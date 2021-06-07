@@ -1,0 +1,574 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Coursera Cpp程序设计 week 6 Part 1 | Doraemonzzz</title><meta name="keywords" content="北大C++慕课"><meta name="author" content="Doraemonzzz"><meta name="copyright" content="Doraemonzzz"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="这一周的内容比较多，这里先回顾输入输出有关的内容。 课程地址： coursera：C++程序设计 https:&#x2F;&#x2F;www.coursera.org&#x2F;learn&#x2F;cpp-chengxu-sheji 中国大学MOOC：程序设计与算法（三）C++面向对象程序设计  程序设计与算法（三）C++面向对象程序设计">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Coursera Cpp程序设计 week 6 Part 1">
+<meta property="og:url" content="http://doraemonzzz.com/2018/10/15/Coursera%20Cpp%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%20week%206%20Part%201/index.html">
+<meta property="og:site_name" content="Doraemonzzz">
+<meta property="og:description" content="这一周的内容比较多，这里先回顾输入输出有关的内容。 课程地址： coursera：C++程序设计 https:&#x2F;&#x2F;www.coursera.org&#x2F;learn&#x2F;cpp-chengxu-sheji 中国大学MOOC：程序设计与算法（三）C++面向对象程序设计  程序设计与算法（三）C++面向对象程序设计">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg">
+<meta property="article:published_time" content="2018-10-15T11:27:00.000Z">
+<meta property="article:modified_time" content="2018-10-27T12:40:42.000Z">
+<meta property="article:author" content="Doraemonzzz">
+<meta property="article:tag" content="北大C++慕课">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="http://doraemonzzz.com/2018/10/15/Coursera%20Cpp%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%20week%206%20Part%201/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"prismjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    jQuery: 'https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js',
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+    },
+    fancybox: {
+      js: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isanchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'Coursera Cpp程序设计 week 6 Part 1',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2018-10-27 20:40:42'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    })(window)</script><meta name="generator" content="Hexo 5.4.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="author-avatar"><img class="avatar-img" src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">文章</div><div class="length-num">610</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">标签</div><div class="length-num">59</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/categories/"><div class="headline">分类</div><div class="length-num">23</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">Doraemonzzz</a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">Coursera Cpp程序设计 week 6 Part 1</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2018-10-15T11:27:00.000Z" title="发表于 2018-10-15 19:27:00">2018-10-15</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2018-10-27T12:40:42.000Z" title="更新于 2018-10-27 20:40:42">2018-10-27</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/C/">C++</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="Coursera Cpp程序设计 week 6 Part 1"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p>这一周的内容比较多，这里先回顾输入输出有关的内容。</p>
+<p>课程地址：</p>
+<p>coursera：C++程序设计</p>
+<p><a target="_blank" rel="noopener" href="https://www.coursera.org/learn/cpp-chengxu-sheji">https://www.coursera.org/learn/cpp-chengxu-sheji</a></p>
+<p>中国大学MOOC：程序设计与算法（三）C++面向对象程序设计 </p>
+<p><a target="_blank" rel="noopener" href="https://www.coursera.org/learn/cpp-chengxu-sheji">程序设计与算法（三）C++面向对象程序设计 </a></p>
+<span id="more"></span>
+<h2 id="输入和输出"><a href="#输入和输出" class="headerlink" title="输入和输出"></a>输入和输出</h2><h3 id="输入输出相关的类"><a href="#输入输出相关的类" class="headerlink" title="输入输出相关的类"></a>输入输出相关的类</h3><p>和输入输出相关的类由下图概括：</p>
+<p><img src="https://github.com/Doraemonzzz/md-photo/blob/master/%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E4%B8%8E%E7%AE%97%E6%B3%95%EF%BC%88%E4%B8%89%EF%BC%89C++%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1/week7/2018101801.png?raw=true" alt=""></p>
+<ul>
+<li>istream是用于输入的流类， cin就是该类的对象。 </li>
+<li>ostream是用于输出的流类， cout就是该类的对象。</li>
+<li>ifstream是用于从文件读取数据的类。</li>
+<li>ofstream是用于向文件写入数据的类。</li>
+<li>iostream是既能用于输入，又能用于输出的类。</li>
+<li>fstream 是既能从文件读取数据，又能向文件写入数据的类。    </li>
+</ul>
+<h4 id="标准流对象"><a href="#标准流对象" class="headerlink" title="标准流对象"></a>标准流对象</h4><ul>
+<li>输入流对象: cin 与标准输入设备相连 </li>
+<li>输出流对象: cout 与标准输出设备相连 </li>
+<li>cerr 与标准错误输出设备相连 </li>
+<li>clog 与标准错误输出设备相连    </li>
+</ul>
+<p>缺省情况下，以下三者一样：</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">cerr <span class="token operator">&lt;&lt;</span> <span class="token string">"Hello,world"</span> <span class="token operator">&lt;&lt;</span> endl<span class="token punctuation">;</span> 
+clog <span class="token operator">&lt;&lt;</span> <span class="token string">"Hello,world"</span> <span class="token operator">&lt;&lt;</span> endl<span class="token punctuation">;</span>
+cout <span class="token operator">&lt;&lt;</span> <span class="token string">"Hello,world"</span> <span class="token operator">&lt;&lt;</span> endl<span class="token punctuation">;</span> <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+<ul>
+<li>cin对应于标准输入流，用于从键盘读取数据，也可以被重定向为从文件中读取数据。 </li>
+<li>cout对应于标准输出流，用于向屏幕输出数据，也可以被重定向为向文件写入数据。 </li>
+<li>cerr对应于标准错误输出流，用于向屏幕输出出错信息， </li>
+<li>clog对应于标准错误输出流，用于向屏幕输出出错信息， </li>
+<li>cerr和clog的区别在于cerr不使用缓冲区,直接向显示器输出信息；而输出到clog中的信息先会被存放在缓冲区,缓冲区满或者刷新时才输出到屏幕。    </li>
+</ul>
+<p>来看两个具体例子，先看输出重定向：</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;iostream></span></span>
+<span class="token keyword">using</span> <span class="token keyword">namespace</span> std<span class="token punctuation">;</span>
+
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+	<span class="token keyword">int</span> x<span class="token punctuation">,</span> y<span class="token punctuation">;</span>
+	cin <span class="token operator">>></span> x <span class="token operator">>></span> y<span class="token punctuation">;</span>
+	<span class="token function">freopen</span><span class="token punctuation">(</span><span class="token string">"test.txt"</span><span class="token punctuation">,</span> <span class="token string">"w"</span><span class="token punctuation">,</span> <span class="token constant">stdout</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment">//将标准输出重定向到 test.txt文件</span>
+	<span class="token keyword">if</span><span class="token punctuation">(</span>y <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span><span class="token comment">//除数为0则在屏幕上输出错误信息</span>
+		cerr<span class="token operator">&lt;&lt;</span><span class="token string">"error."</span><span class="token operator">&lt;&lt;</span>endl<span class="token punctuation">;</span>
+	<span class="token punctuation">&#125;</span><span class="token keyword">else</span><span class="token punctuation">&#123;</span>
+		cout<span class="token operator">&lt;&lt;</span>x <span class="token operator">/</span> y<span class="token punctuation">;</span><span class="token comment">//输出结果到test.txt</span>
+	<span class="token punctuation">&#125;</span>
+	
+	<span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>输入重定向：</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;iostream ></span></span>
+<span class="token keyword">using</span> <span class="token keyword">namespace</span> std<span class="token punctuation">;</span>
+
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">double</span> f<span class="token punctuation">;</span> <span class="token keyword">int</span> n<span class="token punctuation">;</span>
+    <span class="token function">freopen</span><span class="token punctuation">(</span><span class="token string">"t.txt"</span><span class="token punctuation">,</span><span class="token string">"r"</span><span class="token punctuation">,</span><span class="token constant">stdin</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">//cin被改为从 t.txt中读取数据</span>
+    cin <span class="token operator">>></span> f <span class="token operator">>></span> n<span class="token punctuation">;</span>
+    cout <span class="token operator">&lt;&lt;</span> f <span class="token operator">&lt;&lt;</span> <span class="token string">","</span> <span class="token operator">&lt;&lt;</span>n <span class="token operator">&lt;&lt;</span> endl<span class="token punctuation">;</span>
+    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h4 id="判断输入流结束"><a href="#判断输入流结束" class="headerlink" title="判断输入流结束"></a>判断输入流结束</h4><p>可以用如下方法判输入流结束:</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">int</span> x<span class="token punctuation">;</span>
+<span class="token keyword">while</span><span class="token punctuation">(</span>cin<span class="token operator">>></span>x<span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+…
+<span class="token punctuation">&#125;</span>
+<span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h4 id="istream类的成员函数"><a href="#istream类的成员函数" class="headerlink" title="istream类的成员函数"></a>istream类的成员函数</h4><h5 id="getline"><a href="#getline" class="headerlink" title="getline"></a>getline</h5><p>istream &amp; getline(char * buf, int bufSize);</p>
+<p>从输入流中读取bufSize-1个字符到缓冲区buf，或读到碰到‘\n’ 为止（哪个先到算哪个）。 </p>
+<p>istream &amp; getline(char * buf, int bufSize,char delim);</p>
+<p>从输入流中读取bufSize-1个字符到缓冲区buf，或读到碰到delim字符为止（哪个先到算哪个）。 </p>
+<p>两个函数都会自动在buf中读入数据的结尾添加’\0’ 。‘\n’ 或 delim都不会被读入buf，但会被从输入流中取走。 如果输入流中 ‘\n’或delim之前的字符个数达到或超过了bufSize个，就导致读入出错，其结果就是：虽然本次读入已经完成，但是之后的读入就 都会失败了。 </p>
+<p>可以用 if(!cin.getline(…))判断输入是否结束。</p>
+<h5 id=""><a href="#" class="headerlink" title=" "></a> </h5><h5 id="eof"><a href="#eof" class="headerlink" title="eof"></a>eof</h5><p>bool eof(); </p>
+<p>判断输入流是否结束。</p>
+<h5 id="peek"><a href="#peek" class="headerlink" title="peek"></a>peek</h5><p>int peek();</p>
+<p>返回下一个字符,但不从流中去掉。</p>
+<h5 id="putback"><a href="#putback" class="headerlink" title="putback"></a>putback</h5><p>istream &amp; putback(char c); </p>
+<p>将字符ch放回输入流 。</p>
+<h5 id="ignore"><a href="#ignore" class="headerlink" title="ignore"></a>ignore</h5><p>istream &amp; ignore( int nCount = 1, int delim = EOF ); </p>
+<p>从流中删掉最多nCount个字符，遇到EOF时结束。</p>
+<h3 id="流操纵算子"><a href="#流操纵算子" class="headerlink" title="流操纵算子"></a>流操纵算子</h3><p>有如下常用流操纵算子，使用流操纵算子需要包含头文件iomanip</p>
+<ul>
+<li><p>整数流的基数：流操纵算子dec,oct,hex,setbase </p>
+</li>
+<li><p>浮点数的精度（precision,setprecision） </p>
+</li>
+<li><p>设置域宽(setw,width) </p>
+</li>
+<li><p>用户自定义的流操纵算子 </p>
+</li>
+</ul>
+<h4 id="控制整数输出形式的流操纵算子"><a href="#控制整数输出形式的流操纵算子" class="headerlink" title="控制整数输出形式的流操纵算子"></a>控制整数输出形式的流操纵算子</h4><p>hex表示16进制，dec表示10进制，oct表示8进制，使用方法如下：</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;iostream></span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;iomanip></span></span>
+<span class="token keyword">using</span> <span class="token keyword">namespace</span> std<span class="token punctuation">;</span>
+
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+	<span class="token keyword">int</span> n <span class="token operator">=</span> <span class="token number">10</span><span class="token punctuation">;</span>
+	cout<span class="token operator">&lt;&lt;</span> hex <span class="token operator">&lt;&lt;</span> n <span class="token operator">&lt;&lt;</span> endl<span class="token punctuation">;</span>
+	cout<span class="token operator">&lt;&lt;</span> dec <span class="token operator">&lt;&lt;</span> n <span class="token operator">&lt;&lt;</span> endl<span class="token punctuation">;</span>
+	cout<span class="token operator">&lt;&lt;</span> oct <span class="token operator">&lt;&lt;</span> n <span class="token operator">&lt;&lt;</span> endl<span class="token punctuation">;</span>
+	
+	<span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token comment">//输出结果：</span>
+<span class="token comment">//10</span>
+<span class="token comment">//a</span>
+<span class="token comment">//10</span>
+<span class="token comment">//12</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h4 id="控制浮点数精度的流操纵算子"><a href="#控制浮点数精度的流操纵算子" class="headerlink" title="控制浮点数精度的流操纵算子"></a>控制浮点数精度的流操纵算子</h4><p>precision, setprecision</p>
+<p>precision是成员函数，其调用方式为：cout.precision(5); </p>
+<p>setprecision是流操作算子，其调用方式为：cout &lt;&lt; setprecision(5);// 可以连续输出</p>
+<p>它们的功能相同，如下：</p>
+<ul>
+<li>指定输出浮点数的有效位数（非定点方式输出时） </li>
+<li>指定输出浮点数的小数点后的有效位数（定点方式输出时） </li>
+</ul>
+<p>定点方式：小数点必须出现在个位数后面。</p>
+<p>来看如下三个例子，例1：</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;iostream></span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;iomanip></span></span>
+<span class="token keyword">using</span> <span class="token keyword">namespace</span> std<span class="token punctuation">;</span>
+
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+	<span class="token keyword">double</span> x <span class="token operator">=</span> <span class="token number">1234567.89</span><span class="token punctuation">,</span>y <span class="token operator">=</span> <span class="token number">12.34567</span><span class="token punctuation">;</span>
+	<span class="token keyword">int</span> n <span class="token operator">=</span> <span class="token number">1234567</span><span class="token punctuation">;</span>
+	<span class="token keyword">int</span> m <span class="token operator">=</span> <span class="token number">12</span><span class="token punctuation">;</span>
+	<span class="token comment">//浮点数输出最多6位有效数字</span>
+	cout <span class="token operator">&lt;&lt;</span> <span class="token function">setprecision</span><span class="token punctuation">(</span><span class="token number">6</span><span class="token punctuation">)</span> <span class="token operator">&lt;&lt;</span> x <span class="token operator">&lt;&lt;</span> endl
+		 <span class="token operator">&lt;&lt;</span> y <span class="token operator">&lt;&lt;</span> endl <span class="token operator">&lt;&lt;</span> n <span class="token operator">&lt;&lt;</span> endl <span class="token operator">&lt;&lt;</span> m<span class="token punctuation">;</span>
+		 
+	<span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+	
+	<span class="token comment">//输出：</span>
+	<span class="token comment">//1.23457e+006</span>
+	<span class="token comment">//12.3457</span>
+	<span class="token comment">//1234567</span>
+	<span class="token comment">//12</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>例2：</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;iostream></span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;iomanip></span></span>
+<span class="token keyword">using</span> <span class="token keyword">namespace</span> std<span class="token punctuation">;</span>
+
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+	<span class="token keyword">double</span> x <span class="token operator">=</span> <span class="token number">1234567.89</span><span class="token punctuation">,</span>y <span class="token operator">=</span> <span class="token number">12.34567</span><span class="token punctuation">;</span>
+	<span class="token keyword">int</span> n <span class="token operator">=</span> <span class="token number">1234567</span><span class="token punctuation">;</span>
+	<span class="token keyword">int</span> m <span class="token operator">=</span> <span class="token number">12</span><span class="token punctuation">;</span>
+	
+	<span class="token comment">//以小数点位置固定的方式输出</span>
+	cout <span class="token operator">&lt;&lt;</span> <span class="token function">setiosflags</span><span class="token punctuation">(</span>ios<span class="token operator">::</span>fixed<span class="token punctuation">)</span>
+		 <span class="token operator">&lt;&lt;</span> <span class="token function">setprecision</span><span class="token punctuation">(</span><span class="token number">6</span><span class="token punctuation">)</span>
+		 <span class="token operator">&lt;&lt;</span> x <span class="token operator">&lt;&lt;</span> endl
+		 <span class="token operator">&lt;&lt;</span> y <span class="token operator">&lt;&lt;</span> endl <span class="token operator">&lt;&lt;</span> n <span class="token operator">&lt;&lt;</span> endl <span class="token operator">&lt;&lt;</span> m<span class="token punctuation">;</span>
+		 
+	<span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+	
+	<span class="token comment">//输出：</span>
+	<span class="token comment">//1234567.890000</span>
+	<span class="token comment">//12.345670</span>
+	<span class="token comment">//1234567</span>
+	<span class="token comment">//12</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>例3：</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;iostream></span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;iomanip></span></span>
+<span class="token keyword">using</span> <span class="token keyword">namespace</span> std<span class="token punctuation">;</span>
+
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+    <span class="token keyword">double</span> x <span class="token operator">=</span> <span class="token number">1234567.89</span><span class="token punctuation">;</span>
+    cout <span class="token operator">&lt;&lt;</span> <span class="token function">setiosflags</span><span class="token punctuation">(</span>ios<span class="token operator">::</span>fixed<span class="token punctuation">)</span> <span class="token operator">&lt;&lt;</span>
+    <span class="token function">setprecision</span><span class="token punctuation">(</span><span class="token number">6</span><span class="token punctuation">)</span> <span class="token operator">&lt;&lt;</span> x <span class="token operator">&lt;&lt;</span> endl <span class="token operator">&lt;&lt;</span>
+    <span class="token comment">//取消以小数点位置固定的方式输出</span>
+    <span class="token function">resetiosflags</span><span class="token punctuation">(</span>ios<span class="token operator">::</span>fixed<span class="token punctuation">)</span> <span class="token operator">&lt;&lt;</span> x <span class="token punctuation">;</span>
+    
+    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+    
+    <span class="token comment">//输出：</span>
+	<span class="token comment">//1234567.890000</span>
+	<span class="token comment">//1.23457e+006</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h4 id="设置域宽的流操纵算子"><a href="#设置域宽的流操纵算子" class="headerlink" title="设置域宽的流操纵算子"></a>设置域宽的流操纵算子</h4><p>• 设置域宽(setw,width) </p>
+<p>两者功能相同，一个是成员函数，另一个是流操作算子，调用方式不同： </p>
+<p>cin &gt;&gt; setw(4);或者cin.width(5); </p>
+<p>cout &lt;&lt; setw(4);或者cout.width(5);</p>
+<p>注意<strong>宽度设置有效性是一次性的，在每次读入和输出之前都要设置宽度。</strong></p>
+<p>具体作用通过以下例子来说明：</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;iostream></span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;iomanip></span></span>
+<span class="token keyword">using</span> <span class="token keyword">namespace</span> std<span class="token punctuation">;</span>
+
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+	<span class="token keyword">int</span> w <span class="token operator">=</span> <span class="token number">4</span><span class="token punctuation">;</span>
+	<span class="token keyword">char</span> string<span class="token punctuation">[</span><span class="token number">10</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+	cin<span class="token punctuation">.</span><span class="token function">width</span><span class="token punctuation">(</span><span class="token number">5</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token keyword">while</span><span class="token punctuation">(</span>cin <span class="token operator">>></span> string<span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+		cout<span class="token punctuation">.</span><span class="token function">width</span><span class="token punctuation">(</span>w<span class="token operator">++</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		cout <span class="token operator">&lt;&lt;</span> string <span class="token operator">&lt;&lt;</span> endl<span class="token punctuation">;</span>
+		cin<span class="token punctuation">.</span><span class="token function">width</span><span class="token punctuation">(</span><span class="token number">5</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token punctuation">&#125;</span>
+	
+	<span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+	
+	<span class="token comment">//输入:</span>
+	<span class="token comment">//1234567890</span>
+	<span class="token comment">//输出:	</span>
+	<span class="token comment">//1234</span>
+	<span class="token comment">// 5678</span>
+	<span class="token comment">//    90</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h4 id="用户自定义流操纵算子"><a href="#用户自定义流操纵算子" class="headerlink" title="用户自定义流操纵算子"></a>用户自定义流操纵算子</h4><p>用户可以自定义流操纵算子，来看一个例子：</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;iostream></span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;iomanip></span></span>
+<span class="token keyword">using</span> <span class="token keyword">namespace</span> std<span class="token punctuation">;</span>
+
+ostream <span class="token operator">&amp;</span><span class="token function">tab</span><span class="token punctuation">(</span>ostream <span class="token operator">&amp;</span>output<span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+	<span class="token keyword">return</span> output <span class="token operator">&lt;&lt;</span> <span class="token string">'\t'</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+	cout <span class="token operator">&lt;&lt;</span> <span class="token string">"aa"</span> <span class="token operator">&lt;&lt;</span> tab <span class="token operator">&lt;&lt;</span> <span class="token string">"bb"</span> <span class="token operator">&lt;&lt;</span> endl<span class="token punctuation">;</span>
+	
+	<span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+	
+	<span class="token comment">//输出： aa bb</span>
+<span class="token punctuation">&#125;</span> <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>之所以可以这样操作，是因为iostream 里对 &lt;&lt; 进行了重载(成员函数) :</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">ostream <span class="token operator">&amp;</span> <span class="token keyword">operator</span> <span class="token operator">&lt;&lt;</span><span class="token punctuation">(</span> ostream <span class="token operator">&amp;</span> <span class="token punctuation">(</span> <span class="token operator">*</span> p <span class="token punctuation">)</span> <span class="token punctuation">(</span> ostream <span class="token operator">&amp;</span> <span class="token punctuation">)</span> <span class="token punctuation">)</span> <span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>&lt;&lt;重载之后可以的参数为函数指针，该指针指向的函数特点为输入输出均为ostream的引用，所以上述自定义函数能够起作用。</p>
+<p>最后看一个输入输出的综合例子：</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;iostream></span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;iomanip></span></span>
+<span class="token keyword">using</span> <span class="token keyword">namespace</span> std<span class="token punctuation">;</span>
+
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+	<span class="token keyword">int</span> n <span class="token operator">=</span> <span class="token number">141</span><span class="token punctuation">;</span>
+	<span class="token comment">//1) 分别以十六进制、十进制、八进制先后输出 n</span>
+	cout <span class="token operator">&lt;&lt;</span> <span class="token string">"1) "</span> <span class="token operator">&lt;&lt;</span> hex <span class="token operator">&lt;&lt;</span> n <span class="token operator">&lt;&lt;</span> <span class="token string">" "</span> <span class="token operator">&lt;&lt;</span> dec <span class="token operator">&lt;&lt;</span> n <span class="token operator">&lt;&lt;</span> <span class="token string">" "</span> <span class="token operator">&lt;&lt;</span> oct <span class="token operator">&lt;&lt;</span> n <span class="token operator">&lt;&lt;</span> endl<span class="token punctuation">;</span>
+	<span class="token keyword">double</span> x <span class="token operator">=</span> <span class="token number">1234567.89</span><span class="token punctuation">,</span>y <span class="token operator">=</span> <span class="token number">12.34567</span><span class="token punctuation">;</span>
+	<span class="token comment">//2) 保留5位有效数字</span>
+	cout <span class="token operator">&lt;&lt;</span> <span class="token string">"2) "</span> <span class="token operator">&lt;&lt;</span> <span class="token function">setprecision</span><span class="token punctuation">(</span><span class="token number">5</span><span class="token punctuation">)</span> <span class="token operator">&lt;&lt;</span> x <span class="token operator">&lt;&lt;</span> <span class="token string">" "</span> <span class="token operator">&lt;&lt;</span> y <span class="token operator">&lt;&lt;</span> <span class="token string">" "</span> <span class="token operator">&lt;&lt;</span> endl<span class="token punctuation">;</span>
+	<span class="token comment">//3) 保留小数点后面5位</span>
+	cout <span class="token operator">&lt;&lt;</span> <span class="token string">"3) "</span> <span class="token operator">&lt;&lt;</span> fixed <span class="token operator">&lt;&lt;</span> <span class="token function">setprecision</span><span class="token punctuation">(</span><span class="token number">5</span><span class="token punctuation">)</span> <span class="token operator">&lt;&lt;</span> x <span class="token operator">&lt;&lt;</span> <span class="token string">" "</span> <span class="token operator">&lt;&lt;</span> y <span class="token operator">&lt;&lt;</span> endl <span class="token punctuation">;</span>
+	<span class="token comment">//4) 科学计数法输出，且保留小数点后面5位</span>
+	cout <span class="token operator">&lt;&lt;</span> <span class="token string">"4) "</span> <span class="token operator">&lt;&lt;</span> scientific <span class="token operator">&lt;&lt;</span> <span class="token function">setprecision</span><span class="token punctuation">(</span><span class="token number">5</span><span class="token punctuation">)</span> <span class="token operator">&lt;&lt;</span>x <span class="token operator">&lt;&lt;</span> <span class="token string">" "</span> <span class="token operator">&lt;&lt;</span> y <span class="token operator">&lt;&lt;</span> endl <span class="token punctuation">;</span>
+	<span class="token comment">//5) 非负数要显示正号，输出宽度为12字符，宽度不足则用'*'填补</span>
+	cout <span class="token operator">&lt;&lt;</span> <span class="token string">"5) "</span> <span class="token operator">&lt;&lt;</span> showpos <span class="token operator">&lt;&lt;</span> fixed <span class="token operator">&lt;&lt;</span> <span class="token function">setw</span><span class="token punctuation">(</span><span class="token number">12</span><span class="token punctuation">)</span> <span class="token operator">&lt;&lt;</span> <span class="token function">setfill</span><span class="token punctuation">(</span><span class="token string">'*'</span><span class="token punctuation">)</span> <span class="token operator">&lt;&lt;</span> <span class="token number">12.1</span> <span class="token operator">&lt;&lt;</span> endl<span class="token punctuation">;</span>
+	<span class="token comment">//6) 非负数不显示正号，输出宽度为12字符，宽度不足则右边用填充字符填充</span>
+	cout <span class="token operator">&lt;&lt;</span> <span class="token string">"6) "</span> <span class="token operator">&lt;&lt;</span> noshowpos <span class="token operator">&lt;&lt;</span> <span class="token function">setw</span><span class="token punctuation">(</span><span class="token number">12</span><span class="token punctuation">)</span> <span class="token operator">&lt;&lt;</span> left <span class="token operator">&lt;&lt;</span> <span class="token number">12.1</span> <span class="token operator">&lt;&lt;</span> endl<span class="token punctuation">;</span>
+	<span class="token comment">//7) 输出宽度为12字符，宽度不足则左边用填充字符填充</span>
+	cout <span class="token operator">&lt;&lt;</span> <span class="token string">"7) "</span> <span class="token operator">&lt;&lt;</span> <span class="token function">setw</span><span class="token punctuation">(</span><span class="token number">12</span><span class="token punctuation">)</span> <span class="token operator">&lt;&lt;</span> right <span class="token operator">&lt;&lt;</span> <span class="token number">12.1</span> <span class="token operator">&lt;&lt;</span> endl<span class="token punctuation">;</span>
+	<span class="token comment">//8) 宽度不足时，负号和数值分列左右，中间用填充字符填充</span>
+	cout <span class="token operator">&lt;&lt;</span> <span class="token string">"8) "</span> <span class="token operator">&lt;&lt;</span> <span class="token function">setw</span><span class="token punctuation">(</span><span class="token number">12</span><span class="token punctuation">)</span> <span class="token operator">&lt;&lt;</span> internal <span class="token operator">&lt;&lt;</span> <span class="token operator">-</span><span class="token number">12.1</span> <span class="token operator">&lt;&lt;</span> endl<span class="token punctuation">;</span>
+	cout <span class="token operator">&lt;&lt;</span> <span class="token string">"9) "</span> <span class="token operator">&lt;&lt;</span> <span class="token number">12.1</span> <span class="token operator">&lt;&lt;</span> endl<span class="token punctuation">;</span>
+	
+	<span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+	
+	<span class="token comment">//1) 8d 141 215</span>
+	<span class="token comment">//2) 1.2346e+006 12.346</span>
+	<span class="token comment">//3) 1234567.89000 12.34567</span>
+	<span class="token comment">//4) 1.23457e+006 1.23457e+001</span>
+	<span class="token comment">//5) ***+12.10000</span>
+	<span class="token comment">//6) 12.10000****</span>
+	<span class="token comment">//7) ****12.10000</span>
+	<span class="token comment">//8) -***12.10000</span>
+	<span class="token comment">//9) 12.10000</span>
+<span class="token punctuation">&#125;</span> <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h3 id="文件读写"><a href="#文件读写" class="headerlink" title="文件读写"></a>文件读写</h3><h4 id="创建文件"><a href="#创建文件" class="headerlink" title="创建文件"></a>创建文件</h4><p>使用方法如下：</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;fstream></span> <span class="token comment">// 包含头文件</span></span>
+
+ofstream <span class="token function">outFile</span><span class="token punctuation">(</span><span class="token string">"clients.dat"</span><span class="token punctuation">,</span> ios<span class="token operator">::</span>out<span class="token operator">|</span>ios<span class="token operator">::</span>binary<span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment">//创建文件</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+<ul>
+<li>clients.dat     要创建的文件的名字</li>
+<li>ios::out             文件打开方式<ul>
+<li>ios:out       输出到文件, 删除原有内容</li>
+<li>ios::app     输出到文件, 保留原有内容，总是在尾部添加</li>
+</ul>
+</li>
+<li>ios::binary        以二进制文件格式打开文件    </li>
+</ul>
+<p>也可以先创建ofstream对象，再用open函数打开：</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">ofstream fout<span class="token punctuation">;</span> 
+fout<span class="token punctuation">.</span><span class="token function">open</span><span class="token punctuation">(</span><span class="token string">"test.out"</span><span class="token punctuation">,</span>ios<span class="token operator">::</span>out<span class="token operator">|</span>ios<span class="token operator">::</span>binary<span class="token punctuation">)</span><span class="token punctuation">;</span>    <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<p>判断打开是否成功：</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">if</span>（<span class="token operator">!</span>fout）<span class="token punctuation">&#123;</span> 
+    cout <span class="token operator">&lt;&lt;</span> “File open error<span class="token operator">!</span>”<span class="token operator">&lt;&lt;</span>endl<span class="token punctuation">;</span> 
+<span class="token punctuation">&#125;</span>    <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+<p>文件名可以给出绝对路径，也可以给相对路径。没有交代路径信息， 就是在当前文件夹下找文件。</p>
+<h4 id="文件的读写指针"><a href="#文件的读写指针" class="headerlink" title="文件的读写指针"></a>文件的读写指针</h4><ul>
+<li>对于输入文件,有一个读指针; </li>
+<li>对于输出文件,有一个写指针; </li>
+<li>对于输入输出文件,有一个读写指针; </li>
+<li>标识文件操作的当前位置, 该指针在哪里,读写操 作就在哪里进行。</li>
+</ul>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">ifstream <span class="token function">fin</span><span class="token punctuation">(</span>“a1<span class="token punctuation">.</span>in”<span class="token punctuation">,</span>ios<span class="token operator">::</span>ate<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token comment">//打开文件，定位文件指针到文件尾</span>
+<span class="token keyword">long</span> location <span class="token operator">=</span> fin<span class="token punctuation">.</span><span class="token function">tellg</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">//取得读指针的位置</span>
+location <span class="token operator">=</span> <span class="token number">10L</span><span class="token punctuation">;</span>
+fin<span class="token punctuation">.</span><span class="token function">seekg</span><span class="token punctuation">(</span>location<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// 将读指针移动到第10个字节处</span>
+fin<span class="token punctuation">.</span><span class="token function">seekg</span><span class="token punctuation">(</span>location<span class="token punctuation">,</span>ios<span class="token operator">::</span>beg<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">//从头数location</span>
+fin<span class="token punctuation">.</span><span class="token function">seekg</span><span class="token punctuation">(</span>location<span class="token punctuation">,</span>ios<span class="token operator">::</span>cur<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">//从当前位置数location</span>
+fin<span class="token punctuation">.</span><span class="token function">seekg</span><span class="token punctuation">(</span>location<span class="token punctuation">,</span>ios<span class="token operator">::</span>end<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">//从尾部数location</span>
+<span class="token comment">//location 可以为负值</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h4 id="显式关闭文件"><a href="#显式关闭文件" class="headerlink" title="显式关闭文件"></a>显式关闭文件</h4><pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">ifstream <span class="token function">fin</span><span class="token punctuation">(</span>“test<span class="token punctuation">.</span>dat”<span class="token punctuation">,</span>ios<span class="token operator">::</span>in<span class="token punctuation">)</span><span class="token punctuation">;</span> 
+
+fin<span class="token punctuation">.</span><span class="token function">close</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> 
+
+ofstream <span class="token function">fout</span><span class="token punctuation">(</span>“test<span class="token punctuation">.</span>dat”<span class="token punctuation">,</span>ios<span class="token operator">::</span>out<span class="token punctuation">)</span><span class="token punctuation">;</span> 
+
+fout<span class="token punctuation">.</span><span class="token function">close</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>   <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h4 id="二进制文件读写"><a href="#二进制文件读写" class="headerlink" title="二进制文件读写"></a>二进制文件读写</h4><h5 id="二进制读文件"><a href="#二进制读文件" class="headerlink" title="二进制读文件"></a>二进制读文件</h5><p>ifstream 和 fstream的成员函数： </p>
+<p>istream&amp; read (char* s, long n); </p>
+<p>将文件读指针指向的地方的n个字节内容，读入到内存地址s，然后将文件读指针向后移动n字节 (以ios::in方式打开文件时，文件读指针开始指向文件开头)。</p>
+<h5 id="二进制写文件"><a href="#二进制写文件" class="headerlink" title="二进制写文件"></a>二进制写文件</h5><p>ofstream 和 fstream的成员函数： </p>
+<p>istream&amp; write (const char* s, long n);</p>
+<p>将内存地址s处的n个字节内容，写入到文件中写指针指向的位置， 然后将文件写指针向后移动n字节(以ios::out方式打开文件时，文件写指针开始指向文件开头, 以ios::app方式打开文件时，文件写指针开始指向文件尾部 ) 。    </p>
+<p>来看读写的具体例子，先看写：</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;iostream></span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;fstream></span></span>
+<span class="token keyword">using</span> <span class="token keyword">namespace</span> std<span class="token punctuation">;</span>
+
+<span class="token keyword">struct</span> <span class="token class-name">Student</span><span class="token punctuation">&#123;</span>
+	<span class="token keyword">char</span> name<span class="token punctuation">[</span><span class="token number">20</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+	<span class="token keyword">int</span> score<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
+
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+	Student s<span class="token punctuation">;</span>
+	ofstream <span class="token function">OutFile</span><span class="token punctuation">(</span><span class="token string">"students.dat"</span><span class="token punctuation">,</span> ios<span class="token operator">::</span>out<span class="token operator">|</span>ios<span class="token operator">::</span>binary<span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token keyword">while</span><span class="token punctuation">(</span>cin <span class="token operator">>></span> s<span class="token punctuation">.</span>name <span class="token operator">>></span> s<span class="token punctuation">.</span>score<span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+		OutFile<span class="token punctuation">.</span><span class="token function">write</span><span class="token punctuation">(</span> <span class="token punctuation">(</span><span class="token keyword">char</span> <span class="token operator">*</span><span class="token punctuation">)</span> <span class="token operator">&amp;</span> s<span class="token punctuation">,</span> <span class="token keyword">sizeof</span><span class="token punctuation">(</span>s<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token punctuation">&#125;</span>
+	OutFile<span class="token punctuation">.</span><span class="token function">close</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	
+	<span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+	
+	<span class="token comment">//输入：</span>
+	<span class="token comment">//Tom 60</span>
+	<span class="token comment">//Jack 80</span>
+	<span class="token comment">//Jane 40</span>
+	<span class="token comment">//^Z+回车</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>接着看读：</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;iostream></span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;fstream></span></span>
+<span class="token keyword">using</span> <span class="token keyword">namespace</span> std<span class="token punctuation">;</span>
+
+<span class="token keyword">struct</span> <span class="token class-name">Student</span><span class="token punctuation">&#123;</span>
+	<span class="token keyword">char</span> name<span class="token punctuation">[</span><span class="token number">20</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+	<span class="token keyword">int</span> score<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
+
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+	Student s<span class="token punctuation">;</span>
+	ifstream <span class="token function">inFile</span><span class="token punctuation">(</span><span class="token string">"students.dat"</span><span class="token punctuation">,</span> ios<span class="token operator">::</span>out<span class="token operator">|</span>ios<span class="token operator">::</span>binary<span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token keyword">if</span><span class="token punctuation">(</span><span class="token operator">!</span>inFile<span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+		cout <span class="token operator">&lt;&lt;</span> <span class="token string">"error"</span> <span class="token operator">&lt;&lt;</span>endl<span class="token punctuation">;</span>
+		<span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+	<span class="token punctuation">&#125;</span>
+	<span class="token keyword">while</span><span class="token punctuation">(</span> inFile<span class="token punctuation">.</span><span class="token function">read</span><span class="token punctuation">(</span> <span class="token punctuation">(</span><span class="token keyword">char</span> <span class="token operator">*</span><span class="token punctuation">)</span> <span class="token operator">&amp;</span> s<span class="token punctuation">,</span> <span class="token keyword">sizeof</span><span class="token punctuation">(</span>s<span class="token punctuation">)</span> <span class="token punctuation">)</span> <span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+		<span class="token keyword">int</span> readedBytes <span class="token operator">=</span> inFile<span class="token punctuation">.</span><span class="token function">gcount</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		cout <span class="token operator">&lt;&lt;</span> s<span class="token punctuation">.</span>name <span class="token operator">&lt;&lt;</span> <span class="token string">" "</span> <span class="token operator">&lt;&lt;</span> s<span class="token punctuation">.</span>score <span class="token operator">&lt;&lt;</span> endl<span class="token punctuation">;</span>
+	<span class="token punctuation">&#125;</span>
+	inFile<span class="token punctuation">.</span><span class="token function">close</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	
+	<span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+	
+	<span class="token comment">//输出：</span>
+	<span class="token comment">//Tom 60</span>
+	<span class="token comment">//Jack 80</span>
+	<span class="token comment">//Jane 40</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h4 id="二进制文件和文本文件的区别"><a href="#二进制文件和文本文件的区别" class="headerlink" title="二进制文件和文本文件的区别"></a>二进制文件和文本文件的区别</h4><p>Linux,Unix下的换行符号：‘\n’ (ASCII码: 0x0a) </p>
+<p>Windows 下的换行符号：‘\r\n’ (ASCII码： 0x0d0a) endl 就是 ‘\n’ </p>
+<p>Mac OS下的换行符号： ‘\r’ (ASCII码：0x0d) </p>
+<p>这样就会导致 Linux, Mac OS 文本文件在Windows 记事本中打开时不换行。</p>
+<ul>
+<li>Unix/Linux下打开文件，用不用 ios::binary 没区别 </li>
+<li>Windows下打开文件，如果不用 ios::binary，则：<ul>
+<li>读取文件时，所有的 ‘\r\n’ 会被当做一个字符’\n’处理，即少读了一个字 符’\r’。 </li>
+<li>写入文件时，写入单独的’\n’时，系统自动在前面加一个’\r’，即多写了一 个’\r’       </li>
+</ul>
+</li>
+</ul>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">Doraemonzzz</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="http://doraemonzzz.com/2018/10/15/Coursera%20Cpp%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%20week%206%20Part%201/">http://doraemonzzz.com/2018/10/15/Coursera%20Cpp%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%20week%206%20Part%201/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://doraemonzzz.com" target="_blank">Doraemonzzz</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E5%8C%97%E5%A4%A7C-%E6%85%95%E8%AF%BE/">北大C++慕课</a></div><div class="post_share"><div class="social-share" data-image="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2018/10/15/Unit%203%20Logistic%20Regression/"><img class="prev-cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">Unit 3 Logistic Regression</div></div></a></div><div class="next-post pull-right"><a href="/2018/10/12/%E6%96%AF%E5%9D%A6%E7%A6%8F%E7%AE%97%E6%B3%95%E4%B8%93%E9%A1%B9%E8%AF%BE%E7%A8%8BCourse1%20Final%20Exam/"><img class="next-cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">斯坦福算法专项课程Course1 Final Exam</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span> 相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2018/09/15/Coursera Cpp程序设计 week 1/" title="Coursera Cpp程序设计 week 1"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2018-09-15</div><div class="title">Coursera Cpp程序设计 week 1</div></div></a></div><div><a href="/2018/09/20/Coursera Cpp程序设计 week 2/" title="Coursera Cpp程序设计 week 2"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2018-09-20</div><div class="title">Coursera Cpp程序设计 week 2</div></div></a></div><div><a href="/2018/09/26/Coursera Cpp程序设计 week 3/" title="Coursera Cpp程序设计 week 3"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2018-09-26</div><div class="title">Coursera Cpp程序设计 week 3</div></div></a></div><div><a href="/2018/10/02/Coursera Cpp程序设计 week 4/" title="Coursera Cpp程序设计 week 4"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2018-10-02</div><div class="title">Coursera Cpp程序设计 week 4</div></div></a></div><div><a href="/2018/10/09/Coursera Cpp程序设计 week 5/" title="Coursera Cpp程序设计 week 5"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2018-10-09</div><div class="title">Coursera Cpp程序设计 week 5</div></div></a></div><div><a href="/2018/10/23/Coursera Cpp程序设计 week 6 Part 2/" title="Coursera Cpp程序设计 week 6 Part 2"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2018-10-23</div><div class="title">Coursera Cpp程序设计 week 6 Part 2</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="card-info-avatar is-center"><img class="avatar-img" src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/><div class="author-info__name">Doraemonzzz</div><div class="author-info__description">个人博客，主要记录有关机器学习，数学以及计算机科学的笔记</div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">610</div></a></div><div class="card-info-data-item is-center"><a href="/tags/"><div class="headline">标签</div><div class="length-num">59</div></a></div><div class="card-info-data-item is-center"><a href="/categories/"><div class="headline">分类</div><div class="length-num">23</div></a></div></div><a class="button--animated" id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/Doraemonzzz" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="/doraemon_zzz@163.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn card-announcement-animation"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BE%93%E5%85%A5%E5%92%8C%E8%BE%93%E5%87%BA"><span class="toc-number">1.</span> <span class="toc-text">输入和输出</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BE%93%E5%85%A5%E8%BE%93%E5%87%BA%E7%9B%B8%E5%85%B3%E7%9A%84%E7%B1%BB"><span class="toc-number">1.1.</span> <span class="toc-text">输入输出相关的类</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%A0%87%E5%87%86%E6%B5%81%E5%AF%B9%E8%B1%A1"><span class="toc-number">1.1.1.</span> <span class="toc-text">标准流对象</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%88%A4%E6%96%AD%E8%BE%93%E5%85%A5%E6%B5%81%E7%BB%93%E6%9D%9F"><span class="toc-number">1.1.2.</span> <span class="toc-text">判断输入流结束</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#istream%E7%B1%BB%E7%9A%84%E6%88%90%E5%91%98%E5%87%BD%E6%95%B0"><span class="toc-number">1.1.3.</span> <span class="toc-text">istream类的成员函数</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#getline"><span class="toc-number">1.1.3.1.</span> <span class="toc-text">getline</span></a></li><li class="toc-item toc-level-5"><a class="toc-link"><span class="toc-number">1.1.3.2.</span> <span class="toc-text"> </span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#eof"><span class="toc-number">1.1.3.3.</span> <span class="toc-text">eof</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#peek"><span class="toc-number">1.1.3.4.</span> <span class="toc-text">peek</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#putback"><span class="toc-number">1.1.3.5.</span> <span class="toc-text">putback</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#ignore"><span class="toc-number">1.1.3.6.</span> <span class="toc-text">ignore</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B5%81%E6%93%8D%E7%BA%B5%E7%AE%97%E5%AD%90"><span class="toc-number">1.2.</span> <span class="toc-text">流操纵算子</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%8E%A7%E5%88%B6%E6%95%B4%E6%95%B0%E8%BE%93%E5%87%BA%E5%BD%A2%E5%BC%8F%E7%9A%84%E6%B5%81%E6%93%8D%E7%BA%B5%E7%AE%97%E5%AD%90"><span class="toc-number">1.2.1.</span> <span class="toc-text">控制整数输出形式的流操纵算子</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%8E%A7%E5%88%B6%E6%B5%AE%E7%82%B9%E6%95%B0%E7%B2%BE%E5%BA%A6%E7%9A%84%E6%B5%81%E6%93%8D%E7%BA%B5%E7%AE%97%E5%AD%90"><span class="toc-number">1.2.2.</span> <span class="toc-text">控制浮点数精度的流操纵算子</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%AE%BE%E7%BD%AE%E5%9F%9F%E5%AE%BD%E7%9A%84%E6%B5%81%E6%93%8D%E7%BA%B5%E7%AE%97%E5%AD%90"><span class="toc-number">1.2.3.</span> <span class="toc-text">设置域宽的流操纵算子</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%94%A8%E6%88%B7%E8%87%AA%E5%AE%9A%E4%B9%89%E6%B5%81%E6%93%8D%E7%BA%B5%E7%AE%97%E5%AD%90"><span class="toc-number">1.2.4.</span> <span class="toc-text">用户自定义流操纵算子</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%87%E4%BB%B6%E8%AF%BB%E5%86%99"><span class="toc-number">1.3.</span> <span class="toc-text">文件读写</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%88%9B%E5%BB%BA%E6%96%87%E4%BB%B6"><span class="toc-number">1.3.1.</span> <span class="toc-text">创建文件</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%96%87%E4%BB%B6%E7%9A%84%E8%AF%BB%E5%86%99%E6%8C%87%E9%92%88"><span class="toc-number">1.3.2.</span> <span class="toc-text">文件的读写指针</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%98%BE%E5%BC%8F%E5%85%B3%E9%97%AD%E6%96%87%E4%BB%B6"><span class="toc-number">1.3.3.</span> <span class="toc-text">显式关闭文件</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BA%8C%E8%BF%9B%E5%88%B6%E6%96%87%E4%BB%B6%E8%AF%BB%E5%86%99"><span class="toc-number">1.3.4.</span> <span class="toc-text">二进制文件读写</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E4%BA%8C%E8%BF%9B%E5%88%B6%E8%AF%BB%E6%96%87%E4%BB%B6"><span class="toc-number">1.3.4.1.</span> <span class="toc-text">二进制读文件</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E4%BA%8C%E8%BF%9B%E5%88%B6%E5%86%99%E6%96%87%E4%BB%B6"><span class="toc-number">1.3.4.2.</span> <span class="toc-text">二进制写文件</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BA%8C%E8%BF%9B%E5%88%B6%E6%96%87%E4%BB%B6%E5%92%8C%E6%96%87%E6%9C%AC%E6%96%87%E4%BB%B6%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="toc-number">1.3.5.</span> <span class="toc-text">二进制文件和文本文件的区别</span></a></li></ol></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2021/06/06/2021-6-6-%E7%AE%97%E6%B3%95%E6%A6%82%E8%AE%BA(DPV)%E4%B9%A0%E9%A2%98%E8%A7%A3%E7%AD%94%E2%80%94%E2%80%94%E7%AC%AC3%E7%AB%A0-%E5%9B%BE%E7%9A%84%E5%88%86%E8%A7%A3/" title="算法概论(DPV)习题解答——第3章 图的分解"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="算法概论(DPV)习题解答——第3章 图的分解"/></a><div class="content"><a class="title" href="/2021/06/06/2021-6-6-%E7%AE%97%E6%B3%95%E6%A6%82%E8%AE%BA(DPV)%E4%B9%A0%E9%A2%98%E8%A7%A3%E7%AD%94%E2%80%94%E2%80%94%E7%AC%AC3%E7%AB%A0-%E5%9B%BE%E7%9A%84%E5%88%86%E8%A7%A3/" title="算法概论(DPV)习题解答——第3章 图的分解">算法概论(DPV)习题解答——第3章 图的分解</a><time datetime="2021-06-06T14:35:00.000Z" title="发表于 2021-06-06 22:35:00">2021-06-06</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/06/06/2021-6-6-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E7%AC%AC5%E7%AB%A0-%E4%B9%A0%E9%A2%98%E8%A7%A3%E6%9E%90/" title="深入理解计算机系统 第5章 习题解析"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="深入理解计算机系统 第5章 习题解析"/></a><div class="content"><a class="title" href="/2021/06/06/2021-6-6-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E7%AC%AC5%E7%AB%A0-%E4%B9%A0%E9%A2%98%E8%A7%A3%E6%9E%90/" title="深入理解计算机系统 第5章 习题解析">深入理解计算机系统 第5章 习题解析</a><time datetime="2021-06-06T07:23:00.000Z" title="发表于 2021-06-06 15:23:00">2021-06-06</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/06/05/2021-6-5-Stanford-Compiler-PA5%E7%BF%BB%E8%AF%91/" title="Stanford Compiler PA5翻译"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Stanford Compiler PA5翻译"/></a><div class="content"><a class="title" href="/2021/06/05/2021-6-5-Stanford-Compiler-PA5%E7%BF%BB%E8%AF%91/" title="Stanford Compiler PA5翻译">Stanford Compiler PA5翻译</a><time datetime="2021-06-05T06:12:00.000Z" title="发表于 2021-06-05 14:12:00">2021-06-05</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/06/04/2021-6-4-Stanford-Compiler-PA4%E7%BF%BB%E8%AF%91/" title="Stanford Compiler PA4翻译"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Stanford Compiler PA4翻译"/></a><div class="content"><a class="title" href="/2021/06/04/2021-6-4-Stanford-Compiler-PA4%E7%BF%BB%E8%AF%91/" title="Stanford Compiler PA4翻译">Stanford Compiler PA4翻译</a><time datetime="2021-06-03T16:17:00.000Z" title="发表于 2021-06-04 00:17:00">2021-06-04</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/06/03/2021-6-3-%E5%B7%A7%E5%A6%99%E7%9A%84Y%E8%BF%90%E7%AE%97%E7%AC%A6/" title="巧妙的Y运算符"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="巧妙的Y运算符"/></a><div class="content"><a class="title" href="/2021/06/03/2021-6-3-%E5%B7%A7%E5%A6%99%E7%9A%84Y%E8%BF%90%E7%AE%97%E7%AC%A6/" title="巧妙的Y运算符">巧妙的Y运算符</a><time datetime="2021-06-03T00:54:00.000Z" title="发表于 2021-06-03 08:54:00">2021-06-03</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2021 By Doraemonzzz</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><div class="js-pjax"><script>if (!window.MathJax) {
+  window.MathJax = {
+    loader: {
+      source: {
+        '[tex]/amsCd': '[tex]/amscd'
+      }
+    },
+    tex: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]],
+      tags: 'ams'
+    },
+    options: {
+      renderActions: {
+        findScript: [10, doc => {
+          for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+            const display = !!node.type.match(/; *mode=display/)
+            const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+            const text = document.createTextNode('')
+            node.parentNode.replaceChild(text, node)
+            math.start = {node: text, delim: '', n: 0}
+            math.end = {node: text, delim: '', n: 0}
+            doc.math.push(math)
+          }
+        }, ''],
+        addClass: [200,() => {
+          document.querySelectorAll('mjx-container:not([display=\'true\']').forEach( node => {
+            const target = node.parentNode
+            if (!target.classList.contains('has-jax')) {
+              target.classList.add('mathjax-overflow')
+            }
+          })
+        }, '', false]
+      }
+    }
+  }
+  
+  const script = document.createElement('script')
+  script.src = 'https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js'
+  script.id = 'MathJax-script'
+  script.async = true
+  document.head.appendChild(script)
+} else {
+  MathJax.startup.document.state(0)
+  MathJax.texReset()
+  MathJax.typeset()
+}</script></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

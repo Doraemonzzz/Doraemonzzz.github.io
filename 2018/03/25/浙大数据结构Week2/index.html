@@ -1,0 +1,563 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>浙大数据结构Week2 | Doraemonzzz</title><meta name="keywords" content="浙大数据结构mooc"><meta name="author" content="Doraemonzzz"><meta name="copyright" content="Doraemonzzz"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="课程地址：https:&#x2F;&#x2F;www.icourse163.org&#x2F;course&#x2F;ZJU-93001笔记中图片均来自此mooc中讲义。 之前忙于研究生复试，所以停滞了一周的课程。这次回顾下第二周的课程，这周主要讲了三个部分，线性表，堆栈，队列。 Part1:回顾1.线性表这里引用老师的介绍。线性表比较常用，比如python中的list的就是线性表，由于python自带，所以这里没有自己实现一遍。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="浙大数据结构Week2">
+<meta property="og:url" content="http://doraemonzzz.com/2018/03/25/%E6%B5%99%E5%A4%A7%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84Week2/index.html">
+<meta property="og:site_name" content="Doraemonzzz">
+<meta property="og:description" content="课程地址：https:&#x2F;&#x2F;www.icourse163.org&#x2F;course&#x2F;ZJU-93001笔记中图片均来自此mooc中讲义。 之前忙于研究生复试，所以停滞了一周的课程。这次回顾下第二周的课程，这周主要讲了三个部分，线性表，堆栈，队列。 Part1:回顾1.线性表这里引用老师的介绍。线性表比较常用，比如python中的list的就是线性表，由于python自带，所以这里没有自己实现一遍。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg">
+<meta property="article:published_time" content="2018-03-25T13:47:28.000Z">
+<meta property="article:modified_time" content="2018-05-24T08:51:04.000Z">
+<meta property="article:author" content="Doraemonzzz">
+<meta property="article:tag" content="浙大数据结构mooc">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="http://doraemonzzz.com/2018/03/25/%E6%B5%99%E5%A4%A7%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84Week2/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"prismjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    jQuery: 'https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js',
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+    },
+    fancybox: {
+      js: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isanchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '浙大数据结构Week2',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2018-05-24 16:51:04'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    })(window)</script><meta name="generator" content="Hexo 5.4.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="author-avatar"><img class="avatar-img" src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">文章</div><div class="length-num">610</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">标签</div><div class="length-num">59</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/categories/"><div class="headline">分类</div><div class="length-num">23</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">Doraemonzzz</a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">浙大数据结构Week2</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2018-03-25T13:47:28.000Z" title="发表于 2018-03-25 21:47:28">2018-03-25</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2018-05-24T08:51:04.000Z" title="更新于 2018-05-24 16:51:04">2018-05-24</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/">数据结构</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="浙大数据结构Week2"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p>课程地址：<a target="_blank" rel="noopener" href="https://www.icourse163.org/course/ZJU-93001">https://www.icourse163.org/course/ZJU-93001</a><br>笔记中图片均来自此mooc中讲义。</p>
+<p>之前忙于研究生复试，所以停滞了一周的课程。这次回顾下第二周的课程，这周主要讲了三个部分，线性表，堆栈，队列。</p>
+<h1 id="Part1-回顾"><a href="#Part1-回顾" class="headerlink" title="Part1:回顾"></a>Part1:回顾</h1><h2 id="1-线性表"><a href="#1-线性表" class="headerlink" title="1.线性表"></a>1.线性表</h2><p>这里引用老师的介绍。<br><img src="https://github.com/Doraemonzzz/md-photo/blob/master/%E6%B5%99%E5%A4%A7%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/week2/%E7%BA%BF%E6%80%A7%E8%A1%A8.png?raw=true" alt=""><br>线性表比较常用，比如python中的list的就是线性表，由于python自带，所以这里没有自己实现一遍。<br><span id="more"></span></p>
+<h2 id="2-堆栈-Stack"><a href="#2-堆栈-Stack" class="headerlink" title="2.堆栈(Stack)"></a>2.堆栈(Stack)</h2><p>堆栈是一种特殊的线性表，只在栈顶插入删除数据，插入操作称为入栈(Push)，删除操作称为出栈(Pop)。<strong>栈的最大特点为后入先出Last In First Out(LIFO)</strong>。栈在生活中也是比较常见的，例如碗，我们一般会将新的碗放在最上面，用碗的时候也会拿最上面的碗，还有一个例子是夏天冰箱里的饮料，我们一般会拿最外层的，放饮料的时候也会放在最外层。<br>下面是老师的介绍。<br><img src="https://github.com/Doraemonzzz/md-photo/blob/master/%E6%B5%99%E5%A4%A7%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/week2/%E6%A0%88.png?raw=true" alt=""></p>
+<p>第一周的部分使用c语言实现的，但是我指针后面部分都不大会，正在恶补，故这里使用python实现。<br><pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token comment"># -*- coding: utf-8 -*-</span>
+<span class="token triple-quoted-string string">"""
+Created on Sat Mar 24 11:11:38 2018
+
+@author: Administrator
+"""</span>
+
+<span class="token comment">#实现栈</span>
+<span class="token keyword">class</span> <span class="token class-name">Stack</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token keyword">def</span> <span class="token function">__init__</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span>size<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        self<span class="token punctuation">.</span>size<span class="token operator">=</span>size
+        self<span class="token punctuation">.</span>stack<span class="token operator">=</span><span class="token punctuation">[</span><span class="token punctuation">]</span>
+        self<span class="token punctuation">.</span>top<span class="token operator">=</span><span class="token operator">-</span><span class="token number">1</span>
+        
+    <span class="token keyword">def</span> <span class="token function">isfull</span><span class="token punctuation">(</span>self<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token keyword">return</span> self<span class="token punctuation">.</span>size<span class="token operator">==</span><span class="token punctuation">(</span>self<span class="token punctuation">.</span>top<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">)</span>
+    
+    <span class="token keyword">def</span> <span class="token function">push</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span>x<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token keyword">if</span> self<span class="token punctuation">.</span>isfull<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+            <span class="token keyword">return</span> <span class="token string">'stack is full'</span>
+        <span class="token keyword">else</span><span class="token punctuation">:</span>
+            self<span class="token punctuation">.</span>stack<span class="token punctuation">.</span>append<span class="token punctuation">(</span>x<span class="token punctuation">)</span>
+            self<span class="token punctuation">.</span>top<span class="token operator">+=</span><span class="token number">1</span>
+    
+    <span class="token keyword">def</span> <span class="token function">isempty</span><span class="token punctuation">(</span>self<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token keyword">return</span> self<span class="token punctuation">.</span>top<span class="token operator">==</span><span class="token punctuation">(</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span>
+    
+    <span class="token keyword">def</span> <span class="token function">pop</span><span class="token punctuation">(</span>self<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token keyword">if</span> self<span class="token punctuation">.</span>isempty<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+            <span class="token keyword">return</span> <span class="token string">'stack is empty'</span>
+        <span class="token keyword">else</span><span class="token punctuation">:</span>
+            self<span class="token punctuation">.</span>top<span class="token operator">-=</span><span class="token number">1</span>
+            b<span class="token operator">=</span>self<span class="token punctuation">.</span>stack<span class="token punctuation">.</span>pop<span class="token punctuation">(</span><span class="token punctuation">)</span>
+            <span class="token keyword">return</span> b
+            
+    <span class="token keyword">def</span> <span class="token function">show</span><span class="token punctuation">(</span>self<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token keyword">return</span> self<span class="token punctuation">.</span>stack
+    
+a<span class="token operator">=</span>Stack<span class="token punctuation">(</span><span class="token number">5</span><span class="token punctuation">)</span>
+<span class="token keyword">print</span> a<span class="token punctuation">.</span>isfull<span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token keyword">print</span> a<span class="token punctuation">.</span>isempty<span class="token punctuation">(</span><span class="token punctuation">)</span>
+
+a<span class="token punctuation">.</span>push<span class="token punctuation">(</span><span class="token number">4</span><span class="token punctuation">)</span>
+<span class="token keyword">print</span> a<span class="token punctuation">.</span>show<span class="token punctuation">(</span><span class="token punctuation">)</span>
+
+b<span class="token operator">=</span>a<span class="token punctuation">.</span>pop<span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token keyword">print</span> a<span class="token punctuation">.</span>show<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span>b<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></p>
+<h2 id="3-队列-Queue"><a href="#3-队列-Queue" class="headerlink" title="3.队列(Queue)"></a>3.队列(Queue)</h2><p>队列也是一种特殊的线性表，在一端插入数据，另一端删除数据。插入操作称为入队列(AddQ)，删除操作称为出队列(DeleteQ)。<strong>队列的最大特点为先入先出(FIFO)。</strong>这是和栈很大的不同之处。队列在生活中也非常常见，例如排队的例子。<br>下面是老师的介绍。<br><img src="https://github.com/Doraemonzzz/md-photo/blob/master/%E6%B5%99%E5%A4%A7%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/week2/%E9%98%9F%E5%88%97.png?raw=true" alt=""><br><pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token comment"># -*- coding: utf-8 -*-</span>
+<span class="token triple-quoted-string string">"""
+Created on Sat Mar 24 12:15:02 2018
+
+@author: Administrator
+"""</span>
+
+<span class="token keyword">class</span> <span class="token class-name">Queue</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token keyword">def</span> <span class="token function">__init__</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span>size<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        self<span class="token punctuation">.</span>size<span class="token operator">=</span>size
+        self<span class="token punctuation">.</span>queue<span class="token operator">=</span><span class="token punctuation">[</span><span class="token punctuation">]</span>
+        self<span class="token punctuation">.</span>front<span class="token operator">=</span><span class="token number">0</span>
+        self<span class="token punctuation">.</span>rear<span class="token operator">=</span><span class="token number">0</span>
+        
+    <span class="token keyword">def</span> <span class="token function">isfull</span><span class="token punctuation">(</span>self<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token keyword">return</span> self<span class="token punctuation">.</span>size<span class="token operator">==</span><span class="token punctuation">(</span>self<span class="token punctuation">.</span>rear<span class="token operator">-</span>self<span class="token punctuation">.</span>front<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">)</span>
+    
+    <span class="token keyword">def</span> <span class="token function">addq</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span>x<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token keyword">if</span> self<span class="token punctuation">.</span>isfull<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+            <span class="token keyword">return</span> <span class="token string">'queue is full'</span>
+        <span class="token keyword">else</span><span class="token punctuation">:</span>
+            self<span class="token punctuation">.</span>queue<span class="token punctuation">.</span>append<span class="token punctuation">(</span>x<span class="token punctuation">)</span>
+            self<span class="token punctuation">.</span>rear<span class="token operator">+=</span><span class="token number">1</span>
+    
+    <span class="token keyword">def</span> <span class="token function">isempty</span><span class="token punctuation">(</span>self<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token keyword">return</span> self<span class="token punctuation">.</span>front<span class="token operator">==</span>self<span class="token punctuation">.</span>rear
+    
+    <span class="token keyword">def</span> <span class="token function">deleteq</span><span class="token punctuation">(</span>self<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token keyword">if</span> self<span class="token punctuation">.</span>isempty<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+            <span class="token keyword">return</span> <span class="token string">'queue is empty'</span>
+        <span class="token keyword">else</span><span class="token punctuation">:</span>
+            self<span class="token punctuation">.</span>front<span class="token operator">+=</span><span class="token number">1</span>
+            b<span class="token operator">=</span>self<span class="token punctuation">.</span>queue<span class="token punctuation">.</span>pop<span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span>
+            <span class="token keyword">return</span> b
+            
+    <span class="token keyword">def</span> <span class="token function">show</span><span class="token punctuation">(</span>self<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token keyword">return</span> self<span class="token punctuation">.</span>queue
+    
+q<span class="token operator">=</span>Queue<span class="token punctuation">(</span><span class="token number">10</span><span class="token punctuation">)</span>
+<span class="token keyword">for</span> i <span class="token keyword">in</span> <span class="token builtin">range</span><span class="token punctuation">(</span><span class="token number">5</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+    q<span class="token punctuation">.</span>addq<span class="token punctuation">(</span>i<span class="token punctuation">)</span>
+    <span class="token keyword">print</span> q<span class="token punctuation">.</span>show<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span>q<span class="token punctuation">.</span>front<span class="token punctuation">,</span>q<span class="token punctuation">.</span>rear
+<span class="token keyword">for</span> i <span class="token keyword">in</span> <span class="token builtin">range</span><span class="token punctuation">(</span><span class="token number">5</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token keyword">print</span> q<span class="token punctuation">.</span>deleteq<span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token keyword">print</span> q<span class="token punctuation">.</span>show<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span>q<span class="token punctuation">.</span>front<span class="token punctuation">,</span>q<span class="token punctuation">.</span>rear<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></p>
+<h1 id="Part2-作业"><a href="#Part2-作业" class="headerlink" title="Part2:作业"></a>Part2:作业</h1><p>再来看下这周的几个习题。</p>
+<ul>
+<li>作业1</li>
+<li>一元多项式的乘法与加法运算</li>
+</ul>
+<blockquote>
+<blockquote>
+<p>设计函数分别求两个一元多项式的乘积与和。<br>输入格式:</p>
+<p>输入分2行，每行分别先给出多项式非零项的个数，再以指数递降方式输入一个多项式非零项系数和指数（绝对值均为不超过1000的整数）。数字间以空格分隔。<br>输出格式:</p>
+<p>输出分2行，分别以指数递降方式输出乘积多项式以及和多项式非零项的系数和指数。数字间以空格分隔，但结尾不能有多余空格。零多项式应输出0 0。<br>输入样例:</p>
+<p>4 3 4 -5 2  6 1  -2 0<br>3 5 20  -7 4  3 1<br>输出样例:</p>
+<p>15 24 -25 22 30 21 -10 20 -21 8 35 6 -33 5 14 4 -15 3 18 2 -6 1<br>5 20 -4 4 -5 2 9 1 -2 0</p>
+</blockquote>
+</blockquote>
+<p>加法比较容易，使用数组完成。从最高次数n开始，如果两个多项式都有次数n的项，则系数相加，如果系数为不为0，记录下此项。如果只有一个多项式有n次项，则直接记录，以此类推。值得注意的一点是，测试案例中零多项式表示为0，这点要单独处理。<br>乘法的思路是拆为多个加法，先将多项式a的每项依次乘以多项式b，再相加即可。<br><pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token comment"># -*- coding: utf-8 -*-</span>
+<span class="token triple-quoted-string string">"""
+Created on Thu Mar 22 20:47:01 2018
+
+@author: Administrator
+"""</span>
+
+a<span class="token operator">=</span><span class="token builtin">raw_input</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+b<span class="token operator">=</span><span class="token builtin">raw_input</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+
+a<span class="token operator">=</span>a<span class="token punctuation">.</span>split<span class="token punctuation">(</span><span class="token string">' '</span><span class="token punctuation">)</span>
+b<span class="token operator">=</span>b<span class="token punctuation">.</span>split<span class="token punctuation">(</span><span class="token string">' '</span><span class="token punctuation">)</span>
+
+
+poly_1<span class="token operator">=</span><span class="token punctuation">[</span><span class="token punctuation">]</span>
+poly_2<span class="token operator">=</span><span class="token punctuation">[</span><span class="token punctuation">]</span>
+
+<span class="token keyword">for</span> i <span class="token keyword">in</span> a<span class="token punctuation">:</span>
+    <span class="token keyword">if</span> i<span class="token operator">!=</span><span class="token string">' '</span> <span class="token keyword">and</span> i<span class="token operator">!=</span><span class="token string">''</span><span class="token punctuation">:</span>
+        poly_1<span class="token punctuation">.</span>append<span class="token punctuation">(</span>i<span class="token punctuation">)</span>
+
+<span class="token keyword">for</span> i <span class="token keyword">in</span> b<span class="token punctuation">:</span>
+    <span class="token keyword">if</span> i<span class="token operator">!=</span><span class="token string">' '</span> <span class="token keyword">and</span> i<span class="token operator">!=</span><span class="token string">''</span><span class="token punctuation">:</span>
+        poly_2<span class="token punctuation">.</span>append<span class="token punctuation">(</span>i<span class="token punctuation">)</span>
+
+poly1<span class="token operator">=</span><span class="token builtin">map</span><span class="token punctuation">(</span><span class="token builtin">int</span><span class="token punctuation">,</span>poly_1<span class="token punctuation">)</span>
+poly2<span class="token operator">=</span><span class="token builtin">map</span><span class="token punctuation">(</span><span class="token builtin">int</span><span class="token punctuation">,</span>poly_2<span class="token punctuation">)</span>
+
+<span class="token triple-quoted-string string">'''
+poly1=[]
+poly2=[]
+'''</span>
+<span class="token triple-quoted-string string">'''for i in poly_1:
+    if i!=' ':
+        poly1.append(i)
+
+for i in poly_2:
+    if i!=' ':
+        poly2.append(i)'''</span>
+
+<span class="token comment">#读取每项对应的系数，要考虑常数项的情形</span>
+<span class="token comment">#a为次数，b为系数</span>
+<span class="token keyword">if</span> <span class="token builtin">len</span><span class="token punctuation">(</span>poly1<span class="token punctuation">)</span><span class="token operator">></span><span class="token number">1</span> <span class="token keyword">and</span> <span class="token builtin">len</span><span class="token punctuation">(</span>poly2<span class="token punctuation">)</span><span class="token operator">></span><span class="token number">1</span><span class="token punctuation">:</span>
+    poly1_a<span class="token operator">=</span>poly1<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">:</span><span class="token punctuation">:</span><span class="token number">2</span><span class="token punctuation">]</span>
+    poly1_b<span class="token operator">=</span>poly1<span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">:</span><span class="token punctuation">:</span><span class="token number">2</span><span class="token punctuation">]</span>    
+    poly2_a<span class="token operator">=</span>poly2<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">:</span><span class="token punctuation">:</span><span class="token number">2</span><span class="token punctuation">]</span>
+    poly2_b<span class="token operator">=</span>poly2<span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">:</span><span class="token punctuation">:</span><span class="token number">2</span><span class="token punctuation">]</span>
+<span class="token keyword">elif</span> <span class="token builtin">len</span><span class="token punctuation">(</span>poly1<span class="token punctuation">)</span><span class="token operator">==</span><span class="token number">1</span> <span class="token keyword">and</span> <span class="token builtin">len</span><span class="token punctuation">(</span>poly2<span class="token punctuation">)</span><span class="token operator">></span><span class="token number">1</span><span class="token punctuation">:</span>
+    poly2_a<span class="token operator">=</span>poly2<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">:</span><span class="token punctuation">:</span><span class="token number">2</span><span class="token punctuation">]</span>
+    poly2_b<span class="token operator">=</span>poly2<span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">:</span><span class="token punctuation">:</span><span class="token number">2</span><span class="token punctuation">]</span>   
+    poly1_a<span class="token operator">=</span><span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span>
+    poly1_b<span class="token operator">=</span><span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span>
+<span class="token keyword">elif</span> <span class="token builtin">len</span><span class="token punctuation">(</span>poly2<span class="token punctuation">)</span><span class="token operator">==</span><span class="token number">1</span> <span class="token keyword">and</span> <span class="token builtin">len</span><span class="token punctuation">(</span>poly1<span class="token punctuation">)</span><span class="token operator">></span><span class="token number">1</span><span class="token punctuation">:</span>
+    poly1_a<span class="token operator">=</span>poly1<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">:</span><span class="token punctuation">:</span><span class="token number">2</span><span class="token punctuation">]</span>
+    poly1_b<span class="token operator">=</span>poly1<span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">:</span><span class="token punctuation">:</span><span class="token number">2</span><span class="token punctuation">]</span>
+    poly2_a<span class="token operator">=</span><span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span>
+    poly2_b<span class="token operator">=</span><span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span>        
+<span class="token keyword">else</span><span class="token punctuation">:</span>
+    poly2_a<span class="token operator">=</span><span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span> 
+    poly2_b<span class="token operator">=</span><span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span>
+    poly1_a<span class="token operator">=</span><span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span>    
+    poly1_b<span class="token operator">=</span><span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span>
+    
+<span class="token keyword">def</span> <span class="token function">polyplus</span><span class="token punctuation">(</span>poly1a<span class="token punctuation">,</span>poly1b<span class="token punctuation">,</span>poly2a<span class="token punctuation">,</span>poly2b<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token keyword">if</span> poly1a<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token operator">==</span><span class="token number">0</span> <span class="token keyword">and</span> poly1b<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token operator">==</span><span class="token number">0</span><span class="token punctuation">:</span>
+        <span class="token keyword">return</span> poly2a<span class="token punctuation">,</span>poly2b
+    <span class="token keyword">elif</span> poly2a<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token operator">==</span><span class="token number">0</span> <span class="token keyword">and</span> poly2b<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token operator">==</span><span class="token number">0</span><span class="token punctuation">:</span>
+        <span class="token keyword">return</span> poly1a<span class="token punctuation">,</span>poly1b
+    <span class="token keyword">else</span><span class="token punctuation">:</span>
+        l1<span class="token operator">=</span><span class="token builtin">len</span><span class="token punctuation">(</span>poly1a<span class="token punctuation">)</span>
+        l2<span class="token operator">=</span><span class="token builtin">len</span><span class="token punctuation">(</span>poly2a<span class="token punctuation">)</span>
+        
+        <span class="token comment">#polya表示系数，polyb表示指数    </span>
+        poly3a<span class="token operator">=</span><span class="token punctuation">[</span><span class="token punctuation">]</span>
+        poly3b<span class="token operator">=</span><span class="token punctuation">[</span><span class="token punctuation">]</span>
+        
+        i<span class="token operator">=</span><span class="token number">0</span>
+        j<span class="token operator">=</span><span class="token number">0</span>
+        <span class="token keyword">while</span><span class="token punctuation">(</span>i<span class="token operator">&lt;</span>l1 <span class="token keyword">and</span> j<span class="token operator">&lt;</span>l2<span class="token punctuation">)</span><span class="token punctuation">:</span>
+            <span class="token keyword">if</span> poly1b<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token operator">></span>poly2b<span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token punctuation">:</span>
+                poly3b<span class="token punctuation">.</span>append<span class="token punctuation">(</span>poly1b<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">)</span>
+                poly3a<span class="token punctuation">.</span>append<span class="token punctuation">(</span>poly1a<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">)</span>
+                i<span class="token operator">+=</span><span class="token number">1</span>
+            <span class="token keyword">elif</span> poly1b<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token operator">&lt;</span>poly2b<span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token punctuation">:</span>
+                poly3b<span class="token punctuation">.</span>append<span class="token punctuation">(</span>poly2b<span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token punctuation">)</span>
+                poly3a<span class="token punctuation">.</span>append<span class="token punctuation">(</span>poly2a<span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token punctuation">)</span>
+                j<span class="token operator">+=</span><span class="token number">1</span>
+            <span class="token keyword">else</span><span class="token punctuation">:</span>
+                temp<span class="token operator">=</span>poly2a<span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token operator">+</span>poly1a<span class="token punctuation">[</span>i<span class="token punctuation">]</span>
+                <span class="token keyword">if</span> temp<span class="token operator">!=</span><span class="token number">0</span><span class="token punctuation">:</span>
+                    poly3b<span class="token punctuation">.</span>append<span class="token punctuation">(</span>poly2b<span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token punctuation">)</span>
+                    poly3a<span class="token punctuation">.</span>append<span class="token punctuation">(</span>temp<span class="token punctuation">)</span>
+                i<span class="token operator">+=</span><span class="token number">1</span>
+                j<span class="token operator">+=</span><span class="token number">1</span>
+        <span class="token keyword">if</span> i<span class="token operator">==</span>l1<span class="token punctuation">:</span>
+            poly3b<span class="token operator">+=</span>poly2b<span class="token punctuation">[</span>j<span class="token punctuation">:</span><span class="token punctuation">]</span>
+            poly3a<span class="token operator">+=</span>poly2a<span class="token punctuation">[</span>j<span class="token punctuation">:</span><span class="token punctuation">]</span>
+        <span class="token keyword">else</span><span class="token punctuation">:</span>
+            poly3b<span class="token operator">+=</span>poly1b<span class="token punctuation">[</span>i<span class="token punctuation">:</span><span class="token punctuation">]</span>
+            poly3a<span class="token operator">+=</span>poly1a<span class="token punctuation">[</span>i<span class="token punctuation">:</span><span class="token punctuation">]</span>
+        <span class="token keyword">if</span> poly3a<span class="token operator">!=</span><span class="token punctuation">[</span><span class="token punctuation">]</span> <span class="token keyword">and</span> poly3b<span class="token operator">!=</span><span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">:</span>
+            <span class="token keyword">return</span> poly3a<span class="token punctuation">,</span>poly3b
+        <span class="token keyword">else</span><span class="token punctuation">:</span>
+            <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">,</span><span class="token number">0</span>
+        <span class="token comment">#print poly3a,poly3b</span>
+
+<span class="token keyword">def</span> <span class="token function">polymultiply</span><span class="token punctuation">(</span>poly1a<span class="token punctuation">,</span>poly1b<span class="token punctuation">,</span>poly2a<span class="token punctuation">,</span>poly2b<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token keyword">if</span> poly1a<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token operator">==</span><span class="token number">0</span> <span class="token keyword">and</span> poly1b<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token operator">==</span><span class="token number">0</span><span class="token punctuation">:</span>
+        <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">,</span><span class="token number">0</span>
+    <span class="token keyword">elif</span> poly2a<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token operator">==</span><span class="token number">0</span> <span class="token keyword">and</span> poly2b<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token operator">==</span><span class="token number">0</span><span class="token punctuation">:</span>
+        <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">,</span><span class="token number">0</span>
+    <span class="token keyword">else</span><span class="token punctuation">:</span>
+        l1<span class="token operator">=</span><span class="token builtin">len</span><span class="token punctuation">(</span>poly1a<span class="token punctuation">)</span>
+        l2<span class="token operator">=</span><span class="token builtin">len</span><span class="token punctuation">(</span>poly2a<span class="token punctuation">)</span>
+        
+        poly3_a<span class="token operator">=</span><span class="token builtin">map</span><span class="token punctuation">(</span><span class="token keyword">lambda</span> x<span class="token punctuation">:</span>x<span class="token operator">*</span>poly1a<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">,</span>poly2a<span class="token punctuation">)</span>
+        poly3_b<span class="token operator">=</span><span class="token builtin">map</span><span class="token punctuation">(</span><span class="token keyword">lambda</span> x<span class="token punctuation">:</span>x<span class="token operator">+</span>poly1b<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">,</span>poly2b<span class="token punctuation">)</span>
+        
+        i<span class="token operator">=</span><span class="token number">1</span>
+        <span class="token keyword">while</span> <span class="token punctuation">(</span>i<span class="token operator">&lt;</span>l1<span class="token punctuation">)</span><span class="token punctuation">:</span>
+            tempa<span class="token operator">=</span><span class="token builtin">map</span><span class="token punctuation">(</span><span class="token keyword">lambda</span> x<span class="token punctuation">:</span>x<span class="token operator">*</span>poly1a<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">,</span>poly2a<span class="token punctuation">)</span>
+            tempb<span class="token operator">=</span><span class="token builtin">map</span><span class="token punctuation">(</span><span class="token keyword">lambda</span> x<span class="token punctuation">:</span>x<span class="token operator">+</span>poly1b<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">,</span>poly2b<span class="token punctuation">)</span>
+            poly3_a<span class="token punctuation">,</span>poly3_b<span class="token operator">=</span>polyplus<span class="token punctuation">(</span>poly3_a<span class="token punctuation">,</span>poly3_b<span class="token punctuation">,</span>tempa<span class="token punctuation">,</span>tempb<span class="token punctuation">)</span>
+            i<span class="token operator">+=</span><span class="token number">1</span>
+        <span class="token keyword">return</span> poly3_a<span class="token punctuation">,</span>poly3_b
+
+p1<span class="token punctuation">,</span>p2<span class="token operator">=</span>polyplus<span class="token punctuation">(</span>poly1_a<span class="token punctuation">,</span>poly1_b<span class="token punctuation">,</span>poly2_a<span class="token punctuation">,</span>poly2_b<span class="token punctuation">)</span>
+m1<span class="token punctuation">,</span>m2<span class="token operator">=</span>polymultiply<span class="token punctuation">(</span>poly1_a<span class="token punctuation">,</span>poly1_b<span class="token punctuation">,</span>poly2_a<span class="token punctuation">,</span>poly2_b<span class="token punctuation">)</span>
+<span class="token keyword">if</span> m1<span class="token operator">==</span><span class="token number">0</span> <span class="token keyword">and</span> m2<span class="token operator">==</span><span class="token number">0</span><span class="token punctuation">:</span>
+    <span class="token keyword">print</span> <span class="token string">'0 0'</span>
+<span class="token keyword">else</span><span class="token punctuation">:</span>
+    leng<span class="token operator">=</span><span class="token builtin">len</span><span class="token punctuation">(</span>m1<span class="token punctuation">)</span>
+    <span class="token keyword">for</span> i <span class="token keyword">in</span> <span class="token builtin">range</span><span class="token punctuation">(</span>leng<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token keyword">if</span> i<span class="token operator">&lt;</span>leng<span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">:</span>
+            <span class="token keyword">print</span> m1<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">,</span>m2<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">,</span>
+        <span class="token keyword">else</span><span class="token punctuation">:</span>
+            <span class="token keyword">print</span> m1<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">,</span>m2<span class="token punctuation">[</span>i<span class="token punctuation">]</span>
+<span class="token keyword">if</span> p1<span class="token operator">==</span><span class="token number">0</span> <span class="token keyword">and</span> p2<span class="token operator">==</span><span class="token number">0</span><span class="token punctuation">:</span>
+    <span class="token keyword">print</span> <span class="token string">'0 0'</span>
+<span class="token keyword">else</span><span class="token punctuation">:</span>
+    leng<span class="token operator">=</span><span class="token builtin">len</span><span class="token punctuation">(</span>p1<span class="token punctuation">)</span>
+    <span class="token keyword">for</span> i <span class="token keyword">in</span> <span class="token builtin">range</span><span class="token punctuation">(</span>leng<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token keyword">if</span> i<span class="token operator">&lt;</span>leng<span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">:</span>
+            <span class="token keyword">print</span> p1<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">,</span>p2<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">,</span>
+        <span class="token keyword">else</span><span class="token punctuation">:</span>
+            <span class="token keyword">print</span> p1<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">,</span>p2<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></p>
+<ul>
+<li>作业2</li>
+<li>Reversing Linked List</li>
+</ul>
+<blockquote>
+<blockquote>
+<p>Given a constant K and a singly linked list L, you are supposed to reverse the links of every K elements on L. For example, given L being 1→2→3→4→5→6, if K=3, then you must output 3→2→1→6→5→4; if K=4, you must output 4→3→2→1→5→6.<br>Input Specification:</p>
+<p>Each input file contains one test case. For each case, the first line contains the address of the first node, a positive N (≤10^5 ) which is the total number of nodes, and a positive K (≤N) which is the length of the sublist to be reversed. The address of a node is a 5-digit nonnegative integer, and NULL is represented by -1.</p>
+<p>Then N lines follow, each describes a node in the format:<br>Address Data Next<br>where Address is the position of the node, Data is an integer, and Next is the position of the next node.</p>
+<p>Output Specification:<br>For each case, output the resulting ordered linked list. Each node occupies a line, and is printed in the same format as in the input.</p>
+<p>Sample Input:<br>00100 6 4<br>00000 4 99999<br>00100 1 12309<br>68237 6 -1<br>33218 3 00000<br>99999 5 68237<br>12309 2 33218</p>
+<p>Sample Output:<br>00000 4 33218<br>33218 3 12309<br>12309 2 00100<br>00100 1 99999<br>99999 5 68237<br>68237 6 -1</p>
+</blockquote>
+</blockquote>
+<p>这题刚看的时候感觉挺难，后来想了下只要找到每个元素对应的头结点，按照头尾的关系排序，然后将数组反过来，数组的尾节点指向下一个元素即可。但这题遗留了一个问题，当输入量太大的时候运行会超时，也尝试将列表改为字典，但是依旧超时，只能暂时保留了。</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token comment"># -*- coding: utf-8 -*-</span>
+<span class="token triple-quoted-string string">"""
+Created on Fri Mar 23 12:38:13 2018
+
+@author: 715073608
+"""</span>
+
+<span class="token triple-quoted-string string">'''
+00100 7 4
+00000 4 99999
+00100 1 12309
+68237 6 -1
+11111  8  44444
+33218 3 00000
+99999 5 68237
+12309 2 33218
+'''</span>
+
+<span class="token comment">##读取数据</span>
+a<span class="token operator">=</span><span class="token builtin">raw_input</span><span class="token punctuation">(</span><span class="token string">''</span><span class="token punctuation">)</span>
+a<span class="token operator">=</span>a<span class="token punctuation">.</span>split<span class="token punctuation">(</span><span class="token string">' '</span><span class="token punctuation">)</span>
+
+b<span class="token operator">=</span><span class="token punctuation">[</span><span class="token punctuation">]</span>
+<span class="token keyword">for</span> i <span class="token keyword">in</span> <span class="token builtin">range</span><span class="token punctuation">(</span><span class="token builtin">int</span><span class="token punctuation">(</span>a<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+    temp<span class="token operator">=</span><span class="token builtin">raw_input</span><span class="token punctuation">(</span><span class="token string">''</span><span class="token punctuation">)</span>
+    temp<span class="token operator">=</span>temp<span class="token punctuation">.</span>split<span class="token punctuation">(</span><span class="token string">' '</span><span class="token punctuation">)</span>
+    b<span class="token punctuation">.</span>append<span class="token punctuation">(</span>temp<span class="token punctuation">)</span>
+
+<span class="token comment">##按顺序重新排列</span>
+c<span class="token operator">=</span><span class="token punctuation">[</span><span class="token punctuation">]</span>
+pos<span class="token operator">=</span>a<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span>
+<span class="token keyword">for</span> i <span class="token keyword">in</span> <span class="token builtin">range</span><span class="token punctuation">(</span><span class="token builtin">int</span><span class="token punctuation">(</span>a<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token keyword">for</span> j <span class="token keyword">in</span> b<span class="token punctuation">:</span>
+        <span class="token keyword">if</span> j<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token operator">==</span>pos<span class="token punctuation">:</span>
+            <span class="token comment">#c.append(i)</span>
+            c<span class="token punctuation">.</span>append<span class="token punctuation">(</span>j<span class="token punctuation">[</span><span class="token punctuation">:</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+            pos<span class="token operator">=</span>j<span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">]</span>
+            <span class="token keyword">break</span>
+
+<span class="token comment">##reverse数据</span>
+k<span class="token operator">=</span><span class="token builtin">int</span><span class="token punctuation">(</span>a<span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+m<span class="token operator">=</span><span class="token builtin">len</span><span class="token punctuation">(</span>c<span class="token punctuation">)</span>
+n<span class="token operator">=</span>m<span class="token operator">/</span>k
+
+d<span class="token operator">=</span><span class="token punctuation">[</span><span class="token punctuation">]</span>
+<span class="token keyword">for</span> i <span class="token keyword">in</span> <span class="token builtin">range</span><span class="token punctuation">(</span>n<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    temp<span class="token operator">=</span>c<span class="token punctuation">[</span>i<span class="token operator">*</span>k<span class="token punctuation">:</span><span class="token punctuation">(</span>i<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token operator">*</span>k<span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token punctuation">:</span><span class="token punctuation">]</span>
+    temp<span class="token punctuation">.</span>reverse<span class="token punctuation">(</span><span class="token punctuation">)</span>
+    d<span class="token operator">+=</span>temp
+d<span class="token operator">+=</span>c<span class="token punctuation">[</span>n<span class="token operator">*</span>k<span class="token punctuation">:</span><span class="token punctuation">]</span>
+
+<span class="token comment">#输出结果</span>
+<span class="token keyword">for</span> i <span class="token keyword">in</span> <span class="token builtin">range</span><span class="token punctuation">(</span>m<span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token keyword">print</span> d<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token operator">+</span><span class="token string">' '</span><span class="token operator">+</span>d<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token operator">+</span><span class="token string">' '</span><span class="token operator">+</span>d<span class="token punctuation">[</span>i<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span>
+<span class="token keyword">print</span> d<span class="token punctuation">[</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token operator">+</span><span class="token string">' '</span><span class="token operator">+</span>d<span class="token punctuation">[</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token operator">+</span><span class="token string">' '</span><span class="token operator">+</span><span class="token string">'-1'</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<ul>
+<li>作业3</li>
+<li>Pop Sequence</li>
+</ul>
+<blockquote>
+<blockquote>
+<p>Given a stack which can keep M numbers at most. Push N numbers in the order of 1, 2, 3, …, N and pop randomly. You are supposed to tell if a given sequence of numbers is a possible pop sequence of the stack. For example, if M is 5 and N is 7, we can obtain 1, 2, 3, 4, 5, 6, 7 from the stack, but not 3, 2, 1, 7, 5, 6, 4.</p>
+<p>Input Specification:<br>Each input file contains one test case. For each case, the first line contains 3 numbers (all no more than 1000): M (the maximum capacity of the stack), N (the length of push sequence), and K (the number of pop sequences to be checked). Then K lines follow, each contains a pop sequence of N numbers. All the numbers in a line are separated by a space.</p>
+<p>Output Specification:<br>For each pop sequence, print in one line “YES” if it is indeed a possible pop sequence of the stack, or “NO” if not.</p>
+<p>Sample Input:<br>5 7 5<br>1 2 3 4 5 6 7<br>3 2 1 7 5 6 4<br>7 6 5 4 3 2 1<br>5 6 4 3 7 2 1<br>1 7 6 5 4 3 2</p>
+<p>Sample Output:<br>YES<br>NO<br>NO<br>YES<br>NO</p>
+</blockquote>
+</blockquote>
+<p>这题的意思是判断这些序列能否按照堆栈的后进后出的规则输出。思路是先按照题目的顺序入栈，如果栈顶的元素和目标队列第一个元素相同，那么该元素出栈，删除目标的第一个元素，重复此操作即可。<br><pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token comment"># -*- coding: utf-8 -*-</span>
+<span class="token triple-quoted-string string">"""
+Created on Sat Mar 24 11:23:23 2018
+
+@author: Administrator
+"""</span>
+
+<span class="token comment">#定义栈</span>
+<span class="token keyword">class</span> <span class="token class-name">Stack</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token keyword">def</span> <span class="token function">__init__</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span>size<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        self<span class="token punctuation">.</span>size<span class="token operator">=</span>size
+        self<span class="token punctuation">.</span>stack<span class="token operator">=</span><span class="token punctuation">[</span><span class="token punctuation">]</span>
+        self<span class="token punctuation">.</span>top<span class="token operator">=</span><span class="token operator">-</span><span class="token number">1</span>
+        
+    <span class="token keyword">def</span> <span class="token function">isfull</span><span class="token punctuation">(</span>self<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token keyword">return</span> self<span class="token punctuation">.</span>size<span class="token operator">==</span><span class="token punctuation">(</span>self<span class="token punctuation">.</span>top<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">)</span>
+    
+    <span class="token keyword">def</span> <span class="token function">push</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span>x<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token keyword">if</span> self<span class="token punctuation">.</span>isfull<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+            <span class="token keyword">return</span> <span class="token string">'stack is full'</span>
+        <span class="token keyword">else</span><span class="token punctuation">:</span>
+            self<span class="token punctuation">.</span>stack<span class="token punctuation">.</span>append<span class="token punctuation">(</span>x<span class="token punctuation">)</span>
+            self<span class="token punctuation">.</span>top<span class="token operator">+=</span><span class="token number">1</span>
+    
+    <span class="token keyword">def</span> <span class="token function">isempty</span><span class="token punctuation">(</span>self<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token keyword">return</span> self<span class="token punctuation">.</span>top<span class="token operator">==</span><span class="token punctuation">(</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span>
+    
+    <span class="token keyword">def</span> <span class="token function">pop</span><span class="token punctuation">(</span>self<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token keyword">if</span> self<span class="token punctuation">.</span>isempty<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+            <span class="token keyword">return</span> <span class="token string">'stack is empty'</span>
+        <span class="token keyword">else</span><span class="token punctuation">:</span>
+            self<span class="token punctuation">.</span>top<span class="token operator">-=</span><span class="token number">1</span>
+            self<span class="token punctuation">.</span>stack<span class="token punctuation">.</span>pop<span class="token punctuation">(</span><span class="token punctuation">)</span>
+            <span class="token comment">#return b</span>
+            
+    <span class="token keyword">def</span> <span class="token function">show</span><span class="token punctuation">(</span>self<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token keyword">return</span> self<span class="token punctuation">.</span>stack
+    
+<span class="token comment">#读取数据 </span>
+a<span class="token operator">=</span><span class="token builtin">raw_input</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+b<span class="token operator">=</span><span class="token builtin">map</span><span class="token punctuation">(</span><span class="token builtin">int</span><span class="token punctuation">,</span>a<span class="token punctuation">.</span>split<span class="token punctuation">(</span><span class="token string">' '</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+c<span class="token operator">=</span><span class="token punctuation">[</span><span class="token punctuation">]</span>
+
+<span class="token keyword">for</span> i <span class="token keyword">in</span> <span class="token builtin">range</span><span class="token punctuation">(</span>b<span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+    temp<span class="token operator">=</span><span class="token builtin">raw_input</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    c<span class="token punctuation">.</span>append<span class="token punctuation">(</span><span class="token builtin">map</span><span class="token punctuation">(</span><span class="token builtin">int</span><span class="token punctuation">,</span>temp<span class="token punctuation">.</span>split<span class="token punctuation">(</span><span class="token string">' '</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+
+
+<span class="token comment">#思路是按照1到n输入，如果碰到栈尾的元素和给出的序列相同，则抛出这个元素，序列删除这个元素，以此循环</span>
+
+<span class="token keyword">def</span> <span class="token function">isstack</span><span class="token punctuation">(</span>x<span class="token punctuation">,</span>size<span class="token punctuation">,</span>num<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    b<span class="token operator">=</span><span class="token punctuation">[</span><span class="token punctuation">]</span>
+    a<span class="token operator">=</span>Stack<span class="token punctuation">(</span>size<span class="token punctuation">)</span>
+    <span class="token keyword">for</span> i <span class="token keyword">in</span> <span class="token builtin">range</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span>num<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token keyword">if</span> <span class="token keyword">not</span> a<span class="token punctuation">.</span>isfull<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+            a<span class="token punctuation">.</span>push<span class="token punctuation">(</span>i<span class="token punctuation">)</span>
+        <span class="token keyword">while</span> <span class="token keyword">not</span> a<span class="token punctuation">.</span>isempty<span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">and</span> a<span class="token punctuation">.</span>show<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">[</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token operator">==</span>x<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">:</span>
+            <span class="token keyword">del</span> x<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span>
+            a<span class="token punctuation">.</span>pop<span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token keyword">if</span> <span class="token builtin">len</span><span class="token punctuation">(</span>a<span class="token punctuation">.</span>show<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token operator">==</span><span class="token number">0</span><span class="token punctuation">:</span>
+        <span class="token keyword">print</span> <span class="token string">'YES'</span>
+    <span class="token keyword">else</span><span class="token punctuation">:</span>
+        <span class="token keyword">print</span> <span class="token string">'NO'</span>
+
+<span class="token keyword">for</span> i <span class="token keyword">in</span> c<span class="token punctuation">:</span>
+    isstack<span class="token punctuation">(</span>i<span class="token punctuation">,</span>b<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">,</span>b<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">)</span>    
+<span class="token triple-quoted-string string">'''
+[1,2,3,4,5,6,7]
+[3,2,1,7,5,6,4]
+[7,6,5,4,3,2,1]
+[5,6,4,3,7,2,1]
+[1,7,6,5,4,3,2]
+'''</span>
+<span class="token triple-quoted-string string">'''
+isstack([1,2,3,4,5,6,7],5,7)
+isstack([3,2,1,7,5,6,4],5,7)
+isstack([7,6,5,4,3,2,1],5,7)
+isstack([5,6,4,3,7,2,1],5,7)
+isstack([1,7,6,5,4,3,2],5,7)
+'''</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">Doraemonzzz</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="http://doraemonzzz.com/2018/03/25/%E6%B5%99%E5%A4%A7%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84Week2/">http://doraemonzzz.com/2018/03/25/%E6%B5%99%E5%A4%A7%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84Week2/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://doraemonzzz.com" target="_blank">Doraemonzzz</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E6%B5%99%E5%A4%A7%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84mooc/">浙大数据结构mooc</a></div><div class="post_share"><div class="social-share" data-image="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2018/03/27/%E6%96%AF%E5%9D%A6%E7%A6%8FCS106A%E4%BD%9C%E4%B8%9A1/"><img class="prev-cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">斯坦福CS106A作业1</div></div></a></div><div class="next-post pull-right"><a href="/2018/03/21/%E6%B5%99%E5%A4%A7C%E8%AF%AD%E8%A8%80Week1%20and%20Week2/"><img class="next-cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">浙大C语言Week1 and Week2</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span> 相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2018/03/11/浙大数据结构Week1/" title="浙大数据结构Week1"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2018-03-11</div><div class="title">浙大数据结构Week1</div></div></a></div><div><a href="/2018/05/28/浙大数据结构Week10/" title="浙大数据结构Week10"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2018-05-28</div><div class="title">浙大数据结构Week10</div></div></a></div><div><a href="/2018/06/01/浙大数据结构Week11/" title="浙大数据结构Week11"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2018-06-01</div><div class="title">浙大数据结构Week11</div></div></a></div><div><a href="/2018/04/01/浙大数据结构Week3/" title="浙大数据结构Week3"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2018-04-01</div><div class="title">浙大数据结构Week3</div></div></a></div><div><a href="/2018/04/21/浙大数据结构Week6/" title="浙大数据结构Week6"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2018-04-21</div><div class="title">浙大数据结构Week6</div></div></a></div><div><a href="/2018/04/29/浙大数据结构Week7/" title="浙大数据结构Week7"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2018-04-29</div><div class="title">浙大数据结构Week7</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="card-info-avatar is-center"><img class="avatar-img" src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/><div class="author-info__name">Doraemonzzz</div><div class="author-info__description">个人博客，主要记录有关机器学习，数学以及计算机科学的笔记</div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">610</div></a></div><div class="card-info-data-item is-center"><a href="/tags/"><div class="headline">标签</div><div class="length-num">59</div></a></div><div class="card-info-data-item is-center"><a href="/categories/"><div class="headline">分类</div><div class="length-num">23</div></a></div></div><a class="button--animated" id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/Doraemonzzz" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="/doraemon_zzz@163.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn card-announcement-animation"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Part1-%E5%9B%9E%E9%A1%BE"><span class="toc-number">1.</span> <span class="toc-text">Part1:回顾</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-%E7%BA%BF%E6%80%A7%E8%A1%A8"><span class="toc-number">1.1.</span> <span class="toc-text">1.线性表</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-%E5%A0%86%E6%A0%88-Stack"><span class="toc-number">1.2.</span> <span class="toc-text">2.堆栈(Stack)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-%E9%98%9F%E5%88%97-Queue"><span class="toc-number">1.3.</span> <span class="toc-text">3.队列(Queue)</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Part2-%E4%BD%9C%E4%B8%9A"><span class="toc-number">2.</span> <span class="toc-text">Part2:作业</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2021/06/06/2021-6-6-%E7%AE%97%E6%B3%95%E6%A6%82%E8%AE%BA(DPV)%E4%B9%A0%E9%A2%98%E8%A7%A3%E7%AD%94%E2%80%94%E2%80%94%E7%AC%AC3%E7%AB%A0-%E5%9B%BE%E7%9A%84%E5%88%86%E8%A7%A3/" title="算法概论(DPV)习题解答——第3章 图的分解"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="算法概论(DPV)习题解答——第3章 图的分解"/></a><div class="content"><a class="title" href="/2021/06/06/2021-6-6-%E7%AE%97%E6%B3%95%E6%A6%82%E8%AE%BA(DPV)%E4%B9%A0%E9%A2%98%E8%A7%A3%E7%AD%94%E2%80%94%E2%80%94%E7%AC%AC3%E7%AB%A0-%E5%9B%BE%E7%9A%84%E5%88%86%E8%A7%A3/" title="算法概论(DPV)习题解答——第3章 图的分解">算法概论(DPV)习题解答——第3章 图的分解</a><time datetime="2021-06-06T14:35:00.000Z" title="发表于 2021-06-06 22:35:00">2021-06-06</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/06/06/2021-6-6-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E7%AC%AC5%E7%AB%A0-%E4%B9%A0%E9%A2%98%E8%A7%A3%E6%9E%90/" title="深入理解计算机系统 第5章 习题解析"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="深入理解计算机系统 第5章 习题解析"/></a><div class="content"><a class="title" href="/2021/06/06/2021-6-6-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E7%AC%AC5%E7%AB%A0-%E4%B9%A0%E9%A2%98%E8%A7%A3%E6%9E%90/" title="深入理解计算机系统 第5章 习题解析">深入理解计算机系统 第5章 习题解析</a><time datetime="2021-06-06T07:23:00.000Z" title="发表于 2021-06-06 15:23:00">2021-06-06</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/06/05/2021-6-5-Stanford-Compiler-PA5%E7%BF%BB%E8%AF%91/" title="Stanford Compiler PA5翻译"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Stanford Compiler PA5翻译"/></a><div class="content"><a class="title" href="/2021/06/05/2021-6-5-Stanford-Compiler-PA5%E7%BF%BB%E8%AF%91/" title="Stanford Compiler PA5翻译">Stanford Compiler PA5翻译</a><time datetime="2021-06-05T06:12:00.000Z" title="发表于 2021-06-05 14:12:00">2021-06-05</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/06/04/2021-6-4-Stanford-Compiler-PA4%E7%BF%BB%E8%AF%91/" title="Stanford Compiler PA4翻译"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Stanford Compiler PA4翻译"/></a><div class="content"><a class="title" href="/2021/06/04/2021-6-4-Stanford-Compiler-PA4%E7%BF%BB%E8%AF%91/" title="Stanford Compiler PA4翻译">Stanford Compiler PA4翻译</a><time datetime="2021-06-03T16:17:00.000Z" title="发表于 2021-06-04 00:17:00">2021-06-04</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/06/03/2021-6-3-%E5%B7%A7%E5%A6%99%E7%9A%84Y%E8%BF%90%E7%AE%97%E7%AC%A6/" title="巧妙的Y运算符"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="巧妙的Y运算符"/></a><div class="content"><a class="title" href="/2021/06/03/2021-6-3-%E5%B7%A7%E5%A6%99%E7%9A%84Y%E8%BF%90%E7%AE%97%E7%AC%A6/" title="巧妙的Y运算符">巧妙的Y运算符</a><time datetime="2021-06-03T00:54:00.000Z" title="发表于 2021-06-03 08:54:00">2021-06-03</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2021 By Doraemonzzz</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><div class="js-pjax"></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

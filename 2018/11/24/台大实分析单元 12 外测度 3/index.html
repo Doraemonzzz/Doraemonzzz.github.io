@@ -1,0 +1,240 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>台大实分析单元 12 外测度 3 | Doraemonzzz</title><meta name="keywords" content="实分析"><meta name="author" content="Doraemonzzz"><meta name="copyright" content="Doraemonzzz"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="这一部分继续介绍外测度。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="台大实分析单元 12 外测度 3">
+<meta property="og:url" content="http://doraemonzzz.com/2018/11/24/%E5%8F%B0%E5%A4%A7%E5%AE%9E%E5%88%86%E6%9E%90%E5%8D%95%E5%85%83%2012%20%E5%A4%96%E6%B5%8B%E5%BA%A6%203/index.html">
+<meta property="og:site_name" content="Doraemonzzz">
+<meta property="og:description" content="这一部分继续介绍外测度。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg">
+<meta property="article:published_time" content="2018-11-24T12:25:00.000Z">
+<meta property="article:modified_time" content="2019-05-31T05:43:23.392Z">
+<meta property="article:author" content="Doraemonzzz">
+<meta property="article:tag" content="实分析">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="http://doraemonzzz.com/2018/11/24/%E5%8F%B0%E5%A4%A7%E5%AE%9E%E5%88%86%E6%9E%90%E5%8D%95%E5%85%83%2012%20%E5%A4%96%E6%B5%8B%E5%BA%A6%203/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"prismjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    jQuery: 'https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js',
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+    },
+    fancybox: {
+      js: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isanchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '台大实分析单元 12 外测度 3',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2019-05-31 13:43:23'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    })(window)</script><meta name="generator" content="Hexo 5.4.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="author-avatar"><img class="avatar-img" src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">文章</div><div class="length-num">610</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">标签</div><div class="length-num">59</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/categories/"><div class="headline">分类</div><div class="length-num">23</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">Doraemonzzz</a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">台大实分析单元 12 外测度 3</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2018-11-24T12:25:00.000Z" title="发表于 2018-11-24 20:25:00">2018-11-24</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2019-05-31T05:43:23.392Z" title="更新于 2019-05-31 13:43:23">2019-05-31</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E6%95%B0%E5%AD%A6/">数学</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="台大实分析单元 12 外测度 3"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p>这一部分继续介绍外测度。</p>
+<span id="more"></span>
+<p>回顾上次内容：</p>
+<h4 id="Theorem-2"><a href="#Theorem-2" class="headerlink" title="Theorem 2"></a>Theorem 2</h4><script type="math/tex; mode=display">
+令\mu是全集\Omega上的测度(外测度)，那么\Omega上全体\mu可测的子集构成的子集族{\Sigma}^{\mu}为\sigma代数,
+\mu在{\Sigma}^{\mu}上\sigma可加\\
+i.e. \mu是{\Sigma}^{\mu}上的测度</script><h4 id="Remark"><a href="#Remark" class="headerlink" title="Remark"></a>Remark</h4><p>因为每个零集都可测，所以</p>
+<script type="math/tex; mode=display">
+(\Omega,{\Sigma}^{\mu},\mu)是完备的测度空间</script><p>继续回顾上次结论</p>
+<script type="math/tex; mode=display">
+记\lambda为\mathbb R上勒贝格(外)测度，那么每个有限开区间是\lambda可测的</script><p>定理2可以推出，$\mathbb R$上开集可测(因为开集为开区间的可列并)，这也可以推出闭集可测，从而所有的Borel集合可测。</p>
+<p>接下来介绍如何从准测度构造(外)测度</p>
+<h4 id="Constructing-a-measure-from-a-premeasure"><a href="#Constructing-a-measure-from-a-premeasure" class="headerlink" title="Constructing a measure from a premeasure"></a>Constructing a measure from a premeasure</h4><script type="math/tex; mode=display">
+令\Omega为全集，g为包含\varnothing的\Omega的子集类，\\
+\tau:g\to [0,\infty]，并且\tau(\varnothing) =0</script><p>注意$\tau$为之前定义的准测度，现在按如下方式定义$\tau^* :2^{\Omega}\to [0,\infty]$</p>
+<script type="math/tex; mode=display">
+\tau^*(A) = \inf \sum_i \tau(c_i)\\
+A\subset \bigcup_i c_i，\{c_i\}\subset g\\
+注意空集的下确界为\infty，上确界为-\infty</script><p>那么$\tau^<em>​$是$\Omega​$上外测度，$\tau^</em>​$被称为从利用method 1从准测度$\tau​$构建的外测度(这里之所以说method 1，是因为后面还有method 2)</p>
+<h5 id="例-1-mathbb-R-n-上勒贝格-外-测度"><a href="#例-1-mathbb-R-n-上勒贝格-外-测度" class="headerlink" title="例 1 $\mathbb R^n$上勒贝格(外)测度"></a>例 1 $\mathbb R^n$上勒贝格(外)测度</h5><script type="math/tex; mode=display">
+g=\{I_1 \times...\times I_n:I_1,...,I_n是\mathbb R中有限开区间\}</script><p>上述定义的$I_1 \times…\times I_n$被称为$\mathbb R^n$上定向开矩形(oriented open retangle)，定义</p>
+<script type="math/tex; mode=display">
+\tau(I_1 \times...\times I_n) =\prod_{j=1}^n |I_j|</script><p>那么$\tau$是一个准测度，因为$\tau(\varnothing) =0$，通过method 1从$\tau$构造的测度$\tau^ {*}$被称为$\mathbb R^n$上勒贝格(外)测度，并且表示为$\lambda^n(\lambda^1=\lambda)$，$\lambda^n$可测集被称为(勒贝格)可测集，$\lambda^n$可测函数(${\Sigma}^{\lambda}$可测)函数被称为(勒贝格)可测函数，为方便叙述，记$\mathcal L^n = {\Sigma}^{\lambda^n},\mathcal L^1 =\mathcal L$</p>
+<p>以下部分主要针对作业，和主干内容关系不大。</p>
+<p>现在定义度量空间中紧集的概念</p>
+<script type="math/tex; mode=display">
+度量空间(M,\rho)被称为紧的，如果M中序列有收敛子列收敛到M中某个元素，\\
+度量空间中子集K被称为紧集，如果(K,\rho)是紧的</script><p>关于紧集有如下结论：</p>
+<h4 id="Theorem-Lebeague-number"><a href="#Theorem-Lebeague-number" class="headerlink" title="Theorem(Lebeague number)"></a>Theorem(Lebeague number)</h4><script type="math/tex; mode=display">
+令K是度量空间M中紧集，并且\{G_{\alpha}\}_{\alpha\in I}是M中开集族，
+使得K\subset \bigcup_{\alpha\in I}G_{\alpha}，\\
+那么存在正数\delta>0，使得K的直径\le  \delta的任意子集S，S\subset G_{\alpha_0}(\alpha_0\in I)\\
+\delta被称为K关于\{G_{\alpha}\}_{\alpha\in I}的勒贝格数</script><p>证明：</p>
+<p>假设结论不成立，那么对于任意$k\in \mathbb N​$，存在$K​$的子集$S_k​$满足直径$\le \frac 1 k​$，使得$S_k​$不被任意$G_{\alpha}​$包含。选择$x_k \in S_k​$，$k=1,2,…​$，$\{x_k\}​$是$K​$中序列，根据$K​$的紧性，$\{x_k\}​$存在收敛子列$\{x_{n_k}\}​$收敛到$x_0​$，因为$x_0 \in K​$，所以存在$\alpha​$使得$x_0 \in G_{\alpha}​$，由收敛的性质可知，当$k​$充分大时，$S_{n_k}\subset G_{\alpha}​$（这部分是因为当$k​$充分大时，$x_{n_k}\in G_{\alpha}​$，由于$x_{n_k}\in S_{n_k}​$且$S_{n_k}​$的直径小于等于$\frac 1 {n_k}​$，所以当$k​$充分大时，$S_{n_k}\subset G_{\alpha}​$）</p>
+<p>这就产生了矛盾，所以原结论成立。</p>
+<p>下面看一些勒贝格可积的例子：</p>
+<h5 id="例-2"><a href="#例-2" class="headerlink" title="例 2"></a>例 2</h5><script type="math/tex; mode=display">
+J=J_1\times...\times J_n \subset \mathbb R^n，J_i=[a_i,b_i],-\infty<a_i <b_i<\infty,i=1,...,n\\
+假设f是J上的连续函数，那么由勒贝格控制收敛定理可以推出\\
+\int_J f d \lambda^n =  \underset{J}{\int_{...}\int} f(x_1,...,x_n) dx_1...dx_n</script><p>解释：</p>
+<p>左边是勒贝格积分，$\lambda^n$是之前定义的测度，右边是黎曼积分，这个结论的含义是，对于连续函数，勒贝格积分和黎曼积分相同，证明方法是将黎曼积分化为黎曼和的形式，黎曼和可以理解为简单函数的勒贝格积分，这样就可以将右边表示为简单函数的勒贝格积分，然后利用勒贝格控制收敛定理可以推出黎曼和的极限即为左边。</p>
+<h5 id="例-3"><a href="#例-3" class="headerlink" title="例 3"></a>例 3</h5><script type="math/tex; mode=display">
+假设f是\mathbb R上连续函数，那么f在\mathbb R 上勒贝格可积当且仅当\int_{-\infty}^{\infty} f(x)dx绝对收敛</script><p>证明：</p>
+<p>因为绝对收敛，那么</p>
+<script type="math/tex; mode=display">
+\int_{-\infty}^{\infty} |f(x)|dx < \infty</script><p>所以</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+\lim_{n\to \infty} \int_{-n}^{n} |f(x)|dx
+&=\lim_{n\to \infty} \int_{[-n,n]} |f(x)|dx \\
+&=\lim_{n\to \infty} \int_{\mathbb R} |f(x)| I_{[-n,n]} dx\\
+&= \int_{\mathbb R} |f(x)| d{\lambda^n}(单调收敛定理)
+\end{aligned}</script></article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">Doraemonzzz</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="http://doraemonzzz.com/2018/11/24/%E5%8F%B0%E5%A4%A7%E5%AE%9E%E5%88%86%E6%9E%90%E5%8D%95%E5%85%83%2012%20%E5%A4%96%E6%B5%8B%E5%BA%A6%203/">http://doraemonzzz.com/2018/11/24/%E5%8F%B0%E5%A4%A7%E5%AE%9E%E5%88%86%E6%9E%90%E5%8D%95%E5%85%83%2012%20%E5%A4%96%E6%B5%8B%E5%BA%A6%203/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://doraemonzzz.com" target="_blank">Doraemonzzz</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E5%AE%9E%E5%88%86%E6%9E%90/">实分析</a></div><div class="post_share"><div class="social-share" data-image="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2018/11/27/Unit%207%20Visualization/"><img class="prev-cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">Unit 7 Visualization</div></div></a></div><div class="next-post pull-right"><a href="/2018/11/24/%E5%8F%B0%E5%A4%A7%E5%AE%9E%E5%88%86%E6%9E%90%E5%8D%95%E5%85%83%2011%20%E5%A4%96%E6%B5%8B%E5%BA%A6%202/"><img class="next-cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">台大实分析单元 11 外测度 2</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span> 相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2018/11/19/台大实分析Unit 1习题解析/" title="台大实分析Unit 1习题解析"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2018-11-19</div><div class="title">台大实分析Unit 1习题解析</div></div></a></div><div><a href="/2018/11/19/台大实分析Unit 2习题解析/" title="台大实分析Unit 2习题解析"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2018-11-19</div><div class="title">台大实分析Unit 2习题解析</div></div></a></div><div><a href="/2018/10/02/台大实分析单元 1 Introduction/" title="台大实分析单元 1 Introduction"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2018-10-02</div><div class="title">台大实分析单元 1 Introduction</div></div></a></div><div><a href="/2018/11/20/台大实分析单元 10 外测度 1/" title="台大实分析单元 10 外测度 1"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2018-11-20</div><div class="title">台大实分析单元 10 外测度 1</div></div></a></div><div><a href="/2018/11/24/台大实分析单元 11 外测度 2/" title="台大实分析单元 11 外测度 2"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2018-11-24</div><div class="title">台大实分析单元 11 外测度 2</div></div></a></div><div><a href="/2018/12/02/台大实分析单元 13 外测度 4/" title="台大实分析单元 13 外测度 4"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2018-12-02</div><div class="title">台大实分析单元 13 外测度 4</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="card-info-avatar is-center"><img class="avatar-img" src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/><div class="author-info__name">Doraemonzzz</div><div class="author-info__description">个人博客，主要记录有关机器学习，数学以及计算机科学的笔记</div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">610</div></a></div><div class="card-info-data-item is-center"><a href="/tags/"><div class="headline">标签</div><div class="length-num">59</div></a></div><div class="card-info-data-item is-center"><a href="/categories/"><div class="headline">分类</div><div class="length-num">23</div></a></div></div><a class="button--animated" id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/Doraemonzzz" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="/doraemon_zzz@163.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn card-announcement-animation"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#Theorem-2"><span class="toc-number">1.</span> <span class="toc-text">Theorem 2</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Remark"><span class="toc-number">2.</span> <span class="toc-text">Remark</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Constructing-a-measure-from-a-premeasure"><span class="toc-number">3.</span> <span class="toc-text">Constructing a measure from a premeasure</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E4%BE%8B-1-mathbb-R-n-%E4%B8%8A%E5%8B%92%E8%B4%9D%E6%A0%BC-%E5%A4%96-%E6%B5%8B%E5%BA%A6"><span class="toc-number">3.1.</span> <span class="toc-text">例 1 $\mathbb R^n$上勒贝格(外)测度</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Theorem-Lebeague-number"><span class="toc-number">4.</span> <span class="toc-text">Theorem(Lebeague number)</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E4%BE%8B-2"><span class="toc-number">4.1.</span> <span class="toc-text">例 2</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E4%BE%8B-3"><span class="toc-number">4.2.</span> <span class="toc-text">例 3</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2021/06/06/2021-6-6-%E7%AE%97%E6%B3%95%E6%A6%82%E8%AE%BA(DPV)%E4%B9%A0%E9%A2%98%E8%A7%A3%E7%AD%94%E2%80%94%E2%80%94%E7%AC%AC3%E7%AB%A0-%E5%9B%BE%E7%9A%84%E5%88%86%E8%A7%A3/" title="算法概论(DPV)习题解答——第3章 图的分解"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="算法概论(DPV)习题解答——第3章 图的分解"/></a><div class="content"><a class="title" href="/2021/06/06/2021-6-6-%E7%AE%97%E6%B3%95%E6%A6%82%E8%AE%BA(DPV)%E4%B9%A0%E9%A2%98%E8%A7%A3%E7%AD%94%E2%80%94%E2%80%94%E7%AC%AC3%E7%AB%A0-%E5%9B%BE%E7%9A%84%E5%88%86%E8%A7%A3/" title="算法概论(DPV)习题解答——第3章 图的分解">算法概论(DPV)习题解答——第3章 图的分解</a><time datetime="2021-06-06T14:35:00.000Z" title="发表于 2021-06-06 22:35:00">2021-06-06</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/06/06/2021-6-6-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E7%AC%AC5%E7%AB%A0-%E4%B9%A0%E9%A2%98%E8%A7%A3%E6%9E%90/" title="深入理解计算机系统 第5章 习题解析"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="深入理解计算机系统 第5章 习题解析"/></a><div class="content"><a class="title" href="/2021/06/06/2021-6-6-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E7%AC%AC5%E7%AB%A0-%E4%B9%A0%E9%A2%98%E8%A7%A3%E6%9E%90/" title="深入理解计算机系统 第5章 习题解析">深入理解计算机系统 第5章 习题解析</a><time datetime="2021-06-06T07:23:00.000Z" title="发表于 2021-06-06 15:23:00">2021-06-06</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/06/05/2021-6-5-Stanford-Compiler-PA5%E7%BF%BB%E8%AF%91/" title="Stanford Compiler PA5翻译"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Stanford Compiler PA5翻译"/></a><div class="content"><a class="title" href="/2021/06/05/2021-6-5-Stanford-Compiler-PA5%E7%BF%BB%E8%AF%91/" title="Stanford Compiler PA5翻译">Stanford Compiler PA5翻译</a><time datetime="2021-06-05T06:12:00.000Z" title="发表于 2021-06-05 14:12:00">2021-06-05</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/06/04/2021-6-4-Stanford-Compiler-PA4%E7%BF%BB%E8%AF%91/" title="Stanford Compiler PA4翻译"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Stanford Compiler PA4翻译"/></a><div class="content"><a class="title" href="/2021/06/04/2021-6-4-Stanford-Compiler-PA4%E7%BF%BB%E8%AF%91/" title="Stanford Compiler PA4翻译">Stanford Compiler PA4翻译</a><time datetime="2021-06-03T16:17:00.000Z" title="发表于 2021-06-04 00:17:00">2021-06-04</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/06/03/2021-6-3-%E5%B7%A7%E5%A6%99%E7%9A%84Y%E8%BF%90%E7%AE%97%E7%AC%A6/" title="巧妙的Y运算符"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="巧妙的Y运算符"/></a><div class="content"><a class="title" href="/2021/06/03/2021-6-3-%E5%B7%A7%E5%A6%99%E7%9A%84Y%E8%BF%90%E7%AE%97%E7%AC%A6/" title="巧妙的Y运算符">巧妙的Y运算符</a><time datetime="2021-06-03T00:54:00.000Z" title="发表于 2021-06-03 08:54:00">2021-06-03</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2021 By Doraemonzzz</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><div class="js-pjax"><script>if (!window.MathJax) {
+  window.MathJax = {
+    loader: {
+      source: {
+        '[tex]/amsCd': '[tex]/amscd'
+      }
+    },
+    tex: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]],
+      tags: 'ams'
+    },
+    options: {
+      renderActions: {
+        findScript: [10, doc => {
+          for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+            const display = !!node.type.match(/; *mode=display/)
+            const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+            const text = document.createTextNode('')
+            node.parentNode.replaceChild(text, node)
+            math.start = {node: text, delim: '', n: 0}
+            math.end = {node: text, delim: '', n: 0}
+            doc.math.push(math)
+          }
+        }, ''],
+        addClass: [200,() => {
+          document.querySelectorAll('mjx-container:not([display=\'true\']').forEach( node => {
+            const target = node.parentNode
+            if (!target.classList.contains('has-jax')) {
+              target.classList.add('mathjax-overflow')
+            }
+          })
+        }, '', false]
+      }
+    }
+  }
+  
+  const script = document.createElement('script')
+  script.src = 'https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js'
+  script.id = 'MathJax-script'
+  script.async = true
+  document.head.appendChild(script)
+} else {
+  MathJax.startup.document.state(0)
+  MathJax.texReset()
+  MathJax.typeset()
+}</script></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

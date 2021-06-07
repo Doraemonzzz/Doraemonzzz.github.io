@@ -1,0 +1,610 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Michael Collins NLP Lecture 2 | Doraemonzzz</title><meta name="keywords" content="Michael Collins NLP"><meta name="author" content="Doraemonzzz"><meta name="copyright" content="Doraemonzzz"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="课程主页：http:&#x2F;&#x2F;www.cs.columbia.edu&#x2F;~cs4705&#x2F; 课程网盘地址： 链接：https:&#x2F;&#x2F;pan.baidu.com&#x2F;s&#x2F;1KijgO7yjL_MVCC9zKZ7Jdg提取码：t1i3  这一讲主要介绍了三元语言模型以及参数估计的问题。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Michael Collins NLP Lecture 2">
+<meta property="og:url" content="http://doraemonzzz.com/2019/01/27/Michael%20Collins%20NLP%20Lecture%202/index.html">
+<meta property="og:site_name" content="Doraemonzzz">
+<meta property="og:description" content="课程主页：http:&#x2F;&#x2F;www.cs.columbia.edu&#x2F;~cs4705&#x2F; 课程网盘地址： 链接：https:&#x2F;&#x2F;pan.baidu.com&#x2F;s&#x2F;1KijgO7yjL_MVCC9zKZ7Jdg提取码：t1i3  这一讲主要介绍了三元语言模型以及参数估计的问题。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg">
+<meta property="article:published_time" content="2019-01-27T10:44:00.000Z">
+<meta property="article:modified_time" content="2020-03-20T07:05:01.677Z">
+<meta property="article:author" content="Doraemonzzz">
+<meta property="article:tag" content="Michael Collins NLP">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="http://doraemonzzz.com/2019/01/27/Michael%20Collins%20NLP%20Lecture%202/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"prismjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    jQuery: 'https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js',
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+    },
+    fancybox: {
+      js: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isanchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'Michael Collins NLP Lecture 2',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2020-03-20 15:05:01'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    })(window)</script><meta name="generator" content="Hexo 5.4.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="author-avatar"><img class="avatar-img" src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">文章</div><div class="length-num">610</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">标签</div><div class="length-num">59</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/categories/"><div class="headline">分类</div><div class="length-num">23</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">Doraemonzzz</a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">Michael Collins NLP Lecture 2</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2019-01-27T10:44:00.000Z" title="发表于 2019-01-27 18:44:00">2019-01-27</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2020-03-20T07:05:01.677Z" title="更新于 2020-03-20 15:05:01">2020-03-20</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/NLP/">NLP</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="Michael Collins NLP Lecture 2"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p>课程主页：<a target="_blank" rel="noopener" href="http://www.cs.columbia.edu/~cs4705/">http://www.cs.columbia.edu/~cs4705/</a></p>
+<p>课程网盘地址：</p>
+<p>链接：<a target="_blank" rel="noopener" href="https://pan.baidu.com/s/1KijgO7yjL_MVCC9zKZ7Jdg">https://pan.baidu.com/s/1KijgO7yjL_MVCC9zKZ7Jdg</a><br>提取码：t1i3 </p>
+<p>这一讲主要介绍了三元语言模型以及参数估计的问题。</p>
+<span id="more"></span>
+<h3 id="1-3-三元语言模型"><a href="#1-3-三元语言模型" class="headerlink" title="1.3 三元语言模型"></a>1.3 三元语言模型</h3><p>有多种方法可以定义语言模型，本章将介绍一个特别重要的例子，即三元语言模型（trigram language model）。 这将是如上一节所述的马尔可夫模型对语言建模问题的直接应用。 在本节中，我们将给出三元模型的基本定义，讨论了三元模型的最大似然参数估计，最后讨论了三元模型的优点和缺点。</p>
+<h4 id="1-3-1-基本定义"><a href="#1-3-1-基本定义" class="headerlink" title="1.3.1 基本定义"></a>1.3.1 基本定义</h4><p>与马尔可夫模型一样，我们将每个句子建模为$n$个随机变量的序列，$X_1,X_2,…,X_n$。 长度$n$本身是一个随机变量（它可以在不同的句子中变化）。 我们总是有$X_n =\text{STOP}$。 在二阶马尔可夫模型下，任何句子$x_1…x_n$的概率是</p>
+<script type="math/tex; mode=display">
+P(X_1=x_1,X_2= x_2,...,X_n=x_n)= \prod_{i=1}^n P(X_i=x_i|X_{i-2}=x_{i-2},X_{i-1}=x_{i-1})</script><p>这里我们和之前一样假设</p>
+<script type="math/tex; mode=display">
+x_0=x_{-1}= *</script><p>​    我们假设对于任意$i$和任意$x_{i-2},x_{i-1},x_i$，</p>
+<script type="math/tex; mode=display">
+P(X_i=x_i|X_{i-2}=x_{i-2},X_{i-1}=x_{i-1})
+=q(x_i| x_{i-2},x_{i-1})</script><p>其中$q(w|u,v)$是模型的参数（对于任意$(u,v,w)$）。 我们很快就会看到如何从我们的训练语料库中推导出参数$q(w|u,v)$的估计值。 对于任意$x_1…x_n$，我们的模型采用如下形式</p>
+<script type="math/tex; mode=display">
+p(x_1...x_n) =\prod_{i=1}^n q(x_i|x_{i-2},x_{i-1})</script><p>​    这引出了如下定义：</p>
+<h5 id="定义-2-（三元语言模型）"><a href="#定义-2-（三元语言模型）" class="headerlink" title="定义 2 （三元语言模型）"></a>定义 2 （三元语言模型）</h5><p>一个三元语言模型由有限集$\mathcal V$，以及如下参数构成</p>
+<script type="math/tex; mode=display">
+q(w|u,v)</script><p>每个三元组$(u,v,w)$满足</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+w&\in \mathcal V\cup \{\text{STOP}\}\\
+u,v&\in \mathcal V \cup \{*\}
+\end{aligned}</script><p>$q(w|u,v)$的值可以解释为在二元组$(u,v)$之后看到单词$w$的概率。 对于任何满足$x_i\in\mathcal V,i=1…(n-1)$以及$x_n = \text{STOP}$的句子$x_1…x_n$，在三元语言模型下句子对应的概率为</p>
+<script type="math/tex; mode=display">
+p(x_1...x_n) =\prod_{i=1}^n q(x_i|x_{i-2},x_{i-1})</script><p>这里我们定义</p>
+<script type="math/tex; mode=display">
+x_0=x_{-1}= *</script><p>​    例如，对于句子</p>
+<script type="math/tex; mode=display">
+\text{the dog barks STOP}</script><p>我们有</p>
+<script type="math/tex; mode=display">
+p(\text{the dog barks STOP})=
+q(\text{the}|\text{*, *})\times 
+q(\text{dog}|\text{*, the})\times 
+q(\text{barks}|\text{the, dog})\times 
+q(\text{STOP}|\text{dog, barks})</script><p>请注意，在此表达式中，每个单词仅取决于前两个单词：这是三元组假设。</p>
+<p>​    对于任意三元组$u,v,w$，参数满足如下限制</p>
+<script type="math/tex; mode=display">
+q(w|u,v)\ge 0</script><p>对于任意二元组$u,v$</p>
+<script type="math/tex; mode=display">
+\sum_{w\in \mathcal V\cup \{\text{STOP}\}}q(w|u,v) =1</script><p>因此$q(w|u,v)$定义了给定二元组$(u,v)$，$w$的条件分布。</p>
+<p>​    现在关键问题是估计模型的参数，即</p>
+<script type="math/tex; mode=display">
+q(w|u,v)</script><p>其中</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+w&\in \mathcal V\cup \{\text{STOP}\}\\
+u,v&\in \mathcal V \cup \{*\}
+\end{aligned}</script><p>模型中有大约有$|\mathcal V|^3$个参数。 这可能是一个非常大的数字。 例如，$|\mathcal V|=10000$（这是一个现实中的数字，按照现代标准还很可能很小），我们有$|\mathcal V|\approx 10^{12}$。</p>
+<h4 id="1-3-2-最大似然估计"><a href="#1-3-2-最大似然估计" class="headerlink" title="1.3.2 最大似然估计"></a>1.3.2 最大似然估计</h4><p>我们首先从估计问题的最通用解决方案开始，即最大似然估计。 我们将看到这些估计值有致命的缺陷，但我们将展示如何推导出在实际中非常有效的相关估计值。</p>
+<p>​    首先，定义一些符号。 将$c(u,v,w)$定义为在训练语料库中三元组$(u,v,w)$出现的次数：例如，$c(\text{the},\text{dog},\text{barks})$是在训练语料库中序列the dog barks出现的次数。类似的，将$c(u,v)$定义为在语料库中二元组$(u,v)$出现的次数。 对于任何$w,u,v$，我们定义</p>
+<script type="math/tex; mode=display">
+q(w|u,v) = \frac{c(u,v,w)}{c(u,v)}</script><p>举个例子，我们对$q(\text{barks}|\text{the},\text{dog})$的估计是</p>
+<script type="math/tex; mode=display">
+q(\text{barks}|\text{the},\text{dog}) = 
+\frac{c(\text{the},\text{dog},\text{barks})}{c(\text{the},\text{dog})}</script><p>这个估计是非常自然的：分子是三元组the dog barks的出现次数，而分母是二元组the dog出现的次数。 我们简单地考虑这两项的比值。</p>
+<p>​    不幸的是，这种估计参数的方法遇到了一个非常严重的问题。回想一下，我们的模型中有很多参数（例如，词汇量大小为$10000$，我们有大约$10^{12}$个参数）。 因此，我们的许多计数将为零。 这导致两个问题：</p>
+<ul>
+<li>由于分子中的计数为$0$，上述很多估计将为$0$，即$q(w|u,v)=0$。这将导致许多三元组概率被低估：将概率$0$分配给任何未见的三元组似乎是不合理的。注意到与训练语料库中的单词数量相比，模型的参数数量通常非常大，所以上述低估现象将经常会发生。</li>
+<li>在分母$c(u,v)$等于零的情况下，估计不是定义良好的。</li>
+</ul>
+<p>我们将很快看到如何得到解决这些问题的修改后的估计。首先，我们讨论如何评估语言模型，然后讨论三元语言模型的优缺点。</p>
+<h4 id="1-3-3-评估语言模型：困惑度（Perplexity）"><a href="#1-3-3-评估语言模型：困惑度（Perplexity）" class="headerlink" title="1.3.3 评估语言模型：困惑度（Perplexity）"></a>1.3.3 评估语言模型：困惑度（Perplexity）</h4><p>那么我们如何衡量语言模型的质量呢？ 一种非常常见的方法是评估模型对held-out数据的困惑度（Perplexity）。</p>
+<p>​    方法如下。 假设我们有一些测试句子$x^{(1)},x^{(2)},…,x^{(m)}$。 对于$i\in \{1…m\}$的每个测试句子$x^{(i)}$，它是单词序列$x_1^{(i)},…,x_{n_i}^{(i)}$，其中$n_i$是第$i$个句子的长度。 和以前一样，我们假设每个句子都以STOP符号结束。</p>
+<p>​    至关重要的是，测试句子是”held out”，因为它们不是用于估计语言模型的语料库的一部分。 从这个意义上说，它们是新的，没见过的句子。</p>
+<p>​    对于任何测试句子$x^{(i)}$，我们可以在语言模型下计算其概率$p(x^{(i)})$。 衡量语言模型质量的一个自然衡量标准是它分配给整套测试句子的概率，即</p>
+<script type="math/tex; mode=display">
+\prod_{i=1}^m p(x^{(i)})</script><p>直觉如下：这个数量越大，语言模型在建模看不见的句子时就越好。</p>
+<p>​    测试语料库中的困惑度是作为该数量的直接变换而导出的。 将$M$定义为测试语料库中的单词总数。 更确切地说，根据定义，$n_i$是第$i$个测试句子的长度，那么</p>
+<script type="math/tex; mode=display">
+M = \sum_{i=1}^m n_i</script><p>​    然后将模型下的平均对数概率定义为</p>
+<script type="math/tex; mode=display">
+\frac 1 M \log_2 \prod_{i=1}^m p(x^{(i)})=\frac 1 M \sum_{i=1}^m\log_2  p(x^{(i)})</script><p>这只是整个测试语料库的对数概率除以测试语料库中的单词总数。同样，这个数量越高，语言模型越好。</p>
+<p>​    然后将困惑度定义为</p>
+<script type="math/tex; mode=display">
+2^{-l}</script><p>其中</p>
+<script type="math/tex; mode=display">
+l =\frac 1 M  \sum_{i=1}^m\log_2  p(x^{(i)})</script><p>我们取平均对数概率的相反数，然后取$2$次幂。 困惑度是一个正数。 困惑度的值越小，语言模型在未见过的数据上表现就越好。</p>
+<p>​    困惑背后的一些直觉如下。 假设我们有一个词汇表$|\mathcal V|$，其中$|\mathcal V\cup \text{ STOP}|=N$，然后对所有$u,v,w$，模型预测</p>
+<script type="math/tex; mode=display">
+q(w|u,v) =\frac1 N</script><p>因此，这是一个简单的模型，它简单地预测为条件概率为词汇表以及STOP符号上的均匀分布。 在这种情况下，可以表明困惑等于$N$。</p>
+<p>事实上，此时</p>
+<script type="math/tex; mode=display">
+p(x^{(i)}) = \frac 1 {N^{n_i}}</script><p>所以</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+l
+&= \frac 1 M  \sum_{i=1}^m\log_2  p(x^{(i)}) \\
+&= -\frac 1 M \sum_{i=1}^m n_i \log_2 N \\
+&=-\log_2 N \\
+2^{-l}&=N
+\end{aligned}\\</script><p>因此在均匀分布概率模型下，困惑度等于词汇量大小。 困惑度可以被认为是模型下的有效词汇量：例如，如果模型的困惑度为$120$（即使词汇量大小为$10000$），那么这大致相当于具有有效的词汇量大小为$120$。</p>
+<p>​    为了给出更多困惑度产生的动机，很容易发现困惑度等于</p>
+<script type="math/tex; mode=display">
+\frac 1 t</script><p>其中</p>
+<script type="math/tex; mode=display">
+t = \sqrt[M]{\prod_{i=1}^m p(x^{(i)})}</script><p>这里我们用$\sqrt[M] z$表示$z$的$M$次根：所以$t$是满足$t^M=\prod_{i=1}^m p(x^{(i)})$的值。给定</p>
+<script type="math/tex; mode=display">
+\prod_{i=1}^m p(x^{(i)}) = \prod_{i=1}^m  \prod_{j=1}^{n_i}
+q(x_j^{(i)}|x_{j-2}^{(i)},x_{j-1}^{(i)})</script><p>和$M =\sum_{i}n_i$，$t$的值是$\prod_{i=1}^m p(x^{(i)})$中出现的$q(x_j^{(i)}|x_{j-2}^{(i)},x_{j-1}^{(i)})$项的几何平均值。例如，如果困惑度等于$100$，则$t=0.01$，表示几何平均值为$0.01$。</p>
+<p>​    关于困惑度的另一个有用的事实如下。对于测试数据中的任意三元组$u,v,w$，如果我们有估计</p>
+<script type="math/tex; mode=display">
+q(w|u,v)=0</script><p>那么困惑度将是$\infty$。要看到这一点，请注意在这种情况下，模型的测试语料库的概率为$0$，平均对数概率为$-\infty$。 因此，如果我们将困惑度作为衡量语言模型的标准，那么我们应该不惜一切代价避免给出$0$估计值。</p>
+<p>​    最后，给出一些关于困惑度的“典型”值的直觉。 Goodman（“A bit of progress in language modeling”）评估英语数据的一元，二元和三元语言模型，词汇量为$50000$。在二元模型中，我们参数$q(w|v)$，以及</p>
+<script type="math/tex; mode=display">
+p(x_1...x_n) =\prod_{i=1}^n q(x_i|x_{i-1})</script><p>因此，每个单词仅取决于句子中的前一个单词。 在一元模型中，我们有参数$q(w)$，以及</p>
+<script type="math/tex; mode=display">
+p(x_1...x_n) =\prod_{i=1}^n q(x_i)</script><p>因此，每个单词的选择完全独立于句子中的其他单词。</p>
+<p> Goodman报告三元模型的困惑度约为$74$，二元模型为$137$，一元模型为$500$。 简单地分配给词汇表中每个单词概率$1/50000$的困惑度为$50000 $。因此，三元组模型明显比二元和一元模型有了很大的改进，并且相对于给词汇表中的每个单词分配$1/50000$的概率有了巨大的改进。</p>
+<h4 id="1-3-4-三元语言模型的优缺点"><a href="#1-3-4-三元语言模型的优缺点" class="headerlink" title="1.3.4 三元语言模型的优缺点"></a>1.3.4 三元语言模型的优缺点</h4><p>三元组假设可以说是相当强大的，并且在语言上是自然的（参见讲座幻灯片以供讨论）。总之，它是实际中非常有用的模型。</p>
+<h3 id="1-4-三元模型的平滑估计"><a href="#1-4-三元模型的平滑估计" class="headerlink" title="1.4 三元模型的平滑估计"></a>1.4 三元模型的平滑估计</h3><p>如之前所述，三元语言模型具有非常多的参数。 最大似然参数估计采用如下形式</p>
+<script type="math/tex; mode=display">
+q(w|u,v) = \frac{c(u,v,w)}{c(u,v)}</script><p>对于稀疏数据，这将产生严重问题。 即使有大量的训练句子，许多$c(u,v,w)$以及$c(u,v)$也会很低，或者等于零。</p>
+<p>​    在本节中，我们将介绍平滑估计方法，它可以缓解稀疏数据中发现的许多问题。 关键的想法是依靠低阶统计估计——特别是，利用二元组或一元组的计数来“平滑”三元组估计。 我们将讨论了两种在实际中非常常用的平滑方法：第一种是线性插值(linear interpolation); 第二，折扣方法(discounting)。</p>
+<h4 id="1-4-1-线性插值"><a href="#1-4-1-线性插值" class="headerlink" title="1.4.1 线性插值"></a>1.4.1 线性插值</h4><p>线性插值的三元模型按如下方式导出。 我们将三元，二元和一元最大似然估计定义为</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+q_{ML}(w|u,v)&= \frac{c(u,v,w)}{c(u,v)} \\
+q_{ML}(w|v)&= \frac{c(v,w)}{c(v)} \\
+q_{ML}(w)&= \frac{c(w)}{c()}
+\end{aligned}</script><p>我们扩展了我们的符号：$c(w)$是在训练语料库中看到单词$w$的次数，$c()$是在训练语料库中看到的单词总数。</p>
+<p>​    三元，二元和一元估计有不同的优点和缺点。一元估计永远不会有分子或分母等于$0$的问题：因此估计总是定义明确的，并且总是大于$0$（ 规定每个单词在训练语料库中至少出现一次，这是一个合理的假设）。 但是，一元估计完全忽略了上下文（前两个单词），因此丢弃了非常有价值的信息。 相比之下，三元组估计确实利用了上下文，但是它有许多计数都是$0$的问题。二元估计值介于这两个极端情形之间。</p>
+<p>​    线性插值的想法是使用全部三个估计，通过定义三元组估计如下：</p>
+<script type="math/tex; mode=display">
+q(w|u,v) = \lambda_1 \times q_{ML}(w|u,v) + \lambda_2 \times q_{ML}(w|v) + 
+\lambda_3 \times q_{ML}(w)</script><p>这里$\lambda_1,\lambda_2,\lambda_3$是该模型的三个额外参数，它们满足</p>
+<script type="math/tex; mode=display">
+\lambda_1\ge 0,\lambda_2\ge 0,\lambda_3\ge 0</script><p>以及</p>
+<script type="math/tex; mode=display">
+\lambda_1+\lambda_2 +\lambda_3 = 1</script><p>因此，我们采用三个估计的加权平均值。</p>
+<p>​    有许多估计$\lambda $的方法。 常见的一个如下。我们还有一些held-out数据，这些数据与我们的训练以及测试语料库分开。 我们将此数据称为开发数据。 将$c’(u,v,w)$定义为在开发数据中看到三元组$(u,v,w)$的次数。 很容易证明开发数据的对数似然，作为参数$\lambda_1,\lambda_2,\lambda_3$的函数，是</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+L(\lambda_1,\lambda_2,\lambda_3)
+&= \sum_{u,v,w}c'(u,v,w)\log q(w|u,v)\\
+&=\sum_{u,v,w}c'(u,v,w)\log(\lambda_1 \times q_{ML}(w|u,v) + \lambda_2 \times q_{ML}(w|v) + 
+\lambda_3 \times q_{ML}(w))
+\end{aligned}</script><p>我们想选择$\lambda$的值来使$L(\lambda_1,\lambda_2,\lambda_3)$尽可能高。 因此，我们应该选择</p>
+<script type="math/tex; mode=display">
+\arg \max_{\lambda_1,\lambda_2,\lambda_3} L(\lambda_1,\lambda_2,\lambda_3)</script><p>满足</p>
+<script type="math/tex; mode=display">
+\lambda_1\ge 0,\lambda_2\ge 0,\lambda_3\ge 0</script><p>以及</p>
+<script type="math/tex; mode=display">
+\lambda_1+\lambda_2 +\lambda_3 = 1</script><p>找到$\lambda$的最优值是相当直接的。</p>
+<p>​    如上所述，我们的方法有三个平滑参数，$\lambda_1,\lambda_2,\lambda_3$。这三个参数可以解释为每个三元，二元和一元估计值上的置信度或权重。 例如，如果$\lambda_1$接近$1$，这意味着我们对三元组估计$q_{ML}(w|u,v)$给出了高权重; 相反，如果$\lambda_1$接近于$0$，我们对三元组估计放置了一个低权重。</p>
+<p>​    在实际中，通过允许$\lambda_1,\lambda_2,\lambda_3$的值依赖二元组$(u,v)$来增加额外的自由度是很重要的。 特别地，当$c(u,v) $更大时，该方法允许$\lambda_1$更大——直觉是较大的$c(u,v)$的应该转化为我们对三元组估计更有信心。</p>
+<p>​    注意，当$c(u,v)=0$时，该方法将确保$\lambda_1=0$，因为在这种情况下，三元组估计</p>
+<script type="math/tex; mode=display">
+q_{ML}(w|u,v)= \frac{c(u,v,w)}{c(u,v)}</script><p>没有意义。类似地，如果$c(u,v)$和$c(v)$都等于$0$，我们需要定义$\lambda_1=\lambda_2=0$，因为三元和二元极大似然估计此时都是未定义的。</p>
+<p>​    该方法的一个扩展，通常称为bucketing，在1.5.1节中描述。 此外，另一个更简单的方法是定义</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+\lambda_1&= \frac{c(u,v)}{c(u,v)+\gamma} \\
+\lambda_2&= (1-\lambda_1)\times  \frac{c(v)}{c(v)+\gamma} \\
+\lambda_3&=1-\lambda_1-\lambda_2
+\end{aligned}</script><p>其中$\gamma&gt;0$是该方法的唯一参数。很容易验证</p>
+<script type="math/tex; mode=display">
+\lambda_1\ge 0,\lambda_2\ge 0,\lambda_3\ge 0</script><p>以及</p>
+<script type="math/tex; mode=display">
+\lambda_1+\lambda_2 +\lambda_3 = 1</script><p>在该定义下，可以看出$\lambda_1$随着$c(u,v)$的增加而增加，并且类似地$\lambda_2$随着$c(v)$的增加而增加。 此外，如果$c(u,v)=0$，则$\lambda_1=0$，如果$c(v)=0$，则$\lambda_2=0$。$\gamma$的值可以通过最大化一组开发数据的对数似然来选择。</p>
+<p>​    该方法相对粗糙，并且不太可能是最佳的。 然而，它非常简单，并且在某些应用中它的实际效果很好。</p>
+<h4 id="1-4-2-折扣方法-Discounting-Methods"><a href="#1-4-2-折扣方法-Discounting-Methods" class="headerlink" title="1.4.2 折扣方法(Discounting Methods)"></a>1.4.2 折扣方法(Discounting Methods)</h4><p>我们现在描述一种替代的估计方法，它在实际中也是常用的。 首先考虑一种估计二元语言模型的方法，也就是说，我们的目标是定义</p>
+<script type="math/tex; mode=display">
+q(w|v)</script><p>对于任意</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+w&\in \mathcal V\cup \{\text{STOP}\}\\
+u,v&\in \mathcal V \cup \{*\}
+\end{aligned}</script><p>​    第一步是定义折扣计数。 对于任何满足$c(v,w)&gt;0$的二元组$c(v,w)$，我们将折扣计数定义为</p>
+<script type="math/tex; mode=display">
+c^*(v,w) =c(v,w)-\beta</script><p>其中的$\beta$介于$0$和$1$之间（通常$\beta=0.5$）。 因此，我们只需从计数中减去一个常数值。 这反映了这样的直觉：如果我们从训练语料库中获取计数，我们将系统地高估在语料库中出现的二元组的概率（以及低估不出现在语料库中二元组）。</p>
+<p>​    对于任何满足$c(v,w)&gt;0$的二元组$c(v,w)$，我们定义</p>
+<script type="math/tex; mode=display">
+q(w|v) = \frac{c^*(v,w) }{c(v)}</script><p>因此，分子为折扣计数，分母为常规计数。</p>
+<p>​    对于任何单词$v$，该定义导致一些丢失的概率质量，定义为</p>
+<script type="math/tex; mode=display">
+\alpha(v) = 1-\sum_{w:c(v,w)>0}  \frac{c^*(v,w) }{c(v)}</script><p><img src="https://github.com/Doraemonzzz/md-photo/blob/master/Michael%20Collins%20NLP/Lecture%202/2018012901.jpg?raw=true" alt=""></p>
+<p>​    例如，考虑图1.1中示例中显示的计数。 这里展示所有满足$u=the,c(u,v)&gt;0$的二元组$(u,v)$。我们使用折扣值$\beta=0.5 $。 在这种情况下，我们有</p>
+<script type="math/tex; mode=display">
+\sum_{w:c(v,w)>0}  \frac{c^*(v,w) }{c(v)}=
+\frac{14.5}{48} +\frac{10.5}{48}+\frac{9.5}{48}+
+\frac{4.5}{48}+\frac{1.5}{48} + 5\times \frac{0.5}{48} =\frac {43}{48}</script><p>丢失的概率质量为</p>
+<script type="math/tex; mode=display">
+\alpha(the)= 1-\frac {43}{48}=\frac {5}{48}</script><p>​    折扣方法背后的直觉是将这个“缺失质量”分配给使得$c(v,w)=0$的$w$。</p>
+<p>​    更具体地说，估计的完整定义如下。 对于任何$v$，定义集合</p>
+<script type="math/tex; mode=display">
+\mathcal A(v) = \{w:c(v,w)>0\}</script><p>以及</p>
+<script type="math/tex; mode=display">
+\mathcal B(v) = \{w:c(v,w)=0\}</script><p>例如，对于图1.1中的数据，我们有</p>
+<script type="math/tex; mode=display">
+\mathcal A(the) = \{dog, woman, man, park, job, telescope, manual, afternoon, country, street
+\}</script><p>以及$\mathcal B(the)$为词汇表中剩余的词汇。</p>
+<p>​    然后将估计定义为</p>
+<script type="math/tex; mode=display">
+q_D(w|v) = \begin{cases}
+ \frac{c^*(v,w) }{c(v)} &如果w\in \mathcal A(v)\\
+\alpha(v) \times \frac{q_{ML}(w)}{\sum_{w\in \mathcal B(v)} q_{ML}(w)} 
+& 如果w\in \mathcal B(v)
+\end{cases}</script><p>因此，如果$c(v,w)&gt;0$，我们返回</p>
+<script type="math/tex; mode=display">
+\frac{c^*(v,w) }{c(v)}</script><p> 否则我们将剩余概率质量$\alpha(v)$按照一元估计$q_{ML}(w)$的比例划分。</p>
+<h5 id="Katz-Back-Off-Models"><a href="#Katz-Back-Off-Models" class="headerlink" title="Katz Back-Off Models"></a>Katz Back-Off Models</h5><p>​    该方法可以以自然的递归方式推广到三元语言模型(Katz Back-Off Models)：对于任何二元组$(u,v)$，定义</p>
+<script type="math/tex; mode=display">
+\mathcal A(u,v) = \{w:c(u,v,w)>0\}</script><p>以及</p>
+<script type="math/tex; mode=display">
+\mathcal B(u,v) = \{w:c(u,v,w)=0\}</script><p>按如下方式定义三元组$(u,v,w)$的折扣计数</p>
+<script type="math/tex; mode=display">
+c^*(u,v,w) =c(u,v,w)-\beta</script><p>其中$\beta$是折扣值。 那么三元模型为</p>
+<script type="math/tex; mode=display">
+q_D(w|u,v) = \begin{cases}
+ \frac{c^*(u,v,w) }{c(u,v)} &如果w\in \mathcal A(u,v)\\
+\alpha(u,v) \times \frac{q_{D}(w|v)}{\sum_{w\in \mathcal B(u,v)} q_{D}(w|v)} 
+& 如果w\in \mathcal B(u,v)
+\end{cases}</script><p>其中</p>
+<script type="math/tex; mode=display">
+\alpha(u,v) = 1-\sum_{w\in \mathcal A(u,v) }  \frac{c^*(u,v,w) }{c(u,v)}</script><p>是“丢失”概率质量。 请注意，我们将丢失的概率质量按照之前定义的二元组估计值$q_{D}(w|v)$成比例地进行了划分。</p>
+<p>​    这种方法的唯一参数是折扣值$\beta$。 与线性插值模型一样，选择此参数值的常用方法是优化开发语料库的似然性，这也是和训练以及测试语料库分开的数据集。 将$c’(u,v,w)$定义为三元组$(u,v,w)$出现在此开发语料库的次数。 那么开发数据的对数似然函数是</p>
+<script type="math/tex; mode=display">
+\sum_{u,v,w} c'(u,v,w) \log q_D(w|u,v)</script><p>其中$q_D(w|u,v)$的定义如上。 参数估计$q_D(w|u,v)$将随着$\beta$的变化而变化。 通常我们会测试$\beta$的一组可能值——例如，我们可能会测试集合$\{0.1,0.2,0.3,…,0.9\}$中的所有值——我们对每个值都会计算开发数据的对数似然。 然后，我们选择最大化此对数似然的$\beta$。</p>
+<h3 id="1-5-高级主题"><a href="#1-5-高级主题" class="headerlink" title="1.5 高级主题"></a>1.5 高级主题</h3><h4 id="1-5-1-结合桶的线性差值-Linear-Interpolation-with-Bucketing"><a href="#1-5-1-结合桶的线性差值-Linear-Interpolation-with-Bucketing" class="headerlink" title="1.5.1 结合桶的线性差值(Linear Interpolation with Bucketing)"></a>1.5.1 结合桶的线性差值(Linear Interpolation with Bucketing)</h4><p>在线性插值模型中，参数估计定义为</p>
+<script type="math/tex; mode=display">
+q(w|u,v) = \lambda_1 \times q_{ML}(w|u,v) + \lambda_2 \times q_{ML}(w|v) + 
+\lambda_3 \times q_{ML}(w)</script><p>其中$\lambda_1,\lambda_2,\lambda_3$是该方法中的平滑参数。</p>
+<p>​    在实际中，重要的是允许平滑参数随着二元组$(u,v)$的变化而变化，特别是，$c(u,v)$越大，$\lambda_1 $应该越大。 （并且类似地，$c(v)$越大，$\lambda_2$越大）。 实现这一目标的经典方法是通过一种通常被称为“桶”(bucketing)的扩展。</p>
+<p>​    此方法的第一步是定义一个将二元组$(u,v)$映射到$\Pi(u,v)\in \{1,2,…,K\}$的函数$\Pi$，其中$K$是桶的数量。 因此，该函数将二元组分划分为$K$个不同的子集。 该函数是手动定义的，通常取决于训练数据中的计数。$K=3$时，一个例子为</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+\Pi(u,v) &= 1 &如果c(u,v) > 0\\
+\Pi(u,v) &= 2 &如果c(u,v) = 0且c(v)>0\\
+\Pi(u,v) &= 3 &其他
+\end{aligned}</script><p>这是一个非常简单的定义，该定义根据$c(u,v)$和$c(v)$是否等于$0$来定义。</p>
+<p>​    再看另一个稍微复杂的定义，它对二元组$(u,v)$的频率更敏感</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+\Pi(u,v) &= 1 &如果100\le c(u,v)\\
+\Pi(u,v) &= 2 &如果50\le c(u,v) < 100\\
+\Pi(u,v) &= 3 &如果20\le c(u,v) < 50\\
+\Pi(u,v) &= 4 &如果10\le c(u,v) < 20\\
+\Pi(u,v) &= 5 &如果5\le c(u,v) < 10\\
+\Pi(u,v) &= 6 &如果2\le c(u,v) <5\\
+\Pi(u,v) &= 7 &如果 c(u,v)=1\\
+\Pi(u,v) &= 8 &如果 c(u,v)=0,c(v)>0\\
+\Pi(u,v) &= 9 &其他
+
+\end{aligned}</script><p>​    给定函数$\Pi(u,v)$的定义，对于任意$k\in \{1,2,…,K\}$，我们引入平滑参数$\lambda_1^{(k)},\lambda_2^{(k)},\lambda_3^{(k)}$。因此，每个桶具有其自己的一组平滑参数。对于所有$k\in \{1,2,…,K\}$，我们有如下约束</p>
+<script type="math/tex; mode=display">
+\lambda_1^{(k)}\ge 0,\lambda_2^{(k)}\ge 0,\lambda_3^{(k)}\ge 0</script><p>以及</p>
+<script type="math/tex; mode=display">
+\lambda_1^{(k)}+\lambda_2^{(k)}+\lambda_3^{(k)} =1</script><p>线性插值估计将是</p>
+<script type="math/tex; mode=display">
+q(w|u,v) = \lambda_1^{(k)} \times q_{ML}(w|u,v) + \lambda_2^{(k)} \times q_{ML}(w|v) + 
+\lambda_3^{(k)} \times q_{ML}(w)</script><p>其中</p>
+<script type="math/tex; mode=display">
+k =\Pi (u,v)</script><p>因此，我们已经关键地引入了平滑参数对于$\Pi(u,v)$的依赖性。 所以，每个桶都有自己的一组平滑参数; 平滑参数的值可以根据$\Pi(u,v)$的值而变化（通常与$c(u,v),c(v)$直接相关）。</p>
+<p>​    使用开发数据集再次估计平滑参数。 如果我们再次将$c’(u,v,w)$定义为三元组$(u,v,w)$出现在开发数据中的次数，开发数据的对数似然性是</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+&\sum_{u,v,w} c'(u,v,w) \log q_D(w|u,v)\\
+=&\sum_{u,v,w} c'(u,v,w)  \log\Big(
+ \lambda_1^{(\Pi(u,v))} \times q_{ML}(w|u,v) + \lambda_2^{(\Pi(u,v))} \times q_{ML}(w|v) + \lambda_3^{(\Pi(u,v))} \times q_{ML}(w)
+\Big) \\
+=&\sum_{k=1}^K\sum_{u,v,w:\Pi(u,v)=k} c'(u,v,w)
+\log\Big(
+ \lambda_1^{(k)} \times q_{ML}(w|u,v) + \lambda_2^{(k)} \times q_{ML}(w|v) + \lambda_3^{(k)} \times q_{ML}(w)
+\Big)
+\end{aligned}</script><p>我们选择$\lambda_1^{(k)},\lambda_2^{(k)},\lambda_3^{(k)}$来使上述函数最大化。</p>
+<h2 id="本讲测验题"><a href="#本讲测验题" class="headerlink" title="本讲测验题"></a>本讲测验题</h2><h3 id="Coursera部分"><a href="#Coursera部分" class="headerlink" title="Coursera部分"></a>Coursera部分</h3><h4 id="1"><a href="#1" class="headerlink" title="1."></a>1.</h4><p><img src="https://github.com/Doraemonzzz/md-photo/blob/master/Michael%20Collins%20NLP/Lecture%202/q1.jpg?raw=true" alt=""></p>
+<p>可以产生的句子为</p>
+<ul>
+<li>the</li>
+<li>the dog</li>
+<li>the dog runs</li>
+</ul>
+<p>所以答案为$3$</p>
+<h4 id="2"><a href="#2" class="headerlink" title="2."></a>2.</h4><p><img src="https://github.com/Doraemonzzz/md-photo/blob/master/Michael%20Collins%20NLP/Lecture%202/q2.jpg?raw=true" alt=""></p>
+<p>c,e,f</p>
+<h4 id="3"><a href="#3" class="headerlink" title="3."></a>3.</h4><p><img src="https://github.com/Doraemonzzz/md-photo/blob/master/Michael%20Collins%20NLP/Lecture%202/q3.jpg?raw=true" alt=""></p>
+<p>the dog runs STOP</p>
+<script type="math/tex; mode=display">
+p_1= 1\times 0.5\times 1\times 1= \frac 1 2</script><p>the cat walks STOP</p>
+<script type="math/tex; mode=display">
+p_2= 1\times 0.5\times 1\times 1 = \frac 1 2</script><p>the dog runs STOP</p>
+<script type="math/tex; mode=display">
+p_3= 1\times 0.5\times 1\times 1 = \frac 1 2</script><p>所以困惑度为</p>
+<script type="math/tex; mode=display">
+\frac 1 {\sqrt[12] \frac 1 8} \approx 1.189</script><h4 id="4"><a href="#4" class="headerlink" title="4."></a>4.</h4><p><img src="https://github.com/Doraemonzzz/md-photo/blob/master/Michael%20Collins%20NLP/Lecture%202/q4.jpg?raw=true" alt=""></p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+q_{ML}(\text{book}|\text{the},\text{green})&= \frac{1}{1} \\
+ q_{ML}(\text{book}|\text{green})&= \frac{1}{2} \\
+  q_{ML}(\text{book})&= \frac{3}{14}
+\end{aligned}</script><p>所以</p>
+<script type="math/tex; mode=display">
+q_{LI}(\text{book}|\text{the},\text{green})
+=\frac 1 3 \times 1+\frac 1 3\times \frac 1 2 +\frac 1 3 \times \frac 3 {14}
+\approx0.571</script><h4 id="5"><a href="#5" class="headerlink" title="5."></a>5.</h4><p><img src="https://github.com/Doraemonzzz/md-photo/blob/master/Michael%20Collins%20NLP/Lecture%202/q5.jpg?raw=true" alt=""></p>
+<p>因为</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+\sum_{w\in \mathcal V} q(w|u,v) 
+&= \lambda_1 \times\sum_{w\in \mathcal V}  q_{ML}(w|u,v) + \lambda_2 \times \sum_{w\in \mathcal V} q_{ML}(w|v) + \lambda_3 \times\sum_{w\in \mathcal V}  q_{ML}(w)\\
+&=\lambda_1+\lambda_2+\lambda_3\\
+&=1
+\end{aligned}</script><p>所以(a)不会发生。</p>
+<p>(b)可能会发生，只要$q_{ML}(w|v)= q_{ML}(w)=0$</p>
+<p>(c)可能会发生，只要$q_{ML}(w|u,v)=0, q_{ML}(w|v)= q_{ML}(w)=1$</p>
+<h4 id="6"><a href="#6" class="headerlink" title="6."></a>6.</h4><p><img src="https://github.com/Doraemonzzz/md-photo/blob/master/Michael%20Collins%20NLP/Lecture%202/q6.jpg?raw=true" alt=""></p>
+<p>注意到</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+\alpha(v)
+&= 1-\sum_{w:c(v,w)>0}  \frac{c^*(v,w) }{c(v)}\\
+&=1-\sum_{w:c(v,w)>0}  \frac{c(v,w)-\beta }{c(v)} \\
+&=\sum_{w:c(v,w)>0}\frac{\beta}{c(v)}
+\end{aligned}</script><p>所以</p>
+<script type="math/tex; mode=display">
+\alpha(\text{the})= 15\times 0.3 / 70\approx 0.0642</script><h4 id="7"><a href="#7" class="headerlink" title="7."></a>7.</h4><p><img src="https://github.com/Doraemonzzz/md-photo/blob/master/Michael%20Collins%20NLP/Lecture%202/q7.jpg?raw=true" alt=""></p>
+<p>注意到</p>
+<script type="math/tex; mode=display">
+c(\text{his},\text{book}) =0 ,c(\text{his})= 1,c(\text{his},\text{house}) =1</script><p>所以</p>
+<script type="math/tex; mode=display">
+\alpha(\text{his}) = 1- \frac{1-0.5}{1} =\frac 1 2</script><p>此时用估计式</p>
+<script type="math/tex; mode=display">
+\alpha(v)\times\frac{q_{ML}(w)}{\sum_{w\in \mathcal B(v)} q_{ML}(w)}</script><p>因为</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+q(\text{book})&=\frac 1 6\\
+q(\text{the})&=\frac 16\\
+q(\text{STOP})&=\frac 26\\
+q(\text{his})&=\frac 16\\
+\mathcal B(\text{his})&=\{\text{the,book,STOP,his}\}
+\end{aligned}</script><p>所以</p>
+<script type="math/tex; mode=display">
+\frac{q_{ML}(\text{book})}{\sum_{w\in \mathcal B(\text{his})} q_{ML}(w)} 
+= \frac{1/6}{1/6+1/6+2/6+1/6}  =\frac 1 5</script><p>从而</p>
+<script type="math/tex; mode=display">
+q_{D}(\text{book}|\text{his}) =\frac 1 2 \times \frac 1 5 = \frac 1 {10}</script><h3 id="课内部分"><a href="#课内部分" class="headerlink" title="课内部分"></a>课内部分</h3><h4 id="1-1"><a href="#1-1" class="headerlink" title="1."></a>1.</h4><p><img src="https://github.com/Doraemonzzz/md-photo/blob/master/Michael%20Collins%20NLP/Lecture%202/Qu1.jpg?raw=true" alt=""></p>
+<p>因为概率和为$1$，所以类似三元模型，可以定义</p>
+<script type="math/tex; mode=display">
+\alpha(t, u, v)=
+1- \sum_{w \in \mathcal{A}(t, u, v)} \frac{c^{*}(t, u, v, w)}{c(t, u, v)}</script><h4 id="2-1"><a href="#2-1" class="headerlink" title="2."></a>2.</h4><p><img src="https://github.com/Doraemonzzz/md-photo/blob/master/Michael%20Collins%20NLP/Lecture%202/Qu2.jpg?raw=true" alt=""></p>
+<p>2a：</p>
+<p>如果存在$p(x^{(i)})=0$，那么$l\to -\infty$，$2^{-l}\to \infty$，因此最大值为$\infty$。</p>
+<p>2b：</p>
+<p>因为$p(x^{(i)})\le 1$，所以</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+l&=\frac{1}{M} \sum_{i=1}^{m} \log _{2} p(x^{(i)}) \le 0\\
+2^{-l}&\ge 1
+\end{aligned}</script><p>所以最小值为$1$。</p>
+<p>2c：</p>
+<p>训练语料：</p>
+<script type="math/tex; mode=display">
+\text{the a STOP}</script><p>测试语料：</p>
+<script type="math/tex; mode=display">
+\text{a the STOP}</script><p>2d：</p>
+<p>训练语料：</p>
+<script type="math/tex; mode=display">
+\text{the a STOP}</script><p>测试语料：</p>
+<script type="math/tex; mode=display">
+\text{the a STOP}</script><h4 id="3-1"><a href="#3-1" class="headerlink" title="3."></a>3.</h4><p><img src="https://github.com/Doraemonzzz/md-photo/blob/master/Michael%20Collins%20NLP/Lecture%202/Qu31.jpg?raw=true" alt=""></p>
+<p><img src="https://github.com/Doraemonzzz/md-photo/blob/master/Michael%20Collins%20NLP/Lecture%202/Qu32.jpg?raw=true" alt=""></p>
+<p><img src="https://github.com/Doraemonzzz/md-photo/blob/master/Michael%20Collins%20NLP/Lecture%202/Qu33.jpg?raw=true" alt=""></p>
+<p>3a：</p>
+<script type="math/tex; mode=display">
+\begin{aligned} 
+& q(w | u, v) \\
+=\quad& \alpha \times q_{M L}(w | u, v)+(1-\alpha) \times\left(\beta \times q_{M L}(w | u)+(1-\beta) \times q_{M L}(w)\right) \\
+=\quad& \alpha \times q_{M L}(w | u, v) +(1-\alpha)\times\beta\times  q_{M L}(w | u)
++(1-\alpha)\times (1-\beta)\times  q_{M L}(w)
+\end{aligned}</script><p>所以</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+\lambda_1 &=\alpha\\
+\lambda_2 &=(1-\alpha)\beta\\
+\lambda_3 &=(1-\alpha)(1-\beta)
+\end{aligned}</script><p>如果</p>
+<script type="math/tex; mode=display">
+\alpha =\beta =\frac 12</script><p>那么</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+\lambda_1 &=\frac 1 2\\
+\lambda_2 &=\frac 1 4\\
+\lambda_3 &=\frac 1 4
+\end{aligned}</script><p>3b：</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+\sum_w q(w | u, v)
+&=\sum_w \alpha(u, v) \times q_{M L}(w | u, v)
++(1-\alpha(u, v)) \times \left(\beta(u) \times q_{M L}(w | u)+(1-\beta(u)) \times q_{M L}(w)\right)\\
+&= \alpha(u, v) +(1-\alpha(u, v)) \times (\beta(u) +1-\beta(u))\\
+&= \alpha(u, v) + (1-\alpha(u, v))\\
+&=1
+\end{aligned}</script><p>3c：</p>
+<p>直觉是如果$(u,v),u$出现的次数较多，那么$q_{M L}(w | u, v),q_{M L}(w | u)$占的权重应该较大，$C_1,C_2$是为了防止分母为$0$并且决定权重趋于$0$的速度。</p>
+<p>3d：</p>
+<p>只要说明$q(w|u,v)&gt;0$即可，因为</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+q(w | u, v)
+= \alpha(u, v) \times q_{M L}(w | u, v)
++(1-\alpha(u, v)) \times \left(\beta(u) \times q_{M L}(w | u)+(1-\beta(u)) \times q_{M L}(w)\right)
+\end{aligned}</script><p>因为任取测试语料库中的单词$u$，我们有$\text{Count}(u)&gt;0$，所以</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+q(w | u, v) 
+&\ge (1-\alpha(u, v)) \times (1-\beta(u)) \times q_{ML}(w)\\
+&=\frac{C_1}{\text{Count}(u,v) +C_1}\times \frac{C_2}{\text{Count}(u) +C_2} \times q_{ML}(w) \\
+&>0
+\end{aligned}</script><h4 id="4-1"><a href="#4-1" class="headerlink" title="4."></a>4.</h4><p><img src="https://github.com/Doraemonzzz/md-photo/blob/master/Michael%20Collins%20NLP/Lecture%202/Qu4.jpg?raw=true" alt=""></p>
+<p>第一个命题错误，反例如下</p>
+<script type="math/tex; mode=display">
+\text{Count}^* (u,v) = 1-1.5=-0.5</script><p>第二个命题正确，因为：</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+\sum_{w} q_{B O}(w | v)
+&= \sum_{w\in \mathcal A(v)} \frac{\text{Count}^{*}\left(v, w\right)}
+{\text{Count}\left(v\right)}+
+\sum_{w\in \mathcal B(v)} \alpha(v)\frac{\text{Count}^{*}\left(v, w\right)}
+{\text{Count}\left(v\right)}\\
+&=1-\alpha(v)+\alpha(v)\\
+&=1
+\end{aligned}</script></article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">Doraemonzzz</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="http://doraemonzzz.com/2019/01/27/Michael%20Collins%20NLP%20Lecture%202/">http://doraemonzzz.com/2019/01/27/Michael%20Collins%20NLP%20Lecture%202/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://doraemonzzz.com" target="_blank">Doraemonzzz</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/Michael-Collins-NLP/">Michael Collins NLP</a></div><div class="post_share"><div class="social-share" data-image="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2019/01/29/%E5%8F%B0%E5%A4%A7%E5%AE%9E%E5%88%86%E6%9E%90%E5%8D%95%E5%85%83%2019%20Caratheodory%20Measure%205/"><img class="prev-cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">台大实分析单元 19 Caratheodory Measure 5</div></div></a></div><div class="next-post pull-right"><a href="/2019/01/27/CS229%20Lesson%2020%20%E7%AD%96%E7%95%A5%E6%90%9C%E7%B4%A2/"><img class="next-cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">CS229 Lesson 20 策略搜索</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span> 相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2020/04/08/Michael Collins NLP Homework 1/" title="Michael Collins NLP Homework 1"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-04-08</div><div class="title">Michael Collins NLP Homework 1</div></div></a></div><div><a href="/2020/04/21/Michael Collins NLP Homework 2/" title="Michael Collins NLP Homework 2"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-04-21</div><div class="title">Michael Collins NLP Homework 2</div></div></a></div><div><a href="/2020/05/07/Michael Collins NLP Homework 3/" title="Michael Collins NLP Homework 3"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-05-07</div><div class="title">Michael Collins NLP Homework 3</div></div></a></div><div><a href="/2020/05/18/Michael Collins NLP Homework 4/" title="Michael Collins NLP Homework 4"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-05-18</div><div class="title">Michael Collins NLP Homework 4</div></div></a></div><div><a href="/2019/01/24/Michael Collins NLP Lecture 1/" title="Michael Collins NLP Lecture 1"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2019-01-24</div><div class="title">Michael Collins NLP Lecture 1</div></div></a></div><div><a href="/2019/03/03/Michael Collins NLP Lecture 11/" title="Michael Collins NLP Lecture 11"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2019-03-03</div><div class="title">Michael Collins NLP Lecture 11</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="card-info-avatar is-center"><img class="avatar-img" src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/><div class="author-info__name">Doraemonzzz</div><div class="author-info__description">个人博客，主要记录有关机器学习，数学以及计算机科学的笔记</div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">610</div></a></div><div class="card-info-data-item is-center"><a href="/tags/"><div class="headline">标签</div><div class="length-num">59</div></a></div><div class="card-info-data-item is-center"><a href="/categories/"><div class="headline">分类</div><div class="length-num">23</div></a></div></div><a class="button--animated" id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/Doraemonzzz" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="/doraemon_zzz@163.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn card-announcement-animation"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-3-%E4%B8%89%E5%85%83%E8%AF%AD%E8%A8%80%E6%A8%A1%E5%9E%8B"><span class="toc-number">1.</span> <span class="toc-text">1.3 三元语言模型</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-3-1-%E5%9F%BA%E6%9C%AC%E5%AE%9A%E4%B9%89"><span class="toc-number">1.1.</span> <span class="toc-text">1.3.1 基本定义</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%AE%9A%E4%B9%89-2-%EF%BC%88%E4%B8%89%E5%85%83%E8%AF%AD%E8%A8%80%E6%A8%A1%E5%9E%8B%EF%BC%89"><span class="toc-number">1.1.1.</span> <span class="toc-text">定义 2 （三元语言模型）</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-3-2-%E6%9C%80%E5%A4%A7%E4%BC%BC%E7%84%B6%E4%BC%B0%E8%AE%A1"><span class="toc-number">1.2.</span> <span class="toc-text">1.3.2 最大似然估计</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-3-3-%E8%AF%84%E4%BC%B0%E8%AF%AD%E8%A8%80%E6%A8%A1%E5%9E%8B%EF%BC%9A%E5%9B%B0%E6%83%91%E5%BA%A6%EF%BC%88Perplexity%EF%BC%89"><span class="toc-number">1.3.</span> <span class="toc-text">1.3.3 评估语言模型：困惑度（Perplexity）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-3-4-%E4%B8%89%E5%85%83%E8%AF%AD%E8%A8%80%E6%A8%A1%E5%9E%8B%E7%9A%84%E4%BC%98%E7%BC%BA%E7%82%B9"><span class="toc-number">1.4.</span> <span class="toc-text">1.3.4 三元语言模型的优缺点</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-4-%E4%B8%89%E5%85%83%E6%A8%A1%E5%9E%8B%E7%9A%84%E5%B9%B3%E6%BB%91%E4%BC%B0%E8%AE%A1"><span class="toc-number">2.</span> <span class="toc-text">1.4 三元模型的平滑估计</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-4-1-%E7%BA%BF%E6%80%A7%E6%8F%92%E5%80%BC"><span class="toc-number">2.1.</span> <span class="toc-text">1.4.1 线性插值</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-4-2-%E6%8A%98%E6%89%A3%E6%96%B9%E6%B3%95-Discounting-Methods"><span class="toc-number">2.2.</span> <span class="toc-text">1.4.2 折扣方法(Discounting Methods)</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#Katz-Back-Off-Models"><span class="toc-number">2.2.1.</span> <span class="toc-text">Katz Back-Off Models</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-5-%E9%AB%98%E7%BA%A7%E4%B8%BB%E9%A2%98"><span class="toc-number">3.</span> <span class="toc-text">1.5 高级主题</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-5-1-%E7%BB%93%E5%90%88%E6%A1%B6%E7%9A%84%E7%BA%BF%E6%80%A7%E5%B7%AE%E5%80%BC-Linear-Interpolation-with-Bucketing"><span class="toc-number">3.1.</span> <span class="toc-text">1.5.1 结合桶的线性差值(Linear Interpolation with Bucketing)</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9C%AC%E8%AE%B2%E6%B5%8B%E9%AA%8C%E9%A2%98"><span class="toc-number"></span> <span class="toc-text">本讲测验题</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Coursera%E9%83%A8%E5%88%86"><span class="toc-number">1.</span> <span class="toc-text">Coursera部分</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1"><span class="toc-number">1.1.</span> <span class="toc-text">1.</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2"><span class="toc-number">1.2.</span> <span class="toc-text">2.</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3"><span class="toc-number">1.3.</span> <span class="toc-text">3.</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4"><span class="toc-number">1.4.</span> <span class="toc-text">4.</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#5"><span class="toc-number">1.5.</span> <span class="toc-text">5.</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#6"><span class="toc-number">1.6.</span> <span class="toc-text">6.</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#7"><span class="toc-number">1.7.</span> <span class="toc-text">7.</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AF%BE%E5%86%85%E9%83%A8%E5%88%86"><span class="toc-number">2.</span> <span class="toc-text">课内部分</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-1"><span class="toc-number">2.1.</span> <span class="toc-text">1.</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-1"><span class="toc-number">2.2.</span> <span class="toc-text">2.</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-1"><span class="toc-number">2.3.</span> <span class="toc-text">3.</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-1"><span class="toc-number">2.4.</span> <span class="toc-text">4.</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2021/06/06/2021-6-6-%E7%AE%97%E6%B3%95%E6%A6%82%E8%AE%BA(DPV)%E4%B9%A0%E9%A2%98%E8%A7%A3%E7%AD%94%E2%80%94%E2%80%94%E7%AC%AC3%E7%AB%A0-%E5%9B%BE%E7%9A%84%E5%88%86%E8%A7%A3/" title="算法概论(DPV)习题解答——第3章 图的分解"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="算法概论(DPV)习题解答——第3章 图的分解"/></a><div class="content"><a class="title" href="/2021/06/06/2021-6-6-%E7%AE%97%E6%B3%95%E6%A6%82%E8%AE%BA(DPV)%E4%B9%A0%E9%A2%98%E8%A7%A3%E7%AD%94%E2%80%94%E2%80%94%E7%AC%AC3%E7%AB%A0-%E5%9B%BE%E7%9A%84%E5%88%86%E8%A7%A3/" title="算法概论(DPV)习题解答——第3章 图的分解">算法概论(DPV)习题解答——第3章 图的分解</a><time datetime="2021-06-06T14:35:00.000Z" title="发表于 2021-06-06 22:35:00">2021-06-06</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/06/06/2021-6-6-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E7%AC%AC5%E7%AB%A0-%E4%B9%A0%E9%A2%98%E8%A7%A3%E6%9E%90/" title="深入理解计算机系统 第5章 习题解析"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="深入理解计算机系统 第5章 习题解析"/></a><div class="content"><a class="title" href="/2021/06/06/2021-6-6-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E7%AC%AC5%E7%AB%A0-%E4%B9%A0%E9%A2%98%E8%A7%A3%E6%9E%90/" title="深入理解计算机系统 第5章 习题解析">深入理解计算机系统 第5章 习题解析</a><time datetime="2021-06-06T07:23:00.000Z" title="发表于 2021-06-06 15:23:00">2021-06-06</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/06/05/2021-6-5-Stanford-Compiler-PA5%E7%BF%BB%E8%AF%91/" title="Stanford Compiler PA5翻译"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Stanford Compiler PA5翻译"/></a><div class="content"><a class="title" href="/2021/06/05/2021-6-5-Stanford-Compiler-PA5%E7%BF%BB%E8%AF%91/" title="Stanford Compiler PA5翻译">Stanford Compiler PA5翻译</a><time datetime="2021-06-05T06:12:00.000Z" title="发表于 2021-06-05 14:12:00">2021-06-05</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/06/04/2021-6-4-Stanford-Compiler-PA4%E7%BF%BB%E8%AF%91/" title="Stanford Compiler PA4翻译"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Stanford Compiler PA4翻译"/></a><div class="content"><a class="title" href="/2021/06/04/2021-6-4-Stanford-Compiler-PA4%E7%BF%BB%E8%AF%91/" title="Stanford Compiler PA4翻译">Stanford Compiler PA4翻译</a><time datetime="2021-06-03T16:17:00.000Z" title="发表于 2021-06-04 00:17:00">2021-06-04</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/06/03/2021-6-3-%E5%B7%A7%E5%A6%99%E7%9A%84Y%E8%BF%90%E7%AE%97%E7%AC%A6/" title="巧妙的Y运算符"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="巧妙的Y运算符"/></a><div class="content"><a class="title" href="/2021/06/03/2021-6-3-%E5%B7%A7%E5%A6%99%E7%9A%84Y%E8%BF%90%E7%AE%97%E7%AC%A6/" title="巧妙的Y运算符">巧妙的Y运算符</a><time datetime="2021-06-03T00:54:00.000Z" title="发表于 2021-06-03 08:54:00">2021-06-03</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2021 By Doraemonzzz</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><div class="js-pjax"><script>if (!window.MathJax) {
+  window.MathJax = {
+    loader: {
+      source: {
+        '[tex]/amsCd': '[tex]/amscd'
+      }
+    },
+    tex: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]],
+      tags: 'ams'
+    },
+    options: {
+      renderActions: {
+        findScript: [10, doc => {
+          for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+            const display = !!node.type.match(/; *mode=display/)
+            const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+            const text = document.createTextNode('')
+            node.parentNode.replaceChild(text, node)
+            math.start = {node: text, delim: '', n: 0}
+            math.end = {node: text, delim: '', n: 0}
+            doc.math.push(math)
+          }
+        }, ''],
+        addClass: [200,() => {
+          document.querySelectorAll('mjx-container:not([display=\'true\']').forEach( node => {
+            const target = node.parentNode
+            if (!target.classList.contains('has-jax')) {
+              target.classList.add('mathjax-overflow')
+            }
+          })
+        }, '', false]
+      }
+    }
+  }
+  
+  const script = document.createElement('script')
+  script.src = 'https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js'
+  script.id = 'MathJax-script'
+  script.async = true
+  document.head.appendChild(script)
+} else {
+  MathJax.startup.document.state(0)
+  MathJax.texReset()
+  MathJax.typeset()
+}</script></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

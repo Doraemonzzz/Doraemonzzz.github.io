@@ -1,0 +1,660 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Stanford Compiler PA2 | Doraemonzzz</title><meta name="keywords" content="斯坦福大学编译原理"><meta name="author" content="Doraemonzzz"><meta name="copyright" content="Doraemonzzz"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="课程主页： https:&#x2F;&#x2F;www.edx.org&#x2F;course&#x2F;compilers 课程视频： https:&#x2F;&#x2F;www.bilibili.com&#x2F;video&#x2F;BV1NE411376V?p&#x3D;20&amp;t&#x3D;6 这次回顾作业2——词法分析。个人感觉这次作业还是很难的，主要是以下几点：  flex工具的使用——入手需要看一定的资料，并不是半天就能掌握的。 正则表达式识别的逻辑——例如注释和字符串的正">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Stanford Compiler PA2">
+<meta property="og:url" content="http://doraemonzzz.com/2021/03/21/Stanford%20Compiler%20PA2/index.html">
+<meta property="og:site_name" content="Doraemonzzz">
+<meta property="og:description" content="课程主页： https:&#x2F;&#x2F;www.edx.org&#x2F;course&#x2F;compilers 课程视频： https:&#x2F;&#x2F;www.bilibili.com&#x2F;video&#x2F;BV1NE411376V?p&#x3D;20&amp;t&#x3D;6 这次回顾作业2——词法分析。个人感觉这次作业还是很难的，主要是以下几点：  flex工具的使用——入手需要看一定的资料，并不是半天就能掌握的。 正则表达式识别的逻辑——例如注释和字符串的正">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg">
+<meta property="article:published_time" content="2021-03-21T14:16:00.000Z">
+<meta property="article:modified_time" content="2021-03-21T14:19:55.900Z">
+<meta property="article:author" content="Doraemonzzz">
+<meta property="article:tag" content="斯坦福大学编译原理">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="http://doraemonzzz.com/2021/03/21/Stanford%20Compiler%20PA2/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"prismjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    jQuery: 'https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js',
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+    },
+    fancybox: {
+      js: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isanchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'Stanford Compiler PA2',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2021-03-21 22:19:55'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    })(window)</script><meta name="generator" content="Hexo 5.4.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="author-avatar"><img class="avatar-img" src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">文章</div><div class="length-num">610</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">标签</div><div class="length-num">59</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/categories/"><div class="headline">分类</div><div class="length-num">23</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">Doraemonzzz</a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">Stanford Compiler PA2</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2021-03-21T14:16:00.000Z" title="发表于 2021-03-21 22:16:00">2021-03-21</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2021-03-21T14:19:55.900Z" title="更新于 2021-03-21 22:19:55">2021-03-21</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/">编译原理</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="Stanford Compiler PA2"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p>课程主页：</p>
+<p><a target="_blank" rel="noopener" href="https://www.edx.org/course/compilers">https://www.edx.org/course/compilers</a></p>
+<p>课程视频：</p>
+<p><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1NE411376V?p=20&amp;t=6">https://www.bilibili.com/video/BV1NE411376V?p=20&amp;t=6</a></p>
+<p>这次回顾作业2——词法分析。个人感觉这次作业还是很难的，主要是以下几点：</p>
+<ol>
+<li>flex工具的使用——入手需要看一定的资料，并不是半天就能掌握的。</li>
+<li>正则表达式识别的逻辑——例如注释和字符串的正则表达式应该怎样写才能保证不漏不重。</li>
+<li>Cool编程语言的规则——这部分算是相对简单的，但是入门文档也有30页有余，还是需要花一定时间的。</li>
+</ol>
+<p>这次基本是根据大佬的解答才勉强理解的，这里会给出代码的逻辑解释，基本是算是对大佬代码的解析了，主要参考了第一份资料：</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/skyzluo/CS143-Compilers-Stanford">https://github.com/skyzluo/CS143-Compilers-Stanford</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/afterthat97/cool-compiler">https://github.com/afterthat97/cool-compiler</a></li>
+</ul>
+<p>其余参考资料：</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/benladeng29hao/article/details/109111367">https://blog.csdn.net/benladeng29hao/article/details/109111367</a></li>
+<li><a target="_blank" rel="noopener" href="http://dinosaur.compilertools.net/lex/index.html">http://dinosaur.compilertools.net/lex/index.html</a></li>
+<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/deepfuture/article/details/83523136">https://blog.csdn.net/deepfuture/article/details/83523136</a></li>
+</ul>
+<span id="more"></span>
+<h2 id="作业分析"><a href="#作业分析" class="headerlink" title="作业分析"></a>作业分析</h2><h3 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h3><p>完成本次作业的整体流程如下：</p>
+<ol>
+<li><p>阅读如下内容：</p>
+<ol>
+<li>PA2。</li>
+<li>cool-manual至少第10章，11章。</li>
+<li>flex介绍：<ol>
+<li><a target="_blank" rel="noopener" href="http://dinosaur.compilertools.net/lex/index.html">http://dinosaur.compilertools.net/lex/index.html</a></li>
+<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/deepfuture/article/details/83523136">https://blog.csdn.net/deepfuture/article/details/83523136</a></li>
+</ol>
+</li>
+<li>cool-parse.h，stringtab.h，stringtab_functions.h</li>
+</ol>
+</li>
+<li><p>编写cool.flex</p>
+</li>
+<li><p>下载评分脚本：</p>
+<pre class="line-numbers language-none"><code class="language-none">wget https:&#x2F;&#x2F;courses.edx.org&#x2F;assets&#x2F;courseware&#x2F;v1&#x2F;2aa4dec0c84ec3a8d91e0c1d8814452b&#x2F;asset-v1:StanfordOnline+SOE.YCSCS1+1T2020+type@asset+block&#x2F;pa1-grading.pl<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>编译：</p>
+<pre class="line-numbers language-none"><code class="language-none">make lexer<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>测试：</p>
+<pre class="line-numbers language-none"><code class="language-none">perl pa1-grading.pl<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+</li>
+</ol>
+<h4 id="报错处理"><a href="#报错处理" class="headerlink" title="报错处理"></a>报错处理</h4><p>如果</p>
+<pre class="line-numbers language-shell" data-language="shell"><code class="language-shell"><span class="token function">make</span> lexer<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>产生如下报错：</p>
+<pre class="line-numbers language-none"><code class="language-none">&#x2F;usr&#x2F;bin&#x2F;ld: &#x2F;usr&#x2F;lib&#x2F;gcc&#x2F;x86_64-linux-gnu&#x2F;9&#x2F;..&#x2F;..&#x2F;..&#x2F;x86_64-linux-gnu&#x2F;libfl.so: undefined reference to &#96;yylex&#39; collect2: error: ld returned 1 exit status<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>那么在definitions和rules之间增加如下内容即可：</p>
+<pre class="line-numbers language-none"><code class="language-none">%option noyywrap<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>参考资料：</p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/benladeng29hao/article/details/109111367">https://blog.csdn.net/benladeng29hao/article/details/109111367</a></p>
+<h5 id="几个重要变量"><a href="#几个重要变量" class="headerlink" title="几个重要变量"></a>几个重要变量</h5><p>cool_yylval——该变量记录相关信息，这部分使用如下属性：</p>
+<ul>
+<li>error_msg（报错）</li>
+<li>symbol（符号表中变量）</li>
+<li>boolean（布尔变量的值）</li>
+</ul>
+<p>相关代码：</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">extern</span> YYSTYPE cool_yylval<span class="token punctuation">;</span>
+
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">if</span> <span class="token expression"><span class="token operator">!</span> defined YYSTYPE <span class="token operator">&amp;&amp;</span> <span class="token operator">!</span> defined YYSTYPE_IS_DECLARED</span></span>
+<span class="token keyword">typedef</span> <span class="token keyword">union</span> YYSTYPE
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">line</span> <span class="token expression"><span class="token number">46</span> </span><span class="token string">"cool.y"</span></span>
+<span class="token punctuation">&#123;</span>
+  Boolean boolean<span class="token punctuation">;</span>
+  Symbol symbol<span class="token punctuation">;</span>
+  Program program<span class="token punctuation">;</span>
+  Class_ class_<span class="token punctuation">;</span>
+  Classes classes<span class="token punctuation">;</span>
+  Feature feature<span class="token punctuation">;</span>
+  Features features<span class="token punctuation">;</span>
+  Formal formal<span class="token punctuation">;</span>
+  Formals formals<span class="token punctuation">;</span>
+  Case case_<span class="token punctuation">;</span>
+  Cases cases<span class="token punctuation">;</span>
+  Expression expression<span class="token punctuation">;</span>
+  Expressions expressions<span class="token punctuation">;</span>
+  <span class="token keyword">char</span> <span class="token operator">*</span>error_msg<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>三个string table：</p>
+<ul>
+<li>idtable</li>
+<li>inttable</li>
+<li>stringtable</li>
+</ul>
+<p>记录标识符，整数，字符串的信息。</p>
+<h3 id="流程图"><a href="#流程图" class="headerlink" title="流程图"></a>流程图</h3><p>整个词法分析的过程可以用如下流程图概括：</p>
+<p><img src="https://github.com/Doraemonzzz/md-photo/blob/master/Compiler/PA2/%E8%AF%8D%E6%B3%95%E5%88%86%E6%9E%90.jpg?raw=true" alt=""></p>
+<h3 id="词法分析"><a href="#词法分析" class="headerlink" title="词法分析"></a>词法分析</h3><p>所有的说明都在代码中，需要补充的点会加以补充。</p>
+<h4 id="注释"><a href="#注释" class="headerlink" title="注释"></a>注释</h4><pre class="line-numbers language-none"><code class="language-none"> &#x2F;*
+  *  Nested comments
+  *&#x2F;
+
+ &#x2F;* 只有不在STRING状态时, 遇到(*才进入BLOCKCOMMENT状态,
+    commentNum记录嵌套层数, 每次遇到(*则更新。          *&#x2F;
+&lt;INITIAL,BLOCKCOMMENT,INLINECOMMENT&gt;&quot;(*&quot;                        &#123; 
+                                                                    commentNum +&#x3D; 1;
+                                                                    BEGIN BLOCKCOMMENT;
+                                                                &#125;;
+
+ &#x2F;* 如果在BLOCKCOMMENT状态遇到*), 则匹配一个(*, 即commentNum减1;
+    如果commentNum为0, 则说明BLOCKCOMMENT结束, 恢复INITIAL状态。 *&#x2F;
+&lt;BLOCKCOMMENT&gt;&quot;*)&quot;                                              &#123; 
+                                                                    commentNum -&#x3D; 1;
+                                                                    if (commentNum &#x3D;&#x3D; 0)&#123;
+                                                                        BEGIN 0;
+                                                                    &#125;
+                                                                &#125;
+
+ &#x2F;* 如果在非BLOCKCOMMENT状态遇到*), 则直接报错。 *&#x2F;
+    &quot;*)&quot;                                                        &#123; 
+                                                                    cool_yylval.error_msg &#x3D; &quot;Unmatched *)&quot;;
+                                                                    return ERROR;
+                                                                &#125;
+
+ &#x2F;* 换行 *&#x2F;
+&lt;BLOCKCOMMENT&gt;&quot;\n&quot;                                              &#123; 
+                                                                    curr_lineno++; 
+                                                                &#125;;
+
+ &#x2F;* 忽略非\n, (, *字符 *&#x2F;
+&lt;BLOCKCOMMENT&gt;[^\n(*]*                                          &#123;&#125;;
+
+ &#x2F;* 如果进入该状态, 说明匹配了(或*或)
+    如果*后续有), 根据规则的出现顺序会匹配*); 
+    如果(后续有*, 根据规则的出现顺序会匹配(*；
+    其余情形直接忽略。                *&#x2F;
+&lt;BLOCKCOMMENT&gt;[(*)]                                             &#123;&#125;;
+
+ &#x2F;* 根据4.1, COMMENT中遇到&lt;EOF&gt;直接报错 *&#x2F;
+&lt;BLOCKCOMMENT&gt;&lt;&lt;EOF&gt;&gt;                                           &#123; 
+                                                                    cool_yylval.error_msg &#x3D; &quot;EOF in comment&quot;;
+                                                                    BEGIN 0;
+                                                                    return ERROR;
+                                                                &#125;
+
+ &#x2F;*
+  * INLINECOMMENT comments
+  *&#x2F;
+
+ &#x2F;* INITIAL状态下进入INLINECOMMENT状态 *&#x2F;
+&lt;INITIAL&gt;&quot;--&quot;                                                   &#123; 
+                                                                    BEGIN INLINECOMMENT; 
+                                                                &#125;;
+
+ &#x2F;* 忽略非换行符 *&#x2F;
+&lt;INLINECOMMENT&gt;[^\n]*                                           &#123;&#125;;
+
+ &#x2F;* 识别换行符 *&#x2F;
+&lt;INLINECOMMENT&gt;&quot;\n&quot;                                             &#123;
+                                                                    curr_lineno++;
+                                                                    BEGIN 0;
+                                                                &#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h4 id="整数，标识符和特殊符号"><a href="#整数，标识符和特殊符号" class="headerlink" title="整数，标识符和特殊符号"></a>整数，标识符和特殊符号</h4><h5 id="整数"><a href="#整数" class="headerlink" title="整数"></a>整数</h5><pre class="line-numbers language-none"><code class="language-none"> &#x2F;*
+  * Integers
+  *&#x2F;
+&#123;DIGIT&#125;+                                                        &#123;   
+                                                                    cool_yylval.symbol &#x3D; inttable.add_string(yytext);
+                                                                    return INT_CONST;
+                                                                &#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h5 id="标识符"><a href="#标识符" class="headerlink" title="标识符"></a>标识符</h5><pre class="line-numbers language-none"><code class="language-none"> &#x2F;* 
+  * Identifiers
+  *&#x2F;
+[A-Z][0-9a-zA-Z_]*                                              &#123;
+                                                                    cool_yylval.symbol &#x3D; idtable.add_string(yytext);
+                                                                    return TYPEID;
+                                                                &#125;
+
+[a-z][0-9a-zA-Z_]*                                              &#123;   
+                                                                    cool_yylval.symbol &#x3D; idtable.add_string(yytext);
+                                                                    return OBJECTID;
+                                                                &#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h5 id="特殊符号"><a href="#特殊符号" class="headerlink" title="特殊符号"></a>特殊符号</h5><p>特殊符号见cool-manul的第16，17页：</p>
+<pre class="line-numbers language-none"><code class="language-none"> &#x2F;*
+  *  The multiple-character operators.
+  *&#x2F;
+&quot;&#x3D;&gt;&quot;                                                            &#123;   
+                                                                    return DARROW;
+                                                                &#125;
+
+&quot;.&quot;                                                             &#123; 
+                                                                    return &#39;.&#39;; 
+                                                                &#125;
+
+&quot;@&quot;                                                             &#123; 
+                                                                    return &#39;@&#39;; 
+                                                                &#125;
+
+&quot;~&quot;                                                             &#123;   
+                                                                    return &#39;~&#39;;
+                                                                &#125;
+
+&quot;*&quot;                                                             &#123;   
+                                                                    return &#39;*&#39;;
+                                                                &#125;
+
+&quot;&#x2F;&quot;                                                             &#123;   
+                                                                    return &#39;&#x2F;&#39;;
+                                                                &#125;
+
+&quot;+&quot;                                                             &#123; 
+                                                                    return &#39;+&#39;;
+                                                                &#125;
+
+&quot;-&quot;                                                             &#123;   
+                                                                    return &#39;-&#39;;
+                                                                &#125;
+
+&quot;&lt;&#x3D;&quot;                                                            &#123;   
+                                                                    return LE;
+                                                                &#125;
+
+&quot;&lt;&quot;                                                             &#123; 
+                                                                    return &#39;&lt;&#39;;
+                                                                &#125;
+
+&quot;&#x3D;&quot;                                                             &#123; 
+                                                                    return &#39;&#x3D;&#39;;
+                                                                &#125;
+
+&quot;&lt;-&quot;                                                            &#123; 
+                                                                    return ASSIGN;
+                                                                &#125; 
+
+&quot;:&quot;                                                             &#123; 
+                                                                    return &#39;:&#39;; 
+                                                                &#125;
+
+
+&quot;&#123;&quot;                                                             &#123; 
+                                                                    return &#39;&#123;&#39;; 
+                                                                &#125;
+
+&quot;&#125;&quot;                                                             &#123; 
+                                                                    return &#39;&#125;&#39;; 
+                                                                &#125;
+
+&quot;;&quot;                                                             &#123; 
+                                                                    return &#39;;&#39;;
+                                                                &#125;
+
+&quot;(&quot;                                                             &#123; 
+                                                                    return &#39;(&#39;;
+                                                                &#125;
+
+&quot;)&quot;                                                             &#123; 
+                                                                    return &#39;)&#39;; 
+                                                                &#125;
+
+&quot;,&quot;                                                             &#123; 
+                                                                    return &#39;,&#39;; 
+                                                                &#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h4 id="字符串"><a href="#字符串" class="headerlink" title="字符串"></a>字符串</h4><p>字符串是词法分析中最复杂的部分，这部分要详细讨论。</p>
+<p>注意我们的输入是字符串，所以如果输入是转义字符$\text{\c}$，那么得到的结果是$\text{c}$。因此，如果我们希望得到转义字符$\text{\c}$，那么输入应该是$\text{\ \ \ c}$。</p>
+<p>根据这点可以将输入分为几类：</p>
+<ul>
+<li>开始结束符号：$\text{\”}$</li>
+<li>输出为转义字符的形式：$\text{\ \ \ c}$</li>
+<li>输入本身即为转义字符：$\text{\c}$<ul>
+<li>其中$\text{\n}$以及$\text{\0}$为非法字符。</li>
+</ul>
+</li>
+<li>普通字符。</li>
+<li>$\text{<EOF>}$。</li>
+</ul>
+<p>整体代码如下：</p>
+<pre class="line-numbers language-none"><code class="language-none"> &#x2F;*
+  *  String constants (C syntax)
+  *  Escape sequence \c is accepted for all characters c. Except for 
+  *  \n \t \b \f, the result is c.
+  *
+  *&#x2F;
+
+ &#x2F;* 只有在INITIAL状态下， 遇到\&quot;才进入STRING状态;
+    将识别内容存储到yytext                      *&#x2F;
+&lt;INITIAL&gt;\&quot;                                                     &#123;
+                                                                    BEGIN STRING;
+                                                                    yymore();
+                                                                &#125;
+ 
+ &#x2F;* 识别普通字符 *&#x2F;
+&lt;STRING&gt;[^\\\&quot;\n]*                                              &#123;
+                                                                    yymore();
+                                                                &#125;
+
+
+ &#x2F;* 转义字符 *&#x2F;
+&lt;STRING&gt;\\[^\n]                                                 &#123;
+                                                                    yymore();
+                                                                &#125;
+
+ &#x2F;* 换行 *&#x2F;
+&lt;STRING&gt;\\\n                                                    &#123;
+                                                                    curr_lineno++;
+                                                                    yymore();
+                                                                &#125;
+
+ &#x2F;* 涉及到curr_lineno++, 必须直接处理 *&#x2F;
+&lt;STRING&gt;\n                                                      &#123;
+                                                                    cool_yylval.error_msg &#x3D; &quot;Unterminated string constant&quot;;
+                                                                    curr_lineno++;
+                                                                    BEGIN 0;
+                                                                    return ERROR;
+                                                                &#125;
+
+ &#x2F;* 结束符直接报错 *&#x2F;
+&lt;STRING&gt;&lt;&lt;EOF&gt;&gt;                                                 &#123;
+                                                                    cool_yylval.error_msg &#x3D; &quot;EOF in string constant&quot;;
+                                                                    BEGIN 0;
+                                                                    yyrestart(yyin);  
+                                                                    return ERROR;
+                                                                &#125;
+
+
+ &#x2F;* 处理字符串 *&#x2F;
+&lt;STRING&gt;\&quot;                                                      &#123;
+                                                                    std::string str(yytext, yyleng);
+                                                                    int n &#x3D; yyleng;
+                                                                    int i &#x3D; 1;
+                                                                    int j &#x3D; 0;
+                                                                    char res[n + 1];
+
+                                                                    &#x2F;&#x2F;判断是否有\0
+                                                                    for (int j &#x3D; 1; j &lt; n - 1; j++)&#123;
+                                                                        if (str[j] &#x3D;&#x3D; &#39;\0&#39;)&#123;
+                                                                            cool_yylval.error_msg &#x3D; &quot;String contains null character&quot;;
+                                                                            BEGIN 0;
+                                                                            return ERROR;
+                                                                        &#125;
+                                                                    &#125;
+
+                                                                    while (i &lt; n - 1)&#123;
+                                                                        if (str[i] &#x3D;&#x3D; &#39;\\&#39;)&#123;
+                                                                            switch(str[i + 1])&#123;
+                                                                                case &#39;b&#39;:
+                                                                                    res[j++] &#x3D; &#39;\b&#39;;
+                                                                                    break;
+                                                                                case &#39;t&#39;:
+                                                                                    res[j++] &#x3D; &#39;\t&#39;;
+                                                                                    break;
+                                                                                case &#39;n&#39;:
+                                                                                    res[j++] &#x3D; &#39;\n&#39;;
+                                                                                    break;
+                                                                                case &#39;f&#39;:
+                                                                                    res[j++] &#x3D; &#39;\f&#39;;
+                                                                                    break;
+                                                                                default:
+                                                                                    res[j++] &#x3D; str[i + 1];
+                                                                                    break;
+                                                                            &#125;
+                                                                            i +&#x3D; 2;
+                                                                        &#125;else&#123;
+                                                                            res[j++] &#x3D; str[i++];
+                                                                        &#125;
+                                                                    &#125;
+
+                                                                    if (j &gt;&#x3D; MAX_STR_CONST)&#123;
+                                                                        cool_yylval.error_msg &#x3D; &quot;String constant too long&quot;;
+                                                                        BEGIN 0;
+                                                                        return ERROR;
+                                                                    &#125;
+                                                                    
+                                                                    res[j] &#x3D; &#39;\0&#39;;
+                                                                    cool_yylval.symbol &#x3D; stringtable.add_string((char*)res);
+                                                                    BEGIN 0;
+                                                                    return STR_CONST;
+                                                                &#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h4 id="关键词"><a href="#关键词" class="headerlink" title="关键词"></a>关键词</h4><p>这部分很简单的，只要了解</p>
+<pre class="line-numbers language-none"><code class="language-none">(?i:string)<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>是忽略string的大小写即可。</p>
+<p>关键词的列表见cool-parse.h的第115行。</p>
+<p>代码如下：</p>
+<pre class="line-numbers language-none"><code class="language-none"> &#x2F;*
+  * Keywords are case-insensitive except for the values true and false,
+  * which must begin with a lower-case letter.
+  *&#x2F;
+
+(?i:CLASS)                                                      &#123;   
+                                                                    return CLASS;
+                                                                &#125;
+
+(?i:ELSE)                                                       &#123;   
+                                                                    return ELSE;
+                                                                &#125;
+
+(?i:FI)                                                         &#123;   
+                                                                    return FI; 
+                                                                &#125;
+
+(?i:IF)                                                         &#123;   
+                                                                    return IF; 
+                                                                &#125;
+
+(?i:IN)                                                         &#123;   
+                                                                    return IN; 
+                                                                &#125;
+
+(?i:INHERITS)                                                   &#123;   
+                                                                    return INHERITS;
+                                                                &#125;
+
+(?i:ISVOID)                                                     &#123;   
+                                                                    return ISVOID;
+                                                                &#125;
+
+(?i:LET)                                                        &#123;   
+                                                                    return LET;
+                                                                &#125;
+
+(?i:LOOP)                                                       &#123;   
+                                                                    return LOOP;
+                                                                &#125;
+
+(?i:POOL)                                                       &#123;   
+                                                                    return POOL;
+                                                                &#125;
+
+(?i:THEN)                                                       &#123;   
+                                                                    return THEN;
+                                                                &#125;
+
+(?i:WHILE)                                                      &#123;   
+                                                                    return WHILE;
+                                                                &#125;
+
+(?i:CASE)                                                       &#123;   
+                                                                    return CASE;
+                                                                &#125;
+
+(?i:ESAC)                                                       &#123;   
+                                                                    return ESAC;
+                                                                &#125;
+
+(?i:NEW)                                                        &#123;   
+                                                                    return NEW;
+                                                                &#125;
+
+(?i:OF)                                                         &#123;   
+                                                                    return OF;
+                                                                &#125;
+
+(?i:NOT)                                                        &#123;   
+                                                                    return NOT;
+                                                                &#125;
+
+t(?i:rue)                                                       &#123; 
+                                                                    cool_yylval.boolean &#x3D; 1;
+                                                                    return BOOL_CONST; 
+                                                                &#125;
+
+f(?i:alse)                                                      &#123;   cool_yylval.boolean &#x3D; 0;
+                                                                    return BOOL_CONST; 
+                                                                &#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h4 id="空格换行"><a href="#空格换行" class="headerlink" title="空格换行"></a>空格换行</h4><p>空格换行见cool-manu第16页10.5。</p>
+<pre class="line-numbers language-none"><code class="language-none"> &#x2F;*
+  *  White space
+  *&#x2F;
+\n                                                              &#123;
+                                                                    curr_lineno++;
+                                                                &#125;
+
+[ \f\r\t\v]+                                                    &#123;&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h4 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h4><pre class="line-numbers language-none"><code class="language-none"> &#x2F;* 
+  * else
+  *&#x2F;
+.                                                               &#123; 
+                                                                    cool_yylval.error_msg &#x3D; yytext;
+                                                                    return ERROR;
+                                                                &#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">Doraemonzzz</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="http://doraemonzzz.com/2021/03/21/Stanford%20Compiler%20PA2/">http://doraemonzzz.com/2021/03/21/Stanford%20Compiler%20PA2/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://doraemonzzz.com" target="_blank">Doraemonzzz</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E6%96%AF%E5%9D%A6%E7%A6%8F%E5%A4%A7%E5%AD%A6%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/">斯坦福大学编译原理</a></div><div class="post_share"><div class="social-share" data-image="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2021/03/21/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A8%8B%E5%BA%8F%E7%9A%84%E6%9E%84%E9%80%A0%E5%92%8C%E8%A7%A3%E9%87%8A(SICP)%20%E7%AC%AC3%E7%AB%A0%20%E4%B9%A0%E9%A2%98%E8%A7%A3%E6%9E%90%20Part3/"><img class="prev-cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">计算机程序的构造和解释(SICP) 第3章 习题解析 Part3</div></div></a></div><div class="next-post pull-right"><a href="/2021/03/21/Stanford%20Compiler%20PA2%E7%BF%BB%E8%AF%91/"><img class="next-cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">Stanford Compiler PA2翻译</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span> 相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2021/04/15/2021-4-15-Stanford-Compiler-Week-5-Cool-Type-Checking/" title="Stanford Compiler Week 5 Cool Type Checking"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-04-15</div><div class="title">Stanford Compiler Week 5 Cool Type Checking</div></div></a></div><div><a href="/2021/04/20/2021-4-20-Stanford-Compiler-实验环境配置（续）/" title="Stanford Compiler 实验环境配置（续）"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-04-20</div><div class="title">Stanford Compiler 实验环境配置（续）</div></div></a></div><div><a href="/2021/04/24/2021-4-24-Stanford-Compiler-PA3翻译/" title="Stanford Compiler PA3翻译"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-04-24</div><div class="title">Stanford Compiler PA3翻译</div></div></a></div><div><a href="/2021/04/24/2021-4-24-Stanford-Compiler-Week-6-Code-Generation-Part-1/" title="Stanford Compiler Week 6 Code Generation Part 1"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-04-24</div><div class="title">Stanford Compiler Week 6 Code Generation Part 1</div></div></a></div><div><a href="/2021/04/24/2021-4-24-Stanford-Compiler-Week-6-Runtime-Organization/" title="Stanford Compiler Week 6 Runtime Organization"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-04-24</div><div class="title">Stanford Compiler Week 6 Runtime Organization</div></div></a></div><div><a href="/2021/04/26/2021-4-26-Stanford-Compiler-Week-6-Code-Generation-Part-2/" title="Stanford Compiler Week 6 Code Generation Part 2"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-04-26</div><div class="title">Stanford Compiler Week 6 Code Generation Part 2</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="card-info-avatar is-center"><img class="avatar-img" src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/><div class="author-info__name">Doraemonzzz</div><div class="author-info__description">个人博客，主要记录有关机器学习，数学以及计算机科学的笔记</div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">610</div></a></div><div class="card-info-data-item is-center"><a href="/tags/"><div class="headline">标签</div><div class="length-num">59</div></a></div><div class="card-info-data-item is-center"><a href="/categories/"><div class="headline">分类</div><div class="length-num">23</div></a></div></div><a class="button--animated" id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/Doraemonzzz" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="/doraemon_zzz@163.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn card-announcement-animation"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BD%9C%E4%B8%9A%E5%88%86%E6%9E%90"><span class="toc-number">1.</span> <span class="toc-text">作业分析</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%87%86%E5%A4%87%E5%B7%A5%E4%BD%9C"><span class="toc-number">1.1.</span> <span class="toc-text">准备工作</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%8A%A5%E9%94%99%E5%A4%84%E7%90%86"><span class="toc-number">1.1.1.</span> <span class="toc-text">报错处理</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%87%A0%E4%B8%AA%E9%87%8D%E8%A6%81%E5%8F%98%E9%87%8F"><span class="toc-number">1.1.1.1.</span> <span class="toc-text">几个重要变量</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B5%81%E7%A8%8B%E5%9B%BE"><span class="toc-number">1.2.</span> <span class="toc-text">流程图</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AF%8D%E6%B3%95%E5%88%86%E6%9E%90"><span class="toc-number">1.3.</span> <span class="toc-text">词法分析</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%B3%A8%E9%87%8A"><span class="toc-number">1.3.1.</span> <span class="toc-text">注释</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%95%B4%E6%95%B0%EF%BC%8C%E6%A0%87%E8%AF%86%E7%AC%A6%E5%92%8C%E7%89%B9%E6%AE%8A%E7%AC%A6%E5%8F%B7"><span class="toc-number">1.3.2.</span> <span class="toc-text">整数，标识符和特殊符号</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%95%B4%E6%95%B0"><span class="toc-number">1.3.2.1.</span> <span class="toc-text">整数</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%A0%87%E8%AF%86%E7%AC%A6"><span class="toc-number">1.3.2.2.</span> <span class="toc-text">标识符</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E7%89%B9%E6%AE%8A%E7%AC%A6%E5%8F%B7"><span class="toc-number">1.3.2.3.</span> <span class="toc-text">特殊符号</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AD%97%E7%AC%A6%E4%B8%B2"><span class="toc-number">1.3.3.</span> <span class="toc-text">字符串</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%85%B3%E9%94%AE%E8%AF%8D"><span class="toc-number">1.3.4.</span> <span class="toc-text">关键词</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%A9%BA%E6%A0%BC%E6%8D%A2%E8%A1%8C"><span class="toc-number">1.3.5.</span> <span class="toc-text">空格换行</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%85%B6%E4%BB%96"><span class="toc-number">1.3.6.</span> <span class="toc-text">其他</span></a></li></ol></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2021/06/06/2021-6-6-%E7%AE%97%E6%B3%95%E6%A6%82%E8%AE%BA(DPV)%E4%B9%A0%E9%A2%98%E8%A7%A3%E7%AD%94%E2%80%94%E2%80%94%E7%AC%AC3%E7%AB%A0-%E5%9B%BE%E7%9A%84%E5%88%86%E8%A7%A3/" title="算法概论(DPV)习题解答——第3章 图的分解"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="算法概论(DPV)习题解答——第3章 图的分解"/></a><div class="content"><a class="title" href="/2021/06/06/2021-6-6-%E7%AE%97%E6%B3%95%E6%A6%82%E8%AE%BA(DPV)%E4%B9%A0%E9%A2%98%E8%A7%A3%E7%AD%94%E2%80%94%E2%80%94%E7%AC%AC3%E7%AB%A0-%E5%9B%BE%E7%9A%84%E5%88%86%E8%A7%A3/" title="算法概论(DPV)习题解答——第3章 图的分解">算法概论(DPV)习题解答——第3章 图的分解</a><time datetime="2021-06-06T14:35:00.000Z" title="发表于 2021-06-06 22:35:00">2021-06-06</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/06/06/2021-6-6-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E7%AC%AC5%E7%AB%A0-%E4%B9%A0%E9%A2%98%E8%A7%A3%E6%9E%90/" title="深入理解计算机系统 第5章 习题解析"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="深入理解计算机系统 第5章 习题解析"/></a><div class="content"><a class="title" href="/2021/06/06/2021-6-6-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E7%AC%AC5%E7%AB%A0-%E4%B9%A0%E9%A2%98%E8%A7%A3%E6%9E%90/" title="深入理解计算机系统 第5章 习题解析">深入理解计算机系统 第5章 习题解析</a><time datetime="2021-06-06T07:23:00.000Z" title="发表于 2021-06-06 15:23:00">2021-06-06</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/06/05/2021-6-5-Stanford-Compiler-PA5%E7%BF%BB%E8%AF%91/" title="Stanford Compiler PA5翻译"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Stanford Compiler PA5翻译"/></a><div class="content"><a class="title" href="/2021/06/05/2021-6-5-Stanford-Compiler-PA5%E7%BF%BB%E8%AF%91/" title="Stanford Compiler PA5翻译">Stanford Compiler PA5翻译</a><time datetime="2021-06-05T06:12:00.000Z" title="发表于 2021-06-05 14:12:00">2021-06-05</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/06/04/2021-6-4-Stanford-Compiler-PA4%E7%BF%BB%E8%AF%91/" title="Stanford Compiler PA4翻译"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Stanford Compiler PA4翻译"/></a><div class="content"><a class="title" href="/2021/06/04/2021-6-4-Stanford-Compiler-PA4%E7%BF%BB%E8%AF%91/" title="Stanford Compiler PA4翻译">Stanford Compiler PA4翻译</a><time datetime="2021-06-03T16:17:00.000Z" title="发表于 2021-06-04 00:17:00">2021-06-04</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/06/03/2021-6-3-%E5%B7%A7%E5%A6%99%E7%9A%84Y%E8%BF%90%E7%AE%97%E7%AC%A6/" title="巧妙的Y运算符"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="巧妙的Y运算符"/></a><div class="content"><a class="title" href="/2021/06/03/2021-6-3-%E5%B7%A7%E5%A6%99%E7%9A%84Y%E8%BF%90%E7%AE%97%E7%AC%A6/" title="巧妙的Y运算符">巧妙的Y运算符</a><time datetime="2021-06-03T00:54:00.000Z" title="发表于 2021-06-03 08:54:00">2021-06-03</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2021 By Doraemonzzz</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><div class="js-pjax"><script>if (!window.MathJax) {
+  window.MathJax = {
+    loader: {
+      source: {
+        '[tex]/amsCd': '[tex]/amscd'
+      }
+    },
+    tex: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]],
+      tags: 'ams'
+    },
+    options: {
+      renderActions: {
+        findScript: [10, doc => {
+          for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+            const display = !!node.type.match(/; *mode=display/)
+            const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+            const text = document.createTextNode('')
+            node.parentNode.replaceChild(text, node)
+            math.start = {node: text, delim: '', n: 0}
+            math.end = {node: text, delim: '', n: 0}
+            doc.math.push(math)
+          }
+        }, ''],
+        addClass: [200,() => {
+          document.querySelectorAll('mjx-container:not([display=\'true\']').forEach( node => {
+            const target = node.parentNode
+            if (!target.classList.contains('has-jax')) {
+              target.classList.add('mathjax-overflow')
+            }
+          })
+        }, '', false]
+      }
+    }
+  }
+  
+  const script = document.createElement('script')
+  script.src = 'https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js'
+  script.id = 'MathJax-script'
+  script.async = true
+  document.head.appendChild(script)
+} else {
+  MathJax.startup.document.state(0)
+  MathJax.texReset()
+  MathJax.typeset()
+}</script></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

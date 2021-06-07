@@ -1,0 +1,668 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Michael Collins NLP Lecture 3 | Doraemonzzz</title><meta name="keywords" content="Michael Collins NLP"><meta name="author" content="Doraemonzzz"><meta name="copyright" content="Doraemonzzz"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="课程主页：http:&#x2F;&#x2F;www.cs.columbia.edu&#x2F;~cs4705&#x2F; 课程网盘地址： 链接：https:&#x2F;&#x2F;pan.baidu.com&#x2F;s&#x2F;1KijgO7yjL_MVCC9zKZ7Jdg提取码：t1i3  这一讲主要介绍了标注问题和隐马尔可夫模型。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Michael Collins NLP Lecture 3">
+<meta property="og:url" content="http://doraemonzzz.com/2019/02/04/Michael%20Collins%20NLP%20Lecture%203/index.html">
+<meta property="og:site_name" content="Doraemonzzz">
+<meta property="og:description" content="课程主页：http:&#x2F;&#x2F;www.cs.columbia.edu&#x2F;~cs4705&#x2F; 课程网盘地址： 链接：https:&#x2F;&#x2F;pan.baidu.com&#x2F;s&#x2F;1KijgO7yjL_MVCC9zKZ7Jdg提取码：t1i3  这一讲主要介绍了标注问题和隐马尔可夫模型。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg">
+<meta property="article:published_time" content="2019-02-04T09:06:00.000Z">
+<meta property="article:modified_time" content="2020-05-16T07:36:14.674Z">
+<meta property="article:author" content="Doraemonzzz">
+<meta property="article:tag" content="Michael Collins NLP">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="http://doraemonzzz.com/2019/02/04/Michael%20Collins%20NLP%20Lecture%203/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"prismjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    jQuery: 'https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js',
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+    },
+    fancybox: {
+      js: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isanchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'Michael Collins NLP Lecture 3',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2020-05-16 15:36:14'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    })(window)</script><meta name="generator" content="Hexo 5.4.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="author-avatar"><img class="avatar-img" src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">文章</div><div class="length-num">610</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">标签</div><div class="length-num">59</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/categories/"><div class="headline">分类</div><div class="length-num">23</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">Doraemonzzz</a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">Michael Collins NLP Lecture 3</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2019-02-04T09:06:00.000Z" title="发表于 2019-02-04 17:06:00">2019-02-04</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2020-05-16T07:36:14.674Z" title="更新于 2020-05-16 15:36:14">2020-05-16</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/NLP/">NLP</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="Michael Collins NLP Lecture 3"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p>课程主页：<a target="_blank" rel="noopener" href="http://www.cs.columbia.edu/~cs4705/">http://www.cs.columbia.edu/~cs4705/</a></p>
+<p>课程网盘地址：</p>
+<p>链接：<a target="_blank" rel="noopener" href="https://pan.baidu.com/s/1KijgO7yjL_MVCC9zKZ7Jdg">https://pan.baidu.com/s/1KijgO7yjL_MVCC9zKZ7Jdg</a><br>提取码：t1i3 </p>
+<p>这一讲主要介绍了标注问题和隐马尔可夫模型。</p>
+<span id="more"></span>
+<h2 id="Chapter-2-标注问题和隐马尔可夫模型"><a href="#Chapter-2-标注问题和隐马尔可夫模型" class="headerlink" title="Chapter 2 标注问题和隐马尔可夫模型"></a>Chapter 2 标注问题和隐马尔可夫模型</h2><h3 id="2-1-介绍"><a href="#2-1-介绍" class="headerlink" title="2.1 介绍"></a>2.1 介绍</h3><p>在许多NLP问题中，我们希望对序列对进行建模。词性（POS）标注可能是此类问题中最早，最著名的例子。 在POS标注中，我们的目标是建立一个模型，其输入为句子，例如</p>
+<script type="math/tex; mode=display">
+\text{the dog saw a cat}</script><p>其输出是标注序列</p>
+<script type="math/tex; mode=display">
+\begin{eqnarray*}
+\text{D N V D N}\tag{2.1} 
+\end{eqnarray*}</script><p>（这里我们使用D表示定冠词，N表示名词，V表示动词）。标签序列与输入句子的长度相同，因此为句子中的每个单词指定一个标签（在本例中D标注the，N标注dog，V标注saw，依此类推）。</p>
+<p>​    我们将使用$x_1…x_n$来表示标注模型的输入：将其称为句子。在上面的例子中，我们的长度为$n=5$并且</p>
+<script type="math/tex; mode=display">
+x_1 =\text{the}，x_2 =\text{ dog}，x_3 = \text{saw}，x_4 = \text{the}，x_5 = \text{cat}</script><p>我们使用$y_1…y_n$来表示标注模型的输出：我们经常将其称为状态序列或标注序列。 在上面的例子中，我们有$y_1=\text{D},y_2= \text{N},y_3=\text{V}$，依此类推。</p>
+<p>​    这种类型的问题，其任务是将句子$x_1…x_n$映射到标签序列$y_1…y_n$，通常被称为<strong>序列标签问题</strong>或<strong>标注问题</strong>。来看一个具体例子：</p>
+<p><img src="https://github.com/Doraemonzzz/md-photo/blob/master/Michael%20Collins%20NLP/Lecture%203/2019013101.jpg?raw=true" alt=""></p>
+<p>​    我们假设我们有一组训练样本，$(x^{(i)},y^{(i)}), i=1…m$，其中每个$x^{(i)}$是句子$x^{(i)}_1…x^{(i)}_{n_i}$，并且每个$y^{(i)}$是标签序列$y^{(i)}_1…y^{(i)}_{n_i}$（我们假设第$i$个样本具有长度$n_i$）。 因此，$x^{(i)}_j$是第$i$个训练样本中的第$j$个单词，$y^{(i)}_j$是该单词的标注。 我们的任务是学习一个函数，它将训练样本中的句子映射到对应的标签序列。</p>
+<h3 id="2-2-两个标注问题的例子：词性标注和命名实体识别"><a href="#2-2-两个标注问题的例子：词性标注和命名实体识别" class="headerlink" title="2.2 两个标注问题的例子：词性标注和命名实体识别"></a>2.2 两个标注问题的例子：词性标注和命名实体识别</h3><p>我们首先讨论NLP中标注问题的两个重要例子，词性（POS）标注和命名实体识别。</p>
+<p>​    图2.1给出了一个词性问题的例子。 问题的输入是一个句子。 输出是带标注的句子，其中句子中的每个单词都用其词性标注。 我们的目标是构建一个能够高精度地恢复句子POS标签的模型。 POS标注是NLP中最基本的问题之一，在许多自然语言问题中都很有用。</p>
+<p>​    假设我们有一组训练样本：也就是说，我们有一组句子以及对应的正确POS标签序列。 作为一个示例，宾州树语料库包含大约$100$万个单词（大约$40,000$个句子）以及对应的POS标签。 </p>
+<p>​    POS标注的主要挑战之一是歧义性。 英语中的许多单词可以采用几种可能的词性——对于许多其他语言也是如此。 图2.1中的例句有几个含糊不清的词。 例如，句子中的第一个词，profits，在这种情况下是名词，但也可以是动词（例如，in the company profits from its endeavors）。 单词topping在这个特定句子中的动词，但也可以是名词（例如the topping on the cake，）。 forecasts和results这两个词在句子中都是名词，但也可以是其他语境中的动词。 如果我们进一步观察，我们会看到该句子中的quarter是一个名词，但它也可以作为一个动词（只是使用频率低很多）。从这个例句我们可以看出，词性歧义性数量多的令人惊讶。</p>
+<p>​    第二个挑战是存在罕见的单词，特别是在我们的训练样例中没有看到的单词。 即使训练数据有一百万个单词，新的句子中也会有很多单词在训练数据中没有出现过。 作为一个例子，诸如Mulally或topping之类的词语可能非常罕见，并且可能在我们的训练样例中未见过。 开发有效处理训练数据中未见过的单词的方法非常重要。</p>
+<p>​    在恢复POS标签时，考虑两种不同的信息来源是有用的。 首先，单个单词对其词性具有统计偏好：例如，quarter可以是名词或动词，但更可能是名词。 其次，语境对单词的词性有重要影响。 特别是，一些POS标签序列比其他序列更可能。 如果我们考虑POS三元组，序列D N V将在英语中频繁出现（例如，the/D dog/N saw/V)，而序列D V N则不太可能出现。</p>
+<p>​    有时这两种来源的信息是冲突的：例如，在句子中</p>
+<script type="math/tex; mode=display">
+\text{The trash can is hard to find}</script><p>can的词性是名词——但是，也可以是一个语气动词，事实上它更常被看作英语中的一个语气动词。在这句话中，语境已经覆盖了可以成为动词而不是名词的倾向。</p>
+<p><img src="https://github.com/Doraemonzzz/md-photo/blob/master/Michael%20Collins%20NLP/Lecture%203/2019013102.jpg?raw=true" alt=""></p>
+<p>​    在本章的后面，我们将描述标注问题的模型，该模型在制定标注决策时同时考虑了局部和上下文两种信息来源。</p>
+<p>​    第二个重要的示例标注问题是命名实体识别。 图2.2给出了一个例子。 对于这个问题，输入又是一个句子。 输出是标有实体边界的句子。 在此示例中，我们假设有三种可能的实体类型：PERSON，LOCATION和COMPANY。 本例中的输出表明波音公司是一家公司，华尔街是一个地方，艾伦·穆拉利是一个人。 认识到诸如人，地点和组织等实体有许多应用，并且命名实体识别已经在NLP领域中被广泛研究。</p>
+<p>​    乍一看，命名实体问题与标注问题不同——在图2.2中，输出不包含句子中每个单词的标注。 但是，将命名实体识别映射到标注问题是很简单的。 基本方法如图2.3所示。 句子中的每个单词要么被标注为不是实体的一部分（标签NA），要么作为特定实体类型的开始（例如，标签SC对应Start Company），或作为特定实体类型的延续（例如，标签CC对应Continue Company）。</p>
+<p><img src="https://github.com/Doraemonzzz/md-photo/blob/master/Michael%20Collins%20NLP/Lecture%203/2019013103.jpg?raw=true" alt=""></p>
+<p>​    </p>
+<h3 id="2-3-生成模型-Generative-Models-和噪声信道模型-The-Noisy-Channel-Model"><a href="#2-3-生成模型-Generative-Models-和噪声信道模型-The-Noisy-Channel-Model" class="headerlink" title="2.3 生成模型(Generative Models)和噪声信道模型(The Noisy Channel Model)"></a>2.3 生成模型(Generative Models)和噪声信道模型(The Noisy Channel Model)</h3><p>在本章中，我们将标注问题视为监督学习问题。 在本节中，我们描述了一种用于监督学习的重要模型：生成模型。 然后我们将继续描述一种特定类型的生成模型，隐马尔可夫模型，应用于标注问题。</p>
+<p>​    监督学习问题的设置如下。 我们假设训练样本为$(x^{(1)},y^{(1)})…(x^{(m)},y^{(m)})$，其中每个样本包括输入$x^{(i)}$和标签$y^{(i)} $。 我们使用$\mathcal X$来表示可能的输入集合，使用$\mathcal Y$来表示可能的标签集合。 我们的任务是学习将$x$映射到标签$f(x)$的函数$f:\mathcal X \to \mathcal Y$。</p>
+<p>​    自然语言处理中的许多问题是监督学习问题。例如，在标注问题时，每个$x^{(i)}$是单词序列$x^{(i)}_1…x^{(i)}_{n_i}$，并且每个$y^{(i)}$将是标签序列$y^{(i)}_1…y^{(i)}_{n_i}$（我们使用$n_i$来指代第$i$个训练样本的长度）。 $\mathcal  X$表示所有序列$x_1…x_n$，$\mathcal Y$表示所有标注序列$y_1…y_n$。我们的任务是学习函数$f:\mathcal X \to \mathcal Y$将句子映射到标签序列。在机器翻译中，每个输入$x$将是源语言中的句子（例如，中文），并且每个“标签”将是目标语言中的句子（例如，英语）。在语音识别中，每个输入将是一些对话的记录——例如可能使用傅立叶变换进行预处理——并且每个标签是整个句子。我们在所有这些例子中的任务是利用$(x^{(i)},y^{(i)}),i=1…n$来学习从输入$x$到标签$y$的函数。</p>
+<p>​    定义函数$f(x)$的一种方法是通过条件概率模型。 在这种方法中，我们定义了一个模型，该模型对任意$(x,y)$定义了条件概率</p>
+<script type="math/tex; mode=display">
+p(y|x)</script><p>模型的参数根据训练样本来估计。 给定一个新的测试样本$x$，模型的输出是</p>
+<script type="math/tex; mode=display">
+f(x) =\arg \max_{y\in \mathcal Y} p(y|x)</script><p>因此，我们简单地将最可能的标签$y$作为模型的输出。 如果我们的模型$p(y|x)$接近给定输入的真实条件分布，则函数$f(x)$将接近最优解。</p>
+<p>​    通常用于机器学习和自然语言处理的生成模型是另一个选择。 在生成模型中，我们不是直接估计条件分布$p(y|x)$，而是对$( x,y)$的联合概率建模</p>
+<script type="math/tex; mode=display">
+p(x,y)</script><p>模型$p(x,y)$的参数从训练样本$(x^{(i)},y^{(i)}),i=1…n$中估计。 在许多情况下，我们按如下方式分解概率$p(x,y)$：</p>
+<script type="math/tex; mode=display">
+\begin{eqnarray*}
+p(x,y)= p(y)|p(x|y) \tag{2.2} 
+\end{eqnarray*}</script><p>然后分别估计模型$p(y)$和$p(x|y)$。 这两个模型具有以下解释：</p>
+<ul>
+<li>$p(y)$是标签$y$的先验分布</li>
+<li>$p(x|y)$是个给定标签$y$，输出$x$的概率</li>
+</ul>
+<p>我们将看到，在许多情况下以这种方式分解模型非常方便；例如，语音识别的经典方法基于这种类型的分解。</p>
+<p>​    给定生成模型，我们可以使用贝叶斯法则来推导任何$(x,y)$的条件概率$p(y|x)$：</p>
+<script type="math/tex; mode=display">
+p(y|x)= \frac {p(y)p(x|y)}{p(x)}</script><p>其中</p>
+<script type="math/tex; mode=display">
+p(x) =\sum_{y\in \mathcal Y} p(x,y)= \sum_{y\in \mathcal Y} p(y) p(x|y)</script><p>因此，联合概率模型非常通用，这是因为我们也可以推导出概率$p(x)$和$p(y|x)$。</p>
+<p>​    我们在将联合模型应用于新的测试样本时直接使用贝叶斯法则。 给定输入$x$，我们模型的输出$f(x)$可以按如下方式推导：</p>
+<script type="math/tex; mode=display">
+\begin{eqnarray*}
+f(x) &&=\arg \max_y p(y|x)\\
+&&=\arg \max_y \frac {p(y)p(x|y)}{p(x)} \tag{2.3}\\
+&&=\arg \max_y  {p(y)p(x|y)} \tag{2.4}
+\end{eqnarray*}</script><p>公式 2.3遵循贝叶斯法则。公式2.4成立因为分母$p(x)$不依赖于$y$，因此不会影响$\arg \max$。 这很方便，因为这意味着我们不需要计算$p(x)$，而这可能是一项计算量很大的操作。</p>
+<p>​    将联合概率分布分解为$p(y)$和$p(x|y)$项的模型通常称为噪声信道模型(noisy-channel models)。 直观地，当我们看到测试样本$y$时，我们假设数据是分两步生成的：首先，选择标签$y$的概率为$p(y)$； 第二，样本$x$从分布$p(x|y)$生成。 模型$p(x|y)$可以解释为“通道”，它以标签$y$作为输入，并以$x$作为其输出。 我们的任务是给定观测到的$x$，找到最可能的标签$y$。</p>
+<p>​    综上所述：</p>
+<ul>
+<li><p>我们的任务是学习从输入$x$映射到标签$y=f(x)$的函数。 我们假设训练样本为$(x^{(i)},y^{(i)}),i=1…n$</p>
+</li>
+<li><p>在噪声信道(noisy channel)方法中，我们使用训练样本来估计模型$p(y)$和$p(x|y)$。 这些模型定义了一个联合（生成）模型</p>
+<script type="math/tex; mode=display">
+p(x,y)= p(y) p(x|y)</script></li>
+<li><p>给定一个新的测试样本$x$，我们预测标签</p>
+<script type="math/tex; mode=display">
+f(x) =\arg \max_{y\in \mathcal Y} p(y|x)</script><p>找到输入$x$的输出$f(x)$通常被称为解码问题。</p>
+</li>
+</ul>
+<h3 id="2-4-生成标注模型"><a href="#2-4-生成标注模型" class="headerlink" title="2.4 生成标注模型"></a>2.4 生成标注模型</h3><p>我们现在看看如何将生成模型应用于标注问题。 我们假设我们有一个有限的词汇表$\mathcal V$，例如$\mathcal V$可能是英语中的一组单词，例如$\mathcal V = \{the，dog，saw，cat，laughs\}$。 我们用$\mathcal K$来表示可能的标签集；再次，我们假设这个集合是有限的。 然后我们给出以下定义：</p>
+<h6 id="定义-1-生成标注模型"><a href="#定义-1-生成标注模型" class="headerlink" title="定义 1 (生成标注模型)"></a>定义 1 (生成标注模型)</h6><p>假设一组有限的词汇表$\mathcal V$和一组有限的标签$\mathcal K$。将$\mathcal S$定义为所有序列/标签——序列对$\langle x_1…x_n,y_1…y_n \rangle$，它满足$n\ge 0,x_i \in \mathcal V,i=1…n$以及$y_i \in \mathcal K,i=1…n$。生成标注模型是函数$p$，它满足：</p>
+<ul>
+<li><p>1.对任意$\langle x_1…x_n,y_1…y_n \rangle\in S$</p>
+<script type="math/tex; mode=display">
+p( x_1...x_n,y_1...y_n)\ge 0</script></li>
+<li><p>2.此外，</p>
+<script type="math/tex; mode=display">
+\sum_{\langle x_1...x_n,y_1...y_n \rangle\in S}p( x_1...x_n,y_1...y_n) =1</script></li>
+</ul>
+<p>因此，$p( x_1…x_n,y_1…y_n)$是序列对上的概率分布（即，集合$\mathcal  S$上的概率分布）。</p>
+<p>​    给定生成标注模型，从句子$x_1…x_n$到标注序列$y_1…y_n$的函数定义为</p>
+<script type="math/tex; mode=display">
+f(x_1...x_n) =\arg \max_{y_1...y_n} p( x_1...x_n,y_1...y_n)</script><p>其中$\arg \max$是所作用的范围是所有$y_i \in \mathcal K，i\in \{1…n\}$的序列。 因此，对于任何输入$x_1…x_n$，我们将最高概率标签序列作为模型的输出。</p>
+<p>​    引入生成标注模型后，有三个关键问题:</p>
+<ul>
+<li><p>我们如何定义生成标注模型$p( x_1…x_n,y_1…y_n)$？</p>
+</li>
+<li><p>我们如何从训练样本中估计模型的参数？</p>
+</li>
+<li><p>对于任意输入$x_1…x_n$，我们如何有效地找到</p>
+<script type="math/tex; mode=display">
+\arg \max_{y_1...y_n} p( x_1...x_n,y_1...y_n)</script></li>
+</ul>
+<p>下一节将介绍如何使用三元隐马尔可夫模型来回答这三个问题。</p>
+<h3 id="2-5-三元隐马尔可夫模型-Trigram-HMMs"><a href="#2-5-三元隐马尔可夫模型-Trigram-HMMs" class="headerlink" title="2.5 三元隐马尔可夫模型(Trigram HMMs)"></a>2.5 三元隐马尔可夫模型(Trigram HMMs)</h3><p>在本节中，我们将介绍了一种重要的生成标注模型，三元隐马尔可夫模型，描述了如何从训练样本中估计模型的参数，并描述如何为任何句子找到最可能的标签序列。</p>
+<h5 id="2-5-1-三元隐马尔可夫模型的定义"><a href="#2-5-1-三元隐马尔可夫模型的定义" class="headerlink" title="2.5.1 三元隐马尔可夫模型的定义"></a>2.5.1 三元隐马尔可夫模型的定义</h5><p>我们现在将给出三元隐马尔可夫模型（Trigram HMMs）的正式定义。下一节将展示这种模型是如何推导的，并给出模型背后的一些直觉。</p>
+<p><strong>定义 2 (三元隐马尔可夫模型(Trigram HMMs))</strong> </p>
+<p>一个三元隐马尔可夫模型由表示词汇表的有限集合$\mathcal V$和表示标签的有限集合$\mathcal K $以及以下参数组成：</p>
+<ul>
+<li>对任何满足<script type="math/tex; mode=display">
+s\in \mathcal K \bigcup \{ \text{STOP}\}以及u,v\in K  \bigcup\{*\}</script></li>
+</ul>
+<p>  的三元组$(u,v,s)$，定义参数</p>
+<script type="math/tex; mode=display">
+  q(s|u,v)</script><p>  该参数的值可以解释为在标签二元组$(u,v )$之后立即看到标签$s$的概率。</p>
+<ul>
+<li>对任意<script type="math/tex; mode=display">
+x\in \mathcal V,s\in \mathcal K</script>定义参数<script type="math/tex; mode=display">
+e(x|s)</script>$e(x|s)$的值可以解释为观测值$x$与状态$s$配对的概率。</li>
+</ul>
+<p>​    将$\mathcal S$定义为所有序列/标签——序列对$\langle x_1…x_n,y_1…y_n \rangle$的集合，序列对满足$n\ge 0,x_i \in \mathcal V,i=1…n$，$y_i \in \mathcal K,i=1…n$并且$y_{n+1}=\text{STOP}$。</p>
+<p>​    然后我们定义任何$\langle x_1…x_n,y_1…y_{n+1} \rangle\in \mathcal S$的概率为</p>
+<script type="math/tex; mode=display">
+p( x_1...x_n,y_1...y_{n+1})=\prod_{i=1}^{n+1}q(y_i|y_{i-2},y_{i-1}) \prod_{i=1}^n e(x_i|y_i)</script><p>这里我们假设</p>
+<script type="math/tex; mode=display">
+y_0= y_{-1}= *</script><p>​    举个例子，如果我们有$n=3$，$x_1…x_3$等the dog laughs，而$y_1…y_4$等于标签序列D N V STOP，那么</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+p( x_1...x_n,y_1...y_n)
+=& q(\text{D} |*, *) \times q(\text{N} |*, \text{D})\times
+ q(\text{V} |\text{D},\text{N})\times q(\text{STOP}|\text{N}, \text{V}) \\
+ &\times  e(\text{the}|\text{ D})\times  e(\text{dog}|\text{ N})\times  e(\text{laughs}|\text{ V})
+\end{aligned}</script><p>​    请注意，此模型形式是噪声通道模型。 如下乘积</p>
+<script type="math/tex; mode=display">
+q(\text{D} |*, *) \times q(\text{N} |*, \text{D})\times
+ q(\text{V} |\text{D},\text{N})\times q(\text{STOP}|\text{N}, \text{V})</script><p>是标签序列D N V STOP的先验概率，这里我们利用了二阶马尔可夫模型（三元模型），非常类似于我们在前一讲中得到的语言模型。如下乘积</p>
+<script type="math/tex; mode=display">
+e(\text{the}|\text{ D})\times  e(\text{dog}|\text{ N})\times  e(\text{laughs}|\text{ V})</script><p>可以解释为条件概率$p(\text{the dog laughs}|\text{D N V STOP})$：即条件概率$p(x|y)$，其中$x$是句子the dog laughs，$y$是标签序列D N V STOP。</p>
+<p>​    </p>
+<h5 id="2-5-2-三元隐马尔可夫模型的独立假设"><a href="#2-5-2-三元隐马尔可夫模型的独立假设" class="headerlink" title="2.5.2 三元隐马尔可夫模型的独立假设"></a>2.5.2 三元隐马尔可夫模型的独立假设</h5><p>我们现在描述如何导出三元隐马尔可夫模型：特别的，我们描述了在模型中做出的独立性假设。 考虑一对随机变量序列$X_1…X_n$和$Y_1…Y_n$，其中$n$是序列的长度。 我们假设每个$X_i$可以在有限集合$\mathcal  V $中取任何值。 例如，$\mathcal  V $可能是英语单词，例如$\mathcal V = \{the，dog，saw，cat，laughs\}$。 每个$Y_i$可以在有限集合$\mathcal K$中取任何值。 例如，$\mathcal K$是用于英语的可能的词性标签的集合，例如， $K = \{\text{D},\text{N},\text{V}… \}$。</p>
+<p>​    长度$n$本身是一个随机变量——即它可以在不同的句子中变化，我们将使用类似构建可变长马尔可夫过程的方法。</p>
+<p>​    我们的任务是对于任何观察序列$x_1…x_n$与状态序列$y_1…y_n$模拟联合概率</p>
+<script type="math/tex; mode=display">
+P(X_1=x_1...X_n =x_n,Y_1= y_1...Y_n=y_n)</script><p>其中每个$x_i$是$\mathcal V$的成员，并且每个$y_i$是$\mathcal K$的成员。</p>
+<p>​    我们将发现定义一个额外的随机变量$Y_{n+1}$会很方便，它的值总是STOP。 这将与可变长马尔可夫序列中看到的STOP符号起类似作用，如之前的讲义中所述。</p>
+<p>​    隐马尔可夫模型的关键思想是以下定义：</p>
+<script type="math/tex; mode=display">
+\begin{eqnarray*}
+&&P(X_1=x_1...X_n =x_n,Y_1= y_1...Y_{n+1}=y_{n+1}) \\
+=&& \prod_{i=1}^{n+1}P(Y_i=y_i|Y_{i-2}=y_{i-2},Y_{i-1}=y_{i-1}) \prod_{i=1}^nP(X_i=x_i|Y_i=y_i) \tag{2.5} 
+\end{eqnarray*}</script><p>其中</p>
+<script type="math/tex; mode=display">
+y_0= y_{-1}= *</script><p>*是特殊的开始符号。</p>
+<p>​    注意上式和我们对三元隐马尔可夫模型的定义的相似性。 在三元HMM中，我们假设联合概率如公式2.5所示，此外我们假设对于任何$i$以及任意$y_{i-2},y_{i-1},y_i$，</p>
+<script type="math/tex; mode=display">
+P(Y_i=y_i|Y_{i-2}=y_{i-2},Y_{i-1}=y_{i-1}) = q(y_i|y_{i-2},y_{i-1})</script><p>以及对于任何$i$以及任意$x_i,y_i$</p>
+<script type="math/tex; mode=display">
+P(X_i=x_i|Y_i=y_i)  =e(x_i|y_i)</script><p>​    我们现在描述公式2.5是如何推导出来的，特别地，我们将关注模型中的独立假设。 首先，我们可以将联合概率写为</p>
+<script type="math/tex; mode=display">
+\begin{eqnarray*}
+&&P(X_1=x_1...X_n =x_n,Y_1= y_1...Y_{n+1}=y_{n+1}) \\
+=&&P(Y_1= y_1...Y_{n+1}=y_{n+1}) \times P(X_1=x_1...X_n =x_n|Y_1= y_1...Y_{n+1}=y_{n+1}) \tag{2.6}
+\end{eqnarray*}</script><p>根据条件概率的定义，这一步是准确的。 因此，我们将联合概率分解为两个部分：第一个部分为选择标注序列$y_1…y_{n+1}$的概率；第二个部分为给定标签序列，选择单词序列$x_1… x_n$的概率。 请注意，这与噪声通道模型中的分解类型完全相同。</p>
+<p>​    现在考虑看到标签序列$y_1…y_{n+1}$的概率。 我们作出如下的独立假设：我们假设对于任何序列$y_1…y_{n+1}$，</p>
+<script type="math/tex; mode=display">
+P(Y_1= y_1...Y_{n+1}=y_{n+1}) =  \prod_{i=1}^{n+1}P(Y_i=y_i|Y_{i-2}=y_{i-2},Y_{i-1}=y_{i-1})</script><p>也就是说，我们假设序列$Y_1…Y_{n+1}$是二阶马尔可夫序列，即每个状态仅取决于序列中的前两个状态。</p>
+<p>​    接下来，考虑给定标签序列，选择单词序列$x_1…x_n$的概率。 我们做出以下假设：</p>
+<script type="math/tex; mode=display">
+\begin{eqnarray*}
+&&P(X_1=x_1...X_n =x_n|Y_1= y_1...Y_{n+1}=y_{n+1}) \\
+=&& \prod_{i=1}^n P(X_i =x_i|X_1=x_1...X_{i-1}=x_{i-1},Y_1=y_1
+...Y_{n+1}=y_{n+1}) \\
+=&&\prod_{i=1}^n P(X_i =x_i|Y_i =y_i)  \tag{2.7}
+\end{eqnarray*}</script><p>由链式法则，上述推导的第一步是准确的。 第二步涉及独立性假设，即对于$i=1…n$，</p>
+<script type="math/tex; mode=display">
+P(X_i =x_i|X_1=x_1...X_{i-1}=x_{i-1},Y_1=y_1
+...Y_{n+1}=y_{n+1}) = P(X_i =x_i|Y_i =y_i)</script><p>因此，我们假设随机变量$X_i$的值仅取决于$Y_i$的值。 更正式地说，给定$Y_i$的值，$X_i $的值条件独立于先前的观测值$X_1…X_{i-1}$，以及其他状态的值$Y_1…Y_{i-1}Y_{i+1}…Y_n$。</p>
+<p>​    考虑这个模型的一种有用的方法是考虑以下产生序列对$y_1…y_{n+1},x_1…x_n$的随机过程：</p>
+<ul>
+<li><p>1.初始化$i=1$，以及</p>
+<script type="math/tex; mode=display">
+y_0 =y_{-1}=*</script></li>
+<li><p>2.从如下分布中生成$y_i$</p>
+<script type="math/tex; mode=display">
+q(y_i|y_{i-2},y_{i-1})</script></li>
+<li><p>3.如果$y_i =\text{STOP}$，那么返回$y_1…y_{i},x_1…x_{i-1}$。否则，从如下分布中产生$x_i$</p>
+<script type="math/tex; mode=display">
+e(x_i|y_i)</script><p>令$i=i+1$，返回步骤2</p>
+</li>
+</ul>
+<h5 id="2-5-3-估计三元隐马尔可夫模型的参数"><a href="#2-5-3-估计三元隐马尔可夫模型的参数" class="headerlink" title="2.5.3 估计三元隐马尔可夫模型的参数"></a>2.5.3 估计三元隐马尔可夫模型的参数</h5><p>假设我们有一些训练数据。 训练数据由一组样本构成，其中每个样本是句子$x_1…x_n $与标签序列$y_1…y_n$。 给定这些数据，我们如何估计模型的参数？ 我们将看到这个问题有一个简单而直观的答案。</p>
+<p>​    将$c(u,v,s)$定义为在训练数据中看到三个状态序列$(u,v,s)$的次数：例如，$c(\text{V,D,N})$是训练语料库中标签序列V，D，N出现的次数。 类似地，将$c(u,v)$定义为看到标签二元组$(u,v)$的次数。 将$c(s)$定义为在语料库中看到状态$s$的次数。 最后，将$c(s\leadsto x)$定义为语料库中状态$s$和观测值$x$同时出现的次数：例如，$c(\text{ N}\leadsto \text{dog})$将是看到与单词dog的标签为N的次数。</p>
+<p>​    根据上述定义，最大似然估计是</p>
+<script type="math/tex; mode=display">
+q(s|u,v)= \frac{c(u,v,s)}{c(u,v)}</script><p>以及</p>
+<script type="math/tex; mode=display">
+e(x|s) = \frac{c(s\leadsto x)}{c(s)}</script><p>例如，我们将有估计</p>
+<script type="math/tex; mode=display">
+q(\text{N}|\text{V,D}) =\frac{c(\text{V,D,N})}{c(\text{V,D})}</script><p>以及</p>
+<script type="math/tex; mode=display">
+e(\text{dog}|\text{N})=\frac{c(\text{N}\leadsto \text{dog})}{c(\text{N})}</script><p>因此，估计模型的参数很简单：我们只是从训练语料库中读取计数，然后如上所述计算最大似然估计。</p>
+<p>​    在某些情况下，使用第一章描述的技术来平滑我们对$q(s|u,v)$的估计是有用的。 例如定义</p>
+<script type="math/tex; mode=display">
+q(s|u,v) =\lambda_1 \times q_{ML}(s|u,v)+\lambda_2\times q_{ML}(s|v)+
+\lambda_3  \times q_{ML}(s)</script><p>其中$q_{ML}$项是从语料库中的计数得出的最大似然估计，$\lambda_1,\lambda_2,\lambda_3$平滑参数，满足</p>
+<script type="math/tex; mode=display">
+\lambda_1\ge 0,\lambda_2\ge 0,\lambda_3 \ge 0\\
+\lambda_1+\lambda_2+\lambda_3=1</script><p>​    这些估计的一个问题是，如果单词$x$出现的不频繁，则$e(x|s)$的值将是不可靠的：更糟糕的是，如果在训练数据中没有看到单词$x$，则我们有$e(x|s)=0$。 第2.7.1节描述了该问题的解决方案。</p>
+<h5 id="2-5-4-对HMM解码：维特比算法"><a href="#2-5-4-对HMM解码：维特比算法" class="headerlink" title="2.5.4 对HMM解码：维特比算法"></a>2.5.4 对HMM解码：维特比算法</h5><p>我们现在转向查找输入句子$x_1…x_n $的最可能的标注序列的问题。 该问题为找到</p>
+<script type="math/tex; mode=display">
+\arg\max _{y_1...y_{n+1}} p( x_1...x_n,y_1...y_{n+1})</script><p>其中$\arg \max$所作用的范围是所有$y_i \in \mathcal K，i=1…n$以及$y_{n+1}=\text{STOP }$的序列。 我们假设$p$有如下形式</p>
+<script type="math/tex; mode=display">
+\begin{eqnarray*}
+p( x_1...x_n,y_1...y_{n+1})=\prod_{i=1}^{n+1}q(y_i|y_{i-2},y_{i-1}) \prod_{i=1}^n e(x_i|y_i)
+\tag{2.8}
+\end{eqnarray*}</script><p>回想一下，我们在这个定义中假设</p>
+<script type="math/tex; mode=display">
+y_0=y_{-1}=*</script><p>以及</p>
+<script type="math/tex; mode=display">
+y_{n + 1} =\text{ STOP}</script><p>​    解决该问题的蛮力算法为简单地枚举所有可能的标签序列$y_1…y_{n+1}$，然后在函数$p$下对它们进行评分，并获得最高的评分序列。 例如，给定输入句子</p>
+<script type="math/tex; mode=display">
+\text{the dog barks}</script><p>并假设可能的标签集是$\mathcal K = \{\text{D,N,V}\}$，我们会考虑所有可能的标签序列：</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+\text{D} && \text{D}&&\text{D} && \text{STOP} \\
+\text{D} && \text{D}&&\text{N} && \text{STOP}\\
+\text{D} && \text{D}&&\text{V} && \text{STOP} \\
+\text{D} && \text{N}&&\text{D} && \text{STOP}\\
+\text{D} && \text{N}&&\text{N} && \text{STOP}\\
+\text{D} && \text{N}&&\text{V} && \text{STOP}\\
+...
+\end{aligned}</script><p>在这种情况下，有$3^3=27$个可能的序列。</p>
+<p>​    然而，对于较长的句子，这种方法的效率非常低下。 对于长度为$n$的输入句子，存在$|\mathcal K|^n$种可能的标签序列。 关于于长度$n$的指数增长意味着对于任何合理长度的句子，蛮力搜索将不易处理。</p>
+<h6 id="基本算法"><a href="#基本算法" class="headerlink" title="基本算法"></a>基本算法</h6><p>相反，我们可以使用通常称为<strong>维特比算法</strong>的动态规划算法有效地找到最高概率对应的标签序列。算法的输入是句子$x_1…x_n$。 给定这个句子，对于任何$k\in \{1…n\}$，对于任意满足</p>
+<script type="math/tex; mode=display">
+y_i \in \mathcal K,i=1...k\\
+y_0=y_{-1}=*</script><p>的序列$y_{-1},y_0,y_1…y_k$，我们定义函数</p>
+<script type="math/tex; mode=display">
+\begin{eqnarray*}
+r(y_{-1},y_0,y_1...y_k) 
+=\prod_{i=1}^k q(y_i|y_{i-2},y_{i-1}) \prod_{i=1}^k e(x_i|y_i) 
+\tag{2.9}
+\end{eqnarray*}</script><p>这只是公式2.8定义的$p$的截断版本，这里我们只考虑前$k$项。特别的，注意到</p>
+<script type="math/tex; mode=display">
+\begin{eqnarray*}
+p( x_1...x_n,y_1...y_{n+1})
+&&=r(*,*,y_1...y_n)\times q(y_{n+1}|y_{n-1},y_n) \\
+&&=r(*,*,y_1...y_n)\times q(\text{STOP}|y_{n-1},y_n) \\
+\tag{2.10}
+\end{eqnarray*}</script><p>​    使用$\mathcal K_k$来表示序列中位置$k$处的允许标注集合将很方便（$k\in \{-1…n\}$）：更准确地说，定义</p>
+<script type="math/tex; mode=display">
+\mathcal K_{-1}=\mathcal K_{0} =
+\{*\}</script><p>以及</p>
+<script type="math/tex; mode=display">
+\mathcal K_k = \mathcal K ,
+k\in \{1...n\}</script><p>​    接下来，对于任何$k\in \{1…n\},u\in \mathcal K_{k-1},v\in \mathcal K_k$，将$S(k,u,v)$定义为满足$y_{k-1}=u,y_k=v,y_i \in \mathcal K_i,i \in \{-1…k\}$的$y_{-1},y_0,…,y_k$构成的序列集合。 因此，$S(k,u,v)$是长度为$k$的所有以二元组$(u,v)$为结尾的标签序列的集合。定义</p>
+<script type="math/tex; mode=display">
+\begin{eqnarray*}
+\pi(k, u,v ) =\max_{\langle y_{-1},y_0, y_1,...,y_k\rangle \in S(k,u,v)}
+ r(y_{-1},y_0,...,y_k)
+
+ \tag{2.11}
+\end{eqnarray*}</script><p>因此，$\pi(k, u,v )$是任何长度为$k$且以二元组$(u,v)$为结尾的序列的最大概率。</p>
+<p>​    我们现在发现可以按如下方式有效地计算所有$(k,u,v)$对应的$\pi(k, u,v )$。 首先，作为基础情形定义</p>
+<script type="math/tex; mode=display">
+\pi(0, *,*)=1</script><p>​    接下来，我们给出递归定义。</p>
+<h6 id="命题-1"><a href="#命题-1" class="headerlink" title="命题 1"></a>命题 1</h6><p>对于任何$k\in \{1…n\},u\in \mathcal K_{k-1},v\in \mathcal K_k$，我们给出如下递归定义：</p>
+<script type="math/tex; mode=display">
+\begin{eqnarray*}
+\pi(k, u,v ) =\max_{w \in \mathcal K_{k-2}}
+(\pi(k-1, w,u) \times q(v|w,u)\times e(x_{k}|v)) \tag{2.12}
+\end{eqnarray*}</script><p>该定义是递归的，因为该定义使用了$\pi(k-1, u,v )$。 这个定义将是我们的动态规划算法的关键。</p>
+<p>​    我们怎样才能证明这种递归的合理性？ 回想一下，$\pi(k, u,v )$是任何以二元组$(u,v)$结尾的序列$y_{-1}…y_k$的最高galvanized。 任何此类序列必须具有$y_{k-2}=w$（对于某个$w$）。任何长度为$k-1$，以二元组$(w,u)$结尾的序列的最高概率是$\pi(k-1,w,u)$，因此任何长度为$k$，以三元组$(w,u,v)$结尾的序列的概率最高是</p>
+<script type="math/tex; mode=display">
+\pi(k-1, w,u) \times q(v|w,u)\times e(x_{k}|v)</script><p>在公式2.12中我们只是关于$w$搜索上式所有可能值，并返回最大值。</p>
+<p>​    我们的第二个命题如下：</p>
+<h6 id="命题-2"><a href="#命题-2" class="headerlink" title="命题 2"></a>命题 2</h6><script type="math/tex; mode=display">
+\begin{eqnarray*}
+\max _{y_1...y_{n+1}} p( x_1...x_n,y_1...y_{n+1})=
+\max_{u \in \mathcal K_{n-1},v \in \mathcal K_{n}}
+(\pi(n,u,v) \times q(\text{STOP}|u,v))
+\tag{2.13}
+\end{eqnarray*}</script><p>上述命题从公式2.10可以直接推出。</p>
+<p>​    图2.4展示了将这些想法放在一起的算法。 该算法将句子$x_1…x_n$作为输入，并返回下式作为输出</p>
+<script type="math/tex; mode=display">
+\max _{y_1...y_{n+1}} p( x_1...x_n,y_1...y_{n+1})</script><p>该算法首先使用递归定义得到$\pi(k, u,v)$。 然后它使用公式2.13计算任何序列的最高概率。</p>
+<p><img src="https://github.com/Doraemonzzz/md-photo/blob/master/Michael%20Collins%20NLP/Lecture%203/2019020301.jpg?raw=true" alt=""></p>
+<p>​    上述算法一共要迭代$n$次，每次遍历的标签为$(w,u,v)$，所以时间复杂度为$O(n|\mathcal K|^3)$，因此算法关于序列的长度是线性的，关于标签的数量是立方的。</p>
+<h6 id="带有反向指针的维特比算法"><a href="#带有反向指针的维特比算法" class="headerlink" title="带有反向指针的维特比算法"></a>带有反向指针的维特比算法</h6><p>我们刚刚描述的算法将句子$x_1…x_n$作为输入，然后返回下式作为输出</p>
+<script type="math/tex; mode=display">
+\max _{y_1...y_{n+1}} p( x_1...x_n,y_1...y_{n+1})</script><p>然而，我们真正想要的是返回最高概率序列的算法，即对任意$x_1…x_n$，返回</p>
+<script type="math/tex; mode=display">
+\arg \max _{y_1...y_{n+1}} p( x_1...x_n,y_1...y_{n+1})</script><p>​    图2.5显示了实现此目标的修改算法。 关键步骤是在每一步存储反向指针$bp(k,u,v)$，该指针记录$u,v$之前的状态$w$，$w$使在位置$k$以$(u,v)$结束的序列达到最大概率。 在算法结束时，我们解开反向针以找到最高概率序列，然后返回此序列。 该算法依然在$O(n|\mathcal K|^3)$时间内运行。</p>
+<p><img src="https://github.com/Doraemonzzz/md-photo/blob/master/Michael%20Collins%20NLP/Lecture%203/2019020302.jpg?raw=true" alt=""></p>
+<h3 id="2-6-总结"><a href="#2-6-总结" class="headerlink" title="2.6 总结"></a>2.6 总结</h3><p>我们在本章中已经介绍了许多重点，但最终结果相当简单：我们已经推导出一个从训练语料库中学习标注的完整方法，并将其应用于新的句子。 主要内容如下：</p>
+<ul>
+<li><p>三元隐马尔可夫模型有参数$q(s|u,v)$和$e(x|s)$，并且定义任何句子$x_1…x_n$与标签序列$y_1…y_{n+1}$（其中$y_{n+1}=\text{STOP} $） 对应的联合概率</p>
+<script type="math/tex; mode=display">
+p( x_1...x_n,y_1...y_{n+1})=\prod_{i=1}^{n+1}q(y_i|y_{i-2},y_{i-1}) \prod_{i=1}^n e(x_i|y_i)</script></li>
+<li><p>给定一个训练语料库，我们可以从中得出计数，参数的最大似然估计是</p>
+<script type="math/tex; mode=display">
+q(s|u,v)= \frac{c(u,v,s)}{c(u,v)}</script><p>以及</p>
+<script type="math/tex; mode=display">
+e(x|s) = \frac{c(s\leadsto x)}{c(s)}</script></li>
+<li><p>给定一个新的句子$x_1…x_n$，以及我们从训练语料库中估计的参数$q$和$e$，我们可以使用图2.5中的算法（维特比算法）找到$x_1…x_n$的最高概率标签序列。</p>
+</li>
+</ul>
+<h3 id="2-7-更进一步的材料"><a href="#2-7-更进一步的材料" class="headerlink" title="2.7 更进一步的材料"></a>2.7 更进一步的材料</h3><h5 id="2-7-1-处理未知的单词"><a href="#2-7-1-处理未知的单词" class="headerlink" title="2.7.1 处理未知的单词"></a>2.7.1 处理未知的单词</h5><p>回忆一下，我们对HMM中概率的参数估计是</p>
+<script type="math/tex; mode=display">
+e(x|s) = \frac{c(s\leadsto x)}{c(s)}</script><p>其中$c(s\leadsto x)$为语料库中状态$s$和观测值$x$同时出现的次数，$c(s)$为在语料库中看到状态$s$的次数。</p>
+<p>​    该估计的一个主要问题是，对于训练数据中未见过的任何单词$x$，对于所有状态$s$，$e(x|s) $将等于$0$。 因此，对于任何包含训练数据中从未见过的单词的测试句$x_1 … x_n$，很容易验证对任意$y_1…y_{n+1}$</p>
+<script type="math/tex; mode=display">
+p( x_1...x_n,y_1...y_{n+1})= 0</script><p>因此，模型将在测试句子上完全失败。 特别的，对下式取$\arg \max$将没有意义</p>
+<script type="math/tex; mode=display">
+\arg \max _{y_1...y_{n+1}} p( x_1...x_n,y_1...y_{n+1}) =0</script><p>因为每个标签序列有同样的最大值$0$。</p>
+<p>​    这是一个棘手的问题，因为无论我们的训练数据多么大，测试句中都不可避免地会出现训练数据中从未见过的单词。 例如，英语的词汇量非常大; 但在测试数据中总是遇到新单词。 以图2.2和2.3中使用的句子为例：</p>
+<script type="math/tex; mode=display">
+\text {Profits soared at Boeing Co., easily topping forecasts on Wall Street,} \\
+\text {as their CEO Alan Mulally announced first quarter results.}</script><p>在这句话中，很可能在训练数据中没有看到Mulally这个词。 同样地，在英语中，topping是一个相对不常见的单词，在训练语料中可能没有看到过。</p>
+<p>​    在本节中，我们将描述一个简单但非常有效的方法来解决这个问题。关键的想法是将训练数据中的低频词，以及在测试数据中看到但在训练中从未见过的词，映射到相对较小的一组伪单词，例如，我们可以将单词Mulally映射到伪单词initCap，将单词1990映射到伪单词fourDigitNum，依此类推。 这里伪单词initCap用于第一个字母是大写字母，其余字母是小写字母的任何单词。 伪单词fourDigitNum用于任何四位数字。</p>
+<p>​    图2.6显示了一组伪单词的例子，它将HMM标注符应用于命名实体识别问题。 这组伪单词是手工选择的，并且是为了保留关于不同单词的拼写特征的一些有用信息而明确选择的：例如单词的大小写特征，以及不同数字类型的子分类（主要为了处理日期）。</p>
+<p><img src="https://github.com/Doraemonzzz/md-photo/blob/master/Michael%20Collins%20NLP/Lecture%203/2019020303.jpg?raw=true" alt=""></p>
+<p>​    一旦定义了从单词到伪单词的映射，我们进行如下操作。 将$f(x)$定义为将单词$x$映射到其伪单词$f(x)$的函数。 我们定义了计数截断参数$\gamma$：一个典型的值是$\gamma =5$。该参数的作用是，对于训练数据中看到的任何出现次数少于$\gamma$的单词，我们只需将单词$x$替换为伪单词$f(x)$。 此映射适用于训练和测试样本中的单词：因此，在训练数据中从未见过但在测试数据中看到的单词也会映射到其伪单词。 一旦执行了这种映射，我们就可以用与之前完全相同的方式估计HMM的参数，我们在训练数据中的一些单词现在是伪单词。 类似地，如果输入句子中的一些单词是伪单词，我们依然可以应用维特比算法进行模型解码。    </p>
+<p>​    将低频词映射到伪单词具有“关闭词汇表”的效果：通过这种映射，测试数据中的每个词在训练数据中至少会被看到一次（通常，我们可以假设每个伪单词在训练集中至少出现一次）。 因此，对于测试数据中的某些单词$x$，我们永远不会遇到$e(x|s)=0$的问题。 此外，通过仔细选择伪单词集，将保留有关不同单词拼写的重要信息。 有关应用映射之前和之后的示例句子，请参见图2.7。</p>
+<p>​    <img src="https://github.com/Doraemonzzz/md-photo/blob/master/Michael%20Collins%20NLP/Lecture%203/2019020304.jpg?raw=true" alt=""></p>
+<p>​    该方法的缺点是在定义到伪词的映射时需要人为选择，并且该映射会根据所考虑的任务而变化（例如，不同的映射可以用于命名实体识别而不是POS标注）。 在后面的章节中，我们将看到基于对数线性模型的想法，可以说是低频率和未知单词问题的更清晰的解决方案。</p>
+<h2 id="本讲测验题"><a href="#本讲测验题" class="headerlink" title="本讲测验题"></a>本讲测验题</h2><h3 id="Coursera部分"><a href="#Coursera部分" class="headerlink" title="Coursera部分"></a>Coursera部分</h3><h4 id="1"><a href="#1" class="headerlink" title="1."></a>1.</h4><p><img src="https://github.com/Doraemonzzz/md-photo/blob/master/Michael%20Collins%20NLP/Lecture%203/2019020401.jpg?raw=true" alt=""></p>
+<p>Jane为人名，所以选b（回顾课件的例子）</p>
+<h4 id="2"><a href="#2" class="headerlink" title="2."></a>2.</h4><p><img src="https://github.com/Doraemonzzz/md-photo/blob/master/Michael%20Collins%20NLP/Lecture%203/2019020402.jpg?raw=true" alt=""></p>
+<p>利用乘法原理可得可能的标签序列数量为</p>
+<script type="math/tex; mode=display">
+2\times 1\times 3\times 3\times 2=36</script><h4 id="3"><a href="#3" class="headerlink" title="3."></a>3.</h4><p><img src="https://github.com/Doraemonzzz/md-photo/blob/master/Michael%20Collins%20NLP/Lecture%203/2019020403.jpg?raw=true" alt=""></p>
+<p>由转移概率参数可得，标签序列必然为</p>
+<script type="math/tex; mode=display">
+\text{D ,N ,STOP}</script><p>由发射参数可得，可能的序列有$2\times 1=2$种</p>
+<script type="math/tex; mode=display">
+\text{dog dog}\\
+\text{the dog}</script><h4 id="4"><a href="#4" class="headerlink" title="4."></a>4.</h4><p><img src="https://github.com/Doraemonzzz/md-photo/blob/master/Michael%20Collins%20NLP/Lecture%203/2019020404.jpg?raw=true" alt=""></p>
+<p>利用公式</p>
+<script type="math/tex; mode=display">
+p( x_1...x_n,y_1...y_{n+1})=\prod_{i=1}^{n+1}q(y_i|y_{i-2},y_{i-1}) \prod_{i=1}^n e(x_i|y_i)</script><p>此处$n=4$，所以选c</p>
+<h4 id="5"><a href="#5" class="headerlink" title="5."></a>5.</h4><p><img src="https://github.com/Doraemonzzz/md-photo/blob/master/Michael%20Collins%20NLP/Lecture%203/2019020405.jpg?raw=true" alt=""></p>
+<p>只要将</p>
+<script type="math/tex; mode=display">
+q(y_i|y_{i-2},y_{i-1})</script><p>修改为</p>
+<script type="math/tex; mode=display">
+q(y_i|y_{i-1})</script><p>所以选b</p>
+<h4 id="6"><a href="#6" class="headerlink" title="6."></a>6.</h4><p><img src="https://github.com/Doraemonzzz/md-photo/blob/master/Michael%20Collins%20NLP/Lecture%203/2019020406.jpg?raw=true" alt=""></p>
+<p>由</p>
+<script type="math/tex; mode=display">
+e(x|s) = \frac{c(s\leadsto x)}{c(s)}</script><p>可得，</p>
+<script type="math/tex; mode=display">
+c(\text{N})=2, c(\text{N}\leadsto \text{cat})= 1\\
+e(\text{cat}|\text{N}) =\frac 1 2</script><h4 id="7"><a href="#7" class="headerlink" title="7."></a>7.</h4><p><img src="https://github.com/Doraemonzzz/md-photo/blob/master/Michael%20Collins%20NLP/Lecture%203/2019020407.jpg?raw=true" alt=""></p>
+<p>注意公式为</p>
+<script type="math/tex; mode=display">
+q(s|u,v) =\lambda_1 \times q_{ML}(s|u,v)+\lambda_2\times q_{ML}(s|v)+
+\lambda_3  \times q_{ML}(s) \\
+\begin{aligned}
+q_{ML}(w|u,v)&= \frac{c(u,v,w)}{c(u,v)} \\
+q_{ML}(w|v)&= \frac{c(v,w)}{c(v)} \\
+q_{ML}(w)&= \frac{c(w)}{c()}
+\end{aligned}</script><p>所以</p>
+<script type="math/tex; mode=display">
+c(\text{N},\text{V})=2,c(\text{N},\text{V},\text{STOP})=2\\
+c(\text{V},\text{STOP})=2,c(\text{V})=2\\
+c()=8,c(\text{STOP})=2 \\
+q(\text{STOP}|\text{N},\text{V})
+=\frac 1 3\times(1 +1 +\frac 2 8)=\frac 3 4</script><h4 id="8"><a href="#8" class="headerlink" title="8."></a>8.</h4><p><img src="https://github.com/Doraemonzzz/md-photo/blob/master/Michael%20Collins%20NLP/Lecture%203/2019020408.jpg?raw=true" alt=""></p>
+<p>回顾公式为</p>
+<script type="math/tex; mode=display">
+\pi(0, *,*)=1 \\ 
+\pi(k, u,v ) =\max_{w \in \mathcal K_{k-2}}
+(\pi(k-1, w,u) \times q(v|w,u)\times e(x_{k}|v))</script><p>因为</p>
+<script type="math/tex; mode=display">
+q(\text{D}|*,*)=1</script><p>所以</p>
+<script type="math/tex; mode=display">
+\pi(1, \text{*}, \text{D})= \max_{w \in \mathcal K_{-1}}
+(\pi(0, w,*) \times q(\text{D}|w,*)\times e(\text{the}|\text{D}))=
+\pi(0, *,*) \times q(\text{D}|*,*)\times e(\text{the}|\text{D})=0.8 \\
+\pi(2, \text{D}, \text{N})= \max_{w \in \mathcal K_{0}}
+(\pi(1, w,\text{D}) \times q(\text{N}|w,\text{D})\times e(\text{dog}|\text{N}))
+= \pi(1, \text{*}, \text{D}) \times q(\text{N}|*,\text{D})\times e(\text{dog}|\text{N})=0.64\\
+\pi(3, \text{N}, \text{V})=\max_{w \in \mathcal K_{1}}
+(\pi(2, w,\text{N}) \times q(\text{V}|w,\text{N})\times e(\text{barks}|\text{V}))=
+\pi(2, \text{D}, \text{N})\times q(\text{V}|\text{D},\text{N})\times  e(\text{barks}|\text{V})
+=0.64</script><h4 id="9"><a href="#9" class="headerlink" title="9."></a>9.</h4><p><img src="https://github.com/Doraemonzzz/md-photo/blob/master/Michael%20Collins%20NLP/Lecture%203/2019020409.jpg?raw=true" alt=""></p>
+<p>利用</p>
+<script type="math/tex; mode=display">
+\pi(k, u,v ) =\max_{w \in \mathcal K_{k-2}}
+(\pi(k-1, w,u) \times q(v|w,u)\times e(x_{k}|v))</script><p>可得</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+\pi(4, \text{P},\text{D} ) 
+&=\max_{w \in \mathcal K_{2}}
+(\pi(3, w,\text{P}) \times q(\text{D}|w,\text{P})\times e(\text{the}|\text{D}))\\
+&=\pi(3, \text{N},\text{P}) \times q(\text{D}|\text{N},\text{P})\times e(\text{the}|\text{D}) \\
+&=0.2\times 0.4\times 0.6 \\
+&=0.048
+\end{aligned}</script><h3 id="课内部分"><a href="#课内部分" class="headerlink" title="课内部分"></a>课内部分</h3><h4 id="1-1"><a href="#1-1" class="headerlink" title="1."></a>1.</h4><p><img src="https://github.com/Doraemonzzz/md-photo/blob/master/Michael%20Collins%20NLP/Lecture%203/2019052501.jpg?raw=true" alt=""></p>
+<p>显然标注序列必然为</p>
+<script type="math/tex; mode=display">
+\text{D,N,V,STOP}</script><p>单词序列为</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+\text{the dog dog}\\
+\text{the dog barks}\\
+\text{the barks dog}\\
+\text{the barks barks}\\
+\end{aligned}</script><h4 id="2-1"><a href="#2-1" class="headerlink" title="2."></a>2.</h4><p><img src="https://github.com/Doraemonzzz/md-photo/blob/master/Michael%20Collins%20NLP/Lecture%203/2019052502.jpg?raw=true" alt=""></p>
+<h5 id="part-1"><a href="#part-1" class="headerlink" title="part 1"></a>part 1</h5><p><img src="https://github.com/Doraemonzzz/md-photo/blob/master/Michael%20Collins%20NLP/Lecture%203/2019052503.jpg?raw=true" alt=""></p>
+<p>初始化：</p>
+<script type="math/tex; mode=display">
+\pi(0, *, *, *)=1</script><p>算法：</p>
+<ul>
+<li><p>对$k=1\ldots n$,</p>
+<ul>
+<li>对$u\in \mathcal K_{k-2},v\in \mathcal K_{k-1}, w\in \mathcal K_k$,<script type="math/tex; mode=display">
+\pi(k, u,v,w)
+=\max_{s\in \mathcal K_{k-3}}\left(\pi(k-1, s,u, v) \times q(w | s, u,v) \times e\left(x_{k} | w\right)\right)</script></li>
+</ul>
+</li>
+<li><p>返回</p>
+<script type="math/tex; mode=display">
+\max _{u\in \mathcal K_{n-2},v\in \mathcal K_{n-1}, w\in \mathcal K_n}
+(\pi(n, u, v,w) \times q(\mathrm{STOP} | u, v,w))</script></li>
+</ul>
+<h5 id="part-2"><a href="#part-2" class="headerlink" title="part 2"></a>part 2</h5><p><img src="https://github.com/Doraemonzzz/md-photo/blob/master/Michael%20Collins%20NLP/Lecture%203/2019052504.jpg?raw=true" alt=""></p>
+<p>只要对每个$e(x|w)$中的$x$也进行搜索即可，算法如下：</p>
+<p>初始化：</p>
+<script type="math/tex; mode=display">
+\pi(0, *, *)=1</script><p>算法：</p>
+<ul>
+<li><p>对$k=1\ldots n$,</p>
+<ul>
+<li>对$u\in \mathcal K_{k-1},v\in \mathcal K_{k}$,<script type="math/tex; mode=display">
+\pi(k, u,v)
+=\max_{w\in \mathcal K_{k-2}, x\in \mathcal V}\left(\pi(k-1, w,u) \times q(v | w,u) \times e\left(x | v\right)\right)</script></li>
+</ul>
+</li>
+<li><p>返回</p>
+<script type="math/tex; mode=display">
+\max _{u\in \mathcal K_{n-1},v\in \mathcal K_{n}}
+(\pi(n, u, v) \times q(\mathrm{STOP} | u, v))</script></li>
+</ul>
+<h4 id="3-1"><a href="#3-1" class="headerlink" title="3."></a>3.</h4><p><img src="https://github.com/Doraemonzzz/md-photo/blob/master/Michael%20Collins%20NLP/Lecture%203/2019052505.jpg?raw=true" alt=""></p>
+<p><img src="https://github.com/Doraemonzzz/md-photo/blob/master/Michael%20Collins%20NLP/Lecture%203/2019052506.jpg?raw=true" alt=""></p>
+<p>初始化：</p>
+<script type="math/tex; mode=display">
+\pi(0, *, *)=1</script><p>算法：</p>
+<ul>
+<li><p>对$k=1\ldots n$,</p>
+<ul>
+<li>对$u\in \mathcal K_{k-1},v\in \mathcal K_{k}$,<script type="math/tex; mode=display">
+\pi(k, u,v)
+=\max_{w\in \mathcal K_{k-2}}\left(\pi(k-1, w,u) \times q(v | w) \times e\left(x_k | v\right)\right)</script></li>
+</ul>
+</li>
+<li><p>返回</p>
+<script type="math/tex; mode=display">
+\max _{u\in \mathcal K_{n-1},v\in \mathcal K_{n}}
+(\pi(n, u, v) \times q(\mathrm{STOP} | u, v))</script></li>
+</ul>
+<h4 id="4-1"><a href="#4-1" class="headerlink" title="4."></a>4.</h4><p><img src="https://github.com/Doraemonzzz/md-photo/blob/master/Michael%20Collins%20NLP/Lecture%203/2019052507.jpg?raw=true" alt=""></p>
+<p>首先回顾维特比算法：</p>
+<p><img src="https://github.com/Doraemonzzz/md-photo/blob/master/Michael%20Collins%20NLP/Lecture%203/2019020301.jpg?raw=true" alt=""></p>
+<p>从训练数据的特点，前三个标签必然为（注意其余情形概率为$0$）</p>
+<script type="math/tex; mode=display">
+\text{DT,NN,VB}</script><p>对于$k=4$，因为</p>
+<script type="math/tex; mode=display">
+q(u|\text{VB})e(\text{in}|u)=\begin{cases}
+非零& u=\text{IN}  \\
+0&  其他
+\end{cases}</script><p>第一个句子的$y_4=\text{IN}$，同理第二个句子的$y_4=\text{VB}$。最后从训练数据的特点可以确定其余标签。</p>
+<h4 id="5-1"><a href="#5-1" class="headerlink" title="5."></a>5.</h4><p><img src="https://github.com/Doraemonzzz/md-photo/blob/master/Michael%20Collins%20NLP/Lecture%203/2019052508.jpg?raw=true" alt=""></p>
+<p>考虑如下例子（来自参考解答）：</p>
+<script type="math/tex; mode=display">
+\text{the/DT the/NN the/DT the/DT the/DT the/DT}</script><p>最大似然估计为</p>
+<script type="math/tex; mode=display">
+\begin{array}{c}{e(\text {the } | \mathrm{DT})=e(\text {the } | \mathrm{NN})=1} \\ {q(\mathrm{NN} | \mathrm{DT})=1 / 5 \quad q(\mathrm{DT} | \mathrm{DT})=3 / 5 \quad q(\mathrm{STOP} | \mathrm{DT})=1 / 5}\end{array}</script><p>因为$q(\mathrm{DT} | \mathrm{DT})$最大，所以概率最大的标签序列为</p>
+<script type="math/tex; mode=display">
+\text{DT DT DT DT DT DT STOP}</script></article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">Doraemonzzz</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="http://doraemonzzz.com/2019/02/04/Michael%20Collins%20NLP%20Lecture%203/">http://doraemonzzz.com/2019/02/04/Michael%20Collins%20NLP%20Lecture%203/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://doraemonzzz.com" target="_blank">Doraemonzzz</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/Michael-Collins-NLP/">Michael Collins NLP</a></div><div class="post_share"><div class="social-share" data-image="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2019/02/10/Michael%20Collins%20NLP%20Lecture%204/"><img class="prev-cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">Michael Collins NLP Lecture 4</div></div></a></div><div class="next-post pull-right"><a href="/2019/02/04/%E5%8F%B0%E5%A4%A7%E5%AE%9E%E5%88%86%E6%9E%90%E5%8D%95%E5%85%83%2022%20Radon%E6%B5%8B%E5%BA%A6%E4%B9%8B%E5%BE%AE%E5%88%86/"><img class="next-cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">台大实分析单元 22 Radon测度之微分</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span> 相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2020/04/08/Michael Collins NLP Homework 1/" title="Michael Collins NLP Homework 1"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-04-08</div><div class="title">Michael Collins NLP Homework 1</div></div></a></div><div><a href="/2020/04/21/Michael Collins NLP Homework 2/" title="Michael Collins NLP Homework 2"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-04-21</div><div class="title">Michael Collins NLP Homework 2</div></div></a></div><div><a href="/2020/05/07/Michael Collins NLP Homework 3/" title="Michael Collins NLP Homework 3"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-05-07</div><div class="title">Michael Collins NLP Homework 3</div></div></a></div><div><a href="/2020/05/18/Michael Collins NLP Homework 4/" title="Michael Collins NLP Homework 4"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-05-18</div><div class="title">Michael Collins NLP Homework 4</div></div></a></div><div><a href="/2019/01/24/Michael Collins NLP Lecture 1/" title="Michael Collins NLP Lecture 1"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2019-01-24</div><div class="title">Michael Collins NLP Lecture 1</div></div></a></div><div><a href="/2019/03/03/Michael Collins NLP Lecture 11/" title="Michael Collins NLP Lecture 11"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2019-03-03</div><div class="title">Michael Collins NLP Lecture 11</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="card-info-avatar is-center"><img class="avatar-img" src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/><div class="author-info__name">Doraemonzzz</div><div class="author-info__description">个人博客，主要记录有关机器学习，数学以及计算机科学的笔记</div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">610</div></a></div><div class="card-info-data-item is-center"><a href="/tags/"><div class="headline">标签</div><div class="length-num">59</div></a></div><div class="card-info-data-item is-center"><a href="/categories/"><div class="headline">分类</div><div class="length-num">23</div></a></div></div><a class="button--animated" id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/Doraemonzzz" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="/doraemon_zzz@163.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn card-announcement-animation"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Chapter-2-%E6%A0%87%E6%B3%A8%E9%97%AE%E9%A2%98%E5%92%8C%E9%9A%90%E9%A9%AC%E5%B0%94%E5%8F%AF%E5%A4%AB%E6%A8%A1%E5%9E%8B"><span class="toc-number">1.</span> <span class="toc-text">Chapter 2 标注问题和隐马尔可夫模型</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1-%E4%BB%8B%E7%BB%8D"><span class="toc-number">1.1.</span> <span class="toc-text">2.1 介绍</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2-%E4%B8%A4%E4%B8%AA%E6%A0%87%E6%B3%A8%E9%97%AE%E9%A2%98%E7%9A%84%E4%BE%8B%E5%AD%90%EF%BC%9A%E8%AF%8D%E6%80%A7%E6%A0%87%E6%B3%A8%E5%92%8C%E5%91%BD%E5%90%8D%E5%AE%9E%E4%BD%93%E8%AF%86%E5%88%AB"><span class="toc-number">1.2.</span> <span class="toc-text">2.2 两个标注问题的例子：词性标注和命名实体识别</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-3-%E7%94%9F%E6%88%90%E6%A8%A1%E5%9E%8B-Generative-Models-%E5%92%8C%E5%99%AA%E5%A3%B0%E4%BF%A1%E9%81%93%E6%A8%A1%E5%9E%8B-The-Noisy-Channel-Model"><span class="toc-number">1.3.</span> <span class="toc-text">2.3 生成模型(Generative Models)和噪声信道模型(The Noisy Channel Model)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-4-%E7%94%9F%E6%88%90%E6%A0%87%E6%B3%A8%E6%A8%A1%E5%9E%8B"><span class="toc-number">1.4.</span> <span class="toc-text">2.4 生成标注模型</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#%E5%AE%9A%E4%B9%89-1-%E7%94%9F%E6%88%90%E6%A0%87%E6%B3%A8%E6%A8%A1%E5%9E%8B"><span class="toc-number">1.4.0.0.1.</span> <span class="toc-text">定义 1 (生成标注模型)</span></a></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-5-%E4%B8%89%E5%85%83%E9%9A%90%E9%A9%AC%E5%B0%94%E5%8F%AF%E5%A4%AB%E6%A8%A1%E5%9E%8B-Trigram-HMMs"><span class="toc-number">1.5.</span> <span class="toc-text">2.5 三元隐马尔可夫模型(Trigram HMMs)</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#2-5-1-%E4%B8%89%E5%85%83%E9%9A%90%E9%A9%AC%E5%B0%94%E5%8F%AF%E5%A4%AB%E6%A8%A1%E5%9E%8B%E7%9A%84%E5%AE%9A%E4%B9%89"><span class="toc-number">1.5.0.1.</span> <span class="toc-text">2.5.1 三元隐马尔可夫模型的定义</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#2-5-2-%E4%B8%89%E5%85%83%E9%9A%90%E9%A9%AC%E5%B0%94%E5%8F%AF%E5%A4%AB%E6%A8%A1%E5%9E%8B%E7%9A%84%E7%8B%AC%E7%AB%8B%E5%81%87%E8%AE%BE"><span class="toc-number">1.5.0.2.</span> <span class="toc-text">2.5.2 三元隐马尔可夫模型的独立假设</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#2-5-3-%E4%BC%B0%E8%AE%A1%E4%B8%89%E5%85%83%E9%9A%90%E9%A9%AC%E5%B0%94%E5%8F%AF%E5%A4%AB%E6%A8%A1%E5%9E%8B%E7%9A%84%E5%8F%82%E6%95%B0"><span class="toc-number">1.5.0.3.</span> <span class="toc-text">2.5.3 估计三元隐马尔可夫模型的参数</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#2-5-4-%E5%AF%B9HMM%E8%A7%A3%E7%A0%81%EF%BC%9A%E7%BB%B4%E7%89%B9%E6%AF%94%E7%AE%97%E6%B3%95"><span class="toc-number">1.5.0.4.</span> <span class="toc-text">2.5.4 对HMM解码：维特比算法</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#%E5%9F%BA%E6%9C%AC%E7%AE%97%E6%B3%95"><span class="toc-number">1.5.0.4.1.</span> <span class="toc-text">基本算法</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#%E5%91%BD%E9%A2%98-1"><span class="toc-number">1.5.0.4.2.</span> <span class="toc-text">命题 1</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#%E5%91%BD%E9%A2%98-2"><span class="toc-number">1.5.0.4.3.</span> <span class="toc-text">命题 2</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#%E5%B8%A6%E6%9C%89%E5%8F%8D%E5%90%91%E6%8C%87%E9%92%88%E7%9A%84%E7%BB%B4%E7%89%B9%E6%AF%94%E7%AE%97%E6%B3%95"><span class="toc-number">1.5.0.4.4.</span> <span class="toc-text">带有反向指针的维特比算法</span></a></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-6-%E6%80%BB%E7%BB%93"><span class="toc-number">1.6.</span> <span class="toc-text">2.6 总结</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-7-%E6%9B%B4%E8%BF%9B%E4%B8%80%E6%AD%A5%E7%9A%84%E6%9D%90%E6%96%99"><span class="toc-number">1.7.</span> <span class="toc-text">2.7 更进一步的材料</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#2-7-1-%E5%A4%84%E7%90%86%E6%9C%AA%E7%9F%A5%E7%9A%84%E5%8D%95%E8%AF%8D"><span class="toc-number">1.7.0.1.</span> <span class="toc-text">2.7.1 处理未知的单词</span></a></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9C%AC%E8%AE%B2%E6%B5%8B%E9%AA%8C%E9%A2%98"><span class="toc-number">2.</span> <span class="toc-text">本讲测验题</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Coursera%E9%83%A8%E5%88%86"><span class="toc-number">2.1.</span> <span class="toc-text">Coursera部分</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1"><span class="toc-number">2.1.1.</span> <span class="toc-text">1.</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2"><span class="toc-number">2.1.2.</span> <span class="toc-text">2.</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3"><span class="toc-number">2.1.3.</span> <span class="toc-text">3.</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4"><span class="toc-number">2.1.4.</span> <span class="toc-text">4.</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#5"><span class="toc-number">2.1.5.</span> <span class="toc-text">5.</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#6"><span class="toc-number">2.1.6.</span> <span class="toc-text">6.</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#7"><span class="toc-number">2.1.7.</span> <span class="toc-text">7.</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#8"><span class="toc-number">2.1.8.</span> <span class="toc-text">8.</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#9"><span class="toc-number">2.1.9.</span> <span class="toc-text">9.</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AF%BE%E5%86%85%E9%83%A8%E5%88%86"><span class="toc-number">2.2.</span> <span class="toc-text">课内部分</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-1"><span class="toc-number">2.2.1.</span> <span class="toc-text">1.</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-1"><span class="toc-number">2.2.2.</span> <span class="toc-text">2.</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#part-1"><span class="toc-number">2.2.2.1.</span> <span class="toc-text">part 1</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#part-2"><span class="toc-number">2.2.2.2.</span> <span class="toc-text">part 2</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-1"><span class="toc-number">2.2.3.</span> <span class="toc-text">3.</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-1"><span class="toc-number">2.2.4.</span> <span class="toc-text">4.</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#5-1"><span class="toc-number">2.2.5.</span> <span class="toc-text">5.</span></a></li></ol></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2021/06/06/2021-6-6-%E7%AE%97%E6%B3%95%E6%A6%82%E8%AE%BA(DPV)%E4%B9%A0%E9%A2%98%E8%A7%A3%E7%AD%94%E2%80%94%E2%80%94%E7%AC%AC3%E7%AB%A0-%E5%9B%BE%E7%9A%84%E5%88%86%E8%A7%A3/" title="算法概论(DPV)习题解答——第3章 图的分解"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="算法概论(DPV)习题解答——第3章 图的分解"/></a><div class="content"><a class="title" href="/2021/06/06/2021-6-6-%E7%AE%97%E6%B3%95%E6%A6%82%E8%AE%BA(DPV)%E4%B9%A0%E9%A2%98%E8%A7%A3%E7%AD%94%E2%80%94%E2%80%94%E7%AC%AC3%E7%AB%A0-%E5%9B%BE%E7%9A%84%E5%88%86%E8%A7%A3/" title="算法概论(DPV)习题解答——第3章 图的分解">算法概论(DPV)习题解答——第3章 图的分解</a><time datetime="2021-06-06T14:35:00.000Z" title="发表于 2021-06-06 22:35:00">2021-06-06</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/06/06/2021-6-6-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E7%AC%AC5%E7%AB%A0-%E4%B9%A0%E9%A2%98%E8%A7%A3%E6%9E%90/" title="深入理解计算机系统 第5章 习题解析"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="深入理解计算机系统 第5章 习题解析"/></a><div class="content"><a class="title" href="/2021/06/06/2021-6-6-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E7%AC%AC5%E7%AB%A0-%E4%B9%A0%E9%A2%98%E8%A7%A3%E6%9E%90/" title="深入理解计算机系统 第5章 习题解析">深入理解计算机系统 第5章 习题解析</a><time datetime="2021-06-06T07:23:00.000Z" title="发表于 2021-06-06 15:23:00">2021-06-06</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/06/05/2021-6-5-Stanford-Compiler-PA5%E7%BF%BB%E8%AF%91/" title="Stanford Compiler PA5翻译"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Stanford Compiler PA5翻译"/></a><div class="content"><a class="title" href="/2021/06/05/2021-6-5-Stanford-Compiler-PA5%E7%BF%BB%E8%AF%91/" title="Stanford Compiler PA5翻译">Stanford Compiler PA5翻译</a><time datetime="2021-06-05T06:12:00.000Z" title="发表于 2021-06-05 14:12:00">2021-06-05</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/06/04/2021-6-4-Stanford-Compiler-PA4%E7%BF%BB%E8%AF%91/" title="Stanford Compiler PA4翻译"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Stanford Compiler PA4翻译"/></a><div class="content"><a class="title" href="/2021/06/04/2021-6-4-Stanford-Compiler-PA4%E7%BF%BB%E8%AF%91/" title="Stanford Compiler PA4翻译">Stanford Compiler PA4翻译</a><time datetime="2021-06-03T16:17:00.000Z" title="发表于 2021-06-04 00:17:00">2021-06-04</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/06/03/2021-6-3-%E5%B7%A7%E5%A6%99%E7%9A%84Y%E8%BF%90%E7%AE%97%E7%AC%A6/" title="巧妙的Y运算符"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="巧妙的Y运算符"/></a><div class="content"><a class="title" href="/2021/06/03/2021-6-3-%E5%B7%A7%E5%A6%99%E7%9A%84Y%E8%BF%90%E7%AE%97%E7%AC%A6/" title="巧妙的Y运算符">巧妙的Y运算符</a><time datetime="2021-06-03T00:54:00.000Z" title="发表于 2021-06-03 08:54:00">2021-06-03</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2021 By Doraemonzzz</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><div class="js-pjax"><script>if (!window.MathJax) {
+  window.MathJax = {
+    loader: {
+      source: {
+        '[tex]/amsCd': '[tex]/amscd'
+      }
+    },
+    tex: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]],
+      tags: 'ams'
+    },
+    options: {
+      renderActions: {
+        findScript: [10, doc => {
+          for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+            const display = !!node.type.match(/; *mode=display/)
+            const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+            const text = document.createTextNode('')
+            node.parentNode.replaceChild(text, node)
+            math.start = {node: text, delim: '', n: 0}
+            math.end = {node: text, delim: '', n: 0}
+            doc.math.push(math)
+          }
+        }, ''],
+        addClass: [200,() => {
+          document.querySelectorAll('mjx-container:not([display=\'true\']').forEach( node => {
+            const target = node.parentNode
+            if (!target.classList.contains('has-jax')) {
+              target.classList.add('mathjax-overflow')
+            }
+          })
+        }, '', false]
+      }
+    }
+  }
+  
+  const script = document.createElement('script')
+  script.src = 'https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js'
+  script.id = 'MathJax-script'
+  script.async = true
+  document.head.appendChild(script)
+} else {
+  MathJax.startup.document.state(0)
+  MathJax.texReset()
+  MathJax.typeset()
+}</script></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

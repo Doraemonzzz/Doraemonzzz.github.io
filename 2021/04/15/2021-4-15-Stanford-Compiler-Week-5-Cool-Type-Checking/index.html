@@ -1,0 +1,642 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Stanford Compiler Week 5 Cool Type Checking | Doraemonzzz</title><meta name="keywords" content="斯坦福大学编译原理"><meta name="author" content="Doraemonzzz"><meta name="copyright" content="Doraemonzzz"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="课程主页： https:&#x2F;&#x2F;www.edx.org&#x2F;course&#x2F;compilers 课程视频： https:&#x2F;&#x2F;www.bilibili.com&#x2F;video&#x2F;BV1NE411376V?p&#x3D;20&amp;t&#x3D;6 备注： 图片均来自于课件。 这部分回顾Cool的类型检查。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Stanford Compiler Week 5 Cool Type Checking">
+<meta property="og:url" content="http://doraemonzzz.com/2021/04/15/2021-4-15-Stanford-Compiler-Week-5-Cool-Type-Checking/index.html">
+<meta property="og:site_name" content="Doraemonzzz">
+<meta property="og:description" content="课程主页： https:&#x2F;&#x2F;www.edx.org&#x2F;course&#x2F;compilers 课程视频： https:&#x2F;&#x2F;www.bilibili.com&#x2F;video&#x2F;BV1NE411376V?p&#x3D;20&amp;t&#x3D;6 备注： 图片均来自于课件。 这部分回顾Cool的类型检查。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg">
+<meta property="article:published_time" content="2021-04-15T14:59:00.000Z">
+<meta property="article:modified_time" content="2021-05-29T05:35:43.042Z">
+<meta property="article:author" content="Doraemonzzz">
+<meta property="article:tag" content="斯坦福大学编译原理">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="http://doraemonzzz.com/2021/04/15/2021-4-15-Stanford-Compiler-Week-5-Cool-Type-Checking/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"prismjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    jQuery: 'https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js',
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+    },
+    fancybox: {
+      js: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isanchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'Stanford Compiler Week 5 Cool Type Checking',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2021-05-29 13:35:43'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    })(window)</script><meta name="generator" content="Hexo 5.4.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="author-avatar"><img class="avatar-img" src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">文章</div><div class="length-num">610</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">标签</div><div class="length-num">59</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/categories/"><div class="headline">分类</div><div class="length-num">23</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">Doraemonzzz</a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">Stanford Compiler Week 5 Cool Type Checking</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2021-04-15T14:59:00.000Z" title="发表于 2021-04-15 22:59:00">2021-04-15</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2021-05-29T05:35:43.042Z" title="更新于 2021-05-29 13:35:43">2021-05-29</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/">编译原理</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="Stanford Compiler Week 5 Cool Type Checking"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p>课程主页：</p>
+<p><a target="_blank" rel="noopener" href="https://www.edx.org/course/compilers">https://www.edx.org/course/compilers</a></p>
+<p>课程视频：</p>
+<p><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1NE411376V?p=20&amp;t=6">https://www.bilibili.com/video/BV1NE411376V?p=20&amp;t=6</a></p>
+<p>备注：</p>
+<p>图片均来自于课件。</p>
+<p>这部分回顾Cool的类型检查。</p>
+<span id="more"></span>
+<h3 id="静态类型-vs-动态类型"><a href="#静态类型-vs-动态类型" class="headerlink" title="静态类型 vs 动态类型"></a>静态类型 vs 动态类型</h3><ul>
+<li><p>静态类型系统（在编译时刻）检测常见错误。</p>
+</li>
+<li><p>但是某些正确的程序不被静态类型系统允许</p>
+<ul>
+<li>所以有些人主张动态类型检查。</li>
+<li>其他人想要更具表达力的静态类型检查。</li>
+</ul>
+</li>
+<li><p>更具表达力的类型系统往往更复杂。</p>
+</li>
+<li><p>对象的动态类型是创建它的“new C”表达式中使用的类C。</p>
+<ul>
+<li>动态类型是运行时概念。</li>
+<li>即使非静态类型的语言也具有动态类型的概念。</li>
+</ul>
+</li>
+<li><p>表达式的静态类型捕获该表达式可能具有的所有动态类型。</p>
+<ul>
+<li>静态类型是编译时概念。</li>
+</ul>
+</li>
+<li><p>稳定性定理：</p>
+<p>对于所有表达式$\mathrm{E}$</p>
+<script type="math/tex; mode=display">
+\text{dynamic_type(E) = static_type(E)}</script><p>在所有执行中，$\mathrm{E}$求值为编译器推断的类型的值。</p>
+</li>
+<li><p>Cool类型系统的稳定性定理：</p>
+<script type="math/tex; mode=display">
+\forall \mathrm E, \text{dynamic_type(E)} \le \text{static_type(E)}</script></li>
+<li><p>可以在类型$\mathrm{C}$的对象上使用的所有操作也可以在类型为$\mathrm{C}’$的对象上使用，其中$\mathrm{C’}\le \mathrm C$</p>
+<ul>
+<li>例如获取属性的值。</li>
+<li>或在对象上调用方法。</li>
+</ul>
+</li>
+<li><p>子类仅添加属性或方法。</p>
+</li>
+<li><p>可以重新定义方法，但类型相同。</p>
+</li>
+</ul>
+<h4 id="例子"><a href="#例子" class="headerlink" title="例子"></a>例子</h4><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">class</span> <span class="token class-name">A</span> <span class="token punctuation">&#123;</span> <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span> <span class="token punctuation">&#125;</span>
+<span class="token keyword">class</span> <span class="token class-name">B</span> inherits <span class="token class-name">A</span> <span class="token punctuation">&#123;</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">&#125;</span>
+<span class="token keyword">class</span> <span class="token class-name">Main</span> <span class="token punctuation">&#123;</span>
+    x<span class="token operator">:</span><span class="token class-name">A</span> <span class="token operator">&lt;</span><span class="token operator">-</span> <span class="token keyword">new</span> <span class="token class-name">A</span><span class="token punctuation">;</span>
+    <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+    x <span class="token operator">&lt;</span><span class="token operator">-</span> <span class="token keyword">new</span> <span class="token class-name">B</span><span class="token punctuation">;</span>
+    <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>分析：</p>
+<pre class="line-numbers language-none"><code class="language-none">x:A : x的静态类型是A
+new A : x的动态类型是A
+new B : x的动态类型是B<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+<h4 id="习题"><a href="#习题" class="headerlink" title="习题"></a>习题</h4><p><img src="https://github.com/Doraemonzzz/md-photo/blob/master/Compiler/Week5%20P2/2021041501.jpg?raw=true" alt=""></p>
+<p>第一，第二项正确。</p>
+<h3 id="Self-Type"><a href="#Self-Type" class="headerlink" title="Self_Type"></a>Self_Type</h3><h4 id="例子-1"><a href="#例子-1" class="headerlink" title="例子"></a>例子</h4><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">class</span> <span class="token class-name">Count</span> <span class="token punctuation">&#123;</span>
+    i <span class="token operator">:</span> <span class="token keyword">int</span> <span class="token operator">&lt;</span><span class="token operator">-</span> <span class="token number">0</span><span class="token punctuation">;</span>
+    inc <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">:</span> <span class="token class-name">Count</span> <span class="token punctuation">&#123;</span>
+        <span class="token punctuation">&#123;</span>
+            i <span class="token operator">&lt;</span><span class="token operator">-</span> i <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">;</span>
+            self<span class="token punctuation">;</span>
+        <span class="token punctuation">&#125;</span>
+    <span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<ul>
+<li>类Count包含一个计数器。</li>
+<li>inc方法适用于任何子类。</li>
+<li>考虑Count的子类Stock</li>
+</ul>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">class</span> <span class="token class-name">Stock</span> inherits <span class="token class-name">Count</span> <span class="token punctuation">&#123;</span> 
+	name <span class="token operator">:</span> <span class="token class-name">String</span><span class="token punctuation">;</span> <span class="token operator">--</span> name of item
+<span class="token punctuation">&#125;</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+<ul>
+<li>以及对Stock的如下用法</li>
+</ul>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">class</span> <span class="token class-name">Main</span> <span class="token punctuation">&#123;</span>
+    <span class="token class-name">Stock</span> a <span class="token operator">&lt;</span><span class="token operator">-</span> <span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">Stock</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">inc</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span> a<span class="token punctuation">.</span>name <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+<p>上述用法会报错，因为inc返回的类型是Count，但是Count不包含属性name：</p>
+<ul>
+<li><p>$\text{(new Stock).inc()}$具有动态类型$\text{Stock}$；</p>
+</li>
+<li><p>因此如下语句是合法的</p>
+<script type="math/tex; mode=display">
+\text{Stock a <- (new Stock).inc()}</script></li>
+<li><p>但这不是很好的类型，因为$\mathrm{(new Stock).inc()}$的静态类型为$\mathrm{Count}$；</p>
+</li>
+<li><p>类型检查器“丢失”类型信息</p>
+<ul>
+<li>这使得继承$\mathrm{inc}$毫无用处 ；</li>
+<li>因此，我们必须为每个子类重新定义$\mathrm{inc}$，并使用专门的返回类型 。</li>
+</ul>
+</li>
+</ul>
+<p>解决上述问题需要引入$\text{SELF_TYPE}$。</p>
+<h4 id="Self-Type-1"><a href="#Self-Type-1" class="headerlink" title="Self_Type"></a>Self_Type</h4><ul>
+<li><p>我们将扩展类型系统</p>
+</li>
+<li><p>注意到：</p>
+<ul>
+<li>inc返回self；</li>
+<li>因此，返回值与“self”具有相同的类型；</li>
+<li>可以是Count或Count的任何子类型！</li>
+</ul>
+</li>
+<li><p>引入关键字$\text{SELF_TYPE}$以用于此类函数的返回值</p>
+<ul>
+<li>我们还需要修改输入规则以处理$\text{SELF_TYPE}$</li>
+</ul>
+</li>
+<li><p>$\text{SELF_TYPE}$允许在继承inc时更改inc的返回类型</p>
+</li>
+<li><p>修改inc的声明</p>
+<script type="math/tex; mode=display">
+  \text{inc() : SELF_TYPE { ... }}</script></li>
+<li><p>类型检查器现在可以证明：</p>
+<script type="math/tex; mode=display">
+  \begin{aligned}
+  &\mathrm{O,M,C \vdash (new\ Count).inc() : Count} \\
+  &\mathrm{O,M,C \vdash (new\ Stock).inc() : Stock}
+
+  \end{aligned}</script></li>
+<li><p>之前的程序现在类型正确。</p>
+</li>
+<li><p>注意$\text{SELF_TYPE}$不是动态类型</p>
+<ul>
+<li>它也不是类名；</li>
+<li>它是静态类型；</li>
+<li>帮助类型检查器更好地跟踪类型；</li>
+<li>使类型检查器接受更正确的程序；</li>
+</ul>
+</li>
+<li><p>简而言之，拥有$\text{SELF_TYPE}$可以提高类型系统的表达能力。</p>
+</li>
+</ul>
+<h3 id="Self-Type操作"><a href="#Self-Type操作" class="headerlink" title="Self_Type操作"></a>Self_Type操作</h3><p>回忆之前的例子</p>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">class</span> <span class="token class-name">Count</span> <span class="token punctuation">&#123;</span>
+    i <span class="token operator">:</span> <span class="token keyword">int</span> <span class="token operator">&lt;</span><span class="token operator">-</span> <span class="token number">0</span><span class="token punctuation">;</span>
+    inc <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">:</span> <span class="token class-name">Count</span> <span class="token punctuation">&#123;</span>
+        <span class="token punctuation">&#123;</span>
+            i <span class="token operator">&lt;</span><span class="token operator">-</span> i <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">;</span>
+            self<span class="token punctuation">;</span>
+        <span class="token punctuation">&#125;</span>
+    <span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<ul>
+<li><p>inc返回的对象的动态类型是什么？ </p>
+<ul>
+<li><p>答案：“$\text{SELF_TYPE}$”的任意可能类型（Count或Count的任意子类），inc可以通过任何这些类来调用。</p>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">class</span> <span class="token class-name">A</span> inherits <span class="token class-name">Count</span> <span class="token punctuation">&#123;</span> <span class="token punctuation">&#125;</span> <span class="token punctuation">;</span> 
+<span class="token keyword">class</span> <span class="token class-name">B</span> inherits <span class="token class-name">Count</span> <span class="token punctuation">&#123;</span> <span class="token punctuation">&#125;</span> <span class="token punctuation">;</span> 
+<span class="token keyword">class</span> <span class="token class-name">C</span> inherits <span class="token class-name">Count</span> <span class="token punctuation">&#123;</span> <span class="token punctuation">&#125;</span> <span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+</li>
+</ul>
+</li>
+<li><p>通常，如果在类C内部声明E的类型为$\text{SELF_TYPE}$，</p>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">class</span> <span class="token class-name">C</span> <span class="token punctuation">&#123;</span>
+    <span class="token class-name">E</span> <span class="token operator">:</span> SELF_TYPE
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+<p>则</p>
+<script type="math/tex; mode=display">
+\text{dynamic_type(E)}\le {\text{C}}</script></li>
+<li><p>注意：$\text{SELF_TYPE}$的含义取决于它出现的位置</p>
+<ul>
+<li>用$\text{SELF_TYPEC}_{\text{C}}$表示在类C中出现的$\text{SELF_TYPE}$</li>
+</ul>
+</li>
+<li><p>所以建议如下规则</p>
+<script type="math/tex; mode=display">
+\mathrm{SELF\text{_}TYPE_C \le  C}</script></li>
+<li><p>上述规则产生如下重要结果：</p>
+<ul>
+<li>在类型检查中，始终可以用C安全替换$\mathrm{SELF\text{_}TYPE_C}$。</li>
+</ul>
+</li>
+<li><p>这就建议了一种处理$\text{SELF_TYPE}$的方法：</p>
+<ul>
+<li>用C替换所有出现的$\mathrm{SELF\text{_}TYPE_C}$</li>
+</ul>
+</li>
+<li><p>回顾类型上的操作</p>
+<ul>
+<li>$\mathrm{T_1\le T_2}$表示$\mathrm{T_1}$是$\mathrm{T_2}$的子类型。</li>
+<li>$\mathrm{lub(T_1,T_2)}$表示$\mathrm{T_1}$和$\mathrm{T_2}$的最小上界。</li>
+</ul>
+</li>
+<li><p>扩展这些操作以处理$\text{SELF_TYPE}$</p>
+<ul>
+<li>令$\mathrm{T}$和$\mathrm{T’}$是除了$\text{SELF_TYPE}$以外的类型<ul>
+<li>那么$\text {SELF_} \text {TYPE}_{\text{C}} \leq \text {SELF_} \text {TYPE}_{\text{C}}$<ul>
+<li>在Cool中，我们永远不会比较来自不同类的$\text{SELF_TYPE}$。</li>
+</ul>
+</li>
+<li>$\text{SELF_TYPE}_{\text{C}}\le \text{T}$，如果$\mathrm{C\le T}$<ul>
+<li>$\text {SELF_} \text {TYPE}_{\text{C}}$可以是$\mathrm{C}$的任意子类型；</li>
+<li>这包含$\mathrm{C}$本身；</li>
+<li>因此，这是我们可以允许的最灵活的规则。</li>
+</ul>
+</li>
+<li>$\text{T}\le \text{SELF_TYPE}_{\text{C}}$永远错误<ul>
+<li>注意$\text{SELF_TYPE}_{\text{C}}$表示$\text{C}$的任意子类型。</li>
+</ul>
+</li>
+<li>$\mathrm{T\le T’}$（根据之前的规则）</li>
+</ul>
+</li>
+<li>令$\mathrm{T}$和$\mathrm{T’}$是除了SELF_TYPE以外的类型<ul>
+<li>$\mathrm{lub(SELF\text{_}TYPE_C, SELF\text{_}TYPE_C) = SELF\text{_}TYPE_C}$</li>
+<li>$\mathrm{lub(SELF\text{_}TYPE_C, T) =\mathrm{lub(C,T)}}$<ul>
+<li>这是最好的结果，因为$\text{SELF_TYPE}_{\text{C}}\le \text{C}$</li>
+</ul>
+</li>
+<li>$\mathrm{lub( T,SELF\text{_}TYPE_C) =\mathrm{lub(C,T)}}$</li>
+<li>$\text{lub(T,T’)}$和之前定义相同</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h4 id="习题-1"><a href="#习题-1" class="headerlink" title="习题"></a>习题</h4><p><img src="https://github.com/Doraemonzzz/md-photo/blob/master/Compiler/Week5%20P2/2021041502.jpg?raw=true" alt=""></p>
+<p>第三，第四项正确。</p>
+<h3 id="Self-Type的用处"><a href="#Self-Type的用处" class="headerlink" title="Self _Type的用处"></a>Self _Type的用处</h3><p>SELF_TYPE并不能出现在所有类型都能出现的位置：</p>
+<ul>
+<li><p>$\text{class T inherits T’ {…}}$</p>
+<ul>
+<li>那么$\mathrm{T,T’}$不能是$\text{SELF_TYPE}$</li>
+</ul>
+</li>
+<li><p>$\mathrm{x:T}$</p>
+<ul>
+<li>属性$\mathrm x$</li>
+<li>$\mathrm T$可以是$\text{SELF_TYPE}$</li>
+</ul>
+</li>
+<li><p>$\text{let x : T in E}$</p>
+<ul>
+<li>$\mathrm T$可以是$\text{SELF_TYPE}$</li>
+</ul>
+</li>
+<li><p>$\text{new T}$</p>
+<ul>
+<li>$\text{T}$可以是$\text{SELF_TYPE}$</li>
+<li>创建与$\text{self}$动态类型的相同对象</li>
+</ul>
+</li>
+<li><p>$\mathrm{m@T(E_1,\ldots, E_n)}$</p>
+<ul>
+<li>$\mathrm T$不能是$\text{SELF_TYPE}$</li>
+</ul>
+</li>
+<li><p>$\mathrm{m(x:T):T’}\{\ldots\}$</p>
+<ul>
+<li><p>只有$\text{T’}$可以是$\text{SELF_TYPE}$</p>
+</li>
+<li><p>如果$\text{T}$是$\text{SELF_TYPE}$会有什么问题？</p>
+</li>
+<li><p>考虑其对应的分派$\mathrm{e.m(e’), e’:T_0}$，那么</p>
+<script type="math/tex; mode=display">
+\mathrm{T_0 \le }\text{SELF_TYPE}_{\text{C}}</script><p>注意这一步是错误的。</p>
+</li>
+<li><p>在下例中，$\text{T}$是$\text{SELF_TYPE}$，但是$\text{A}$不包含属性$\text{b}$</p>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">class</span> <span class="token class-name">A</span> <span class="token punctuation">&#123;</span> <span class="token function">comp</span><span class="token punctuation">(</span>x <span class="token operator">:</span> SELF_TYPE<span class="token punctuation">)</span> <span class="token operator">:</span> <span class="token class-name">Bool</span> <span class="token punctuation">&#123;</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">&#125;</span><span class="token punctuation">;</span> <span class="token punctuation">&#125;</span><span class="token punctuation">;</span> 
+<span class="token keyword">class</span> <span class="token class-name">B</span> inherits <span class="token class-name">A</span> <span class="token punctuation">&#123;</span>
+    b <span class="token operator">:</span> <span class="token keyword">int</span><span class="token punctuation">;</span>
+    <span class="token function">comp</span><span class="token punctuation">(</span>x <span class="token operator">:</span> SELF_TYPE<span class="token punctuation">)</span> <span class="token operator">:</span> <span class="token class-name">Bool</span> <span class="token punctuation">&#123;</span> <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span> x<span class="token punctuation">.</span>b <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span> <span class="token punctuation">&#125;</span><span class="token punctuation">;</span> <span class="token punctuation">&#125;</span><span class="token punctuation">;</span> 
+    <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+    let x <span class="token operator">:</span> <span class="token class-name">A</span> <span class="token operator">&lt;</span><span class="token operator">-</span> <span class="token keyword">new</span> <span class="token class-name">B</span> in <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span> x<span class="token punctuation">.</span><span class="token function">comp</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">A</span><span class="token punctuation">)</span><span class="token punctuation">;</span> #<span class="token class-name">A</span>没有属性b
+    <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+</li>
+</ul>
+</li>
+</ul>
+<h4 id="习题-2"><a href="#习题-2" class="headerlink" title="习题"></a>习题</h4><p><img src="https://github.com/Doraemonzzz/md-photo/blob/master/Compiler/Week5%20P2/2021041503.jpg?raw=true" alt=""></p>
+<p>第三项错误。</p>
+<h3 id="Self-Type检查"><a href="#Self-Type检查" class="headerlink" title="Self_Type检查"></a>Self_Type检查</h3><ul>
+<li><p>$\text{SELF_TYPE}$的含义取决于所在的类：</p>
+<script type="math/tex; mode=display">
+\mathrm{O}, \mathrm{M}, \mathrm{C} \vdash \mathrm{e}: \mathrm{T}</script><p>上述符号表示，在给定变量类型环境O和方法签名M的情况下，在C中出现的表达式e具有静态类型T。</p>
+</li>
+<li><p>下一步是使用$\text{SELF_TYPE}$设计类型规则。</p>
+</li>
+<li><p>大多数规则保持不变</p>
+<ul>
+<li>但要使用$\le $和$\text{lub}$<script type="math/tex; mode=display">
+\begin{array}{l}
+\mathrm{O}(\mathrm{Id})=\mathrm{T}_{0} \\
+\mathrm{O}, \mathrm{M}, \mathrm{C} \vdash \mathrm{e}_{1}: \mathrm{T}_{0} \\
+\mathrm{~T}_{1} \leq \mathrm{T}_{0} \\
+\hline \mathrm{O}, \mathrm{M}, \mathrm{C} \vdash \mathrm{Id} \leftarrow \mathrm{e}_{1}: \mathrm{T}_{1}
+\end{array}</script></li>
+</ul>
+</li>
+<li><p>回忆分派的规则</p>
+<script type="math/tex; mode=display">
+\begin{array}{c}
+\mathrm{O}, \mathrm{M,C} \vdash \mathrm{e}_{0}: \mathrm{T}_{0} \\
+\mathrm{O}, \mathrm{M,C} \vdash \mathrm{e}_{1}: \mathrm{T}_{1} \\
+\ldots \\
+\mathrm{O}, \mathrm{M,C} \vdash \mathrm{e}_{\mathrm{n}}: \mathrm{T}_{\mathrm{n}} \\
+\mathrm{M}\left(\mathrm{T}_{0}, \mathrm{f}\right)=\left(\mathrm{T}_{1}', \ldots \mathrm{T}_{\mathrm{n}}', \mathrm{T}_{\mathrm{n}+1}'\right) \\
+\mathrm{T}_{\mathrm{n}+1}' \neq \text{SELF_TYPE}\\
+\mathrm{T}_{\mathrm{i}} \leq \mathrm{T}_{\mathrm{i}}', \text { for } 1 \leq \mathrm{i} \leq \mathrm{n} \\
+\hline
+\mathrm{O}, \mathrm{M,C} \vdash \mathrm{e}_{0} . \mathrm{f}\left(\mathrm{e}_{1}, \ldots, \mathrm{e}_{\mathrm{n}}\right): \mathrm{T}_{\mathrm{n}+1}'
+\end{array}</script></li>
+<li><p>如果方法的返回类型为$\text{SELF_TYPE}$，则分派的类型为分派表达式的类型：</p>
+<script type="math/tex; mode=display">
+\begin{array}{c}
+\mathrm{O}, \mathrm{M,C} \vdash \mathrm{e}_{0}: \mathrm{T}_{0} \\
+\mathrm{O}, \mathrm{M,C} \vdash \mathrm{e}_{1}: \mathrm{T}_{1} \\
+\ldots \\
+\mathrm{O}, \mathrm{M,C} \vdash \mathrm{e}_{\mathrm{n}}: \mathrm{T}_{\mathrm{n}} \\
+\mathrm{M}\left(\mathrm{T}_{0}, \mathrm{f}\right)=\left(\mathrm{T}_{1}', \ldots \mathrm{T}_{\mathrm{n}}', \text{SELF_TYPE}\right) \\
+\mathrm{T}_{\mathrm{i}} \leq \mathrm{T}_{\mathrm{i}}', \text { for } 1 \leq \mathrm{i} \leq \mathrm{n} \\
+\hline
+\mathrm{O}, \mathrm{M,C} \vdash \mathrm{e}_{0} . \mathrm{f}\left(\mathrm{e}_{1}, \ldots, \mathrm{e}_{\mathrm{n}}\right): \mathrm{T}_{0}
+\end{array}</script></li>
+<li><p>形式参数不能为$\text{SELF_TYPE}$</p>
+</li>
+<li><p>实际参数可以是$\text{SELF_TYPE}$</p>
+<ul>
+<li>扩展的$\le $关系处理这种情况。</li>
+</ul>
+</li>
+<li><p>分派表达式的类型$\mathrm{T}_0$可以为$\text{SELF_TYPE}$</p>
+<ul>
+<li>哪个类用于查找$\mathrm{f}$的声明？</li>
+<li>答案：使用分派所出现的类是安全的。</li>
+</ul>
+</li>
+<li><p>回顾静态分派的原始规则</p>
+<script type="math/tex; mode=display">
+\begin{array}{c}
+\mathrm{O}, \mathrm{M,C} \vdash \mathrm{e}_{0}: \mathrm{T}_{0} \\
+\mathrm{O}, \mathrm{M,C} \vdash \mathrm{e}_{1}: \mathrm{T}_{1} \\
+\ldots \\
+\mathrm{O}, \mathrm{M,C} \vdash \mathrm{e}_{\mathrm{n}}: \mathrm{T}_{\mathrm{n}} \\
+\mathrm{T_0 \le T}\\
+\mathrm{M}\left(\mathrm{T}, \mathrm{f}\right)=\left(\mathrm{T}_{1}', \ldots \mathrm{T}_{\mathrm{n}}', \mathrm{T}_{\mathrm{n}+1}'\right) \\
+\mathrm{T}_{\mathrm{n}+1}'\neq \text{SELF_TYPE}\\
+\mathrm{T}_{\mathrm{i}} \leq \mathrm{T}_{\mathrm{i}}', \text { for } 1 \leq \mathrm{i} \leq \mathrm{n} \\
+\hline
+\mathrm{O}, \mathrm{M,C} \vdash \mathrm{e}_{0}@\mathrm {T} . \mathrm{f}\left(\mathrm{e}_{1}, \ldots, \mathrm{e}_{\mathrm{n}}\right): \mathrm{T}_{\mathrm{n}+1}'
+\end{array}</script></li>
+<li><p>如果该方法的返回类型为$\text{SELF_TYPE}$，则我们有：</p>
+<script type="math/tex; mode=display">
+\begin{array}{c}
+\mathrm{O}, \mathrm{M,C} \vdash \mathrm{e}_{0}: \mathrm{T}_{0} \\
+\mathrm{O}, \mathrm{M,C} \vdash \mathrm{e}_{1}: \mathrm{T}_{1} \\
+\ldots \\
+\mathrm{O}, \mathrm{M,C} \vdash \mathrm{e}_{\mathrm{n}}: \mathrm{T}_{\mathrm{n}} \\
+\mathrm{T_0 \le T}\\
+\mathrm{M}\left(\mathrm{T}, \mathrm{f}\right)=\left(\mathrm{T}_{1}', \ldots \mathrm{T}_{\mathrm{n}}', \text{SELF_TYPE}\right) \\
+\mathrm{T}_{\mathrm{i}} \leq \mathrm{T}_{\mathrm{i}}', \text { for } 1 \leq \mathrm{i} \leq \mathrm{n} \\
+\hline
+\mathrm{O}, \mathrm{M,C} \vdash \mathrm{e}_{0}@\mathrm {T} . \mathrm{f}\left(\mathrm{e}_{1}, \ldots, \mathrm{e}_{\mathrm{n}}\right): \mathrm{T}_{0}
+\end{array}</script></li>
+<li><p>使用$\text{SELF_TYPE}$有两个新规则</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+\overline{\mathrm{O}, \mathrm{M}, \mathrm{C} \vdash \text {self }: \mathrm{SELF}\text{_} \operatorname{TYPE}_{\mathrm{C}}}\\
+\overline{\text { O,M,C } \vdash \text { new SELF_TYPE : SELF_TYPE}_{\text{C}}}
+\end{aligned}</script></li>
+<li><p>扩展的$\le $和$\text{lub}$操作可以完成很多工作。</p>
+</li>
+<li><p>$\text{SELF_TYPE}$只能在少数地方使用。 </p>
+</li>
+<li><p>$\text{SELF_TYPE}$的使用总是指当前类的任何子类型</p>
+<ul>
+<li>例外是分派的类型检查，$\text{SELF_TYPE}$的方法返回类型可能与当前类无关。</li>
+</ul>
+</li>
+<li><p>$\text{SELF_TYPE}$是一个研究思路</p>
+<ul>
+<li>它增加了类型系统的表现力。</li>
+</ul>
+</li>
+<li><p>$\text{SELF_TYPE}$本身并不那么重要</p>
+<ul>
+<li>除了项目中。</li>
+</ul>
+</li>
+<li><p>相反，$\text{SELF_TYPE}$旨在说明类型检查可能非常微妙。</p>
+</li>
+<li><p>在实际中，类型系统的复杂性与其表现力之间应该保持平衡。</p>
+</li>
+</ul>
+<h4 id="习题-3"><a href="#习题-3" class="headerlink" title="习题"></a>习题</h4><p><img src="https://github.com/Doraemonzzz/md-photo/blob/master/Compiler/Week5%20P2/2021041604.jpg?raw=true" alt=""></p>
+<p>第二项，第四项正确。</p>
+<h3 id="错误恢复"><a href="#错误恢复" class="headerlink" title="错误恢复"></a>错误恢复</h3><ul>
+<li><p>与解析一样，从类型错误中恢复也很重要。</p>
+</li>
+<li><p>这里检测错误发生的位置比解析容易</p>
+<ul>
+<li>没有理由跳过部分代码。</li>
+</ul>
+</li>
+<li><p>问题：</p>
+<ul>
+<li>将什么类型分配给没有合法类型的表达式？</li>
+<li>此类型将影响封闭表达式的类型。</li>
+</ul>
+</li>
+<li><p>一个方法是将类型Object分配给错误类型的表达式</p>
+<ul>
+<li><script type="math/tex; mode=display">
+\text { let y} : \operatorname{lnt} \leftarrow \text{x}+2 \text { in } \text{y}+3</script></li>
+<li><p>错误：</p>
+<ul>
+<li>$\mathrm x$未定义；</li>
+<li>$+$应用于Object；</li>
+<li>不正确的赋值。</li>
+</ul>
+</li>
+<li><p>这是一个可行的解决方案，但有级联错误。</p>
+</li>
+</ul>
+</li>
+<li><p>引入一种新的$\text{No_type}$类型，用来不良类型的表达式一起使用。</p>
+</li>
+<li><p>对所有类型$\text{C}$定义$\text { No_type} \leq \mathrm{C}$</p>
+</li>
+<li><p>每个操作都对$\text{No_type}$有定义</p>
+<ul>
+<li>结果为$\text{No_type}$</li>
+</ul>
+</li>
+<li><p>对于之前的例子，此时错误为</p>
+<ul>
+<li>$\mathrm x$未定义</li>
+</ul>
+</li>
+<li><p>一个“真正的”编译器将使用No_type之类的东西</p>
+</li>
+<li><p>但是，存在一些实现问题</p>
+<ul>
+<li>类层次结构不再是一棵树</li>
+</ul>
+</li>
+<li><p>Object解决方案在课程项目效果中很好。</p>
+</li>
+</ul>
+<h4 id="习题-4"><a href="#习题-4" class="headerlink" title="习题"></a>习题</h4><p><img src="https://github.com/Doraemonzzz/md-photo/blob/master/Compiler/Week5%20P2/2021041605.jpg?raw=true" alt=""></p>
+<p>选择第二项。</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">Doraemonzzz</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="http://doraemonzzz.com/2021/04/15/2021-4-15-Stanford-Compiler-Week-5-Cool-Type-Checking/">http://doraemonzzz.com/2021/04/15/2021-4-15-Stanford-Compiler-Week-5-Cool-Type-Checking/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://doraemonzzz.com" target="_blank">Doraemonzzz</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E6%96%AF%E5%9D%A6%E7%A6%8F%E5%A4%A7%E5%AD%A6%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/">斯坦福大学编译原理</a></div><div class="post_share"><div class="social-share" data-image="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2021/04/20/2021-4-20-%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A8%8B%E5%BA%8F%E7%9A%84%E6%9E%84%E9%80%A0%E5%92%8C%E8%A7%A3%E9%87%8A(SICP)-%E7%AC%AC3%E7%AB%A0-%E4%B9%A0%E9%A2%98%E8%A7%A3%E6%9E%90-Part6/"><img class="prev-cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">计算机程序的构造和解释(SICP) 第3章 习题解析 Part6</div></div></a></div><div class="next-post pull-right"><a href="/2021/04/14/2021-4-14-Stanford-Compiler-Week-5-Semantic-Analysis-and-Type-Checking/"><img class="next-cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">Stanford Compiler Week 5 Semantic Analysis and Type Checking</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span> 相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2021/04/20/2021-4-20-Stanford-Compiler-实验环境配置（续）/" title="Stanford Compiler 实验环境配置（续）"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-04-20</div><div class="title">Stanford Compiler 实验环境配置（续）</div></div></a></div><div><a href="/2021/04/24/2021-4-24-Stanford-Compiler-PA3翻译/" title="Stanford Compiler PA3翻译"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-04-24</div><div class="title">Stanford Compiler PA3翻译</div></div></a></div><div><a href="/2021/04/24/2021-4-24-Stanford-Compiler-Week-6-Code-Generation-Part-1/" title="Stanford Compiler Week 6 Code Generation Part 1"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-04-24</div><div class="title">Stanford Compiler Week 6 Code Generation Part 1</div></div></a></div><div><a href="/2021/04/24/2021-4-24-Stanford-Compiler-Week-6-Runtime-Organization/" title="Stanford Compiler Week 6 Runtime Organization"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-04-24</div><div class="title">Stanford Compiler Week 6 Runtime Organization</div></div></a></div><div><a href="/2021/04/26/2021-4-26-Stanford-Compiler-Week-6-Code-Generation-Part-2/" title="Stanford Compiler Week 6 Code Generation Part 2"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-04-26</div><div class="title">Stanford Compiler Week 6 Code Generation Part 2</div></div></a></div><div><a href="/2021/05/26/2021-5-26-Stanford-Compiler-Week-9-Garbage-Collection/" title="Stanford Compiler Week 9 Garbage Collection"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-05-26</div><div class="title">Stanford Compiler Week 9 Garbage Collection</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="card-info-avatar is-center"><img class="avatar-img" src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/><div class="author-info__name">Doraemonzzz</div><div class="author-info__description">个人博客，主要记录有关机器学习，数学以及计算机科学的笔记</div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">610</div></a></div><div class="card-info-data-item is-center"><a href="/tags/"><div class="headline">标签</div><div class="length-num">59</div></a></div><div class="card-info-data-item is-center"><a href="/categories/"><div class="headline">分类</div><div class="length-num">23</div></a></div></div><a class="button--animated" id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/Doraemonzzz" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="/doraemon_zzz@163.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn card-announcement-animation"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%9D%99%E6%80%81%E7%B1%BB%E5%9E%8B-vs-%E5%8A%A8%E6%80%81%E7%B1%BB%E5%9E%8B"><span class="toc-number">1.</span> <span class="toc-text">静态类型 vs 动态类型</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BE%8B%E5%AD%90"><span class="toc-number">1.1.</span> <span class="toc-text">例子</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%B9%A0%E9%A2%98"><span class="toc-number">1.2.</span> <span class="toc-text">习题</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Self-Type"><span class="toc-number">2.</span> <span class="toc-text">Self_Type</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BE%8B%E5%AD%90-1"><span class="toc-number">2.1.</span> <span class="toc-text">例子</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Self-Type-1"><span class="toc-number">2.2.</span> <span class="toc-text">Self_Type</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Self-Type%E6%93%8D%E4%BD%9C"><span class="toc-number">3.</span> <span class="toc-text">Self_Type操作</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%B9%A0%E9%A2%98-1"><span class="toc-number">3.1.</span> <span class="toc-text">习题</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Self-Type%E7%9A%84%E7%94%A8%E5%A4%84"><span class="toc-number">4.</span> <span class="toc-text">Self _Type的用处</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%B9%A0%E9%A2%98-2"><span class="toc-number">4.1.</span> <span class="toc-text">习题</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Self-Type%E6%A3%80%E6%9F%A5"><span class="toc-number">5.</span> <span class="toc-text">Self_Type检查</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%B9%A0%E9%A2%98-3"><span class="toc-number">5.1.</span> <span class="toc-text">习题</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%94%99%E8%AF%AF%E6%81%A2%E5%A4%8D"><span class="toc-number">6.</span> <span class="toc-text">错误恢复</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%B9%A0%E9%A2%98-4"><span class="toc-number">6.1.</span> <span class="toc-text">习题</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2021/06/06/2021-6-6-%E7%AE%97%E6%B3%95%E6%A6%82%E8%AE%BA(DPV)%E4%B9%A0%E9%A2%98%E8%A7%A3%E7%AD%94%E2%80%94%E2%80%94%E7%AC%AC3%E7%AB%A0-%E5%9B%BE%E7%9A%84%E5%88%86%E8%A7%A3/" title="算法概论(DPV)习题解答——第3章 图的分解"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="算法概论(DPV)习题解答——第3章 图的分解"/></a><div class="content"><a class="title" href="/2021/06/06/2021-6-6-%E7%AE%97%E6%B3%95%E6%A6%82%E8%AE%BA(DPV)%E4%B9%A0%E9%A2%98%E8%A7%A3%E7%AD%94%E2%80%94%E2%80%94%E7%AC%AC3%E7%AB%A0-%E5%9B%BE%E7%9A%84%E5%88%86%E8%A7%A3/" title="算法概论(DPV)习题解答——第3章 图的分解">算法概论(DPV)习题解答——第3章 图的分解</a><time datetime="2021-06-06T14:35:00.000Z" title="发表于 2021-06-06 22:35:00">2021-06-06</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/06/06/2021-6-6-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E7%AC%AC5%E7%AB%A0-%E4%B9%A0%E9%A2%98%E8%A7%A3%E6%9E%90/" title="深入理解计算机系统 第5章 习题解析"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="深入理解计算机系统 第5章 习题解析"/></a><div class="content"><a class="title" href="/2021/06/06/2021-6-6-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E7%AC%AC5%E7%AB%A0-%E4%B9%A0%E9%A2%98%E8%A7%A3%E6%9E%90/" title="深入理解计算机系统 第5章 习题解析">深入理解计算机系统 第5章 习题解析</a><time datetime="2021-06-06T07:23:00.000Z" title="发表于 2021-06-06 15:23:00">2021-06-06</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/06/05/2021-6-5-Stanford-Compiler-PA5%E7%BF%BB%E8%AF%91/" title="Stanford Compiler PA5翻译"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Stanford Compiler PA5翻译"/></a><div class="content"><a class="title" href="/2021/06/05/2021-6-5-Stanford-Compiler-PA5%E7%BF%BB%E8%AF%91/" title="Stanford Compiler PA5翻译">Stanford Compiler PA5翻译</a><time datetime="2021-06-05T06:12:00.000Z" title="发表于 2021-06-05 14:12:00">2021-06-05</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/06/04/2021-6-4-Stanford-Compiler-PA4%E7%BF%BB%E8%AF%91/" title="Stanford Compiler PA4翻译"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Stanford Compiler PA4翻译"/></a><div class="content"><a class="title" href="/2021/06/04/2021-6-4-Stanford-Compiler-PA4%E7%BF%BB%E8%AF%91/" title="Stanford Compiler PA4翻译">Stanford Compiler PA4翻译</a><time datetime="2021-06-03T16:17:00.000Z" title="发表于 2021-06-04 00:17:00">2021-06-04</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/06/03/2021-6-3-%E5%B7%A7%E5%A6%99%E7%9A%84Y%E8%BF%90%E7%AE%97%E7%AC%A6/" title="巧妙的Y运算符"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="巧妙的Y运算符"/></a><div class="content"><a class="title" href="/2021/06/03/2021-6-3-%E5%B7%A7%E5%A6%99%E7%9A%84Y%E8%BF%90%E7%AE%97%E7%AC%A6/" title="巧妙的Y运算符">巧妙的Y运算符</a><time datetime="2021-06-03T00:54:00.000Z" title="发表于 2021-06-03 08:54:00">2021-06-03</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2021 By Doraemonzzz</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><div class="js-pjax"><script>if (!window.MathJax) {
+  window.MathJax = {
+    loader: {
+      source: {
+        '[tex]/amsCd': '[tex]/amscd'
+      }
+    },
+    tex: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]],
+      tags: 'ams'
+    },
+    options: {
+      renderActions: {
+        findScript: [10, doc => {
+          for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+            const display = !!node.type.match(/; *mode=display/)
+            const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+            const text = document.createTextNode('')
+            node.parentNode.replaceChild(text, node)
+            math.start = {node: text, delim: '', n: 0}
+            math.end = {node: text, delim: '', n: 0}
+            doc.math.push(math)
+          }
+        }, ''],
+        addClass: [200,() => {
+          document.querySelectorAll('mjx-container:not([display=\'true\']').forEach( node => {
+            const target = node.parentNode
+            if (!target.classList.contains('has-jax')) {
+              target.classList.add('mathjax-overflow')
+            }
+          })
+        }, '', false]
+      }
+    }
+  }
+  
+  const script = document.createElement('script')
+  script.src = 'https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js'
+  script.id = 'MathJax-script'
+  script.async = true
+  document.head.appendChild(script)
+} else {
+  MathJax.startup.document.state(0)
+  MathJax.texReset()
+  MathJax.typeset()
+}</script></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

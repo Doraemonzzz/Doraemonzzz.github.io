@@ -1,0 +1,352 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>CS229 Lesson 15 奇异值分解 | Doraemonzzz</title><meta name="keywords" content="CS229"><meta name="author" content="Doraemonzzz"><meta name="copyright" content="Doraemonzzz"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="课程视频地址：http:&#x2F;&#x2F;open.163.com&#x2F;special&#x2F;opencourse&#x2F;machinelearning.html 课程主页：http:&#x2F;&#x2F;cs229.stanford.edu&#x2F; 更具体的资料链接：https:&#x2F;&#x2F;www.jianshu.com&#x2F;p&#x2F;0a6ef31ff77a 笔记参考自中文翻译版：https:&#x2F;&#x2F;github.com&#x2F;Kivy-CN&#x2F;Stanford-CS-229">
+<meta property="og:type" content="article">
+<meta property="og:title" content="CS229 Lesson 15 奇异值分解">
+<meta property="og:url" content="http://doraemonzzz.com/2019/01/08/CS229%20Lesson%2015%20%E5%A5%87%E5%BC%82%E5%80%BC%E5%88%86%E8%A7%A3/index.html">
+<meta property="og:site_name" content="Doraemonzzz">
+<meta property="og:description" content="课程视频地址：http:&#x2F;&#x2F;open.163.com&#x2F;special&#x2F;opencourse&#x2F;machinelearning.html 课程主页：http:&#x2F;&#x2F;cs229.stanford.edu&#x2F; 更具体的资料链接：https:&#x2F;&#x2F;www.jianshu.com&#x2F;p&#x2F;0a6ef31ff77a 笔记参考自中文翻译版：https:&#x2F;&#x2F;github.com&#x2F;Kivy-CN&#x2F;Stanford-CS-229">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg">
+<meta property="article:published_time" content="2019-01-08T06:55:00.000Z">
+<meta property="article:modified_time" content="2020-11-10T16:05:03.152Z">
+<meta property="article:author" content="Doraemonzzz">
+<meta property="article:tag" content="CS229">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="http://doraemonzzz.com/2019/01/08/CS229%20Lesson%2015%20%E5%A5%87%E5%BC%82%E5%80%BC%E5%88%86%E8%A7%A3/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"prismjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    jQuery: 'https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js',
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+    },
+    fancybox: {
+      js: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isanchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'CS229 Lesson 15 奇异值分解',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2020-11-11 00:05:03'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    })(window)</script><meta name="generator" content="Hexo 5.4.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="author-avatar"><img class="avatar-img" src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">文章</div><div class="length-num">610</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">标签</div><div class="length-num">59</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/categories/"><div class="headline">分类</div><div class="length-num">23</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">Doraemonzzz</a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">CS229 Lesson 15 奇异值分解</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2019-01-08T06:55:00.000Z" title="发表于 2019-01-08 14:55:00">2019-01-08</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2020-11-10T16:05:03.152Z" title="更新于 2020-11-11 00:05:03">2020-11-11</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/">机器学习</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="CS229 Lesson 15 奇异值分解"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p>课程视频地址：<a target="_blank" rel="noopener" href="http://open.163.com/special/opencourse/machinelearning.html">http://open.163.com/special/opencourse/machinelearning.html</a></p>
+<p>课程主页：<a target="_blank" rel="noopener" href="http://cs229.stanford.edu/">http://cs229.stanford.edu/</a></p>
+<p>更具体的资料链接：<a target="_blank" rel="noopener" href="https://www.jianshu.com/p/0a6ef31ff77a">https://www.jianshu.com/p/0a6ef31ff77a</a></p>
+<p>笔记参考自中文翻译版：<a target="_blank" rel="noopener" href="https://github.com/Kivy-CN/Stanford-CS-229-CN">https://github.com/Kivy-CN/Stanford-CS-229-CN</a></p>
+<p>这一讲介绍了奇异值分解以及独立成分分析。</p>
+<span id="more"></span>
+<h3 id="奇异值分解"><a href="#奇异值分解" class="headerlink" title="奇异值分解"></a>奇异值分解</h3><p>这部分来自老师上课笔记，讲义中没有，首先介绍奇异值分解的定义：</p>
+<h4 id="奇异值分解的定义"><a href="#奇异值分解的定义" class="headerlink" title="奇异值分解的定义"></a>奇异值分解的定义</h4><p>设$A$是一个$m\times n$矩阵, 则存在$m$阶正交矩阵$U$和$n$阶正交矩阵$V$, 满足</p>
+<script type="math/tex; mode=display">
+A=U \left[
+ \begin{matrix}
+\sigma_1 &&  &  \\
+   & \ddots &&  \\
+   &&\sigma_r&  \\
+      &&&0
+  \end{matrix}
+  \right] V^T=UD V^T</script><p> 其中$\text{r = rank A},D\in \mathbb R^{m\times n}$. 习惯上,设 $\sigma_1\ge\sigma_2\ge…\ge\sigma_r&gt;0$，称$\sigma_1,…,\sigma_r$为奇异值(singular value). 称$U$和$V$的前$r$列向量为奇异向量(singular vector)。这个分解为奇异值分解, 简称<strong>SVD</strong>。</p>
+<p>奇异值分解的证明以及性质可以参考以下两篇博客：</p>
+<ul>
+<li>奇异值分解(1)——奇异值分解的证明</li>
+<li>奇异值分解(2)——奇异值分解的性质</li>
+<li><a href="http://doraemonzzz.com/tags/%E5%A5%87%E5%BC%82%E5%80%BC%E5%88%86%E8%A7%A3/">http://doraemonzzz.com/tags/%E5%A5%87%E5%BC%82%E5%80%BC%E5%88%86%E8%A7%A3/</a></li>
+</ul>
+<p>这里老师上课介绍的奇异值分解有所不同，形式如下：</p>
+<p>设$A$是一个$m\times n$矩阵（$m\ge n$），那么</p>
+<script type="math/tex; mode=display">
+A = UDV^T\\
+U\in \mathbb R^{m\times n}, D\in \mathbb R^{n\times n}, V \in \mathbb R^{n\times n}\\
+D为对角阵，V为正交阵，U^T U = I_n</script><p>这里来解释下这种形式，首先按之前的分解可以得到</p>
+<script type="math/tex; mode=display">
+A=U_1 D_1 V^T=U_1 \left[
+ \begin{matrix}
+\sigma_1 &&  &  \\
+   & \ddots &&  \\
+   &&\sigma_r&  \\
+      &&&0
+  \end{matrix}
+  \right] V^T\\
+  A\in \mathbb R^{m\times n} , U_1\in \mathbb R^{m\times m} ,D_1 \in \mathbb R^{m\times n},
+  V\in \mathbb R^{n\times n}\\
+  U_1 ,V为正交矩阵</script><p>注意$n\ge r$，我们补充$\sigma_{r+1},…,\sigma_n=0$，那么</p>
+<script type="math/tex; mode=display">
+U_1D_1=
+(\sigma_1 u_1,...,\sigma_n u_n)=
+(u_1,...,u_n)\left[
+ \begin{matrix}
+\sigma_1   \\
+   & \ddots   \\
+   &&\sigma_n  \\
+  \end{matrix}
+  \right]=UD\\
+  U \in \mathbb R^{m\times n} ,U ^T U = I_n,D \in \mathbb R^{n\times n}</script><p>从而可以得到老师给出的形式。注意这里的条件为$m\ge n$，如果$m&lt;n$，则$A^T$可以得到上述分解。</p>
+<p>现在做好了准备工作，接下来介绍如何对PCA使用SVD。</p>
+<h4 id="使用SVD处理PCA"><a href="#使用SVD处理PCA" class="headerlink" title="使用SVD处理PCA"></a>使用SVD处理PCA</h4><p>现在假设数据已经预处理完毕，那么</p>
+<script type="math/tex; mode=display">
+\Sigma=\sum_{i=1}^m  x^{(i)}{x^{(i)}}^T = X^T X \\
+其中X=  \left[
+ \begin{matrix}
+   x^{(1)} \\
+     x^{(2)}\\
+  ...\\
+    x^{(m)}
+  \end{matrix}
+  \right] \in \mathbb R^{m\times n}</script><p>我们对$X$使用SVD分解，那么</p>
+<script type="math/tex; mode=display">
+X= UDV^T\\
+\Sigma=X^T X= V D^T U^T UDV^T = VD^2 V^T\\
+其中最后一个等号使用了U^TU =I_n以及D为对角阵的事实</script><p>所以从上述表达式不难看出$V$的列向量为$\Sigma$的特征向量，因此选择$k$个主成分只要选择$V$的前$k$列即可，老师说这种方法在数据量很大的时候效果很好。</p>
+<h2 id="Part-XII-独立成分分析"><a href="#Part-XII-独立成分分析" class="headerlink" title="Part XII 独立成分分析"></a>Part XII 独立成分分析</h2><p>我们下一个主题是独立成分分析（ICA）。和PCA相似，这个算法将找到一组新的基来表示数据，但是目的非常不同。</p>
+<p>​    作为一个启发的例子，考虑“鸡尾酒问题”。在这个问题中，$n$个人在聚会上同时说话，放在屋子中的麦克风记录的是$n$个人叠加的声音。假设我们在屋中有$n$个不同的麦克风，因为每个麦克风距离每个人的距离不同，它记录了说话者声音的不同组合。利用麦克风的记录，我们可以把$n$个人的原始声音区分开来吗？</p>
+<p>​    为了形式化这个问题，我们想象数据$s\in \mathbb R^n$是由$n$个独立的数据源生成的。我们观测到的是</p>
+<script type="math/tex; mode=display">
+x = As</script><p>其中$A$是一个未知的方阵，被称为<strong>混合矩阵</strong>。重复观测得到数据集$\{x^{(i)};i=1,…,m\}$，我们的目标是恢复产生我们数据$x^{(i)}=As^{(i)}$的原始数据$s^{(i)}$。</p>
+<p>​    在我们的鸡尾酒问题中， $s^{(i)}$是一个$n$维向量，$s^{(i)}_j$是第$j$个人在时刻$i$发出的声音。同样的，$x^{(i)}$也是一个$n$维向量，$x^{(i)}_j$是第$j$个麦克风在时刻$i$录制的声音。</p>
+<p>​    令$W=A^{-1}$为<strong>还原矩阵</strong>。我们的目标是找到$W$，所以给定麦克风的记录$x^{(i)}$，我们可以通过计算$s^{(i)}= Wx^{(i)}$还原原始数据。为了记号方便，我们令$w_i^T$表示$W$的第$i$行，所以</p>
+<script type="math/tex; mode=display">
+W = \left[
+ \begin{matrix}
+  -w_1^T-\\
+   ...\\
+  -w_n^T-
+  \end{matrix}
+  \right]</script><p>因此，$w_i \in \mathbb R^n$，第$j$个原始数据可以通过计算$s^{(i)}_j= w_j^T x^{(i)}$来还原。</p>
+<h3 id="1-ICA的模糊性"><a href="#1-ICA的模糊性" class="headerlink" title="1.ICA的模糊性"></a>1.ICA的模糊性</h3><p>$W=A^{-1}$能恢复到什么程度呢？如果我们对原始数据和混合矩阵没有先验知识，不难看出$A$中有些固有的模糊性，只给定$x^{(i)}$，这些模糊性是不可能恢复的。</p>
+<p>​    特别地，令$P$为$n$阶置换矩阵。这意味着$P$的每行每列有且只有一个$1$。下面是几个置换矩阵的例子：</p>
+<script type="math/tex; mode=display">
+P = \left[
+ \begin{matrix}
+   0 & 1 & 0 \\
+   1 & 0& 0\\
+   0 & 0 & 1
+  \end{matrix}
+  \right] ;
+  P= \left[
+ \begin{matrix}
+   0 & 1\\
+   1 & 0
+  \end{matrix}
+  \right];
+    P= \left[
+ \begin{matrix}
+   1 & 0\\
+   0 & 1
+  \end{matrix}
+  \right]</script><p>如果$z$是一个向量，那么$Pz$是另一个向量，它包含了$z$坐标的置换版本。只给定$x^{(i)}$，没有办法区分$W$和$PW$。特别地，原始数据的置换是有歧义的。幸运的是，在绝大多数应用中，这一点无关紧要。</p>
+<p>​    此外，没有办法恢复$w_i$的大小。例如，如果用$2A$代替$A$，每个$s^{(i)}$用$0.5s^{(i)}$代替，那么我们观察的结果$x^{(i)}=2A.(0.5)s^{(i)}$将和之前一样。更广泛的，如果$A$的某一列乘以$\alpha$，相应的原始数据乘以$1/\alpha$，那么给定$x^{(i)}$，我们无法发现发生了什么。因此，我们无法恢复数据“准确”的大小。但是，对于我们正在考虑的应用——包括鸡尾酒问题，这种歧义性也没有影响。特别地，将说话者的说话信号$s^{(i)}_j $缩放正数$\alpha$只影响说话者的声音大小。另外，改变符号也没有影响，$s^{(i)}_j $和$-s^{(i)}_j $麦克风在的声音相同。因此，如果通过一个算法得到的$w_i$缩放非零常数，相应恢复的原始数据$s_i =w_i^Tx$将缩放相同的常数；但是这通常没有影响。</p>
+<p>​    这些是ICA中仅有的模糊性来源吗？事实上，只要原始数据$s_i$不服从高斯分布，那么这就是仅有的模糊性来源。为了看出来自高斯分布的数据的困难之处，考虑$n=2$，$s\sim \mathcal N(0,I)$的例子。这里，$I$是一个$2\times 2$的单位矩阵。注意到标准正态分布$\mathcal N(0,I)$密度的等高线是圆心位于原点的圆，并且密度是旋转对称的。</p>
+<p>​    现在，假设我们观测到$x=As$，其中$A$是混合矩阵。那么$x$服从高斯分布，均值为$0$，协方差矩阵为$\mathbb E[xx^T]= \mathbb E[Ass^T A^T]= AA^T$。现在，令$R$是任意正交矩阵，所以$RR^T= R^TR =I$，然后令$A’=AR$。如果使用$A’$而不是$A$来作为混合矩阵，我们将观测到$x’= A’s$。$x’$任然服从高斯分布，均值为$0$，协方差为</p>
+<script type="math/tex; mode=display">
+\mathbb E[x'(x')^T]=\mathbb E[A'ss^T(A')^T]=\mathbb E[ARss^T(AR)^T]=ARR^TA^T =AA^T</script><p>因此，无论混合矩阵为$A$还是$A’$，我们观察到的数据都服从$ \mathcal N(0,AA^T)$。</p>
+<p>​    我们上述讨论都建立于多元标准正态分布是旋转对称的。尽管ICA对服从高斯分布的数据无能为力，但事实上，只要数据不服从高斯分布，给定足够的数据，就有可能恢复$n$个独立的原始数据。</p>
+<h3 id="2-密度和线性变换"><a href="#2-密度和线性变换" class="headerlink" title="2.密度和线性变换"></a>2.密度和线性变换</h3><p>​    如果$s$是一个向量值分布，密度为$p_s$，$x=As$，其中$A$是一个可逆方阵，那么$x$的密度由下式给出</p>
+<script type="math/tex; mode=display">
+p_x(x)= p_s (Wx).|W|</script><p>其中$W=A^{-1}$</p>
+<h3 id="3-ICA算法"><a href="#3-ICA算法" class="headerlink" title="3.ICA算法"></a>3.ICA算法</h3><p>我们现在开始推导ICA算法。假设每个原始数据$s_i $的分布由密度$p_s$给出，所以原始数据$s$的联合分布为</p>
+<script type="math/tex; mode=display">
+p(s)=\prod_{i=1}^n p_s(s_i)</script><p>注意到在建模中让联合分布等于边际分布的乘积，我们可以得出原始数据是独立的假设。利用前一部分的公式，我们可以得到$x= As =W^{-1}s$的密度为</p>
+<script type="math/tex; mode=display">
+p(x) =\prod_{i=1}^n p_s(w_i^T x).|W|</script><p>剩下只要确定每个独立数据源的密度$p_s$</p>
+<p>​    回忆一下，给定实值随机变量$z$，它的累计分布函数(cdf)$F$由</p>
+<script type="math/tex; mode=display">
+F(z_0)=P(z\le z_0)=\int_{-\infty}^ {z_0} p_z(z) dz</script><p>定义。此外，$z$的密度为$p_z(z)= F’(z)$</p>
+<p>​    因此，要确定$s_i$的密度，我们只要确定它的cdf。一个cdf必须是一个从$0$到$1$单调递增的函数。从之前的讨论中，我们不能选择cdf为高斯分布的cdf。取而代之的，我们将选择一个合理“默认”的函数，它从$0$缓慢增加到$1$，这个函数是sigmoid函数$g(s)=1/(1+e^{-s})$。因此$p_s(s)=g’(s)$。</p>
+<p>​    方阵$W$是我们模型的参数，给定训练集$\{x^{(i)};i=1,…,m\}$，对数似然函数如下</p>
+<script type="math/tex; mode=display">
+l(w)= \sum_{i=1}^m \Big(
+\sum_{j=1}^n \log g'(w_j^T x^{(i)})+\log |W|
+\Big)</script><p>我们对上式关于$W$求最大值，首先对$\log |W|$关于$W$求梯度，注意到</p>
+<script type="math/tex; mode=display">
+\nabla_W  |W| = |W|(W^{-1})^T \\</script><p>所以</p>
+<script type="math/tex; mode=display">
+\nabla_W \log|W| = |W|^{-1}\nabla_W  |W| = |W|^{-1}|W|(W^{-1})^T
+=(W^T)^{-1}</script><p>接着对$\sum_{j=1}^n \log g’(w_j^T x^{(i)})$关于$W$求梯度，因为$W$每一行为$w_j^T$，所以先关于$w_j$求梯度，注意到</p>
+<script type="math/tex; mode=display">
+g'(s)= g(s)(1-g(s))</script><p>所以</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+\nabla_{w_j} \sum_{j=1}^n \log g'(w_j^T x^{(i)})
+&= \nabla_{w_j}\log g'(w_j^T x^{(i)}) \\
+&= \frac{1}{g'(w_j^T x^{(i)})}\nabla_{w_j}g'(w_j^T x^{(i)}) \\
+&=\frac{1}{g'(w_j^T x^{(i)})}\nabla_{w_j}
+\Big( g(w_j^T x^{(i)})
+(1- g(w_j^T x^{(i)}))\Big) \\
+&=\frac{g'(w_j^T x^{(i)})(1-2g(w_j^T x^{(i)}))}{g'(w_j^T x^{(i)})} \nabla_{w_j} w_j^T x^{(i)} \\
+&=(1-2g(w_j^T x^{(i)})) x^{(i)}
+\end{aligned}</script><p>从而$\nabla_W\sum_{j=1}^n \log g’(w_j^T x^{(i)})$的第$j$行为</p>
+<script type="math/tex; mode=display">
+(1-2g(w_j^T x^{(i)})) {x^{(i)}}^T</script><p>因此对于训练样本$x^{(i)}$，随机梯度下降法的更新规则为：</p>
+<script type="math/tex; mode=display">
+W:= W + \alpha
+ \left(
+ \begin{matrix}
+ \left[
+ \begin{matrix}
+1-2g(w_1^T x^{(i)}) \\
+1-2g(w_2^T x^{(i)}) \\
+...\\
+1-2g(w_n^T x^{(i)})
+  \end{matrix}
+  \right] {x^{(i)}}^T + (W^T)^{-1}
+  \end{matrix}
+  \right)</script><p>其中$\alpha$是学习率。</p>
+<p>​    在算法收敛后，我们通过计算$s^{(i)}= Wx^{(i)}$来恢复原始数据。</p>
+<h4 id="注记"><a href="#注记" class="headerlink" title="注记"></a>注记</h4><p>当写下数据的似然函数时，我们隐藏的假设了数据$x^{(i)}$直接相互独立（这里的独立是对于不同的$i$；和$x^{(i)}$的每个坐标独立不同），所以训练集的似然函数为$\prod_{i}p(x^{(i)};W)$。这个假设对于演讲数据以及其他$x^{(i)}$相关的时间序列都是不正确的，但是如果有足够的数据，即使数据相关，算法的效果也不会受影响。但是，对于数据相关的问题，在使用随机梯度下降法的时候，如果以随机顺序访问数据，那么会加快收敛。</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">Doraemonzzz</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="http://doraemonzzz.com/2019/01/08/CS229%20Lesson%2015%20%E5%A5%87%E5%BC%82%E5%80%BC%E5%88%86%E8%A7%A3/">http://doraemonzzz.com/2019/01/08/CS229%20Lesson%2015%20%E5%A5%87%E5%BC%82%E5%80%BC%E5%88%86%E8%A7%A3/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://doraemonzzz.com" target="_blank">Doraemonzzz</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/CS229/">CS229</a></div><div class="post_share"><div class="social-share" data-image="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2019/01/13/CS229%20Lesson%2016%20%E9%A9%AC%E5%B0%94%E5%8F%AF%E5%A4%AB%E5%86%B3%E7%AD%96%E8%BF%87%E7%A8%8B/"><img class="prev-cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">CS229 Lesson 16 马尔可夫决策过程</div></div></a></div><div class="next-post pull-right"><a href="/2019/01/06/CS229%20Lesson%2014%20%E4%B8%BB%E6%88%90%E5%88%86%E5%88%86%E6%9E%90%E6%B3%95/"><img class="next-cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">CS229 Lesson 14 主成分分析法</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span> 相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2019/03/01/CS229 2017版作业0/" title="CS229 2017版作业0"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2019-03-01</div><div class="title">CS229 2017版作业0</div></div></a></div><div><a href="/2019/04/02/CS229 2017版作业4/" title="CS229 2017版作业4"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2019-04-02</div><div class="title">CS229 2017版作业4</div></div></a></div><div><a href="/2018/12/12/CS229 Hoeffding不等式补充资料/" title="CS229 Hoeffding不等式补充资料"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2018-12-12</div><div class="title">CS229 Hoeffding不等式补充资料</div></div></a></div><div><a href="/2019/02/01/CS229 Lesson 1 机器学习的动机与应用/" title="CS229 Lesson 1 机器学习的动机与应用"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2019-02-01</div><div class="title">CS229 Lesson 1 机器学习的动机与应用</div></div></a></div><div><a href="/2018/12/16/CS229 Lesson 10 特征选择/" title="CS229 Lesson 10 特征选择"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2018-12-16</div><div class="title">CS229 Lesson 10 特征选择</div></div></a></div><div><a href="/2018/12/25/CS229 Lesson 11 贝叶斯统计正则化/" title="CS229 Lesson 11 贝叶斯统计正则化"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2018-12-25</div><div class="title">CS229 Lesson 11 贝叶斯统计正则化</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="card-info-avatar is-center"><img class="avatar-img" src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/><div class="author-info__name">Doraemonzzz</div><div class="author-info__description">个人博客，主要记录有关机器学习，数学以及计算机科学的笔记</div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">610</div></a></div><div class="card-info-data-item is-center"><a href="/tags/"><div class="headline">标签</div><div class="length-num">59</div></a></div><div class="card-info-data-item is-center"><a href="/categories/"><div class="headline">分类</div><div class="length-num">23</div></a></div></div><a class="button--animated" id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/Doraemonzzz" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="/doraemon_zzz@163.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn card-announcement-animation"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A5%87%E5%BC%82%E5%80%BC%E5%88%86%E8%A7%A3"><span class="toc-number">1.</span> <span class="toc-text">奇异值分解</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%A5%87%E5%BC%82%E5%80%BC%E5%88%86%E8%A7%A3%E7%9A%84%E5%AE%9A%E4%B9%89"><span class="toc-number">1.1.</span> <span class="toc-text">奇异值分解的定义</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8SVD%E5%A4%84%E7%90%86PCA"><span class="toc-number">1.2.</span> <span class="toc-text">使用SVD处理PCA</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Part-XII-%E7%8B%AC%E7%AB%8B%E6%88%90%E5%88%86%E5%88%86%E6%9E%90"><span class="toc-number"></span> <span class="toc-text">Part XII 独立成分分析</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-ICA%E7%9A%84%E6%A8%A1%E7%B3%8A%E6%80%A7"><span class="toc-number">1.</span> <span class="toc-text">1.ICA的模糊性</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E5%AF%86%E5%BA%A6%E5%92%8C%E7%BA%BF%E6%80%A7%E5%8F%98%E6%8D%A2"><span class="toc-number">2.</span> <span class="toc-text">2.密度和线性变换</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-ICA%E7%AE%97%E6%B3%95"><span class="toc-number">3.</span> <span class="toc-text">3.ICA算法</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%B3%A8%E8%AE%B0"><span class="toc-number">3.1.</span> <span class="toc-text">注记</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2021/06/06/2021-6-6-%E7%AE%97%E6%B3%95%E6%A6%82%E8%AE%BA(DPV)%E4%B9%A0%E9%A2%98%E8%A7%A3%E7%AD%94%E2%80%94%E2%80%94%E7%AC%AC3%E7%AB%A0-%E5%9B%BE%E7%9A%84%E5%88%86%E8%A7%A3/" title="算法概论(DPV)习题解答——第3章 图的分解"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="算法概论(DPV)习题解答——第3章 图的分解"/></a><div class="content"><a class="title" href="/2021/06/06/2021-6-6-%E7%AE%97%E6%B3%95%E6%A6%82%E8%AE%BA(DPV)%E4%B9%A0%E9%A2%98%E8%A7%A3%E7%AD%94%E2%80%94%E2%80%94%E7%AC%AC3%E7%AB%A0-%E5%9B%BE%E7%9A%84%E5%88%86%E8%A7%A3/" title="算法概论(DPV)习题解答——第3章 图的分解">算法概论(DPV)习题解答——第3章 图的分解</a><time datetime="2021-06-06T14:35:00.000Z" title="发表于 2021-06-06 22:35:00">2021-06-06</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/06/06/2021-6-6-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E7%AC%AC5%E7%AB%A0-%E4%B9%A0%E9%A2%98%E8%A7%A3%E6%9E%90/" title="深入理解计算机系统 第5章 习题解析"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="深入理解计算机系统 第5章 习题解析"/></a><div class="content"><a class="title" href="/2021/06/06/2021-6-6-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E7%AC%AC5%E7%AB%A0-%E4%B9%A0%E9%A2%98%E8%A7%A3%E6%9E%90/" title="深入理解计算机系统 第5章 习题解析">深入理解计算机系统 第5章 习题解析</a><time datetime="2021-06-06T07:23:00.000Z" title="发表于 2021-06-06 15:23:00">2021-06-06</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/06/05/2021-6-5-Stanford-Compiler-PA5%E7%BF%BB%E8%AF%91/" title="Stanford Compiler PA5翻译"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Stanford Compiler PA5翻译"/></a><div class="content"><a class="title" href="/2021/06/05/2021-6-5-Stanford-Compiler-PA5%E7%BF%BB%E8%AF%91/" title="Stanford Compiler PA5翻译">Stanford Compiler PA5翻译</a><time datetime="2021-06-05T06:12:00.000Z" title="发表于 2021-06-05 14:12:00">2021-06-05</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/06/04/2021-6-4-Stanford-Compiler-PA4%E7%BF%BB%E8%AF%91/" title="Stanford Compiler PA4翻译"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Stanford Compiler PA4翻译"/></a><div class="content"><a class="title" href="/2021/06/04/2021-6-4-Stanford-Compiler-PA4%E7%BF%BB%E8%AF%91/" title="Stanford Compiler PA4翻译">Stanford Compiler PA4翻译</a><time datetime="2021-06-03T16:17:00.000Z" title="发表于 2021-06-04 00:17:00">2021-06-04</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/06/03/2021-6-3-%E5%B7%A7%E5%A6%99%E7%9A%84Y%E8%BF%90%E7%AE%97%E7%AC%A6/" title="巧妙的Y运算符"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="巧妙的Y运算符"/></a><div class="content"><a class="title" href="/2021/06/03/2021-6-3-%E5%B7%A7%E5%A6%99%E7%9A%84Y%E8%BF%90%E7%AE%97%E7%AC%A6/" title="巧妙的Y运算符">巧妙的Y运算符</a><time datetime="2021-06-03T00:54:00.000Z" title="发表于 2021-06-03 08:54:00">2021-06-03</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2021 By Doraemonzzz</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><div class="js-pjax"><script>if (!window.MathJax) {
+  window.MathJax = {
+    loader: {
+      source: {
+        '[tex]/amsCd': '[tex]/amscd'
+      }
+    },
+    tex: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]],
+      tags: 'ams'
+    },
+    options: {
+      renderActions: {
+        findScript: [10, doc => {
+          for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+            const display = !!node.type.match(/; *mode=display/)
+            const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+            const text = document.createTextNode('')
+            node.parentNode.replaceChild(text, node)
+            math.start = {node: text, delim: '', n: 0}
+            math.end = {node: text, delim: '', n: 0}
+            doc.math.push(math)
+          }
+        }, ''],
+        addClass: [200,() => {
+          document.querySelectorAll('mjx-container:not([display=\'true\']').forEach( node => {
+            const target = node.parentNode
+            if (!target.classList.contains('has-jax')) {
+              target.classList.add('mathjax-overflow')
+            }
+          })
+        }, '', false]
+      }
+    }
+  }
+  
+  const script = document.createElement('script')
+  script.src = 'https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js'
+  script.id = 'MathJax-script'
+  script.async = true
+  document.head.appendChild(script)
+} else {
+  MathJax.startup.document.state(0)
+  MathJax.texReset()
+  MathJax.typeset()
+}</script></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

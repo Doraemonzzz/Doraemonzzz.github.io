@@ -1,0 +1,388 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>CMU 15-213 Intro to Computer Systems Lecture 11 | Doraemonzzz</title><meta name="keywords" content="CMU 15-213"><meta name="author" content="Doraemonzzz"><meta name="copyright" content="Doraemonzzz"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="课程主页：http:&#x2F;&#x2F;www.cs.cmu.edu&#x2F;afs&#x2F;cs&#x2F;academic&#x2F;class&#x2F;15213-f15&#x2F;www&#x2F;schedule.html 课程资料：https:&#x2F;&#x2F;github.com&#x2F;EugeneLiu&#x2F;translationCSAPP 课程视频：https:&#x2F;&#x2F;www.bilibili.com&#x2F;video&#x2F;av31289365&#x2F; 这一讲介绍了存储器层次结构。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="CMU 15-213 Intro to Computer Systems Lecture 11">
+<meta property="og:url" content="http://doraemonzzz.com/2020/06/09/CMU%2015-213%20Intro%20to%20Computer%20Systems%20Lecture%2011/index.html">
+<meta property="og:site_name" content="Doraemonzzz">
+<meta property="og:description" content="课程主页：http:&#x2F;&#x2F;www.cs.cmu.edu&#x2F;afs&#x2F;cs&#x2F;academic&#x2F;class&#x2F;15213-f15&#x2F;www&#x2F;schedule.html 课程资料：https:&#x2F;&#x2F;github.com&#x2F;EugeneLiu&#x2F;translationCSAPP 课程视频：https:&#x2F;&#x2F;www.bilibili.com&#x2F;video&#x2F;av31289365&#x2F; 这一讲介绍了存储器层次结构。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg">
+<meta property="article:published_time" content="2020-06-09T02:15:00.000Z">
+<meta property="article:modified_time" content="2020-07-18T07:06:28.669Z">
+<meta property="article:author" content="Doraemonzzz">
+<meta property="article:tag" content="CMU 15-213">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="http://doraemonzzz.com/2020/06/09/CMU%2015-213%20Intro%20to%20Computer%20Systems%20Lecture%2011/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"prismjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    jQuery: 'https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js',
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+    },
+    fancybox: {
+      js: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isanchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'CMU 15-213 Intro to Computer Systems Lecture 11',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2020-07-18 15:06:28'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    })(window)</script><meta name="generator" content="Hexo 5.4.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="author-avatar"><img class="avatar-img" src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">文章</div><div class="length-num">610</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">标签</div><div class="length-num">59</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/categories/"><div class="headline">分类</div><div class="length-num">23</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">Doraemonzzz</a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">CMU 15-213 Intro to Computer Systems Lecture 11</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2020-06-09T02:15:00.000Z" title="发表于 2020-06-09 10:15:00">2020-06-09</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2020-07-18T07:06:28.669Z" title="更新于 2020-07-18 15:06:28">2020-07-18</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%8E%9F%E7%90%86/">计算机原理</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="CMU 15-213 Intro to Computer Systems Lecture 11"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p>课程主页：<a target="_blank" rel="noopener" href="http://www.cs.cmu.edu/afs/cs/academic/class/15213-f15/www/schedule.html">http://www.cs.cmu.edu/afs/cs/academic/class/15213-f15/www/schedule.html</a></p>
+<p>课程资料：<a target="_blank" rel="noopener" href="https://github.com/EugeneLiu/translationCSAPP">https://github.com/EugeneLiu/translationCSAPP</a></p>
+<p>课程视频：<a target="_blank" rel="noopener" href="https://www.bilibili.com/video/av31289365/">https://www.bilibili.com/video/av31289365/</a></p>
+<p>这一讲介绍了存储器层次结构。</p>
+<span id="more"></span>
+<h3 id="存储技术和趋势"><a href="#存储技术和趋势" class="headerlink" title="存储技术和趋势"></a>存储技术和趋势</h3><h4 id="RAM-随机访问存储器"><a href="#RAM-随机访问存储器" class="headerlink" title="RAM(随机访问存储器)"></a>RAM(随机访问存储器)</h4><ul>
+<li>主要特点<ul>
+<li>传统上将RAM封装为芯片。</li>
+<li>基本存储单元通常是一个cell（每个cell一比特）。</li>
+<li>多个RAM芯片形成一个存储器。</li>
+</ul>
+</li>
+<li>RAM有两种：<ul>
+<li>SRAM（静态RAM）</li>
+<li>DRAM（动态RAM）</li>
+</ul>
+</li>
+</ul>
+<p>两者的性能对比如下：</p>
+<p><img src="https://github.com/Doraemonzzz/md-photo/blob/master/CMU%2015-213%20Intro%20to%20Computer%20Systems/Lecture11/2020060901.jpg?raw=true" alt=""></p>
+<h5 id="非易失性存储器"><a href="#非易失性存储器" class="headerlink" title="非易失性存储器"></a>非易失性存储器</h5><ul>
+<li>DRAM和SRAM是易失性存储器<ul>
+<li>如果关闭电源，则会丢失信息。</li>
+</ul>
+</li>
+<li>非易失性存储器即使断电也能保存存储的值<ul>
+<li>只读存储器（ROM）：在生产期间进行编程</li>
+<li>可编程ROM（PROM）：可以编程一次</li>
+<li>可擦除的PROM（EPROM）：可以批量擦除（UV，X射线）</li>
+<li>电可擦除PROM（EEPROM）：具有电子可擦除功能</li>
+<li>闪存：EEPROM。 具有部分（块级）擦除功能<ul>
+<li>擦除约100,000次后会磨损</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>非易失性存储器的用途<ul>
+<li>存储在ROM中的固件程序（BIOS，磁盘控制器，网卡，图形加速器，安全子系统等）</li>
+<li>固态硬盘（替换拇指驱动器，智能电话，mp3播放器，平板电脑，笔记本电脑等中的旋转磁盘）</li>
+<li>磁盘缓存</li>
+</ul>
+</li>
+</ul>
+<h4 id="传统的总线结构连接，CPU和内存"><a href="#传统的总线结构连接，CPU和内存" class="headerlink" title="传统的总线结构连接，CPU和内存"></a>传统的总线结构连接，CPU和内存</h4><ul>
+<li>总线是承载地址，数据和控制信号的并行导线的集合。</li>
+<li>总线通常由多个设备共享。</li>
+</ul>
+<p><img src="https://github.com/Doraemonzzz/md-photo/blob/master/CMU%2015-213%20Intro%20to%20Computer%20Systems/Lecture11/2020060902.jpg?raw=true" alt=""></p>
+<h4 id="旋转磁盘"><a href="#旋转磁盘" class="headerlink" title="旋转磁盘"></a>旋转磁盘</h4><p>旋转磁盘即普通磁盘，这样描述是为了和固态硬盘加以区别。</p>
+<h5 id="磁盘构造"><a href="#磁盘构造" class="headerlink" title="磁盘构造"></a>磁盘构造</h5><p><img src="https://github.com/Doraemonzzz/md-photo/blob/master/CMU%2015-213%20Intro%20to%20Computer%20Systems/Lecture11/2020060903.jpg?raw=true" alt=""></p>
+<ul>
+<li>磁盘由盘片组成，每个盘片都有两个表面。</li>
+<li>每个表面由称为磁道的同心环组成。</li>
+<li>每条磁道都由被间隙隔开的扇区组成。</li>
+</ul>
+<h5 id="磁盘容量"><a href="#磁盘容量" class="headerlink" title="磁盘容量"></a>磁盘容量</h5><script type="math/tex; mode=display">
+磁盘容量=\frac{字节数}{扇区}\times 
+\frac{平均扇区数}{磁道}\times 
+\frac{磁道数}{表面}\times 
+\frac{表面数}{盘片}\times 
+\frac{盘片数}{磁盘}</script><h5 id="磁盘访问时间"><a href="#磁盘访问时间" class="headerlink" title="磁盘访问时间"></a>磁盘访问时间</h5><p>磁盘访问过程如下：</p>
+<p><img src="https://github.com/Doraemonzzz/md-photo/blob/master/CMU%2015-213%20Intro%20to%20Computer%20Systems/Lecture11/2020060904.jpg?raw=true" alt=""></p>
+<p>访问时间如下：</p>
+<ul>
+<li>访问某些目标扇区的平均时间，近似为：<ul>
+<li>$\text{Taccess = Tavg seek + Tavg rotation + Tavg transfer }$</li>
+</ul>
+</li>
+<li>寻道时间（$\text{Tavg seek}$）<ul>
+<li>将磁头定位在包含目标扇区的圆柱体上的时间。</li>
+<li>典型的$\text{Tavg seek}$为3-9毫秒</li>
+</ul>
+</li>
+<li>旋转等待时间（$\text{Tavg rotation}$）<ul>
+<li>等待目标扇区的第一位通过读/写头的时间。</li>
+<li>$\text{Tavg rotation = 1/2 x 1/RPMs x 60 sec/1 min}$</li>
+<li>$\text{Typical Tavg rotation = 7200 RPMs}$</li>
+</ul>
+</li>
+<li>转移时间（$\text{ Tavg transfer}$）<ul>
+<li>读取目标扇区中比特的视角。</li>
+<li>$\text{Tavg transfer = 1/RPM x 1/(avg # sectors/track) x 60 secs/1 min}$</li>
+</ul>
+</li>
+</ul>
+<h5 id="逻辑磁盘块"><a href="#逻辑磁盘块" class="headerlink" title="逻辑磁盘块"></a>逻辑磁盘块</h5><ul>
+<li>现代磁盘为复杂的扇区几何提供了一个更简单的抽象视图：<ul>
+<li>可用扇区集被建模为一系列b大小的逻辑块(0, 1, 2, …)</li>
+</ul>
+</li>
+<li>逻辑块与实际（物理）扇区之间的映射<ul>
+<li>由称为磁盘控制器的硬件/固件设备维护。</li>
+<li>将对逻辑块的请求转换为（表面，轨道，扇区）三元组。</li>
+</ul>
+</li>
+<li>允许控制器为每个区域预留备用柱面。<ul>
+<li>解决“格式化容量”和“最大容量”中的差异。</li>
+</ul>
+</li>
+</ul>
+<h4 id="SSD-固态硬盘"><a href="#SSD-固态硬盘" class="headerlink" title="SSD(固态硬盘)"></a>SSD(固态硬盘)</h4><p><img src="https://github.com/Doraemonzzz/md-photo/blob/master/CMU%2015-213%20Intro%20to%20Computer%20Systems/Lecture11/2020060905.jpg?raw=true" alt=""></p>
+<ul>
+<li>页数：512KB至4KB，块数：32至128页</li>
+<li>以页为单位读取/写入的数据。</li>
+<li>页只能在其块被擦除后才能写入</li>
+<li>重复写入约100,000次后，块耗尽。</li>
+</ul>
+<h5 id="性能"><a href="#性能" class="headerlink" title="性能"></a>性能</h5><p><img src="https://github.com/Doraemonzzz/md-photo/blob/master/CMU%2015-213%20Intro%20to%20Computer%20Systems/Lecture11/2020060906.jpg?raw=true" alt=""></p>
+<h5 id="SSD-vs-旋转磁盘"><a href="#SSD-vs-旋转磁盘" class="headerlink" title="SSD vs 旋转磁盘"></a>SSD vs 旋转磁盘</h5><ul>
+<li>优点<ul>
+<li>无移动部分，所以更快，功率更少，更坚固</li>
+</ul>
+</li>
+<li>缺点<ul>
+<li>有可能磨损</li>
+<li>在2015年，每字节价格大约贵30倍</li>
+</ul>
+</li>
+<li>应用<ul>
+<li>MP3播放器，智能手机，笔记本电脑</li>
+<li>开始出现在台式机和服务器中</li>
+</ul>
+</li>
+</ul>
+<h4 id="对比"><a href="#对比" class="headerlink" title="对比"></a>对比</h4><p><img src="https://github.com/Doraemonzzz/md-photo/blob/master/CMU%2015-213%20Intro%20to%20Computer%20Systems/Lecture11/2020060907.jpg?raw=true" alt=""></p>
+<h3 id="局部引用"><a href="#局部引用" class="headerlink" title="局部引用"></a>局部引用</h3><h4 id="局部性"><a href="#局部性" class="headerlink" title="局部性"></a>局部性</h4><ul>
+<li>局部性原则：程序倾向于引用邻近于其他最近引用过的数据项和指令。</li>
+<li>时间局部性：<ul>
+<li>最近引用的项可能会在不久的将来再次引用</li>
+<li><img src="https://github.com/Doraemonzzz/md-photo/blob/master/CMU%2015-213%20Intro%20to%20Computer%20Systems/Lecture11/2020060908.jpg?raw=true" alt=""></li>
+</ul>
+</li>
+<li>空间局部性：<ul>
+<li>地址接近的项往往会在比较接近的时间内被引用</li>
+<li><img src="https://github.com/Doraemonzzz/md-photo/blob/master/CMU%2015-213%20Intro%20to%20Computer%20Systems/Lecture11/2020060910.jpg?raw=true" alt=""></li>
+</ul>
+</li>
+</ul>
+<h4 id="局部性例子"><a href="#局部性例子" class="headerlink" title="局部性例子"></a>局部性例子</h4><pre class="line-numbers language-c" data-language="c"><code class="language-c">sum <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token keyword">for</span> <span class="token punctuation">(</span>i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> n<span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span>
+	sum <span class="token operator">+=</span> a<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">;</span>
+<span class="token keyword">return</span> sum<span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+<ul>
+<li>数组$a$有很好的空间局部性，$\text{sum}$有很好的时间局部性</li>
+</ul>
+<h3 id="存储器层次结构中的缓存"><a href="#存储器层次结构中的缓存" class="headerlink" title="存储器层次结构中的缓存"></a>存储器层次结构中的缓存</h3><h4 id="存储器结构"><a href="#存储器结构" class="headerlink" title="存储器结构"></a>存储器结构</h4><ul>
+<li>硬件和软件的一些基本和持久属性：<ul>
+<li>快速存储技术每字节成本更高，容量更小且需要更多功率（热量！）。</li>
+<li>CPU和主内存速度之间的差距越来越大。</li>
+<li>编写良好的程序倾向于展现良好的局部性。</li>
+</ul>
+</li>
+<li>这些基本特性彼此完美地互补。</li>
+<li>他们提出了一种组织内存和存储系统的方法，称为内存层次结构。</li>
+</ul>
+<p><img src="https://github.com/Doraemonzzz/md-photo/blob/master/CMU%2015-213%20Intro%20to%20Computer%20Systems/Lecture11/2020060911.jpg?raw=true" alt=""></p>
+<h4 id="缓存"><a href="#缓存" class="headerlink" title="缓存"></a>缓存</h4><ul>
+<li>缓存：较小，速度较快的存储设备，可充当较大，较慢的设备中数据子集的暂存区。</li>
+<li>存储层次结构的基本思想：<ul>
+<li>对于每个$k$，级别$k$处更快，更小的设备充当级别$k + 1$处较大，更慢的设备的缓存。</li>
+</ul>
+</li>
+<li>为什么内存层次结构有效？<ul>
+<li>由于局部性原因，程序倾向于访问级别$k$的数据比访问级别$k + 1$的数据更多。</li>
+<li>因此，级别$k + 1$处的存储可能更慢，所以每比特更便宜。</li>
+</ul>
+</li>
+<li>重要构想：内存层次结构创建了一个大型存储池，其成本与底部附近的廉价存储相同，但以顶部附近的快速存储的速率向程序提供数据。</li>
+</ul>
+<h4 id="例子"><a href="#例子" class="headerlink" title="例子"></a>例子</h4><p><img src="https://github.com/Doraemonzzz/md-photo/blob/master/CMU%2015-213%20Intro%20to%20Computer%20Systems/Lecture11/2020060912.jpg?raw=true" alt=""></p>
+<h5 id="Hit"><a href="#Hit" class="headerlink" title="Hit"></a>Hit</h5><p>请求的数据在缓存中：</p>
+<p><img src="https://github.com/Doraemonzzz/md-photo/blob/master/CMU%2015-213%20Intro%20to%20Computer%20Systems/Lecture11/2020060913.jpg?raw=true" alt=""></p>
+<h5 id="Miss"><a href="#Miss" class="headerlink" title="Miss"></a>Miss</h5><p>请求的数据不在缓存中，所以要将内存中的数据替换缓存中的数据：</p>
+<p><img src="https://github.com/Doraemonzzz/md-photo/blob/master/CMU%2015-213%20Intro%20to%20Computer%20Systems/Lecture11/2020060914.jpg?raw=true" alt=""></p>
+<h4 id="常规缓存概念：缓存未命中的类型"><a href="#常规缓存概念：缓存未命中的类型" class="headerlink" title="常规缓存概念：缓存未命中的类型"></a>常规缓存概念：缓存未命中的类型</h4><ul>
+<li>冷未命中<ul>
+<li>由于缓存为空而发生。</li>
+</ul>
+</li>
+<li>冲突未命中<ul>
+<li>大多数高速缓存将级别$k + 1$的块限制为级别$k$的块位置的一小部分子集。<ul>
+<li>例如。 第$k + 1$级的块$i$必须放置在第$k$级的块（$i \mod 4$）中。</li>
+</ul>
+</li>
+<li>当级别$k$高速缓存足够大，但是多个数据对象都映射到同一级别$k$块时，就会发生冲突未命中。<ul>
+<li>例如。 每次引用块0、8、0、8、0、8，…都会未命中。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>容量未命中<ul>
+<li>当活动高速缓存块的集合（工作集）大于高速缓存时发生。</li>
+</ul>
+</li>
+</ul>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><ul>
+<li>CPU，内存和大容量存储之间的速度差距继续扩大。</li>
+<li>编写精良的程序具有一种称为局部性的特性。</li>
+<li>基于缓存的存储器层次结构通过利用局部性来缩小差距。</li>
+</ul>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">Doraemonzzz</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="http://doraemonzzz.com/2020/06/09/CMU%2015-213%20Intro%20to%20Computer%20Systems%20Lecture%2011/">http://doraemonzzz.com/2020/06/09/CMU%2015-213%20Intro%20to%20Computer%20Systems%20Lecture%2011/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://doraemonzzz.com" target="_blank">Doraemonzzz</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/CMU-15-213/">CMU 15-213</a></div><div class="post_share"><div class="social-share" data-image="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2020/06/09/Information%20Theory,%20Inference%20and%20Learning%20Algorithms%20Lecture%206/"><img class="prev-cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">Information Theory, Inference and Learning Algorithms Lecture 6</div></div></a></div><div class="next-post pull-right"><a href="/2020/06/08/CMU%2015-213%20Intro%20to%20Computer%20Systems%20Lecture%2010/"><img class="next-cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">CMU 15-213 Intro to Computer Systems Lecture 10</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span> 相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2020/06/08/CMU 15-213 Intro to Computer Systems Lecture 10/" title="CMU 15-213 Intro to Computer Systems Lecture 10"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-06-08</div><div class="title">CMU 15-213 Intro to Computer Systems Lecture 10</div></div></a></div><div><a href="/2020/04/30/CMU 15-213 Intro to Computer Systems Lecture 1/" title="CMU 15-213 Intro to Computer Systems Lecture 1"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-04-30</div><div class="title">CMU 15-213 Intro to Computer Systems Lecture 1</div></div></a></div><div><a href="/2020/06/16/CMU 15-213 Intro to Computer Systems Lecture 13/" title="CMU 15-213 Intro to Computer Systems Lecture 13"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-06-16</div><div class="title">CMU 15-213 Intro to Computer Systems Lecture 13</div></div></a></div><div><a href="/2020/06/10/CMU 15-213 Intro to Computer Systems Lecture 12/" title="CMU 15-213 Intro to Computer Systems Lecture 12"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-06-10</div><div class="title">CMU 15-213 Intro to Computer Systems Lecture 12</div></div></a></div><div><a href="/2020/07/15/CMU 15-213 Intro to Computer Systems Lecture 17/" title="CMU 15-213 Intro to Computer Systems Lecture 17"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-07-15</div><div class="title">CMU 15-213 Intro to Computer Systems Lecture 17</div></div></a></div><div><a href="/2020/05/09/CMU 15-213 Intro to Computer Systems Lecture 4/" title="CMU 15-213 Intro to Computer Systems Lecture 4"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-05-09</div><div class="title">CMU 15-213 Intro to Computer Systems Lecture 4</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="card-info-avatar is-center"><img class="avatar-img" src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/><div class="author-info__name">Doraemonzzz</div><div class="author-info__description">个人博客，主要记录有关机器学习，数学以及计算机科学的笔记</div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">610</div></a></div><div class="card-info-data-item is-center"><a href="/tags/"><div class="headline">标签</div><div class="length-num">59</div></a></div><div class="card-info-data-item is-center"><a href="/categories/"><div class="headline">分类</div><div class="length-num">23</div></a></div></div><a class="button--animated" id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/Doraemonzzz" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="/doraemon_zzz@163.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn card-announcement-animation"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AD%98%E5%82%A8%E6%8A%80%E6%9C%AF%E5%92%8C%E8%B6%8B%E5%8A%BF"><span class="toc-number">1.</span> <span class="toc-text">存储技术和趋势</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#RAM-%E9%9A%8F%E6%9C%BA%E8%AE%BF%E9%97%AE%E5%AD%98%E5%82%A8%E5%99%A8"><span class="toc-number">1.1.</span> <span class="toc-text">RAM(随机访问存储器)</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E9%9D%9E%E6%98%93%E5%A4%B1%E6%80%A7%E5%AD%98%E5%82%A8%E5%99%A8"><span class="toc-number">1.1.1.</span> <span class="toc-text">非易失性存储器</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BC%A0%E7%BB%9F%E7%9A%84%E6%80%BB%E7%BA%BF%E7%BB%93%E6%9E%84%E8%BF%9E%E6%8E%A5%EF%BC%8CCPU%E5%92%8C%E5%86%85%E5%AD%98"><span class="toc-number">1.2.</span> <span class="toc-text">传统的总线结构连接，CPU和内存</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%97%8B%E8%BD%AC%E7%A3%81%E7%9B%98"><span class="toc-number">1.3.</span> <span class="toc-text">旋转磁盘</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E7%A3%81%E7%9B%98%E6%9E%84%E9%80%A0"><span class="toc-number">1.3.1.</span> <span class="toc-text">磁盘构造</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E7%A3%81%E7%9B%98%E5%AE%B9%E9%87%8F"><span class="toc-number">1.3.2.</span> <span class="toc-text">磁盘容量</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E7%A3%81%E7%9B%98%E8%AE%BF%E9%97%AE%E6%97%B6%E9%97%B4"><span class="toc-number">1.3.3.</span> <span class="toc-text">磁盘访问时间</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E9%80%BB%E8%BE%91%E7%A3%81%E7%9B%98%E5%9D%97"><span class="toc-number">1.3.4.</span> <span class="toc-text">逻辑磁盘块</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#SSD-%E5%9B%BA%E6%80%81%E7%A1%AC%E7%9B%98"><span class="toc-number">1.4.</span> <span class="toc-text">SSD(固态硬盘)</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%80%A7%E8%83%BD"><span class="toc-number">1.4.1.</span> <span class="toc-text">性能</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#SSD-vs-%E6%97%8B%E8%BD%AC%E7%A3%81%E7%9B%98"><span class="toc-number">1.4.2.</span> <span class="toc-text">SSD vs 旋转磁盘</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AF%B9%E6%AF%94"><span class="toc-number">1.5.</span> <span class="toc-text">对比</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B1%80%E9%83%A8%E5%BC%95%E7%94%A8"><span class="toc-number">2.</span> <span class="toc-text">局部引用</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%B1%80%E9%83%A8%E6%80%A7"><span class="toc-number">2.1.</span> <span class="toc-text">局部性</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%B1%80%E9%83%A8%E6%80%A7%E4%BE%8B%E5%AD%90"><span class="toc-number">2.2.</span> <span class="toc-text">局部性例子</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AD%98%E5%82%A8%E5%99%A8%E5%B1%82%E6%AC%A1%E7%BB%93%E6%9E%84%E4%B8%AD%E7%9A%84%E7%BC%93%E5%AD%98"><span class="toc-number">3.</span> <span class="toc-text">存储器层次结构中的缓存</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AD%98%E5%82%A8%E5%99%A8%E7%BB%93%E6%9E%84"><span class="toc-number">3.1.</span> <span class="toc-text">存储器结构</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%BC%93%E5%AD%98"><span class="toc-number">3.2.</span> <span class="toc-text">缓存</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BE%8B%E5%AD%90"><span class="toc-number">3.3.</span> <span class="toc-text">例子</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#Hit"><span class="toc-number">3.3.1.</span> <span class="toc-text">Hit</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#Miss"><span class="toc-number">3.3.2.</span> <span class="toc-text">Miss</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%B8%B8%E8%A7%84%E7%BC%93%E5%AD%98%E6%A6%82%E5%BF%B5%EF%BC%9A%E7%BC%93%E5%AD%98%E6%9C%AA%E5%91%BD%E4%B8%AD%E7%9A%84%E7%B1%BB%E5%9E%8B"><span class="toc-number">3.4.</span> <span class="toc-text">常规缓存概念：缓存未命中的类型</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-number">4.</span> <span class="toc-text">总结</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2021/06/06/2021-6-6-%E7%AE%97%E6%B3%95%E6%A6%82%E8%AE%BA(DPV)%E4%B9%A0%E9%A2%98%E8%A7%A3%E7%AD%94%E2%80%94%E2%80%94%E7%AC%AC3%E7%AB%A0-%E5%9B%BE%E7%9A%84%E5%88%86%E8%A7%A3/" title="算法概论(DPV)习题解答——第3章 图的分解"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="算法概论(DPV)习题解答——第3章 图的分解"/></a><div class="content"><a class="title" href="/2021/06/06/2021-6-6-%E7%AE%97%E6%B3%95%E6%A6%82%E8%AE%BA(DPV)%E4%B9%A0%E9%A2%98%E8%A7%A3%E7%AD%94%E2%80%94%E2%80%94%E7%AC%AC3%E7%AB%A0-%E5%9B%BE%E7%9A%84%E5%88%86%E8%A7%A3/" title="算法概论(DPV)习题解答——第3章 图的分解">算法概论(DPV)习题解答——第3章 图的分解</a><time datetime="2021-06-06T14:35:00.000Z" title="发表于 2021-06-06 22:35:00">2021-06-06</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/06/06/2021-6-6-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E7%AC%AC5%E7%AB%A0-%E4%B9%A0%E9%A2%98%E8%A7%A3%E6%9E%90/" title="深入理解计算机系统 第5章 习题解析"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="深入理解计算机系统 第5章 习题解析"/></a><div class="content"><a class="title" href="/2021/06/06/2021-6-6-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E7%AC%AC5%E7%AB%A0-%E4%B9%A0%E9%A2%98%E8%A7%A3%E6%9E%90/" title="深入理解计算机系统 第5章 习题解析">深入理解计算机系统 第5章 习题解析</a><time datetime="2021-06-06T07:23:00.000Z" title="发表于 2021-06-06 15:23:00">2021-06-06</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/06/05/2021-6-5-Stanford-Compiler-PA5%E7%BF%BB%E8%AF%91/" title="Stanford Compiler PA5翻译"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Stanford Compiler PA5翻译"/></a><div class="content"><a class="title" href="/2021/06/05/2021-6-5-Stanford-Compiler-PA5%E7%BF%BB%E8%AF%91/" title="Stanford Compiler PA5翻译">Stanford Compiler PA5翻译</a><time datetime="2021-06-05T06:12:00.000Z" title="发表于 2021-06-05 14:12:00">2021-06-05</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/06/04/2021-6-4-Stanford-Compiler-PA4%E7%BF%BB%E8%AF%91/" title="Stanford Compiler PA4翻译"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Stanford Compiler PA4翻译"/></a><div class="content"><a class="title" href="/2021/06/04/2021-6-4-Stanford-Compiler-PA4%E7%BF%BB%E8%AF%91/" title="Stanford Compiler PA4翻译">Stanford Compiler PA4翻译</a><time datetime="2021-06-03T16:17:00.000Z" title="发表于 2021-06-04 00:17:00">2021-06-04</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/06/03/2021-6-3-%E5%B7%A7%E5%A6%99%E7%9A%84Y%E8%BF%90%E7%AE%97%E7%AC%A6/" title="巧妙的Y运算符"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="巧妙的Y运算符"/></a><div class="content"><a class="title" href="/2021/06/03/2021-6-3-%E5%B7%A7%E5%A6%99%E7%9A%84Y%E8%BF%90%E7%AE%97%E7%AC%A6/" title="巧妙的Y运算符">巧妙的Y运算符</a><time datetime="2021-06-03T00:54:00.000Z" title="发表于 2021-06-03 08:54:00">2021-06-03</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2021 By Doraemonzzz</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><div class="js-pjax"><script>if (!window.MathJax) {
+  window.MathJax = {
+    loader: {
+      source: {
+        '[tex]/amsCd': '[tex]/amscd'
+      }
+    },
+    tex: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]],
+      tags: 'ams'
+    },
+    options: {
+      renderActions: {
+        findScript: [10, doc => {
+          for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+            const display = !!node.type.match(/; *mode=display/)
+            const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+            const text = document.createTextNode('')
+            node.parentNode.replaceChild(text, node)
+            math.start = {node: text, delim: '', n: 0}
+            math.end = {node: text, delim: '', n: 0}
+            doc.math.push(math)
+          }
+        }, ''],
+        addClass: [200,() => {
+          document.querySelectorAll('mjx-container:not([display=\'true\']').forEach( node => {
+            const target = node.parentNode
+            if (!target.classList.contains('has-jax')) {
+              target.classList.add('mathjax-overflow')
+            }
+          })
+        }, '', false]
+      }
+    }
+  }
+  
+  const script = document.createElement('script')
+  script.src = 'https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js'
+  script.id = 'MathJax-script'
+  script.async = true
+  document.head.appendChild(script)
+} else {
+  MathJax.startup.document.state(0)
+  MathJax.texReset()
+  MathJax.typeset()
+}</script></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

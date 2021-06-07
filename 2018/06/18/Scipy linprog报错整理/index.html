@@ -1,0 +1,351 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Scipy linprog报错整理 | Doraemonzzz</title><meta name="keywords" content="Scipy"><meta name="author" content="Doraemonzzz"><meta name="copyright" content="Doraemonzzz"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="最近在做Learning from data的习题，要解决一个线性优化问题，但是碰到一个坑，这里记录一下，具体题目可以参考Learning from data的第三章的Problem3.6，题目的大概意思是从线性规划角度解决分类问题，我先产生1000组数据。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Scipy linprog报错整理">
+<meta property="og:url" content="http://doraemonzzz.com/2018/06/18/Scipy%20linprog%E6%8A%A5%E9%94%99%E6%95%B4%E7%90%86/index.html">
+<meta property="og:site_name" content="Doraemonzzz">
+<meta property="og:description" content="最近在做Learning from data的习题，要解决一个线性优化问题，但是碰到一个坑，这里记录一下，具体题目可以参考Learning from data的第三章的Problem3.6，题目的大概意思是从线性规划角度解决分类问题，我先产生1000组数据。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg">
+<meta property="article:published_time" content="2018-06-18T08:08:00.000Z">
+<meta property="article:modified_time" content="2019-02-12T13:16:40.761Z">
+<meta property="article:author" content="Doraemonzzz">
+<meta property="article:tag" content="Scipy">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="http://doraemonzzz.com/2018/06/18/Scipy%20linprog%E6%8A%A5%E9%94%99%E6%95%B4%E7%90%86/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"prismjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    jQuery: 'https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js',
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+    },
+    fancybox: {
+      js: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isanchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'Scipy linprog报错整理',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: false,
+  postUpdate: '2019-02-12 21:16:40'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    })(window)</script><meta name="generator" content="Hexo 5.4.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="author-avatar"><img class="avatar-img" src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">文章</div><div class="length-num">610</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">标签</div><div class="length-num">59</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/categories/"><div class="headline">分类</div><div class="length-num">23</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">Doraemonzzz</a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">Scipy linprog报错整理</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2018-06-18T08:08:00.000Z" title="发表于 2018-06-18 16:08:00">2018-06-18</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2019-02-12T13:16:40.761Z" title="更新于 2019-02-12 21:16:40">2019-02-12</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/">机器学习</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="Scipy linprog报错整理"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p>最近在做Learning from data的习题，要解决一个线性优化问题，但是碰到一个坑，这里记录一下，具体题目可以参考Learning from data的第三章的Problem3.6，题目的大概意思是从线性规划角度解决分类问题，我先产生1000组数据。</p>
+<span id="more"></span>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">import</span> numpy <span class="token keyword">as</span> np
+<span class="token keyword">import</span> matplotlib<span class="token punctuation">.</span>pyplot <span class="token keyword">as</span> plt
+
+<span class="token comment">#参数</span>
+rad<span class="token operator">=</span><span class="token number">10</span>
+thk<span class="token operator">=</span><span class="token number">5</span>
+sep<span class="token operator">=</span><span class="token number">5</span>
+
+<span class="token comment">#n为产生点的个数,x1,y1为上半个圆环的坐标</span>
+<span class="token keyword">def</span> <span class="token function">generatedata</span><span class="token punctuation">(</span>rad<span class="token punctuation">,</span>thk<span class="token punctuation">,</span>sep<span class="token punctuation">,</span>n<span class="token punctuation">,</span>x1<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">,</span>y1<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token comment">#上半个圆的圆心</span>
+    X1<span class="token operator">=</span>x1
+    Y1<span class="token operator">=</span>y1
+
+    <span class="token comment">#下半个圆的圆心</span>
+    X2<span class="token operator">=</span>X1<span class="token operator">+</span>rad<span class="token operator">+</span>thk<span class="token operator">/</span><span class="token number">2</span>
+    Y2<span class="token operator">=</span>Y1<span class="token operator">-</span>sep
+    
+    <span class="token comment">#上半个圆环的点</span>
+    top<span class="token operator">=</span><span class="token punctuation">[</span><span class="token punctuation">]</span>
+    <span class="token comment">#下半个圆环的点</span>
+    bottom<span class="token operator">=</span><span class="token punctuation">[</span><span class="token punctuation">]</span>
+    
+    <span class="token comment">#后面要用到的参数</span>
+    r1<span class="token operator">=</span>rad<span class="token operator">+</span>thk
+    r2<span class="token operator">=</span>rad
+    
+    cnt<span class="token operator">=</span><span class="token number">1</span>
+    <span class="token keyword">while</span><span class="token punctuation">(</span>cnt<span class="token operator">&lt;=</span>n<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token comment">#产生均匀分布的点</span>
+        x<span class="token operator">=</span>np<span class="token punctuation">.</span>random<span class="token punctuation">.</span>uniform<span class="token punctuation">(</span><span class="token operator">-</span>r1<span class="token punctuation">,</span>r1<span class="token punctuation">)</span>
+        y<span class="token operator">=</span>np<span class="token punctuation">.</span>random<span class="token punctuation">.</span>uniform<span class="token punctuation">(</span><span class="token operator">-</span>r1<span class="token punctuation">,</span>r1<span class="token punctuation">)</span>
+        
+        d<span class="token operator">=</span>x<span class="token operator">**</span><span class="token number">2</span><span class="token operator">+</span>y<span class="token operator">**</span><span class="token number">2</span>
+        <span class="token keyword">if</span><span class="token punctuation">(</span>d<span class="token operator">>=</span>r2<span class="token operator">**</span><span class="token number">2</span> <span class="token keyword">and</span> d<span class="token operator">&lt;=</span>r1<span class="token operator">**</span><span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+            <span class="token keyword">if</span> <span class="token punctuation">(</span>y<span class="token operator">></span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+                top<span class="token punctuation">.</span>append<span class="token punctuation">(</span><span class="token punctuation">[</span>X1<span class="token operator">+</span>x<span class="token punctuation">,</span>Y1<span class="token operator">+</span>y<span class="token punctuation">]</span><span class="token punctuation">)</span>
+                cnt<span class="token operator">+=</span><span class="token number">1</span>
+            <span class="token keyword">else</span><span class="token punctuation">:</span>
+                bottom<span class="token punctuation">.</span>append<span class="token punctuation">(</span><span class="token punctuation">[</span>X2<span class="token operator">+</span>x<span class="token punctuation">,</span>Y2<span class="token operator">+</span>y<span class="token punctuation">]</span><span class="token punctuation">)</span>
+                cnt<span class="token operator">+=</span><span class="token number">1</span>
+        <span class="token keyword">else</span><span class="token punctuation">:</span>
+            <span class="token keyword">continue</span>
+
+    <span class="token keyword">return</span> top<span class="token punctuation">,</span>bottom
+
+n<span class="token operator">=</span><span class="token number">1000</span>
+top<span class="token punctuation">,</span>bottom<span class="token operator">=</span>generatedata<span class="token punctuation">(</span>rad<span class="token punctuation">,</span>thk<span class="token punctuation">,</span>sep<span class="token punctuation">,</span>n<span class="token punctuation">)</span>
+
+X1<span class="token operator">=</span><span class="token punctuation">[</span>i<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span> <span class="token keyword">for</span> i <span class="token keyword">in</span> top<span class="token punctuation">]</span>
+Y1<span class="token operator">=</span><span class="token punctuation">[</span>i<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span> <span class="token keyword">for</span> i <span class="token keyword">in</span> top<span class="token punctuation">]</span>
+
+X2<span class="token operator">=</span><span class="token punctuation">[</span>i<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span> <span class="token keyword">for</span> i <span class="token keyword">in</span> bottom<span class="token punctuation">]</span>
+Y2<span class="token operator">=</span><span class="token punctuation">[</span>i<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span> <span class="token keyword">for</span> i <span class="token keyword">in</span> bottom<span class="token punctuation">]</span>
+
+plt<span class="token punctuation">.</span>scatter<span class="token punctuation">(</span>X1<span class="token punctuation">,</span>Y1<span class="token punctuation">,</span>s<span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">)</span>
+plt<span class="token punctuation">.</span>scatter<span class="token punctuation">(</span>X2<span class="token punctuation">,</span>Y2<span class="token punctuation">,</span>s<span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">)</span>
+plt<span class="token punctuation">.</span>show<span class="token punctuation">(</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p><img src="https://github.com/Doraemonzzz/md-photo/blob/master/Python/Scipy/2018061801.png?raw=true" alt=""></p>
+<p>显然这组数据是可分的，但是我带入scipy的linprog函数确始终解不出来。</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">from</span> scipy<span class="token punctuation">.</span>optimize <span class="token keyword">import</span> linprog
+
+<span class="token comment">#加上偏移项</span>
+x1<span class="token operator">=</span><span class="token punctuation">[</span><span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token operator">+</span>i <span class="token keyword">for</span> i <span class="token keyword">in</span> top<span class="token punctuation">]</span>
+x2<span class="token operator">=</span><span class="token punctuation">[</span><span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token operator">+</span>i <span class="token keyword">for</span> i <span class="token keyword">in</span> bottom<span class="token punctuation">]</span>
+
+c<span class="token operator">=</span>np<span class="token punctuation">.</span>array<span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token number">1.0</span><span class="token punctuation">,</span><span class="token number">1.0</span><span class="token punctuation">,</span><span class="token number">1.0</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+A<span class="token operator">=</span>np<span class="token punctuation">.</span>concatenate<span class="token punctuation">(</span><span class="token punctuation">(</span>np<span class="token punctuation">.</span>array<span class="token punctuation">(</span>x1<span class="token punctuation">)</span><span class="token punctuation">,</span>np<span class="token punctuation">.</span>array<span class="token punctuation">(</span>x2<span class="token punctuation">)</span><span class="token operator">*</span><span class="token punctuation">(</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token operator">*</span><span class="token punctuation">(</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span>
+b<span class="token operator">=</span>np<span class="token punctuation">.</span>ones<span class="token punctuation">(</span>n<span class="token punctuation">)</span><span class="token operator">*</span><span class="token punctuation">(</span><span class="token operator">-</span><span class="token number">1.0</span><span class="token punctuation">)</span>
+
+result<span class="token operator">=</span>linprog<span class="token punctuation">(</span>c<span class="token punctuation">,</span>A_ub<span class="token operator">=</span>A<span class="token punctuation">,</span>b_ub<span class="token operator">=</span>b<span class="token punctuation">,</span>options<span class="token operator">=</span><span class="token builtin">dict</span><span class="token punctuation">(</span>bland<span class="token operator">=</span><span class="token boolean">True</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+result<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<pre><code>     fun: 71.923242295321842
+ message: &#39;Optimization failed. Unable to find a feasible starting point.&#39;
+     nit: 1000
+  status: 2
+ success: False
+       x: nan
+</code></pre><p>看到有这样一个报错<strong>‘Optimization failed. Unable to find a feasible starting point.’</strong>，意思是没有解，但是显然有解啊，我就非常郁闷，上网查阅了一下，看到有人说100组数据以上linprog会解不出，于是我试了下50组数据。</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python">n<span class="token operator">=</span><span class="token number">50</span>
+top<span class="token punctuation">,</span>bottom<span class="token operator">=</span>generatedata<span class="token punctuation">(</span>rad<span class="token punctuation">,</span>thk<span class="token punctuation">,</span>sep<span class="token punctuation">,</span>n<span class="token punctuation">)</span>
+<span class="token comment">#加上偏移项</span>
+x1<span class="token operator">=</span><span class="token punctuation">[</span><span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token operator">+</span>i <span class="token keyword">for</span> i <span class="token keyword">in</span> top<span class="token punctuation">]</span>
+x2<span class="token operator">=</span><span class="token punctuation">[</span><span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token operator">+</span>i <span class="token keyword">for</span> i <span class="token keyword">in</span> bottom<span class="token punctuation">]</span>
+
+c<span class="token operator">=</span>np<span class="token punctuation">.</span>array<span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token number">1.0</span><span class="token punctuation">,</span><span class="token number">1.0</span><span class="token punctuation">,</span><span class="token number">1.0</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+A<span class="token operator">=</span>np<span class="token punctuation">.</span>concatenate<span class="token punctuation">(</span><span class="token punctuation">(</span>np<span class="token punctuation">.</span>array<span class="token punctuation">(</span>x1<span class="token punctuation">)</span><span class="token punctuation">,</span>np<span class="token punctuation">.</span>array<span class="token punctuation">(</span>x2<span class="token punctuation">)</span><span class="token operator">*</span><span class="token punctuation">(</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token operator">*</span><span class="token punctuation">(</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span>
+b<span class="token operator">=</span>np<span class="token punctuation">.</span>ones<span class="token punctuation">(</span>n<span class="token punctuation">)</span><span class="token operator">*</span><span class="token punctuation">(</span><span class="token operator">-</span><span class="token number">1.0</span><span class="token punctuation">)</span>
+
+result<span class="token operator">=</span>linprog<span class="token punctuation">(</span>c<span class="token punctuation">,</span>A_ub<span class="token operator">=</span>A<span class="token punctuation">,</span>b_ub<span class="token operator">=</span>b<span class="token punctuation">)</span>
+result<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<pre><code>     fun: 0.68978181507748448
+ message: &#39;Optimization terminated successfully.&#39;
+     nit: 55
+   slack: array([  8.25582251,   1.39579263,   5.45099168,   7.89511373,
+         4.07001065,   7.5398225 ,   6.36340605,   5.19580442,
+         0.        ,   7.88915867,   7.21006349,   5.61077845,
+         0.80448989,   5.84426297,   1.22033368,   5.00423168,
+         4.2392862 ,   2.43914755,   0.67341515,   9.26841422,
+         6.22546989,   8.54254805,   6.22844178,  12.44853646,
+         8.24740109,   9.51136402,   4.8966531 ,  11.47498782,
+         9.10895613,  11.81051557,  12.51911944,   7.09788684,
+         3.43465829,  10.05898861,  11.83502706,  10.34493975,
+         8.90589327,  11.95815476,   9.4623471 ,   2.78260225,
+         6.77083725,   9.6965408 ,  10.10390994,   5.0151723 ,
+         3.2516008 ,   4.95376907,  11.83342563,   7.88599283,
+         2.53952582,   8.34889399])
+  status: 0
+ success: True
+       x: array([ 0.        ,  0.        ,  0.68978182])
+</code></pre><p>一看还真是这个问题，于是网上查阅了下有没有其他的工具，看到cvxopt是一个比较不错的凸优化工具，于是下载了后尝试了一下，效果不错，需要注意的一点是cvxopt的数据格式一定是浮点数，我一开始因为这个还报错了。</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">from</span> cvxopt <span class="token keyword">import</span> matrix<span class="token punctuation">,</span> solvers
+
+n<span class="token operator">=</span><span class="token number">1000</span>
+top<span class="token punctuation">,</span>bottom<span class="token operator">=</span>generatedata<span class="token punctuation">(</span>rad<span class="token punctuation">,</span>thk<span class="token punctuation">,</span>sep<span class="token punctuation">,</span>n<span class="token punctuation">)</span>
+<span class="token comment">#加上偏移项</span>
+x1<span class="token operator">=</span><span class="token punctuation">[</span><span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token operator">+</span>i <span class="token keyword">for</span> i <span class="token keyword">in</span> top<span class="token punctuation">]</span>
+x2<span class="token operator">=</span><span class="token punctuation">[</span><span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token operator">+</span>i <span class="token keyword">for</span> i <span class="token keyword">in</span> bottom<span class="token punctuation">]</span>
+
+c<span class="token operator">=</span>np<span class="token punctuation">.</span>array<span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token number">1.0</span><span class="token punctuation">,</span><span class="token number">1.0</span><span class="token punctuation">,</span><span class="token number">1.0</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+A<span class="token operator">=</span>np<span class="token punctuation">.</span>concatenate<span class="token punctuation">(</span><span class="token punctuation">(</span>np<span class="token punctuation">.</span>array<span class="token punctuation">(</span>x1<span class="token punctuation">)</span><span class="token punctuation">,</span>np<span class="token punctuation">.</span>array<span class="token punctuation">(</span>x2<span class="token punctuation">)</span><span class="token operator">*</span><span class="token punctuation">(</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token operator">*</span><span class="token punctuation">(</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span>
+b<span class="token operator">=</span>np<span class="token punctuation">.</span>ones<span class="token punctuation">(</span>n<span class="token punctuation">)</span><span class="token operator">*</span><span class="token punctuation">(</span><span class="token operator">-</span><span class="token number">1.0</span><span class="token punctuation">)</span>
+
+<span class="token comment">#要转换为matrix</span>
+c<span class="token operator">=</span>matrix<span class="token punctuation">(</span>c<span class="token punctuation">)</span>
+A<span class="token operator">=</span>matrix<span class="token punctuation">(</span>A<span class="token punctuation">)</span>
+b<span class="token operator">=</span>matrix<span class="token punctuation">(</span>b<span class="token punctuation">)</span>
+
+sol <span class="token operator">=</span> solvers<span class="token punctuation">.</span>lp<span class="token punctuation">(</span>c<span class="token punctuation">,</span>A<span class="token punctuation">,</span>b<span class="token punctuation">)</span>
+
+<span class="token keyword">print</span><span class="token punctuation">(</span>sol<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<pre><code>     pcost       dcost       gap    pres   dres   k/t
+ 0:  3.4242e-01  1.0017e+03  2e+03  2e+00  7e+03  1e+00
+ 1:  3.4061e+01  4.7700e+04  8e+06  9e+01  3e+05  2e+02
+ 2:  7.0763e-01  4.3232e+02  6e+02  7e-01  3e+03  5e+01
+ 3:  8.4793e-01  5.2743e+02  1e+03  9e-01  3e+03  6e+01
+ 4:  1.8868e+00  7.3869e+01  1e+02  7e-02  3e+02  3e+01
+ 5:  1.8724e+00  3.3409e+00  5e+00  2e-03  8e+00  3e-01
+ 6:  1.4143e+00  1.8996e+00  1e+00  7e-04  3e+00  1e-01
+ 7:  1.4221e+00  1.8726e+00  1e+00  6e-04  2e+00  1e-01
+ 8:  1.3924e+00  1.5287e+00  3e-01  2e-04  8e-01  2e-02
+ 9:  1.3752e+00  1.3953e+00  5e-02  3e-05  1e-01  2e-03
+10:  1.3731e+00  1.3733e+00  6e-04  4e-07  1e-03  3e-05
+11:  1.3730e+00  1.3730e+00  6e-06  4e-09  1e-05  3e-07
+12:  1.3730e+00  1.3730e+00  6e-08  4e-11  1e-07  3e-09
+13:  1.3730e+00  1.3730e+00  6e-10  4e-13  1e-09  3e-11
+Optimal solution found.
+&#123;&#39;x&#39;: &lt;3x1 matrix, tc=&#39;d&#39;&gt;, &#39;y&#39;: &lt;0x1 matrix, tc=&#39;d&#39;&gt;, &#39;s&#39;: &lt;1000x1 matrix, tc=&#39;d&#39;&gt;, &#39;z&#39;: &lt;1000x1 matrix, tc=&#39;d&#39;&gt;, &#39;status&#39;: &#39;optimal&#39;, &#39;gap&#39;: 6.385522247857282e-10, &#39;relative gap&#39;: 4.65067372803741e-10, &#39;primal objective&#39;: 1.3730316552293447, &#39;dual objective&#39;: 1.3730316554698367, &#39;primal infeasibility&#39;: 3.958299300636158e-13, &#39;dual infeasibility&#39;: 1.4801406159663262e-09, &#39;primal slack&#39;: 9.474745058411444e-13, &#39;dual slack&#39;: 9.915311930562724e-14, &#39;residual as primal infeasibility certificate&#39;: None, &#39;residual as dual infeasibility certificate&#39;: None, &#39;iterations&#39;: 13&#125;
+</code></pre><p>最后的结果是以字典形式存储的，比较重要的是’x’键所指的内容，我们的最优解对应的向量，这里作图看一下效果。</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python">w<span class="token operator">=</span><span class="token builtin">list</span><span class="token punctuation">(</span><span class="token punctuation">(</span>sol<span class="token punctuation">[</span><span class="token string">'x'</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+<span class="token comment">#作图</span>
+r<span class="token operator">=</span><span class="token number">2</span><span class="token operator">*</span><span class="token punctuation">(</span>rad<span class="token operator">+</span>thk<span class="token punctuation">)</span>
+X3<span class="token operator">=</span><span class="token punctuation">[</span><span class="token operator">-</span>r<span class="token punctuation">,</span>r<span class="token punctuation">]</span>
+Y3<span class="token operator">=</span><span class="token punctuation">[</span><span class="token operator">-</span><span class="token punctuation">(</span>w<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token operator">+</span>w<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token operator">*</span>i<span class="token punctuation">)</span><span class="token operator">/</span>w<span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">]</span> <span class="token keyword">for</span> i <span class="token keyword">in</span> X3<span class="token punctuation">]</span>
+
+plt<span class="token punctuation">.</span>scatter<span class="token punctuation">(</span>X1<span class="token punctuation">,</span>Y1<span class="token punctuation">,</span>s<span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">)</span>
+plt<span class="token punctuation">.</span>scatter<span class="token punctuation">(</span>X2<span class="token punctuation">,</span>Y2<span class="token punctuation">,</span>s<span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">)</span>
+plt<span class="token punctuation">.</span>plot<span class="token punctuation">(</span>X3<span class="token punctuation">,</span>Y3<span class="token punctuation">)</span>
+plt<span class="token punctuation">.</span>show<span class="token punctuation">(</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p><img src="https://github.com/Doraemonzzz/md-photo/blob/master/Python/Scipy/2016051802.png?raw=true" alt=""></p>
+<p>效果还是很不错的，以上就是这次报错的总结，所以以后大量数据的优化使用cvxopt比较好。</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">Doraemonzzz</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="http://doraemonzzz.com/2018/06/18/Scipy%20linprog%E6%8A%A5%E9%94%99%E6%95%B4%E7%90%86/">http://doraemonzzz.com/2018/06/18/Scipy%20linprog%E6%8A%A5%E9%94%99%E6%95%B4%E7%90%86/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://doraemonzzz.com" target="_blank">Doraemonzzz</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/Scipy/">Scipy</a></div><div class="post_share"><div class="social-share" data-image="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2018/06/29/Neural%20Networks%20for%20Machine%20Learning%20Lecture%201/"><img class="prev-cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">Neural Networks for Machine Learning Lecture 1</div></div></a></div><div class="next-post pull-right"><a href="/2018/06/18/%E5%8C%97%E7%90%86Python%E7%88%AC%E8%99%ABWeek4/"><img class="next-cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">北理Python爬虫Week4</div></div></a></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="card-info-avatar is-center"><img class="avatar-img" src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/><div class="author-info__name">Doraemonzzz</div><div class="author-info__description">个人博客，主要记录有关机器学习，数学以及计算机科学的笔记</div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">610</div></a></div><div class="card-info-data-item is-center"><a href="/tags/"><div class="headline">标签</div><div class="length-num">59</div></a></div><div class="card-info-data-item is-center"><a href="/categories/"><div class="headline">分类</div><div class="length-num">23</div></a></div></div><a class="button--animated" id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/Doraemonzzz" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="/doraemon_zzz@163.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn card-announcement-animation"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2021/06/06/2021-6-6-%E7%AE%97%E6%B3%95%E6%A6%82%E8%AE%BA(DPV)%E4%B9%A0%E9%A2%98%E8%A7%A3%E7%AD%94%E2%80%94%E2%80%94%E7%AC%AC3%E7%AB%A0-%E5%9B%BE%E7%9A%84%E5%88%86%E8%A7%A3/" title="算法概论(DPV)习题解答——第3章 图的分解"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="算法概论(DPV)习题解答——第3章 图的分解"/></a><div class="content"><a class="title" href="/2021/06/06/2021-6-6-%E7%AE%97%E6%B3%95%E6%A6%82%E8%AE%BA(DPV)%E4%B9%A0%E9%A2%98%E8%A7%A3%E7%AD%94%E2%80%94%E2%80%94%E7%AC%AC3%E7%AB%A0-%E5%9B%BE%E7%9A%84%E5%88%86%E8%A7%A3/" title="算法概论(DPV)习题解答——第3章 图的分解">算法概论(DPV)习题解答——第3章 图的分解</a><time datetime="2021-06-06T14:35:00.000Z" title="发表于 2021-06-06 22:35:00">2021-06-06</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/06/06/2021-6-6-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E7%AC%AC5%E7%AB%A0-%E4%B9%A0%E9%A2%98%E8%A7%A3%E6%9E%90/" title="深入理解计算机系统 第5章 习题解析"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="深入理解计算机系统 第5章 习题解析"/></a><div class="content"><a class="title" href="/2021/06/06/2021-6-6-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E7%AC%AC5%E7%AB%A0-%E4%B9%A0%E9%A2%98%E8%A7%A3%E6%9E%90/" title="深入理解计算机系统 第5章 习题解析">深入理解计算机系统 第5章 习题解析</a><time datetime="2021-06-06T07:23:00.000Z" title="发表于 2021-06-06 15:23:00">2021-06-06</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/06/05/2021-6-5-Stanford-Compiler-PA5%E7%BF%BB%E8%AF%91/" title="Stanford Compiler PA5翻译"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Stanford Compiler PA5翻译"/></a><div class="content"><a class="title" href="/2021/06/05/2021-6-5-Stanford-Compiler-PA5%E7%BF%BB%E8%AF%91/" title="Stanford Compiler PA5翻译">Stanford Compiler PA5翻译</a><time datetime="2021-06-05T06:12:00.000Z" title="发表于 2021-06-05 14:12:00">2021-06-05</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/06/04/2021-6-4-Stanford-Compiler-PA4%E7%BF%BB%E8%AF%91/" title="Stanford Compiler PA4翻译"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Stanford Compiler PA4翻译"/></a><div class="content"><a class="title" href="/2021/06/04/2021-6-4-Stanford-Compiler-PA4%E7%BF%BB%E8%AF%91/" title="Stanford Compiler PA4翻译">Stanford Compiler PA4翻译</a><time datetime="2021-06-03T16:17:00.000Z" title="发表于 2021-06-04 00:17:00">2021-06-04</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/06/03/2021-6-3-%E5%B7%A7%E5%A6%99%E7%9A%84Y%E8%BF%90%E7%AE%97%E7%AC%A6/" title="巧妙的Y运算符"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="巧妙的Y运算符"/></a><div class="content"><a class="title" href="/2021/06/03/2021-6-3-%E5%B7%A7%E5%A6%99%E7%9A%84Y%E8%BF%90%E7%AE%97%E7%AC%A6/" title="巧妙的Y运算符">巧妙的Y运算符</a><time datetime="2021-06-03T00:54:00.000Z" title="发表于 2021-06-03 08:54:00">2021-06-03</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2021 By Doraemonzzz</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><div class="js-pjax"><script>if (!window.MathJax) {
+  window.MathJax = {
+    loader: {
+      source: {
+        '[tex]/amsCd': '[tex]/amscd'
+      }
+    },
+    tex: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]],
+      tags: 'ams'
+    },
+    options: {
+      renderActions: {
+        findScript: [10, doc => {
+          for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+            const display = !!node.type.match(/; *mode=display/)
+            const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+            const text = document.createTextNode('')
+            node.parentNode.replaceChild(text, node)
+            math.start = {node: text, delim: '', n: 0}
+            math.end = {node: text, delim: '', n: 0}
+            doc.math.push(math)
+          }
+        }, ''],
+        addClass: [200,() => {
+          document.querySelectorAll('mjx-container:not([display=\'true\']').forEach( node => {
+            const target = node.parentNode
+            if (!target.classList.contains('has-jax')) {
+              target.classList.add('mathjax-overflow')
+            }
+          })
+        }, '', false]
+      }
+    }
+  }
+  
+  const script = document.createElement('script')
+  script.src = 'https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js'
+  script.id = 'MathJax-script'
+  script.async = true
+  document.head.appendChild(script)
+} else {
+  MathJax.startup.document.state(0)
+  MathJax.texReset()
+  MathJax.typeset()
+}</script></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

@@ -1,0 +1,704 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>CMU 15-213 Intro to Computer Systems Lecture 3 | Doraemonzzz</title><meta name="keywords" content="CMU 15-213"><meta name="author" content="Doraemonzzz"><meta name="copyright" content="Doraemonzzz"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="课程主页：http:&#x2F;&#x2F;www.cs.cmu.edu&#x2F;afs&#x2F;cs&#x2F;academic&#x2F;class&#x2F;15213-f15&#x2F;www&#x2F;schedule.html 课程资料：https:&#x2F;&#x2F;github.com&#x2F;EugeneLiu&#x2F;translationCSAPP 课程视频：https:&#x2F;&#x2F;www.bilibili.com&#x2F;video&#x2F;av31289365&#x2F; 这一讲的主题是整型数的其他操作以及指针的内容。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="CMU 15-213 Intro to Computer Systems Lecture 3">
+<meta property="og:url" content="http://doraemonzzz.com/2020/05/07/CMU%2015-213%20Intro%20to%20Computer%20Systems%20Lecture%203/index.html">
+<meta property="og:site_name" content="Doraemonzzz">
+<meta property="og:description" content="课程主页：http:&#x2F;&#x2F;www.cs.cmu.edu&#x2F;afs&#x2F;cs&#x2F;academic&#x2F;class&#x2F;15213-f15&#x2F;www&#x2F;schedule.html 课程资料：https:&#x2F;&#x2F;github.com&#x2F;EugeneLiu&#x2F;translationCSAPP 课程视频：https:&#x2F;&#x2F;www.bilibili.com&#x2F;video&#x2F;av31289365&#x2F; 这一讲的主题是整型数的其他操作以及指针的内容。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg">
+<meta property="article:published_time" content="2020-05-07T13:36:00.000Z">
+<meta property="article:modified_time" content="2020-08-01T09:45:46.429Z">
+<meta property="article:author" content="Doraemonzzz">
+<meta property="article:tag" content="CMU 15-213">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="http://doraemonzzz.com/2020/05/07/CMU%2015-213%20Intro%20to%20Computer%20Systems%20Lecture%203/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"prismjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    jQuery: 'https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js',
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+    },
+    fancybox: {
+      js: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isanchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'CMU 15-213 Intro to Computer Systems Lecture 3',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2020-08-01 17:45:46'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    })(window)</script><meta name="generator" content="Hexo 5.4.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="author-avatar"><img class="avatar-img" src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">文章</div><div class="length-num">610</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">标签</div><div class="length-num">59</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/categories/"><div class="headline">分类</div><div class="length-num">23</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">Doraemonzzz</a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">CMU 15-213 Intro to Computer Systems Lecture 3</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2020-05-07T13:36:00.000Z" title="发表于 2020-05-07 21:36:00">2020-05-07</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2020-08-01T09:45:46.429Z" title="更新于 2020-08-01 17:45:46">2020-08-01</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%8E%9F%E7%90%86/">计算机原理</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="CMU 15-213 Intro to Computer Systems Lecture 3"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p>课程主页：<a target="_blank" rel="noopener" href="http://www.cs.cmu.edu/afs/cs/academic/class/15213-f15/www/schedule.html">http://www.cs.cmu.edu/afs/cs/academic/class/15213-f15/www/schedule.html</a></p>
+<p>课程资料：<a target="_blank" rel="noopener" href="https://github.com/EugeneLiu/translationCSAPP">https://github.com/EugeneLiu/translationCSAPP</a></p>
+<p>课程视频：<a target="_blank" rel="noopener" href="https://www.bilibili.com/video/av31289365/">https://www.bilibili.com/video/av31289365/</a></p>
+<p>这一讲的主题是整型数的其他操作以及指针的内容。</p>
+<span id="more"></span>
+<h3 id="整型"><a href="#整型" class="headerlink" title="整型"></a>整型</h3><h4 id="加法"><a href="#加法" class="headerlink" title="加法"></a>加法</h4><h5 id="无符号加法"><a href="#无符号加法" class="headerlink" title="无符号加法"></a>无符号加法</h5><p><img src="https://github.com/Doraemonzzz/md-photo/blob/master/CMU%2015-213%20Intro%20to%20Computer%20Systems/Lecture3/2020050501.jpg?raw=true" alt=""></p>
+<ul>
+<li><p>无符号加法的方式为按正常加法运算，然后不考虑溢出位</p>
+</li>
+<li><p>最终的结果为取模运算</p>
+<script type="math/tex; mode=display">
+s=\text {UAdd}_{w}(u, v)=u+v \bmod 2^{w}
+=\left\{\begin{array}{ll}
+u+v, & u+v<2^{w} \\
+u+v-2^{w}, & 2^{w} \leqslant u+v<2^{w+1}
+\end{array}\right.</script></li>
+</ul>
+<h5 id="可视化（数学）整数加法"><a href="#可视化（数学）整数加法" class="headerlink" title="可视化（数学）整数加法"></a>可视化（数学）整数加法</h5><p><img src="https://github.com/Doraemonzzz/md-photo/blob/master/CMU%2015-213%20Intro%20to%20Computer%20Systems/Lecture3/2020050502.jpg?raw=true" alt=""></p>
+<ul>
+<li>整数加法<ul>
+<li>输入为$4$比特的整数$u,v$</li>
+<li>计算真实结果$\operatorname{Add}_{4}(u, v)$</li>
+<li>结果和$u,v$呈线性关系</li>
+<li>形成平面</li>
+</ul>
+</li>
+</ul>
+<h5 id="可视化无符号加法"><a href="#可视化无符号加法" class="headerlink" title="可视化无符号加法"></a>可视化无符号加法</h5><p><img src="https://github.com/Doraemonzzz/md-photo/blob/master/CMU%2015-213%20Intro%20to%20Computer%20Systems/Lecture3/2020050503.jpg?raw=true" alt=""></p>
+<p><img src="https://github.com/Doraemonzzz/md-photo/blob/master/CMU%2015-213%20Intro%20to%20Computer%20Systems/Lecture3/2020050504.jpg?raw=true" alt=""></p>
+<h5 id="检查无符号加法的溢出"><a href="#检查无符号加法的溢出" class="headerlink" title="检查无符号加法的溢出"></a>检查无符号加法的溢出</h5><p>假设$u,v$为无符号整数，$s=u+v$，那么当且仅当$s&lt;u$（或等价的$s&lt;v$）时产生溢出，这是因为</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+s&=u+v-2^{w} < u\\
+s&=u+v-2^{w} < v
+\end{aligned}</script><h5 id="补码加法"><a href="#补码加法" class="headerlink" title="补码加法"></a>补码加法</h5><p><img src="https://github.com/Doraemonzzz/md-photo/blob/master/CMU%2015-213%20Intro%20to%20Computer%20Systems/Lecture3/2020050505.jpg?raw=true" alt=""></p>
+<ul>
+<li><p>TAdd和UAdd比特级别行为相同，具体如下</p>
+<ul>
+<li><p>```c<br>int s, t, u, v;<br>s = (int) ((unsigned) u + (unsigned) v);<br>t = u + v</p>
+<pre class="line-numbers language-none"><code class="language-none">
+  - 最后的结果是s&#x3D;&#x3D;t
+
+计算公式如下
+$$
+\text &#123;TAdd&#125;_&#123;w&#125;(u, v)&#x3D;\text&#123;U2T&#125;_w\left(\text&#123;UAdd&#125;_&#123;w&#125;(\text&#123;T2U&#125;_w(u), \text&#123;T2U&#125;_w(v))\right)
+$$
+
+
+
+##### TAdd溢出
+
+- 真实的加法需要$w+1$比特
+- 处理方法为不考虑最高位
+- 将其余的比特视为补码
+
+![](https:&#x2F;&#x2F;github.com&#x2F;Doraemonzzz&#x2F;md-photo&#x2F;blob&#x2F;master&#x2F;CMU%2015-213%20Intro%20to%20Computer%20Systems&#x2F;Lecture3&#x2F;2020050506.jpg?raw&#x3D;true)
+
+
+
+##### 可视化补码加法
+
+对补码加法进行可视化
+
+![](https:&#x2F;&#x2F;github.com&#x2F;Doraemonzzz&#x2F;md-photo&#x2F;blob&#x2F;master&#x2F;CMU%2015-213%20Intro%20to%20Computer%20Systems&#x2F;Lecture3&#x2F;2020050507.jpg?raw&#x3D;true)
+
+- 值
+  - 4比特的补码
+  - 范围从$-8$到$7$
+- 截断方法
+  - 如果和$\ge 2^&#123;w-1&#125;$
+    - 变成负数
+  - 如果和$&lt;-2^&#123;w-1&#125;$
+    - 变成正数
+
+公式如下
+$$
+x+ y&#x3D;\left\&#123;\begin&#123;array&#125;&#123;ll&#125;
+x+y-2^&#123;w&#125;, &amp; 2^&#123;w-1&#125; \leqslant x+y \\
+x+y, &amp; -2^&#123;w-1&#125; \leqslant x+y&lt;2^&#123;w-1&#125; \\
+x+y+2^&#123;w&#125;, &amp; x+y&lt;-2^&#123;u-1&#125;
+\end&#123;array&#125;\right.
+$$
+
+如果画图表示则为：
+
+![](https:&#x2F;&#x2F;github.com&#x2F;Doraemonzzz&#x2F;md-photo&#x2F;blob&#x2F;master&#x2F;CMU%2015-213%20Intro%20to%20Computer%20Systems&#x2F;Lecture3&#x2F;2020050817.jpg?raw&#x3D;true)
+
+
+
+##### 检查补码加法的溢出
+
+利用上述公式可得如下结论：对于满足$\operatorname&#123;TMin&#125;_&#123;w&#125; \leqslant x,  y \leqslant \text&#123;TMax&#125;_&#123;w&#125;$的$x,y$，记$s&#x3D;x+y$。如果$x&gt;0,y&gt;0$且$s&lt;0$，则发生了正溢出；如果$x&lt;0,y&lt;0$且$s\ge0$，发生了负溢出。
+
+
+
+#### 求反
+
+##### 方法1
+
+- 假设输入为$x$，我们希望得到$-x$
+- 方式为对比特向量取反然后加$1$
+
+证明如下：
+$$
+B 2 T_w(X)&#x3D;-x_&#123;w-1&#125; \cdot 2^&#123;w-1&#125;+\sum_&#123;i&#x3D;0&#125;^&#123;w-2&#125; x_&#123;i&#125; \cdot 2^&#123;i&#125;
+$$
+取反
+$$
+\begin&#123;aligned&#125;
+-(1-x_&#123;w-1&#125;) \cdot 2^&#123;w-1&#125;+\sum_&#123;i&#x3D;0&#125;^&#123;w-2&#125; (1-x_&#123;i&#125;) \cdot 2^&#123;i&#125;
+&amp;&#x3D; -2^&#123;w-1&#125; + \sum_&#123;i&#x3D;0&#125;^&#123;w-2&#125; 2^&#123;i&#125; +x_&#123;w-1&#125; \cdot 2^&#123;w-1&#125;-\sum_&#123;i&#x3D;0&#125;^&#123;w-2&#125; x_&#123;i&#125; \cdot 2^&#123;i&#125;\\
+&amp;&#x3D;-1+x_&#123;w-1&#125; \cdot 2^&#123;w-1&#125;-\sum_&#123;i&#x3D;0&#125;^&#123;w-2&#125; x_&#123;i&#125; \cdot 2^&#123;i&#125;
+\end&#123;aligned&#125;
+$$
+加$1$得到
+$$
+x_&#123;w-1&#125; \cdot 2^&#123;w-1&#125;-\sum_&#123;i&#x3D;0&#125;^&#123;w-2&#125; x_&#123;i&#125; \cdot 2^&#123;i&#125; &#x3D;-B2T_w(X)
+$$
+
+不难看出我们有
+$$
+-\text&#123;TMin&#125;&#x3D;\text&#123;TMin&#125;
+$$
+
+
+
+##### 方法2
+
+还有另一种求$-x$的方式，假设
+$$
+x&#x3D;\left[x_&#123;w-1&#125;,\cdots,x_0\right]
+$$
+令$k$是$x$最右边的$1$的位置，即
+$$
+x&#x3D;\left[x_&#123;w-1&#125;, x_&#123;w-2&#125;, \cdots, x_&#123;k+1&#125;, 1,0, \cdots, 0\right]
+$$
+那么
+$$
+-x&#x3D;\left[1-x_&#123;w-1&#125;,1- x_&#123;w-2&#125;, \cdots, 1-x_&#123;k+1&#125;, 1,0, \cdots, 0\right]
+$$
+证明：
+
+首先
+$$
+\begin&#123;aligned&#125;
+B 2 T_w(X)&amp;&#x3D;-x_&#123;w-1&#125; \cdot 2^&#123;w-1&#125;+\sum_&#123;i&#x3D;k+1&#125;^&#123;w-2&#125; x_&#123;i&#125; \cdot 2^&#123;i&#125; +2^&#123;k&#125;\\
+\end&#123;aligned&#125;
+$$
+其次
+$$
+\begin&#123;aligned&#125;
+&amp;-(1-x_&#123;w-1&#125;) \cdot 2^&#123;w-1&#125;+\sum_&#123;i&#x3D;k+1&#125;^&#123;w-2&#125; (1-x_&#123;i&#125;) \cdot 2^&#123;i&#125; +2^&#123;k&#125;\\
+&#x3D;&amp;-2^&#123;w-1&#125; + 2^&#123;k+1&#125;(2^&#123;w-k-2&#125; -1) +x_&#123;w-1&#125; \cdot 2^&#123;w-1&#125;-\sum_&#123;i&#x3D;k+1&#125;^&#123;w-2&#125; x_&#123;i&#125; \cdot 2^&#123;i&#125; + 2^&#123;k&#125;\\
+&#x3D;&amp;x_&#123;w-1&#125; \cdot 2^&#123;w-1&#125;-\sum_&#123;i&#x3D;k+1&#125;^&#123;w-2&#125; x_&#123;i&#125; \cdot 2^&#123;i&#125; -2^k\\
+&#x3D;&amp;-B 2 T_w(X)
+\end&#123;aligned&#125;
+$$
+
+
+
+#### 乘法
+
+- 目标：计算$ w $位数字$ x，y $的乘积
+  
+  - 对于有符号或者无符号整型
+  
+- 但是，确切的结果可能大于$ w $位
+  
+    - 无符号：最多$ 2 w $位
+    
+        -  结果范围：
+            $$
+            0 \leq x&#123;*&#125; y \leq\left(2^&#123;w&#125;-1\right)^&#123;2&#125;&#x3D;2^&#123;2 w&#125;-2^&#123;w+1&#125;+1
+            $$
+    
+    - 二进制补码最小值（负数）：最多$ 2 w-1 $
+      
+        -  结果范围：
+            $$
+            x&#123;*&#125; y \geq\left(-2^&#123;w-1&#125;\right)&#123;*&#125;\left(2^&#123;w-1&#125;-1\right)&#x3D;-2^&#123;2 w-2&#125;+2^&#123;w-1&#125;
+            $$
+        
+    - 二进制补码最大值（正）：最多$ 2 w $位，为$\left(\text&#123;TMin&#125;_&#123;w&#125;\right)^&#123;2&#125;$
+    
+        - 结果范围：
+            $$
+            xy \leq\left(-2^&#123;w-1&#125;\right)^&#123;2&#125;&#x3D;2^&#123;2 w-2&#125;
+            $$
+
+- 所以，如果要保持准确结果
+  
+    - 计算每种乘法时都需要增加比特位
+    - 在软件中完成（如果需要）
+
+
+
+##### C中无符号乘法
+
+![](https:&#x2F;&#x2F;github.com&#x2F;Doraemonzzz&#x2F;md-photo&#x2F;blob&#x2F;master&#x2F;CMU%2015-213%20Intro%20to%20Computer%20Systems&#x2F;Lecture3&#x2F;2020050508.jpg?raw&#x3D;true)
+
+- 标准乘法
+
+  - 忽略高于$w$比特的部分
+
+- 最终的结果为取模运算
+  $$
+  \text &#123; UMult&#125;_&#123;w&#125;(u, v)&#x3D;u \cdot v \bmod 2^&#123;w&#125;
+  $$
+  
+
+
+
+##### C中有符号乘法
+
+![](https:&#x2F;&#x2F;github.com&#x2F;Doraemonzzz&#x2F;md-photo&#x2F;blob&#x2F;master&#x2F;CMU%2015-213%20Intro%20to%20Computer%20Systems&#x2F;Lecture3&#x2F;2020050509.jpg?raw&#x3D;true)
+
+- 标准乘法
+  - 忽略高于$w$比特的部分
+  - 有符号和无符号部分有些不同
+  - 低位部分相同
+
+计算公式为
+$$
+\text&#123;TMult&#125;_w(u,v)&#x3D;U2T_w((u.v) \mod  2^w)
+$$
+其中$u.v$表示数学乘法。
+
+
+
+##### 使用移位操作代替乘以2的幂
+
+- 操作
+
+  - $u&lt;&lt;k$给出$u\times 2^k$（有符号乘法和无符号乘法均成立）
+  - ![](https:&#x2F;&#x2F;github.com&#x2F;Doraemonzzz&#x2F;md-photo&#x2F;blob&#x2F;master&#x2F;CMU%2015-213%20Intro%20to%20Computer%20Systems&#x2F;Lecture3&#x2F;2020050510.jpg?raw&#x3D;true)
+
+- 例子
+
+  - &#96;&#96;&#96;c
+    u &lt;&lt; 3 &#x3D;&#x3D; u * 8<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+</li>
+<li><p>```c<br>(u &lt;&lt; 5) – (u &lt;&lt; 3) == u * 24</p>
+<pre class="line-numbers language-none"><code class="language-none">
+  - 大多数机器中左移比乘法快
+
+    - 编译器会自动生成这样的代码
+
+方法的证明：
+
+假设$x$的$w$位二进制表示为$\left[
+x_&#123;w-1&#125;  ,  x_&#123;w-2&#125;  \cdots  x_&#123;0&#125;
+\right]$，那么$\left[x_&#123;w-1&#125;, x_&#123;w-2&#125;, \cdots, x_&#123;0&#125;, 0, \cdots, 0\right]$给出了$x2^k$的$w+k$位二进制表示：
+$$
+\begin&#123;aligned&#125;
+B 2 U_&#123;w+k&#125;\left(\left[x_&#123;w-1&#125;, x_&#123;w-2&#125;, \cdots, x_&#123;0&#125;, 0, \cdots, 0\right]\right) &amp;&#x3D;\sum_&#123;i&#x3D;0&#125;^&#123;w-1&#125; x_&#123;i&#125; 2^&#123;i+k&#125; \\
+&amp;&#x3D;\left[\sum_&#123;i&#x3D;0&#125;^&#123;w-1&#125; x_&#123;i&#125; 2^&#123;i&#125;\right] \cdot 2^&#123;k&#125; \\
+&amp;&#x3D;x 2^&#123;k&#125;
+\end&#123;aligned&#125;
+$$
+对于固定长度的表示，高$k$位被丢弃，左移$k$位的二进制表示为
+$$
+\left[x_&#123;w-k-1&#125;, x_&#123;w-k-2&#125;, \cdots, x_&#123;0&#125;, 0, \cdots, 0\right]
+$$
+所以
+$$
+\begin&#123;aligned&#125;
+B 2 U_&#123;w&#125;\left(\left[x_&#123;w-k-1&#125;, x_&#123;w-k-2&#125;, \cdots, x_&#123;0&#125;, 0, \cdots, 0\right]\right) 
+&amp;&#x3D;\sum_&#123;i&#x3D;0&#125;^&#123;w-k-1&#125; x_&#123;i&#125; 2^&#123;i+k&#125; \\
+&amp;&#x3D;\left[\sum_&#123;i&#x3D;0&#125;^&#123;w-k-1&#125; x_&#123;i&#125; 2^&#123;i&#125;\right] \cdot 2^&#123;k&#125; \\
+&amp;&#x3D;\left[\sum_&#123;i&#x3D;0&#125;^&#123;w-1&#125; x_&#123;i&#125; 2^&#123;i&#125;\right] \cdot 2^&#123;k&#125; \mod 2^w \\
+&amp;&#x3D;x2^k \mod 2^w
+\end&#123;aligned&#125;
+$$
+所以对于无符号整数
+$$
+B 2 U_&#123;w&#125;\left(\left[x_&#123;w-k-1&#125;, x_&#123;w-k-2&#125;, \cdots, x_&#123;0&#125;, 0, \cdots, 0\right]\right)  &#x3D; \text&#123;UMult&#125;_w(x,2^k)
+$$
+对于有符号整数，利用
+$$
+\text&#123;TMult&#125;_w(u,v)&#x3D;U2T_w((u.v) \mod  2^w)
+$$
+可以得到相同的结果。
+
+
+
+##### 一般情形
+
+现在考虑一般的情形，假设我们需要计算$u\times K$，其中$K$为常数，将$K$表达为一组$0$和$1$交替的序列
+$$
+[(0 \cdots 0)(1 \cdots 1)(0 \cdots 0) \cdots(1 \cdots 1)]
+$$
+考虑一组从位置$n$到位置$m$的连续$1$，那么可以用如下方式计算这部分的对于乘积的影响：
+$$
+\begin&#123;aligned&#125;
+&amp;(x&lt;&lt;n)+(x&lt;&lt;(n-1))+\cdots+(x&lt;&lt;m)\\
+&amp;(x&lt;&lt;(n+1))-(x&lt;&lt;m)
+\end&#123;aligned&#125;
+$$
+
+
+
+##### 使用移位操作代替除以2的幂（无符号）
+
+- $u&gt;&gt;k$给出$\left\lfloor\text &#123; u &#125; &#x2F; 2^&#123;k&#125;\right\rfloor$
+- 使用逻辑移位
+
+![](https:&#x2F;&#x2F;github.com&#x2F;Doraemonzzz&#x2F;md-photo&#x2F;blob&#x2F;master&#x2F;CMU%2015-213%20Intro%20to%20Computer%20Systems&#x2F;Lecture3&#x2F;2020050511.jpg?raw&#x3D;true)
+
+证明：
+
+假设$x$的$w$位二进制表示为$\left[
+x_&#123;w-1&#125;  ,  x_&#123;w-2&#125;  \cdots  x_&#123;0&#125;
+\right]$，右移$k$位的二进制表示为$\left[
+0, \cdots ,0 ,x_&#123;w-1&#125;  ,  x_&#123;w-2&#125;  \cdots  x_&#123;w-k&#125;
+\right]$
+$$
+\begin&#123;aligned&#125;
+B2U_w(\left[
+0, \cdots ,0 ,x_&#123;w-1&#125;  ,  x_&#123;w-2&#125; , \cdots  ,x_&#123;k&#125;
+\right])&amp;&#x3D; \sum_&#123;i&#x3D;0&#125;^&#123;w-k-1&#125; x_&#123;i+k&#125; 2^&#123;i&#125; \\
+B 2 U_&#123;w&#125;\left(\left[x_&#123;w-1&#125;, x_&#123;w-2&#125;, \cdots, x_&#123;0&#125;\right]\right) 
+&amp;&#x3D;\sum_&#123;i&#x3D;0&#125;^&#123;w-1&#125; x_&#123;i&#125; 2^&#123;i&#125; \\
+&amp;&#x3D;2^k\sum_&#123;i&#x3D;0&#125;^&#123;w-k-1&#125; x_&#123;i+k&#125; 2^&#123;i&#125;  +   \sum_&#123;i&#x3D;0&#125;^&#123;k-1&#125; x_&#123;i&#125; 2^&#123;i&#125;\\
+&amp;&#x3D; 2^k B2U_w(\left[
+0, \cdots ,0 ,x_&#123;w-1&#125;  ,  x_&#123;w-2&#125; , \cdots  ,x_&#123;k&#125;
+\right]) + \sum_&#123;i&#x3D;0&#125;^&#123;k-1&#125; x_&#123;i&#125; 2^&#123;i&#125;
+\end&#123;aligned&#125;
+$$
+所以
+$$
+\left\lfloor x &#x2F; 2^&#123;k&#125;\right\rfloor &#x3D; x &gt;&gt;k
+$$
+
+
+
+##### 使用移位操作代替除以2的幂（有符号）
+
+- $u&gt;&gt;k$给出$\left\lfloor\text &#123; u &#125; &#x2F; 2^&#123;k&#125;\right\rfloor$
+- 使用算数移位
+
+当$u&gt;0$时上述方法和无符号情形一致，但是当$u&lt;0$时则会产生有问题的结果，例如取$u&#x3D;-12340$：
+
+![](https:&#x2F;&#x2F;github.com&#x2F;Doraemonzzz&#x2F;md-photo&#x2F;blob&#x2F;master&#x2F;CMU%2015-213%20Intro%20to%20Computer%20Systems&#x2F;Lecture3&#x2F;2020050512.jpg?raw&#x3D;true)
+
+考虑$k&#x3D;4,8$时的结果，在C语言中实际结果为$-771$和$-48$，之所以和C语言中的结果不同，是因为上述算法朝着离$0$更远的方向舍入，所以当$u&lt;0$时要向上舍入，达到上述效果利用如下事实即可
+$$
+\lceil x &#x2F; y\rceil&#x3D;\lfloor(x+y-1) &#x2F; y\rfloor
+$$
+在此问题下使用如下方式即可，注意这里$y&#x3D;2^k$
+
+- $(u+(1&lt;&lt;k)-1)&gt;&gt;k$
+
+C代码如下
+
+&#96;&#96;&#96;c
+(x&lt;0 ? x+(1&lt;&lt;k)-1 : x) &gt;&gt; k<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+</li>
+</ul>
+</li>
+</ul>
+<h4 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h4><ul>
+<li>加法：<ul>
+<li>无符号/有符号：正常加法，然后截断，在位级别上相同的操作</li>
+<li>无符号：加法$\bmod 2^{w}$<ul>
+<li>数学加法+可能减去$2^{w}$</li>
+</ul>
+</li>
+<li>有符号：修改的加法$\bmod 2^{w}$（在适当范围内）<ul>
+<li>数学加法和可能减去或加上$2^{w}$</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>乘法：<ul>
+<li>无符号/有符号：普通乘法后截断，在位级别上进行相同的操作</li>
+<li>无符号：乘法$\bmod 2^{w}$</li>
+<li>有符号：修改后的乘法$\bmod 2^{w}$（在适当范围内）</li>
+</ul>
+</li>
+</ul>
+<h5 id="一些例子"><a href="#一些例子" class="headerlink" title="一些例子"></a>一些例子</h5><h6 id="例1"><a href="#例1" class="headerlink" title="例1"></a>例1</h6><pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">unsigned</span> i<span class="token punctuation">;</span>
+<span class="token keyword">for</span> <span class="token punctuation">(</span>i <span class="token operator">=</span> cnt<span class="token operator">-</span><span class="token number">2</span><span class="token punctuation">;</span> i <span class="token operator">>=</span> <span class="token number">0</span><span class="token punctuation">;</span> i<span class="token operator">--</span><span class="token punctuation">)</span>
+	a<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">+=</span> a<span class="token punctuation">[</span>i<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+<p>上述代码会死循环，因为无符号整数永远$\ge 0$，$0-1 \rightarrow \text{UMax}$，正确方式如下</p>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">unsigned</span> i<span class="token punctuation">;</span>
+<span class="token keyword">for</span> <span class="token punctuation">(</span>i <span class="token operator">=</span> cnt<span class="token operator">-</span><span class="token number">2</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> cnt<span class="token punctuation">;</span> i<span class="token operator">--</span><span class="token punctuation">)</span>
+	a<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">+=</span> a<span class="token punctuation">[</span>i<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+<h6 id="例2"><a href="#例2" class="headerlink" title="例2"></a>例2</h6><pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">define</span> <span class="token macro-name">DELTA</span> <span class="token expression"><span class="token keyword">sizeof</span><span class="token punctuation">(</span><span class="token keyword">int</span><span class="token punctuation">)</span></span></span>
+<span class="token keyword">int</span> i<span class="token punctuation">;</span>
+<span class="token keyword">for</span> <span class="token punctuation">(</span>i <span class="token operator">=</span> CNT<span class="token punctuation">;</span> i<span class="token operator">-</span>DELTA <span class="token operator">>=</span> <span class="token number">0</span><span class="token punctuation">;</span> i<span class="token operator">-=</span> DELTA<span class="token punctuation">)</span>
+<span class="token punctuation">.</span> <span class="token punctuation">.</span> <span class="token punctuation">.</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+<p>上述代码也会死循环，因为DELTA是无符号整数，赋值时会被强制转换成无符号整数。</p>
+<p>正确方式如下：</p>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token class-name">size_t</span> i<span class="token punctuation">;</span>
+<span class="token keyword">for</span> <span class="token punctuation">(</span>i <span class="token operator">=</span> cnt<span class="token operator">-</span><span class="token number">2</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> cnt<span class="token punctuation">;</span> i<span class="token operator">--</span><span class="token punctuation">)</span>
+	a<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">+=</span> a<span class="token punctuation">[</span>i<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+<h5 id="何时使用无符号整数"><a href="#何时使用无符号整数" class="headerlink" title="何时使用无符号整数"></a>何时使用无符号整数</h5><ul>
+<li>在执行模块化算术时使用<ul>
+<li>多精度算术</li>
+</ul>
+</li>
+<li>在使用位表示集时使用<ul>
+<li>逻辑右移，无符号扩展</li>
+</ul>
+</li>
+</ul>
+<h3 id="内存中的表示形式，指针，字符串"><a href="#内存中的表示形式，指针，字符串" class="headerlink" title="内存中的表示形式，指针，字符串"></a>内存中的表示形式，指针，字符串</h3><h4 id="面向字节的内存组织"><a href="#面向字节的内存组织" class="headerlink" title="面向字节的内存组织"></a>面向字节的内存组织</h4><p><img src="https://github.com/Doraemonzzz/md-photo/blob/master/CMU%2015-213%20Intro%20to%20Computer%20Systems/Lecture3/2020050813.jpg?raw=true" alt=""></p>
+<ul>
+<li>程序根据地址引用数据<ul>
+<li>从概念上讲，可以将其设想为非常大的字节数组<ul>
+<li>实际上不是，但是可以这样想</li>
+</ul>
+</li>
+<li>地址就像是该数组的索引<ul>
+<li>并且指针变量存储一个地址</li>
+</ul>
+</li>
+<li>注意：系统为每个“进程”提供专用地址空间</li>
+<li>将进程视为正在执行的程序</li>
+<li>因此，程序可以破坏自己的数据，但不能破坏其他数据</li>
+</ul>
+</li>
+</ul>
+<h4 id="Machine-Words"><a href="#Machine-Words" class="headerlink" title="Machine Words"></a>Machine Words</h4><ul>
+<li>任何给定的计算机都具有“字长”<ul>
+<li>整型数据（地址）的标称大小</li>
+<li>直到最近，大多数机器都使用32位（4字节）作为字长<ul>
+<li>地址限制为4GB($2^{32}$比特)</li>
+</ul>
+</li>
+<li>越来越多的机器具有64位字长<ul>
+<li>可能有$18.4\times 10^{18}$个地址</li>
+</ul>
+</li>
+<li>机器仍支持多种数据格式<ul>
+<li>字长的分数或整数倍</li>
+<li>但总是整数比特</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>来看一个具体例子：</p>
+<p><img src="https://github.com/Doraemonzzz/md-photo/blob/master/CMU%2015-213%20Intro%20to%20Computer%20Systems/Lecture3/2020050814.jpg?raw=true" alt=""></p>
+<h4 id="比特顺序"><a href="#比特顺序" class="headerlink" title="比特顺序"></a>比特顺序</h4><p>比特顺序分为大端法和小端法，考虑变量$x$，其值为$0\text{x} 01234567$，地址为$0\text{x}100$，大端法和小端法的表示区别为：</p>
+<p><img src="https://github.com/Doraemonzzz/md-photo/blob/master/CMU%2015-213%20Intro%20to%20Computer%20Systems/Lecture3/2020050815.jpg?raw=true" alt=""></p>
+<p><img src="https://github.com/Doraemonzzz/md-photo/blob/master/CMU%2015-213%20Intro%20to%20Computer%20Systems/Lecture3/2020050816.jpg?raw=true" alt=""></p>
+<h4 id="表示字符串"><a href="#表示字符串" class="headerlink" title="表示字符串"></a>表示字符串</h4><ul>
+<li>C中字符串<ul>
+<li>用字符数组表示</li>
+<li>每个字符均以ASClI码表示<ul>
+<li>ASClI码是字符集的标准7位编码</li>
+<li>字符“0”的代码为0x30<ul>
+<li>数字$ i $的代码为0x30+i</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>字符串应以空值结尾<ul>
+<li>最终字符= 0</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>兼容性<ul>
+<li>比特顺序不是问题</li>
+</ul>
+</li>
+</ul>
+<h3 id="习题"><a href="#习题" class="headerlink" title="习题"></a>习题</h3><p>初始化</p>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">int</span> x <span class="token operator">=</span> <span class="token function">foo</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">int</span> y <span class="token operator">=</span> <span class="token function">bar</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">unsigned</span> ux <span class="token operator">=</span> x<span class="token punctuation">;</span>
+<span class="token keyword">unsigned</span> uy <span class="token operator">=</span> y<span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+<p>这里假设int用32字节表示。</p>
+<p>1.</p>
+<script type="math/tex; mode=display">
+\mathbf{x}<0 \quad \Rightarrow \quad\left(\left(\mathbf{x} {\star} \mathbf{2}\right)<0\right)</script><p>错误，反例如下</p>
+<script type="math/tex; mode=display">
+\mathbf x=[1,0,\dots,0],\mathbf x\star 2 = [0,0,\dots,0]</script><p>2.</p>
+<script type="math/tex; mode=display">
+\mathbf{ux}>=0</script><p>正确，因为$\mathbf{ux}$是无符号整数。</p>
+<p>3.</p>
+<script type="math/tex; mode=display">
+\mathbf x \& 7==7 \quad \Rightarrow \quad(\mathbf x<<30)<0</script><p>正确，因为$\mathbf x \&amp; 7$表示$\mathbf  x$的最后三位为$1$，所以左移30位后第一位仍然为$1$</p>
+<p>4.</p>
+<script type="math/tex; mode=display">
+\mathbf{ux}>-1</script><p>错误，$-1$的二进制表示为全$1$，$\mathbf {ux}$将其转换为无符号整数，即$\text{UMax}$。</p>
+<p>5.</p>
+<script type="math/tex; mode=display">
+\mathbf{x}>\mathbf{y} \quad \Rightarrow \quad-\mathbf{x}<-\mathbf{y}</script><p>错误，取$\mathbf y = \text{TMin}$，利用$-\mathbf y=\text{TMin}$</p>
+<p>6.</p>
+<script type="math/tex; mode=display">
+\mathbf x \star \mathbf  x>=0</script><p>错误，取较大$\mathbf x$就会产生错误。</p>
+<p>7.</p>
+<script type="math/tex; mode=display">
+\mathbf x>0 \& \& \mathbf y>0 \Rightarrow \mathbf x+\mathbf y>0</script><p>错误，正溢出。</p>
+<p>8.</p>
+<script type="math/tex; mode=display">
+\mathbf x>=0 \quad \Rightarrow \quad-\mathbf x<=0</script><p>正确，因为每个正数对对应一个负数。</p>
+<p>9.</p>
+<script type="math/tex; mode=display">
+\mathbf x<=0 \quad \Rightarrow \quad-\mathbf x>=0</script><p>错误，取$\mathbf x =\text{TMin}$</p>
+<p>10.</p>
+<script type="math/tex; mode=display">
+(\mathbf x |-\mathbf x)>>31=-1</script><p>错误，例如取$\mathbf x =0$，那么得到的结果为$0$。注意取非零$\mathbf x$，上述结论均成立，因为$\mathbf x |-\mathbf x$第一位一定是$1$，右移$31$位后会得到全部为$1$的二进制数，即$-1$</p>
+<p>11.</p>
+<script type="math/tex; mode=display">
+\mathbf {ux}>>3=\mathbf {ux} / 8</script><p>正确。</p>
+<p>12.</p>
+<script type="math/tex; mode=display">
+\mathbf {x}>>3=\mathbf {x} / 8</script><p>不正确，例如$x$取负数的时候。</p>
+<p>13.</p>
+<script type="math/tex; mode=display">
+\mathbf x \&(\mathbf x-1) !=0</script><p>错误，取$\mathbf x = \text{TMin}=[1,0,\ldots, 0]$，那么$\mathbf x -1= [0,1,\ldots, 1]$，所以</p>
+<script type="math/tex; mode=display">
+\mathbf x \&(\mathbf x-1) =0</script></article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">Doraemonzzz</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="http://doraemonzzz.com/2020/05/07/CMU%2015-213%20Intro%20to%20Computer%20Systems%20Lecture%203/">http://doraemonzzz.com/2020/05/07/CMU%2015-213%20Intro%20to%20Computer%20Systems%20Lecture%203/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://doraemonzzz.com" target="_blank">Doraemonzzz</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/CMU-15-213/">CMU 15-213</a></div><div class="post_share"><div class="social-share" data-image="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2020/05/08/CS224N%20Natural%20Language%20Processing%20with%20Deep%20Learning%20Lecture%2013/"><img class="prev-cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">CS224N Natural Language Processing with Deep Learning Lecture 13</div></div></a></div><div class="next-post pull-right"><a href="/2020/05/07/Michael%20Collins%20NLP%20Homework%203/"><img class="next-cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">Michael Collins NLP Homework 3</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span> 相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2020/06/08/CMU 15-213 Intro to Computer Systems Lecture 10/" title="CMU 15-213 Intro to Computer Systems Lecture 10"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-06-08</div><div class="title">CMU 15-213 Intro to Computer Systems Lecture 10</div></div></a></div><div><a href="/2020/04/30/CMU 15-213 Intro to Computer Systems Lecture 1/" title="CMU 15-213 Intro to Computer Systems Lecture 1"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-04-30</div><div class="title">CMU 15-213 Intro to Computer Systems Lecture 1</div></div></a></div><div><a href="/2020/06/09/CMU 15-213 Intro to Computer Systems Lecture 11/" title="CMU 15-213 Intro to Computer Systems Lecture 11"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-06-09</div><div class="title">CMU 15-213 Intro to Computer Systems Lecture 11</div></div></a></div><div><a href="/2020/06/16/CMU 15-213 Intro to Computer Systems Lecture 13/" title="CMU 15-213 Intro to Computer Systems Lecture 13"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-06-16</div><div class="title">CMU 15-213 Intro to Computer Systems Lecture 13</div></div></a></div><div><a href="/2020/06/10/CMU 15-213 Intro to Computer Systems Lecture 12/" title="CMU 15-213 Intro to Computer Systems Lecture 12"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-06-10</div><div class="title">CMU 15-213 Intro to Computer Systems Lecture 12</div></div></a></div><div><a href="/2020/07/15/CMU 15-213 Intro to Computer Systems Lecture 17/" title="CMU 15-213 Intro to Computer Systems Lecture 17"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-07-15</div><div class="title">CMU 15-213 Intro to Computer Systems Lecture 17</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="card-info-avatar is-center"><img class="avatar-img" src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/><div class="author-info__name">Doraemonzzz</div><div class="author-info__description">个人博客，主要记录有关机器学习，数学以及计算机科学的笔记</div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">610</div></a></div><div class="card-info-data-item is-center"><a href="/tags/"><div class="headline">标签</div><div class="length-num">59</div></a></div><div class="card-info-data-item is-center"><a href="/categories/"><div class="headline">分类</div><div class="length-num">23</div></a></div></div><a class="button--animated" id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/Doraemonzzz" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="/doraemon_zzz@163.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn card-announcement-animation"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%95%B4%E5%9E%8B"><span class="toc-number">1.</span> <span class="toc-text">整型</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8A%A0%E6%B3%95"><span class="toc-number">1.1.</span> <span class="toc-text">加法</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%97%A0%E7%AC%A6%E5%8F%B7%E5%8A%A0%E6%B3%95"><span class="toc-number">1.1.1.</span> <span class="toc-text">无符号加法</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%8F%AF%E8%A7%86%E5%8C%96%EF%BC%88%E6%95%B0%E5%AD%A6%EF%BC%89%E6%95%B4%E6%95%B0%E5%8A%A0%E6%B3%95"><span class="toc-number">1.1.2.</span> <span class="toc-text">可视化（数学）整数加法</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%8F%AF%E8%A7%86%E5%8C%96%E6%97%A0%E7%AC%A6%E5%8F%B7%E5%8A%A0%E6%B3%95"><span class="toc-number">1.1.3.</span> <span class="toc-text">可视化无符号加法</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%A3%80%E6%9F%A5%E6%97%A0%E7%AC%A6%E5%8F%B7%E5%8A%A0%E6%B3%95%E7%9A%84%E6%BA%A2%E5%87%BA"><span class="toc-number">1.1.4.</span> <span class="toc-text">检查无符号加法的溢出</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E8%A1%A5%E7%A0%81%E5%8A%A0%E6%B3%95"><span class="toc-number">1.1.5.</span> <span class="toc-text">补码加法</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-number">1.2.</span> <span class="toc-text">总结</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E4%B8%80%E4%BA%9B%E4%BE%8B%E5%AD%90"><span class="toc-number">1.2.1.</span> <span class="toc-text">一些例子</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#%E4%BE%8B1"><span class="toc-number">1.2.1.1.</span> <span class="toc-text">例1</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#%E4%BE%8B2"><span class="toc-number">1.2.1.2.</span> <span class="toc-text">例2</span></a></li></ol></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E4%BD%95%E6%97%B6%E4%BD%BF%E7%94%A8%E6%97%A0%E7%AC%A6%E5%8F%B7%E6%95%B4%E6%95%B0"><span class="toc-number">1.2.2.</span> <span class="toc-text">何时使用无符号整数</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%86%85%E5%AD%98%E4%B8%AD%E7%9A%84%E8%A1%A8%E7%A4%BA%E5%BD%A2%E5%BC%8F%EF%BC%8C%E6%8C%87%E9%92%88%EF%BC%8C%E5%AD%97%E7%AC%A6%E4%B8%B2"><span class="toc-number">2.</span> <span class="toc-text">内存中的表示形式，指针，字符串</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%9D%A2%E5%90%91%E5%AD%97%E8%8A%82%E7%9A%84%E5%86%85%E5%AD%98%E7%BB%84%E7%BB%87"><span class="toc-number">2.1.</span> <span class="toc-text">面向字节的内存组织</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Machine-Words"><span class="toc-number">2.2.</span> <span class="toc-text">Machine Words</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%AF%94%E7%89%B9%E9%A1%BA%E5%BA%8F"><span class="toc-number">2.3.</span> <span class="toc-text">比特顺序</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%A1%A8%E7%A4%BA%E5%AD%97%E7%AC%A6%E4%B8%B2"><span class="toc-number">2.4.</span> <span class="toc-text">表示字符串</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B9%A0%E9%A2%98"><span class="toc-number">3.</span> <span class="toc-text">习题</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2021/06/06/2021-6-6-%E7%AE%97%E6%B3%95%E6%A6%82%E8%AE%BA(DPV)%E4%B9%A0%E9%A2%98%E8%A7%A3%E7%AD%94%E2%80%94%E2%80%94%E7%AC%AC3%E7%AB%A0-%E5%9B%BE%E7%9A%84%E5%88%86%E8%A7%A3/" title="算法概论(DPV)习题解答——第3章 图的分解"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="算法概论(DPV)习题解答——第3章 图的分解"/></a><div class="content"><a class="title" href="/2021/06/06/2021-6-6-%E7%AE%97%E6%B3%95%E6%A6%82%E8%AE%BA(DPV)%E4%B9%A0%E9%A2%98%E8%A7%A3%E7%AD%94%E2%80%94%E2%80%94%E7%AC%AC3%E7%AB%A0-%E5%9B%BE%E7%9A%84%E5%88%86%E8%A7%A3/" title="算法概论(DPV)习题解答——第3章 图的分解">算法概论(DPV)习题解答——第3章 图的分解</a><time datetime="2021-06-06T14:35:00.000Z" title="发表于 2021-06-06 22:35:00">2021-06-06</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/06/06/2021-6-6-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E7%AC%AC5%E7%AB%A0-%E4%B9%A0%E9%A2%98%E8%A7%A3%E6%9E%90/" title="深入理解计算机系统 第5章 习题解析"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="深入理解计算机系统 第5章 习题解析"/></a><div class="content"><a class="title" href="/2021/06/06/2021-6-6-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E7%AC%AC5%E7%AB%A0-%E4%B9%A0%E9%A2%98%E8%A7%A3%E6%9E%90/" title="深入理解计算机系统 第5章 习题解析">深入理解计算机系统 第5章 习题解析</a><time datetime="2021-06-06T07:23:00.000Z" title="发表于 2021-06-06 15:23:00">2021-06-06</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/06/05/2021-6-5-Stanford-Compiler-PA5%E7%BF%BB%E8%AF%91/" title="Stanford Compiler PA5翻译"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Stanford Compiler PA5翻译"/></a><div class="content"><a class="title" href="/2021/06/05/2021-6-5-Stanford-Compiler-PA5%E7%BF%BB%E8%AF%91/" title="Stanford Compiler PA5翻译">Stanford Compiler PA5翻译</a><time datetime="2021-06-05T06:12:00.000Z" title="发表于 2021-06-05 14:12:00">2021-06-05</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/06/04/2021-6-4-Stanford-Compiler-PA4%E7%BF%BB%E8%AF%91/" title="Stanford Compiler PA4翻译"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Stanford Compiler PA4翻译"/></a><div class="content"><a class="title" href="/2021/06/04/2021-6-4-Stanford-Compiler-PA4%E7%BF%BB%E8%AF%91/" title="Stanford Compiler PA4翻译">Stanford Compiler PA4翻译</a><time datetime="2021-06-03T16:17:00.000Z" title="发表于 2021-06-04 00:17:00">2021-06-04</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/06/03/2021-6-3-%E5%B7%A7%E5%A6%99%E7%9A%84Y%E8%BF%90%E7%AE%97%E7%AC%A6/" title="巧妙的Y运算符"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="巧妙的Y运算符"/></a><div class="content"><a class="title" href="/2021/06/03/2021-6-3-%E5%B7%A7%E5%A6%99%E7%9A%84Y%E8%BF%90%E7%AE%97%E7%AC%A6/" title="巧妙的Y运算符">巧妙的Y运算符</a><time datetime="2021-06-03T00:54:00.000Z" title="发表于 2021-06-03 08:54:00">2021-06-03</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2021 By Doraemonzzz</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><div class="js-pjax"><script>if (!window.MathJax) {
+  window.MathJax = {
+    loader: {
+      source: {
+        '[tex]/amsCd': '[tex]/amscd'
+      }
+    },
+    tex: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]],
+      tags: 'ams'
+    },
+    options: {
+      renderActions: {
+        findScript: [10, doc => {
+          for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+            const display = !!node.type.match(/; *mode=display/)
+            const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+            const text = document.createTextNode('')
+            node.parentNode.replaceChild(text, node)
+            math.start = {node: text, delim: '', n: 0}
+            math.end = {node: text, delim: '', n: 0}
+            doc.math.push(math)
+          }
+        }, ''],
+        addClass: [200,() => {
+          document.querySelectorAll('mjx-container:not([display=\'true\']').forEach( node => {
+            const target = node.parentNode
+            if (!target.classList.contains('has-jax')) {
+              target.classList.add('mathjax-overflow')
+            }
+          })
+        }, '', false]
+      }
+    }
+  }
+  
+  const script = document.createElement('script')
+  script.src = 'https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js'
+  script.id = 'MathJax-script'
+  script.async = true
+  document.head.appendChild(script)
+} else {
+  MathJax.startup.document.state(0)
+  MathJax.texReset()
+  MathJax.typeset()
+}</script></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

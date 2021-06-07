@@ -1,0 +1,266 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>CS231 第六讲 训练神经网络（上） | Doraemonzzz</title><meta name="keywords" content="CS231"><meta name="author" content="Doraemonzzz"><meta name="copyright" content="Doraemonzzz"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="课程视频地址：https:&#x2F;&#x2F;study.163.com&#x2F;courses-search?keyword&#x3D;CS231 课程主页：http:&#x2F;&#x2F;cs231n.stanford.edu&#x2F;2017&#x2F; 这一讲主要介绍训练神经网络的一些技巧。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="CS231 第六讲 训练神经网络（上）">
+<meta property="og:url" content="http://doraemonzzz.com/2019/02/02/CS231%20%E7%AC%AC%E5%85%AD%E8%AE%B2%20%E8%AE%AD%E7%BB%83%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%EF%BC%88%E4%B8%8A%EF%BC%89/index.html">
+<meta property="og:site_name" content="Doraemonzzz">
+<meta property="og:description" content="课程视频地址：https:&#x2F;&#x2F;study.163.com&#x2F;courses-search?keyword&#x3D;CS231 课程主页：http:&#x2F;&#x2F;cs231n.stanford.edu&#x2F;2017&#x2F; 这一讲主要介绍训练神经网络的一些技巧。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg">
+<meta property="article:published_time" content="2019-02-02T14:21:00.000Z">
+<meta property="article:modified_time" content="2019-02-12T13:10:48.513Z">
+<meta property="article:author" content="Doraemonzzz">
+<meta property="article:tag" content="CS231">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="http://doraemonzzz.com/2019/02/02/CS231%20%E7%AC%AC%E5%85%AD%E8%AE%B2%20%E8%AE%AD%E7%BB%83%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%EF%BC%88%E4%B8%8A%EF%BC%89/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"prismjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    jQuery: 'https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js',
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+    },
+    fancybox: {
+      js: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isanchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'CS231 第六讲 训练神经网络（上）',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2019-02-12 21:10:48'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    })(window)</script><meta name="generator" content="Hexo 5.4.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="author-avatar"><img class="avatar-img" src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">文章</div><div class="length-num">610</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">标签</div><div class="length-num">59</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/categories/"><div class="headline">分类</div><div class="length-num">23</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">Doraemonzzz</a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">CS231 第六讲 训练神经网络（上）</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2019-02-02T14:21:00.000Z" title="发表于 2019-02-02 22:21:00">2019-02-02</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2019-02-12T13:10:48.513Z" title="更新于 2019-02-12 21:10:48">2019-02-12</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/">机器学习</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="CS231 第六讲 训练神经网络（上）"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p>课程视频地址：<a target="_blank" rel="noopener" href="https://study.163.com/courses-search?keyword=CS231">https://study.163.com/courses-search?keyword=CS231</a></p>
+<p>课程主页：<a target="_blank" rel="noopener" href="http://cs231n.stanford.edu/2017/">http://cs231n.stanford.edu/2017/</a></p>
+<p>这一讲主要介绍训练神经网络的一些技巧。</p>
+<span id="more"></span>
+<h4 id="激活函数"><a href="#激活函数" class="headerlink" title="激活函数"></a>激活函数</h4><p>回顾神经元的架构</p>
+<p><img src="https://github.com/Doraemonzzz/md-photo/blob/master/CS231/Lecture%206/2019020201.jpg?raw=true" alt=""></p>
+<p>我们首先进行线性运算，接着使用激活函数$f$，常用激活函数如下</p>
+<p><img src="https://github.com/Doraemonzzz/md-photo/blob/master/CS231/Lecture%206/2019020202.jpg?raw=true" alt=""></p>
+<p>下面分别介绍这几个激活函数。</p>
+<h5 id="Sigmoid"><a href="#Sigmoid" class="headerlink" title="Sigmoid"></a>Sigmoid</h5><p><img src="https://github.com/Doraemonzzz/md-photo/blob/master/CS231/Lecture%206/2019020203.jpg?raw=true" alt=""></p>
+<p>Sigmoid函数有如下三个问题：</p>
+<ul>
+<li><p>1.饱和的神经元会使得梯度消失。</p>
+<p>这是因为当$x$绝对值很大时，Sigmoid函数的导数几乎为$0$（这点从图像中就能看出），而这会使训练过程很缓慢。</p>
+</li>
+<li><p>2.Sigmoid函数输出结果的均值不是$0$。</p>
+<p>由于Sigmoid函数输出结果都大于$0$，由乘法门的含义可知，这会导致梯度的符号都相同，这也不利于训练。</p>
+</li>
+<li><p>3.$\exp()$有一定的计算量。</p>
+<p>这个算是比较次要的原因，感觉主要是和之后的ReLU作对比。</p>
+</li>
+</ul>
+<h5 id="tanh"><a href="#tanh" class="headerlink" title="tanh"></a>tanh</h5><p><img src="https://github.com/Doraemonzzz/md-photo/blob/master/CS231/Lecture%206/2019020204.jpg?raw=true" alt=""></p>
+<p>tanh函数可以克服上述第2个问题，因为输出结果的均值为$0$，但是问题1,3依然没有解决。</p>
+<h5 id="ReLU"><a href="#ReLU" class="headerlink" title="ReLU"></a>ReLU</h5><p><img src="https://github.com/Doraemonzzz/md-photo/blob/master/CS231/Lecture%206/2019020205.jpg?raw=true" alt=""></p>
+<p>ReLU函数可以有效克服问题1，但是输出结果的均值不是$0$，并且会导致部分神经元“死亡”（当$x&lt;0$时输出永远为$0$）</p>
+<h5 id="Leaky-ReLU"><a href="#Leaky-ReLU" class="headerlink" title="Leaky ReLU"></a>Leaky ReLU</h5><p><img src="https://github.com/Doraemonzzz/md-photo/blob/master/CS231/Lecture%206/2019020206.jpg?raw=true" alt=""></p>
+<p>Leaky ReLU保留了ReLU的优点，并且有效解决了ReLU导致的神经元“死亡”问题。</p>
+<p>实际中，还有Parametric Rectifier (PReLU)，这里多引入一个系数$\alpha$，即</p>
+<script type="math/tex; mode=display">
+f(x)= \max(\alpha x,x)</script><p>$\alpha$可以通过反向传播来学习。</p>
+<h5 id="ELU"><a href="#ELU" class="headerlink" title="ELU"></a>ELU</h5><p><img src="https://github.com/Doraemonzzz/md-photo/blob/master/CS231/Lecture%206/2019020208.jpg?raw=true" alt=""></p>
+<p>ELU和Leaky ReLU类似，但是将小于$0$部分修改为指数函数，这样的好处是在$0$这一点可导，更为平滑，坏处是需要计算$\exp()$，加大计算量。</p>
+<h5 id="Maxout"><a href="#Maxout" class="headerlink" title="Maxout"></a>Maxout</h5><p>Maxout实际上式前面三种激活函数的推广，激活函数为</p>
+<script type="math/tex; mode=display">
+\max (w_1^T x+b_1, w_2^T x+b_2)</script><p>这种激活函数的问题是参数数量会加倍。</p>
+<p>在实际中，大多数情况都是使用ReLU，如果效果不好，可以尝试Leaky ReLU，ELU以及Maxout，如果这些激活函数效果都不好，可以尝试tanh（不要期望太多），实际中一般从不使用Sigmoid。</p>
+<h4 id="数据预处理"><a href="#数据预处理" class="headerlink" title="数据预处理"></a>数据预处理</h4><p>比较简单的数据预处理方式为将数据零均值化以及方差归一化，效果如下图所示</p>
+<p><img src="https://github.com/Doraemonzzz/md-photo/blob/master/CS231/Lecture%206/2019020209.jpg?raw=true" alt=""></p>
+<p>其他的方法还有PCA以及Whitening，这里略过（CNN中不常用）。</p>
+<p>在实际中，对于图像数据，我们只要将数据零均值化即可。</p>
+<h4 id="权重初始化"><a href="#权重初始化" class="headerlink" title="权重初始化"></a>权重初始化</h4><p>第一种初始化方式为将权重全部初始为$0$，不难发现这样会导致每个神经元的输出都相同，反向传播中更新的梯度也相同，从而权重始终相等，神经元失去效果。</p>
+<p>第二种初始化方式为随机初始化为很小的值，这样对小网络合理，但是当网络层数增加后，会导致一些问题。例如10层神经网络，按照上述初始化方式，做实验可得如下结果</p>
+<p><img src="https://github.com/Doraemonzzz/md-photo/blob/master/CS231/Lecture%206/2019020210.jpg?raw=true" alt=""></p>
+<p>上述现象可以描述为输入输出的方差相差太多，一个合理的假设是我们希望输入和输出的方差比较接近，假设</p>
+<script type="math/tex; mode=display">
+s=\sum_{i=1}^n w_i x_i</script><p>那么</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+\text{Var}(s)&=\text{Var}(\sum_{i=1}^n w_i x_i) \\
+&= \sum_{i=1}^n \text{Var}( w_i x_i) \\
+&=\sum_{i=1}^n  (\mathbb E[x_i])^2\text{Var}( w_i)
++(\mathbb E[w_i])^2\text{Var}( x_i) +\text{Var}( x_i) \text{Var}( w_i)\\
+ &= \sum_{i=1}^n \text{Var}( x_i) \text{Var}( w_i) \\
+ &=n\text{Var}( w)\text{Var}( x)
+\end{aligned}</script><p>前三步运用了方差的性质，第四步利用了</p>
+<script type="math/tex; mode=display">
+\mathbb E[x_i]= \mathbb E[w_i]=0</script><p>最后一步利用了$x_i$独立同分布，$w_i$独立同分布。</p>
+<p>所以要使得$x$与$s$的方差相同，应该有</p>
+<script type="math/tex; mode=display">
+\text{Var}( w) = \frac 1 n</script><p>所以可以用如下初始化方式</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python">w <span class="token operator">=</span> np<span class="token punctuation">.</span>random<span class="token punctuation">.</span>randn<span class="token punctuation">(</span>fan_in<span class="token punctuation">,</span> fan_out<span class="token punctuation">)</span> <span class="token operator">/</span> np<span class="token punctuation">.</span>sqrt<span class="token punctuation">(</span>fan_in<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>利用这种初始化得到图像为</p>
+<p><img src="https://github.com/Doraemonzzz/md-photo/blob/master/CS231/Lecture%206/2019020211.jpg?raw=true" alt=""></p>
+<p>这种初始化方式被称为“Xavier initialization”。</p>
+<p>如果激活函数为ReLU，大约一半的神经元会“死亡”，所以初始化方式修改为</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python">w <span class="token operator">=</span> np<span class="token punctuation">.</span>random<span class="token punctuation">.</span>randn<span class="token punctuation">(</span>fan_in<span class="token punctuation">,</span> fan_out<span class="token punctuation">)</span> <span class="token operator">/</span> np<span class="token punctuation">.</span>sqrt<span class="token punctuation">(</span>fan_in <span class="token operator">/</span> <span class="token number">2</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<h4 id="批量标准化"><a href="#批量标准化" class="headerlink" title="批量标准化"></a>批量标准化</h4><p>批量标准化是指在全连接层或者卷积层之后对数据进行如下处理</p>
+<script type="math/tex; mode=display">
+\hat x^{(k)}= \frac{x^{(k)}-\mathbb E[x^{(k)}]}{\sqrt{\text{Var}[x^{(k)}]}}</script><p>使得数据满足$0$均值以及方差为$1$，此时的网络架构为</p>
+<p><img src="https://github.com/Doraemonzzz/md-photo/blob/master/CS231/Lecture%206/2019020212.jpg?raw=true" alt=""></p>
+<p>现在的问题是，我们是否希望均值为$0​$以及方差为$1​$？为了让算法效果更好，增加两个参数$\gamma^{(k)},\beta^{(k)}​$，每层的输入为</p>
+<script type="math/tex; mode=display">
+y^{(k)}= \gamma^{(k)}x^{(k)}+\beta^{(k)}</script><p>这里$\gamma^{(k)},\beta^{(k)}$为参数，需要通过反向传播来训练，实际中的算法步骤为</p>
+<p><img src="https://github.com/Doraemonzzz/md-photo/blob/master/CS231/Lecture%206/2019020213.jpg?raw=true" alt=""></p>
+<p>注意第4行分母增加了$\epsilon$，这是为了防止分母为$0$</p>
+<h4 id="超参数优化"><a href="#超参数优化" class="headerlink" title="超参数优化"></a>超参数优化</h4><p>算法中很有多超参数，我们应该如何选择呢？这里需要用之前介绍交叉验证来处理——即我们尝试不同的超参数组合，然后比较交叉验证集上的效果，如果我们的超参数不多，可以使用网格搜索，否则应该使用随机搜索，如下图所示</p>
+<p><img src="https://github.com/Doraemonzzz/md-photo/blob/master/CS231/Lecture%206/2019020214.jpg?raw=true" alt=""></p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">Doraemonzzz</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="http://doraemonzzz.com/2019/02/02/CS231%20%E7%AC%AC%E5%85%AD%E8%AE%B2%20%E8%AE%AD%E7%BB%83%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%EF%BC%88%E4%B8%8A%EF%BC%89/">http://doraemonzzz.com/2019/02/02/CS231%20%E7%AC%AC%E5%85%AD%E8%AE%B2%20%E8%AE%AD%E7%BB%83%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%EF%BC%88%E4%B8%8A%EF%BC%89/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://doraemonzzz.com" target="_blank">Doraemonzzz</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/CS231/">CS231</a></div><div class="post_share"><div class="social-share" data-image="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2019/02/04/%E5%8F%B0%E5%A4%A7%E5%AE%9E%E5%88%86%E6%9E%90%E5%8D%95%E5%85%83%2021%20Riemann%20%E4%B8%8E%20Lebesgue%20%E7%A7%AF%E5%88%86%EF%BC%882%EF%BC%89/"><img class="prev-cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">台大实分析单元 21 Riemann 与 Lebesgue 积分（2）</div></div></a></div><div class="next-post pull-right"><a href="/2019/02/01/CS229%20Lesson%201%20%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%9A%84%E5%8A%A8%E6%9C%BA%E4%B8%8E%E5%BA%94%E7%94%A8/"><img class="next-cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">CS229 Lesson 1 机器学习的动机与应用</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span> 相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2019/01/23/CS231 第一讲 课程简介/" title="CS231 第一讲 课程简介"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2019-01-23</div><div class="title">CS231 第一讲 课程简介</div></div></a></div><div><a href="/2019/02/10/CS231 第七讲 训练神经网络（下）/" title="CS231 第七讲 训练神经网络（下）"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2019-02-10</div><div class="title">CS231 第七讲 训练神经网络（下）</div></div></a></div><div><a href="/2019/01/27/CS231 第三讲 损失函数和优化/" title="CS231 第三讲 损失函数和优化"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2019-01-27</div><div class="title">CS231 第三讲 损失函数和优化</div></div></a></div><div><a href="/2019/02/10/CS231 第九讲 CNN架构/" title="CS231 第九讲 CNN架构"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2019-02-10</div><div class="title">CS231 第九讲 CNN架构</div></div></a></div><div><a href="/2019/01/24/CS231 第二讲 图像分类/" title="CS231 第二讲 图像分类"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2019-01-24</div><div class="title">CS231 第二讲 图像分类</div></div></a></div><div><a href="/2019/01/31/CS231 第五讲 卷积神经网络/" title="CS231 第五讲 卷积神经网络"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2019-01-31</div><div class="title">CS231 第五讲 卷积神经网络</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="card-info-avatar is-center"><img class="avatar-img" src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/><div class="author-info__name">Doraemonzzz</div><div class="author-info__description">个人博客，主要记录有关机器学习，数学以及计算机科学的笔记</div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">610</div></a></div><div class="card-info-data-item is-center"><a href="/tags/"><div class="headline">标签</div><div class="length-num">59</div></a></div><div class="card-info-data-item is-center"><a href="/categories/"><div class="headline">分类</div><div class="length-num">23</div></a></div></div><a class="button--animated" id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/Doraemonzzz" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="/doraemon_zzz@163.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn card-announcement-animation"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%BF%80%E6%B4%BB%E5%87%BD%E6%95%B0"><span class="toc-number">1.</span> <span class="toc-text">激活函数</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#Sigmoid"><span class="toc-number">1.1.</span> <span class="toc-text">Sigmoid</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#tanh"><span class="toc-number">1.2.</span> <span class="toc-text">tanh</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#ReLU"><span class="toc-number">1.3.</span> <span class="toc-text">ReLU</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#Leaky-ReLU"><span class="toc-number">1.4.</span> <span class="toc-text">Leaky ReLU</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#ELU"><span class="toc-number">1.5.</span> <span class="toc-text">ELU</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#Maxout"><span class="toc-number">1.6.</span> <span class="toc-text">Maxout</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E9%A2%84%E5%A4%84%E7%90%86"><span class="toc-number">2.</span> <span class="toc-text">数据预处理</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%9D%83%E9%87%8D%E5%88%9D%E5%A7%8B%E5%8C%96"><span class="toc-number">3.</span> <span class="toc-text">权重初始化</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%89%B9%E9%87%8F%E6%A0%87%E5%87%86%E5%8C%96"><span class="toc-number">4.</span> <span class="toc-text">批量标准化</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%B6%85%E5%8F%82%E6%95%B0%E4%BC%98%E5%8C%96"><span class="toc-number">5.</span> <span class="toc-text">超参数优化</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2021/06/06/2021-6-6-%E7%AE%97%E6%B3%95%E6%A6%82%E8%AE%BA(DPV)%E4%B9%A0%E9%A2%98%E8%A7%A3%E7%AD%94%E2%80%94%E2%80%94%E7%AC%AC3%E7%AB%A0-%E5%9B%BE%E7%9A%84%E5%88%86%E8%A7%A3/" title="算法概论(DPV)习题解答——第3章 图的分解"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="算法概论(DPV)习题解答——第3章 图的分解"/></a><div class="content"><a class="title" href="/2021/06/06/2021-6-6-%E7%AE%97%E6%B3%95%E6%A6%82%E8%AE%BA(DPV)%E4%B9%A0%E9%A2%98%E8%A7%A3%E7%AD%94%E2%80%94%E2%80%94%E7%AC%AC3%E7%AB%A0-%E5%9B%BE%E7%9A%84%E5%88%86%E8%A7%A3/" title="算法概论(DPV)习题解答——第3章 图的分解">算法概论(DPV)习题解答——第3章 图的分解</a><time datetime="2021-06-06T14:35:00.000Z" title="发表于 2021-06-06 22:35:00">2021-06-06</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/06/06/2021-6-6-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E7%AC%AC5%E7%AB%A0-%E4%B9%A0%E9%A2%98%E8%A7%A3%E6%9E%90/" title="深入理解计算机系统 第5章 习题解析"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="深入理解计算机系统 第5章 习题解析"/></a><div class="content"><a class="title" href="/2021/06/06/2021-6-6-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E7%AC%AC5%E7%AB%A0-%E4%B9%A0%E9%A2%98%E8%A7%A3%E6%9E%90/" title="深入理解计算机系统 第5章 习题解析">深入理解计算机系统 第5章 习题解析</a><time datetime="2021-06-06T07:23:00.000Z" title="发表于 2021-06-06 15:23:00">2021-06-06</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/06/05/2021-6-5-Stanford-Compiler-PA5%E7%BF%BB%E8%AF%91/" title="Stanford Compiler PA5翻译"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Stanford Compiler PA5翻译"/></a><div class="content"><a class="title" href="/2021/06/05/2021-6-5-Stanford-Compiler-PA5%E7%BF%BB%E8%AF%91/" title="Stanford Compiler PA5翻译">Stanford Compiler PA5翻译</a><time datetime="2021-06-05T06:12:00.000Z" title="发表于 2021-06-05 14:12:00">2021-06-05</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/06/04/2021-6-4-Stanford-Compiler-PA4%E7%BF%BB%E8%AF%91/" title="Stanford Compiler PA4翻译"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Stanford Compiler PA4翻译"/></a><div class="content"><a class="title" href="/2021/06/04/2021-6-4-Stanford-Compiler-PA4%E7%BF%BB%E8%AF%91/" title="Stanford Compiler PA4翻译">Stanford Compiler PA4翻译</a><time datetime="2021-06-03T16:17:00.000Z" title="发表于 2021-06-04 00:17:00">2021-06-04</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/06/03/2021-6-3-%E5%B7%A7%E5%A6%99%E7%9A%84Y%E8%BF%90%E7%AE%97%E7%AC%A6/" title="巧妙的Y运算符"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="巧妙的Y运算符"/></a><div class="content"><a class="title" href="/2021/06/03/2021-6-3-%E5%B7%A7%E5%A6%99%E7%9A%84Y%E8%BF%90%E7%AE%97%E7%AC%A6/" title="巧妙的Y运算符">巧妙的Y运算符</a><time datetime="2021-06-03T00:54:00.000Z" title="发表于 2021-06-03 08:54:00">2021-06-03</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2021 By Doraemonzzz</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><div class="js-pjax"><script>if (!window.MathJax) {
+  window.MathJax = {
+    loader: {
+      source: {
+        '[tex]/amsCd': '[tex]/amscd'
+      }
+    },
+    tex: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]],
+      tags: 'ams'
+    },
+    options: {
+      renderActions: {
+        findScript: [10, doc => {
+          for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+            const display = !!node.type.match(/; *mode=display/)
+            const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+            const text = document.createTextNode('')
+            node.parentNode.replaceChild(text, node)
+            math.start = {node: text, delim: '', n: 0}
+            math.end = {node: text, delim: '', n: 0}
+            doc.math.push(math)
+          }
+        }, ''],
+        addClass: [200,() => {
+          document.querySelectorAll('mjx-container:not([display=\'true\']').forEach( node => {
+            const target = node.parentNode
+            if (!target.classList.contains('has-jax')) {
+              target.classList.add('mathjax-overflow')
+            }
+          })
+        }, '', false]
+      }
+    }
+  }
+  
+  const script = document.createElement('script')
+  script.src = 'https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js'
+  script.id = 'MathJax-script'
+  script.async = true
+  document.head.appendChild(script)
+} else {
+  MathJax.startup.document.state(0)
+  MathJax.texReset()
+  MathJax.typeset()
+}</script></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

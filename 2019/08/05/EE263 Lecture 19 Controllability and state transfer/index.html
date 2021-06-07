@@ -1,0 +1,351 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>EE263 Lecture 19 Controllability and state transfer | Doraemonzzz</title><meta name="keywords" content="EE263"><meta name="author" content="Doraemonzzz"><meta name="copyright" content="Doraemonzzz"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="课程主页：https:&#x2F;&#x2F;see.stanford.edu&#x2F;Course&#x2F;EE263 这次回顾第十九讲，这一讲介绍了可控性和状态转移。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="EE263 Lecture 19 Controllability and state transfer">
+<meta property="og:url" content="http://doraemonzzz.com/2019/08/05/EE263%20Lecture%2019%20Controllability%20and%20state%20transfer/index.html">
+<meta property="og:site_name" content="Doraemonzzz">
+<meta property="og:description" content="课程主页：https:&#x2F;&#x2F;see.stanford.edu&#x2F;Course&#x2F;EE263 这次回顾第十九讲，这一讲介绍了可控性和状态转移。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg">
+<meta property="article:published_time" content="2019-08-05T15:15:00.000Z">
+<meta property="article:modified_time" content="2019-08-05T15:34:46.904Z">
+<meta property="article:author" content="Doraemonzzz">
+<meta property="article:tag" content="EE263">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="http://doraemonzzz.com/2019/08/05/EE263%20Lecture%2019%20Controllability%20and%20state%20transfer/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"prismjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    jQuery: 'https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js',
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+    },
+    fancybox: {
+      js: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isanchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'EE263 Lecture 19 Controllability and state transfer',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2019-08-05 23:34:46'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    })(window)</script><meta name="generator" content="Hexo 5.4.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="author-avatar"><img class="avatar-img" src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">文章</div><div class="length-num">610</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">标签</div><div class="length-num">59</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/categories/"><div class="headline">分类</div><div class="length-num">23</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">Doraemonzzz</a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">EE263 Lecture 19 Controllability and state transfer</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2019-08-05T15:15:00.000Z" title="发表于 2019-08-05 23:15:00">2019-08-05</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2019-08-05T15:34:46.904Z" title="更新于 2019-08-05 23:34:46">2019-08-05</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E6%95%B0%E5%AD%A6/">数学</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="EE263 Lecture 19 Controllability and state transfer"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p>课程主页：<a target="_blank" rel="noopener" href="https://see.stanford.edu/Course/EE263">https://see.stanford.edu/Course/EE263</a></p>
+<p>这次回顾第十九讲，这一讲介绍了可控性和状态转移。</p>
+<span id="more"></span>
+<h4 id="可控性系统"><a href="#可控性系统" class="headerlink" title="可控性系统"></a>可控性系统</h4><p>系统被称为可达或可控，如果所有状态可达（即$\mathcal R = \mathbb R^n$）</p>
+<p>系统为可达当且仅当$\operatorname{Rank}(\mathcal{C})=n$，注意</p>
+<script type="math/tex; mode=display">
+\mathcal{C}=\left[\begin{array}{llll}{B} & {A B} & {\cdots} & {A^{n-1} B}\end{array}\right]</script><p>例子：</p>
+<script type="math/tex; mode=display">
+x(t+1)=\left[\begin{array}{ll}{0} & {1} \\ {1} & {0}\end{array}\right] x(t)+\left[\begin{array}{c}{1} \\ {1}\end{array}\right] u(t)</script><p>控制矩阵为</p>
+<script type="math/tex; mode=display">
+\mathcal{C}=\left[\begin{array}{ll}{1} & {1} \\ {1} & {1}\end{array}\right]</script><p>可达集合为</p>
+<script type="math/tex; mode=display">
+\mathcal{R}=\operatorname{range}(\mathcal{C})=\left\{x | x_{1}=x_{2}\right\}</script><h4 id="一般的状态转移"><a href="#一般的状态转移" class="headerlink" title="一般的状态转移"></a>一般的状态转移</h4><p>对于$t_{f}&gt;t_{i}$，我们有</p>
+<script type="math/tex; mode=display">
+x\left(t_{f}\right)=A^{t_{f}-t_{i}} x\left(t_{i}\right)+\mathcal{C}_{t_{f}-t_{i}}\left[\begin{array}{c}{u\left(t_{f}-1\right)} \\ {\vdots} \\ {u\left(t_{i}\right)}\end{array}\right]</script><p>因此将$x\left(t_{i}\right)$转移到$x\left(t_{f}\right)=x_{\mathrm{des}}$等价于</p>
+<script type="math/tex; mode=display">
+x_{\mathrm{des}}-A^{t_{f}-t_{i}} x\left(t_{i}\right) \in \mathcal{R}_{t_{f}-t_{i}}</script><p>注意</p>
+<script type="math/tex; mode=display">
+\mathcal{R}_{t}=\left\{\begin{array}{ll}{\operatorname{range}\left(\mathcal{C}_{t}\right)} & {t<n} \\ {\operatorname{range}(\mathcal{C})} & {t \geq n}\end{array}\right.</script><p>这说明</p>
+<ul>
+<li>一般的的状态转移可以化成可达性问题</li>
+<li>如果系统是可控的，那么任何状态可以在$\le n$步到达</li>
+<li>重要的特殊情形：将状态变为$0$</li>
+</ul>
+<h4 id="可达性的最小范数输入"><a href="#可达性的最小范数输入" class="headerlink" title="可达性的最小范数输入"></a>可达性的最小范数输入</h4><p>假设系统可达，即$\operatorname{Rank}\left(\mathcal{C}_{t}\right)=n$</p>
+<p>为了将$x(0)=0$转移到$x(t)=x_{\mathrm{des}}$，输入$u(0), \ldots, u(t-1)$必须满足</p>
+<script type="math/tex; mode=display">
+x_{\mathrm{des}}=\mathcal{C}_{t}\left[\begin{array}{c}{u(t-1)} \\ {\vdots} \\ {u(0)}\end{array}\right]</script><p>对所有满足条件的$u$，使得下式最小化</p>
+<script type="math/tex; mode=display">
+\sum_{\tau=0}^{t-1}\|u(\tau)\|^{2}</script><p>的$u$由最小范数解给出</p>
+<script type="math/tex; mode=display">
+\left[\begin{array}{c}{u_{\ln }(t-1)} \\ {\vdots} \\ {u_{\ln }(0)}\end{array}\right]=\mathcal{C}_{t}^{T}\left(\mathcal{C}_{t} \mathcal{C}_{t}^{T}\right)^{-1} x_{\mathrm{des}}</script><p>$u_{\ln }$被称为最小范数或最小能量输入。</p>
+<p>将</p>
+<script type="math/tex; mode=display">
+\mathcal{C}_{t}=\left[\begin{array}{llll}{B} & {A B} & {\cdots} & {A^{t-1} B}\end{array}\right]</script><p>带入可得</p>
+<script type="math/tex; mode=display">
+u_{\ln }(\tau)=B^{T}\left(A^{T}\right)^{(t-1-\tau)}\left(\sum_{s=0}^{t-1} A^{s} B B^{T}\left(A^{T}\right)^{s}\right)^{-1} x_{\mathrm{des}}</script><p>其中$\tau=0, \ldots, t-1$。</p>
+<p>$\mathcal{E}_{\mathrm{min}}$，即到达$x(t)=x_{\mathrm{des}}$的$\sum_{\tau=0}^{t-1}|u(\tau)|^{2}$的最小值，有时被称为到达$x(t)=x_{\mathrm{des}}$的最小能量</p>
+<script type="math/tex; mode=display">
+\begin{aligned} \mathcal{E}_{\min } 
+&=\sum_{\tau=0}^{t-1}\left\|u_{\ln (\tau)}\right\|^{2} \\ &=\left(\mathcal{C}_{t}^{T}\left(\mathcal{C}_{t} \mathcal{C}_{t}^{T}\right)^{-1} x_{\mathrm{des}}\right)^{T} \mathcal{C}_{t}^{T}\left(\mathcal{C}_{t} \mathcal{C}_{t}^{T}\right)^{-1} x_{\mathrm{des}} \\ 
+&=x_{\mathrm{des}}^{T}\left(\mathcal{C}_{t} \mathcal{C}_{t}^{T}\right)^{-1} x_{\mathrm{des}} \\ &=x_{\mathrm{des}}^{T}\left(\sum_{\tau=0}^{t-1} A^{\tau} B B^{T}\left(A^{T}\right)^{\tau}\right)^{-1} x_{\mathrm{des}} \end{aligned}</script><ul>
+<li>$\mathcal{E}_{\min }\left(x_{\mathrm{des}}, t\right)$给出度量从$x(0)=0$到达$x(t)=x_{\mathrm{des}}$的难易程度</li>
+<li>$\mathcal{E}_{\min }\left(x_{\mathrm{des}}, t\right)$给出可控性/可达性的实际度量（关于$x_{\mathrm{des}}, t$的函数）</li>
+<li>椭球$\left\{z | \mathcal{E}_{\min }(z, t) \leq 1\right\}$给出在$t$时刻，单位能量可达的状态空间</li>
+</ul>
+<p>考虑$\mathcal{E}_{\min }$和$t$的关系：</p>
+<p>如果$t\ge s$，那么</p>
+<script type="math/tex; mode=display">
+\sum_{\tau=0}^{t-1} A^{\tau} B B^{T}\left(A^{T}\right)^{\tau} \geq \sum_{\tau=0}^{s-1} A^{\tau} B B^{T}\left(A^{T}\right)^{\tau}</script><p>因此</p>
+<script type="math/tex; mode=display">
+\left(\sum_{\tau=0}^{t-1} A^{\tau} B B^{T}\left(A^{T}\right)^{\tau}\right)^{-1} \leq\left(\sum_{\tau=0}^{s-1} A^{\tau} B B^{T}\left(A^{T}\right)^{\tau}\right)^{-1}</script><p>从而</p>
+<script type="math/tex; mode=display">
+\mathcal{E}_{\min }\left(x_{\mathrm{des}}, t\right) \leq \mathcal{E}_{\min }\left(x_{\mathrm{des}}, s\right)</script><p>即，使用更少的能量更悠闲的到达某处。</p>
+<h4 id="无限时间的最小能量"><a href="#无限时间的最小能量" class="headerlink" title="无限时间的最小能量"></a>无限时间的最小能量</h4><p>矩阵</p>
+<script type="math/tex; mode=display">
+P=\lim _{t \rightarrow \infty}\left(\sum_{\tau=0}^{t-1} A^{\tau} B B^{T}\left(A^{T}\right)^{\tau}\right)^{-1}</script><p>总存在，并且给出了到达$x_{\mathrm{des}}$的最小能量：</p>
+<script type="math/tex; mode=display">
+\min \left\{\sum_{\tau=0}^{t-1}\|u(\tau)\|^{2} | x(0)=0, x(t)=x_{\mathrm{des}}\right\}=x_{\mathrm{des}}^{T} P x_{\mathrm{des}}</script><p>如果$A$稳定，那么$P&gt;0$（即，无法免费到达任何地方）</p>
+<p>如果$A$不稳定，那么$P$可能有非平凡零空间</p>
+<ul>
+<li>$Pz=0,z\neq 0$说明可以用能量为任意小的$u$到达$z$</li>
+<li>上述事实为高度机动，不稳定的飞机的基础</li>
+</ul>
+<h4 id="连续时间的可达性"><a href="#连续时间的可达性" class="headerlink" title="连续时间的可达性"></a>连续时间的可达性</h4><p>考虑</p>
+<script type="math/tex; mode=display">
+\dot{x}=A x+B u,  x(t)\in \mathbb R^n</script><p>在时间$t$的可达集合为</p>
+<script type="math/tex; mode=display">
+\mathcal{R}_{t}=\left\{\int_{0}^{t} e^{(t-\tau) A} B u(\tau) d \tau \Big| u :[0, t] \rightarrow \mathbb{R}^{m}\right\}</script><p>事实：对$t&gt;0, \mathcal{R}_{t}=\mathcal{R}=\operatorname{range}(\mathcal{C})$，其中</p>
+<script type="math/tex; mode=display">
+\mathcal{C}=\left[\begin{array}{llll}{B} & {A B} & {\cdots} & {A^{n-1} B}\end{array}\right]</script><p>为矩阵$(A,B)$的可控性矩阵。</p>
+<ul>
+<li>$\mathcal R $和离散情形相同</li>
+<li>对于连续时间系统，任何可到达的点都可以以任意时间到达（使用足够大的$u$）</li>
+</ul>
+<p>证明：</p>
+<p>首先证明对任意$u$（以及$x(0)=0 $）我们有$x(t) \in \operatorname{range}(\mathcal{C})$</p>
+<p>将$e^{tA}$写成幂级数：</p>
+<script type="math/tex; mode=display">
+e^{t A}=I+\frac{t}{1 !} A+\frac{t^{2}}{2 !} A^{2}+\cdots</script><p>根据C-H定理，用$A^{0}, \ldots, A^{n-1}$表达$A^{n}, A^{n+1}, \dots$，得到</p>
+<script type="math/tex; mode=display">
+e^{t A}=\alpha_{0}(t) I+\alpha_{1}(t) A+\cdots+\alpha_{n-1}(t) A^{n-1}</script><p>因此</p>
+<script type="math/tex; mode=display">
+\begin{aligned} x(t) &=\int_{0}^{t} e^{\tau A} B u(t-\tau) d \tau \\ &=\int_{0}^{t}\left(\sum_{i=0}^{n-1} \alpha_{i}(\tau) A^{i}\right) B u(t-\tau) d \tau\\
+&=\sum_{i=0}^{n-1} A^{i} B \int_{0}^{t} \alpha_{i}(\tau) u(t-\tau) d \tau \\ &=\mathcal{C} z\end{aligned}</script><p>其中</p>
+<script type="math/tex; mode=display">
+z_{i}=\int_{0}^{t} \alpha_{i}(\tau) u(t-\tau) d \tau</script><p>因此，$x(t)\in \operatorname{range}(\mathcal{C})$。</p>
+<p>还需证明$ \operatorname{range}(\mathcal{C})$中每个点可达。</p>
+<h4 id="脉冲输入"><a href="#脉冲输入" class="headerlink" title="脉冲输入"></a>脉冲输入</h4><p>假设$x\left(0_{-}\right)=0$，输入为$u(t)=\delta^{(k)}(t) f$，其中$\delta^{(k)}$为$\delta $的$k$阶导数，$f\in \mathbb R^m$，从而拉普拉斯变换为</p>
+<script type="math/tex; mode=display">
+U(s)=s^{k} f</script><p>（<a target="_blank" rel="noopener" href="https://math.stackexchange.com/questions/377690/laplace-transform-of-the-derivative-of-the-dirac-delta-function">参考资料</a>）</p>
+<p>所以</p>
+<script type="math/tex; mode=display">
+\begin{aligned} 
+X(s) &=(s I-A)^{-1} B s^{k} f \\ &=\left(s^{-1} I+s^{-2} A+\cdots\right) B s^{k} f \\ &=\left(\underbrace{s^{k-1}+\cdots+s A^{k-2}+A^{k-1}}_{\text { impulsive terms }}+s^{-1} A^{k}+\cdots\right) B f \end{aligned}</script><p>因此</p>
+<script type="math/tex; mode=display">
+x(t)=\text { impulsive terms }+A^{k} B f+A^{k+1} B f \frac{t}{1 !}+A^{k+2} B f \frac{t^{2}}{2 !}+\cdots</script><p>特别的，$x\left(0_{+}\right)=A^{k} B f$。</p>
+<p>因此，输入$u=\delta^{(k)} f$将状态$x\left(0_{-}\right)=0$转移到$x\left(0_{+}\right)=A^{k} B f$</p>
+<p>现在考虑如下形式的输入</p>
+<script type="math/tex; mode=display">
+u(t)=\delta(t) f_{0}+\cdots+\delta^{(n-1)}(t) f_{n-1}</script><p>其中$f_i \in \mathbb R^m$</p>
+<p>由线性性，我们有</p>
+<script type="math/tex; mode=display">
+x\left(0_{+}\right)=B f_{0}+\cdots+A^{n-1} B f_{n-1}=\mathcal{C}\left[\begin{array}{c}{f_{0}} \\ {\vdots} \\ {f_{n-1}}\end{array}\right]</script><p>所以我们可以到达$\operatorname{range}(\mathcal{C})$中任意一点（使用脉冲输入），同样可以证明不使用脉冲输入也能够做到这点。</p>
+<p>事实：如果$x(0) \in \mathcal{R}$，那么对所有$t$，$x(t) \in \mathcal{R}$</p>
+<h4 id="例子"><a href="#例子" class="headerlink" title="例子"></a>例子</h4><ul>
+<li>单位质量在$y_1,y_2$，由单位弹簧，阻尼器连接</li>
+<li>输入为物体间的力</li>
+<li>状态为$x=\left[y^{T} \quad \dot{y}^{T}\right]^{T}$</li>
+</ul>
+<p>图如下：</p>
+<p><img src="https://github.com/Doraemonzzz/md-photo/blob/master/EE263/Lecture%2019/2019070901.jpg?raw=true" alt=""></p>
+<p>系统为</p>
+<script type="math/tex; mode=display">
+\dot{x}=\left[\begin{array}{rrrr}{0} & {0} & {1} & {0} \\ {0} & {0} & {0} & {1} \\ {-1} & {1} & {-1} & {1} \\ {1} & {-1} & {1} & {-1}\end{array}\right] x+\left[\begin{array}{r}{0} \\ {0} \\ {1} \\ {-1}\end{array}\right] u</script><p>控制矩阵为</p>
+<script type="math/tex; mode=display">
+\mathcal{C}=\left[\begin{array}{lllll}{B} & {A B} & {A^{2} B} & {A^{3} B}\end{array}\right]=\left[\begin{array}{rrrr}{0} & {1} & {-2} & {2} \\ {0} & {-1} & {2} & {-2} \\ {1} & {-2} & {2} & {0} \\ {-1} & {2} & {-2} & {0}\end{array}\right]</script><p>可达集合为</p>
+<script type="math/tex; mode=display">
+\mathcal{R}=\operatorname{span}\left\{\left[\begin{array}{r}{1} \\ {-1} \\ {0} \\ {0}\end{array}\right],\left[\begin{array}{r}{0} \\ {0} \\ {1} \\ {-1}\end{array}\right]\right\}</script><p>可达的集合满足$y_{1}=-y_{2}, \dot{y}_{1}=-\dot{y}_{2}$。</p>
+<p>结果是显然的，因为内力不会影响中心位置或总动量。</p>
+<h4 id="连续时间可达性的最小范数输入"><a href="#连续时间可达性的最小范数输入" class="headerlink" title="连续时间可达性的最小范数输入"></a>连续时间可达性的最小范数输入</h4><p>假设$\dot{x}=A x+B u$可达</p>
+<p>我们寻找$u$，使得其将$x(0)=0$转移到$x(t)=x_{\mathrm{des}}$，并且最小化</p>
+<script type="math/tex; mode=display">
+\int_{0}^{t}\|u(\tau)\|^{2} d \tau</script><p>将系统离散化，间隔为$h=t/N$（后续令$N\to \infty$）</p>
+<p>所以$u$为分段常数</p>
+<script type="math/tex; mode=display">
+u(\tau)=u_{d}(k) \text { for } k h \leq \tau<(k+1) h, \quad k=0, \ldots, N-1</script><p>所以</p>
+<script type="math/tex; mode=display">
+x(t)=
+\left[\begin{matrix}
+B_{d} &A_{d} B_{d} & \cdots & A_{d}^{N-1} B_{d}
+\end{matrix}\right]
+\left[\begin{matrix}{u_{d}(N-1)} \\ 
+\vdots \\
+{u_{d}(0)}\end{matrix}\right]</script><p>其中</p>
+<script type="math/tex; mode=display">
+A_{d}=e^{h A}, \quad B_{d}=\int_{0}^{h} e^{\tau A} d \tau B</script><p>（具体推导参考第15讲）</p>
+<p>产生$x(t)=x_{\mathrm{des}}$的最小范数$u_d$为</p>
+<script type="math/tex; mode=display">
+u_{\mathrm{dln}}(k)=B_{d}^{T}\left(A_{d}^{T}\right)^{(N-1-k)}\left(\sum_{i=0}^{N-1} A_{d}^{i} B_{d} B_{d}^{T}\left(A_{d}^{T}\right)^{i}\right)^{-1} x_{\mathrm{des}}</script><p>因为</p>
+<script type="math/tex; mode=display">
+h(N-1-k)  =t\frac{N-1-k}{N} \approx t- \tau</script><p>用$A$表达上式：</p>
+<script type="math/tex; mode=display">
+B_{d}^{T}\left(A_{d}^{T}\right)^{(N-1-k)}
+=B_{d}^{T} e^{h(N-1-k) A^{T}}
+=B_{d}^{T} e^{(t-\tau) A^{T}}</script><p>当$N$充分大时，$B_{d} \approx(t / N) B$，所以有如下近似</p>
+<script type="math/tex; mode=display">
+(t / N) B^{T} e^{(t-\tau) A^{T}}</script><p>类似的，我们有</p>
+<script type="math/tex; mode=display">
+\begin{aligned} \sum_{i=0}^{N-1} A_{d}^{i} B_{d} B_{d}^{T}\left(A_{d}^{T}\right)^{i} &=(t / N) ^2\sum_{k=0}^{N-1} e^{(t i / N) A} B_{d} B_{d}^{T} e^{(t i / N) A^{T}} \\ & \approx(t / N) \int_{0}^{t} e^{\overline{t} A} B B^{T} e^{\overline{t} A^{T}} d \overline{t} \end{aligned}</script><p>因此离散化的最小范数输入近似于</p>
+<script type="math/tex; mode=display">
+u_{\ln }(\tau)=B^{T} e^{(t-\tau) A^{T}}\left(\int_{0}^{t} e^{\overline t A} B B^{T} e^{\overline{t} A^{T}} d \overline{t}\right)^{-1} x_{\mathrm{des}}, \quad 0 \leq \tau \leq t</script><p>因此，存在最小范数连续输入，使得</p>
+<ul>
+<li>可以使得$t$很小，但是得到较大的$u$</li>
+<li>和DT情形的区别为将求和变成积分</li>
+</ul>
+<p>最小能量为</p>
+<script type="math/tex; mode=display">
+\int_{0}^{t}\left\|u_{\ln }(\tau)\right\|^{2} d \tau=x_{\mathrm{des}}^{T} Q(t)^{-1} x_{\mathrm{des}}</script><p>其中</p>
+<script type="math/tex; mode=display">
+Q(t)=\int_{0}^{t} e^{\tau A} B B^{T} e^{\tau A^{T}} d \tau</script><p>可以证明</p>
+<script type="math/tex; mode=display">
+\begin{aligned}(A, B) \text { controllable } & \Leftrightarrow Q(t)>0 \text { for all } t>0 \\ & \Leftrightarrow Q(s)>0 \text { for some } s>0 \end{aligned}</script><p>实际上，对任意$t&gt;0$，我们有$\operatorname{range}(Q(t))=\mathcal{R}$</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">Doraemonzzz</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="http://doraemonzzz.com/2019/08/05/EE263%20Lecture%2019%20Controllability%20and%20state%20transfer/">http://doraemonzzz.com/2019/08/05/EE263%20Lecture%2019%20Controllability%20and%20state%20transfer/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://doraemonzzz.com" target="_blank">Doraemonzzz</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/EE263/">EE263</a></div><div class="post_share"><div class="social-share" data-image="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2019/08/06/EE261%20Problem%20Set%205/"><img class="prev-cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">EE261 Problem Set 5</div></div></a></div><div class="next-post pull-right"><a href="/2019/08/05/EE261%20Problem%20Set%204/"><img class="next-cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">EE261 Problem Set 4</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span> 相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2019/05/13/EE263 Homework 1/" title="EE263 Homework 1"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2019-05-13</div><div class="title">EE263 Homework 1</div></div></a></div><div><a href="/2019/05/23/EE263 Homework 2/" title="EE263 Homework 2"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2019-05-23</div><div class="title">EE263 Homework 2</div></div></a></div><div><a href="/2019/05/26/EE263 Homework 3/" title="EE263 Homework 3"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2019-05-26</div><div class="title">EE263 Homework 3</div></div></a></div><div><a href="/2019/06/27/EE263 Homework 5/" title="EE263 Homework 5"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2019-06-27</div><div class="title">EE263 Homework 5</div></div></a></div><div><a href="/2019/06/29/EE263 Homework 6/" title="EE263 Homework 6"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2019-06-29</div><div class="title">EE263 Homework 6</div></div></a></div><div><a href="/2019/07/03/EE263 Homework 7/" title="EE263 Homework 7"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2019-07-03</div><div class="title">EE263 Homework 7</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="card-info-avatar is-center"><img class="avatar-img" src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/><div class="author-info__name">Doraemonzzz</div><div class="author-info__description">个人博客，主要记录有关机器学习，数学以及计算机科学的笔记</div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">610</div></a></div><div class="card-info-data-item is-center"><a href="/tags/"><div class="headline">标签</div><div class="length-num">59</div></a></div><div class="card-info-data-item is-center"><a href="/categories/"><div class="headline">分类</div><div class="length-num">23</div></a></div></div><a class="button--animated" id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/Doraemonzzz" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="/doraemon_zzz@163.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn card-announcement-animation"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8F%AF%E6%8E%A7%E6%80%A7%E7%B3%BB%E7%BB%9F"><span class="toc-number">1.</span> <span class="toc-text">可控性系统</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%B8%80%E8%88%AC%E7%9A%84%E7%8A%B6%E6%80%81%E8%BD%AC%E7%A7%BB"><span class="toc-number">2.</span> <span class="toc-text">一般的状态转移</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8F%AF%E8%BE%BE%E6%80%A7%E7%9A%84%E6%9C%80%E5%B0%8F%E8%8C%83%E6%95%B0%E8%BE%93%E5%85%A5"><span class="toc-number">3.</span> <span class="toc-text">可达性的最小范数输入</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%97%A0%E9%99%90%E6%97%B6%E9%97%B4%E7%9A%84%E6%9C%80%E5%B0%8F%E8%83%BD%E9%87%8F"><span class="toc-number">4.</span> <span class="toc-text">无限时间的最小能量</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%BF%9E%E7%BB%AD%E6%97%B6%E9%97%B4%E7%9A%84%E5%8F%AF%E8%BE%BE%E6%80%A7"><span class="toc-number">5.</span> <span class="toc-text">连续时间的可达性</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%84%89%E5%86%B2%E8%BE%93%E5%85%A5"><span class="toc-number">6.</span> <span class="toc-text">脉冲输入</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BE%8B%E5%AD%90"><span class="toc-number">7.</span> <span class="toc-text">例子</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%BF%9E%E7%BB%AD%E6%97%B6%E9%97%B4%E5%8F%AF%E8%BE%BE%E6%80%A7%E7%9A%84%E6%9C%80%E5%B0%8F%E8%8C%83%E6%95%B0%E8%BE%93%E5%85%A5"><span class="toc-number">8.</span> <span class="toc-text">连续时间可达性的最小范数输入</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2021/06/06/2021-6-6-%E7%AE%97%E6%B3%95%E6%A6%82%E8%AE%BA(DPV)%E4%B9%A0%E9%A2%98%E8%A7%A3%E7%AD%94%E2%80%94%E2%80%94%E7%AC%AC3%E7%AB%A0-%E5%9B%BE%E7%9A%84%E5%88%86%E8%A7%A3/" title="算法概论(DPV)习题解答——第3章 图的分解"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="算法概论(DPV)习题解答——第3章 图的分解"/></a><div class="content"><a class="title" href="/2021/06/06/2021-6-6-%E7%AE%97%E6%B3%95%E6%A6%82%E8%AE%BA(DPV)%E4%B9%A0%E9%A2%98%E8%A7%A3%E7%AD%94%E2%80%94%E2%80%94%E7%AC%AC3%E7%AB%A0-%E5%9B%BE%E7%9A%84%E5%88%86%E8%A7%A3/" title="算法概论(DPV)习题解答——第3章 图的分解">算法概论(DPV)习题解答——第3章 图的分解</a><time datetime="2021-06-06T14:35:00.000Z" title="发表于 2021-06-06 22:35:00">2021-06-06</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/06/06/2021-6-6-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E7%AC%AC5%E7%AB%A0-%E4%B9%A0%E9%A2%98%E8%A7%A3%E6%9E%90/" title="深入理解计算机系统 第5章 习题解析"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="深入理解计算机系统 第5章 习题解析"/></a><div class="content"><a class="title" href="/2021/06/06/2021-6-6-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E7%AC%AC5%E7%AB%A0-%E4%B9%A0%E9%A2%98%E8%A7%A3%E6%9E%90/" title="深入理解计算机系统 第5章 习题解析">深入理解计算机系统 第5章 习题解析</a><time datetime="2021-06-06T07:23:00.000Z" title="发表于 2021-06-06 15:23:00">2021-06-06</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/06/05/2021-6-5-Stanford-Compiler-PA5%E7%BF%BB%E8%AF%91/" title="Stanford Compiler PA5翻译"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Stanford Compiler PA5翻译"/></a><div class="content"><a class="title" href="/2021/06/05/2021-6-5-Stanford-Compiler-PA5%E7%BF%BB%E8%AF%91/" title="Stanford Compiler PA5翻译">Stanford Compiler PA5翻译</a><time datetime="2021-06-05T06:12:00.000Z" title="发表于 2021-06-05 14:12:00">2021-06-05</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/06/04/2021-6-4-Stanford-Compiler-PA4%E7%BF%BB%E8%AF%91/" title="Stanford Compiler PA4翻译"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Stanford Compiler PA4翻译"/></a><div class="content"><a class="title" href="/2021/06/04/2021-6-4-Stanford-Compiler-PA4%E7%BF%BB%E8%AF%91/" title="Stanford Compiler PA4翻译">Stanford Compiler PA4翻译</a><time datetime="2021-06-03T16:17:00.000Z" title="发表于 2021-06-04 00:17:00">2021-06-04</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/06/03/2021-6-3-%E5%B7%A7%E5%A6%99%E7%9A%84Y%E8%BF%90%E7%AE%97%E7%AC%A6/" title="巧妙的Y运算符"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="巧妙的Y运算符"/></a><div class="content"><a class="title" href="/2021/06/03/2021-6-3-%E5%B7%A7%E5%A6%99%E7%9A%84Y%E8%BF%90%E7%AE%97%E7%AC%A6/" title="巧妙的Y运算符">巧妙的Y运算符</a><time datetime="2021-06-03T00:54:00.000Z" title="发表于 2021-06-03 08:54:00">2021-06-03</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2021 By Doraemonzzz</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><div class="js-pjax"><script>if (!window.MathJax) {
+  window.MathJax = {
+    loader: {
+      source: {
+        '[tex]/amsCd': '[tex]/amscd'
+      }
+    },
+    tex: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]],
+      tags: 'ams'
+    },
+    options: {
+      renderActions: {
+        findScript: [10, doc => {
+          for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+            const display = !!node.type.match(/; *mode=display/)
+            const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+            const text = document.createTextNode('')
+            node.parentNode.replaceChild(text, node)
+            math.start = {node: text, delim: '', n: 0}
+            math.end = {node: text, delim: '', n: 0}
+            doc.math.push(math)
+          }
+        }, ''],
+        addClass: [200,() => {
+          document.querySelectorAll('mjx-container:not([display=\'true\']').forEach( node => {
+            const target = node.parentNode
+            if (!target.classList.contains('has-jax')) {
+              target.classList.add('mathjax-overflow')
+            }
+          })
+        }, '', false]
+      }
+    }
+  }
+  
+  const script = document.createElement('script')
+  script.src = 'https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js'
+  script.id = 'MathJax-script'
+  script.async = true
+  document.head.appendChild(script)
+} else {
+  MathJax.startup.document.state(0)
+  MathJax.texReset()
+  MathJax.typeset()
+}</script></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

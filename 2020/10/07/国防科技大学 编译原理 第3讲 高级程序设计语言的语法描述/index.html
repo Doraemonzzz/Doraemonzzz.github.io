@@ -1,0 +1,567 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>国防科技大学 编译原理 第3讲 高级程序设计语言的语法描述 | Doraemonzzz</title><meta name="keywords" content="国防科技大学编译原理"><meta name="author" content="Doraemonzzz"><meta name="copyright" content="Doraemonzzz"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="课程主页： https:&#x2F;&#x2F;www.icourse163.org&#x2F;course&#x2F;NUDT-1003101005?tid&#x3D;1460976445 这次回顾第3讲：高级程序设计语言的语法描述。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="国防科技大学 编译原理 第3讲 高级程序设计语言的语法描述">
+<meta property="og:url" content="http://doraemonzzz.com/2020/10/07/%E5%9B%BD%E9%98%B2%E7%A7%91%E6%8A%80%E5%A4%A7%E5%AD%A6%20%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86%20%E7%AC%AC3%E8%AE%B2%20%E9%AB%98%E7%BA%A7%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E8%AF%AD%E8%A8%80%E7%9A%84%E8%AF%AD%E6%B3%95%E6%8F%8F%E8%BF%B0/index.html">
+<meta property="og:site_name" content="Doraemonzzz">
+<meta property="og:description" content="课程主页： https:&#x2F;&#x2F;www.icourse163.org&#x2F;course&#x2F;NUDT-1003101005?tid&#x3D;1460976445 这次回顾第3讲：高级程序设计语言的语法描述。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg">
+<meta property="article:published_time" content="2020-10-07T13:01:00.000Z">
+<meta property="article:modified_time" content="2021-01-17T15:05:27.371Z">
+<meta property="article:author" content="Doraemonzzz">
+<meta property="article:tag" content="国防科技大学编译原理">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="http://doraemonzzz.com/2020/10/07/%E5%9B%BD%E9%98%B2%E7%A7%91%E6%8A%80%E5%A4%A7%E5%AD%A6%20%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86%20%E7%AC%AC3%E8%AE%B2%20%E9%AB%98%E7%BA%A7%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E8%AF%AD%E8%A8%80%E7%9A%84%E8%AF%AD%E6%B3%95%E6%8F%8F%E8%BF%B0/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"prismjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    jQuery: 'https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js',
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+    },
+    fancybox: {
+      js: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isanchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '国防科技大学 编译原理 第3讲 高级程序设计语言的语法描述',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2021-01-17 23:05:27'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    })(window)</script><meta name="generator" content="Hexo 5.4.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="author-avatar"><img class="avatar-img" src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">文章</div><div class="length-num">610</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">标签</div><div class="length-num">59</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/categories/"><div class="headline">分类</div><div class="length-num">23</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">Doraemonzzz</a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">国防科技大学 编译原理 第3讲 高级程序设计语言的语法描述</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2020-10-07T13:01:00.000Z" title="发表于 2020-10-07 21:01:00">2020-10-07</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2021-01-17T15:05:27.371Z" title="更新于 2021-01-17 23:05:27">2021-01-17</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/">编译原理</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="国防科技大学 编译原理 第3讲 高级程序设计语言的语法描述"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p>课程主页：</p>
+<p><a target="_blank" rel="noopener" href="https://www.icourse163.org/course/NUDT-1003101005?tid=1460976445">https://www.icourse163.org/course/NUDT-1003101005?tid=1460976445</a></p>
+<p>这次回顾第3讲：高级程序设计语言的语法描述。</p>
+<span id="more"></span>
+<h3 id="第3讲-高级程序设计语言的语法描述"><a href="#第3讲-高级程序设计语言的语法描述" class="headerlink" title="第3讲 高级程序设计语言的语法描述"></a>第3讲 高级程序设计语言的语法描述</h3><h4 id="文法"><a href="#文法" class="headerlink" title="文法"></a>文法</h4><ul>
+<li><p>文法：描述语言的语法结构的形式规则</p>
+</li>
+<li><p>假设我们有如下文法：</p>
+</li>
+<li><p>```<br>&lt;句子&gt; -&gt; &lt;主语&gt;&lt;谓语&gt;&lt;间接宾语&gt;&lt;直接宾语&gt;<br>&lt;主语&gt; -&gt; &lt;代词&gt;<br>&lt;谓语&gt; -&gt; &lt;动词&gt;<br>&lt;间接宾语&gt; -&gt; &lt;代词&gt;<br>&lt;直接宾语&gt; -&gt; &lt;冠词&gt; &lt;名词&gt;<br>&lt;代词&gt; -&gt; He<br>&lt;代词&gt; -&gt; me<br>&lt;名词&gt; -&gt; book<br>&lt;冠词&gt; -&gt; a<br>&lt;动词&gt; -&gt; gave</p>
+<pre class="line-numbers language-none"><code class="language-none">
+- 考虑句子：He gave me a book.
+
+- &#96;&#96;&#96;
+    &lt;句子&gt;
+  &#x3D;&gt;&lt;主语&gt;&lt;谓语&gt;&lt;间接宾语&gt;&lt;直接宾语&gt;
+  &#x3D;&gt;&lt;代词&gt;&lt;谓语&gt;&lt;间接宾语&gt;&lt;直接宾语&gt;
+  &#x3D;&gt;He &lt;谓语&gt;&lt;间接宾语&gt;&lt;直接宾语&gt;
+  &#x3D;&gt;He &lt;动词&gt; &lt;间接宾语&gt;&lt;直接宾语&gt;
+  &#x3D;&gt;He gave &lt;间接宾语&gt;&lt;直接宾语&gt;
+  &#x3D;&gt;He gave &lt;代词&gt; &lt;直接宾语&gt;
+  &#x3D;&gt;He gave me &lt;直接宾语&gt;
+  &#x3D;&gt;He gave me &lt;冠词&gt;&lt;名词&gt;
+  &#x3D;&gt;He gave me a &lt;名词&gt;
+  &#x3D;&gt;He gave me a book<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+</li>
+</ul>
+<h4 id="语法描述的几个基本概念"><a href="#语法描述的几个基本概念" class="headerlink" title="语法描述的几个基本概念"></a>语法描述的几个基本概念</h4><ul>
+<li><p>字母表：一个有穷字符集，记为$\Sigma$</p>
+</li>
+<li><p>字母表中每个元素称为字符</p>
+</li>
+<li><p>$\Sigma$上的字(也叫字符串) 是指由$\Sigma$中的字符所构成的一个有穷序列</p>
+</li>
+<li><p>不包含任何字符的序列称为空字，记为$\varepsilon$</p>
+</li>
+<li><p>用$\Sigma^{\star}$表示$\Sigma$上的所有字的全体，包含空字$\varepsilon$</p>
+<ul>
+<li>例如: 设 $\Sigma=\{a,b\}$，则</li>
+</ul>
+</li>
+</ul>
+<script type="math/tex; mode=display">
+  \Sigma^{\star}=\{\varepsilon ,a,b,aa,ab,ba,bb,aaa,\ldots\}</script><ul>
+<li><p>$\Sigma^{\star}$的子集$U$和$V$的连接（积）定义为</p>
+<script type="math/tex; mode=display">
+UV＝\{ \alpha\beta | \alpha \in U \& \beta\in V \}</script></li>
+<li><p>示例：$U=\{a,aa\},V=\{b,bb\},UV=\{ab,abb,aab,aabb\}$</p>
+</li>
+<li><p>$V$自身的$n$次积记为</p>
+<script type="math/tex; mode=display">
+V^n=\underbrace{V\ldots V}_{n个}</script></li>
+<li><p>$V^0=\{\varepsilon\}$</p>
+</li>
+<li><p>$V^{\star}$是$V$的闭包：$V^\star =V^0\cup V^1\cup V^2\ldots$</p>
+</li>
+<li><p>$V^{+}$是$V$的正规闭包：$V^+=VV^\star $</p>
+<ul>
+<li><p>例子：</p>
+<script type="math/tex; mode=display">
+U=\{a,aa\}</script></li>
+<li><p>那么：</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+U^{\star}&=\{\varepsilon, a,aa,aaa,aaaa,\ldots\}\\
+U^{+}&=\{a,aa,aaa,aaaa,\ldots\}
+\end{aligned}</script></li>
+</ul>
+</li>
+</ul>
+<h4 id="上下文无关文法"><a href="#上下文无关文法" class="headerlink" title="上下文无关文法"></a>上下文无关文法</h4><ul>
+<li><p>上下文无关文法$G$是一个四元组</p>
+<script type="math/tex; mode=display">
+G=(V_T,V_N,S,P)</script></li>
+<li><p>其中</p>
+<ul>
+<li>$V_T$：终结符(Terminal)集合(非空)</li>
+<li>$V_N$：非终结符(Noterminal)集合(非空)，且$V_T \cap V_N=\varnothing$</li>
+<li>$S$：文法的开始符号，$S\in V_N$</li>
+<li>$P$：产生式集合(有限)，每个产生式形式为<ul>
+<li>$P\to \alpha， P\in V_N， \alpha∈ (V_T \cup V_N)^{\star}$</li>
+</ul>
+</li>
+<li>开始符$S$至少必须在某个产生式的左部出现一次</li>
+</ul>
+</li>
+<li><p>上下文无关文法还有一种描述形式，称为巴科斯范式(BNF)</p>
+<ul>
+<li>“ →”用“::=”表示</li>
+</ul>
+</li>
+</ul>
+<h5 id="例子"><a href="#例子" class="headerlink" title="例子"></a>例子</h5><p>定义只含$+，\star$的算术表达式的文法</p>
+<script type="math/tex; mode=display">
+G=< \{i,+,\star,(,)\}，\{E\},E,P ></script><p>其中，$P$的定义如下：</p>
+<ul>
+<li>$E → i$</li>
+<li>$E → E+E$</li>
+<li>$E → E\star E$</li>
+<li>$E → (E)$</li>
+</ul>
+<h5 id="一些约定"><a href="#一些约定" class="headerlink" title="一些约定"></a>一些约定</h5><ul>
+<li><p>约定</p>
+<script type="math/tex; mode=display">
+\begin{array}{l}
+P \rightarrow \alpha_{1} \\
+P \rightarrow \alpha_{2} \quad \overset {\text { 可缩写为 }}{\Rightarrow} \\
+\ldots \\
+{P} \rightarrow \alpha_{\mathrm{n}}
+\end{array} P \rightarrow \alpha_{1}\left|\alpha_{2}\right| \ldots \mid \alpha_{\mathrm{n}}</script></li>
+<li><p>其中，“$|$”读成“或”，称$α_i$为$P$的一个候选式</p>
+<ul>
+<li>表示一个文法时，通常只给出开始符号和产生式</li>
+</ul>
+</li>
+<li><p>之前的文法可以简写为</p>
+<script type="math/tex; mode=display">
+G(E)： E → i | E+E | E\star E | (E)</script></li>
+</ul>
+<h4 id="文法生成语言"><a href="#文法生成语言" class="headerlink" title="文法生成语言"></a>文法生成语言</h4><h5 id="推导"><a href="#推导" class="headerlink" title="推导"></a>推导</h5><ul>
+<li><p>定义：称$αAβ$直接推出$αγβ$，即</p>
+<script type="math/tex; mode=display">
+αAβ\Rightarrow \alphaγβ</script><p>仅当$A → γ$是一个产生式，且$\alpha,β∈ (V_T \cup V_N)^{\star}$。</p>
+</li>
+<li><p>如果$α_1 \Rightarrow α_2 \Rightarrow\ldots \Rightarrow α_n$，则我们称这个序列是从$α_1$到$α_n$的一个推导。若存在一个从$α_1$到$α_n$的推导，则称$α_1$可以推导出$α_n$。</p>
+</li>
+<li><p>对文法$G(E)： E → i | E+E | E\star E | (E)$</p>
+<script type="math/tex; mode=display">
+E\Rightarrow (E)\Rightarrow (E+E)\Rightarrow (i+E)\Rightarrow (i+i)</script></li>
+<li><p>$\alpha_1 \overset{\star}\Rightarrow \alpha_n$：从$α_1$出发，经过$0$步或若干步推出$α_n$</p>
+</li>
+<li><p>$\alpha_1 \overset{+}\Rightarrow \alpha_n$：从$α_1$出发，经过$1$步或若干步推出$α_n$</p>
+</li>
+<li><p>$\alpha ⇒ 𝛽$ ：即$𝛼 = 𝛽$或$\alpha \overset{+}\Rightarrow \beta$</p>
+<ul>
+<li>&lt;句子&gt; $ \overset{\star}\Rightarrow$ He gave me a book</li>
+<li>&lt;句子&gt; $ \overset{+}\Rightarrow$ He gave me a book</li>
+<li>He gave &lt;间接宾语&gt;&lt;直接宾语&gt;$ \overset{+}\Rightarrow$He gave me &lt;冠词&gt; &lt;名词&gt;</li>
+</ul>
+</li>
+</ul>
+<p>之前例子的推导过程：</p>
+<p><img src="https://github.com/Doraemonzzz/md-photo/blob/master/%E5%9B%BD%E9%98%B2%E7%A7%91%E6%8A%80%E5%A4%A7%E5%AD%A6%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/%E7%AC%AC3%E8%AE%B2/2020100701.jpg?raw=true" alt=""></p>
+<h5 id="句型、句子和语言"><a href="#句型、句子和语言" class="headerlink" title="句型、句子和语言"></a>句型、句子和语言</h5><ul>
+<li><p>假定$G$是一个文法，$S$是它的开始符号。</p>
+</li>
+<li><p>如果$S \overset{\star}\Rightarrow \alpha$，则称$α$是一个句型。</p>
+</li>
+<li><p>仅含终结符号的句型是一个句子。</p>
+</li>
+<li><p>文法$G$所产生的句子的全体是一个语言，记为$L(G)$:</p>
+<script type="math/tex; mode=display">
+L(G)=\{\alpha | S\overset{+}\Rightarrow \alpha, \alpha\in V_T^{\star}\}</script></li>
+</ul>
+<h6 id="例子-1"><a href="#例子-1" class="headerlink" title="例子"></a>例子</h6><p>证明$(i \star i+i)$是文法</p>
+<script type="math/tex; mode=display">
+G(E)： E → i | E+E | E\star E | (E)</script><p>的一个句子。</p>
+<p>证明：</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+E & \Rightarrow(E) \\
+& \Rightarrow(E+E) \\
+& \Rightarrow\left(E{\star} E+E\right) \\
+& \Rightarrow\left(i{\star} E+E\right) \\
+& \Rightarrow\left(i{\star} i+E\right) \\
+& \Rightarrow\left(i{\star} i+i\right)
+\end{aligned}</script><p>所以$(i+i)$是文法$G$的句子，$E,(E),(E\star E+E),\ldots, (i\star i+i)$是句型。</p>
+<h5 id="从文法到语言"><a href="#从文法到语言" class="headerlink" title="从文法到语言"></a>从文法到语言</h5><h6 id="例1"><a href="#例1" class="headerlink" title="例1"></a>例1</h6><ul>
+<li>设文法<script type="math/tex; mode=display">
+G_1(A)：
+A → c | Ab</script></li>
+<li><p>$G_1(A)$产生的语言是什么?</p>
+<ul>
+<li><p>以$c$开头，后继若干个$b$</p>
+<script type="math/tex; mode=display">
+L(G_1)=\{c,cb,cbb,\ldots \}</script></li>
+<li><script type="math/tex; mode=display">
+\begin{aligned}
+{A} & \Rightarrow {c} \\
+{A} & \Rightarrow {Ab} \\
+& \Rightarrow {cb} \\
+{A} & \Rightarrow {Ab} \\
+& \Rightarrow {Abb} \\
+& \Rightarrow {Abbb} \\
+& \Rightarrow \ldots \\
+& \Rightarrow {Ab} \ldots {b} \\
+& \Rightarrow {cb} \ldots {b}
+\end{aligned}</script></li>
+</ul>
+</li>
+</ul>
+<h6 id="例2"><a href="#例2" class="headerlink" title="例2"></a>例2</h6><ul>
+<li><p>设文法</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+G_2(S):
+&S \to AB\\
+&A \to aA|a\\
+&B \to bB|b
+\end{aligned}</script></li>
+<li><p>$G_2(S)$产生的语言是什么?</p>
+<script type="math/tex; mode=display">
+L(G_2)=\{a^mb^n|m,n>0\}</script></li>
+<li><script type="math/tex; mode=display">
+\begin{aligned}
+S & \Rightarrow A B \\
+A & \Rightarrow a \\
+A & \Rightarrow a A \\
+& \Rightarrow a a A \\
+& \Rightarrow a a a A \\
+& \Rightarrow \ldots \\
+& \Rightarrow a \ldots a A \\
+& \Rightarrow a \ldots a a \\
+
+B & \Rightarrow b  \\
+B & \Rightarrow b B \\
+& \Rightarrow b b B \\
+& \Rightarrow b b b B \\
+& \Rightarrow \ldots \\
+& \Rightarrow b \ldots b B\\
+& \Rightarrow b \ldots bb 
+\end{aligned}</script></li>
+</ul>
+<h6 id="例3"><a href="#例3" class="headerlink" title="例3"></a>例3</h6><p>请给出产生语言为$\{a^nb^n|n≥1\}$的文法</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+G_3(S):& S\to aSb\\
+&S\to ab
+
+\end{aligned}</script><h6 id="例4"><a href="#例4" class="headerlink" title="例4"></a>例4</h6><p>请给出产生语言为$\{a^mb^n|1≤n≤m≤2n\}$的文法</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+G_4(S):& S\to  ab | aab\\
+&S → aSb | aaSb
+
+\end{aligned}</script><h4 id="推导与语法树"><a href="#推导与语法树" class="headerlink" title="推导与语法树"></a>推导与语法树</h4><h5 id="最左推导和最右推导"><a href="#最左推导和最右推导" class="headerlink" title="最左推导和最右推导"></a>最左推导和最右推导</h5><ul>
+<li><p>从一个句型到另一个句型的推导往往不唯一</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+E+E&\Rightarrow i+E\Rightarrow i +i\\
+E+E&\Rightarrow E+i\Rightarrow i +i
+\end{aligned}</script></li>
+<li><p>最左推导：任何一步$\alpha \Rightarrow \beta$都是对$α$中的最左非终结符进行替换</p>
+</li>
+<li><p>最右推导：任何一步$\alpha \Rightarrow \beta$都是对$α$中的最右非终结符进行替换</p>
+</li>
+</ul>
+<h5 id="语法树"><a href="#语法树" class="headerlink" title="语法树"></a>语法树</h5><ul>
+<li>用一张图表示一个句型的推导，称为语法树</li>
+<li>一棵语法树是不同推导过程的共性抽象</li>
+</ul>
+<p><img src="https://github.com/Doraemonzzz/md-photo/blob/master/%E5%9B%BD%E9%98%B2%E7%A7%91%E6%8A%80%E5%A4%A7%E5%AD%A6%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/%E7%AC%AC3%E8%AE%B2/2020100702.jpg?raw=true" alt=""></p>
+<h5 id="语法树与二义性-ambiguity"><a href="#语法树与二义性-ambiguity" class="headerlink" title="语法树与二义性(ambiguity)"></a>语法树与二义性(ambiguity)</h5><ul>
+<li><p>一个句型是否只对应唯一一棵语法树？考虑如下例子：</p>
+</li>
+<li><p>$G(E)： E → i | E+E | E\star E | (E)$是二义的(ambiguous)</p>
+</li>
+<li><p>$(i\star i+i)$对应了两棵语法树</p>
+<p><img src="https://github.com/Doraemonzzz/md-photo/blob/master/%E5%9B%BD%E9%98%B2%E7%A7%91%E6%8A%80%E5%A4%A7%E5%AD%A6%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/%E7%AC%AC3%E8%AE%B2/2020100703.jpg?raw=true" alt=""></p>
+</li>
+</ul>
+<p>具体定义：</p>
+<ul>
+<li><p>文法的二义性：如果一个文法存在某个句子对应两棵不同的语法树，则说这个文法是二义的</p>
+<ul>
+<li><p>例如$G(E)： E → i | E+E | E\star E | (E)$</p>
+</li>
+<li><p>可以将其改写为无二义文法$G’(E)$：</p>
+<p><img src="https://github.com/Doraemonzzz/md-photo/blob/master/%E5%9B%BD%E9%98%B2%E7%A7%91%E6%8A%80%E5%A4%A7%E5%AD%A6%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/%E7%AC%AC3%E8%AE%B2/2020100704.jpg?raw=true" alt=""></p>
+</li>
+</ul>
+</li>
+<li><p>语言的二义性：一个语言是二义的，如果对它不存在无二义的文法</p>
+<ul>
+<li>对于语言$L$，可能存在$G$和$G’$，使得$L(G)=L(G’)=L$，有可能其中一个文法为二义的， 另一个为无二义的</li>
+<li>例如John saw Mary in a boat.是二义的，因为in a boat可以修饰Mary或者John。</li>
+</ul>
+</li>
+<li><p>二义性问题是不可判定问题，即不存在一个算法，它能在有限步骤内，确切地判定一个文法是否是二义的</p>
+</li>
+<li><p>但可以找到一组无二义文法的充分条件</p>
+</li>
+</ul>
+<h4 id="形式语言鸟瞰"><a href="#形式语言鸟瞰" class="headerlink" title="形式语言鸟瞰"></a>形式语言鸟瞰</h4><ul>
+<li><p>乔姆斯基(Chomsky)是美国当代有重大影响的语言学家</p>
+</li>
+<li><p>乔姆斯基于1956年建立形式语言体系，他把文法分成四种类型：$0,1,2,3$型</p>
+</li>
+<li><p>与上下文无关文法一样，它们都由四部分组成，但对产生式的限制有所不同</p>
+<ul>
+<li><p>$G=(V_T，V_N，S，P)$</p>
+<ul>
+<li><p>$V_T$：终结符(Terminal)集合(非空)</p>
+</li>
+<li><p>$V_N$：非终结符(Noterminal)集合(非空)，且$V_T \cap V_N=\varnothing$</p>
+</li>
+<li><p>$S$：文法的开始符号，$S\in V_N$</p>
+</li>
+<li><p>$P$：产生式集合(有限)</p>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>四种文法分别如下：</p>
+<ul>
+<li>0型(短语文法，图灵机)<ul>
+<li>产生式形如：$α → β$</li>
+<li>其中：$\alpha\in (V_T ∪ V_N)^{\star}$且至少含有一个非终结符；$\beta\in (V_T ∪ V_N)^{\star}$</li>
+</ul>
+</li>
+<li>1型(上下文有关文法，线性界限自动机)<ul>
+<li>产生式形如：$α → β$</li>
+<li>其中：$|α| \le |β|$，仅$S→\varepsilon $例外</li>
+</ul>
+</li>
+<li>2型(上下文无关文法，非确定下推自动机)<ul>
+<li>产生式形如： $A → β$</li>
+<li>其中：$A∈ V_N；β∈ (V_T \cup V_N)^\star$</li>
+</ul>
+</li>
+<li>3型(正规文法，有限自动机)<ul>
+<li>产生式形如：$A → αB$或$A → α$<ul>
+<li>其中：$α∈ V_T^{\star};A,B∈V_N$（右线性文法）</li>
+</ul>
+</li>
+<li>产生式形如：$A → Bα$或$A → α$<ul>
+<li>其中：$α∈ V_T^{\star};A,B∈V_N$（左线性文法）</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h5 id="四种类型文法描述能力比较"><a href="#四种类型文法描述能力比较" class="headerlink" title="四种类型文法描述能力比较"></a>四种类型文法描述能力比较</h5><p><img src="https://github.com/Doraemonzzz/md-photo/blob/master/%E5%9B%BD%E9%98%B2%E7%A7%91%E6%8A%80%E5%A4%A7%E5%AD%A6%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/%E7%AC%AC3%E8%AE%B2/2020100705.jpg?raw=true" alt=""></p>
+<h5 id="上下文无关文法与上下文有关文法"><a href="#上下文无关文法与上下文有关文法" class="headerlink" title="上下文无关文法与上下文有关文法"></a>上下文无关文法与上下文有关文法</h5><h6 id="例1-1"><a href="#例1-1" class="headerlink" title="例1"></a>例1</h6><p>$L_5 =\{a^nb^n|n≥1\}$不能由正规文法(3型)产生，但可由上下文无关文法产生</p>
+<script type="math/tex; mode=display">
+G_5(S)：
+S → aSb| ab</script><h6 id="例2-1"><a href="#例2-1" class="headerlink" title="例2"></a>例2</h6><p>$L_6=\{a^n b^nc ^n|n≥1\}$不能由上下文无关文法产生，但可由上下文有关文法产生</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+G_6(S):
+&S \to aSBC| aBC\\
+&CB → BC\\
+&aB → ab\\
+&bB → bb\\
+&bC → bc\\
+&cC → cc
+\end{aligned}</script><p>推导例子：</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+&S\\
+\Rightarrow & aSBC\\
+\Rightarrow & aaSBCBC\\
+\Rightarrow &  aaaBCBCBC\\
+\Rightarrow &  aaaBBCCBC\\
+\Rightarrow &  aaaBBCBCC\\
+\Rightarrow &  aaaBBBCCC\\
+\Rightarrow &  aaabBBCCC\\
+\Rightarrow &  aaabbBCCC\\
+\Rightarrow &  aaabbbCCC\\
+\Rightarrow &  aaabbbcCC\\
+\Rightarrow &  aaabbbccC\\
+\Rightarrow &  aaabbbccc
+\end{aligned}</script><h4 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h4><ul>
+<li>程序设计语言不是上下文无关语言，甚至不是上下文有关语言</li>
+<li>$L_7=\{αcα| α∈\{a,b\}^\star \}$不能由上下文无关文法产生，甚至连上下文有关文法也不能产生，只能由$0$型文法产生<ul>
+<li>$L_7$对应了<ul>
+<li>标识符引用</li>
+<li>过程调用过程中，“形-实参数的对应性”(如个数，顺序和类型一致性)</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>对于现今程序设计语言，在编译程序中，仍然采用上下文无关文法来描述其语言结构<ul>
+<li>这是一种权衡</li>
+</ul>
+</li>
+</ul>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">Doraemonzzz</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="http://doraemonzzz.com/2020/10/07/%E5%9B%BD%E9%98%B2%E7%A7%91%E6%8A%80%E5%A4%A7%E5%AD%A6%20%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86%20%E7%AC%AC3%E8%AE%B2%20%E9%AB%98%E7%BA%A7%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E8%AF%AD%E8%A8%80%E7%9A%84%E8%AF%AD%E6%B3%95%E6%8F%8F%E8%BF%B0/">http://doraemonzzz.com/2020/10/07/%E5%9B%BD%E9%98%B2%E7%A7%91%E6%8A%80%E5%A4%A7%E5%AD%A6%20%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86%20%E7%AC%AC3%E8%AE%B2%20%E9%AB%98%E7%BA%A7%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E8%AF%AD%E8%A8%80%E7%9A%84%E8%AF%AD%E6%B3%95%E6%8F%8F%E8%BF%B0/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://doraemonzzz.com" target="_blank">Doraemonzzz</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E5%9B%BD%E9%98%B2%E7%A7%91%E6%8A%80%E5%A4%A7%E5%AD%A6%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/">国防科技大学编译原理</a></div><div class="post_share"><div class="social-share" data-image="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2020/10/08/%E5%9B%BD%E9%98%B2%E7%A7%91%E6%8A%80%E5%A4%A7%E5%AD%A6%20%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86%20%E7%AC%AC4%E8%AE%B2%20%E8%AF%8D%E6%B3%95%E5%88%86%E6%9E%901/"><img class="prev-cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">国防科技大学 编译原理 第4讲 词法分析1</div></div></a></div><div class="next-post pull-right"><a href="/2020/09/29/%E5%9B%BD%E9%98%B2%E7%A7%91%E6%8A%80%E5%A4%A7%E5%AD%A6%20%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86%20%E7%AC%AC2%E8%AE%B2%20%E9%AB%98%E7%BA%A7%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E8%AF%AD%E8%A8%80%E6%A6%82%E8%BF%B0/"><img class="next-cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">国防科技大学 编译原理 第2讲 高级程序设计语言概述</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span> 相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2020/11/04/国防科技大学 编译原理 第11讲 语法分析——自下而上分析2/" title="国防科技大学 编译原理 第11讲 语法分析——自下而上分析2"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-11-04</div><div class="title">国防科技大学 编译原理 第11讲 语法分析——自下而上分析2</div></div></a></div><div><a href="/2020/11/12/国防科技大学 编译原理 第12讲 语法分析——自下而上分析3/" title="国防科技大学 编译原理 第12讲 语法分析——自下而上分析3"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-11-12</div><div class="title">国防科技大学 编译原理 第12讲 语法分析——自下而上分析3</div></div></a></div><div><a href="/2020/11/22/国防科技大学 编译原理 第13讲 语法分析——自下而上分析4/" title="国防科技大学 编译原理 第13讲 语法分析——自下而上分析4"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-11-22</div><div class="title">国防科技大学 编译原理 第13讲 语法分析——自下而上分析4</div></div></a></div><div><a href="/2020/09/27/国防科技大学 编译原理 第1讲 引论/" title="国防科技大学 编译原理 第1讲 引论"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-09-27</div><div class="title">国防科技大学 编译原理 第1讲 引论</div></div></a></div><div><a href="/2020/09/29/国防科技大学 编译原理 第2讲 高级程序设计语言概述/" title="国防科技大学 编译原理 第2讲 高级程序设计语言概述"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-09-29</div><div class="title">国防科技大学 编译原理 第2讲 高级程序设计语言概述</div></div></a></div><div><a href="/2020/10/08/国防科技大学 编译原理 第4讲 词法分析1/" title="国防科技大学 编译原理 第4讲 词法分析1"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-10-08</div><div class="title">国防科技大学 编译原理 第4讲 词法分析1</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="card-info-avatar is-center"><img class="avatar-img" src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/><div class="author-info__name">Doraemonzzz</div><div class="author-info__description">个人博客，主要记录有关机器学习，数学以及计算机科学的笔记</div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">610</div></a></div><div class="card-info-data-item is-center"><a href="/tags/"><div class="headline">标签</div><div class="length-num">59</div></a></div><div class="card-info-data-item is-center"><a href="/categories/"><div class="headline">分类</div><div class="length-num">23</div></a></div></div><a class="button--animated" id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/Doraemonzzz" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="/doraemon_zzz@163.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn card-announcement-animation"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC3%E8%AE%B2-%E9%AB%98%E7%BA%A7%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E8%AF%AD%E8%A8%80%E7%9A%84%E8%AF%AD%E6%B3%95%E6%8F%8F%E8%BF%B0"><span class="toc-number">1.</span> <span class="toc-text">第3讲 高级程序设计语言的语法描述</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%96%87%E6%B3%95"><span class="toc-number">1.1.</span> <span class="toc-text">文法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%AF%AD%E6%B3%95%E6%8F%8F%E8%BF%B0%E7%9A%84%E5%87%A0%E4%B8%AA%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5"><span class="toc-number">1.2.</span> <span class="toc-text">语法描述的几个基本概念</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%B8%8A%E4%B8%8B%E6%96%87%E6%97%A0%E5%85%B3%E6%96%87%E6%B3%95"><span class="toc-number">1.3.</span> <span class="toc-text">上下文无关文法</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E4%BE%8B%E5%AD%90"><span class="toc-number">1.3.1.</span> <span class="toc-text">例子</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E4%B8%80%E4%BA%9B%E7%BA%A6%E5%AE%9A"><span class="toc-number">1.3.2.</span> <span class="toc-text">一些约定</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%96%87%E6%B3%95%E7%94%9F%E6%88%90%E8%AF%AD%E8%A8%80"><span class="toc-number">1.4.</span> <span class="toc-text">文法生成语言</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%8E%A8%E5%AF%BC"><span class="toc-number">1.4.1.</span> <span class="toc-text">推导</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%8F%A5%E5%9E%8B%E3%80%81%E5%8F%A5%E5%AD%90%E5%92%8C%E8%AF%AD%E8%A8%80"><span class="toc-number">1.4.2.</span> <span class="toc-text">句型、句子和语言</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#%E4%BE%8B%E5%AD%90-1"><span class="toc-number">1.4.2.1.</span> <span class="toc-text">例子</span></a></li></ol></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E4%BB%8E%E6%96%87%E6%B3%95%E5%88%B0%E8%AF%AD%E8%A8%80"><span class="toc-number">1.4.3.</span> <span class="toc-text">从文法到语言</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#%E4%BE%8B1"><span class="toc-number">1.4.3.1.</span> <span class="toc-text">例1</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#%E4%BE%8B2"><span class="toc-number">1.4.3.2.</span> <span class="toc-text">例2</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#%E4%BE%8B3"><span class="toc-number">1.4.3.3.</span> <span class="toc-text">例3</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#%E4%BE%8B4"><span class="toc-number">1.4.3.4.</span> <span class="toc-text">例4</span></a></li></ol></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%8E%A8%E5%AF%BC%E4%B8%8E%E8%AF%AD%E6%B3%95%E6%A0%91"><span class="toc-number">1.5.</span> <span class="toc-text">推导与语法树</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%9C%80%E5%B7%A6%E6%8E%A8%E5%AF%BC%E5%92%8C%E6%9C%80%E5%8F%B3%E6%8E%A8%E5%AF%BC"><span class="toc-number">1.5.1.</span> <span class="toc-text">最左推导和最右推导</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E8%AF%AD%E6%B3%95%E6%A0%91"><span class="toc-number">1.5.2.</span> <span class="toc-text">语法树</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E8%AF%AD%E6%B3%95%E6%A0%91%E4%B8%8E%E4%BA%8C%E4%B9%89%E6%80%A7-ambiguity"><span class="toc-number">1.5.3.</span> <span class="toc-text">语法树与二义性(ambiguity)</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%BD%A2%E5%BC%8F%E8%AF%AD%E8%A8%80%E9%B8%9F%E7%9E%B0"><span class="toc-number">1.6.</span> <span class="toc-text">形式语言鸟瞰</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%9B%9B%E7%A7%8D%E7%B1%BB%E5%9E%8B%E6%96%87%E6%B3%95%E6%8F%8F%E8%BF%B0%E8%83%BD%E5%8A%9B%E6%AF%94%E8%BE%83"><span class="toc-number">1.6.1.</span> <span class="toc-text">四种类型文法描述能力比较</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E4%B8%8A%E4%B8%8B%E6%96%87%E6%97%A0%E5%85%B3%E6%96%87%E6%B3%95%E4%B8%8E%E4%B8%8A%E4%B8%8B%E6%96%87%E6%9C%89%E5%85%B3%E6%96%87%E6%B3%95"><span class="toc-number">1.6.2.</span> <span class="toc-text">上下文无关文法与上下文有关文法</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#%E4%BE%8B1-1"><span class="toc-number">1.6.2.1.</span> <span class="toc-text">例1</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#%E4%BE%8B2-1"><span class="toc-number">1.6.2.2.</span> <span class="toc-text">例2</span></a></li></ol></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%B0%8F%E7%BB%93"><span class="toc-number">1.7.</span> <span class="toc-text">小结</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2021/06/06/2021-6-6-%E7%AE%97%E6%B3%95%E6%A6%82%E8%AE%BA(DPV)%E4%B9%A0%E9%A2%98%E8%A7%A3%E7%AD%94%E2%80%94%E2%80%94%E7%AC%AC3%E7%AB%A0-%E5%9B%BE%E7%9A%84%E5%88%86%E8%A7%A3/" title="算法概论(DPV)习题解答——第3章 图的分解"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="算法概论(DPV)习题解答——第3章 图的分解"/></a><div class="content"><a class="title" href="/2021/06/06/2021-6-6-%E7%AE%97%E6%B3%95%E6%A6%82%E8%AE%BA(DPV)%E4%B9%A0%E9%A2%98%E8%A7%A3%E7%AD%94%E2%80%94%E2%80%94%E7%AC%AC3%E7%AB%A0-%E5%9B%BE%E7%9A%84%E5%88%86%E8%A7%A3/" title="算法概论(DPV)习题解答——第3章 图的分解">算法概论(DPV)习题解答——第3章 图的分解</a><time datetime="2021-06-06T14:35:00.000Z" title="发表于 2021-06-06 22:35:00">2021-06-06</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/06/06/2021-6-6-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E7%AC%AC5%E7%AB%A0-%E4%B9%A0%E9%A2%98%E8%A7%A3%E6%9E%90/" title="深入理解计算机系统 第5章 习题解析"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="深入理解计算机系统 第5章 习题解析"/></a><div class="content"><a class="title" href="/2021/06/06/2021-6-6-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E7%AC%AC5%E7%AB%A0-%E4%B9%A0%E9%A2%98%E8%A7%A3%E6%9E%90/" title="深入理解计算机系统 第5章 习题解析">深入理解计算机系统 第5章 习题解析</a><time datetime="2021-06-06T07:23:00.000Z" title="发表于 2021-06-06 15:23:00">2021-06-06</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/06/05/2021-6-5-Stanford-Compiler-PA5%E7%BF%BB%E8%AF%91/" title="Stanford Compiler PA5翻译"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Stanford Compiler PA5翻译"/></a><div class="content"><a class="title" href="/2021/06/05/2021-6-5-Stanford-Compiler-PA5%E7%BF%BB%E8%AF%91/" title="Stanford Compiler PA5翻译">Stanford Compiler PA5翻译</a><time datetime="2021-06-05T06:12:00.000Z" title="发表于 2021-06-05 14:12:00">2021-06-05</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/06/04/2021-6-4-Stanford-Compiler-PA4%E7%BF%BB%E8%AF%91/" title="Stanford Compiler PA4翻译"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Stanford Compiler PA4翻译"/></a><div class="content"><a class="title" href="/2021/06/04/2021-6-4-Stanford-Compiler-PA4%E7%BF%BB%E8%AF%91/" title="Stanford Compiler PA4翻译">Stanford Compiler PA4翻译</a><time datetime="2021-06-03T16:17:00.000Z" title="发表于 2021-06-04 00:17:00">2021-06-04</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/06/03/2021-6-3-%E5%B7%A7%E5%A6%99%E7%9A%84Y%E8%BF%90%E7%AE%97%E7%AC%A6/" title="巧妙的Y运算符"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="巧妙的Y运算符"/></a><div class="content"><a class="title" href="/2021/06/03/2021-6-3-%E5%B7%A7%E5%A6%99%E7%9A%84Y%E8%BF%90%E7%AE%97%E7%AC%A6/" title="巧妙的Y运算符">巧妙的Y运算符</a><time datetime="2021-06-03T00:54:00.000Z" title="发表于 2021-06-03 08:54:00">2021-06-03</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2021 By Doraemonzzz</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><div class="js-pjax"><script>if (!window.MathJax) {
+  window.MathJax = {
+    loader: {
+      source: {
+        '[tex]/amsCd': '[tex]/amscd'
+      }
+    },
+    tex: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]],
+      tags: 'ams'
+    },
+    options: {
+      renderActions: {
+        findScript: [10, doc => {
+          for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+            const display = !!node.type.match(/; *mode=display/)
+            const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+            const text = document.createTextNode('')
+            node.parentNode.replaceChild(text, node)
+            math.start = {node: text, delim: '', n: 0}
+            math.end = {node: text, delim: '', n: 0}
+            doc.math.push(math)
+          }
+        }, ''],
+        addClass: [200,() => {
+          document.querySelectorAll('mjx-container:not([display=\'true\']').forEach( node => {
+            const target = node.parentNode
+            if (!target.classList.contains('has-jax')) {
+              target.classList.add('mathjax-overflow')
+            }
+          })
+        }, '', false]
+      }
+    }
+  }
+  
+  const script = document.createElement('script')
+  script.src = 'https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js'
+  script.id = 'MathJax-script'
+  script.async = true
+  document.head.appendChild(script)
+} else {
+  MathJax.startup.document.state(0)
+  MathJax.texReset()
+  MathJax.typeset()
+}</script></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

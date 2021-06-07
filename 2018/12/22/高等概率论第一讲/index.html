@@ -1,0 +1,324 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>高等概率论第一讲 | Doraemonzzz</title><meta name="keywords" content="高等概率论"><meta name="author" content="Doraemonzzz"><meta name="copyright" content="Doraemonzzz"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="记录本校的高等概率论课程笔记，参考教材《测度与概率》。 本讲内容为概率空间的基本定义。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="高等概率论第一讲">
+<meta property="og:url" content="http://doraemonzzz.com/2018/12/22/%E9%AB%98%E7%AD%89%E6%A6%82%E7%8E%87%E8%AE%BA%E7%AC%AC%E4%B8%80%E8%AE%B2/index.html">
+<meta property="og:site_name" content="Doraemonzzz">
+<meta property="og:description" content="记录本校的高等概率论课程笔记，参考教材《测度与概率》。 本讲内容为概率空间的基本定义。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg">
+<meta property="article:published_time" content="2018-12-21T16:54:50.000Z">
+<meta property="article:modified_time" content="2019-02-12T13:15:09.721Z">
+<meta property="article:author" content="Doraemonzzz">
+<meta property="article:tag" content="高等概率论">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="http://doraemonzzz.com/2018/12/22/%E9%AB%98%E7%AD%89%E6%A6%82%E7%8E%87%E8%AE%BA%E7%AC%AC%E4%B8%80%E8%AE%B2/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"prismjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    jQuery: 'https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js',
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+    },
+    fancybox: {
+      js: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isanchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '高等概率论第一讲',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2019-02-12 21:15:09'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    })(window)</script><meta name="generator" content="Hexo 5.4.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="author-avatar"><img class="avatar-img" src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">文章</div><div class="length-num">610</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">标签</div><div class="length-num">59</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/categories/"><div class="headline">分类</div><div class="length-num">23</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">Doraemonzzz</a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">高等概率论第一讲</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2018-12-21T16:54:50.000Z" title="发表于 2018-12-22 00:54:50">2018-12-22</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2019-02-12T13:15:09.721Z" title="更新于 2019-02-12 21:15:09">2019-02-12</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E6%95%B0%E5%AD%A6/">数学</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="高等概率论第一讲"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p>记录本校的高等概率论课程笔记，参考教材<a target="_blank" rel="noopener" href="https://book.douban.com/subject/1583463/">《测度与概率》</a>。</p>
+<p>本讲内容为概率空间的基本定义。</p>
+<span id="more"></span>
+<h1 id="Chapter-1-概率空间"><a href="#Chapter-1-概率空间" class="headerlink" title="Chapter 1 概率空间"></a>Chapter 1 概率空间</h1><h2 id="1-集类与事件域"><a href="#1-集类与事件域" class="headerlink" title="1.集类与事件域"></a>1.集类与事件域</h2><h3 id="1-几种常见的集类"><a href="#1-几种常见的集类" class="headerlink" title="1.几种常见的集类"></a>1.几种常见的集类</h3><h4 id="半（集）代数"><a href="#半（集）代数" class="headerlink" title="半（集）代数"></a>半（集）代数</h4><p>定义：若子集类$\mathscr S$满足：</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+&(1)\Omega \in \mathscr S ,\varnothing \in \mathscr S \\
+&(2) A,B \in \mathscr S \Rightarrow AB\in \mathscr S \\
+&(3) A, A_1 \in \mathscr S且A_1 \subset A \Rightarrow  
+\exists A_2,...,A_n \in \mathscr S 两两不交使得 A- A_1=  \bigcup_{i=2}^n A_i
+\end{aligned}</script><p>则称$\mathscr S$为（集）代数。</p>
+<h4 id="（集）代数"><a href="#（集）代数" class="headerlink" title="（集）代数"></a>（集）代数</h4><p>定义：若子集类$\mathscr A$满足：</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+&(1)\Omega \in \mathscr A  \\
+&(2) A \in \mathscr A \Rightarrow A^C\in \mathscr A \\
+&(3) A, B \in \mathscr A\Rightarrow  
+AB \in \mathscr A
+\end{aligned}</script><p>则称$\mathscr A$（集）代数。</p>
+<h4 id="sigma-代数"><a href="#sigma-代数" class="headerlink" title="$\sigma$代数"></a>$\sigma$代数</h4><p>定义：若子集类$\mathscr F$满足：</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+&(1)\Omega \in \mathscr F  \\
+&(2) A \in \mathscr F\Rightarrow A^C\in \mathscr F \\
+&(3) A_n \in \mathscr F,n\ge1\Rightarrow  
+\bigcup_{n=1}^{\infty} A_n \in \mathscr F
+\end{aligned}</script><p>则称$\mathscr F$为一$\sigma-$代数（或$\sigma-$域）。</p>
+<h4 id="命题1"><a href="#命题1" class="headerlink" title="命题1"></a>命题1</h4><p>设$\mathcal C$是任意子集类，则存在唯一的一个$\sigma$代数（$\sigma(\mathcal C)$），它是包含$\mathcal C$的最小$\sigma-$代数，称$\sigma (\mathcal C)$是$\mathcal C$生成的$\sigma$代数（$\mathcal C$为生成元）</p>
+<p>证明：</p>
+<script type="math/tex; mode=display">
+\sigma(\mathcal C) = {\bigcap} _{\mathcal F'为\sigma代数且\mathcal C 
+\subset \mathcal F'}\mathcal F'</script><p>注意满足条件的$\sigma$代数是存在的，因为$\mathcal C \subset 2^{\Omega}$</p>
+<h4 id="lambda-系与-pi-系"><a href="#lambda-系与-pi-系" class="headerlink" title="$\lambda$系与$\pi$系"></a>$\lambda$系与$\pi$系</h4><p>(1)定义：若子集类$\Pi$满足：</p>
+<script type="math/tex; mode=display">
+A,B\in \pi \Rightarrow AB \in \Pi</script><p>则称子集类$\Pi$为$\pi$系。</p>
+<p>(2)定义：若子集类$\Lambda$满足</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+&(2.1)\Omega \in \mathscr \Lambda  \\
+&(2.2) A,B \in \Lambda,A\subset B\Rightarrow B- A \in \Lambda \\
+&(2.3) A_n \in \Lambda ,n\ge1且A_n \uparrow\Rightarrow  
+\bigcup_{n=1}^{\infty} A_n \in \Lambda
+\end{aligned}</script><p>则称子集类$\Lambda$为$\lambda$系。</p>
+<h4 id="单调类"><a href="#单调类" class="headerlink" title="单调类"></a>单调类</h4><p>定义：若子集类$\mathscr M$满足：</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+&(1)对不降集列的并封闭：即A_n\in \mathscr M且A_n \uparrow, n\in \mathbb N,
+则有\bigcup_{n=1}^{\infty}A_n\in \mathscr M \\
+&(2) 对不升集列的交封闭：即A_n\in \mathscr M且A_n \downarrow ,n\in \mathbb N,
+则有\bigcap_{n=1}^{\infty}A_n\in \mathscr M
+\end{aligned}</script><p>则称子集类$\mathscr M$为单调类。</p>
+<p>关于$\lambda $系与$\pi$系有如下重要定理。</p>
+<h3 id="2-单调类定理"><a href="#2-单调类定理" class="headerlink" title="2.单调类定理"></a>2.单调类定理</h3><h4 id="定理1-1-1-lambda-pi-系方法"><a href="#定理1-1-1-lambda-pi-系方法" class="headerlink" title="定理1.1.1 $\lambda -\pi$系方法"></a>定理1.1.1 $\lambda -\pi$系方法</h4><script type="math/tex; mode=display">
+\Lambda是\lambda系，\Pi是\pi系，若\Pi \subset \Lambda，那么\sigma(\Pi)\subset \Lambda</script><p>证明：用$\lambda(\Pi)$表示包含$\Pi$的最小$\lambda$系，则只需证$\lambda(\Pi)= \sigma(\Pi)$即可。</p>
+<p>因为$\sigma$代数一定是$\lambda$系，因此显然有$\lambda(\Pi) \subset \sigma(\Pi)$，所以只需证$\sigma(\Pi)\subset\lambda(\Pi)  $，从而只需证$\lambda(\Pi)$为$\sigma$代数，又因为$\lambda(\Pi)$为$\lambda $系，所以只要证明$\lambda(\Pi)$关于可列并封闭即可。取$A_n \in \lambda(\Pi)$，那么</p>
+<script type="math/tex; mode=display">
+\bigcup_{n=1}^{\infty} A_n 
+=\bigcup_{n=1}^{\infty}(\bigcup_{i=1}^{n} A_i)
+=\bigcup_{n=1}^{\infty} B_n</script><p>注意到$B_n \uparrow$，由$\lambda $系的性质3可知，我们只要说明$B_n \in \lambda(\Pi)$即可，从而只要证$\lambda(\Pi)$对有限并封闭。又注意到$\lambda $系包含全集且关于补封闭，所以我们只要证$\lambda(\Pi)$对有限交封闭，即证</p>
+<script type="math/tex; mode=display">
+A,B\in \lambda(\Pi) \Rightarrow  AB \in \lambda(\Pi)</script><p>下面分几种情形讨论。</p>
+<p>如果$A,B \in \Pi$，由于$\Pi$为$\pi$系，那么$AB \in \Pi \subset \lambda(\Pi)$，结论成立。</p>
+<p>如果$A\in \Pi,B \in \lambda(\Pi)$，定义</p>
+<script type="math/tex; mode=display">
+\Pi_{A} =\{ B\in \lambda(\Pi)|AB \in \lambda (\Pi)\}</script><p>下证$\lambda(\Pi) = \Pi_{A}$，注意到$\Pi_{A}\subset  \lambda(\Pi) $，所以只要证明$\lambda(\Pi)\subset   \Pi_{A}$即可。因为$\Pi\subset  \Pi_{A}$，所以只要说明$ \Pi_{A}$为$\lambda$系即可，下面逐条验证。</p>
+<p>(1)$\Omega \in \Pi_A$</p>
+<p>因为$A\Omega=A \in  \Pi_A$，所以$\Omega \in \Pi_A$</p>
+<p>(2)$B_1,B_2 \subset  \Pi_A,B,B_1\subset B_2\Rightarrow B_2- B_1 \in  \Pi_A$</p>
+<p>要证明$B_2- B_1 \in  \Pi_A$，只要证明$A(B_2- B_1)\in \lambda (\Pi)$。因为</p>
+<script type="math/tex; mode=display">
+A(B_2- B_1)= AB_2 -AB_1</script><p>由定义可知$AB_2 ,AB_1\in \lambda(\Pi)$且$AB_1\subset AB_2$，所以由$\lambda$系的定义可知$AB_2 -AB_1 \in \lambda(\Pi)$，从而$B_2- B_1\in \lambda (\Pi)$</p>
+<p>(3)$B_n \in \Pi_A ,n\ge1且B_n \uparrow\Rightarrow  \bigcup_{n=1}^{\infty} B_n \in \Pi_A$</p>
+<p>根据定义验证即可，先证明$ \bigcup_{n=1}^{\infty} B_n \in  \lambda(\Pi)$：</p>
+<ul>
+<li>因为$B_n \in \Pi_A \subset  \lambda(\Pi),B_n \uparrow$，所以$ \bigcup_{n=1}^{\infty} B_n \in  \lambda(\Pi)$</li>
+</ul>
+<p>再证明$ A\bigcap(\bigcup_{n=1}^{\infty} B_n) \in  \lambda(\Pi)$：</p>
+<ul>
+<li>因为$A\bigcap(\bigcup_{n=1}^{\infty} B_n) =\bigcup_{n=1}^{\infty}(A\bigcap B_n)$，然后注意到$A\bigcap B_n \in  \Pi_A \subset  \lambda(\Pi)$且$A\bigcap B_n \uparrow$，所以$A\bigcap(\bigcup_{n=1}^{\infty} B_n) \in \lambda(\Pi)$</li>
+</ul>
+<p>结合上述3点可得$\Pi_A$为$\lambda$系。因为$\Pi \subset \Pi_A$，$\lambda(\Pi)$为包含$\Pi $的最小$\lambda$系，所以$\lambda(\Pi)\subset  \Pi_A$，结合$\Pi_A\subset  \lambda(\Pi)$可得$\Pi_A= \lambda(\Pi)$</p>
+<p>如果$A\in  \lambda(\Pi),B \in \lambda(\Pi)$，定义</p>
+<script type="math/tex; mode=display">
+\Pi_{B} =\{ A\in \lambda(\Pi)|AB \in \lambda (\Pi)\}</script><p>注意由第二种情形可知$\Pi\subset  \Pi_{B}$，所以同第二种情形的证明可得$\Pi_{B} =\lambda(\Pi)$</p>
+<p>综上可得结论</p>
+<script type="math/tex; mode=display">
+A,B\in \lambda(\Pi) \Rightarrow  AB \in \lambda(\Pi)</script><p>成立。</p>
+<h4 id="定理1-1-2-单调类定理"><a href="#定理1-1-2-单调类定理" class="headerlink" title="定理1.1.2 单调类定理"></a>定理1.1.2 单调类定理</h4><script type="math/tex; mode=display">
+\mathscr M为单调类，\mathscr A为代数，若\mathscr A\subset \mathscr M，则\sigma(\mathscr A)\subset \mathscr M</script><p>证明见习题。</p>
+<h2 id="习题"><a href="#习题" class="headerlink" title="习题"></a>习题</h2><h3 id="习题1"><a href="#习题1" class="headerlink" title="习题1"></a>习题1</h3><p>$\mathscr M$为单调类，$\mathscr A$为代数，若$\mathscr A\subset \mathscr M$，则$\sigma(\mathscr A)\subset \mathscr M$</p>
+<p>证明：定义$M(\mathscr A) = \bigcap_{M’包含\mathscr A且M’为单调类}M’$，则$M(\mathscr A)$为包含$\mathscr A$的最小单调类。由于$2^{\Omega}$显然为单调类且$\mathscr A \subset 2^{\Omega}$，所以满足条件$M’$存在，定义合理。</p>
+<p>由定义可知$\mathscr M$为包含$\mathscr A$的单调类，所以$M(\mathscr A) \subset \mathscr M$，如果能推出$M(\mathscr A) = \sigma(\mathscr A)$，则结论成立。因为$\sigma$代数显然为单调类，所以$M(\mathscr A) \subset \sigma(\mathscr A)$，从而只要验证$\sigma(\mathscr A)\subset M(\mathscr A) $，若能证明$M(\mathscr A)$为$\sigma$代数，则结论成立，下面将证明这点。</p>
+<p>(1)$\Omega \in M(\mathscr A)$</p>
+<p>由$ \mathscr A$为代数可知$\Omega \in \mathscr A \subset M(\mathscr A)$</p>
+<p>(2)$A \in M(\mathscr A) \Rightarrow A^C\in M(\mathscr A)$</p>
+<p>为了证明$M(\mathscr A)$关于补运算封闭，构造如下集合：</p>
+<script type="math/tex; mode=display">
+\forall A\in M(\mathscr A),
+S_A =\{B: B\in   M(\mathscr A),A-B \in  M(\mathscr A),B-A \in  M(\mathscr A) \}</script><p>下证$S_A =  M(\mathscr A)$，类似$\lambda -\pi$系方法，分以下三步证明：</p>
+<p>1.$S_A$为单调类</p>
+<p>2.$\forall A\in \mathscr A,S_A =  M(\mathscr A)$</p>
+<p>3.$\forall A\in M(\mathscr A),S_A =  M(\mathscr A)$</p>
+<p>1.$\forall B_n\in S_A , B_n \uparrow $，那么$B_n \in M(\mathscr A),A-B_n \in  M(\mathscr A), B_n - A \in  M(\mathscr A)$，由$B_n \uparrow$可知$A-B_n \downarrow$且</p>
+<p>$B_n -A \uparrow$</p>
+<p>由$A-B_n \downarrow$且$A-B_n \in  M(\mathscr A)$可得</p>
+<script type="math/tex; mode=display">
+\bigcap_{n=1}^{\infty} (A-B_n)=  A- \bigcup_{n=1}^{\infty} B_n \in M(\mathscr A)</script><p>由$B_n -A \uparrow$且$B_n - A \in  M(\mathscr A)$可得</p>
+<script type="math/tex; mode=display">
+\bigcup_{n=1}^{\infty} (B_n-A)=  \bigcup_{n=1}^{\infty} B_n -A \in M(\mathscr A)</script><p>因为$M(\mathscr A)$为单调类，$B_n \uparrow $，所以$\bigcup_{n=1}^{\infty} B_n \in  M(\mathscr A)$。结合上述三点可得</p>
+<script type="math/tex; mode=display">
+\bigcup_{n=1}^{\infty} B_n \in  S_A</script><p>这说明$S_A$对不降序列集的并封闭。</p>
+<p>$\forall B_n\in S_A , B_n \downarrow $，那么$B_n \in M(\mathscr A),A-B_n \in  M(\mathscr A), B_n - A \in  M(\mathscr A)$，由$B_n \downarrow$可知$A-B_n \uparrow$且</p>
+<p>$B_n -A \downarrow$</p>
+<p>由$A-B_n \uparrow $且$A-B_n \in  M(\mathscr A)$可得</p>
+<script type="math/tex; mode=display">
+\bigcup_{n=1}^{\infty} (A-B_n)=  A- \bigcap_{n=1}^{\infty} B_n \in M(\mathscr A)</script><p>由$B_n -A \downarrow $且$B_n - A \in  M(\mathscr A)$可得</p>
+<script type="math/tex; mode=display">
+\bigcap_{n=1}^{\infty} (B_n-A)=  \bigcap_{n=1}^{\infty} B_n -A \in M(\mathscr A)</script><p>因为$M(\mathscr A)$为单调类，$B_n \downarrow$，所以$\bigcap_{n=1}^{\infty} B_n \in  M(\mathscr A)$。结合上述三点可得</p>
+<script type="math/tex; mode=display">
+\bigcap_{n=1}^{\infty} B_n \in  S_A</script><p>这说明$S_A$对不升序列集列的交封闭。从而$S_A$为单调类。</p>
+<p>2.$A\in \mathscr A$</p>
+<p>由定义显然有$S_A\subset M(\mathscr A)$，所以只要证明$M(\mathscr A)\subset S_A$即可。注意由$\mathscr A$为代数可得$\mathscr A \subset S_A$，又因为$S_A$为单调类，所以$S_A$为包含$\mathscr A$的单调类，而$M(\mathscr A)$为包含$\mathscr A$的最小单调类，从而$M(\mathscr A)\subset S_A$。</p>
+<p>3.$ A\in M(\mathscr A)$</p>
+<p>由定义显然有$S_A\subset M(\mathscr A)$，所以只要证明$M(\mathscr A)\subset S_A$即可。$\forall B \in \mathscr A$，由2可知，$A \in S_B$，所以</p>
+<script type="math/tex; mode=display">
+B-A \in M(\mathscr A),A-B \in M(\mathscr A)</script><p>因为$B \in \mathscr A \subset M(\mathscr A)$，所以$B \in S_A$（由定义），由$B$的任意性可知$\mathscr A\subset S_A$。又因为$S_A$为单调类，所以$S_A$为包含$\mathscr A$的单调类，而$M(\mathscr A)$为包含$\mathscr A$的最小单调类，从而$M(\mathscr A)\subset S_A$。</p>
+<p>综上，$M(\mathscr A)$对差运算封闭。</p>
+<p>(3)$ \forall A_n \in M(\mathscr A)，\bigcup_{n=1}^{\infty} A_n \in M(\mathscr A)$</p>
+<p>由(1)(2)可知$ M(\mathscr A)$关于补运算封闭，所以$\forall A,B \in  M(\mathscr A)$</p>
+<script type="math/tex; mode=display">
+B^C \in M(\mathscr A),
+AB = A \bigcap (B^C) ^C = A - B^C \in M(\mathscr A)</script><p>从而$M(\mathscr A)$为代数。</p>
+<p>现在取$B_n = \bigcup_{i=1}^n A_i​$，注意代数关于有限交和补运算封闭且包含全集，从而也关于有限并运算封闭，所以</p>
+<p>$B_n  \in  M(\mathscr A)$。因为$B_n  \uparrow$，所以由单调类的定义可知</p>
+<script type="math/tex; mode=display">
+\bigcup_{n=1}^{\infty}A_n = \bigcup_{n=1}^{\infty}B_n \in M(\mathscr A)</script><p>参考资料：<a target="_blank" rel="noopener" href="https://www.lizhechen.com/2017/09/21/单调类定理/">https://www.lizhechen.com/2017/09/21/单调类定理/</a></p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">Doraemonzzz</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="http://doraemonzzz.com/2018/12/22/%E9%AB%98%E7%AD%89%E6%A6%82%E7%8E%87%E8%AE%BA%E7%AC%AC%E4%B8%80%E8%AE%B2/">http://doraemonzzz.com/2018/12/22/%E9%AB%98%E7%AD%89%E6%A6%82%E7%8E%87%E8%AE%BA%E7%AC%AC%E4%B8%80%E8%AE%B2/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://doraemonzzz.com" target="_blank">Doraemonzzz</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E9%AB%98%E7%AD%89%E6%A6%82%E7%8E%87%E8%AE%BA/">高等概率论</a></div><div class="post_share"><div class="social-share" data-image="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2018/12/22/%E9%AB%98%E7%AD%89%E6%A6%82%E7%8E%87%E8%AE%BA%E7%AC%AC%E4%BA%8C%E8%AE%B2/"><img class="prev-cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">高等概率论第二讲</div></div></a></div><div class="next-post pull-right"><a href="/2018/12/19/Hexo%E5%8D%9A%E5%AE%A2next%E4%B8%BB%E9%A2%98%E6%95%B0%E5%AD%A6%E5%85%AC%E5%BC%8F%E9%87%8D%E5%A4%8D%E6%98%BE%E7%A4%BA/"><img class="next-cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">Hexo博客next主题数学公式重复显示</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span> 相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2019/01/22/高等概率论第七讲/" title="高等概率论第七讲"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2019-01-22</div><div class="title">高等概率论第七讲</div></div></a></div><div><a href="/2019/01/18/高等概率论第三讲/" title="高等概率论第三讲"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2019-01-18</div><div class="title">高等概率论第三讲</div></div></a></div><div><a href="/2019/01/22/高等概率论第九讲/" title="高等概率论第九讲"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2019-01-22</div><div class="title">高等概率论第九讲</div></div></a></div><div><a href="/2018/12/22/高等概率论第二讲/" title="高等概率论第二讲"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2018-12-22</div><div class="title">高等概率论第二讲</div></div></a></div><div><a href="/2019/01/19/高等概率论第五讲/" title="高等概率论第五讲"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2019-01-19</div><div class="title">高等概率论第五讲</div></div></a></div><div><a href="/2019/01/19/高等概率论第六讲/" title="高等概率论第六讲"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2019-01-19</div><div class="title">高等概率论第六讲</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="card-info-avatar is-center"><img class="avatar-img" src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/><div class="author-info__name">Doraemonzzz</div><div class="author-info__description">个人博客，主要记录有关机器学习，数学以及计算机科学的笔记</div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">610</div></a></div><div class="card-info-data-item is-center"><a href="/tags/"><div class="headline">标签</div><div class="length-num">59</div></a></div><div class="card-info-data-item is-center"><a href="/categories/"><div class="headline">分类</div><div class="length-num">23</div></a></div></div><a class="button--animated" id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/Doraemonzzz" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="/doraemon_zzz@163.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn card-announcement-animation"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Chapter-1-%E6%A6%82%E7%8E%87%E7%A9%BA%E9%97%B4"><span class="toc-number">1.</span> <span class="toc-text">Chapter 1 概率空间</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-%E9%9B%86%E7%B1%BB%E4%B8%8E%E4%BA%8B%E4%BB%B6%E5%9F%9F"><span class="toc-number">1.1.</span> <span class="toc-text">1.集类与事件域</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E5%87%A0%E7%A7%8D%E5%B8%B8%E8%A7%81%E7%9A%84%E9%9B%86%E7%B1%BB"><span class="toc-number">1.1.1.</span> <span class="toc-text">1.几种常见的集类</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8D%8A%EF%BC%88%E9%9B%86%EF%BC%89%E4%BB%A3%E6%95%B0"><span class="toc-number">1.1.1.1.</span> <span class="toc-text">半（集）代数</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%EF%BC%88%E9%9B%86%EF%BC%89%E4%BB%A3%E6%95%B0"><span class="toc-number">1.1.1.2.</span> <span class="toc-text">（集）代数</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#sigma-%E4%BB%A3%E6%95%B0"><span class="toc-number">1.1.1.3.</span> <span class="toc-text">$\sigma$代数</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%91%BD%E9%A2%981"><span class="toc-number">1.1.1.4.</span> <span class="toc-text">命题1</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#lambda-%E7%B3%BB%E4%B8%8E-pi-%E7%B3%BB"><span class="toc-number">1.1.1.5.</span> <span class="toc-text">$\lambda$系与$\pi$系</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8D%95%E8%B0%83%E7%B1%BB"><span class="toc-number">1.1.1.6.</span> <span class="toc-text">单调类</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E5%8D%95%E8%B0%83%E7%B1%BB%E5%AE%9A%E7%90%86"><span class="toc-number">1.1.2.</span> <span class="toc-text">2.单调类定理</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AE%9A%E7%90%861-1-1-lambda-pi-%E7%B3%BB%E6%96%B9%E6%B3%95"><span class="toc-number">1.1.2.1.</span> <span class="toc-text">定理1.1.1 $\lambda -\pi$系方法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AE%9A%E7%90%861-1-2-%E5%8D%95%E8%B0%83%E7%B1%BB%E5%AE%9A%E7%90%86"><span class="toc-number">1.1.2.2.</span> <span class="toc-text">定理1.1.2 单调类定理</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B9%A0%E9%A2%98"><span class="toc-number">1.2.</span> <span class="toc-text">习题</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B9%A0%E9%A2%981"><span class="toc-number">1.2.1.</span> <span class="toc-text">习题1</span></a></li></ol></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2021/06/06/2021-6-6-%E7%AE%97%E6%B3%95%E6%A6%82%E8%AE%BA(DPV)%E4%B9%A0%E9%A2%98%E8%A7%A3%E7%AD%94%E2%80%94%E2%80%94%E7%AC%AC3%E7%AB%A0-%E5%9B%BE%E7%9A%84%E5%88%86%E8%A7%A3/" title="算法概论(DPV)习题解答——第3章 图的分解"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="算法概论(DPV)习题解答——第3章 图的分解"/></a><div class="content"><a class="title" href="/2021/06/06/2021-6-6-%E7%AE%97%E6%B3%95%E6%A6%82%E8%AE%BA(DPV)%E4%B9%A0%E9%A2%98%E8%A7%A3%E7%AD%94%E2%80%94%E2%80%94%E7%AC%AC3%E7%AB%A0-%E5%9B%BE%E7%9A%84%E5%88%86%E8%A7%A3/" title="算法概论(DPV)习题解答——第3章 图的分解">算法概论(DPV)习题解答——第3章 图的分解</a><time datetime="2021-06-06T14:35:00.000Z" title="发表于 2021-06-06 22:35:00">2021-06-06</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/06/06/2021-6-6-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E7%AC%AC5%E7%AB%A0-%E4%B9%A0%E9%A2%98%E8%A7%A3%E6%9E%90/" title="深入理解计算机系统 第5章 习题解析"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="深入理解计算机系统 第5章 习题解析"/></a><div class="content"><a class="title" href="/2021/06/06/2021-6-6-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E7%AC%AC5%E7%AB%A0-%E4%B9%A0%E9%A2%98%E8%A7%A3%E6%9E%90/" title="深入理解计算机系统 第5章 习题解析">深入理解计算机系统 第5章 习题解析</a><time datetime="2021-06-06T07:23:00.000Z" title="发表于 2021-06-06 15:23:00">2021-06-06</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/06/05/2021-6-5-Stanford-Compiler-PA5%E7%BF%BB%E8%AF%91/" title="Stanford Compiler PA5翻译"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Stanford Compiler PA5翻译"/></a><div class="content"><a class="title" href="/2021/06/05/2021-6-5-Stanford-Compiler-PA5%E7%BF%BB%E8%AF%91/" title="Stanford Compiler PA5翻译">Stanford Compiler PA5翻译</a><time datetime="2021-06-05T06:12:00.000Z" title="发表于 2021-06-05 14:12:00">2021-06-05</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/06/04/2021-6-4-Stanford-Compiler-PA4%E7%BF%BB%E8%AF%91/" title="Stanford Compiler PA4翻译"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Stanford Compiler PA4翻译"/></a><div class="content"><a class="title" href="/2021/06/04/2021-6-4-Stanford-Compiler-PA4%E7%BF%BB%E8%AF%91/" title="Stanford Compiler PA4翻译">Stanford Compiler PA4翻译</a><time datetime="2021-06-03T16:17:00.000Z" title="发表于 2021-06-04 00:17:00">2021-06-04</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/06/03/2021-6-3-%E5%B7%A7%E5%A6%99%E7%9A%84Y%E8%BF%90%E7%AE%97%E7%AC%A6/" title="巧妙的Y运算符"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="巧妙的Y运算符"/></a><div class="content"><a class="title" href="/2021/06/03/2021-6-3-%E5%B7%A7%E5%A6%99%E7%9A%84Y%E8%BF%90%E7%AE%97%E7%AC%A6/" title="巧妙的Y运算符">巧妙的Y运算符</a><time datetime="2021-06-03T00:54:00.000Z" title="发表于 2021-06-03 08:54:00">2021-06-03</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2021 By Doraemonzzz</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><div class="js-pjax"><script>if (!window.MathJax) {
+  window.MathJax = {
+    loader: {
+      source: {
+        '[tex]/amsCd': '[tex]/amscd'
+      }
+    },
+    tex: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]],
+      tags: 'ams'
+    },
+    options: {
+      renderActions: {
+        findScript: [10, doc => {
+          for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+            const display = !!node.type.match(/; *mode=display/)
+            const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+            const text = document.createTextNode('')
+            node.parentNode.replaceChild(text, node)
+            math.start = {node: text, delim: '', n: 0}
+            math.end = {node: text, delim: '', n: 0}
+            doc.math.push(math)
+          }
+        }, ''],
+        addClass: [200,() => {
+          document.querySelectorAll('mjx-container:not([display=\'true\']').forEach( node => {
+            const target = node.parentNode
+            if (!target.classList.contains('has-jax')) {
+              target.classList.add('mathjax-overflow')
+            }
+          })
+        }, '', false]
+      }
+    }
+  }
+  
+  const script = document.createElement('script')
+  script.src = 'https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js'
+  script.id = 'MathJax-script'
+  script.async = true
+  document.head.appendChild(script)
+} else {
+  MathJax.startup.document.state(0)
+  MathJax.texReset()
+  MathJax.typeset()
+}</script></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

@@ -1,0 +1,580 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>The Hardware Software Interface Lab 2 | Doraemonzzz</title><meta name="keywords" content="CSE 351"><meta name="author" content="Doraemonzzz"><meta name="copyright" content="Doraemonzzz"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="课程主页：https:&#x2F;&#x2F;courses.cs.washington.edu&#x2F;courses&#x2F;cse351&#x2F;16sp&#x2F; 课程资料： 实验部分：https:&#x2F;&#x2F;github.com&#x2F;vuquangtrong&#x2F;HW-SW_Interface_Course 实验说明：https:&#x2F;&#x2F;courses.cs.washington.edu&#x2F;courses&#x2F;cse351&#x2F;13sp&#x2F;lab-0.html 课件：h">
+<meta property="og:type" content="article">
+<meta property="og:title" content="The Hardware Software Interface Lab 2">
+<meta property="og:url" content="http://doraemonzzz.com/2020/08/16/The%20Hardware%20Software%20Interface%20Lab%202/index.html">
+<meta property="og:site_name" content="Doraemonzzz">
+<meta property="og:description" content="课程主页：https:&#x2F;&#x2F;courses.cs.washington.edu&#x2F;courses&#x2F;cse351&#x2F;16sp&#x2F; 课程资料： 实验部分：https:&#x2F;&#x2F;github.com&#x2F;vuquangtrong&#x2F;HW-SW_Interface_Course 实验说明：https:&#x2F;&#x2F;courses.cs.washington.edu&#x2F;courses&#x2F;cse351&#x2F;13sp&#x2F;lab-0.html 课件：h">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg">
+<meta property="article:published_time" content="2020-08-16T12:58:00.000Z">
+<meta property="article:modified_time" content="2020-09-06T05:44:05.378Z">
+<meta property="article:author" content="Doraemonzzz">
+<meta property="article:tag" content="CSE 351">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="http://doraemonzzz.com/2020/08/16/The%20Hardware%20Software%20Interface%20Lab%202/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"prismjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    jQuery: 'https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js',
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+    },
+    fancybox: {
+      js: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isanchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'The Hardware Software Interface Lab 2',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2020-09-06 13:44:05'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    })(window)</script><meta name="generator" content="Hexo 5.4.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="author-avatar"><img class="avatar-img" src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">文章</div><div class="length-num">610</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">标签</div><div class="length-num">59</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/categories/"><div class="headline">分类</div><div class="length-num">23</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">Doraemonzzz</a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">The Hardware Software Interface Lab 2</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2020-08-16T12:58:00.000Z" title="发表于 2020-08-16 20:58:00">2020-08-16</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2020-09-06T05:44:05.378Z" title="更新于 2020-09-06 13:44:05">2020-09-06</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%8E%9F%E7%90%86/">计算机原理</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="The Hardware Software Interface Lab 2"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p>课程主页：<a target="_blank" rel="noopener" href="https://courses.cs.washington.edu/courses/cse351/16sp/">https://courses.cs.washington.edu/courses/cse351/16sp/</a></p>
+<p>课程资料：</p>
+<p>实验部分：<a target="_blank" rel="noopener" href="https://github.com/vuquangtrong/HW-SW_Interface_Course">https://github.com/vuquangtrong/HW-SW_Interface_Course</a></p>
+<p>实验说明：<a target="_blank" rel="noopener" href="https://courses.cs.washington.edu/courses/cse351/13sp/lab-0.html">https://courses.cs.washington.edu/courses/cse351/13sp/lab-0.html</a></p>
+<p>课件：<a target="_blank" rel="noopener" href="http://academictorrents.com/details/b63a566df824b39740eb9754e4fe4c0140306f4b">http://academictorrents.com/details/b63a566df824b39740eb9754e4fe4c0140306f4b</a></p>
+<p>课程视频：<a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1Zt411s7Gg?from=search&amp;seid=8781593976070799647">https://www.bilibili.com/video/BV1Zt411s7Gg?from=search&amp;seid=8781593976070799647</a></p>
+<p>参考资料：<a target="_blank" rel="noopener" href="https://www.runoob.com/cprogramming/c-function-strtol.html">https://www.runoob.com/cprogramming/c-function-strtol.html</a></p>
+<p><a target="_blank" rel="noopener" href="https://github.com/HeLiangHIT/Hardware_Software_Interface/blob/f223721d39c88ffb30a109922fbb7db761e6a3ee/README.md">https://github.com/HeLiangHIT/Hardware_Software_Interface/blob/f223721d39c88ffb30a109922fbb7db761e6a3ee/README.md</a></p>
+<p>这次完成Lab2，这次的内容是Buffer Overflows。</p>
+<p>x86-64参考资料：</p>
+<p><a target="_blank" rel="noopener" href="https://web.stanford.edu/class/archive/cs/cs107/cs107.1166/guide_x86-64.html">https://web.stanford.edu/class/archive/cs/cs107/cs107.1166/guide_x86-64.html</a></p>
+<p><a target="_blank" rel="noopener" href="https://cs.brown.edu/courses/cs033/docs/guides/x64_cheatsheet.pdf">https://cs.brown.edu/courses/cs033/docs/guides/x64_cheatsheet.pdf</a></p>
+<span id="more"></span>
+<h4 id="答案"><a href="#答案" class="headerlink" title="答案"></a>答案</h4><pre class="line-numbers language-none"><code class="language-none">Science isn&#39;t about why, it&#39;s about why not?
+1 1 1 1 1 1
+0 535
+9
+7 93
+600<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>secret_phase需要特殊处理，输入99,107都可。</p>
+<h4 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h4><p>反汇编：</p>
+<pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">objdump -t bomb <span class="token operator">>></span> bomb1.txt
+objdump -d bomb <span class="token operator">>></span> bomb2.txt
+strings -t x bomb <span class="token operator">>></span> bomb3.txt<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+<h4 id="phase-1"><a href="#phase-1" class="headerlink" title="phase_1"></a>phase_1</h4><pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">gdb bomb
+<span class="token builtin class-name">break</span> *0x400e74
+print <span class="token punctuation">(</span>char *<span class="token punctuation">)</span> 0x401af8<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+<p>得到结果为</p>
+<pre class="line-numbers language-shell" data-language="shell"><code class="language-shell"><span class="token variable">$1</span> <span class="token operator">=</span> 0x401af8 <span class="token string">"Science isn't about why, it's about why not?"</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>所以输入为</p>
+<pre class="line-numbers language-none"><code class="language-none">Science isn&#39;t about why, it&#39;s about why not?<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<h4 id="phase-2"><a href="#phase-2" class="headerlink" title="phase_2"></a>phase_2</h4><p>整体说明如下，程序主要工作是判断相邻两个数是否相同：</p>
+<pre class="line-numbers language-assembly" data-language="assembly"><code class="language-assembly">400eac:	48 89 e5             	mov    %rsp,%rbp				(初始化工作)#R[rbp]&#x3D;R[rsp]
+400eaf:	4c 8d 6c 24 0c       	lea    0xc(%rsp),%r13			#R[r13]&#x3D;M[R[rsp]+0xc](上限位置)
+400eb4:	41 bc 00 00 00 00    	mov    $0x0,%r12d				#R[r12d]&#x3D;0(初始化)
+400eba:	48 89 eb             	mov    %rbp,%rbx				(循环开始)#R[rbx]&#x3D;R[rbp]
+400ebd:	8b 45 0c             	mov    0xc(%rbp),%eax			#R[eax]&#x3D;M[R[rbp]-0xc](前一个数字的值)
+400ec0:	39 45 00             	cmp    %eax,0x0(%rbp)			#M[R[rbp]] - R[eax](判断当且数字和之前数字是否相等)
+400ec3:	74 05                	je     400eca &lt;phase_2+0x3e&gt;
+400ec5:	e8 73 07 00 00       	callq  40163d &lt;explode_bomb&gt;
+400eca:	44 03 23             	add    (%rbx),%r12d				#R[r12d]+&#x3D;M[R[rbx]]
+400ecd:	48 83 c5 04          	add    $0x4,%rbp				#R[rbp]+&#x3D;0x4(更新前一个数字的位置)
+400ed1:	4c 39 ed             	cmp    %r13,%rbp				#R[rbp]-R[r13](判断)<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>所以输入为</p>
+<pre class="line-numbers language-none"><code class="language-none">1 1 1 1 1 1<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<h4 id="phase-3"><a href="#phase-3" class="headerlink" title="phase_3"></a>phase_3</h4><p>和CMU Bomb lab phase_3类似，分析见：</p>
+<p><a href="https://doraemonzzz.com/2020/06/02/CMU%2015-213%20Lab2%20Bomb%20Lab/">https://doraemonzzz.com/2020/06/02/CMU%2015-213%20Lab2%20Bomb%20Lab/</a></p>
+<p>输入为</p>
+<pre class="line-numbers language-none"><code class="language-none">0 535<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<h4 id="phase-4"><a href="#phase-4" class="headerlink" title="phase_4"></a>phase_4</h4><p>func4对应的Python程序为</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">def</span> <span class="token function">func4</span><span class="token punctuation">(</span>a<span class="token punctuation">,</span> b<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    b<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token number">1</span>
+    <span class="token keyword">if</span> a <span class="token operator">></span> <span class="token number">1</span><span class="token punctuation">:</span>
+        func4<span class="token punctuation">(</span>a <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">,</span> b<span class="token punctuation">)</span>
+    <span class="token keyword">else</span><span class="token punctuation">:</span>
+        <span class="token keyword">return</span>
+    c <span class="token operator">=</span> b<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span>
+    func4<span class="token punctuation">(</span>a <span class="token operator">-</span> <span class="token number">2</span><span class="token punctuation">,</span> b<span class="token punctuation">)</span>
+    b<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span> <span class="token operator">+=</span> c<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>我们需要比较$b[0]$和$0\text{x}37=55$的值，所以使用如下方式遍历即可</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python">i <span class="token operator">=</span> <span class="token number">0</span>
+<span class="token keyword">while</span> <span class="token boolean">True</span><span class="token punctuation">:</span>
+    b <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span>
+    func4<span class="token punctuation">(</span>i<span class="token punctuation">,</span> b<span class="token punctuation">)</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>b<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span> <span class="token operator">==</span> <span class="token number">55</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token keyword">print</span><span class="token punctuation">(</span>i<span class="token punctuation">)</span>
+        <span class="token keyword">break</span>
+    i <span class="token operator">+=</span> <span class="token number">1</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>结果为</p>
+<pre class="line-numbers language-none"><code class="language-none">9<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<h4 id="phase-5"><a href="#phase-5" class="headerlink" title="phase_5"></a>phase_5</h4><p>首先查看输入格式：</p>
+<pre class="line-numbers language-shell" data-language="shell"><code class="language-shell"><span class="token punctuation">(</span>gdb<span class="token punctuation">)</span> print <span class="token punctuation">(</span>char *<span class="token punctuation">)</span> 0x401ebe
+<span class="token variable">$28</span> <span class="token operator">=</span> 0x401ebe <span class="token string">"%d %d"</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<p>所以输入为两个整型数，其次查看数组中存储的元素：</p>
+<pre class="line-numbers language-shell" data-language="shell"><code class="language-shell"><span class="token punctuation">(</span>gdb<span class="token punctuation">)</span> print *<span class="token punctuation">(</span>int *<span class="token punctuation">)</span> <span class="token punctuation">(</span>0x401ba0+4*0<span class="token punctuation">)</span>
+<span class="token variable">$10</span> <span class="token operator">=</span> <span class="token number">10</span>
+<span class="token punctuation">(</span>gdb<span class="token punctuation">)</span> print *<span class="token punctuation">(</span>int *<span class="token punctuation">)</span> <span class="token punctuation">(</span>0x401ba0+4*1<span class="token punctuation">)</span>
+<span class="token variable">$11</span> <span class="token operator">=</span> <span class="token number">2</span>
+<span class="token punctuation">(</span>gdb<span class="token punctuation">)</span> print *<span class="token punctuation">(</span>int *<span class="token punctuation">)</span> <span class="token punctuation">(</span>0x401ba0+4*2<span class="token punctuation">)</span>
+<span class="token variable">$12</span> <span class="token operator">=</span> <span class="token number">14</span>
+<span class="token punctuation">(</span>gdb<span class="token punctuation">)</span> print *<span class="token punctuation">(</span>int *<span class="token punctuation">)</span> <span class="token punctuation">(</span>0x401ba0+4*3<span class="token punctuation">)</span>
+<span class="token variable">$13</span> <span class="token operator">=</span> <span class="token number">7</span>
+<span class="token punctuation">(</span>gdb<span class="token punctuation">)</span> print *<span class="token punctuation">(</span>int *<span class="token punctuation">)</span> <span class="token punctuation">(</span>0x401ba0+4*4<span class="token punctuation">)</span>
+<span class="token variable">$14</span> <span class="token operator">=</span> <span class="token number">8</span>
+<span class="token punctuation">(</span>gdb<span class="token punctuation">)</span> print *<span class="token punctuation">(</span>int *<span class="token punctuation">)</span> <span class="token punctuation">(</span>0x401ba0+4*5<span class="token punctuation">)</span>
+<span class="token variable">$15</span> <span class="token operator">=</span> <span class="token number">12</span>
+<span class="token punctuation">(</span>gdb<span class="token punctuation">)</span> print *<span class="token punctuation">(</span>int *<span class="token punctuation">)</span> <span class="token punctuation">(</span>0x401ba0+4*6<span class="token punctuation">)</span>
+<span class="token variable">$16</span> <span class="token operator">=</span> <span class="token number">15</span>
+<span class="token punctuation">(</span>gdb<span class="token punctuation">)</span> print *<span class="token punctuation">(</span>int *<span class="token punctuation">)</span> <span class="token punctuation">(</span>0x401ba0+4*7<span class="token punctuation">)</span>
+<span class="token variable">$17</span> <span class="token operator">=</span> <span class="token number">11</span>
+<span class="token punctuation">(</span>gdb<span class="token punctuation">)</span> print *<span class="token punctuation">(</span>int *<span class="token punctuation">)</span> <span class="token punctuation">(</span>0x401ba0+4*8<span class="token punctuation">)</span>
+<span class="token variable">$18</span> <span class="token operator">=</span> <span class="token number">0</span>
+<span class="token punctuation">(</span>gdb<span class="token punctuation">)</span> print *<span class="token punctuation">(</span>int *<span class="token punctuation">)</span> <span class="token punctuation">(</span>0x401ba0+4*9<span class="token punctuation">)</span>
+<span class="token variable">$19</span> <span class="token operator">=</span> <span class="token number">4</span>
+<span class="token punctuation">(</span>gdb<span class="token punctuation">)</span> print *<span class="token punctuation">(</span>int *<span class="token punctuation">)</span> <span class="token punctuation">(</span>0x401ba0+4*10<span class="token punctuation">)</span>
+<span class="token variable">$20</span> <span class="token operator">=</span> <span class="token number">1</span>
+<span class="token punctuation">(</span>gdb<span class="token punctuation">)</span> print *<span class="token punctuation">(</span>int *<span class="token punctuation">)</span> <span class="token punctuation">(</span>0x401ba0+4*11<span class="token punctuation">)</span>
+<span class="token variable">$21</span> <span class="token operator">=</span> <span class="token number">13</span>
+<span class="token punctuation">(</span>gdb<span class="token punctuation">)</span> print *<span class="token punctuation">(</span>int *<span class="token punctuation">)</span> <span class="token punctuation">(</span>0x401ba0+4*12<span class="token punctuation">)</span>
+<span class="token variable">$22</span> <span class="token operator">=</span> <span class="token number">3</span>
+<span class="token punctuation">(</span>gdb<span class="token punctuation">)</span> print *<span class="token punctuation">(</span>int *<span class="token punctuation">)</span> <span class="token punctuation">(</span>0x401ba0+4*13<span class="token punctuation">)</span>
+<span class="token variable">$23</span> <span class="token operator">=</span> <span class="token number">9</span>
+<span class="token punctuation">(</span>gdb<span class="token punctuation">)</span> print *<span class="token punctuation">(</span>int *<span class="token punctuation">)</span> <span class="token punctuation">(</span>0x401ba0+4*14<span class="token punctuation">)</span>
+<span class="token variable">$24</span> <span class="token operator">=</span> <span class="token number">6</span>
+<span class="token punctuation">(</span>gdb<span class="token punctuation">)</span> print *<span class="token punctuation">(</span>int *<span class="token punctuation">)</span> <span class="token punctuation">(</span>0x401ba0+4*15<span class="token punctuation">)</span>
+<span class="token variable">$25</span> <span class="token operator">=</span> <span class="token number">5</span>
+<span class="token punctuation">(</span>gdb<span class="token punctuation">)</span> print *<span class="token punctuation">(</span>int *<span class="token punctuation">)</span> <span class="token punctuation">(</span>0x401ba0+4*16<span class="token punctuation">)</span>
+<span class="token variable">$26</span> <span class="token operator">=</span> <span class="token number">2032168787</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>将原始汇编码转换为python代码：</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python">array <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token number">10</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">14</span><span class="token punctuation">,</span> <span class="token number">7</span><span class="token punctuation">,</span> <span class="token number">8</span><span class="token punctuation">,</span> <span class="token number">12</span><span class="token punctuation">,</span> <span class="token number">15</span><span class="token punctuation">,</span> <span class="token number">11</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">4</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">13</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">,</span> <span class="token number">9</span><span class="token punctuation">,</span> <span class="token number">6</span><span class="token punctuation">,</span> <span class="token number">5</span><span class="token punctuation">]</span>
+<span class="token keyword">for</span> i <span class="token keyword">in</span> <span class="token builtin">range</span><span class="token punctuation">(</span><span class="token number">15</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+    eax <span class="token operator">=</span> i
+    ecx <span class="token operator">=</span> <span class="token number">0</span>
+    <span class="token keyword">for</span> edx <span class="token keyword">in</span> <span class="token builtin">range</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">16</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+        eax <span class="token operator">=</span> array<span class="token punctuation">[</span>eax<span class="token punctuation">]</span>
+        ecx <span class="token operator">+=</span> eax
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>eax <span class="token operator">==</span> <span class="token number">15</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+            <span class="token keyword">break</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token punctuation">(</span>edx <span class="token operator">==</span> <span class="token number">12</span><span class="token punctuation">)</span> <span class="token keyword">and</span> <span class="token punctuation">(</span>eax <span class="token operator">==</span> <span class="token number">15</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token keyword">print</span><span class="token punctuation">(</span>i<span class="token punctuation">,</span> ecx<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>最终得到如下结果：</p>
+<pre class="line-numbers language-none"><code class="language-none">7 93<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<h4 id="phase-6"><a href="#phase-6" class="headerlink" title="phase_6"></a>phase_6</h4><p>这里使用比较偷鸡的办法，直接打印如下结果：</p>
+<pre class="line-numbers language-shell" data-language="shell"><code class="language-shell"><span class="token punctuation">(</span>gdb<span class="token punctuation">)</span> <span class="token builtin class-name">break</span> *0x40110e
+<span class="token punctuation">(</span>gdb<span class="token punctuation">)</span> print *<span class="token punctuation">(</span>int *<span class="token punctuation">)</span> <span class="token variable">$rax</span>
+<span class="token variable">$4</span> <span class="token operator">=</span> <span class="token number">600</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+<p>所以输入为</p>
+<pre class="line-numbers language-none"><code class="language-none">600<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<h4 id="secret-phase"><a href="#secret-phase" class="headerlink" title="secret_phase"></a>secret_phase</h4><p>这部分依然使用偷鸡的方法，直接给寄存器赋值，得到如下结果：</p>
+<p>参考资料：<a target="_blank" rel="noopener" href="https://github.com/HeLiangHIT/Hardware_Software_Interface/blob/f223721d39c88ffb30a109922fbb7db761e6a3ee/README.md">https://github.com/HeLiangHIT/Hardware_Software_Interface/blob/f223721d39c88ffb30a109922fbb7db761e6a3ee/README.md</a></p>
+<pre class="line-numbers language-shell" data-language="shell"><code class="language-shell"><span class="token punctuation">(</span>gdb<span class="token punctuation">)</span> <span class="token builtin class-name">break</span> *0x401177
+Breakpoint <span class="token number">1</span> at 0x401177
+<span class="token punctuation">(</span>gdb<span class="token punctuation">)</span> <span class="token builtin class-name">break</span> *0x40118f
+Breakpoint <span class="token number">2</span> at 0x40118f
+<span class="token punctuation">(</span>gdb<span class="token punctuation">)</span> <span class="token builtin class-name">break</span> *0x4017b0
+Breakpoint <span class="token number">3</span> at 0x4017b0
+<span class="token punctuation">(</span>gdb<span class="token punctuation">)</span> <span class="token builtin class-name">break</span> *0x4017c4
+Breakpoint <span class="token number">4</span> at 0x4017c4
+<span class="token punctuation">(</span>gdb<span class="token punctuation">)</span> run
+Starting program: /home/qz/桌面/Labs/lab2/bomb 
+Welcome to my fiendish little bomb. You have <span class="token number">6</span> phases with
+<span class="token function">which</span> to blow yourself up. Have a <span class="token function">nice</span> day<span class="token operator">!</span>
+Science isn<span class="token string">'t about why, it'</span>s about why not?
+Phase <span class="token number">1</span> defused. How about the next one?
+<span class="token number">1</span> <span class="token number">1</span> <span class="token number">1</span> <span class="token number">1</span> <span class="token number">1</span> <span class="token number">1</span>
+That<span class="token string">'s number 2.  Keep going!
+0 535
+Halfway there!
+9
+So you got that one.  Try this one.
+7 93
+Congratulations! You'</span>ve <span class="token punctuation">(</span>mostly<span class="token punctuation">)</span> defused the bomb<span class="token operator">!</span>
+Hit Control-C to escape phase <span class="token number">6</span> <span class="token punctuation">(</span>for free<span class="token operator">!</span><span class="token punctuation">)</span>, but <span class="token keyword">if</span> you want to
+try phase <span class="token number">6</span> <span class="token keyword">for</span> extra credit, you can continue.  Just beware<span class="token operator">!</span>
+<span class="token number">600</span>
+
+Breakpoint <span class="token number">3</span>, 0x00000000004017b0 <span class="token keyword">in</span> phase_defused <span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">(</span>gdb<span class="token punctuation">)</span> print <span class="token variable">$rax</span><span class="token operator">=</span><span class="token number">2</span>
+<span class="token variable">$1</span> <span class="token operator">=</span> <span class="token number">2</span>
+<span class="token punctuation">(</span>gdb<span class="token punctuation">)</span> <span class="token builtin class-name">continue</span>
+Continuing.
+
+Breakpoint <span class="token number">4</span>, 0x00000000004017c4 <span class="token keyword">in</span> phase_defused <span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">(</span>gdb<span class="token punctuation">)</span> print <span class="token variable">$rax</span><span class="token operator">=</span><span class="token number">0</span>
+<span class="token variable">$2</span> <span class="token operator">=</span> <span class="token number">0</span>
+<span class="token punctuation">(</span>gdb<span class="token punctuation">)</span> <span class="token builtin class-name">continue</span>
+Continuing.
+Curses, you<span class="token string">'ve found the secret phase!
+But finding it and solving it are quite different...
+4
+
+Breakpoint 1, 0x0000000000401177 in secret_phase ()
+(gdb) print <span class="token variable">$rax</span>=0x3e8
+<span class="token variable">$3</span> = 1000
+(gdb) continue
+Continuing.
+
+Breakpoint 2, 0x000000000040118f in secret_phase ()
+(gdb) print <span class="token variable">$rax</span>=3
+<span class="token variable">$4</span> = 3
+(gdb) continue
+Continuing.
+Wow! You'</span>ve defused the secret stage<span class="token operator">!</span>
+Congratulations<span class="token operator">!</span> You've defused the bomb<span class="token operator">!</span> Again<span class="token operator">!</span>
+<span class="token punctuation">[</span>Inferior <span class="token number">1</span> <span class="token punctuation">(</span>process <span class="token number">14133</span><span class="token punctuation">)</span> exited normally<span class="token punctuation">]</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>接着分析代码部分如何工作，首先秘密阶段是由secret_phase函数控制，该函数由phase_defused调用，该函数只有在完成phase_6时才会调用，然后查看如下汇编码：</p>
+<pre class="line-numbers language-assembly" data-language="assembly"><code class="language-assembly">40179c:	be c4 1e 40 00       	mov    $0x401ec4,%esi				#%d %s
+4017a1:	bf 30 30 60 00       	mov    $0x603030,%edi				#0x603030 &lt;input_strings+240&gt; &quot;&quot;
+4017a6:	b8 00 00 00 00       	mov    $0x0,%eax
+4017ab:	e8 00 f3 ff ff       	callq  400ab0 &lt;__isoc99_sscanf@plt&gt;
+4017b0:	83 f8 02             	cmp    $0x2,%eax					#eax&#x3D;0x2
+4017b3:	75 31                	jne    4017e6 &lt;phase_defused+0x61&gt;
+4017b5:	be ca 1e 40 00       	mov    $0x401eca,%esi				#&quot;austinpowers&quot;
+4017ba:	48 8d 7c 24 10       	lea    0x10(%rsp),%rdi
+4017bf:	e8 79 fa ff ff       	callq  40123d &lt;strings_not_equal&gt;
+4017c4:	85 c0                	test   %eax,%eax					#eax&#x3D;0<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>这部分首先调用sscanf函数，edi是我们的输入字符，格式为%d %s，然后调用sscanf，如下语句判断是否成功：</p>
+<pre class="line-numbers language-assembly" data-language="assembly"><code class="language-assembly">cmp    $0x2,%eax<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>后续的语句</p>
+<pre class="line-numbers language-assembly" data-language="assembly"><code class="language-assembly">4017b5:	be ca 1e 40 00       	mov    $0x401eca,%esi				#&quot;austinpowers&quot;
+4017ba:	48 8d 7c 24 10       	lea    0x10(%rsp),%rdi
+4017bf:	e8 79 fa ff ff       	callq  40123d &lt;strings_not_equal&gt;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+<p>判断rdi处的字符串（即sscanf的结果）是否和austinpowers相同，所以我们需要在0x4017a1处设置断点，然后运行如下指令</p>
+<pre class="line-numbers language-shell" data-language="shell"><code class="language-shell"><span class="token builtin class-name">set</span> <span class="token punctuation">&#123;</span>char <span class="token punctuation">[</span><span class="token number">30</span><span class="token punctuation">]</span><span class="token punctuation">&#125;</span> 0x603030 <span class="token operator">=</span> <span class="token string">"6301152 austinpowers"</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>这样可以通过上述测试。</p>
+<p>通过该测试后命令行让我们输入一个参数，然后进入secret_phase，如下指令判断参数是否小于等于1001：</p>
+<pre class="line-numbers language-assembly" data-language="assembly"><code class="language-assembly">401172:	89 c3                	mov    %eax,%ebx						#R[ebx]&#x3D;R[eax]
+401174:	8d 43 ff             	lea    -0x1(%rbx),%eax					#R[eax]&#x3D;R[rbx]-0x1
+401177:	3d e8 03 00 00       	cmp    $0x3e8,%eax						#1000<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+<p>通过该指令后进入fun7，最后判断返回结果是否为3，该函数C版本如下（参考<a target="_blank" rel="noopener" href="https://github.com/HeLiangHIT/Hardware_Software_Interface/blob/f223721d39c88ffb30a109922fbb7db761e6a3ee/README.md）">https://github.com/HeLiangHIT/Hardware_Software_Interface/blob/f223721d39c88ffb30a109922fbb7db761e6a3ee/README.md）</a></p>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">int</span> <span class="token function">fun7</span><span class="token punctuation">(</span><span class="token keyword">const</span> <span class="token keyword">int</span> <span class="token operator">*</span>a<span class="token punctuation">,</span> <span class="token keyword">int</span> b<span class="token punctuation">)</span>
+<span class="token punctuation">&#123;</span>
+  <span class="token keyword">if</span> <span class="token punctuation">(</span>a <span class="token operator">==</span> <span class="token constant">NULL</span><span class="token punctuation">)</span>
+    <span class="token keyword">return</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">;</span>
+  <span class="token keyword">int</span> ret <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+  <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">*</span>a <span class="token operator">-</span> b <span class="token operator">></span> <span class="token number">0</span><span class="token punctuation">)</span>
+  <span class="token punctuation">&#123;</span>
+    ret <span class="token operator">=</span> <span class="token function">fun7</span><span class="token punctuation">(</span><span class="token operator">*</span><span class="token punctuation">(</span>a <span class="token operator">+</span> <span class="token number">4</span><span class="token punctuation">)</span><span class="token punctuation">,</span> b<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    ret <span class="token operator">*=</span> <span class="token number">2</span>
+  <span class="token punctuation">&#125;</span>
+  <span class="token keyword">else</span> <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">*</span>a <span class="token operator">-</span> b <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">)</span>
+    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+  <span class="token keyword">else</span>
+  <span class="token punctuation">&#123;</span>
+    ret <span class="token operator">=</span> <span class="token function">fun7</span><span class="token punctuation">(</span><span class="token operator">*</span><span class="token punctuation">(</span>a <span class="token operator">+</span> <span class="token number">8</span><span class="token punctuation">)</span><span class="token punctuation">,</span> b<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    ret <span class="token operator">=</span> ret <span class="token operator">*</span> <span class="token number">2</span> <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">;</span>
+  <span class="token punctuation">&#125;</span>
+  <span class="token keyword">return</span> ret<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>所以求解该问题的python版本如下：</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python">address <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>
+data <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>
+<span class="token keyword">with</span> <span class="token builtin">open</span><span class="token punctuation">(</span><span class="token string">"data.txt"</span><span class="token punctuation">)</span> <span class="token keyword">as</span> f<span class="token punctuation">:</span>
+    i <span class="token operator">=</span> <span class="token number">0</span>
+    <span class="token keyword">for</span> line <span class="token keyword">in</span> f<span class="token punctuation">.</span>readlines<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+        num <span class="token operator">=</span> <span class="token builtin">int</span><span class="token punctuation">(</span>line<span class="token punctuation">.</span>split<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+        <span class="token keyword">if</span> i <span class="token operator">%</span> <span class="token number">2</span> <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">:</span>
+            address<span class="token punctuation">.</span>append<span class="token punctuation">(</span>num<span class="token punctuation">)</span>
+        <span class="token keyword">else</span><span class="token punctuation">:</span>
+            data<span class="token punctuation">.</span>append<span class="token punctuation">(</span>num<span class="token punctuation">)</span>
+        i <span class="token operator">+=</span> <span class="token number">1</span>
+mp <span class="token operator">=</span> <span class="token builtin">dict</span><span class="token punctuation">(</span><span class="token builtin">zip</span><span class="token punctuation">(</span>address<span class="token punctuation">,</span> data<span class="token punctuation">)</span><span class="token punctuation">)</span>
+
+<span class="token keyword">def</span> <span class="token function">func7</span><span class="token punctuation">(</span>esi<span class="token punctuation">,</span> index<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>index <span class="token keyword">not</span> <span class="token keyword">in</span> mp<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token keyword">return</span> <span class="token operator">-</span><span class="token number">1</span>
+    tmp <span class="token operator">=</span> mp<span class="token punctuation">[</span>index<span class="token punctuation">]</span> <span class="token operator">-</span> esi
+    <span class="token keyword">if</span> tmp <span class="token operator">&lt;=</span> <span class="token number">0</span><span class="token punctuation">:</span>
+        res <span class="token operator">=</span> <span class="token number">0</span>
+        <span class="token keyword">if</span> tmp <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">:</span>
+            <span class="token keyword">return</span> <span class="token number">0</span>
+        <span class="token keyword">else</span><span class="token punctuation">:</span>
+            index <span class="token operator">+=</span> <span class="token number">16</span>
+            <span class="token keyword">if</span> index <span class="token keyword">in</span> mp<span class="token punctuation">:</span>
+                index <span class="token operator">=</span> mp<span class="token punctuation">[</span>index<span class="token punctuation">]</span>
+            <span class="token keyword">else</span><span class="token punctuation">:</span>
+                index <span class="token operator">=</span> <span class="token number">0</span>
+            res <span class="token operator">=</span> func7<span class="token punctuation">(</span>esi<span class="token punctuation">,</span> index<span class="token punctuation">)</span>
+            <span class="token keyword">return</span> <span class="token number">2</span> <span class="token operator">*</span> res <span class="token operator">+</span> <span class="token number">1</span>
+    <span class="token keyword">else</span><span class="token punctuation">:</span>
+        index <span class="token operator">+=</span> <span class="token number">8</span>
+        <span class="token keyword">if</span> index <span class="token keyword">in</span> mp<span class="token punctuation">:</span>
+            index <span class="token operator">=</span> mp<span class="token punctuation">[</span>index<span class="token punctuation">]</span>
+        <span class="token keyword">else</span><span class="token punctuation">:</span>
+            index <span class="token operator">=</span> <span class="token number">0</span>
+        res <span class="token operator">=</span> func7<span class="token punctuation">(</span>esi<span class="token punctuation">,</span> index<span class="token punctuation">)</span>
+        
+        <span class="token keyword">return</span> res <span class="token operator">*</span> <span class="token number">2</span>
+    
+<span class="token keyword">for</span> esi <span class="token keyword">in</span> <span class="token builtin">range</span><span class="token punctuation">(</span><span class="token number">1002</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+    index <span class="token operator">=</span> <span class="token number">6301088</span>
+    res <span class="token operator">=</span> func7<span class="token punctuation">(</span>esi<span class="token punctuation">,</span> index<span class="token punctuation">)</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>res <span class="token operator">==</span> <span class="token number">3</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token keyword">print</span><span class="token punctuation">(</span>esi<span class="token punctuation">,</span> res<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>最后的结果为</p>
+<pre class="line-numbers language-none"><code class="language-none">99 3
+107 3<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<p>所以输入99,107即可。</p>
+<p>补充：data.txt中数据格式如下：</p>
+<pre class="line-numbers language-none"><code class="language-none">$2621 &#x3D; 6301088
+$2622 &#x3D; 36
+$2623 &#x3D; 6301096
+$2624 &#x3D; 6301120<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+<p>第一行等式右边表示地址，第二行等式右边表示值。</p>
+<p>上述程序中的data.txt存储内存中的数据存放情况，该数组的初始位置为0x6025a0=6301088，这可以由如下命令得到：</p>
+<pre class="line-numbers language-shell" data-language="shell"><code class="language-shell"><span class="token number">401183</span>:	<span class="token number">89</span> de                	mov    %ebx,%esi						<span class="token comment">#R[esi]=R[ebx]=R[eax]</span>
+<span class="token number">401185</span>:	bf a0 <span class="token number">25</span> <span class="token number">60</span> 00       	mov    <span class="token variable">$0x6025a0</span>,%edi					<span class="token comment">#R[edi]=0x6025a0,M[0x6025a0]=36</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<p>然后使用如下命令得到结果：</p>
+<pre class="line-numbers language-shell" data-language="shell"><code class="language-shell"><span class="token builtin class-name">set</span> logging <span class="token function">file</span> data.txt
+<span class="token builtin class-name">set</span> logging on
+
+<span class="token builtin class-name">set</span> <span class="token variable">$i</span><span class="token operator">=</span><span class="token number">6301088</span> 
+<span class="token builtin class-name">set</span> <span class="token variable">$j</span><span class="token operator">=</span><span class="token number">0</span>
+<span class="token builtin class-name">set</span> <span class="token variable">$k</span><span class="token operator">=</span><span class="token number">0</span>
+<span class="token keyword">while</span> <span class="token punctuation">(</span><span class="token variable">$j</span><span class="token operator">&lt;</span><span class="token number">2000</span><span class="token punctuation">)</span>
+   <span class="token builtin class-name">set</span> <span class="token variable">$k</span><span class="token operator">=</span><span class="token variable">$i</span>+8*<span class="token variable">$j</span>
+   print <span class="token variable">$k</span>
+   print *<span class="token punctuation">(</span>int *<span class="token punctuation">)</span> <span class="token variable">$k</span>
+   <span class="token builtin class-name">set</span> <span class="token variable">$j</span><span class="token operator">=</span><span class="token variable">$j</span>+1
+end
+
+<span class="token builtin class-name">set</span> logging off<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>完整的流程如下：</p>
+<pre class="line-numbers language-shell" data-language="shell"><code class="language-shell"><span class="token punctuation">(</span>gdb<span class="token punctuation">)</span> <span class="token builtin class-name">break</span> *0x4017a1
+Breakpoint <span class="token number">1</span> at 0x4017a1
+<span class="token punctuation">(</span>gdb<span class="token punctuation">)</span> run
+Starting program: /home/qz/桌面/Labs/lab2/bomb 
+Welcome to my fiendish little bomb. You have <span class="token number">6</span> phases with
+<span class="token function">which</span> to blow yourself up. Have a <span class="token function">nice</span> day<span class="token operator">!</span>
+Science isn<span class="token string">'t about why, it'</span>s about why not?
+Phase <span class="token number">1</span> defused. How about the next one?
+<span class="token number">1</span> <span class="token number">1</span> <span class="token number">1</span> <span class="token number">1</span> <span class="token number">1</span> <span class="token number">1</span>
+That<span class="token string">'s number 2.  Keep going!
+0 535
+Halfway there!
+9
+So you got that one.  Try this one.
+7 93
+Congratulations! You'</span>ve <span class="token punctuation">(</span>mostly<span class="token punctuation">)</span> defused the bomb<span class="token operator">!</span>
+Hit Control-C to escape phase <span class="token number">6</span> <span class="token punctuation">(</span>for free<span class="token operator">!</span><span class="token punctuation">)</span>, but <span class="token keyword">if</span> you want to
+try phase <span class="token number">6</span> <span class="token keyword">for</span> extra credit, you can continue.  Just beware<span class="token operator">!</span>
+<span class="token number">600</span>
+
+Breakpoint <span class="token number">1</span>, 0x00000000004017a1 <span class="token keyword">in</span> phase_defused <span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">(</span>gdb<span class="token punctuation">)</span> <span class="token builtin class-name">set</span> <span class="token punctuation">&#123;</span>char <span class="token punctuation">[</span><span class="token number">30</span><span class="token punctuation">]</span><span class="token punctuation">&#125;</span> 0x603030 <span class="token operator">=</span> <span class="token string">"6301152 austinpowers"</span>
+<span class="token punctuation">(</span>gdb<span class="token punctuation">)</span> <span class="token builtin class-name">set</span> logging <span class="token function">file</span> data.txt
+<span class="token punctuation">(</span>gdb<span class="token punctuation">)</span> <span class="token builtin class-name">set</span> logging on
+Copying output to data.txt.
+Copying debug output to data.txt.
+<span class="token punctuation">(</span>gdb<span class="token punctuation">)</span> <span class="token builtin class-name">set</span> <span class="token variable">$i</span><span class="token operator">=</span><span class="token number">6301088</span> 
+<span class="token punctuation">(</span>gdb<span class="token punctuation">)</span> <span class="token builtin class-name">set</span> <span class="token variable">$j</span><span class="token operator">=</span><span class="token number">0</span>
+<span class="token punctuation">(</span>gdb<span class="token punctuation">)</span> <span class="token builtin class-name">set</span> <span class="token variable">$k</span><span class="token operator">=</span><span class="token number">0</span>
+<span class="token punctuation">(</span>gdb<span class="token punctuation">)</span> <span class="token keyword">while</span> <span class="token punctuation">(</span><span class="token variable">$j</span><span class="token operator">&lt;</span><span class="token number">2000</span><span class="token punctuation">)</span>
+ <span class="token operator">></span>   <span class="token builtin class-name">set</span> <span class="token variable">$k</span><span class="token operator">=</span><span class="token variable">$i</span>+8*<span class="token variable">$j</span>
+ <span class="token operator">></span>   print <span class="token variable">$k</span>
+ <span class="token operator">></span>   print *<span class="token punctuation">(</span>int *<span class="token punctuation">)</span> <span class="token variable">$k</span>
+ <span class="token operator">></span>   <span class="token builtin class-name">set</span> <span class="token variable">$j</span><span class="token operator">=</span><span class="token variable">$j</span>+1
+ <span class="token operator">></span>end
+<span class="token variable">$1</span> <span class="token operator">=</span> <span class="token number">6301088</span>
+<span class="token variable">$2</span> <span class="token operator">=</span> <span class="token number">36</span>
+<span class="token variable">$3</span> <span class="token operator">=</span> <span class="token number">6301096</span>
+<span class="token variable">$4</span> <span class="token operator">=</span> <span class="token number">6301120</span>
+<span class="token variable">$5</span> <span class="token operator">=</span> <span class="token number">6301104</span>
+<span class="token variable">$6</span> <span class="token operator">=</span> <span class="token number">6301152</span>
+<span class="token variable">$7</span> <span class="token operator">=</span> <span class="token number">6301112</span>
+<span class="token variable">$8</span> <span class="token operator">=</span> <span class="token number">0</span>
+<span class="token variable">$9</span> <span class="token operator">=</span> <span class="token number">6301120</span>
+<span class="token variable">$10</span> <span class="token operator">=</span> <span class="token number">8</span>
+<span class="token variable">$11</span> <span class="token operator">=</span> <span class="token number">6301128</span>
+<span class="token variable">$12</span> <span class="token operator">=</span> <span class="token number">6301248</span>
+<span class="token variable">$13</span> <span class="token operator">=</span> <span class="token number">6301136</span>
+<span class="token variable">$14</span> <span class="token operator">=</span> <span class="token number">6301184</span>
+<span class="token variable">$15</span> <span class="token operator">=</span> <span class="token number">6301144</span>
+<span class="token variable">$16</span> <span class="token operator">=</span> <span class="token number">0</span>
+<span class="token variable">$17</span> <span class="token operator">=</span> <span class="token number">6301152</span>
+<span class="token variable">$18</span> <span class="token operator">=</span> <span class="token number">50</span>
+<span class="token variable">$19</span> <span class="token operator">=</span> <span class="token number">6301160</span>
+<span class="token variable">$20</span> <span class="token operator">=</span> <span class="token number">6301216</span>
+<span class="token variable">$21</span> <span class="token operator">=</span> <span class="token number">6301168</span>
+<span class="token variable">$22</span> <span class="token operator">=</span> <span class="token number">6301280</span>
+<span class="token variable">$23</span> <span class="token operator">=</span> <span class="token number">6301176</span>
+--Type <span class="token operator">&lt;</span>RET<span class="token operator">></span> <span class="token keyword">for</span> more, q to quit, c to <span class="token builtin class-name">continue</span> without paging--q
+Quit
+<span class="token punctuation">(</span>gdb<span class="token punctuation">)</span> <span class="token builtin class-name">set</span> logging off
+Done logging to data.txt.
+<span class="token punctuation">(</span>gdb<span class="token punctuation">)</span> <span class="token builtin class-name">continue</span>
+Continuing.
+Curses, you<span class="token string">'ve found the secret phase!
+But finding it and solving it are quite different...
+107
+Wow! You'</span>ve defused the secret stage<span class="token operator">!</span>
+Congratulations<span class="token operator">!</span> You've defused the bomb<span class="token operator">!</span> Again<span class="token operator">!</span>
+<span class="token punctuation">[</span>Inferior <span class="token number">1</span> <span class="token punctuation">(</span>process <span class="token number">18341</span><span class="token punctuation">)</span> exited normally<span class="token punctuation">]</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h4 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h4><p>gbd中给寄存器赋值：</p>
+<pre class="line-numbers language-none"><code class="language-none">print $rax&#x3D;1<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>gdb赋值字符串：</p>
+<pre class="line-numbers language-none"><code class="language-none">set &#123;char [30]&#125; 0x603030 &#x3D; &quot;6301152 austinpowers&quot;<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>循环：</p>
+<pre class="line-numbers language-none"><code class="language-none">set $i&#x3D;6301088 
+set $j&#x3D;0
+set $k&#x3D;0
+while ($j&lt;2000)
+   set $k&#x3D;$i+8*$j
+   print $k
+   print *(int *) $k
+   set $j&#x3D;$j+1
+end<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>将gdb的输出结果重定向：</p>
+<pre class="line-numbers language-none"><code class="language-none">(gdb) set logging file &lt;file name&gt;
+(gdb) set logging on
+(gdb) info functions
+(gdb) set logging off<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">Doraemonzzz</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="http://doraemonzzz.com/2020/08/16/The%20Hardware%20Software%20Interface%20Lab%202/">http://doraemonzzz.com/2020/08/16/The%20Hardware%20Software%20Interface%20Lab%202/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://doraemonzzz.com" target="_blank">Doraemonzzz</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/CSE-351/">CSE 351</a></div><div class="post_share"><div class="social-share" data-image="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2020/08/17/Digital%20VLSI%20Design%20Lecture%201%20Introduction/"><img class="prev-cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">Digital VLSI Design Lecture 1 Introduction</div></div></a></div><div class="next-post pull-right"><a href="/2020/08/16/%E5%8F%B0%E4%BA%A4%E5%A4%A7%E4%BF%A1%E6%81%AF%E8%AE%BA%20Lecture%2010/"><img class="next-cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">台交大信息论 Lecture 10</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span> 相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2020/08/09/The Hardware Software Interface Lab 0/" title="The Hardware Software Interface Lab 0"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-08-09</div><div class="title">The Hardware Software Interface Lab 0</div></div></a></div><div><a href="/2020/08/09/The Hardware Software Interface Lab 1/" title="The Hardware Software Interface Lab 1"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-08-09</div><div class="title">The Hardware Software Interface Lab 1</div></div></a></div><div><a href="/2020/09/06/The Hardware Software Interface Lab 3/" title="The Hardware Software Interface Lab 3"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-09-06</div><div class="title">The Hardware Software Interface Lab 3</div></div></a></div><div><a href="/2020/09/06/The Hardware Software Interface Lab 4/" title="The Hardware Software Interface Lab 4"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-09-06</div><div class="title">The Hardware Software Interface Lab 4</div></div></a></div><div><a href="/2020/07/26/The Hardware Software Interface Section 1 Memory Data and Addressing/" title="The Hardware Software Interface Section 1 Memory Data and Addressing"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-07-26</div><div class="title">The Hardware Software Interface Section 1 Memory Data and Addressing</div></div></a></div><div><a href="/2020/09/20/The Hardware Software Interface Section 11 Java vs C/" title="The Hardware Software Interface Section 11 Java vs C"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-09-20</div><div class="title">The Hardware Software Interface Section 11 Java vs C</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="card-info-avatar is-center"><img class="avatar-img" src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/><div class="author-info__name">Doraemonzzz</div><div class="author-info__description">个人博客，主要记录有关机器学习，数学以及计算机科学的笔记</div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">610</div></a></div><div class="card-info-data-item is-center"><a href="/tags/"><div class="headline">标签</div><div class="length-num">59</div></a></div><div class="card-info-data-item is-center"><a href="/categories/"><div class="headline">分类</div><div class="length-num">23</div></a></div></div><a class="button--animated" id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/Doraemonzzz" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="/doraemon_zzz@163.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn card-announcement-animation"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%AD%94%E6%A1%88"><span class="toc-number">1.</span> <span class="toc-text">答案</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%87%86%E5%A4%87%E5%B7%A5%E4%BD%9C"><span class="toc-number">2.</span> <span class="toc-text">准备工作</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#phase-1"><span class="toc-number">3.</span> <span class="toc-text">phase_1</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#phase-2"><span class="toc-number">4.</span> <span class="toc-text">phase_2</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#phase-3"><span class="toc-number">5.</span> <span class="toc-text">phase_3</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#phase-4"><span class="toc-number">6.</span> <span class="toc-text">phase_4</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#phase-5"><span class="toc-number">7.</span> <span class="toc-text">phase_5</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#phase-6"><span class="toc-number">8.</span> <span class="toc-text">phase_6</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#secret-phase"><span class="toc-number">9.</span> <span class="toc-text">secret_phase</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-number">10.</span> <span class="toc-text">总结</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2021/06/06/2021-6-6-%E7%AE%97%E6%B3%95%E6%A6%82%E8%AE%BA(DPV)%E4%B9%A0%E9%A2%98%E8%A7%A3%E7%AD%94%E2%80%94%E2%80%94%E7%AC%AC3%E7%AB%A0-%E5%9B%BE%E7%9A%84%E5%88%86%E8%A7%A3/" title="算法概论(DPV)习题解答——第3章 图的分解"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="算法概论(DPV)习题解答——第3章 图的分解"/></a><div class="content"><a class="title" href="/2021/06/06/2021-6-6-%E7%AE%97%E6%B3%95%E6%A6%82%E8%AE%BA(DPV)%E4%B9%A0%E9%A2%98%E8%A7%A3%E7%AD%94%E2%80%94%E2%80%94%E7%AC%AC3%E7%AB%A0-%E5%9B%BE%E7%9A%84%E5%88%86%E8%A7%A3/" title="算法概论(DPV)习题解答——第3章 图的分解">算法概论(DPV)习题解答——第3章 图的分解</a><time datetime="2021-06-06T14:35:00.000Z" title="发表于 2021-06-06 22:35:00">2021-06-06</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/06/06/2021-6-6-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E7%AC%AC5%E7%AB%A0-%E4%B9%A0%E9%A2%98%E8%A7%A3%E6%9E%90/" title="深入理解计算机系统 第5章 习题解析"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="深入理解计算机系统 第5章 习题解析"/></a><div class="content"><a class="title" href="/2021/06/06/2021-6-6-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E7%AC%AC5%E7%AB%A0-%E4%B9%A0%E9%A2%98%E8%A7%A3%E6%9E%90/" title="深入理解计算机系统 第5章 习题解析">深入理解计算机系统 第5章 习题解析</a><time datetime="2021-06-06T07:23:00.000Z" title="发表于 2021-06-06 15:23:00">2021-06-06</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/06/05/2021-6-5-Stanford-Compiler-PA5%E7%BF%BB%E8%AF%91/" title="Stanford Compiler PA5翻译"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Stanford Compiler PA5翻译"/></a><div class="content"><a class="title" href="/2021/06/05/2021-6-5-Stanford-Compiler-PA5%E7%BF%BB%E8%AF%91/" title="Stanford Compiler PA5翻译">Stanford Compiler PA5翻译</a><time datetime="2021-06-05T06:12:00.000Z" title="发表于 2021-06-05 14:12:00">2021-06-05</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/06/04/2021-6-4-Stanford-Compiler-PA4%E7%BF%BB%E8%AF%91/" title="Stanford Compiler PA4翻译"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Stanford Compiler PA4翻译"/></a><div class="content"><a class="title" href="/2021/06/04/2021-6-4-Stanford-Compiler-PA4%E7%BF%BB%E8%AF%91/" title="Stanford Compiler PA4翻译">Stanford Compiler PA4翻译</a><time datetime="2021-06-03T16:17:00.000Z" title="发表于 2021-06-04 00:17:00">2021-06-04</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/06/03/2021-6-3-%E5%B7%A7%E5%A6%99%E7%9A%84Y%E8%BF%90%E7%AE%97%E7%AC%A6/" title="巧妙的Y运算符"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="巧妙的Y运算符"/></a><div class="content"><a class="title" href="/2021/06/03/2021-6-3-%E5%B7%A7%E5%A6%99%E7%9A%84Y%E8%BF%90%E7%AE%97%E7%AC%A6/" title="巧妙的Y运算符">巧妙的Y运算符</a><time datetime="2021-06-03T00:54:00.000Z" title="发表于 2021-06-03 08:54:00">2021-06-03</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2021 By Doraemonzzz</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><div class="js-pjax"><script>if (!window.MathJax) {
+  window.MathJax = {
+    loader: {
+      source: {
+        '[tex]/amsCd': '[tex]/amscd'
+      }
+    },
+    tex: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]],
+      tags: 'ams'
+    },
+    options: {
+      renderActions: {
+        findScript: [10, doc => {
+          for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+            const display = !!node.type.match(/; *mode=display/)
+            const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+            const text = document.createTextNode('')
+            node.parentNode.replaceChild(text, node)
+            math.start = {node: text, delim: '', n: 0}
+            math.end = {node: text, delim: '', n: 0}
+            doc.math.push(math)
+          }
+        }, ''],
+        addClass: [200,() => {
+          document.querySelectorAll('mjx-container:not([display=\'true\']').forEach( node => {
+            const target = node.parentNode
+            if (!target.classList.contains('has-jax')) {
+              target.classList.add('mathjax-overflow')
+            }
+          })
+        }, '', false]
+      }
+    }
+  }
+  
+  const script = document.createElement('script')
+  script.src = 'https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js'
+  script.id = 'MathJax-script'
+  script.async = true
+  document.head.appendChild(script)
+} else {
+  MathJax.startup.document.state(0)
+  MathJax.texReset()
+  MathJax.typeset()
+}</script></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

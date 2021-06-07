@@ -1,0 +1,363 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Probability, Unit 4 Discrete random variables | Doraemonzzz</title><meta name="keywords" content="MIT 概率公开课"><meta name="author" content="Doraemonzzz"><meta name="copyright" content="Doraemonzzz"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="这次回顾第四单元，这一讲介绍了离散随机变量。 课程主页：https:&#x2F;&#x2F;ocw.mit.edu&#x2F;resources&#x2F;res-6-012-introduction-to-probability-spring-2018&#x2F;index.htm edx版本：https:&#x2F;&#x2F;www.edx.org&#x2F;course&#x2F;probability-the-science-of-uncertainty-and-data-0">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Probability, Unit 4 Discrete random variables">
+<meta property="og:url" content="http://doraemonzzz.com/2019/07/10/Probability,%20Unit%204%20Discrete%20random%20variables/index.html">
+<meta property="og:site_name" content="Doraemonzzz">
+<meta property="og:description" content="这次回顾第四单元，这一讲介绍了离散随机变量。 课程主页：https:&#x2F;&#x2F;ocw.mit.edu&#x2F;resources&#x2F;res-6-012-introduction-to-probability-spring-2018&#x2F;index.htm edx版本：https:&#x2F;&#x2F;www.edx.org&#x2F;course&#x2F;probability-the-science-of-uncertainty-and-data-0">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg">
+<meta property="article:published_time" content="2019-07-10T12:44:00.000Z">
+<meta property="article:modified_time" content="2019-07-10T12:44:11.020Z">
+<meta property="article:author" content="Doraemonzzz">
+<meta property="article:tag" content="MIT 概率公开课">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="http://doraemonzzz.com/2019/07/10/Probability,%20Unit%204%20Discrete%20random%20variables/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"prismjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    jQuery: 'https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js',
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+    },
+    fancybox: {
+      js: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isanchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'Probability, Unit 4 Discrete random variables',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2019-07-10 20:44:11'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    })(window)</script><meta name="generator" content="Hexo 5.4.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="author-avatar"><img class="avatar-img" src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">文章</div><div class="length-num">610</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">标签</div><div class="length-num">59</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/categories/"><div class="headline">分类</div><div class="length-num">23</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">Doraemonzzz</a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">Probability, Unit 4 Discrete random variables</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2019-07-10T12:44:00.000Z" title="发表于 2019-07-10 20:44:00">2019-07-10</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2019-07-10T12:44:11.020Z" title="更新于 2019-07-10 20:44:11">2019-07-10</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E6%95%B0%E5%AD%A6/">数学</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="Probability, Unit 4 Discrete random variables"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p>这次回顾第四单元，这一讲介绍了离散随机变量。</p>
+<p>课程主页：<a target="_blank" rel="noopener" href="https://ocw.mit.edu/resources/res-6-012-introduction-to-probability-spring-2018/index.htm">https://ocw.mit.edu/resources/res-6-012-introduction-to-probability-spring-2018/index.htm</a></p>
+<p>edx版本：<a target="_blank" rel="noopener" href="https://www.edx.org/course/probability-the-science-of-uncertainty-and-data-0">https://www.edx.org/course/probability-the-science-of-uncertainty-and-data-0</a></p>
+<span id="more"></span>
+<h3 id="Part-1：课程回顾"><a href="#Part-1：课程回顾" class="headerlink" title="Part 1：课程回顾"></a>Part 1：课程回顾</h3><h4 id="常见随机变量"><a href="#常见随机变量" class="headerlink" title="常见随机变量"></a>常见随机变量</h4><h5 id="伯努利随机变量"><a href="#伯努利随机变量" class="headerlink" title="伯努利随机变量"></a>伯努利随机变量</h5><script type="math/tex; mode=display">
+X=\left\{\begin{array}{ll}{1,} & {\text { w.p. } p} \\ {0,} & {\text { w.p. } 1-p}\end{array}\right.</script><p>其中$p \in[0,1]$。期望和方差为</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+\mathbf E[X]&= p\\
+\operatorname{var}(X)&=p(1-p)
+\end{aligned}</script><h5 id="离散均匀随机变量"><a href="#离散均匀随机变量" class="headerlink" title="离散均匀随机变量"></a>离散均匀随机变量</h5><p>给定整数$a\le b$，样本空间为$\{a, a+1, \ldots, b\}$，随机变量$X(\omega)=\omega$，分布列为</p>
+<script type="math/tex; mode=display">
+p_X(x)=\frac 1 {b-a+1}, x\in \{a, a+1, \ldots, b\}</script><p>期望和方差为</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+\mathbf E[X]&= \frac {a+b} 2\\
+\operatorname{var}(X)&=\frac{1}{12}(b-a)(b-a+2)
+\end{aligned}</script><h5 id="几何随机变量"><a href="#几何随机变量" class="headerlink" title="几何随机变量"></a>几何随机变量</h5><p>给定参数$p : 0&lt;p \leq 1$，$p$为硬币正面出现的概率，随机变量$X$为连续投硬币，直至正面出现所需的投掷次数，所以分布列为</p>
+<script type="math/tex; mode=display">
+p_{X}(k)=(1-p)^{k-1} p, \quad k=1,2, \cdots</script><p>期望和方差为</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+\mathbf E[X]&= \frac 1 p\\
+\operatorname{var}(X)&=\frac {1-p}{p^2}
+\end{aligned}</script><h5 id="泊松随机变量"><a href="#泊松随机变量" class="headerlink" title="泊松随机变量"></a>泊松随机变量</h5><script type="math/tex; mode=display">
+p_{X}(k)=\mathrm{e}^{-\lambda} \frac{\lambda^{k}}{k !}, \quad k=0,1,2, \cdots</script><p>期望和方差为</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+\mathbf E[X]&= \lambda\\
+\operatorname{var}(X)&= \lambda
+\end{aligned}</script><h4 id="期望"><a href="#期望" class="headerlink" title="期望"></a>期望</h4><h5 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h5><p>对于离散随机变量，定义其期望为</p>
+<script type="math/tex; mode=display">
+\mathbf{E}[X]=\sum_{x} x p_{X}(x)</script><p>这里假设</p>
+<script type="math/tex; mode=display">
+\sum_{x}|x| p_{X}(x)<\infty</script><h5 id="性质"><a href="#性质" class="headerlink" title="性质"></a>性质</h5><ul>
+<li>$\mathbf{E}[a X+b]=a \mathbf{E}[X]+b$</li>
+<li>$\mathbf{E}[g(X)]=\sum_x g(x)p_X(x)$</li>
+<li>如果$X\ge 0$，那么$\mathbf{E}[X] \geq 0$</li>
+<li>如果$a \leq X \leq b$，那么$a \leq \mathbf{E}[X] \leq b$</li>
+<li>如果$c$是常数，那么$\mathbf{E}[c]=c$</li>
+</ul>
+<h4 id="方差和标准差"><a href="#方差和标准差" class="headerlink" title="方差和标准差"></a>方差和标准差</h4><h5 id="定义-1"><a href="#定义-1" class="headerlink" title="定义"></a>定义</h5><p>方差的定义为</p>
+<script type="math/tex; mode=display">
+\operatorname{var}(X)=\mathbf{E}\left[(X-\mu)^{2}\right]=\mathbf{E}\left[X^{2}\right]-(\mathbf{E}[X])^{2}</script><p>标准差为</p>
+<script type="math/tex; mode=display">
+\sigma_{X}=\sqrt{\operatorname{var}(X)}</script><h5 id="性质-1"><a href="#性质-1" class="headerlink" title="性质"></a>性质</h5><ul>
+<li>对于$Y=a X+b$，其期望和方差为<script type="math/tex; mode=display">
+\mathbf{E}[Y]=a \mathbf{E}[X]+b, \quad \operatorname{var}(Y)=a^{2} \operatorname{var}(X)</script></li>
+</ul>
+<h4 id="条件分布列与期望"><a href="#条件分布列与期望" class="headerlink" title="条件分布列与期望"></a>条件分布列与期望</h4><p>假设$A$为某事件，$\mathbf P(A)&gt;0$。随机变量$X$在给定$A$发生的条件下的条件分布列为</p>
+<script type="math/tex; mode=display">
+p_{X | A}(x)=\mathrm{P}(X=x | A)</script><p>满足</p>
+<script type="math/tex; mode=display">
+\sum_{x} p_{X | A}(x)=1</script><p>条件期望的定义为</p>
+<script type="math/tex; mode=display">
+\begin{array}{l}{\mathbf{E}[X | A]=\sum_{x} x p_{X | A}(x)} \\\end{array}</script><p>类似的我们有</p>
+<script type="math/tex; mode=display">
+{\mathbf{E}[g(X) | A]=\sum g(x) p_{X | A}(x)}</script><p>对于随机变量，定义</p>
+<script type="math/tex; mode=display">
+p_{X | Y}(x | y)=\mathrm{P}(X=x | Y=y)</script><p>给定$Y=y$的条件下$X$的条件期望为</p>
+<script type="math/tex; mode=display">
+\mathbf{E}[X | Y=y]=\sum x p_{X | Y}(x | y)</script><p>利用全期望公式，我们有</p>
+<script type="math/tex; mode=display">
+\mathbf{E}[X]=\sum_{\boldsymbol{y}} p_{Y}(y) \mathbf{E}[{X} | {Y}=y]</script><p>假设$A_{1}, \cdots, A_{n}$是互不相容的事件并构成样本空间的分割，假设$\mathbf P(A_i)&gt;0$，那么</p>
+<script type="math/tex; mode=display">
+\mathbf{E}[X]=\sum_{i=1}^{n} \mathrm{P}\left(A_{i}\right) \mathrm{E}\left[\boldsymbol{X} | A_{i}\right]</script><p>如果事件$B$满足$\mathrm{P}\left(A_{i} \cap B\right)&gt;0$，那么</p>
+<script type="math/tex; mode=display">
+\mathbf{E}[X | B]=\sum_{i=1}^{n} \mathbf{P}\left(A_{i} | B\right) \mathbf{E}\left[X | A_{i} \cap B\right]</script><h4 id="几何分布的无记忆性"><a href="#几何分布的无记忆性" class="headerlink" title="几何分布的无记忆性"></a>几何分布的无记忆性</h4><ul>
+<li>假设$X$服从参数为$p$的几何分布，在$X&gt;n$的条件下，$X-n$服从参数为$p$的几何分布</li>
+</ul>
+<p>证明：</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+p_{X-n|X>n}(X-n=k| X>n)
+&= \frac{p(X=n+k,X>n)}{p(X>n)}\\
+&= \frac{(1-p)^{n+k-1}(1-p)}{(1-p)^{n}}\\
+&=(1-p)^{k-1}p
+\end{aligned}</script><p>利用该性质计算期望：</p>
+<script type="math/tex; mode=display">
+\begin{aligned} 
+\mathbf E[x] &=1+ \mathbf E[x-1] \\ 
+&=1+p\mathbf  E[x-1 | x=1]+(1-p) \mathbf  E[x-1 | x>1] \\ &=1+0+(1-p)\mathbf E[x] \\
+\mathbf E[x]&= \frac 1 p
+\end{aligned}</script><h4 id="多个随机变量的联合分布列"><a href="#多个随机变量的联合分布列" class="headerlink" title="多个随机变量的联合分布列"></a>多个随机变量的联合分布列</h4><p>定义两个随机变量的联合PMF为</p>
+<script type="math/tex; mode=display">
+p_{X, Y}(x, y)=\mathbf{P}(X=x \text { and } Y=y)</script><p>由此可以推出</p>
+<script type="math/tex; mode=display">
+\begin{array}{l}{\sum_{x} \sum_{y} p_{X, Y}(x, y)=1} \\ {p_{X}(x)=\sum_{y} p_{X, Y}(x, y)} \\ {p_{Y}(y)=\sum_{x} p_{X, Y}(x, y)}\end{array}</script><p>对于$g(X,Y)$，我们有</p>
+<script type="math/tex; mode=display">
+\mathbf{E}[g(X, Y)]=\sum_{x} \sum_{y} g(x, y) p_{X, Y}(x, y)</script><p>多于两个随机变量的情形也可以推广，特别的，我们有</p>
+<script type="math/tex; mode=display">
+\mathbf{E}\left[X_{1}+\cdots+X_{n}\right]=\mathbf{E}\left[X_{1}\right]+\cdots+\mathbf{E}\left[X_{n}\right]</script><h4 id="独立性"><a href="#独立性" class="headerlink" title="独立性"></a>独立性</h4><p>我们称$X$相对于事件$A$独立，如果</p>
+<script type="math/tex; mode=display">
+p_{X | A}(x)=p_{X}(x)对一切x成立</script><p>称$X,Y$为相互独立的随机变量，如果</p>
+<script type="math/tex; mode=display">
+p_{X, Y}(x, y)=p_{X}(x) p_{Y}(y)对一切x,y成立</script><p>如果$X,Y$相互独立，那么</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+&\mathbf{E}[X Y]=\mathbf{E}[X] \mathbf{E}[Y]\\
+&\mathbf{E}[g(X) h(Y)]=\mathbf{E}[g(X)] \mathbf{E}[h(Y)]\\
+&\operatorname{var}(X+Y)=\operatorname{var}(X)+\operatorname{var}(Y)
+\end{aligned}</script><h3 id="Part-2：理论习题"><a href="#Part-2：理论习题" class="headerlink" title="Part 2：理论习题"></a>Part 2：理论习题</h3><h4 id="1"><a href="#1" class="headerlink" title="1"></a>1</h4><p><img src="https://github.com/Doraemonzzz/md-photo/blob/master/MIT%E6%A6%82%E7%8E%87/Unit%204/2019070906.jpg?raw=true" alt=""></p>
+<p>注意</p>
+<script type="math/tex; mode=display">
+\cup_{k=1}^{n} A_{k} 发生\Leftrightarrow  \prod_{i=1}^n (1-X_i)=0
+\Leftrightarrow   1-\prod_{i=1}^n (1-X_i)=1</script><p>所以</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+\mathrm{P}\left(\cup_{k=1}^{n} A_{k}\right)
+&= \mathrm E \left[ 1-\prod_{i=1}^n (1-X_i)\right] \\
+&=1 -  \mathrm E \left[ \prod_{i=1}^n (1-X_i)\right] \\
+&=\sum_{i \in S_{1}} \mathrm{P}\left(A_{i}\right)-\sum_{\left(i_{1}, i_{2}\right) \in S_{2}} \mathrm{P}\left(A_{i_{1}} \cap A_{i_{2}}\right) +\sum_{\left(i_{1}, i_{2}, i_{3}\right) \in S_{3}} \mathrm{P}\left(A_{i_{1}} \cap A_{i_{2}} \cap A_{i_{3}}\right)-\cdots+(-1)^{n-1} \mathrm{P}\left(\cap_{k=1}^{n} A_{k}\right)
+\end{aligned}</script><h4 id="2"><a href="#2" class="headerlink" title="2"></a>2</h4><p><img src="https://github.com/Doraemonzzz/md-photo/blob/master/MIT%E6%A6%82%E7%8E%87/Unit%204/2019070902.jpg?raw=true" alt=""></p>
+<p>假设投掷硬币的次数为$X$，第$i$次硬币为正面的事件为$H_i$，反面的事件为$T_i$，那么</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+\mathrm{E}[X]=p \mathrm{E}\left[X | H_{1}\right]+q \mathrm{E}\left[X | T_{1}\right]
+\end{aligned}</script><p>接着考虑$\mathrm{E}\left[X | H_{1}\right]$，我们有</p>
+<script type="math/tex; mode=display">
+\mathrm{E}\left[X | H_{1}\right] =p\mathrm{E}\left[X | H_{1} H_2\right]
++q\mathrm{E}\left[X | H_{1} T_2\right]=2p + q (1 +\mathrm{E}\left[X | T_{1}\right] )</script><p>同理计算$\mathrm{E}\left[X | T_{1}\right]$可得</p>
+<script type="math/tex; mode=display">
+\mathrm{E}\left[X | T_{1}\right] =p\mathrm{E}\left[X | T_{1} H_2\right]
++q\mathrm{E}\left[X | T_{1} T_2\right]=p(1 +\mathrm{E}\left[X | H_{1}\right] ) +2q</script><p>解得</p>
+<script type="math/tex; mode=display">
+\begin{aligned} \mathrm{E}\left[X | T_{1}\right] &=\frac{2+p^{2}}{1-p q} \\ \mathrm{E}\left[X | H_{1}\right] &=\frac{2+q^{2}}{1-p q} \end{aligned}</script><p>所以</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+\mathrm{E}[X]
+&=p \cdot \frac{2+q^{2}}{1-p q}+q \cdot \frac{2+p^{2}}{1-p q} \\
+&=\frac{2(p+q)+pq(p+q)}{1-pq}\\
+&=\frac{2+pq}{1-pq}
+\end{aligned}</script><h4 id="3"><a href="#3" class="headerlink" title="3"></a>3</h4><p><img src="https://github.com/Doraemonzzz/md-photo/blob/master/MIT%E6%A6%82%E7%8E%87/Unit%204/2019070903.jpg?raw=true" alt=""></p>
+<p><img src="https://github.com/Doraemonzzz/md-photo/blob/master/MIT%E6%A6%82%E7%8E%87/Unit%204/2019070904.jpg?raw=true" alt=""></p>
+<p><img src="https://github.com/Doraemonzzz/md-photo/blob/master/MIT%E6%A6%82%E7%8E%87/Unit%204/2019070905.jpg?raw=true" alt=""></p>
+<p>(a)注意到该不等式等价于</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+H(X) +\sum_{i=1}^{n} p_{i} \log q_{i}
+&=\sum_{i=1}^{n} p_{i} \log q_{i}-\sum_{i=1}^{n} p_{i} \log p_{i}\\
+&= \sum_{i=1}^{n} p_{i} \log \frac{q_{i}}{p_i} \\
+&\le 0
+\end{aligned}</script><p>利用不等式</p>
+<script type="math/tex; mode=display">
+\ln \alpha \le \alpha -1</script><p>我们可得</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+p_{i} \log \frac{q_{i}}{p_i}  &\le p_i \left(\frac{q_{i}}{p_i}-1\right) \\
+\sum_{i=1}^{n} p_{i} \log \frac{q_{i}}{p_i} &\le 
+\sum_{i=1}^{n}p_i \left(\frac{q_{i}}{p_i}-1\right)\\
+&= \sum_{i=1}^n q_i -
+ \sum_{i=1}^n p_i\\
+ &=0
+\end{aligned}</script><p>所以结论成立。</p>
+<p>利用原不等式等号成立的条件，我们得到该不等式等号成立的条件为</p>
+<script type="math/tex; mode=display">
+q_i =p_i</script><p>(b)注意到</p>
+<script type="math/tex; mode=display">
+\sum_{x} \sum_{y} p_{X}(x) p_{Y}(y)=1</script><p>由(a)可得</p>
+<script type="math/tex; mode=display">
+\sum_{x} \sum_{y} p_{X, Y}(x, y) \log \left(p_{X, Y}(x, y)\right) \geqslant \sum_{x} \sum_{y} p_{X, Y}(x, y) \log \left(p_{X}(x) p_{Y}(y)\right)</script><p>等号成立的条件为</p>
+<script type="math/tex; mode=display">
+p_{X, Y}(x, y) =  p_{X}(x) p_{Y}(y)</script><p>(c)</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+I(X, Y)
+&=\sum_{x} \sum_{y} p_{X, Y}(x, y) \log p_{X, Y}(x, y)-\sum_{x} \sum_{y} p_{X, Y}(x, y) \log \left(p_{X}(x) p_{Y}(y)\right) \\
+&=\sum_{x} \sum_{y} p_{X, Y}(x, y) \log p_{X, Y}(x, y)-
+\sum_{x} \sum_{y} p_{X, Y}(x, y)  \log (p_X(x))-
+\sum_{x} \sum_{y} p_{X, Y}(x, y)  \log (p_Y(y))\\
+&=-H(X,Y) -\sum_{x} p_X(x)\log (p_X(x)) -\sum_{x} p_Y(x)\log (p_Y(x))\\
+&=-H(X,Y)+ H(X) +H(Y)
+\end{aligned}</script><p>(d)</p>
+<script type="math/tex; mode=display">
+\begin{aligned} I(X, Y)=
+& \sum_{x} \sum_{y} p_{X, Y}(x, y) \log \left(p_{X, Y}(x, y)\right)-\sum_{x} p_{X}(x) \log p_{X}(x) -\sum_{x} \sum_{y} p_{X, Y}(x, y) \log p_{Y}(y) \\=& H(X)+\sum_{x} \sum_{y} p_{X, Y}(x, y) \log \left(\frac{p_{X, Y}(x, y)}{p_{Y}(y)}\right) \\=& H(X)+\sum_{x} \sum_{y} p_{Y}(y) p_{X | Y}(x | y) \log p_{X | Y}(x | y) \\=& H(X)-H(X | Y) \end{aligned}</script></article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">Doraemonzzz</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="http://doraemonzzz.com/2019/07/10/Probability,%20Unit%204%20Discrete%20random%20variables/">http://doraemonzzz.com/2019/07/10/Probability,%20Unit%204%20Discrete%20random%20variables/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://doraemonzzz.com" target="_blank">Doraemonzzz</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/MIT-%E6%A6%82%E7%8E%87%E5%85%AC%E5%BC%80%E8%AF%BE/">MIT 概率公开课</a></div><div class="post_share"><div class="social-share" data-image="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2019/07/10/EE261%20Lecture%2012/"><img class="prev-cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">EE261 Lecture 12</div></div></a></div><div class="next-post pull-right"><a href="/2019/07/10/Probability,%20Unit%203%20Counting/"><img class="next-cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">Probability, Unit 3 Counting</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span> 相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2019/05/29/Probability, Unit 1 Probability Models and Axioms/" title="Probability, Unit 1 Probability Models and Axioms"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2019-05-29</div><div class="title">Probability, Unit 1 Probability Models and Axioms</div></div></a></div><div><a href="/2019/06/04/Probability, Unit 2 Conditioning and Bayes' Rule, Independence/" title="Probability, Unit 2 Conditioning and Bayes' Rule, Independence"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2019-06-04</div><div class="title">Probability, Unit 2 Conditioning and Bayes' Rule, Independence</div></div></a></div><div><a href="/2019/07/10/Probability, Unit 3 Counting/" title="Probability, Unit 3 Counting"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2019-07-10</div><div class="title">Probability, Unit 3 Counting</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="card-info-avatar is-center"><img class="avatar-img" src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/><div class="author-info__name">Doraemonzzz</div><div class="author-info__description">个人博客，主要记录有关机器学习，数学以及计算机科学的笔记</div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">610</div></a></div><div class="card-info-data-item is-center"><a href="/tags/"><div class="headline">标签</div><div class="length-num">59</div></a></div><div class="card-info-data-item is-center"><a href="/categories/"><div class="headline">分类</div><div class="length-num">23</div></a></div></div><a class="button--animated" id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/Doraemonzzz" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="/doraemon_zzz@163.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn card-announcement-animation"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Part-1%EF%BC%9A%E8%AF%BE%E7%A8%8B%E5%9B%9E%E9%A1%BE"><span class="toc-number">1.</span> <span class="toc-text">Part 1：课程回顾</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%B8%B8%E8%A7%81%E9%9A%8F%E6%9C%BA%E5%8F%98%E9%87%8F"><span class="toc-number">1.1.</span> <span class="toc-text">常见随机变量</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E4%BC%AF%E5%8A%AA%E5%88%A9%E9%9A%8F%E6%9C%BA%E5%8F%98%E9%87%8F"><span class="toc-number">1.1.1.</span> <span class="toc-text">伯努利随机变量</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E7%A6%BB%E6%95%A3%E5%9D%87%E5%8C%80%E9%9A%8F%E6%9C%BA%E5%8F%98%E9%87%8F"><span class="toc-number">1.1.2.</span> <span class="toc-text">离散均匀随机变量</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%87%A0%E4%BD%95%E9%9A%8F%E6%9C%BA%E5%8F%98%E9%87%8F"><span class="toc-number">1.1.3.</span> <span class="toc-text">几何随机变量</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%B3%8A%E6%9D%BE%E9%9A%8F%E6%9C%BA%E5%8F%98%E9%87%8F"><span class="toc-number">1.1.4.</span> <span class="toc-text">泊松随机变量</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%9C%9F%E6%9C%9B"><span class="toc-number">1.2.</span> <span class="toc-text">期望</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%AE%9A%E4%B9%89"><span class="toc-number">1.2.1.</span> <span class="toc-text">定义</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%80%A7%E8%B4%A8"><span class="toc-number">1.2.2.</span> <span class="toc-text">性质</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%96%B9%E5%B7%AE%E5%92%8C%E6%A0%87%E5%87%86%E5%B7%AE"><span class="toc-number">1.3.</span> <span class="toc-text">方差和标准差</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%AE%9A%E4%B9%89-1"><span class="toc-number">1.3.1.</span> <span class="toc-text">定义</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%80%A7%E8%B4%A8-1"><span class="toc-number">1.3.2.</span> <span class="toc-text">性质</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%9D%A1%E4%BB%B6%E5%88%86%E5%B8%83%E5%88%97%E4%B8%8E%E6%9C%9F%E6%9C%9B"><span class="toc-number">1.4.</span> <span class="toc-text">条件分布列与期望</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%87%A0%E4%BD%95%E5%88%86%E5%B8%83%E7%9A%84%E6%97%A0%E8%AE%B0%E5%BF%86%E6%80%A7"><span class="toc-number">1.5.</span> <span class="toc-text">几何分布的无记忆性</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%A4%9A%E4%B8%AA%E9%9A%8F%E6%9C%BA%E5%8F%98%E9%87%8F%E7%9A%84%E8%81%94%E5%90%88%E5%88%86%E5%B8%83%E5%88%97"><span class="toc-number">1.6.</span> <span class="toc-text">多个随机变量的联合分布列</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%8B%AC%E7%AB%8B%E6%80%A7"><span class="toc-number">1.7.</span> <span class="toc-text">独立性</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Part-2%EF%BC%9A%E7%90%86%E8%AE%BA%E4%B9%A0%E9%A2%98"><span class="toc-number">2.</span> <span class="toc-text">Part 2：理论习题</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1"><span class="toc-number">2.1.</span> <span class="toc-text">1</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2"><span class="toc-number">2.2.</span> <span class="toc-text">2</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3"><span class="toc-number">2.3.</span> <span class="toc-text">3</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2021/06/06/2021-6-6-%E7%AE%97%E6%B3%95%E6%A6%82%E8%AE%BA(DPV)%E4%B9%A0%E9%A2%98%E8%A7%A3%E7%AD%94%E2%80%94%E2%80%94%E7%AC%AC3%E7%AB%A0-%E5%9B%BE%E7%9A%84%E5%88%86%E8%A7%A3/" title="算法概论(DPV)习题解答——第3章 图的分解"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="算法概论(DPV)习题解答——第3章 图的分解"/></a><div class="content"><a class="title" href="/2021/06/06/2021-6-6-%E7%AE%97%E6%B3%95%E6%A6%82%E8%AE%BA(DPV)%E4%B9%A0%E9%A2%98%E8%A7%A3%E7%AD%94%E2%80%94%E2%80%94%E7%AC%AC3%E7%AB%A0-%E5%9B%BE%E7%9A%84%E5%88%86%E8%A7%A3/" title="算法概论(DPV)习题解答——第3章 图的分解">算法概论(DPV)习题解答——第3章 图的分解</a><time datetime="2021-06-06T14:35:00.000Z" title="发表于 2021-06-06 22:35:00">2021-06-06</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/06/06/2021-6-6-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E7%AC%AC5%E7%AB%A0-%E4%B9%A0%E9%A2%98%E8%A7%A3%E6%9E%90/" title="深入理解计算机系统 第5章 习题解析"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="深入理解计算机系统 第5章 习题解析"/></a><div class="content"><a class="title" href="/2021/06/06/2021-6-6-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E7%AC%AC5%E7%AB%A0-%E4%B9%A0%E9%A2%98%E8%A7%A3%E6%9E%90/" title="深入理解计算机系统 第5章 习题解析">深入理解计算机系统 第5章 习题解析</a><time datetime="2021-06-06T07:23:00.000Z" title="发表于 2021-06-06 15:23:00">2021-06-06</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/06/05/2021-6-5-Stanford-Compiler-PA5%E7%BF%BB%E8%AF%91/" title="Stanford Compiler PA5翻译"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Stanford Compiler PA5翻译"/></a><div class="content"><a class="title" href="/2021/06/05/2021-6-5-Stanford-Compiler-PA5%E7%BF%BB%E8%AF%91/" title="Stanford Compiler PA5翻译">Stanford Compiler PA5翻译</a><time datetime="2021-06-05T06:12:00.000Z" title="发表于 2021-06-05 14:12:00">2021-06-05</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/06/04/2021-6-4-Stanford-Compiler-PA4%E7%BF%BB%E8%AF%91/" title="Stanford Compiler PA4翻译"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Stanford Compiler PA4翻译"/></a><div class="content"><a class="title" href="/2021/06/04/2021-6-4-Stanford-Compiler-PA4%E7%BF%BB%E8%AF%91/" title="Stanford Compiler PA4翻译">Stanford Compiler PA4翻译</a><time datetime="2021-06-03T16:17:00.000Z" title="发表于 2021-06-04 00:17:00">2021-06-04</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/06/03/2021-6-3-%E5%B7%A7%E5%A6%99%E7%9A%84Y%E8%BF%90%E7%AE%97%E7%AC%A6/" title="巧妙的Y运算符"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="巧妙的Y运算符"/></a><div class="content"><a class="title" href="/2021/06/03/2021-6-3-%E5%B7%A7%E5%A6%99%E7%9A%84Y%E8%BF%90%E7%AE%97%E7%AC%A6/" title="巧妙的Y运算符">巧妙的Y运算符</a><time datetime="2021-06-03T00:54:00.000Z" title="发表于 2021-06-03 08:54:00">2021-06-03</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2021 By Doraemonzzz</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><div class="js-pjax"><script>if (!window.MathJax) {
+  window.MathJax = {
+    loader: {
+      source: {
+        '[tex]/amsCd': '[tex]/amscd'
+      }
+    },
+    tex: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]],
+      tags: 'ams'
+    },
+    options: {
+      renderActions: {
+        findScript: [10, doc => {
+          for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+            const display = !!node.type.match(/; *mode=display/)
+            const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+            const text = document.createTextNode('')
+            node.parentNode.replaceChild(text, node)
+            math.start = {node: text, delim: '', n: 0}
+            math.end = {node: text, delim: '', n: 0}
+            doc.math.push(math)
+          }
+        }, ''],
+        addClass: [200,() => {
+          document.querySelectorAll('mjx-container:not([display=\'true\']').forEach( node => {
+            const target = node.parentNode
+            if (!target.classList.contains('has-jax')) {
+              target.classList.add('mathjax-overflow')
+            }
+          })
+        }, '', false]
+      }
+    }
+  }
+  
+  const script = document.createElement('script')
+  script.src = 'https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js'
+  script.id = 'MathJax-script'
+  script.async = true
+  document.head.appendChild(script)
+} else {
+  MathJax.startup.document.state(0)
+  MathJax.texReset()
+  MathJax.typeset()
+}</script></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

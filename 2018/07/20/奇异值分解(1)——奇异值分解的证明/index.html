@@ -1,0 +1,379 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>奇异值分解(1)——奇异值分解的证明 | Doraemonzzz</title><meta name="keywords" content="奇异值分解"><meta name="author" content="Doraemonzzz"><meta name="copyright" content="Doraemonzzz"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="在学习机器学习的过程中经常碰到奇异值分解，之前对这个知识点不太熟悉，花了一点时间去学习了相关知识，准备写三篇博客，分别为奇异值分解的证明，奇异值分解的性质，奇异值分解的应用，这一篇是有关奇异值分解的证明，话不多说，进入正题。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="奇异值分解(1)——奇异值分解的证明">
+<meta property="og:url" content="http://doraemonzzz.com/2018/07/20/%E5%A5%87%E5%BC%82%E5%80%BC%E5%88%86%E8%A7%A3(1)%E2%80%94%E2%80%94%E5%A5%87%E5%BC%82%E5%80%BC%E5%88%86%E8%A7%A3%E7%9A%84%E8%AF%81%E6%98%8E/index.html">
+<meta property="og:site_name" content="Doraemonzzz">
+<meta property="og:description" content="在学习机器学习的过程中经常碰到奇异值分解，之前对这个知识点不太熟悉，花了一点时间去学习了相关知识，准备写三篇博客，分别为奇异值分解的证明，奇异值分解的性质，奇异值分解的应用，这一篇是有关奇异值分解的证明，话不多说，进入正题。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg">
+<meta property="article:published_time" content="2018-07-19T17:28:00.000Z">
+<meta property="article:modified_time" content="2019-05-27T02:36:51.561Z">
+<meta property="article:author" content="Doraemonzzz">
+<meta property="article:tag" content="奇异值分解">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="http://doraemonzzz.com/2018/07/20/%E5%A5%87%E5%BC%82%E5%80%BC%E5%88%86%E8%A7%A3(1)%E2%80%94%E2%80%94%E5%A5%87%E5%BC%82%E5%80%BC%E5%88%86%E8%A7%A3%E7%9A%84%E8%AF%81%E6%98%8E/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"prismjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    jQuery: 'https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js',
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+    },
+    fancybox: {
+      js: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isanchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '奇异值分解(1)——奇异值分解的证明',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2019-05-27 10:36:51'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    })(window)</script><meta name="generator" content="Hexo 5.4.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="author-avatar"><img class="avatar-img" src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">文章</div><div class="length-num">610</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">标签</div><div class="length-num">59</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/categories/"><div class="headline">分类</div><div class="length-num">23</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">Doraemonzzz</a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">奇异值分解(1)——奇异值分解的证明</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2018-07-19T17:28:00.000Z" title="发表于 2018-07-20 01:28:00">2018-07-20</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2019-05-27T02:36:51.561Z" title="更新于 2019-05-27 10:36:51">2019-05-27</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/">机器学习</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="奇异值分解(1)——奇异值分解的证明"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p>在学习机器学习的过程中经常碰到奇异值分解，之前对这个知识点不太熟悉，花了一点时间去学习了相关知识，准备写三篇博客，分别为奇异值分解的证明，奇异值分解的性质，奇异值分解的应用，这一篇是有关奇异值分解的证明，话不多说，进入正题。</p>
+<span id="more"></span>
+<p>首先来看定义</p>
+<h4 id="奇异值分解-Singular-Value-Decomposition"><a href="#奇异值分解-Singular-Value-Decomposition" class="headerlink" title="奇异值分解(Singular Value Decomposition)"></a>奇异值分解(Singular Value Decomposition)</h4><p>设$A$是一个$m\times n$矩阵, 则存在$m$阶正交矩阵$U$和$n$阶正交矩阵$V$, 满足</p>
+<script type="math/tex; mode=display">
+A=U \left[
+ \begin{matrix}
+\sigma_1 &&  &  \\
+   & \ddots &&  \\
+   &&\sigma_r&  \\
+      &&&0
+  \end{matrix}
+  \right] V^T=U\sum V^T</script><p> 其中$\text{r = rank A},\sum\in R^{m\times n}​$. 习惯上,设 $\sigma_1\ge\sigma_2\ge…\ge\sigma_r&gt;0​$，称$\sigma_1,…,\sigma_r​$为奇异值(singular value). 称$U​$和$V​$的前$r​$列向量为奇异向量(singular vector). 这个分解为奇异值分解, 简称<strong>SVD</strong>.</p>
+<p>这里要注意的一点是$\sum$右下角的$0$是$0$矩阵的意思，下面用两种方法给出这个定理的证明。</p>
+<h4 id="奇异值分解的证明一"><a href="#奇异值分解的证明一" class="headerlink" title="奇异值分解的证明一"></a>奇异值分解的证明一</h4><p>在证明之前需要两个引理</p>
+<h5 id="引理1"><a href="#引理1" class="headerlink" title="引理1"></a>引理1</h5><script type="math/tex; mode=display">
+对任意矩阵A\in R^{m\times n}，A^TA\in R^{n\times n}为半正定对称矩阵，从而A^TA的特征值非负</script><p>证明：</p>
+<p>$(A^TA)^T=A^TA$，所以$A^TA$为对称矩阵，接着证明$A^TA$为半正定对称矩阵。任取$x\in R^n$，考虑二次型</p>
+<script type="math/tex; mode=display">
+x^TA^TAx=(Ax)^T(Ax)=\sum_{i=1}^nx_i^{'2}\ge0\\
+其中Ax=(x^{'}_1,...,x^{'}_n)</script><p>所以$A^TA$为半正定矩阵，所以$A^TA$的特征值非负。</p>
+<h5 id="引理2"><a href="#引理2" class="headerlink" title="引理2"></a>引理2</h5><script type="math/tex; mode=display">
+对任意矩阵A\in R^{m\times n},\text{rank}(A)=\text{rank}(A^TA)</script><p>如果我们可以证明$Ax=0,A^TAx=0​$同解，那么由解空间的维数公式可得</p>
+<script type="math/tex; mode=display">
+n-\text{rank}(A)=n-\text{rank}(A^TA)</script><p>从而可以证明该结论。接下来证明$Ax=0,A^TAx=0$同解。</p>
+<p>证明：</p>
+<p>如果$Ax=0$，那么$A^TAx=A^T0=0$，所以$Ax=0$的解一定是$A^TAx=0$的解。</p>
+<p>反之，如果$A^TAx=0$，两边左乘$x^T$可得$x^TA^TAx=x^T0=0$，所以$(Ax)^TAx=0$，从而$Ax=0$，所以$A^TAx=0$的解一定是$Ax=0$的解。</p>
+<p>结合以上两点$Ax=0,A^TAx=0$同解，所以</p>
+<script type="math/tex; mode=display">
+n-\text{rank}(A)=n-\text{rank}(A^TA)\\
+\text{rank}(A)=\text{rank}(A^TA)</script><p>以上两个引理会在证明中使用到，下面开始正式证明。</p>
+<h5 id="证明"><a href="#证明" class="headerlink" title="证明"></a>证明</h5><p>由于结论中有正交矩阵，而对称矩阵可以正交相似于对角阵，所以我们自然联想到构造对称矩阵。令$A_1=A^TA\in R^{n\times n}$，设$\text{rank } A=r$，由引理2可得$\text {rank }A_1=\text {rank }(A^TA)=\text{rank } A=r$，而可对角化的矩阵的秩等于矩阵的非零特征值数量，对称矩阵显然可逆，所以$A_1$有$r$个非零特征值，由引理1我们知道$A_1$为半正定矩阵，其特征值均为非负数，所以$A_1$有$r$个正特征值，设$A_1$的特征值为</p>
+<script type="math/tex; mode=display">
+\sigma_1^2,\sigma_2^2,...,\sigma_r^2，其中\sigma_1\ge\sigma_2\ge...\ge\sigma_r>0，</script><p>由对称矩阵的性质可知，$A_1$可以正交相似于对角矩阵</p>
+<script type="math/tex; mode=display">
+A_2=\text{diag}\{\sigma_1^2,\sigma_2^2,...,\sigma_r^2,\underbrace{0,...,0}_{n-r个0}\}\in R^{n\times n}</script><p>如果记</p>
+<script type="math/tex; mode=display">
+S= \left[
+ \begin{matrix}
+\sigma_1 &&  \\
+   & \ddots &  \\
+   &&\sigma_r
+  \end{matrix}
+  \right]\in R^{r\times r}</script><p>那么</p>
+<script type="math/tex; mode=display">
+A_2= \left[
+ \begin{matrix}
+S^2 &0  \\
+ 0  &0
+  \end{matrix}
+  \right]</script><p>我们$A_2​$设对应的正交矩阵为$V​$，从而</p>
+<script type="math/tex; mode=display">
+A_1=VA_2V^T\\
+V^TA_1V=A_2</script><p>对$V$进行分块，记其前$r$列构成的矩阵为$V_1$，后$n-r$列构成的矩阵为$V_2$，$V=(V_1,V_2)$，带入计算可得</p>
+<script type="math/tex; mode=display">
+(V_1,V_2)^TA_1(V_1,V_2)
+=\left[
+ \begin{matrix}
+S^2 &0  \\
+ 0  &0
+  \end{matrix}
+  \right]\\
+  V_1^TA_1 V_1=S^2,  V_2^TA_1 V_1=0,V_1^TA_1 V_2=0,V_2^TA_1 V_2=0</script><p>将$A_1=A^TA$带入第$1，4$个等式，分别对其处理，先处理第$1$个等式</p>
+<script type="math/tex; mode=display">
+V_1^TA^TA V_1=S^2\\
+先左乘S^{-1}，再右乘S^{-1}\\
+S^{-1}V_1^TA^TA V_1S^{-1}=I_r\\
+因为S为对角矩阵，所以S^{-1}也为对角矩阵，从而(S^{-1})^T=S^{-1}，因此\\
+S^{-1}V_1^TA^TA V_1S^{-1}=(S^{-1})^TV_1^TA^TA V_1S^{-1}=(A V_1S^{-1})^TA V_1S^{-1}=I_r\\
+记U_1=A V_1S^{-1}\in R^{m\times r},那么U_1^TU_1=0</script><p>所以$U_1$是$R^m$中正交向量组成的矩阵，我们可以将其补充成一个$R^{m\times m}$的正交矩阵，下面严格证明一下。</p>
+<p>首先由引理2可知</p>
+<script type="math/tex; mode=display">
+\text{rank}(U_1)=\text{rank}(U_1^TU_1)=\text{rank}(I_r)=r</script><p>接下来我们考虑$U_1^Tx=0$的解空间，由于$\text{rank}(U_1)=r,U_1^T\in R^{r\times m}$，所以$U_1^Tx=0$有$m-r$个线性无关的解$u_1,…,u_{m-r}$，对这些解利用施密特正交化，并对其单位化，可以得到$U_2=(u_1^<em>,…,u_{m-r}^</em>)$满足以下条件</p>
+<script type="math/tex; mode=display">
+U_1^TU_2=0,U_2^TU_2=I_{m-r}</script><p>结合$U_1^TU_1=I_r$，那么$U=(U_1,U_2)$为正交矩阵。</p>
+<p>再来看处理第$4$个等式，将$A_1=A^TA$带入可得</p>
+<script type="math/tex; mode=display">
+V_2^TA^TA V_2=(A V_2)^TA V_2=0\\
+AV_2=0\\
+这个推出关系在引理2中有说明</script><p>现在我们找到了$U,V​$,就可以来计算$U^TAV​$，将其写成分块矩阵的形式。</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+U^TAV&=(U_1,U_2)^TA(V_1,V_2)\\
+&= \left[
+ \begin{matrix}
+   U_1^TAV_1 &    U_1^TAV_2  \\
+   U_2^TAV_1 & U_2^TAV_2  \\
+  \end{matrix}
+  \right]
+\end{aligned}</script><p>分别分析这四个部分，先看$   U_1^TAV_1​$，将$U_1=A V_1S^{-1}， V_1^TA_1 V_1=S^2,A_1=A^TA​$带入</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+U_1^TAV_1
+&=(A V_1S^{-1})^TAV_1\\
+&=S^{-1}V_1^TA^TAV_1\\
+&=S^{-1}V_1^TA_1V_1\\
+&=S^{-1}S^2\\
+&=S
+\end{aligned}</script><p>再看$U_1^TAV_2$，将$AV_2=0$带入可得</p>
+<script type="math/tex; mode=display">
+U_1^TAV_2=0</script><p>接着看$U_2^TAV_1 $，考虑$U_1=A V_1S^{-1},U_2^TU_1=0$</p>
+<script type="math/tex; mode=display">
+U_2^TU_1=U_2^TA V_1S^{-1}=0\\
+因为S可逆，所以\\
+U_2^TA V_1=0</script><p>最后考虑$U_2^TAV_2 $，将$AV_2=0$带入可得</p>
+<script type="math/tex; mode=display">
+U_2^TAV_2 =0</script><p>综上所述</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+U^TAV&=(U_1,U_2)^TA(V_1,V_2)\\
+&= \left[
+ \begin{matrix}
+S &    0  \\
+   0 & 0  \\
+  \end{matrix}
+  \right]\\
+  &=\left[
+ \begin{matrix}
+\sigma_1 &&  &  \\
+   & \ddots &&  \\
+   &&\sigma_r&  \\
+      &&&0
+  \end{matrix}
+  \right]\\
+ & {\overset{记录为}=}\sum
+\end{aligned}</script><p>注意$U,V​$为正交矩阵，所以上式也等价于</p>
+<script type="math/tex; mode=display">
+A=U \left[
+ \begin{matrix}
+\sigma_1 &&  &  \\
+   & \ddots &&  \\
+   &&\sigma_r&  \\
+      &&&0
+  \end{matrix}
+  \right] V^T=U\sum V^T</script><p>这就是奇异值分解的形式，证毕。</p>
+<h4 id="奇异值分解的证明二"><a href="#奇异值分解的证明二" class="headerlink" title="奇异值分解的证明二"></a>奇异值分解的证明二</h4><p>前一部分和证明一相同，这里简单叙述下</p>
+<script type="math/tex; mode=display">
+A\in R^{m\times n},\text{rank } A=r,\\
+A_1=A^TA\in R^{n\times n},\text{rank } A_1=r,\\
+A_1正交相似于对角阵A_2,
+A_2=\text{diag}\{\sigma_1^2,\sigma_2^2,...,\sigma_r^2,\underbrace{0,...,0}_{n-r个0}\}\in R^{n\times n}\\
+其中\sigma_1\ge\sigma_2\ge...\ge\sigma_r>0</script><p>设$(v_1,…,v_n),v_i\in R^n$为$A_1=A^TA$的单位特征正交向量，那么</p>
+<script type="math/tex; mode=display">
+A^TAv_i =\begin{cases}
+\sigma_i^2v_i, & 1\le i\le r\\
+0, & r+1\le i\le k
+\end{cases}</script><p>注意对于$1\le i\le r$,</p>
+<script type="math/tex; mode=display">
+v_i^TA^TAv_i=\sigma_i^2v_i^Tv_i=\sigma_i^2\\
+||Av_i||^2=\sigma_i^2\\
+||Av_i||=\sigma_i</script><p>记$u_i = \frac{Av_i}{\sigma_i},u_i\in R^m,1\le i\le r$，我们来证明$(u_1,…,u_r)$为一组单位正交向量，注意$A^TAv_i =\sigma_i^2v_i,$</p>
+<script type="math/tex; mode=display">
+u_i^Tu_i= \frac{v_i^TA^TAv_i}{\sigma_i^2}=\frac{\sigma_i^2}{\sigma_i^2}=1\\
+u_i^Tu_j=\frac{v_i^TA^TAv_j}{\sigma_i\sigma_j}=\frac{\sigma_i^2v_i^Tv_j}{\sigma_i\sigma_j}\\
+因为v_i,v_j(i\ne j)正交，所以\\
+u_i^Tu_j=\frac{\sigma_i^2v_i^Tv_j}{\sigma_i\sigma_j}=0</script><p>从而$(u_1,…,u_r)$为单位正交向量。现在将$u_i = \frac{Av_i}{\sigma_i}$变形为$Av_i =\sigma_i u_i,1\le i\le r$，将这$r$个式子写成矩阵的形式</p>
+<script type="math/tex; mode=display">
+A(v_1,...,v_r)=(u_1,...,u_r)\text{diag}\{\sigma_1^2,\sigma_2^2,...,\sigma_r^2\}</script><p>这个形式已经和我们要证明的形式非常接近了，只要把剩余的向量添加上即可，先将$(u_1,…,u_r)$补充为正交基。</p>
+<p>由于$v_i\in R^m$，所以由基扩张定理，可以将$(u_1,…,u_r)$扩张为$(u_1,…,u_r,u_{r+1},…u_m)$，使得$(u_1,…,u_r,u_{r+1},…u_m)$为$ R^m$的一组单位正交基。现在将$(v_1,…,v_n),(u_1,…,u_m)$带入上式可得</p>
+<script type="math/tex; mode=display">
+A(v_1,...,v_n)=(u_1,...,u_m) \left[
+ \begin{matrix}
+\sigma_1 &&  &  \\
+   & \ddots &&  \\
+   &&\sigma_r&  \\
+      &&&0
+  \end{matrix}
+  \right]</script><p>记$V=(v_1,…,v_n),U=(u_1,…,u_m)$，注意$U,V$均为正交矩阵，那么上式可以表达为</p>
+<script type="math/tex; mode=display">
+AV=U\left[
+ \begin{matrix}
+\sigma_1 &&  &  \\
+   & \ddots &&  \\
+   &&\sigma_r&  \\
+      &&&0
+  \end{matrix}
+  \right]\\
+  A=U\left[
+ \begin{matrix}
+\sigma_1 &&  &  \\
+   & \ddots &&  \\
+   &&\sigma_r&  \\
+      &&&0
+  \end{matrix}
+  \right]V^T=U\sum V^T</script><p>定理得证。</p>
+<h4 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h4><p>回顾一下证明思路，证明一首先是从$A$构造对称矩阵$A^TA$，利用对称矩阵的正交相似性找到$V$，接着利用分块矩阵的形式找到$U$的一部分$U_1$，将其补充为$U$，最后利用之前的一些得到的一些性质证明了奇异值分解；证明二是证明一的简化版，主要利用了$ \frac{Av_i}{\sigma_i}$的正交性，本质上和证明一是相似的。</p>
+<p>这部分的内容是比较理论的，但个人认为还是挺有必要的，后续还会介绍奇异值分解的性质以及应用。</p>
+<p>参考资料:</p>
+<p><a target="_blank" rel="noopener" href="https://wenku.baidu.com/view/e600ac060740be1e650e9a03.html">矩阵奇异值分解</a></p>
+<p><a target="_blank" rel="noopener" href="http://www.xuetangx.com/courses/course-v1:TsinghuaX+10421102x_2015_T2+sp/about">线性代数公开课</a></p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">Doraemonzzz</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="http://doraemonzzz.com/2018/07/20/%E5%A5%87%E5%BC%82%E5%80%BC%E5%88%86%E8%A7%A3(1)%E2%80%94%E2%80%94%E5%A5%87%E5%BC%82%E5%80%BC%E5%88%86%E8%A7%A3%E7%9A%84%E8%AF%81%E6%98%8E/">http://doraemonzzz.com/2018/07/20/%E5%A5%87%E5%BC%82%E5%80%BC%E5%88%86%E8%A7%A3(1)%E2%80%94%E2%80%94%E5%A5%87%E5%BC%82%E5%80%BC%E5%88%86%E8%A7%A3%E7%9A%84%E8%AF%81%E6%98%8E/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://doraemonzzz.com" target="_blank">Doraemonzzz</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E5%A5%87%E5%BC%82%E5%80%BC%E5%88%86%E8%A7%A3/">奇异值分解</a></div><div class="post_share"><div class="social-share" data-image="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2018/08/05/%E5%88%A9%E7%94%A8sklearn%E8%AE%A1%E7%AE%97SVM%E7%9A%84%E4%B8%80%E4%BA%9B%E5%8F%82%E6%95%B0/"><img class="prev-cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">利用sklearn计算SVM的一些参数</div></div></a></div><div class="next-post pull-right"><a href="/2018/07/15/%E5%88%A9%E7%94%A8matplotlib%E5%BA%93%E4%B8%ADpcolormesh%E4%BD%9C%E5%BD%A9%E5%9B%BE/"><img class="next-cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">利用matplotlib库中pcolormesh作彩图</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span> 相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2018/08/30/奇异值分解(2)——奇异值分解的性质/" title="奇异值分解(2)——奇异值分解的性质"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2018-08-30</div><div class="title">奇异值分解(2)——奇异值分解的性质</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="card-info-avatar is-center"><img class="avatar-img" src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/><div class="author-info__name">Doraemonzzz</div><div class="author-info__description">个人博客，主要记录有关机器学习，数学以及计算机科学的笔记</div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">610</div></a></div><div class="card-info-data-item is-center"><a href="/tags/"><div class="headline">标签</div><div class="length-num">59</div></a></div><div class="card-info-data-item is-center"><a href="/categories/"><div class="headline">分类</div><div class="length-num">23</div></a></div></div><a class="button--animated" id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/Doraemonzzz" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="/doraemon_zzz@163.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn card-announcement-animation"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%A5%87%E5%BC%82%E5%80%BC%E5%88%86%E8%A7%A3-Singular-Value-Decomposition"><span class="toc-number">1.</span> <span class="toc-text">奇异值分解(Singular Value Decomposition)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%A5%87%E5%BC%82%E5%80%BC%E5%88%86%E8%A7%A3%E7%9A%84%E8%AF%81%E6%98%8E%E4%B8%80"><span class="toc-number">2.</span> <span class="toc-text">奇异值分解的证明一</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%BC%95%E7%90%861"><span class="toc-number">2.1.</span> <span class="toc-text">引理1</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%BC%95%E7%90%862"><span class="toc-number">2.2.</span> <span class="toc-text">引理2</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E8%AF%81%E6%98%8E"><span class="toc-number">2.3.</span> <span class="toc-text">证明</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%A5%87%E5%BC%82%E5%80%BC%E5%88%86%E8%A7%A3%E7%9A%84%E8%AF%81%E6%98%8E%E4%BA%8C"><span class="toc-number">3.</span> <span class="toc-text">奇异值分解的证明二</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-number">4.</span> <span class="toc-text">总结</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2021/06/06/2021-6-6-%E7%AE%97%E6%B3%95%E6%A6%82%E8%AE%BA(DPV)%E4%B9%A0%E9%A2%98%E8%A7%A3%E7%AD%94%E2%80%94%E2%80%94%E7%AC%AC3%E7%AB%A0-%E5%9B%BE%E7%9A%84%E5%88%86%E8%A7%A3/" title="算法概论(DPV)习题解答——第3章 图的分解"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="算法概论(DPV)习题解答——第3章 图的分解"/></a><div class="content"><a class="title" href="/2021/06/06/2021-6-6-%E7%AE%97%E6%B3%95%E6%A6%82%E8%AE%BA(DPV)%E4%B9%A0%E9%A2%98%E8%A7%A3%E7%AD%94%E2%80%94%E2%80%94%E7%AC%AC3%E7%AB%A0-%E5%9B%BE%E7%9A%84%E5%88%86%E8%A7%A3/" title="算法概论(DPV)习题解答——第3章 图的分解">算法概论(DPV)习题解答——第3章 图的分解</a><time datetime="2021-06-06T14:35:00.000Z" title="发表于 2021-06-06 22:35:00">2021-06-06</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/06/06/2021-6-6-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E7%AC%AC5%E7%AB%A0-%E4%B9%A0%E9%A2%98%E8%A7%A3%E6%9E%90/" title="深入理解计算机系统 第5章 习题解析"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="深入理解计算机系统 第5章 习题解析"/></a><div class="content"><a class="title" href="/2021/06/06/2021-6-6-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E7%AC%AC5%E7%AB%A0-%E4%B9%A0%E9%A2%98%E8%A7%A3%E6%9E%90/" title="深入理解计算机系统 第5章 习题解析">深入理解计算机系统 第5章 习题解析</a><time datetime="2021-06-06T07:23:00.000Z" title="发表于 2021-06-06 15:23:00">2021-06-06</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/06/05/2021-6-5-Stanford-Compiler-PA5%E7%BF%BB%E8%AF%91/" title="Stanford Compiler PA5翻译"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Stanford Compiler PA5翻译"/></a><div class="content"><a class="title" href="/2021/06/05/2021-6-5-Stanford-Compiler-PA5%E7%BF%BB%E8%AF%91/" title="Stanford Compiler PA5翻译">Stanford Compiler PA5翻译</a><time datetime="2021-06-05T06:12:00.000Z" title="发表于 2021-06-05 14:12:00">2021-06-05</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/06/04/2021-6-4-Stanford-Compiler-PA4%E7%BF%BB%E8%AF%91/" title="Stanford Compiler PA4翻译"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Stanford Compiler PA4翻译"/></a><div class="content"><a class="title" href="/2021/06/04/2021-6-4-Stanford-Compiler-PA4%E7%BF%BB%E8%AF%91/" title="Stanford Compiler PA4翻译">Stanford Compiler PA4翻译</a><time datetime="2021-06-03T16:17:00.000Z" title="发表于 2021-06-04 00:17:00">2021-06-04</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/06/03/2021-6-3-%E5%B7%A7%E5%A6%99%E7%9A%84Y%E8%BF%90%E7%AE%97%E7%AC%A6/" title="巧妙的Y运算符"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="巧妙的Y运算符"/></a><div class="content"><a class="title" href="/2021/06/03/2021-6-3-%E5%B7%A7%E5%A6%99%E7%9A%84Y%E8%BF%90%E7%AE%97%E7%AC%A6/" title="巧妙的Y运算符">巧妙的Y运算符</a><time datetime="2021-06-03T00:54:00.000Z" title="发表于 2021-06-03 08:54:00">2021-06-03</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2021 By Doraemonzzz</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><div class="js-pjax"><script>if (!window.MathJax) {
+  window.MathJax = {
+    loader: {
+      source: {
+        '[tex]/amsCd': '[tex]/amscd'
+      }
+    },
+    tex: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]],
+      tags: 'ams'
+    },
+    options: {
+      renderActions: {
+        findScript: [10, doc => {
+          for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+            const display = !!node.type.match(/; *mode=display/)
+            const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+            const text = document.createTextNode('')
+            node.parentNode.replaceChild(text, node)
+            math.start = {node: text, delim: '', n: 0}
+            math.end = {node: text, delim: '', n: 0}
+            doc.math.push(math)
+          }
+        }, ''],
+        addClass: [200,() => {
+          document.querySelectorAll('mjx-container:not([display=\'true\']').forEach( node => {
+            const target = node.parentNode
+            if (!target.classList.contains('has-jax')) {
+              target.classList.add('mathjax-overflow')
+            }
+          })
+        }, '', false]
+      }
+    }
+  }
+  
+  const script = document.createElement('script')
+  script.src = 'https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js'
+  script.id = 'MathJax-script'
+  script.async = true
+  document.head.appendChild(script)
+} else {
+  MathJax.startup.document.state(0)
+  MathJax.texReset()
+  MathJax.typeset()
+}</script></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

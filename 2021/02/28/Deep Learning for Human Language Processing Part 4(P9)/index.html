@@ -1,0 +1,264 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Deep Learning for Human Language Processing Part 4(P9) | Doraemonzzz</title><meta name="keywords" content="DLHLP"><meta name="author" content="Doraemonzzz"><meta name="copyright" content="Doraemonzzz"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="课程主页：http:&#x2F;&#x2F;speech.ee.ntu.edu.tw&#x2F;~tlkagk&#x2F;courses_DLHLP20.html 视频地址：https:&#x2F;&#x2F;www.bilibili.com&#x2F;video&#x2F;BV1RE411g7rQ?p&#x3D;1 参考资料：https:&#x2F;&#x2F;blog.csdn.net&#x2F;qq_44574333&#x2F;category_10304412_2.html 备注：图片均来自于课件。 这次回顾P9，这">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Deep Learning for Human Language Processing Part 4(P9)">
+<meta property="og:url" content="http://doraemonzzz.com/2021/02/28/Deep%20Learning%20for%20Human%20Language%20Processing%20Part%204(P9)/index.html">
+<meta property="og:site_name" content="Doraemonzzz">
+<meta property="og:description" content="课程主页：http:&#x2F;&#x2F;speech.ee.ntu.edu.tw&#x2F;~tlkagk&#x2F;courses_DLHLP20.html 视频地址：https:&#x2F;&#x2F;www.bilibili.com&#x2F;video&#x2F;BV1RE411g7rQ?p&#x3D;1 参考资料：https:&#x2F;&#x2F;blog.csdn.net&#x2F;qq_44574333&#x2F;category_10304412_2.html 备注：图片均来自于课件。 这次回顾P9，这">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg">
+<meta property="article:published_time" content="2021-02-28T13:32:00.000Z">
+<meta property="article:modified_time" content="2021-02-28T13:51:40.703Z">
+<meta property="article:author" content="Doraemonzzz">
+<meta property="article:tag" content="DLHLP">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="http://doraemonzzz.com/2021/02/28/Deep%20Learning%20for%20Human%20Language%20Processing%20Part%204(P9)/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"prismjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    jQuery: 'https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js',
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+    },
+    fancybox: {
+      js: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isanchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'Deep Learning for Human Language Processing Part 4(P9)',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2021-02-28 21:51:40'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    })(window)</script><meta name="generator" content="Hexo 5.4.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="author-avatar"><img class="avatar-img" src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">文章</div><div class="length-num">610</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">标签</div><div class="length-num">59</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/categories/"><div class="headline">分类</div><div class="length-num">23</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">Doraemonzzz</a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">Deep Learning for Human Language Processing Part 4(P9)</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2021-02-28T13:32:00.000Z" title="发表于 2021-02-28 21:32:00">2021-02-28</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2021-02-28T13:51:40.703Z" title="更新于 2021-02-28 21:51:40">2021-02-28</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/NLP/">NLP</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="Deep Learning for Human Language Processing Part 4(P9)"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p>课程主页：<a target="_blank" rel="noopener" href="http://speech.ee.ntu.edu.tw/~tlkagk/courses_DLHLP20.html">http://speech.ee.ntu.edu.tw/~tlkagk/courses_DLHLP20.html</a></p>
+<p>视频地址：<a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1RE411g7rQ?p=1">https://www.bilibili.com/video/BV1RE411g7rQ?p=1</a></p>
+<p>参考资料：<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_44574333/category_10304412_2.html">https://blog.csdn.net/qq_44574333/category_10304412_2.html</a></p>
+<p>备注：图片均来自于课件。</p>
+<p>这次回顾P9，这部分介绍了语音识别中的语言模型。</p>
+<span id="more"></span>
+<h1 id="语音识别中的语言模型"><a href="#语音识别中的语言模型" class="headerlink" title="语音识别中的语言模型"></a>语音识别中的语言模型</h1><p>这部分介绍为什么要在语音识别中增加语言模型。</p>
+<h2 id="语言模型"><a href="#语言模型" class="headerlink" title="语言模型"></a>语言模型</h2><h3 id="引子"><a href="#引子" class="headerlink" title="引子"></a>引子</h3><p>语言模型估计token序列$Y=y_1,y_2,\ldots, y_n$的概率$P\left(y_{1}, y_{2}, \ldots \ldots, y_{n}\right)$。</p>
+<p>过去需要语言模型是因为HMM的解码过程为：</p>
+<script type="math/tex; mode=display">
+{Y}^{\star}=\arg \max _ P(X \mid {Y}) P({Y})</script><p>现在Seq2Seq模型的解码过程为：</p>
+<script type="math/tex; mode=display">
+{Y}^{\star}=\arg \max _ P(Y \mid {X})</script><p>但是实际中，一般使用如下方法：</p>
+<script type="math/tex; mode=display">
+{Y}^{\star}=\arg \max _ P(Y \mid {X}) P(Y)</script><p>尽管从概率角度不好解释，但是实际上该效果会更好，老师解释的角度如下：</p>
+<ul>
+<li>训练$ P(Y \mid {X}) $需要成对数据，收集成本较大。</li>
+<li>训练$P(Y)$只需要文本数据，很好收集。</li>
+</ul>
+<h3 id="语言模型介绍"><a href="#语言模型介绍" class="headerlink" title="语言模型介绍"></a>语言模型介绍</h3><h4 id="N-gram"><a href="#N-gram" class="headerlink" title="$N$-gram"></a>$N$-gram</h4><p>这部分可以参考如下笔记：</p>
+<p><a href="https://doraemonzzz.com/2019/01/27/Michael%20Collins%20NLP%20Lecture%202/#toc-heading-5">https://doraemonzzz.com/2019/01/27/Michael%20Collins%20NLP%20Lecture%202/#toc-heading-5</a></p>
+<p>$N$-gram的最大问题是许多gram出现次数很少或者为0，所以估计的概率会很低，为了解决这点，人们提出一些方法。</p>
+<h3 id="连续LM"><a href="#连续LM" class="headerlink" title="连续LM"></a>连续LM</h3><p>该方法来自于推荐系统的矩阵分解方法：</p>
+<p><img src="https://github.com/Doraemonzzz/md-photo/blob/master/DLHLP/Lecture4/photo2021022801.jpg?raw=true" alt=""></p>
+<p>连续LM将横轴和纵轴换成token：</p>
+<p><img src="https://github.com/Doraemonzzz/md-photo/blob/master/DLHLP/Lecture4/photo2021022802.jpg?raw=true" alt=""></p>
+<p>$n_{ij}$的含义是在训练数据中，第$i$个token出现在第$j$个token后的次数，我们希望：</p>
+<script type="math/tex; mode=display">
+n_{ij}\approx v^i .h^j</script><p>以此来估计表格中缺失的部分。</p>
+<p>我们的目标是：</p>
+<script type="math/tex; mode=display">
+\min L=\sum_{(i, j)}\left(v^{i} \cdot h^{j}-n_{i j}\right)^{2}</script><h4 id="NN视角"><a href="#NN视角" class="headerlink" title="NN视角"></a>NN视角</h4><p>可以将上述模型视为简单的NN：</p>
+<p><img src="https://github.com/Doraemonzzz/md-photo/blob/master/DLHLP/Lecture4/photo2021022803.jpg?raw=true" alt=""></p>
+<h3 id="基于NN的LM"><a href="#基于NN的LM" class="headerlink" title="基于NN的LM"></a>基于NN的LM</h3><p>最初的思路是取代n-gram，即根据前$k$个单词预测下一个单词：</p>
+<p><img src="https://github.com/Doraemonzzz/md-photo/blob/master/DLHLP/Lecture4/photo2021022804.jpg?raw=true" alt=""></p>
+<p>利用条件概率公式可以计算一段句子出现的概率。</p>
+<h3 id="基于RNN的LM"><a href="#基于RNN的LM" class="headerlink" title="基于RNN的LM"></a>基于RNN的LM</h3><p>$N$-gram只能利用前$N$项的信息，如果句子太长，则效果会不太好，为了解决这点，可以使用RNN，即预测每个单词的时候考虑之前全部单词：</p>
+<p><img src="https://github.com/Doraemonzzz/md-photo/blob/master/DLHLP/Lecture4/photo2021022805.jpg?raw=true" alt=""></p>
+<h2 id="如何使用LM提升语音识别"><a href="#如何使用LM提升语音识别" class="headerlink" title="如何使用LM提升语音识别"></a>如何使用LM提升语音识别</h2><p>以LAS为例：</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th></th>
+<th>输出</th>
+<th>隐藏层</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>训练后</td>
+<td>浅融合</td>
+<td>深融合</td>
+</tr>
+<tr>
+<td>训练前</td>
+<td></td>
+<td>冷融合</td>
+</tr>
+</tbody>
+</table>
+</div>
+<ul>
+<li>横轴：如何结合。</li>
+<li>纵轴：何时结合。</li>
+</ul>
+<h3 id="浅融合"><a href="#浅融合" class="headerlink" title="浅融合"></a>浅融合</h3><p>将LAS和LM分别训练好，输出为概率乘积（带权）：</p>
+<p><img src="https://github.com/Doraemonzzz/md-photo/blob/master/DLHLP/Lecture4/photo2021022806.jpg?raw=true" alt=""></p>
+<p><img src="https://github.com/Doraemonzzz/md-photo/blob/master/DLHLP/Lecture4/photo2021022808.jpg?raw=true" alt=""></p>
+<h3 id="深融合"><a href="#深融合" class="headerlink" title="深融合"></a>深融合</h3><p>将LAS和LM分别训练好，然后将两者的输出（或者中间层）输入到一个网络中，该网络的输出为最终的概率：</p>
+<p><img src="https://github.com/Doraemonzzz/md-photo/blob/master/DLHLP/Lecture4/photo2021022807.jpg?raw=true" alt=""></p>
+<p>如果直接将LM的隐藏层直接接入网络中，那么每次更换LM，都可能需要重新训练网络（因为LM隐藏层的维度可能不同），所以比较好的方式是将输出层SoftMax之前的结果输入到网络中：</p>
+<p><img src="https://github.com/Doraemonzzz/md-photo/blob/master/DLHLP/Lecture4/photo2021022809.jpg?raw=true" alt=""></p>
+<p>那么什么时候会需要更换LM呢？老师举的例子是更换领域知识，因为很多单词发音相同，但是在不同领域中对应的单词不同，例如城市和程式。</p>
+<h3 id="冷融合"><a href="#冷融合" class="headerlink" title="冷融合"></a>冷融合</h3><p>将训练好的LM和未训练的LAS结合，然后利用端到端的方式训练LAS，该方法的优势是可以加速LAS的训练，注意此时无法随意更换LAS，因为该LAS是基于LM训练的：</p>
+<p><img src="https://github.com/Doraemonzzz/md-photo/blob/master/DLHLP/Lecture4/photo2021022810.jpg?raw=true" alt=""></p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">Doraemonzzz</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="http://doraemonzzz.com/2021/02/28/Deep%20Learning%20for%20Human%20Language%20Processing%20Part%204(P9)/">http://doraemonzzz.com/2021/02/28/Deep%20Learning%20for%20Human%20Language%20Processing%20Part%204(P9)/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://doraemonzzz.com" target="_blank">Doraemonzzz</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/DLHLP/">DLHLP</a></div><div class="post_share"><div class="social-share" data-image="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2021/02/28/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A8%8B%E5%BA%8F%E7%9A%84%E6%9E%84%E9%80%A0%E5%92%8C%E8%A7%A3%E9%87%8A(SICP)%20%E7%AC%AC2%E7%AB%A0%20%E4%B9%A0%E9%A2%98%E8%A7%A3%E6%9E%90%20Part7/"><img class="prev-cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">计算机程序的构造和解释(SICP) 第2章 习题解析 Part7</div></div></a></div><div class="next-post pull-right"><a href="/2021/02/23/Deep%20Learning%20for%20Human%20Language%20Processing%20Part%203(P6%20to%20P8)/"><img class="next-cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">Deep Learning for Human Language Processing Part 3(P6 to P8)</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span> 相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2020/03/17/Deep Learning for Human Language Processing Part 1(P1 to P2)/" title="Deep Learning for Human Language Processing Part 1(P1 to P2)"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-03-17</div><div class="title">Deep Learning for Human Language Processing Part 1(P1 to P2)</div></div></a></div><div><a href="/2021/02/20/Deep Learning for Human Language Processing Part 2(P3 to P5)/" title="Deep Learning for Human Language Processing Part 2(P3 to P5)"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-02-20</div><div class="title">Deep Learning for Human Language Processing Part 2(P3 to P5)</div></div></a></div><div><a href="/2021/03/01/Deep Learning for Human Language Processing Part 5(P10 to P11)/" title="Deep Learning for Human Language Processing Part 5(P10 to P11)"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-03-01</div><div class="title">Deep Learning for Human Language Processing Part 5(P10 to P11)</div></div></a></div><div><a href="/2021/03/02/Deep Learning for Human Language Processing Part 6(P12 to P13)/" title="Deep Learning for Human Language Processing Part 6(P12 to P13)"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-03-02</div><div class="title">Deep Learning for Human Language Processing Part 6(P12 to P13)</div></div></a></div><div><a href="/2021/03/03/Deep Learning for Human Language Processing Part 8(P16)/" title="Deep Learning for Human Language Processing Part 8(P16)"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-03-03</div><div class="title">Deep Learning for Human Language Processing Part 8(P16)</div></div></a></div><div><a href="/2021/03/02/Deep Learning for Human Language Processing Part 7(P14 to P15)/" title="Deep Learning for Human Language Processing Part 7(P14 to P15)"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-03-02</div><div class="title">Deep Learning for Human Language Processing Part 7(P14 to P15)</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="card-info-avatar is-center"><img class="avatar-img" src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/><div class="author-info__name">Doraemonzzz</div><div class="author-info__description">个人博客，主要记录有关机器学习，数学以及计算机科学的笔记</div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">610</div></a></div><div class="card-info-data-item is-center"><a href="/tags/"><div class="headline">标签</div><div class="length-num">59</div></a></div><div class="card-info-data-item is-center"><a href="/categories/"><div class="headline">分类</div><div class="length-num">23</div></a></div></div><a class="button--animated" id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/Doraemonzzz" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="/doraemon_zzz@163.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn card-announcement-animation"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E8%AF%AD%E9%9F%B3%E8%AF%86%E5%88%AB%E4%B8%AD%E7%9A%84%E8%AF%AD%E8%A8%80%E6%A8%A1%E5%9E%8B"><span class="toc-number">1.</span> <span class="toc-text">语音识别中的语言模型</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AF%AD%E8%A8%80%E6%A8%A1%E5%9E%8B"><span class="toc-number">1.1.</span> <span class="toc-text">语言模型</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BC%95%E5%AD%90"><span class="toc-number">1.1.1.</span> <span class="toc-text">引子</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AF%AD%E8%A8%80%E6%A8%A1%E5%9E%8B%E4%BB%8B%E7%BB%8D"><span class="toc-number">1.1.2.</span> <span class="toc-text">语言模型介绍</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#N-gram"><span class="toc-number">1.1.2.1.</span> <span class="toc-text">$N$-gram</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BF%9E%E7%BB%ADLM"><span class="toc-number">1.1.3.</span> <span class="toc-text">连续LM</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#NN%E8%A7%86%E8%A7%92"><span class="toc-number">1.1.3.1.</span> <span class="toc-text">NN视角</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9F%BA%E4%BA%8ENN%E7%9A%84LM"><span class="toc-number">1.1.4.</span> <span class="toc-text">基于NN的LM</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9F%BA%E4%BA%8ERNN%E7%9A%84LM"><span class="toc-number">1.1.5.</span> <span class="toc-text">基于RNN的LM</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8LM%E6%8F%90%E5%8D%87%E8%AF%AD%E9%9F%B3%E8%AF%86%E5%88%AB"><span class="toc-number">1.2.</span> <span class="toc-text">如何使用LM提升语音识别</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B5%85%E8%9E%8D%E5%90%88"><span class="toc-number">1.2.1.</span> <span class="toc-text">浅融合</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B7%B1%E8%9E%8D%E5%90%88"><span class="toc-number">1.2.2.</span> <span class="toc-text">深融合</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%86%B7%E8%9E%8D%E5%90%88"><span class="toc-number">1.2.3.</span> <span class="toc-text">冷融合</span></a></li></ol></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2021/06/06/2021-6-6-%E7%AE%97%E6%B3%95%E6%A6%82%E8%AE%BA(DPV)%E4%B9%A0%E9%A2%98%E8%A7%A3%E7%AD%94%E2%80%94%E2%80%94%E7%AC%AC3%E7%AB%A0-%E5%9B%BE%E7%9A%84%E5%88%86%E8%A7%A3/" title="算法概论(DPV)习题解答——第3章 图的分解"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="算法概论(DPV)习题解答——第3章 图的分解"/></a><div class="content"><a class="title" href="/2021/06/06/2021-6-6-%E7%AE%97%E6%B3%95%E6%A6%82%E8%AE%BA(DPV)%E4%B9%A0%E9%A2%98%E8%A7%A3%E7%AD%94%E2%80%94%E2%80%94%E7%AC%AC3%E7%AB%A0-%E5%9B%BE%E7%9A%84%E5%88%86%E8%A7%A3/" title="算法概论(DPV)习题解答——第3章 图的分解">算法概论(DPV)习题解答——第3章 图的分解</a><time datetime="2021-06-06T14:35:00.000Z" title="发表于 2021-06-06 22:35:00">2021-06-06</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/06/06/2021-6-6-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E7%AC%AC5%E7%AB%A0-%E4%B9%A0%E9%A2%98%E8%A7%A3%E6%9E%90/" title="深入理解计算机系统 第5章 习题解析"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="深入理解计算机系统 第5章 习题解析"/></a><div class="content"><a class="title" href="/2021/06/06/2021-6-6-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E7%AC%AC5%E7%AB%A0-%E4%B9%A0%E9%A2%98%E8%A7%A3%E6%9E%90/" title="深入理解计算机系统 第5章 习题解析">深入理解计算机系统 第5章 习题解析</a><time datetime="2021-06-06T07:23:00.000Z" title="发表于 2021-06-06 15:23:00">2021-06-06</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/06/05/2021-6-5-Stanford-Compiler-PA5%E7%BF%BB%E8%AF%91/" title="Stanford Compiler PA5翻译"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Stanford Compiler PA5翻译"/></a><div class="content"><a class="title" href="/2021/06/05/2021-6-5-Stanford-Compiler-PA5%E7%BF%BB%E8%AF%91/" title="Stanford Compiler PA5翻译">Stanford Compiler PA5翻译</a><time datetime="2021-06-05T06:12:00.000Z" title="发表于 2021-06-05 14:12:00">2021-06-05</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/06/04/2021-6-4-Stanford-Compiler-PA4%E7%BF%BB%E8%AF%91/" title="Stanford Compiler PA4翻译"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Stanford Compiler PA4翻译"/></a><div class="content"><a class="title" href="/2021/06/04/2021-6-4-Stanford-Compiler-PA4%E7%BF%BB%E8%AF%91/" title="Stanford Compiler PA4翻译">Stanford Compiler PA4翻译</a><time datetime="2021-06-03T16:17:00.000Z" title="发表于 2021-06-04 00:17:00">2021-06-04</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/06/03/2021-6-3-%E5%B7%A7%E5%A6%99%E7%9A%84Y%E8%BF%90%E7%AE%97%E7%AC%A6/" title="巧妙的Y运算符"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="巧妙的Y运算符"/></a><div class="content"><a class="title" href="/2021/06/03/2021-6-3-%E5%B7%A7%E5%A6%99%E7%9A%84Y%E8%BF%90%E7%AE%97%E7%AC%A6/" title="巧妙的Y运算符">巧妙的Y运算符</a><time datetime="2021-06-03T00:54:00.000Z" title="发表于 2021-06-03 08:54:00">2021-06-03</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2021 By Doraemonzzz</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><div class="js-pjax"><script>if (!window.MathJax) {
+  window.MathJax = {
+    loader: {
+      source: {
+        '[tex]/amsCd': '[tex]/amscd'
+      }
+    },
+    tex: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]],
+      tags: 'ams'
+    },
+    options: {
+      renderActions: {
+        findScript: [10, doc => {
+          for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+            const display = !!node.type.match(/; *mode=display/)
+            const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+            const text = document.createTextNode('')
+            node.parentNode.replaceChild(text, node)
+            math.start = {node: text, delim: '', n: 0}
+            math.end = {node: text, delim: '', n: 0}
+            doc.math.push(math)
+          }
+        }, ''],
+        addClass: [200,() => {
+          document.querySelectorAll('mjx-container:not([display=\'true\']').forEach( node => {
+            const target = node.parentNode
+            if (!target.classList.contains('has-jax')) {
+              target.classList.add('mathjax-overflow')
+            }
+          })
+        }, '', false]
+      }
+    }
+  }
+  
+  const script = document.createElement('script')
+  script.src = 'https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js'
+  script.id = 'MathJax-script'
+  script.async = true
+  document.head.appendChild(script)
+} else {
+  MathJax.startup.document.state(0)
+  MathJax.texReset()
+  MathJax.typeset()
+}</script></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

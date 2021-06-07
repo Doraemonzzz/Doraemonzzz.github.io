@@ -1,0 +1,385 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>EE263 Lecture 13 Jordan canonical form | Doraemonzzz</title><meta name="keywords" content="EE263"><meta name="author" content="Doraemonzzz"><meta name="copyright" content="Doraemonzzz"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="课程主页：https:&#x2F;&#x2F;see.stanford.edu&#x2F;Course&#x2F;EE263 这次回顾第十三讲，这一讲结束了特征值和对角化，介绍了约当标准型。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="EE263 Lecture 13 Jordan canonical form">
+<meta property="og:url" content="http://doraemonzzz.com/2019/06/24/EE263%20Lecture%2013%20Jordan%20canonical%20form/index.html">
+<meta property="og:site_name" content="Doraemonzzz">
+<meta property="og:description" content="课程主页：https:&#x2F;&#x2F;see.stanford.edu&#x2F;Course&#x2F;EE263 这次回顾第十三讲，这一讲结束了特征值和对角化，介绍了约当标准型。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg">
+<meta property="article:published_time" content="2019-06-24T14:24:00.000Z">
+<meta property="article:modified_time" content="2019-06-24T14:35:26.877Z">
+<meta property="article:author" content="Doraemonzzz">
+<meta property="article:tag" content="EE263">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="http://doraemonzzz.com/2019/06/24/EE263%20Lecture%2013%20Jordan%20canonical%20form/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"prismjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    jQuery: 'https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js',
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+    },
+    fancybox: {
+      js: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isanchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'EE263 Lecture 13 Jordan canonical form',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2019-06-24 22:35:26'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    })(window)</script><meta name="generator" content="Hexo 5.4.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="author-avatar"><img class="avatar-img" src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">文章</div><div class="length-num">610</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">标签</div><div class="length-num">59</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/categories/"><div class="headline">分类</div><div class="length-num">23</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">Doraemonzzz</a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">EE263 Lecture 13 Jordan canonical form</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2019-06-24T14:24:00.000Z" title="发表于 2019-06-24 22:24:00">2019-06-24</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2019-06-24T14:35:26.877Z" title="更新于 2019-06-24 22:35:26">2019-06-24</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E6%95%B0%E5%AD%A6/">数学</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="EE263 Lecture 13 Jordan canonical form"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p>课程主页：<a target="_blank" rel="noopener" href="https://see.stanford.edu/Course/EE263">https://see.stanford.edu/Course/EE263</a></p>
+<p>这次回顾第十三讲，这一讲结束了特征值和对角化，介绍了约当标准型。</p>
+<span id="more"></span>
+<h4 id="例子：马尔可夫链"><a href="#例子：马尔可夫链" class="headerlink" title="例子：马尔可夫链"></a>例子：马尔可夫链</h4><p>马尔可夫链的概率分布满足</p>
+<script type="math/tex; mode=display">
+p(t+1)=P p(t)</script><p>注意到</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+p_{i}(t)&= \operatorname{Prob}(z(t)=i) \\
+P_{i j}&=\operatorname{Prob}(z(t+1)=i | z(t)=j)
+\end{aligned}</script><p>所以</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+\sum_{i=1}^{n} p_{i}(t)&=1\\
+\sum_{i=1}^{n} P_{i j}&=1
+\end{aligned}</script><p>第二个事实可以写成矩阵形式</p>
+<script type="math/tex; mode=display">
+\left[\begin{array}{lll}{1} & {1} & {\cdots} & {1}\end{array}\right] P=\left[\begin{array}{llll}{1} & {1} & {\cdots} & {1}\end{array}\right]</script><p>即$\left[\begin{array}{llll}{1} &amp; {1} &amp; {\cdots} &amp; {1}\end{array}\right]$为$P$的特征值$1$对应的左特征向量，因此</p>
+<script type="math/tex; mode=display">
+\operatorname{det}(I-P)=0</script><p>$P$同样有非零的右特征向量$v\neq 0$满足</p>
+<script type="math/tex; mode=display">
+Pv= v</script><p>我们可以选择$v$，使得$v_i \ge 0$，因此我们可以将$v$正规化，使得</p>
+<script type="math/tex; mode=display">
+\sum_{i=1}^{n} v_{i}=1</script><p>解释：$v$是平稳分布，即，如果$p(0)=v$，那么对$t\ge 0$，我们都有$p(t)=v$</p>
+<h4 id="对角化"><a href="#对角化" class="headerlink" title="对角化"></a>对角化</h4><p>假设$v_{1}, \dots, v_{n}$是$A\in \mathbb R^{n\times n}$的线性无关特征向量组：</p>
+<script type="math/tex; mode=display">
+A v_{i}=\lambda_{i} v_{i}, \quad i=1, \ldots, n</script><p>矩阵形式为</p>
+<script type="math/tex; mode=display">
+A\left[\begin{array}{llll}{v_{1}} & {\cdots} & {v_{n}}\end{array}\right]=\left[\begin{array}{lll}{v_{1}} & {\cdots} & {v_{n}}\end{array}\right]\left[\begin{array}{ccc}{\lambda_{1}} & {} & {} \\ {} & {\ddots} & {} \\ {} & {} & {\lambda_{n}}\end{array}\right]</script><p>定义</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+T&=\left[\begin{array}{lll}{v_{1}} & {\cdots} & {v_{n}}\end{array}\right]\\
+\Lambda&=\operatorname{diag}\left(\lambda_{1}, \ldots, \lambda_{n}\right)
+\end{aligned}</script><p>那么</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+A T&=T \Lambda\\
+T^{-1} A T&=\Lambda
+\end{aligned}</script><ul>
+<li>因为$v_{1}, \dots, v_{n}$线性无关，所以$T$可逆</li>
+<li>使用$T$的相似变换将$A$对角化</li>
+</ul>
+<p>反过来，如果存在$T=\left[v_{1} \cdots v_{n}\right]$，使得</p>
+<script type="math/tex; mode=display">
+T^{-1} A T=\Lambda=\operatorname{diag}\left(\lambda_{1}, \ldots, \lambda_{n}\right)</script><p>那么$AT=T\Lambda$，即</p>
+<script type="math/tex; mode=display">
+A v_{i}=\lambda_{i} v_{i}, \quad i=1, \ldots, n</script><p>所以$v_{1}, \dots, v_{n}$是$A$的线性无关特征向量组。</p>
+<p>我们称$A$可对角化，如果</p>
+<ul>
+<li>存在$T$，使得$T^{-1} A T=\Lambda$为对角矩阵</li>
+<li>$A$有线性无关的特征向量组</li>
+</ul>
+<p>（如果$A$无法对角化，有时称其为defective）</p>
+<h4 id="不是所有矩阵都可对角化"><a href="#不是所有矩阵都可对角化" class="headerlink" title="不是所有矩阵都可对角化"></a>不是所有矩阵都可对角化</h4><p>例子：</p>
+<script type="math/tex; mode=display">
+A=\left[\begin{array}{ll}{0} & {1} \\ {0} & {0}\end{array}\right]</script><h4 id="不同的特征值"><a href="#不同的特征值" class="headerlink" title="不同的特征值"></a>不同的特征值</h4><p>事实：如果$A$有不同特征值，即对于$i\neq j$，$\lambda_i \neq \lambda_j$，那么$A$可对角化，反过来并不成立——即使$A$有重复的特征值，但它也有可能对角化。</p>
+<h4 id="对角化和左特征向量"><a href="#对角化和左特征向量" class="headerlink" title="对角化和左特征向量"></a>对角化和左特征向量</h4><p>将$T^{-1} A T=\Lambda$写成$T^{-1} A=\Lambda T^{-1}$，或</p>
+<script type="math/tex; mode=display">
+\left[\begin{array}{c}{w_{1}^{T}} \\ {\vdots} \\ {w_{n}^{T}}\end{array}\right] A=\Lambda\left[\begin{array}{c}{w_{1}^{T}} \\ {\vdots} \\ {w_{n}^{T}}\end{array}\right]</script><p>其中$w_{1}^{T}, \ldots, w_{n}^{T}$是$T^{-1}$的行，因此</p>
+<script type="math/tex; mode=display">
+w_{i}^{T} A=\lambda_{i} w_{i}^{T}</script><p>即，$T^{-1}$的行为左特征向量，并且</p>
+<script type="math/tex; mode=display">
+w_{i}^{T} v_{j}=\delta_{i j}</script><p>即，根据这种方式选择的左右特征向量为对偶基。</p>
+<h4 id="modal-form"><a href="#modal-form" class="headerlink" title="modal form"></a>modal form</h4><p>假设$A$可以由$T$对角化，定义新的坐标系$x=T \tilde{x}$，所以</p>
+<script type="math/tex; mode=display">
+\dot x=Ax \quad \Leftrightarrow \quad T \dot{\tilde{x}}=A T \tilde{x} \quad \Leftrightarrow \quad \dot{\tilde{x}}=T^{-1} A T \tilde{x} \quad \Leftrightarrow \quad \dot{\tilde{x}}=\Lambda \tilde{x}</script><p>在新的坐标下，系统为对角阵的形式：</p>
+<p><img src="https://github.com/Doraemonzzz/md-photo/blob/master/EE263/Lecture%2013/20190621101.jpg?raw=true" alt=""></p>
+<p>轨迹由$n$个独立模式组成，即</p>
+<script type="math/tex; mode=display">
+\tilde{x}_{i}(t)=e^{\lambda_{i} t} \tilde{x}_{i}(0)</script><p>因此被称为modal form</p>
+<h4 id="Real-modal-form"><a href="#Real-modal-form" class="headerlink" title="Real modal form"></a>Real modal form</h4><p>当特征值是复数的时候，系统可以化为Real modal form的形式：</p>
+<script type="math/tex; mode=display">
+S^{-1} A S=\operatorname{diag}\left(\Lambda_{r},\left[\begin{array}{cc}{\sigma_{r+1}} & {\omega_{r+1}} \\ {-\omega_{r+1}} & {\sigma_{r+1}}\end{array}\right], \ldots,\left[\begin{array}{cc}{\sigma_{n}} & {\omega_{n}} \\ {-\omega_{n}} & {\sigma_{n}}\end{array}\right]\right)</script><p>其中$\Lambda_{r}=\operatorname{diag}\left(\lambda_{1}, \ldots, \lambda_{r}\right)$为实特征值，并且</p>
+<script type="math/tex; mode=display">
+\lambda_{i}=\sigma_{i}+j \omega_{i}, \quad i=r+1, \ldots, n</script><p>为复特征值。</p>
+<p>框图为</p>
+<p><img src="https://github.com/Doraemonzzz/md-photo/blob/master/EE263/Lecture%2013/20190621102.jpg?raw=true" alt=""></p>
+<h4 id="对角化的作用"><a href="#对角化的作用" class="headerlink" title="对角化的作用"></a>对角化的作用</h4><p>对角化简化了很多矩阵表达式。</p>
+<p>resolvent：</p>
+<script type="math/tex; mode=display">
+\begin{aligned}(s I-A)^{-1} &=\left(s T T^{-1}-T \Lambda T^{-1}\right)^{-1} \\ &=\left(T(s I-\Lambda) T^{-1}\right)^{-1} \\ &=T(s I-\Lambda)^{-1} T^{-1} \\ &=T \operatorname{diag}\left(\frac{1}{s-\lambda_{1}}, \cdots, \frac{1}{s-\lambda_{n}}\right) T^{-1} \end{aligned}</script><p>幂（即离散情形的解）：</p>
+<script type="math/tex; mode=display">
+\begin{aligned} A^{k} &=\left(T \Lambda T^{-1}\right)^{k} \\ &=\left(T \Lambda T^{-1}\right) \cdots\left(T \Lambda T^{-1}\right) \\ &=T \Lambda^{k} T^{-1} \\ &=T \operatorname{diag}\left(\lambda_{1}^{k}, \ldots, \lambda_{n}^{k}\right) T^{-1} \end{aligned}</script><p>（对于$k&lt;0$，只有$A$可逆的时候上式才成立，即所有的$\lambda_i \neq 0$）</p>
+<p>指数（连续情形的解）：</p>
+<script type="math/tex; mode=display">
+\begin{aligned} e^{A} &=I+A+A^{2} / 2 !+\cdots \\ &=I+T \Lambda T^{-1}+\left(T \Lambda T^{-1}\right)^{2} / 2 !+\cdots \\ &=T\left(I+\Lambda+\Lambda^{2} / 2 !+\cdots\right) T^{-1} \\ &=T e^{\Lambda} T^{-1} \\ &=T \operatorname{diag}\left(e^{\lambda_{1}}, \ldots, e^{\lambda_{n}}\right) T^{-1} \end{aligned}</script><h4 id="函数的解析函数"><a href="#函数的解析函数" class="headerlink" title="函数的解析函数"></a>函数的解析函数</h4><p>对于任意解析函数$f : \mathbb{R} \rightarrow \mathbb{R}$，即有多项式序列给出的函数</p>
+<script type="math/tex; mode=display">
+f(a)=\beta_{0}+\beta_{1} a+\beta_{2} a^{2}+\beta_{3} a^{3}+\cdots</script><p>我们可以对$A\in \mathbb R^{n\times n}$定义$f(A)$为</p>
+<script type="math/tex; mode=display">
+f(A)=\beta_{0} I+\beta_{1} A+\beta_{2} A^{2}+\beta_{3} A^{3}+\cdots</script><p>将$A=T \Lambda T^{-1}$带入，我们有</p>
+<script type="math/tex; mode=display">
+\begin{aligned} f(A) &=\beta_{0} I+\beta_{1} A+\beta_{2} A^{2}+\beta_{3} A^{3}+\cdots \\ &=\beta_{0} T T^{-1}+\beta_{1} T \Lambda T^{-1}+\beta_{2}\left(T \Lambda T^{-1}\right)^{2}+\cdots \\ &=T\left(\beta_{0} I+\beta_{1} \Lambda+\beta_{2} \Lambda^{2}+\cdots\right) T^{-1} \\ &=T \operatorname{diag}\left(f\left(\lambda_{1}\right), \ldots, f\left(\lambda_{n}\right)\right) T^{-1} \end{aligned}</script><h4 id="通过对角化求解"><a href="#通过对角化求解" class="headerlink" title="通过对角化求解"></a>通过对角化求解</h4><p>假设$A$可对角化，考虑LDS$\dot{x}=A x$，并且$T^{-1} A T=\Lambda$，那么</p>
+<script type="math/tex; mode=display">
+\begin{aligned} x(t) &=e^{t A} x(0) \\ &=T e^{\Lambda t} T^{-1} x(0) \\ &=\sum_{i=1}^{n} e^{\lambda_{i} t}\left(w_{i}^{T} x(0)\right) v_{i} \end{aligned}</script><p>因此：任何轨迹都可以表示为modal的线性组合。</p>
+<p><strong>解释</strong>：</p>
+<ul>
+<li>（左特征向量）将初始状态$x(0)$分解为modal元素$w_i^Tx(0)$</li>
+<li>$e^{\lambda_i t}$项将第$i$个model向前推进$t$秒</li>
+<li>将状态重建为（右）特征向量的线性组合</li>
+</ul>
+<p><strong>应用</strong></p>
+<p>当$x(0)$为何值时，当$t\to \infty$时，我们有$x(t)\to 0$？</p>
+<p>将特征值分为实部负和非负的两部分，负数部分</p>
+<script type="math/tex; mode=display">
+\Re \lambda_{1}<0, \ldots, \Re \lambda_{s}<0</script><p>其余部分为</p>
+<script type="math/tex; mode=display">
+\Re \lambda_{s+1} \geq 0, \ldots, \Re \lambda_{n} \geq 0</script><p>由</p>
+<script type="math/tex; mode=display">
+x(t)=\sum_{i=1}^{n} e^{\lambda_{i} t}\left(w_{i}^{T} x(0)\right) v_{i}</script><p>我们得到$x(t)\to 0$的条件为</p>
+<script type="math/tex; mode=display">
+x(0) \in \operatorname{span}\left\{v_{1}, \ldots, v_{s}\right\}</script><p>或者等价的，</p>
+<script type="math/tex; mode=display">
+w_{i}^{T} x(0)=0, \quad i=s+1, \ldots, n</script><h4 id="离散时间系统的稳定性"><a href="#离散时间系统的稳定性" class="headerlink" title="离散时间系统的稳定性"></a>离散时间系统的稳定性</h4><p>假设$A$可对角化，考虑离散时间LDS</p>
+<script type="math/tex; mode=display">
+x(t+1)=A x(t)</script><p>如果$A=T \Lambda T^{-1}$，那么$A^{k}=T \Lambda^{k} T^{-1}$，因此对任意的$x(0)$</p>
+<script type="math/tex; mode=display">
+x(t)=A^{t} x(0)=\sum_{i=1}^{n} \lambda_{i}^{t}\left(w_{i}^{T} x(0)\right) v_{i} \rightarrow 0 \quad \text { as } t \rightarrow \infty</script><p>我们必然有</p>
+<script type="math/tex; mode=display">
+\left|\lambda_{i}\right|<1, \quad i=1, \ldots, n</script><p>我们将在后面看到，当$A$无法对角化的时候，上述事实依然成立，因此我们有：$x(t+1)=A x(t)$稳定当且仅当$A$的所有特征值的模长小于$1$</p>
+<h3 id="Lecture-12-约当标准型"><a href="#Lecture-12-约当标准型" class="headerlink" title="Lecture 12 约当标准型"></a>Lecture 12 约当标准型</h3><h4 id="约当标准型"><a href="#约当标准型" class="headerlink" title="约当标准型"></a>约当标准型</h4><p>约当标准是对角化的推广。</p>
+<p>任意矩阵$A \in \mathbb{R}^{n \times n}$通过相似变换可以化为如下形式</p>
+<script type="math/tex; mode=display">
+T^{-1} A T=J=\left[\begin{array}{lll}{J_{1}} & {} \\ {} & {\cdots} & {} \\ {} & {} & {J_{q}}\end{array}\right]</script><p>其中</p>
+<script type="math/tex; mode=display">
+J_{i}=\left[\begin{array}{cccc}{\lambda_{i}} & {1} & {} & {} \\ {} & {\lambda_{i}} & {\cdots} & {} \\ {} & {} & {\ddots} & {1} \\ {} & {} & {} & {\lambda_{i}}\end{array}\right] \in \mathbb{C}^{n_{i} \times n_{i}}</script><p>被称为大小为$n_i$，特征值为$\lambda_i$的约当块（所以$n=\sum_{i=1}^{q} n_{i}$）</p>
+<p>约当标准型有如下性质：</p>
+<ul>
+<li>$J$为上三角bidiagonal</li>
+<li>$J$为对角矩阵为约当标准型的特殊情形，此时有$n$个约当块，并且$n_i =1$</li>
+<li>约当标准型唯一（考虑置换的情形下）</li>
+<li>可能有很多个约当块的特征值相同</li>
+</ul>
+<p><strong>备注</strong>：约当标准为理论工具，数值计算中从不使用！</p>
+<p>注意$J$的特征值多项式为</p>
+<script type="math/tex; mode=display">
+\mathcal{X}(s)=\operatorname{det}(s I-A)=\left(s-\lambda_{1}\right)^{n_{1}} \cdots\left(s-\lambda_{q}\right)^{n_{q}}</script><p>因此不同特征值$\Rightarrow n_{i}=1 \Rightarrow A$可对角化。</p>
+<p>$\operatorname{dim} \mathcal{N}(\lambda I-A)$为特征值为$\lambda$的约当块的数量，更一般的，我们有</p>
+<script type="math/tex; mode=display">
+\operatorname{dim} \mathcal{N}(\lambda I-A)^{k}=\sum_{\lambda_{i}=\lambda} \min \left\{k, n_{i}\right\}</script><p>所以根据$\operatorname{dim} \mathcal{N}(\lambda I-A)^{k},k=1,2,\ldots$，我们可以判断和$\lambda $有关的约当块的数量。</p>
+<p>关于约当标准型有如下事实：</p>
+<ul>
+<li><p>$\lambda I-A=T(\lambda I-J) T^{-1}$</p>
+</li>
+<li><p>对大小为$3$的分块：</p>
+<script type="math/tex; mode=display">
+\lambda_{i} I-J_{i}=\left[\begin{array}{rrr}{0} & {-1} & {0} \\ {0} & {0} & {-1} \\ {0} & {0} & {0}\end{array}\right] \quad\left(\lambda_{i} I-J_{i}\right)^{2}=\left[\begin{array}{ccc}{0} & {0} & {1} \\ {0} & {0} & {0} \\ {0} & {0} & {0}\end{array}\right] \quad\left(\lambda_{i} I-J_{i}\right)^{3}=0</script></li>
+<li><p>对其他大小为$3$的分块（$k\ge 2$），我们有</p>
+<script type="math/tex; mode=display">
+\left(\lambda_{i} I-J_{j}\right)^{k}=\left[\begin{array}{ccc}{\left(\lambda_{i}-\lambda_{j}\right)^{k}} & {-k\left(\lambda_{i}-\lambda_{j}\right)^{k-1}} & {(k(k-1) / 2)\left(\lambda_{i}-\lambda_{j}\right)^{k-2}} \\ {0} & {\left(\lambda_{j}-\lambda_{i}\right)^{k}} & {-k\left(\lambda_{j}-\lambda_{i}\right)^{k-1}} \\ {0} & {0} & {\left(\lambda_{j}-\lambda_{i}\right)^{k}}\end{array}\right]</script></li>
+</ul>
+<h4 id="广义特征向量"><a href="#广义特征向量" class="headerlink" title="广义特征向量"></a>广义特征向量</h4><p>假设</p>
+<script type="math/tex; mode=display">
+T^{-1} A T=J=\operatorname{diag}\left(J_{1}, \ldots, J_{q}\right)</script><p>将$T$表达为</p>
+<script type="math/tex; mode=display">
+T=\left[T_{1} T_{2} \cdots T_{q}\right]</script><p>其中$T_{i} \in \mathbb{C}^{n \times n_{i}}$为和第$i$个约当块$J_i$有关的$T$的列，我们有</p>
+<script type="math/tex; mode=display">
+A T_{i}=T_{i} J_{i}</script><p>令</p>
+<script type="math/tex; mode=display">
+T_{i}=\left[\begin{array}{llll}{v_{i 1}} & {v_{i 2}} & {\cdots} & {v_{i n_{i}}}\end{array}\right]</script><p>那么我们有</p>
+<script type="math/tex; mode=display">
+A v_{i 1}=\lambda_{i} v_{i 1}</script><p>即，$T_i$的第一列为$\lambda_i $对应的特征向量。</p>
+<p>对$j=2, \ldots, n_{i}$，</p>
+<script type="math/tex; mode=display">
+A v_{i j}=v_{i j-1}+\lambda_{i} v_{i j}</script><p>向量$v_{i 1}, \dots v_{i n_{i}}$被称为广义特征向量。</p>
+<h4 id="约当标准型LDS"><a href="#约当标准型LDS" class="headerlink" title="约当标准型LDS"></a>约当标准型LDS</h4><p>考虑LDS</p>
+<script type="math/tex; mode=display">
+\dot{x}=A x</script><p>通过坐标变换</p>
+<script type="math/tex; mode=display">
+x=T \tilde{x}</script><p>我们可以化为</p>
+<script type="math/tex; mode=display">
+\dot{\tilde{x}}=J \tilde{x}</script><p>因此系统被分解为独立的“约当块系统”$\dot{\tilde{x}}_{i}=J_{i} \tilde{x}_{i}$</p>
+<p><img src="https://github.com/Doraemonzzz/md-photo/blob/master/EE263/Lecture%2013/20190621103.jpg?raw=true" alt=""></p>
+<p>约当块有时被称为约当链</p>
+<h4 id="Resolvent，约当块的指数"><a href="#Resolvent，约当块的指数" class="headerlink" title="Resolvent，约当块的指数"></a>Resolvent，约当块的指数</h4><p>考虑特征值为$\lambda_i$的$k\times k$的约当块的resolvent</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+\left(s I-J_{\lambda}\right)^{-1}
+&=\left[\begin{array}{cccc}{s-\lambda} & {-1} & {} & {} \\ {} & {s-\lambda} & {\ddots} & {} \\ {} & {} & {\ddots} & {-1} \\ {} & {} & {} & {s-\lambda}\end{array}\right]^{-1}\\
+&=\left[\begin{array}{cccc}{(s-\lambda)^{-1}} & {(s-\lambda)^{-2}} & {\dots} & {(s-\lambda)^{-k}} \\ {} & {(s-\lambda)^{-1}} & {\dots} & {(s-\lambda)^{-k+1}} \\ {} & {} & {\ddots} & {\vdots} \\ {} & {} & {} & {(s-\lambda)^{-1}}\end{array}\right]\\
+&=(s-\lambda)^{-1} I+(s-\lambda)^{-2} F_{1}+\cdots+(s-\lambda)^{-k} F_{k-1}
+\end{aligned}</script><p>其中$F_i$为第$i$个上对角线全为$1$的矩阵。</p>
+<p>利用逆拉普拉斯变换，得到指数形式为</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+e^{t J_{\lambda}}
+&=e^{t \lambda}\left(I+t F_{1}+\cdots+\left(t^{k-1} /(k-1) !\right) F_{k-1}\right)\\
+&=e^{t \lambda}
+\left[
+\begin{matrix}{1} & {t} & {\cdots} & {t^{k-1} /(k-1) !} 
+\\ {} & {1} & {\cdots} & {t^{k-2} /(k-2) !} 
+\\ {} & {} & {\ddots}  & {\vdots}
+\\ {} & {} & {} & {1}
+\end{matrix}\right]
+\end{aligned}</script><p>约当块产生：</p>
+<ul>
+<li>$e^{tA}$中$t^{p} e^{t \lambda}$的项</li>
+</ul>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">Doraemonzzz</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="http://doraemonzzz.com/2019/06/24/EE263%20Lecture%2013%20Jordan%20canonical%20form/">http://doraemonzzz.com/2019/06/24/EE263%20Lecture%2013%20Jordan%20canonical%20form/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://doraemonzzz.com" target="_blank">Doraemonzzz</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/EE263/">EE263</a></div><div class="post_share"><div class="social-share" data-image="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2019/06/26/EE263%20Lecture%2014%20Linear%20dynamical%20systems%20with%20inputs%20and%20outputs/"><img class="prev-cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">EE263 Lecture 14 Linear dynamical systems with inputs and outputs</div></div></a></div><div class="next-post pull-right"><a href="/2019/06/21/EE263%20Lecture%2012%20Eigenvectors%20and%20diagonalization/"><img class="next-cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">EE263 Lecture 12 Eigenvectors and diagonalization</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span> 相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2019/05/13/EE263 Homework 1/" title="EE263 Homework 1"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2019-05-13</div><div class="title">EE263 Homework 1</div></div></a></div><div><a href="/2019/05/23/EE263 Homework 2/" title="EE263 Homework 2"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2019-05-23</div><div class="title">EE263 Homework 2</div></div></a></div><div><a href="/2019/05/26/EE263 Homework 3/" title="EE263 Homework 3"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2019-05-26</div><div class="title">EE263 Homework 3</div></div></a></div><div><a href="/2019/06/27/EE263 Homework 5/" title="EE263 Homework 5"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2019-06-27</div><div class="title">EE263 Homework 5</div></div></a></div><div><a href="/2019/06/29/EE263 Homework 6/" title="EE263 Homework 6"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2019-06-29</div><div class="title">EE263 Homework 6</div></div></a></div><div><a href="/2019/07/03/EE263 Homework 7/" title="EE263 Homework 7"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2019-07-03</div><div class="title">EE263 Homework 7</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="card-info-avatar is-center"><img class="avatar-img" src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/><div class="author-info__name">Doraemonzzz</div><div class="author-info__description">个人博客，主要记录有关机器学习，数学以及计算机科学的笔记</div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">610</div></a></div><div class="card-info-data-item is-center"><a href="/tags/"><div class="headline">标签</div><div class="length-num">59</div></a></div><div class="card-info-data-item is-center"><a href="/categories/"><div class="headline">分类</div><div class="length-num">23</div></a></div></div><a class="button--animated" id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/Doraemonzzz" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="/doraemon_zzz@163.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn card-announcement-animation"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BE%8B%E5%AD%90%EF%BC%9A%E9%A9%AC%E5%B0%94%E5%8F%AF%E5%A4%AB%E9%93%BE"><span class="toc-number">1.</span> <span class="toc-text">例子：马尔可夫链</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AF%B9%E8%A7%92%E5%8C%96"><span class="toc-number">2.</span> <span class="toc-text">对角化</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%B8%8D%E6%98%AF%E6%89%80%E6%9C%89%E7%9F%A9%E9%98%B5%E9%83%BD%E5%8F%AF%E5%AF%B9%E8%A7%92%E5%8C%96"><span class="toc-number">3.</span> <span class="toc-text">不是所有矩阵都可对角化</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%B8%8D%E5%90%8C%E7%9A%84%E7%89%B9%E5%BE%81%E5%80%BC"><span class="toc-number">4.</span> <span class="toc-text">不同的特征值</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AF%B9%E8%A7%92%E5%8C%96%E5%92%8C%E5%B7%A6%E7%89%B9%E5%BE%81%E5%90%91%E9%87%8F"><span class="toc-number">5.</span> <span class="toc-text">对角化和左特征向量</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#modal-form"><span class="toc-number">6.</span> <span class="toc-text">modal form</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Real-modal-form"><span class="toc-number">7.</span> <span class="toc-text">Real modal form</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AF%B9%E8%A7%92%E5%8C%96%E7%9A%84%E4%BD%9C%E7%94%A8"><span class="toc-number">8.</span> <span class="toc-text">对角化的作用</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%87%BD%E6%95%B0%E7%9A%84%E8%A7%A3%E6%9E%90%E5%87%BD%E6%95%B0"><span class="toc-number">9.</span> <span class="toc-text">函数的解析函数</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%80%9A%E8%BF%87%E5%AF%B9%E8%A7%92%E5%8C%96%E6%B1%82%E8%A7%A3"><span class="toc-number">10.</span> <span class="toc-text">通过对角化求解</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%A6%BB%E6%95%A3%E6%97%B6%E9%97%B4%E7%B3%BB%E7%BB%9F%E7%9A%84%E7%A8%B3%E5%AE%9A%E6%80%A7"><span class="toc-number">11.</span> <span class="toc-text">离散时间系统的稳定性</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Lecture-12-%E7%BA%A6%E5%BD%93%E6%A0%87%E5%87%86%E5%9E%8B"><span class="toc-number"></span> <span class="toc-text">Lecture 12 约当标准型</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%BA%A6%E5%BD%93%E6%A0%87%E5%87%86%E5%9E%8B"><span class="toc-number">1.</span> <span class="toc-text">约当标准型</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%B9%BF%E4%B9%89%E7%89%B9%E5%BE%81%E5%90%91%E9%87%8F"><span class="toc-number">2.</span> <span class="toc-text">广义特征向量</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%BA%A6%E5%BD%93%E6%A0%87%E5%87%86%E5%9E%8BLDS"><span class="toc-number">3.</span> <span class="toc-text">约当标准型LDS</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Resolvent%EF%BC%8C%E7%BA%A6%E5%BD%93%E5%9D%97%E7%9A%84%E6%8C%87%E6%95%B0"><span class="toc-number">4.</span> <span class="toc-text">Resolvent，约当块的指数</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2021/06/06/2021-6-6-%E7%AE%97%E6%B3%95%E6%A6%82%E8%AE%BA(DPV)%E4%B9%A0%E9%A2%98%E8%A7%A3%E7%AD%94%E2%80%94%E2%80%94%E7%AC%AC3%E7%AB%A0-%E5%9B%BE%E7%9A%84%E5%88%86%E8%A7%A3/" title="算法概论(DPV)习题解答——第3章 图的分解"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="算法概论(DPV)习题解答——第3章 图的分解"/></a><div class="content"><a class="title" href="/2021/06/06/2021-6-6-%E7%AE%97%E6%B3%95%E6%A6%82%E8%AE%BA(DPV)%E4%B9%A0%E9%A2%98%E8%A7%A3%E7%AD%94%E2%80%94%E2%80%94%E7%AC%AC3%E7%AB%A0-%E5%9B%BE%E7%9A%84%E5%88%86%E8%A7%A3/" title="算法概论(DPV)习题解答——第3章 图的分解">算法概论(DPV)习题解答——第3章 图的分解</a><time datetime="2021-06-06T14:35:00.000Z" title="发表于 2021-06-06 22:35:00">2021-06-06</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/06/06/2021-6-6-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E7%AC%AC5%E7%AB%A0-%E4%B9%A0%E9%A2%98%E8%A7%A3%E6%9E%90/" title="深入理解计算机系统 第5章 习题解析"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="深入理解计算机系统 第5章 习题解析"/></a><div class="content"><a class="title" href="/2021/06/06/2021-6-6-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E7%AC%AC5%E7%AB%A0-%E4%B9%A0%E9%A2%98%E8%A7%A3%E6%9E%90/" title="深入理解计算机系统 第5章 习题解析">深入理解计算机系统 第5章 习题解析</a><time datetime="2021-06-06T07:23:00.000Z" title="发表于 2021-06-06 15:23:00">2021-06-06</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/06/05/2021-6-5-Stanford-Compiler-PA5%E7%BF%BB%E8%AF%91/" title="Stanford Compiler PA5翻译"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Stanford Compiler PA5翻译"/></a><div class="content"><a class="title" href="/2021/06/05/2021-6-5-Stanford-Compiler-PA5%E7%BF%BB%E8%AF%91/" title="Stanford Compiler PA5翻译">Stanford Compiler PA5翻译</a><time datetime="2021-06-05T06:12:00.000Z" title="发表于 2021-06-05 14:12:00">2021-06-05</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/06/04/2021-6-4-Stanford-Compiler-PA4%E7%BF%BB%E8%AF%91/" title="Stanford Compiler PA4翻译"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Stanford Compiler PA4翻译"/></a><div class="content"><a class="title" href="/2021/06/04/2021-6-4-Stanford-Compiler-PA4%E7%BF%BB%E8%AF%91/" title="Stanford Compiler PA4翻译">Stanford Compiler PA4翻译</a><time datetime="2021-06-03T16:17:00.000Z" title="发表于 2021-06-04 00:17:00">2021-06-04</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/06/03/2021-6-3-%E5%B7%A7%E5%A6%99%E7%9A%84Y%E8%BF%90%E7%AE%97%E7%AC%A6/" title="巧妙的Y运算符"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="巧妙的Y运算符"/></a><div class="content"><a class="title" href="/2021/06/03/2021-6-3-%E5%B7%A7%E5%A6%99%E7%9A%84Y%E8%BF%90%E7%AE%97%E7%AC%A6/" title="巧妙的Y运算符">巧妙的Y运算符</a><time datetime="2021-06-03T00:54:00.000Z" title="发表于 2021-06-03 08:54:00">2021-06-03</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2021 By Doraemonzzz</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><div class="js-pjax"><script>if (!window.MathJax) {
+  window.MathJax = {
+    loader: {
+      source: {
+        '[tex]/amsCd': '[tex]/amscd'
+      }
+    },
+    tex: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]],
+      tags: 'ams'
+    },
+    options: {
+      renderActions: {
+        findScript: [10, doc => {
+          for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+            const display = !!node.type.match(/; *mode=display/)
+            const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+            const text = document.createTextNode('')
+            node.parentNode.replaceChild(text, node)
+            math.start = {node: text, delim: '', n: 0}
+            math.end = {node: text, delim: '', n: 0}
+            doc.math.push(math)
+          }
+        }, ''],
+        addClass: [200,() => {
+          document.querySelectorAll('mjx-container:not([display=\'true\']').forEach( node => {
+            const target = node.parentNode
+            if (!target.classList.contains('has-jax')) {
+              target.classList.add('mathjax-overflow')
+            }
+          })
+        }, '', false]
+      }
+    }
+  }
+  
+  const script = document.createElement('script')
+  script.src = 'https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js'
+  script.id = 'MathJax-script'
+  script.async = true
+  document.head.appendChild(script)
+} else {
+  MathJax.startup.document.state(0)
+  MathJax.texReset()
+  MathJax.typeset()
+}</script></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

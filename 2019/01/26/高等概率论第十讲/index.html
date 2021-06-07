@@ -1,0 +1,382 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>高等概率论第十讲 | Doraemonzzz</title><meta name="keywords" content="高等概率论"><meta name="author" content="Doraemonzzz"><meta name="copyright" content="Doraemonzzz"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="记录本校的高等概率论课程笔记，参考教材《测度与概率》。 本讲继续介绍条件期望的性质。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="高等概率论第十讲">
+<meta property="og:url" content="http://doraemonzzz.com/2019/01/26/%E9%AB%98%E7%AD%89%E6%A6%82%E7%8E%87%E8%AE%BA%E7%AC%AC%E5%8D%81%E8%AE%B2/index.html">
+<meta property="og:site_name" content="Doraemonzzz">
+<meta property="og:description" content="记录本校的高等概率论课程笔记，参考教材《测度与概率》。 本讲继续介绍条件期望的性质。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg">
+<meta property="article:published_time" content="2019-01-26T15:11:50.000Z">
+<meta property="article:modified_time" content="2021-06-06T19:47:35.042Z">
+<meta property="article:author" content="Doraemonzzz">
+<meta property="article:tag" content="高等概率论">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="http://doraemonzzz.com/2019/01/26/%E9%AB%98%E7%AD%89%E6%A6%82%E7%8E%87%E8%AE%BA%E7%AC%AC%E5%8D%81%E8%AE%B2/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"prismjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    jQuery: 'https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js',
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+    },
+    fancybox: {
+      js: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isanchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '高等概率论第十讲',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2021-06-07 03:47:35'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    })(window)</script><meta name="generator" content="Hexo 5.4.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="author-avatar"><img class="avatar-img" src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">文章</div><div class="length-num">610</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">标签</div><div class="length-num">59</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/categories/"><div class="headline">分类</div><div class="length-num">23</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">Doraemonzzz</a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">高等概率论第十讲</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2019-01-26T15:11:50.000Z" title="发表于 2019-01-26 23:11:50">2019-01-26</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2021-06-06T19:47:35.042Z" title="更新于 2021-06-07 03:47:35">2021-06-07</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E6%95%B0%E5%AD%A6/">数学</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="高等概率论第十讲"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p>记录本校的高等概率论课程笔记，参考教材<a target="_blank" rel="noopener" href="https://book.douban.com/subject/1583463/">《测度与概率》</a>。</p>
+<p>本讲继续介绍条件期望的性质。</p>
+<span id="more"></span>
+<h2 id="4-条件期望的性质"><a href="#4-条件期望的性质" class="headerlink" title="4.条件期望的性质"></a>4.条件期望的性质</h2><h4 id="定理5-4-1"><a href="#定理5-4-1" class="headerlink" title="定理5.4.1"></a>定理5.4.1</h4><p>条件期望具有如下性质</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+&(1)若X与\mathcal G独立（即\sigma(X)与\mathcal G独立，也即X与1_A独立），\forall A\in \mathcal G,则
+\mathbb E[X|\mathcal G] =\mathbb E[X] (a.s)\\
+&(2)若X为\mathcal G可测，则\mathbb E[XY|\mathcal G]= X\mathbb E[Y |\mathcal G](a.s)\\
+&(3)\mathcal G_1 \subset \mathcal G_2 \subset \mathcal G ,则
+\mathbb E[\mathbb E[X|\mathcal G_1]| \mathcal G_2] = \mathbb E[X|\mathcal G_1] =
+\mathbb E[\mathbb E[X|\mathcal G_2]| \mathcal G_1](a.s)
+\end{aligned}</script><p>(1)证明：首先$\mathbb E[X]$为$\mathcal G$可测，接着$\forall A\in \mathcal G$，</p>
+<script type="math/tex; mode=display">
+\int_A \mathbb E[X] d p =\int 1 _A\mathbb E[X] d p 
+\overset{独立}=\mathbb E[X]\mathbb E[1_A]
+ =\mathbb E[X1_A] = \int_{A} X dp</script><p>(2)证明：$X$为$\mathcal G$可测，$\mathbb E[Y |\mathcal G]$为$\mathcal G$可测，从而$X\mathbb E[Y |\mathcal G]$为$\mathcal G$可测。我们的目标是证明</p>
+<script type="math/tex; mode=display">
+\forall A\in \mathcal G,
+\int_{A} X \mathbb E[Y|\mathcal G] dp =\int_{A} XY dp</script><p>如果$X=1_B$，那么</p>
+<script type="math/tex; mode=display">
+左边= \int_{A} 1_B \mathbb E[Y|\mathcal G] dp=
+\int_{AB} \mathbb E[Y|\mathcal G] dp=\int_{AB} Y dp = \int_{A} 1_BY dp =右边</script><p>接下来将上述结论推广到非负简单，非负可测，再到一般的情形，从而完成证明。</p>
+<p>(3)证明：因为$\mathbb E[X|\mathcal G_1]$为$\mathcal G_1$可测，所以$\mathbb E[X|\mathcal G_1]$为$\mathcal G_2$可测，由(2)可得</p>
+<script type="math/tex; mode=display">
+\mathbb E[\mathbb E[X|\mathcal G_1]| \mathcal G_2] = \mathbb E[X|\mathcal G_1]</script><p>接着证明第二个等号。注意到$\mathbb E[X|\mathcal G_1] $为$\mathcal G_1$可测，$\forall A\in \mathcal G_1$，</p>
+<script type="math/tex; mode=display">
+\int_{A}\mathbb E[X|\mathcal G_2] dp =  \int_{A} X dp</script><p>所以</p>
+<script type="math/tex; mode=display">
+\mathbb E[X|\mathcal G_1] =
+\mathbb E[\mathbb E[X|\mathcal G_2]| \mathcal G_1]</script><h4 id="定理5-4-2"><a href="#定理5-4-2" class="headerlink" title="定理5.4.2"></a>定理5.4.2</h4><script type="math/tex; mode=display">
+\begin{aligned}
+&(1)若p,q \ge 1是一对共轭对，\frac 1 p + \frac 1 q =1，那么
+\mathbb E[|XY||\mathcal G]  \le 
+(\mathbb  E[|X|^p|\mathcal G])^{\frac 1 p}(\mathbb  E[|Y|^q|\mathcal G])^{\frac 1 q} \\
+&(2)若\mathbb E[X]存在，\varphi是\mathbb R中下凸函数，使得\mathbb E[\varphi(X)]存在，则
+\varphi(\mathbb E[X]) \le \mathbb E[\varphi(X)] ,
+\varphi(\mathbb E[X|\mathcal G]) \le \mathbb E[\varphi(X)|\mathcal G](a.s)
+\end{aligned}</script><p>(1)证明：利用</p>
+<script type="math/tex; mode=display">
+ab\le \frac{a^p}{p}+ \frac{b^q}{q},a,b\ge 0</script><p>如果</p>
+<script type="math/tex; mode=display">
+(\mathbb E[|X|^p|\mathcal G])^{\frac 1 p} \neq 0 ,(\mathbb E[|Y|^q|\mathcal G])^{\frac 1 q}\neq 0</script><p>取$a= \frac{|X|}{ (\mathbb E[|X|^p|\mathcal G])^{\frac 1 p} },b=\frac{|Y|}{(\mathbb E[|Y|^q|\mathcal G])^{\frac 1 q} }$，那么</p>
+<script type="math/tex; mode=display">
+\frac{|X|}{\mathbb (\mathbb E[|X|^p|\mathcal G])^{\frac 1 p} }
+\frac{|Y|}{(\mathbb E[|Y|^q|\mathcal G])^{\frac 1 q} }\le  
+\frac{|X|^p}{p\mathbb E[|X|^p|\mathcal G]} + \frac{|Y|^q}{q\mathbb E[|Y|^q|\mathcal G]}</script><p>关于$\mathcal G$取条件期望可得</p>
+<script type="math/tex; mode=display">
+\mathbb E\Big[\frac{|X|}{ (\mathbb E[|X|^p|\mathcal G])^{\frac 1 p} }\frac{|Y|}
+{(\mathbb E[|Y|^q|\mathcal G])^{\frac 1 q} }\Big | \mathcal G \Big]
+\le \frac 1 p + \frac 1 q = 1 \\
+\mathbb E[|XY||\mathcal G]  \le 
+ (\mathbb E[|X|^p|\mathcal G])^{\frac 1 p}(\mathbb E[|Y|^q|\mathcal G])^{\frac 1 q}</script><p>如果</p>
+<script type="math/tex; mode=display">
+(\mathbb E[|X|^p|\mathcal G])^{\frac 1 p} = 0 或(\mathbb E[|Y|^q|\mathcal G])^{\frac 1 q}=0</script><p>考虑$X+\epsilon ,Y+\epsilon,\epsilon &gt;0$，那么</p>
+<script type="math/tex; mode=display">
+\mathbb E[|(X+\epsilon)(Y+\epsilon)||\mathcal G]  \le 
+\mathbb (E[|(X+\epsilon)|^p|\mathcal G])^{\frac 1 p}(E[|(Y+\epsilon)|^q|\mathcal G])^{\frac 1 q}</script><p>令$\epsilon \to 0$即可。</p>
+<p>(2)证明：因为下凸，所以$\forall x,y$</p>
+<script type="math/tex; mode=display">
+\varphi(y)-\varphi(x) \le \varphi_+'(y)(y-x)</script><p>取$x=X(w),y =\mathbb E[X]$，则</p>
+<script type="math/tex; mode=display">
+\varphi(\mathbb E[X])-\varphi(X) \le 
+\varphi_+'(\mathbb E[X])(\mathbb E[X]-X)</script><p>取期望可得</p>
+<script type="math/tex; mode=display">
+\varphi(\mathbb E[X])-\mathbb E[\varphi(X)]\le 0 \\
+\varphi(\mathbb E[X]) \le \mathbb E[\varphi(X)]</script><p>取$x=X(w),y =\mathbb E[X|\mathcal G]$，则</p>
+<script type="math/tex; mode=display">
+\varphi(\mathbb E[X|\mathcal G])-\varphi(X) \le 
+\varphi_+'(\mathbb E[X|\mathcal G])(\mathbb E[X|\mathcal G]-X)</script><p>两边取关于$\mathcal G$取条件期望可得</p>
+<script type="math/tex; mode=display">
+\varphi(\mathbb E[X|\mathcal G])-\mathbb E[\varphi(X)|\mathcal G] \le 0 \\
+\varphi(\mathbb E[X|\mathcal G]) \le \mathbb E[\varphi(X)|\mathcal G]</script><h4 id="命题"><a href="#命题" class="headerlink" title="命题"></a>命题</h4><script type="math/tex; mode=display">
+若X,Y独立，则 \\
+\mathbb E[f(X,Y) |Y]= h(Y) ,\\
+其中h(y) = \mathbb E[f(X,y)] \\
+特别的，
+\mathbb E[f(X)g(Y)|Y]  = g(Y)\mathbb E[f(X) | Y] = g(Y) \mathbb E[f(X)] \\</script><p>证明：由截口的定义知$h(Y)$是$\sigma(Y)$可测。</p>
+<p>为了证明</p>
+<script type="math/tex; mode=display">
+\forall A\in \sigma(Y)= Y^{-1} (\Sigma)=\lbrace Y^{-1}(B),B\in \Sigma \rbrace  \\
+\int_{Y^{-1}(B)} h(y) d p= \int_{Y^{-1}(B)} f(x,y) dp</script><p>上式</p>
+<script type="math/tex; mode=display">
+\Leftrightarrow \int_{y\in B} h(y) d p= \int_{y\in B} f(x,y) dp \\
+\Leftrightarrow \int 1_B(y) h(y) d p= \int 1_B(y)f(x,y) dp</script><p>注意到</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+左边
+&=\int 1_B(y)  h(y) dp  \\
+&= \int 1_B(y)  h(y) \mu_Y(dy)  \\
+&=\int 1_B(y) \mathbb E[f(X,y)] \mu_Y(dy)  \\
+&=\int f(x,y) \mu_X(dx)  \int 1_B(y)\mu_Y(dy) \\
+&=\underset{_{E\times E} }{\int \int} 1_B(y)f(x,y) d(\mu_X \times \mu_Y)\\
+&=右边
+\end{aligned}</script><h4 id="定理5-4-3"><a href="#定理5-4-3" class="headerlink" title="定理5.4.3"></a>定理5.4.3</h4><script type="math/tex; mode=display">
+设\mathbb E[X^2]<\infty，则对任意\mathcal G可测的Y，如果\mathbb E[Y^2]<\infty，那么\\
+\mathbb E[(X-\mathbb E[X |\mathcal G]) Y]= 0</script><p>证明：</p>
+<script type="math/tex; mode=display">
+\mathbb E[(X-\mathbb E[X |\mathcal G]) Y]
+=\mathbb E[\mathbb E[(X-\mathbb E[X |\mathcal G]) Y]|\mathcal G]
+=\mathbb E[ Y\mathbb E[(X-\mathbb E[X |\mathcal G])]|\mathcal G]=0</script><h4 id="推论"><a href="#推论" class="headerlink" title="推论"></a>推论</h4><script type="math/tex; mode=display">
+\mathbb E[X-\mathbb E[X|Y]]^2 =\min_{Z\in L^2(\sigma(Y),\mathbb P)} \mathbb E[X-Z]^2\\
+L^2(\sigma(Y),\mathbb P)表示平方可积函数</script><p>证明见习题。</p>
+<h2 id="习题"><a href="#习题" class="headerlink" title="习题"></a>习题</h2><h3 id="习题1"><a href="#习题1" class="headerlink" title="习题1"></a>习题1</h3><p>（课本P193/7.4/2）</p>
+<p>(1)证明：首先考虑$X’$为示性函数的情形，假设$X’= 1_A$，那么$\forall B\in \mathcal C$，我们有</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+\int_B \mathbb E[XX'|\mathcal C] d\mathbb P_{\mathcal C} 
+&=\int_B XX'd\mathbb P_{\mathcal C}  \\
+&=\int_B X1_Ad\mathbb P_{\mathcal C}  \\
+&=\int_{AB} Xd\mathbb P_{\mathcal C}  \\
+&=\int_{AB} \mathbb E[X| \mathcal C']d\mathbb P_{\mathcal C} \\
+&=\int_{B} 1_A\mathbb E[X| \mathcal C']d\mathbb P_{\mathcal C} \\
+&=\int_{B}X'\mathbb E[X| \mathcal C']d\mathbb P_{\mathcal C} \\
+&=\int_{B}\mathbb E[X'\mathbb E[X| \mathcal C']|\mathcal C]d\mathbb P_{\mathcal C}
+\end{aligned}</script><p>最后一步是由条件期望的定义。</p>
+<p>由条件期望的线性性可知，$X’$为简单函数时结论也成立。</p>
+<p>如果$X’$为非负可测函数，存在简单简单函数$\lbrace X_n’\rbrace  \uparrow X’$，利用单调收敛定理可得结论也成立。</p>
+<p>如果$X’$为一般可测函数，利用$X’= X^{‘+}-X^{‘-}$可得结论也成立。</p>
+<p>(2)证明：取$C’=C$，则</p>
+<script type="math/tex; mode=display">
+\mathbb E[XX'|C]= \mathbb E[X' \mathbb E[X|C]|C]=X' \mathbb E[X|C]</script><p>取$X’=1_C $，则</p>
+<script type="math/tex; mode=display">
+\mathbb E[X|C] = \mathbb E[\mathbb E[X|C']|C]</script><h3 id="习题2"><a href="#习题2" class="headerlink" title="习题2"></a>习题2</h3><p>（课本P193/7.4/3）</p>
+<p>(1)证明：$\Rightarrow$：取$m=n+1$即可</p>
+<p>$\Leftarrow$：因为$\mathcal F_n \uparrow$，所以</p>
+<script type="math/tex; mode=display">
+X_n=\mathbb E[X_{n+1}| \mathcal F_n]
+=\mathbb E[\mathbb E[X_{n+2}| \mathcal F_{n+1}]| \mathcal F_n]=\mathbb E[X_{n+2}| \mathcal F_n]</script><p>递推可得</p>
+<script type="math/tex; mode=display">
+X_n = \mathbb E[X_{m}| \mathcal F_n] (m>n)</script><p>(2)证明：</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+\mathbb E[X_{n+1}|\mathcal F_n] 
+&= \mathbb E[X_n + Y_{n+1}|\mathcal F_n]\\
+&=\mathbb E[X_n|\mathcal F_n] + \mathbb E[Y_{n+1}|\mathcal F_n] 
+\end{aligned}</script><p>因为$X_n$为$\mathcal F_n$可测，$Y_{n+1}$与$\mathcal F_n$独立，所以</p>
+<script type="math/tex; mode=display">
+\mathbb E[X_n|\mathcal F_n]= X_n,\mathbb E[Y_{n+1}|\mathcal F_n]  =\mathbb E[Y_{n+1}]=0</script><p>因此</p>
+<script type="math/tex; mode=display">
+\mathbb E[X_{n+1}|\mathcal F_n] 
+=X_n</script><p>从而$X_n$是鞅</p>
+<h3 id="习题3"><a href="#习题3" class="headerlink" title="习题3"></a>习题3</h3><p>（课本P193/7.4/5）</p>
+<p>该题需增加如下条件</p>
+<script type="math/tex; mode=display">
+\mathbb P(|Y|<\infty)= 1,\mathbb P(|X|<\infty)= 1</script><p>备注：该证明参考老师上课的讲解。</p>
+<p>证明：计算截断期望$\mathbb E[(X-Y)^2 1_{\lbrace |X|\le n\rbrace  }]$</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+\mathbb E[(X-Y)^2 1_{\lbrace |X|\le n\rbrace  }]
+&= \mathbb E[\mathbb E[(X-Y)^2 1_{\lbrace |X|\le n\rbrace  }| \mathcal C]]\\
+&=\mathbb E[ X^21_{\lbrace |X|\le n\rbrace  }-2X1_{\lbrace |X|\le n\rbrace  }\mathbb E[Y|\mathcal C] 
++ 1_{\lbrace |X|\le n\rbrace  } \mathbb E[Y^2|\mathcal C] ]\\
+&=\mathbb E[ X^21_{\lbrace |X|\le n\rbrace  }] - 2\mathbb E [X^21_{\lbrace |X|\le n\rbrace  }] + 
+\mathbb E[X^2 1_{\lbrace |X|\le n\rbrace  }]\\
+&=0
+\end{aligned}</script><p>第二个等号成立需要拆开后的运算有意义，这里证明每一项都有限：</p>
+<script type="math/tex; mode=display">
+\mathbb E[X^2 1_{\lbrace |X|\le n\rbrace  }] \le n^2 \\
+\begin{aligned}
+\mathbb E[2|XY|1_{\lbrace |X|\le n\rbrace  }] 
+&\le 2n \mathbb E[|Y|1_{\lbrace |X|\le n\rbrace  }]\\
+&\le 2n (\mathbb  E[Y^21_{\lbrace |X|\le n\rbrace  }])^{\frac 1 2} (C-S不等式)\\
+&\le 2n (\mathbb  E[\mathbb  E[Y^21_{\lbrace |X|\le n\rbrace  }]|\mathcal C])^{\frac 1 2} \\
+&\le 2n (\mathbb  E[X^21_{\lbrace |X|\le n\rbrace  }])^{\frac 1 2}\\
+&\le 2n^2
+\end{aligned}\\
+\mathbb E[Y^2 1_{\lbrace |X|\le n\rbrace  }]= 
+\mathbb E[\mathbb E[Y^2 1_{\lbrace |X|\le n\rbrace  }]|\mathcal C]=\mathbb  E[X^21_{\lbrace |X|\le n\rbrace  }]\le n^2</script><p>第三个等号用到了题目中的条件。</p>
+<p>所以</p>
+<script type="math/tex; mode=display">
+(X-Y) 1_{\lbrace |X|\le n\rbrace  } =0 (a.s)</script><p>令$n\to \infty$可</p>
+<script type="math/tex; mode=display">
+X = Y (a.s)</script><h3 id="习题4"><a href="#习题4" class="headerlink" title="习题4"></a>习题4</h3><script type="math/tex; mode=display">
+\mathbb E[X-\mathbb E[X|Y]]^2 =\min_{Z\in L^2(\sigma(Y),\mathbb P)} \mathbb E[X-Z]^2\\
+L^2(\sigma(Y),\mathbb P)表示平方可积函数</script><p>证明：</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+\mathbb E[X-Z]^2
+&=\mathbb E[X-\mathbb E[X|Y]+\mathbb E[X|Y]-Z]^2 \\
+&=\mathbb E[X-\mathbb E[X|Y]]^2 + 
+\mathbb E[\mathbb E[X|Y]-Z]^2 +2\mathbb E[(X-\mathbb E[X|Y])(\mathbb E[X|Y]-Z)]
+\end{aligned}</script><p>而</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+\mathbb E[(X-\mathbb E[X|Y])(\mathbb E[X|Y]-Z)]
+&=\mathbb E[\mathbb E[(X-\mathbb E[X|Y])(\mathbb E[X|Y]-Z)]| Y]\\
+&= \mathbb E[(\mathbb E[X|Y]-Z)\mathbb E[X-\mathbb E[X|Y] |Y] ]
+\end{aligned}\\
+\mathbb E[X-\mathbb E[X|Y] |Y] = 0</script><p>所以</p>
+<script type="math/tex; mode=display">
+\mathbb E[(X-\mathbb E[X|Y])(\mathbb E[X|Y]-Z)] =0 \\
+\mathbb E[X-Z]^2
+=\mathbb E[X-\mathbb E[X|Y]]^2 + 
+\mathbb E[\mathbb E[X|Y]-Z]^2 \ge \mathbb E[X-\mathbb E[X|Y]]^2</script></article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">Doraemonzzz</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="http://doraemonzzz.com/2019/01/26/%E9%AB%98%E7%AD%89%E6%A6%82%E7%8E%87%E8%AE%BA%E7%AC%AC%E5%8D%81%E8%AE%B2/">http://doraemonzzz.com/2019/01/26/%E9%AB%98%E7%AD%89%E6%A6%82%E7%8E%87%E8%AE%BA%E7%AC%AC%E5%8D%81%E8%AE%B2/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://doraemonzzz.com" target="_blank">Doraemonzzz</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E9%AB%98%E7%AD%89%E6%A6%82%E7%8E%87%E8%AE%BA/">高等概率论</a></div><div class="post_share"><div class="social-share" data-image="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2019/01/26/%E9%AB%98%E7%AD%89%E6%A6%82%E7%8E%87%E8%AE%BA%E7%AC%AC%E5%8D%81%E4%B8%80%E8%AE%B2/"><img class="prev-cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">高等概率论第十一讲</div></div></a></div><div class="next-post pull-right"><a href="/2019/01/25/CS229%20Lesson%2019%20%E5%BE%AE%E5%88%86%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/"><img class="next-cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">CS229 Lesson 19 微分动态规划</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span> 相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2018/12/22/高等概率论第一讲/" title="高等概率论第一讲"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2018-12-22</div><div class="title">高等概率论第一讲</div></div></a></div><div><a href="/2019/01/22/高等概率论第七讲/" title="高等概率论第七讲"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2019-01-22</div><div class="title">高等概率论第七讲</div></div></a></div><div><a href="/2019/01/18/高等概率论第三讲/" title="高等概率论第三讲"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2019-01-18</div><div class="title">高等概率论第三讲</div></div></a></div><div><a href="/2019/01/22/高等概率论第九讲/" title="高等概率论第九讲"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2019-01-22</div><div class="title">高等概率论第九讲</div></div></a></div><div><a href="/2018/12/22/高等概率论第二讲/" title="高等概率论第二讲"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2018-12-22</div><div class="title">高等概率论第二讲</div></div></a></div><div><a href="/2019/01/19/高等概率论第五讲/" title="高等概率论第五讲"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2019-01-19</div><div class="title">高等概率论第五讲</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="card-info-avatar is-center"><img class="avatar-img" src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/><div class="author-info__name">Doraemonzzz</div><div class="author-info__description">个人博客，主要记录有关机器学习，数学以及计算机科学的笔记</div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">610</div></a></div><div class="card-info-data-item is-center"><a href="/tags/"><div class="headline">标签</div><div class="length-num">59</div></a></div><div class="card-info-data-item is-center"><a href="/categories/"><div class="headline">分类</div><div class="length-num">23</div></a></div></div><a class="button--animated" id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/Doraemonzzz" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="/doraemon_zzz@163.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn card-announcement-animation"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#4-%E6%9D%A1%E4%BB%B6%E6%9C%9F%E6%9C%9B%E7%9A%84%E6%80%A7%E8%B4%A8"><span class="toc-number">1.</span> <span class="toc-text">4.条件期望的性质</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AE%9A%E7%90%865-4-1"><span class="toc-number">1.0.1.</span> <span class="toc-text">定理5.4.1</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AE%9A%E7%90%865-4-2"><span class="toc-number">1.0.2.</span> <span class="toc-text">定理5.4.2</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%91%BD%E9%A2%98"><span class="toc-number">1.0.3.</span> <span class="toc-text">命题</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AE%9A%E7%90%865-4-3"><span class="toc-number">1.0.4.</span> <span class="toc-text">定理5.4.3</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%8E%A8%E8%AE%BA"><span class="toc-number">1.0.5.</span> <span class="toc-text">推论</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B9%A0%E9%A2%98"><span class="toc-number">2.</span> <span class="toc-text">习题</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B9%A0%E9%A2%981"><span class="toc-number">2.1.</span> <span class="toc-text">习题1</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B9%A0%E9%A2%982"><span class="toc-number">2.2.</span> <span class="toc-text">习题2</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B9%A0%E9%A2%983"><span class="toc-number">2.3.</span> <span class="toc-text">习题3</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B9%A0%E9%A2%984"><span class="toc-number">2.4.</span> <span class="toc-text">习题4</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2021/06/06/2021-6-6-%E7%AE%97%E6%B3%95%E6%A6%82%E8%AE%BA(DPV)%E4%B9%A0%E9%A2%98%E8%A7%A3%E7%AD%94%E2%80%94%E2%80%94%E7%AC%AC3%E7%AB%A0-%E5%9B%BE%E7%9A%84%E5%88%86%E8%A7%A3/" title="算法概论(DPV)习题解答——第3章 图的分解"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="算法概论(DPV)习题解答——第3章 图的分解"/></a><div class="content"><a class="title" href="/2021/06/06/2021-6-6-%E7%AE%97%E6%B3%95%E6%A6%82%E8%AE%BA(DPV)%E4%B9%A0%E9%A2%98%E8%A7%A3%E7%AD%94%E2%80%94%E2%80%94%E7%AC%AC3%E7%AB%A0-%E5%9B%BE%E7%9A%84%E5%88%86%E8%A7%A3/" title="算法概论(DPV)习题解答——第3章 图的分解">算法概论(DPV)习题解答——第3章 图的分解</a><time datetime="2021-06-06T14:35:00.000Z" title="发表于 2021-06-06 22:35:00">2021-06-06</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/06/06/2021-6-6-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E7%AC%AC5%E7%AB%A0-%E4%B9%A0%E9%A2%98%E8%A7%A3%E6%9E%90/" title="深入理解计算机系统 第5章 习题解析"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="深入理解计算机系统 第5章 习题解析"/></a><div class="content"><a class="title" href="/2021/06/06/2021-6-6-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E7%AC%AC5%E7%AB%A0-%E4%B9%A0%E9%A2%98%E8%A7%A3%E6%9E%90/" title="深入理解计算机系统 第5章 习题解析">深入理解计算机系统 第5章 习题解析</a><time datetime="2021-06-06T07:23:00.000Z" title="发表于 2021-06-06 15:23:00">2021-06-06</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/06/05/2021-6-5-Stanford-Compiler-PA5%E7%BF%BB%E8%AF%91/" title="Stanford Compiler PA5翻译"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Stanford Compiler PA5翻译"/></a><div class="content"><a class="title" href="/2021/06/05/2021-6-5-Stanford-Compiler-PA5%E7%BF%BB%E8%AF%91/" title="Stanford Compiler PA5翻译">Stanford Compiler PA5翻译</a><time datetime="2021-06-05T06:12:00.000Z" title="发表于 2021-06-05 14:12:00">2021-06-05</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/06/04/2021-6-4-Stanford-Compiler-PA4%E7%BF%BB%E8%AF%91/" title="Stanford Compiler PA4翻译"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Stanford Compiler PA4翻译"/></a><div class="content"><a class="title" href="/2021/06/04/2021-6-4-Stanford-Compiler-PA4%E7%BF%BB%E8%AF%91/" title="Stanford Compiler PA4翻译">Stanford Compiler PA4翻译</a><time datetime="2021-06-03T16:17:00.000Z" title="发表于 2021-06-04 00:17:00">2021-06-04</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/06/03/2021-6-3-%E5%B7%A7%E5%A6%99%E7%9A%84Y%E8%BF%90%E7%AE%97%E7%AC%A6/" title="巧妙的Y运算符"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="巧妙的Y运算符"/></a><div class="content"><a class="title" href="/2021/06/03/2021-6-3-%E5%B7%A7%E5%A6%99%E7%9A%84Y%E8%BF%90%E7%AE%97%E7%AC%A6/" title="巧妙的Y运算符">巧妙的Y运算符</a><time datetime="2021-06-03T00:54:00.000Z" title="发表于 2021-06-03 08:54:00">2021-06-03</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2021 By Doraemonzzz</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><div class="js-pjax"><script>if (!window.MathJax) {
+  window.MathJax = {
+    loader: {
+      source: {
+        '[tex]/amsCd': '[tex]/amscd'
+      }
+    },
+    tex: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]],
+      tags: 'ams'
+    },
+    options: {
+      renderActions: {
+        findScript: [10, doc => {
+          for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+            const display = !!node.type.match(/; *mode=display/)
+            const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+            const text = document.createTextNode('')
+            node.parentNode.replaceChild(text, node)
+            math.start = {node: text, delim: '', n: 0}
+            math.end = {node: text, delim: '', n: 0}
+            doc.math.push(math)
+          }
+        }, ''],
+        addClass: [200,() => {
+          document.querySelectorAll('mjx-container:not([display=\'true\']').forEach( node => {
+            const target = node.parentNode
+            if (!target.classList.contains('has-jax')) {
+              target.classList.add('mathjax-overflow')
+            }
+          })
+        }, '', false]
+      }
+    }
+  }
+  
+  const script = document.createElement('script')
+  script.src = 'https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js'
+  script.id = 'MathJax-script'
+  script.async = true
+  document.head.appendChild(script)
+} else {
+  MathJax.startup.document.state(0)
+  MathJax.texReset()
+  MathJax.typeset()
+}</script></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

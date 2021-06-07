@@ -1,0 +1,553 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Deep Learning for Human Language Processing Part 3(P6 to P8) | Doraemonzzz</title><meta name="keywords" content="DLHLP"><meta name="author" content="Doraemonzzz"><meta name="copyright" content="Doraemonzzz"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="课程主页：http:&#x2F;&#x2F;speech.ee.ntu.edu.tw&#x2F;~tlkagk&#x2F;courses_DLHLP20.html 视频地址：https:&#x2F;&#x2F;www.bilibili.com&#x2F;video&#x2F;BV1RE411g7rQ?p&#x3D;1 参考资料：https:&#x2F;&#x2F;blog.csdn.net&#x2F;qq_44574333&#x2F;category_10304412_2.html 备注：图片均来自于课件。 这次回顾P6至P">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Deep Learning for Human Language Processing Part 3(P6 to P8)">
+<meta property="og:url" content="http://doraemonzzz.com/2021/02/23/Deep%20Learning%20for%20Human%20Language%20Processing%20Part%203(P6%20to%20P8)/index.html">
+<meta property="og:site_name" content="Doraemonzzz">
+<meta property="og:description" content="课程主页：http:&#x2F;&#x2F;speech.ee.ntu.edu.tw&#x2F;~tlkagk&#x2F;courses_DLHLP20.html 视频地址：https:&#x2F;&#x2F;www.bilibili.com&#x2F;video&#x2F;BV1RE411g7rQ?p&#x3D;1 参考资料：https:&#x2F;&#x2F;blog.csdn.net&#x2F;qq_44574333&#x2F;category_10304412_2.html 备注：图片均来自于课件。 这次回顾P6至P">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg">
+<meta property="article:published_time" content="2021-02-23T14:53:00.000Z">
+<meta property="article:modified_time" content="2021-03-01T14:56:43.624Z">
+<meta property="article:author" content="Doraemonzzz">
+<meta property="article:tag" content="DLHLP">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="http://doraemonzzz.com/2021/02/23/Deep%20Learning%20for%20Human%20Language%20Processing%20Part%203(P6%20to%20P8)/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"prismjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    jQuery: 'https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js',
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+    },
+    fancybox: {
+      js: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isanchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'Deep Learning for Human Language Processing Part 3(P6 to P8)',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2021-03-01 22:56:43'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    })(window)</script><meta name="generator" content="Hexo 5.4.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="author-avatar"><img class="avatar-img" src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">文章</div><div class="length-num">610</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">标签</div><div class="length-num">59</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/categories/"><div class="headline">分类</div><div class="length-num">23</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">Doraemonzzz</a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">Deep Learning for Human Language Processing Part 3(P6 to P8)</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2021-02-23T14:53:00.000Z" title="发表于 2021-02-23 22:53:00">2021-02-23</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2021-03-01T14:56:43.624Z" title="更新于 2021-03-01 22:56:43">2021-03-01</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/NLP/">NLP</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="Deep Learning for Human Language Processing Part 3(P6 to P8)"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p>课程主页：<a target="_blank" rel="noopener" href="http://speech.ee.ntu.edu.tw/~tlkagk/courses_DLHLP20.html">http://speech.ee.ntu.edu.tw/~tlkagk/courses_DLHLP20.html</a></p>
+<p>视频地址：<a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1RE411g7rQ?p=1">https://www.bilibili.com/video/BV1RE411g7rQ?p=1</a></p>
+<p>参考资料：<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_44574333/category_10304412_2.html">https://blog.csdn.net/qq_44574333/category_10304412_2.html</a></p>
+<p>备注：图片均来自于课件。</p>
+<p>这次回顾P6至P8，这部分介绍了语音识别的传统方法，由此引出端到端方法的训练方式。</p>
+<span id="more"></span>
+<h1 id="语音识别（Speech-Recognition）"><a href="#语音识别（Speech-Recognition）" class="headerlink" title="语音识别（Speech Recognition）"></a>语音识别（Speech Recognition）</h1><p>这次紧接上次的内容，主要介绍语音识别的HMM视角。</p>
+<h2 id="引子"><a href="#引子" class="headerlink" title="引子"></a>引子</h2><p>过去是用基于统计的模型求解语音识别问题：</p>
+<p><img src="https://github.com/Doraemonzzz/md-photo/blob/master/DLHLP/Lecture3/photo2021022301.jpg?raw=true" alt=""></p>
+<p>该过程称为Decode，具体如下：</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+Y^{\star}&=\arg \max _{Y} P(Y | X)\\
+&= \arg \max _{ {Y} } \frac{P(X | {Y}) P({Y})}{P(X)} \\
+&=\arg \max _{ {Y} } P(X | {Y}) P({Y})
+\end{aligned}</script><p>该问题实际上是很困难的，传统方法主要是通过近似的方法求解。</p>
+<p>注意到概率的两部分对应两个模型：</p>
+<ul>
+<li>$P(X|Y)$：声学模型，这部分主要是使用HMM。</li>
+<li>$P(Y)$：语言模型。</li>
+</ul>
+<p>下面具体介绍HMM。</p>
+<h2 id="HMM"><a href="#HMM" class="headerlink" title="HMM"></a>HMM</h2><h3 id="参数介绍"><a href="#参数介绍" class="headerlink" title="参数介绍"></a>参数介绍</h3><p>HMM是对给定token（$Y$），生成声学信号（$X$）的条件概率建模，但是之前介绍的token对HMM来说都太大了（不够细），所以一般将token序列为状态序列：</p>
+<script type="math/tex; mode=display">
+P(X|Y)\to P(X|S)</script><p>具体来说，状态$S$比音素（phoneme）更细：</p>
+<ol>
+<li>phoneme：生成音素。</li>
+<li>tri-phone：由于音素的具体发音会受到前后的音素影响，所以将三个音素组合成一个tri-phone。</li>
+<li>state：对每个tri-phone，利用$k$个状态表示，一般$k=3,5$。</li>
+</ol>
+<p>过程如下：</p>
+<p><img src="https://github.com/Doraemonzzz/md-photo/blob/master/DLHLP/Lecture3/photo2021022302.jpg?raw=true" alt=""></p>
+<h3 id="生成过程"><a href="#生成过程" class="headerlink" title="生成过程"></a>生成过程</h3><p>语音识别的过程如下：</p>
+<p><img src="https://github.com/Doraemonzzz/md-photo/blob/master/DLHLP/Lecture3/photo2021022303.jpg?raw=true" alt=""></p>
+<p>模型分为两个部分：</p>
+<ul>
+<li>转移概率：状态之间转移的概率分布。</li>
+<li>发射概率：给定状态，生成某个声音的概率分布，这部分常常使用GMM建模。<ul>
+<li>由于概率分布是固定的，所以选择比音素更细的信息作为状态。</li>
+<li>如果选择字符的发音作为状态，那么c和ch中的c发音不同，建模比较困难。</li>
+</ul>
+</li>
+</ul>
+<p>具体如下：</p>
+<p><img src="https://github.com/Doraemonzzz/md-photo/blob/master/DLHLP/Lecture3/photo2021022304.jpg?raw=true" alt=""></p>
+<h4 id="一些问题"><a href="#一些问题" class="headerlink" title="一些问题"></a>一些问题</h4><p>不难看出：</p>
+<script type="math/tex; mode=display">
+|S|=k|Y|^3</script><p>所以状态空间可能过多，但是不同state的发音可能相同，为了解决这点，有人提出了Subspace GMM模型：</p>
+<p><img src="https://github.com/Doraemonzzz/md-photo/blob/master/DLHLP/Lecture3/photo2021022305.jpg?raw=true" alt=""></p>
+<h4 id="概率计算"><a href="#概率计算" class="headerlink" title="概率计算"></a>概率计算</h4><h5 id="转移概率"><a href="#转移概率" class="headerlink" title="转移概率"></a>转移概率</h5><p>利用数位语音处理的技术，我们可以计算出转移概率。</p>
+<h5 id="发射概率"><a href="#发射概率" class="headerlink" title="发射概率"></a>发射概率</h5><p>注意状态和输出的对应关系我们是不知道的（通常输出的数量大于输入的数量），所以无法直接计算出$P(X|S)$。为了解决这点，我们需要对齐（alignment）的操作：对齐指定了每个状态生成了哪些向量。</p>
+<p>对齐的例子：</p>
+<p><img src="https://github.com/Doraemonzzz/md-photo/blob/master/DLHLP/Lecture3/photo2021022306.jpg?raw=true" alt=""></p>
+<p>对于此例来说，我们有三个state，所以不合法的对齐为：</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+h&=a b c c b c \\
+h&=a b b b b
+\end{aligned}</script><p>利用对齐可以计算出发射概率：</p>
+<script type="math/tex; mode=display">
+{P}_{ {\theta} }(X | S)= \sum_{h \in \text { align }(S)} P(X | h)</script><h3 id="如何应用深度学习"><a href="#如何应用深度学习" class="headerlink" title="如何应用深度学习"></a>如何应用深度学习</h3><p>这部分介绍如何将深度学习和传统的方法结合。</p>
+<h4 id="Tandem"><a href="#Tandem" class="headerlink" title="Tandem"></a>Tandem</h4><p>原本HMM的输入为MFCC，现在的思路是利用DL抽取新的声学特征：</p>
+<p><img src="https://github.com/Doraemonzzz/md-photo/blob/master/DLHLP/Lecture3/photo2021022307.jpg?raw=true" alt=""></p>
+<p>具体思路如下：</p>
+<ul>
+<li>训练一个DNN状态分类器：<ul>
+<li>输入MFCC。</li>
+<li>输出属于某个状态的概率分布。</li>
+</ul>
+</li>
+<li>HMM的输入MFCC替换为DNN的某一层。</li>
+</ul>
+<h4 id="DNN-HMM-Hybrid"><a href="#DNN-HMM-Hybrid" class="headerlink" title="DNN-HMM Hybrid"></a>DNN-HMM Hybrid</h4><p>将GMM替换为DNN，然后利用贝叶斯公式计算概率：</p>
+<p><img src="https://github.com/Doraemonzzz/md-photo/blob/master/DLHLP/Lecture3/photo2021022308.jpg?raw=true" alt=""></p>
+<p>我们的目标是计算$P(x|a)$，利用贝叶斯公式可以分解为三个部分：</p>
+<ul>
+<li>$P(a|x)$：模型输出。</li>
+<li>$P(x)$：忽略。</li>
+<li>$P(a)$：从训练数据中统计。</li>
+</ul>
+<h3 id="如何训练"><a href="#如何训练" class="headerlink" title="如何训练"></a>如何训练</h3><p>无论哪种方法，我们都需要对齐，但这事先是不知道的，需要用一些特殊的方法。</p>
+<h4 id="HMM-1"><a href="#HMM-1" class="headerlink" title="HMM"></a>HMM</h4><ol>
+<li>在没有对齐的数据上训练模型。</li>
+<li>根据该模型计算对齐。</li>
+</ol>
+<p>图示如下：</p>
+<p><img src="https://github.com/Doraemonzzz/md-photo/blob/master/DLHLP/Lecture3/photo2021022309.jpg?raw=true" alt=""></p>
+<h4 id="DNN"><a href="#DNN" class="headerlink" title="DNN"></a>DNN</h4><p>DNN使用了迭代训练的方法：</p>
+<ol>
+<li>根据HMM的结果训练DNN。</li>
+<li>根据该模型计算对齐。</li>
+<li>根据新的数据训练模型。</li>
+</ol>
+<p>图示如下：</p>
+<p><img src="https://github.com/Doraemonzzz/md-photo/blob/master/DLHLP/Lecture3/photo2021022310.jpg?raw=true" alt=""></p>
+<p><img src="https://github.com/Doraemonzzz/md-photo/blob/master/DLHLP/Lecture3/photo2021022311.jpg?raw=true" alt=""></p>
+<h2 id="回到端到端模型"><a href="#回到端到端模型" class="headerlink" title="回到端到端模型"></a>回到端到端模型</h2><p>这部分回到端到端模型，介其训练方法。</p>
+<p>注意端到端模型计算的是：</p>
+<script type="math/tex; mode=display">
+P(Y|X)</script><p>但是模型计算的方式略有不同：</p>
+<ul>
+<li><p>LAS，直接计算：</p>
+<script type="math/tex; mode=display">
+P(Y | \mathrm{X})=\prod_{i} p(y_i | y_{j<i},X)</script></li>
+<li><p>CTC，RNN-T需要对齐：</p>
+<script type="math/tex; mode=display">
+{P}({Y} | X)=\sum_{h \in \operatorname{align}(Y)} P(h | X)</script></li>
+<li><p>HMM：</p>
+<script type="math/tex; mode=display">
+{P}(X | S)= \sum_{h \in \text { align }(S)} P(X | h)</script></li>
+</ul>
+<h3 id="LAS"><a href="#LAS" class="headerlink" title="LAS"></a>LAS</h3><p>训练：</p>
+<script type="math/tex; mode=display">
+\theta^{\star}=\arg \max _{\theta} \log \mathrm{P}_{\theta}(\hat{Y} | X)</script><p>解码：</p>
+<script type="math/tex; mode=display">
+{Y}^{\star}=\arg \max _{Y} \log P(\mathrm{Y} | X)</script><p>利用端到端的方式训练即可。</p>
+<h3 id="CTC，RNN-T"><a href="#CTC，RNN-T" class="headerlink" title="CTC，RNN-T"></a>CTC，RNN-T</h3><p>这两个模型的训练方式类似：</p>
+<ol>
+<li><p>枚举所有可能的对齐方式。</p>
+</li>
+<li><p>如何对所有对齐求和。</p>
+</li>
+<li><p>训练（涉及梯度计算）：</p>
+<script type="math/tex; mode=display">
+\theta^{\star}=\arg \max _{\theta} \log \mathrm{P}_{\theta}(\hat{Y} | X)</script></li>
+<li><p>测试（推理，解码）：</p>
+<script type="math/tex; mode=display">
+{Y}^{\star}=\arg \max _{Y} \log P(\mathrm{Y} | X)</script></li>
+</ol>
+<p>后续依次介绍。</p>
+<h4 id="枚举所有可能的对齐方式"><a href="#枚举所有可能的对齐方式" class="headerlink" title="枚举所有可能的对齐方式"></a>枚举所有可能的对齐方式</h4><h5 id="几种对齐的对比"><a href="#几种对齐的对比" class="headerlink" title="几种对齐的对比"></a>几种对齐的对比</h5><ul>
+<li>HMM：重复字符。</li>
+<li>CTC：重复或增加$\phi$。</li>
+<li>RNN-T：增加$T$个$\phi$，最后一位为$\phi$，其中$T$为输入的长度。</li>
+</ul>
+<p>这部分利用老师的课件很好理解：</p>
+<p><img src="https://github.com/Doraemonzzz/md-photo/blob/master/DLHLP/Lecture3/photo2021022312.jpg?raw=true" alt=""></p>
+<h5 id="HMM-2"><a href="#HMM-2" class="headerlink" title="HMM"></a>HMM</h5><p>算法是很平凡的，利用枚举即可：</p>
+<p><img src="https://github.com/Doraemonzzz/md-photo/blob/master/DLHLP/Lecture3/photo2021022313.jpg?raw=true" alt=""></p>
+<p>这里老师利用格子图解释：</p>
+<ul>
+<li>横轴：声学特征。</li>
+<li>纵轴：token。</li>
+</ul>
+<p>在格子图中有两种移动方式：</p>
+<ul>
+<li>向右移动（表示重复）</li>
+<li>向右下方移动（表示切换到下一个token）</li>
+</ul>
+<p>限制：</p>
+<ul>
+<li>起点为左上角。</li>
+<li>终点为右下角。</li>
+<li>第一步向右下方移动。</li>
+</ul>
+<p>从起点到终点的每条路径就是一个合法的对齐。</p>
+<p>图示如下：</p>
+<p><img src="https://github.com/Doraemonzzz/md-photo/blob/master/DLHLP/Lecture3/photo2021022314.jpg?raw=true" alt=""></p>
+<p>例如绿色的路径对应的对齐为：</p>
+<script type="math/tex; mode=display">
+caabbb</script><p>错误的对齐：</p>
+<p><img src="https://github.com/Doraemonzzz/md-photo/blob/master/DLHLP/Lecture3/photo2021022315.jpg?raw=true" alt=""></p>
+<h5 id="CTC"><a href="#CTC" class="headerlink" title="CTC"></a>CTC</h5><p>CTC的区别在于有$\phi$符号。</p>
+<p>算法：</p>
+<p><img src="https://github.com/Doraemonzzz/md-photo/blob/master/DLHLP/Lecture3/photo2021022316.jpg?raw=true" alt=""></p>
+<p>格子图解释：</p>
+<ul>
+<li>横轴：声学特征。</li>
+<li>纵轴：token以及$\phi$，两个token之间有一个$\phi$。</li>
+</ul>
+<p>有三种移动方式：</p>
+<ul>
+<li>向右移动（表示重复）</li>
+<li>向右下方移动（切换到下一个token）</li>
+<li>向右下走马步（插入$\phi$）。</li>
+</ul>
+<p>限制：</p>
+<ul>
+<li>起点为左上角。</li>
+<li>终点为右下角。</li>
+<li>第一步不能向右移动。</li>
+<li>如果当前token和下一个token相同或者当前处于$\phi$，那么不能走马步。</li>
+</ul>
+<p>从起点到终点的每条路径就是一个合法的对齐。</p>
+<p>例子：</p>
+<p><img src="https://github.com/Doraemonzzz/md-photo/blob/master/DLHLP/Lecture3/photo2021022317.jpg?raw=true" alt=""></p>
+<p><img src="https://github.com/Doraemonzzz/md-photo/blob/master/DLHLP/Lecture3/photo2021022318.jpg?raw=true" alt=""></p>
+<p><img src="https://github.com/Doraemonzzz/md-photo/blob/master/DLHLP/Lecture3/photo2021022319.jpg?raw=true" alt=""></p>
+<p>第4条限制是为了防止丢失token，图示如下：</p>
+<p><img src="https://github.com/Doraemonzzz/md-photo/blob/master/DLHLP/Lecture3/photo2021022320.jpg?raw=true" alt=""></p>
+<p><img src="https://github.com/Doraemonzzz/md-photo/blob/master/DLHLP/Lecture3/photo2021022321.jpg?raw=true" alt=""></p>
+<h5 id="RNN-T"><a href="#RNN-T" class="headerlink" title="RNN-T"></a>RNN-T</h5><p>RNN-T的区别于最后一步必然为$\phi$。</p>
+<p>算法：</p>
+<p><img src="https://github.com/Doraemonzzz/md-photo/blob/master/DLHLP/Lecture3/photo2021022322.jpg?raw=true" alt=""></p>
+<p>格子图解释：</p>
+<ul>
+<li>横轴：声学特征。</li>
+<li>纵轴：一个空白位置，token。</li>
+</ul>
+<p>有两种移动方式：</p>
+<ul>
+<li>向右移动（插入$\phi$）。</li>
+<li>向下移动（切换到下一个token）。</li>
+</ul>
+<p>限制：</p>
+<ul>
+<li>起点为第二行第二列。</li>
+<li>终点为右下角右边一格。</li>
+</ul>
+<p>从起点到终点的每条路径就是一个合法的对齐。</p>
+<p>例子：</p>
+<p><img src="https://github.com/Doraemonzzz/md-photo/blob/master/DLHLP/Lecture3/photo2021022323.jpg?raw=true" alt=""></p>
+<h5 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h5><p>从状态转换图理解几种对齐的不同：</p>
+<p><img src="https://github.com/Doraemonzzz/md-photo/blob/master/DLHLP/Lecture3/photo2021022324.jpg?raw=true" alt=""></p>
+<h4 id="如何对所有对齐（路径）求和"><a href="#如何对所有对齐（路径）求和" class="headerlink" title="如何对所有对齐（路径）求和"></a>如何对所有对齐（路径）求和</h4><h5 id="一条路径的计算方式"><a href="#一条路径的计算方式" class="headerlink" title="一条路径的计算方式"></a>一条路径的计算方式</h5><p>以RNN-T为例，考虑对齐：</p>
+<script type="math/tex; mode=display">
+h=\phi c \phi \phi a \phi t \phi \phi</script><p>对应路径为：</p>
+<p><img src="https://github.com/Doraemonzzz/md-photo/blob/master/DLHLP/Lecture3/photo2021022401.jpg?raw=true" alt=""></p>
+<p>现在结合路径的产生过程计算概率：</p>
+<script type="math/tex; mode=display">
+P(h|X)</script><p>注意到RNN-T有两个RNN，其中一个是语言模型，不考虑$\phi$。</p>
+<p>初始状态：</p>
+<p>$h^1$是Encoder生成的向量，BOS是句子开始符号，输入到RNN中得到得到$l^0$，表示还没有产生token；将$l^0,h^1$输入到另一个RNN，得到概率分布$p_{1,0}$：</p>
+<p><img src="https://github.com/Doraemonzzz/md-photo/blob/master/DLHLP/Lecture3/photo2021022402.jpg?raw=true" alt=""></p>
+<p>注意此时的输出是$\phi$，所以下一步$l^0$不变，另一个向量变成$h^2$：</p>
+<p><img src="https://github.com/Doraemonzzz/md-photo/blob/master/DLHLP/Lecture3/photo2021022403.jpg?raw=true" alt=""></p>
+<p>这一步的输出为$c$，所以将$c$输入到语言模型，得到$l^1$，另一个输入依然为$h^2$，以此类推：</p>
+<p><img src="https://github.com/Doraemonzzz/md-photo/blob/master/DLHLP/Lecture3/photo2021022404.jpg?raw=true" alt=""></p>
+<p>从而一条路径的概率为：</p>
+<p><img src="https://github.com/Doraemonzzz/md-photo/blob/master/DLHLP/Lecture3/photo2021022410.jpg?raw=true" alt=""></p>
+<p>从之前例子中，不难看出$p_{i,j}$表示读取第$i$个声学特征，输出第$j$个token后产生的概率分布，从图示法来说，其表示每个格子中，产生token的概率分布：</p>
+<p><img src="https://github.com/Doraemonzzz/md-photo/blob/master/DLHLP/Lecture3/photo2021022405.jpg?raw=true" alt=""></p>
+<p>事实上，每个格子的概率分布是固定的，和如何到达当前格子的路径无关，这点可以从如下数学推导中看出：</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+p_{i,j}&=f_1(h^i, l^j)\\
+l^j &= f_2(l^{j-1})
+\end{aligned}</script><p>例如如下三种对齐对应相同的$p_{4,2}$：</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+h&=\phi c \phi \phi a \\
+h&=c \phi \phi \phi a \\
+h&=\phi \phi \phi c  a 
+\end{aligned}</script><p>备注：从这点来说，语言模型是很必要的，否则无法实现该特性。</p>
+<h5 id="多条路径的计算方式"><a href="#多条路径的计算方式" class="headerlink" title="多条路径的计算方式"></a>多条路径的计算方式</h5><p>接下来利用动态规划即可，定义：</p>
+<ul>
+<li>$\alpha_{i,j}$：读取第$i$个声学特征并输出第$j$个token的所有路线的分数总和。</li>
+</ul>
+<p>那么可以计算其递推关系：</p>
+<ul>
+<li><p>读取第$i$个声学特征并输出第$j$个token分数 = </p>
+<ul>
+<li>读取第$i -1$个声学特征并输出第$j$个token分数 $\times$ 读取第$i -1$个声学特征并输出第$j$个token后再读取$\phi$的概率 $+$ 读取第$i$个声学特征并输出第$j-1$个token分数 $\times$ 读取第$i$个声学特征并输出第$j-1$个token后再读取第$j$个token的概率</li>
+</ul>
+</li>
+<li><p>即</p>
+<script type="math/tex; mode=display">
+\alpha_{i,j}= \alpha_{i-1,j}p_{i-1,j}(\phi) +\alpha_{i,j-1} p_{i,j-1}(t_j)</script></li>
+</ul>
+<p>具体例子：</p>
+<p><img src="https://github.com/Doraemonzzz/md-photo/blob/master/DLHLP/Lecture3/photo2021022406.jpg?raw=true" alt=""></p>
+<p>该例子的递推公式为：</p>
+<script type="math/tex; mode=display">
+\alpha_{4,2}=\alpha_{4,1} p_{4,1}(a)+\alpha_{3,2} p_{3,2}(\phi)</script><h4 id="训练（涉及梯度计算）"><a href="#训练（涉及梯度计算）" class="headerlink" title="训练（涉及梯度计算）"></a>训练（涉及梯度计算）</h4><p>目标：</p>
+<script type="math/tex; mode=display">
+\theta^{\star}=\arg \max _{\theta} \log \mathrm{P}_{\theta}(\hat{Y} | X)</script><p>根据</p>
+<script type="math/tex; mode=display">
+P(\hat{Y} | X)=\sum_{h} P(h | X)</script><p>计算梯度：</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+\frac{\partial P(\hat{Y} | X)}{\partial \theta}
+&=\sum_{h} \frac{\partial P(h | X)}{\partial \theta}\\
+&= \sum_{h} \sum_{i,j}\frac{ \partial p_{i,j}(t_{j+1})}{\partial\theta}\frac{\partial P( h | X)}{\partial p_{i,j}(t_{j+1})}\\
+&=\sum_{i,j}\frac{ \partial p_{i,j}(t_{j+1})}{\partial\theta}\frac{\partial \sum_{h} P( h | X)}{\partial p_{i,j}(t_{j+1})}\\
+&=\sum_{i,j}\frac{ \partial p_{i,j}(t_{j+1})}{\partial\theta}\frac{\partial P(\hat Y| X)}{\partial p_{i,j}(t_{j+1})}
+
+\end{aligned}</script><p>第一部分$\frac{ \partial p_{i,j}(t_{j+1})}{\partial\theta}$是RNN的梯度，所以只需要计算第二项即可：</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+{P(\hat{Y} | X)}
+&=\sum_{h} {P(h | X)}\\
+&=\sum_{h\text{ with }p_{i,j}(t_{j+1})} {P(h | X)} +
+\sum_{h\text{ without }p_{i,j}(t_{j+1})} {P(h | X)}\\
+\frac{\partial P(\hat Y| X)}{\partial p_{i,j}(t_{j+1})}
+&= \sum_{h\text{ with }p_{i,j}(t_{j+1})} \frac{ {P(h | X)} }{p_{i,j}(t_{j+1})}\\
+&= \frac 1 { {p_{i,j}(t_{j+1})} }\sum_{h\text{ with }p_{i,j}(t_{j+1})}P(h | X)
+\end{aligned}</script><p>为了计算该和式，定义</p>
+<ul>
+<li>$\beta_{i,j}$：读取第$i$个声学特征并输出第$j$个token后到达终点的分数总和。</li>
+</ul>
+<p>递推关系为：</p>
+<script type="math/tex; mode=display">
+\beta_{i,j}=\beta_{i,j+1}p_{i,j}(t_{j+1})+\beta_{i+1,j} p_{i,j}(\phi)</script><p>图示：</p>
+<p><img src="https://github.com/Doraemonzzz/md-photo/blob/master/DLHLP/Lecture3/photo2021022407.jpg?raw=true" alt=""></p>
+<p>要使得路径中包含$p_{i,j}(t_{j+1})$，必然是从$(i,j)$位置走到$(i,j+1)$位置：</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+\sum_{h\text{ with }p_{i,j}(t_{j+1})}P(h | X)
+&=\alpha_{i,j}p_{i,j}(t_{j+1})\beta_{i,{j+1} }
+\\
+\frac 1 { {p_{i,j}(t_{j+1})} }\sum_{h\text{ with }p_{i,j}(t_{j+1})}P(h | X)
+&= \alpha_{i,j} \beta_{i,{j+1} }
+\end{aligned}</script><p>图示法：</p>
+<p><img src="https://github.com/Doraemonzzz/md-photo/blob/master/DLHLP/Lecture3/photo2021022408.jpg?raw=true" alt=""></p>
+<h4 id="测试（推理，解码）"><a href="#测试（推理，解码）" class="headerlink" title="测试（推理，解码）"></a>测试（推理，解码）</h4><p>目标：</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+{Y}^{\star}
+&=\arg \max _{Y} \log P(\mathrm{Y} | X)\\
+&=\arg \max _{Y} \log \sum_{h\in\text{align}(Y)} P(h | X)
+\end{aligned}</script><p>该方法的缺点是运算量太大，实际采用的方法是</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+{Y}^{\star}
+&=\arg \max _{Y} \log P({Y} | X)\\
+&=\arg \max _{Y} \log \max_{h\in\text{align}(Y)} P(h | X)\\
+&=\arg \max _{Y}\max_{h\in\text{align}(Y)} \log  P(h | X)
+\end{aligned}</script><p>所以分为两步即可：</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+h^{\star}
+&=\arg\max_h \log P(h|X) \\
+{Y}^{\star}
+&=\text{align}^{-1}(h^{\star})
+\end{aligned}</script><p>图示：</p>
+<p><img src="https://github.com/Doraemonzzz/md-photo/blob/master/DLHLP/Lecture3/photo2021022409.jpg?raw=true" alt=""></p>
+<p>上述方法是贪心法，可以用Beam Search提高效果。</p>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><div class="table-container">
+<table>
+<thead>
+<tr>
+<th></th>
+<th>LAS</th>
+<th>CTC</th>
+<th>RNN-T</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>解码器</td>
+<td>考虑前一时刻的输出</td>
+<td>不考虑前一时刻的输出</td>
+<td>考虑前一时刻的输出</td>
+</tr>
+<tr>
+<td>对齐</td>
+<td>没有明确（软对齐）</td>
+<td>是</td>
+<td>是</td>
+</tr>
+<tr>
+<td>训练</td>
+<td>直接训练</td>
+<td>关于对齐求和</td>
+<td>关于对齐求和</td>
+</tr>
+<tr>
+<td>在线</td>
+<td>否</td>
+<td>是</td>
+<td>是</td>
+</tr>
+</tbody>
+</table>
+</div>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">Doraemonzzz</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="http://doraemonzzz.com/2021/02/23/Deep%20Learning%20for%20Human%20Language%20Processing%20Part%203(P6%20to%20P8)/">http://doraemonzzz.com/2021/02/23/Deep%20Learning%20for%20Human%20Language%20Processing%20Part%203(P6%20to%20P8)/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://doraemonzzz.com" target="_blank">Doraemonzzz</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/DLHLP/">DLHLP</a></div><div class="post_share"><div class="social-share" data-image="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2021/02/28/Deep%20Learning%20for%20Human%20Language%20Processing%20Part%204(P9)/"><img class="prev-cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">Deep Learning for Human Language Processing Part 4(P9)</div></div></a></div><div class="next-post pull-right"><a href="/2021/02/21/%E7%AE%97%E6%B3%95%E6%A6%82%E8%AE%BA(DPV)%E7%AC%AC2%E7%AB%A0%20%E5%88%86%E6%B2%BB%E7%AE%97%E6%B3%95%20%E6%80%BB%E7%BB%93/"><img class="next-cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">算法概论(DPV)第2章 分治算法 总结</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span> 相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2020/03/17/Deep Learning for Human Language Processing Part 1(P1 to P2)/" title="Deep Learning for Human Language Processing Part 1(P1 to P2)"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-03-17</div><div class="title">Deep Learning for Human Language Processing Part 1(P1 to P2)</div></div></a></div><div><a href="/2021/02/28/Deep Learning for Human Language Processing Part 4(P9)/" title="Deep Learning for Human Language Processing Part 4(P9)"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-02-28</div><div class="title">Deep Learning for Human Language Processing Part 4(P9)</div></div></a></div><div><a href="/2021/02/20/Deep Learning for Human Language Processing Part 2(P3 to P5)/" title="Deep Learning for Human Language Processing Part 2(P3 to P5)"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-02-20</div><div class="title">Deep Learning for Human Language Processing Part 2(P3 to P5)</div></div></a></div><div><a href="/2021/03/01/Deep Learning for Human Language Processing Part 5(P10 to P11)/" title="Deep Learning for Human Language Processing Part 5(P10 to P11)"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-03-01</div><div class="title">Deep Learning for Human Language Processing Part 5(P10 to P11)</div></div></a></div><div><a href="/2021/03/02/Deep Learning for Human Language Processing Part 6(P12 to P13)/" title="Deep Learning for Human Language Processing Part 6(P12 to P13)"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-03-02</div><div class="title">Deep Learning for Human Language Processing Part 6(P12 to P13)</div></div></a></div><div><a href="/2021/03/03/Deep Learning for Human Language Processing Part 8(P16)/" title="Deep Learning for Human Language Processing Part 8(P16)"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-03-03</div><div class="title">Deep Learning for Human Language Processing Part 8(P16)</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="card-info-avatar is-center"><img class="avatar-img" src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/><div class="author-info__name">Doraemonzzz</div><div class="author-info__description">个人博客，主要记录有关机器学习，数学以及计算机科学的笔记</div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">610</div></a></div><div class="card-info-data-item is-center"><a href="/tags/"><div class="headline">标签</div><div class="length-num">59</div></a></div><div class="card-info-data-item is-center"><a href="/categories/"><div class="headline">分类</div><div class="length-num">23</div></a></div></div><a class="button--animated" id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/Doraemonzzz" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="/doraemon_zzz@163.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn card-announcement-animation"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E8%AF%AD%E9%9F%B3%E8%AF%86%E5%88%AB%EF%BC%88Speech-Recognition%EF%BC%89"><span class="toc-number">1.</span> <span class="toc-text">语音识别（Speech Recognition）</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BC%95%E5%AD%90"><span class="toc-number">1.1.</span> <span class="toc-text">引子</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#HMM"><span class="toc-number">1.2.</span> <span class="toc-text">HMM</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%82%E6%95%B0%E4%BB%8B%E7%BB%8D"><span class="toc-number">1.2.1.</span> <span class="toc-text">参数介绍</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%94%9F%E6%88%90%E8%BF%87%E7%A8%8B"><span class="toc-number">1.2.2.</span> <span class="toc-text">生成过程</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%B8%80%E4%BA%9B%E9%97%AE%E9%A2%98"><span class="toc-number">1.2.2.1.</span> <span class="toc-text">一些问题</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%A6%82%E7%8E%87%E8%AE%A1%E7%AE%97"><span class="toc-number">1.2.2.2.</span> <span class="toc-text">概率计算</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E8%BD%AC%E7%A7%BB%E6%A6%82%E7%8E%87"><span class="toc-number">1.2.2.2.1.</span> <span class="toc-text">转移概率</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%8F%91%E5%B0%84%E6%A6%82%E7%8E%87"><span class="toc-number">1.2.2.2.2.</span> <span class="toc-text">发射概率</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A6%82%E4%BD%95%E5%BA%94%E7%94%A8%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0"><span class="toc-number">1.2.3.</span> <span class="toc-text">如何应用深度学习</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Tandem"><span class="toc-number">1.2.3.1.</span> <span class="toc-text">Tandem</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#DNN-HMM-Hybrid"><span class="toc-number">1.2.3.2.</span> <span class="toc-text">DNN-HMM Hybrid</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A6%82%E4%BD%95%E8%AE%AD%E7%BB%83"><span class="toc-number">1.2.4.</span> <span class="toc-text">如何训练</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#HMM-1"><span class="toc-number">1.2.4.1.</span> <span class="toc-text">HMM</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#DNN"><span class="toc-number">1.2.4.2.</span> <span class="toc-text">DNN</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9E%E5%88%B0%E7%AB%AF%E5%88%B0%E7%AB%AF%E6%A8%A1%E5%9E%8B"><span class="toc-number">1.3.</span> <span class="toc-text">回到端到端模型</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#LAS"><span class="toc-number">1.3.1.</span> <span class="toc-text">LAS</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#CTC%EF%BC%8CRNN-T"><span class="toc-number">1.3.2.</span> <span class="toc-text">CTC，RNN-T</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%9E%9A%E4%B8%BE%E6%89%80%E6%9C%89%E5%8F%AF%E8%83%BD%E7%9A%84%E5%AF%B9%E9%BD%90%E6%96%B9%E5%BC%8F"><span class="toc-number">1.3.2.1.</span> <span class="toc-text">枚举所有可能的对齐方式</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%87%A0%E7%A7%8D%E5%AF%B9%E9%BD%90%E7%9A%84%E5%AF%B9%E6%AF%94"><span class="toc-number">1.3.2.1.1.</span> <span class="toc-text">几种对齐的对比</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#HMM-2"><span class="toc-number">1.3.2.1.2.</span> <span class="toc-text">HMM</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#CTC"><span class="toc-number">1.3.2.1.3.</span> <span class="toc-text">CTC</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#RNN-T"><span class="toc-number">1.3.2.1.4.</span> <span class="toc-text">RNN-T</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%B0%8F%E7%BB%93"><span class="toc-number">1.3.2.1.5.</span> <span class="toc-text">小结</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%A6%82%E4%BD%95%E5%AF%B9%E6%89%80%E6%9C%89%E5%AF%B9%E9%BD%90%EF%BC%88%E8%B7%AF%E5%BE%84%EF%BC%89%E6%B1%82%E5%92%8C"><span class="toc-number">1.3.2.2.</span> <span class="toc-text">如何对所有对齐（路径）求和</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E4%B8%80%E6%9D%A1%E8%B7%AF%E5%BE%84%E7%9A%84%E8%AE%A1%E7%AE%97%E6%96%B9%E5%BC%8F"><span class="toc-number">1.3.2.2.1.</span> <span class="toc-text">一条路径的计算方式</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%A4%9A%E6%9D%A1%E8%B7%AF%E5%BE%84%E7%9A%84%E8%AE%A1%E7%AE%97%E6%96%B9%E5%BC%8F"><span class="toc-number">1.3.2.2.2.</span> <span class="toc-text">多条路径的计算方式</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%AE%AD%E7%BB%83%EF%BC%88%E6%B6%89%E5%8F%8A%E6%A2%AF%E5%BA%A6%E8%AE%A1%E7%AE%97%EF%BC%89"><span class="toc-number">1.3.2.3.</span> <span class="toc-text">训练（涉及梯度计算）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%B5%8B%E8%AF%95%EF%BC%88%E6%8E%A8%E7%90%86%EF%BC%8C%E8%A7%A3%E7%A0%81%EF%BC%89"><span class="toc-number">1.3.2.4.</span> <span class="toc-text">测试（推理，解码）</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-number">1.3.3.</span> <span class="toc-text">总结</span></a></li></ol></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2021/06/06/2021-6-6-%E7%AE%97%E6%B3%95%E6%A6%82%E8%AE%BA(DPV)%E4%B9%A0%E9%A2%98%E8%A7%A3%E7%AD%94%E2%80%94%E2%80%94%E7%AC%AC3%E7%AB%A0-%E5%9B%BE%E7%9A%84%E5%88%86%E8%A7%A3/" title="算法概论(DPV)习题解答——第3章 图的分解"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="算法概论(DPV)习题解答——第3章 图的分解"/></a><div class="content"><a class="title" href="/2021/06/06/2021-6-6-%E7%AE%97%E6%B3%95%E6%A6%82%E8%AE%BA(DPV)%E4%B9%A0%E9%A2%98%E8%A7%A3%E7%AD%94%E2%80%94%E2%80%94%E7%AC%AC3%E7%AB%A0-%E5%9B%BE%E7%9A%84%E5%88%86%E8%A7%A3/" title="算法概论(DPV)习题解答——第3章 图的分解">算法概论(DPV)习题解答——第3章 图的分解</a><time datetime="2021-06-06T14:35:00.000Z" title="发表于 2021-06-06 22:35:00">2021-06-06</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/06/06/2021-6-6-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E7%AC%AC5%E7%AB%A0-%E4%B9%A0%E9%A2%98%E8%A7%A3%E6%9E%90/" title="深入理解计算机系统 第5章 习题解析"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="深入理解计算机系统 第5章 习题解析"/></a><div class="content"><a class="title" href="/2021/06/06/2021-6-6-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E7%AC%AC5%E7%AB%A0-%E4%B9%A0%E9%A2%98%E8%A7%A3%E6%9E%90/" title="深入理解计算机系统 第5章 习题解析">深入理解计算机系统 第5章 习题解析</a><time datetime="2021-06-06T07:23:00.000Z" title="发表于 2021-06-06 15:23:00">2021-06-06</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/06/05/2021-6-5-Stanford-Compiler-PA5%E7%BF%BB%E8%AF%91/" title="Stanford Compiler PA5翻译"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Stanford Compiler PA5翻译"/></a><div class="content"><a class="title" href="/2021/06/05/2021-6-5-Stanford-Compiler-PA5%E7%BF%BB%E8%AF%91/" title="Stanford Compiler PA5翻译">Stanford Compiler PA5翻译</a><time datetime="2021-06-05T06:12:00.000Z" title="发表于 2021-06-05 14:12:00">2021-06-05</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/06/04/2021-6-4-Stanford-Compiler-PA4%E7%BF%BB%E8%AF%91/" title="Stanford Compiler PA4翻译"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Stanford Compiler PA4翻译"/></a><div class="content"><a class="title" href="/2021/06/04/2021-6-4-Stanford-Compiler-PA4%E7%BF%BB%E8%AF%91/" title="Stanford Compiler PA4翻译">Stanford Compiler PA4翻译</a><time datetime="2021-06-03T16:17:00.000Z" title="发表于 2021-06-04 00:17:00">2021-06-04</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/06/03/2021-6-3-%E5%B7%A7%E5%A6%99%E7%9A%84Y%E8%BF%90%E7%AE%97%E7%AC%A6/" title="巧妙的Y运算符"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="巧妙的Y运算符"/></a><div class="content"><a class="title" href="/2021/06/03/2021-6-3-%E5%B7%A7%E5%A6%99%E7%9A%84Y%E8%BF%90%E7%AE%97%E7%AC%A6/" title="巧妙的Y运算符">巧妙的Y运算符</a><time datetime="2021-06-03T00:54:00.000Z" title="发表于 2021-06-03 08:54:00">2021-06-03</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2021 By Doraemonzzz</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><div class="js-pjax"><script>if (!window.MathJax) {
+  window.MathJax = {
+    loader: {
+      source: {
+        '[tex]/amsCd': '[tex]/amscd'
+      }
+    },
+    tex: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]],
+      tags: 'ams'
+    },
+    options: {
+      renderActions: {
+        findScript: [10, doc => {
+          for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+            const display = !!node.type.match(/; *mode=display/)
+            const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+            const text = document.createTextNode('')
+            node.parentNode.replaceChild(text, node)
+            math.start = {node: text, delim: '', n: 0}
+            math.end = {node: text, delim: '', n: 0}
+            doc.math.push(math)
+          }
+        }, ''],
+        addClass: [200,() => {
+          document.querySelectorAll('mjx-container:not([display=\'true\']').forEach( node => {
+            const target = node.parentNode
+            if (!target.classList.contains('has-jax')) {
+              target.classList.add('mathjax-overflow')
+            }
+          })
+        }, '', false]
+      }
+    }
+  }
+  
+  const script = document.createElement('script')
+  script.src = 'https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js'
+  script.id = 'MathJax-script'
+  script.async = true
+  document.head.appendChild(script)
+} else {
+  MathJax.startup.document.state(0)
+  MathJax.texReset()
+  MathJax.typeset()
+}</script></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

@@ -1,0 +1,343 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Neural Networks for Machine Learning Lecture 7 | Doraemonzzz</title><meta name="keywords" content="Neural Network"><meta name="author" content="Doraemonzzz"><meta name="copyright" content="Doraemonzzz"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="课程地址：https:&#x2F;&#x2F;www.coursera.org&#x2F;learn&#x2F;neural-networks 老师主页：http:&#x2F;&#x2F;www.cs.toronto.edu&#x2F;~hinton 备注：笔记内容和图片均参考老师课件。 这节课蜻蜓点水地介绍了RNN，这里主要回顾下LSTM以及本周的习题解答。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Neural Networks for Machine Learning Lecture 7">
+<meta property="og:url" content="http://doraemonzzz.com/2018/08/25/Neural%20Networks%20for%20Machine%20Learning%20Lecture%207/index.html">
+<meta property="og:site_name" content="Doraemonzzz">
+<meta property="og:description" content="课程地址：https:&#x2F;&#x2F;www.coursera.org&#x2F;learn&#x2F;neural-networks 老师主页：http:&#x2F;&#x2F;www.cs.toronto.edu&#x2F;~hinton 备注：笔记内容和图片均参考老师课件。 这节课蜻蜓点水地介绍了RNN，这里主要回顾下LSTM以及本周的习题解答。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg">
+<meta property="article:published_time" content="2018-08-25T12:45:00.000Z">
+<meta property="article:modified_time" content="2018-09-14T15:00:18.000Z">
+<meta property="article:author" content="Doraemonzzz">
+<meta property="article:tag" content="Neural Network">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="http://doraemonzzz.com/2018/08/25/Neural%20Networks%20for%20Machine%20Learning%20Lecture%207/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"prismjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    jQuery: 'https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js',
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+    },
+    fancybox: {
+      js: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isanchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'Neural Networks for Machine Learning Lecture 7',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2018-09-14 23:00:18'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    })(window)</script><meta name="generator" content="Hexo 5.4.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="author-avatar"><img class="avatar-img" src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">文章</div><div class="length-num">610</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">标签</div><div class="length-num">59</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/categories/"><div class="headline">分类</div><div class="length-num">23</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">Doraemonzzz</a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">Neural Networks for Machine Learning Lecture 7</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2018-08-25T12:45:00.000Z" title="发表于 2018-08-25 20:45:00">2018-08-25</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2018-09-14T15:00:18.000Z" title="更新于 2018-09-14 23:00:18">2018-09-14</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/">机器学习</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="Neural Networks for Machine Learning Lecture 7"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p>课程地址：<a target="_blank" rel="noopener" href="https://www.coursera.org/learn/neural-networks">https://www.coursera.org/learn/neural-networks</a></p>
+<p>老师主页：<a target="_blank" rel="noopener" href="http://www.cs.toronto.edu/~hinton">http://www.cs.toronto.edu/~hinton</a></p>
+<p>备注：笔记内容和图片均参考老师课件。</p>
+<p>这节课蜻蜓点水地介绍了RNN，这里主要回顾下LSTM以及本周的习题解答。</p>
+<span id="more"></span>
+<h4 id="Long-Short-Term-Memory-LSTM"><a href="#Long-Short-Term-Memory-LSTM" class="headerlink" title="Long Short Term Memory (LSTM)"></a>Long Short Term Memory (LSTM)</h4><p>由于梯度爆炸和梯度消失的问题，RNN很难学习到太久之前的输入，为了解决这个问题，有人提出了Long Short Term Memory (LSTM)，具体如下</p>
+<p><img src="https://github.com/Doraemonzzz/md-photo/blob/master/Neural%20Networks%20for%20Machine%20Learning/week7/2018082501.jpg?raw=true" alt=""></p>
+<p>这里有三个门，分别是keep gate，write gate以及read gate，keep gate控制着记忆单元，如果权重为$1$，数据保持不变，write  gate控制数据输入， read gate控制数据输出。</p>
+<h2 id="Quiz"><a href="#Quiz" class="headerlink" title="Quiz"></a>Quiz</h2><p>这一章的习题比较难，这里记录下。</p>
+<h4 id="Problem-1"><a href="#Problem-1" class="headerlink" title="Problem 1"></a>Problem 1</h4><p>How many bits of information can be modeled by the hidden state (at some specific time) of a Hidden Markov Model with 16 hidden units? </p>
+<ul>
+<li>$2$</li>
+<li>$4$</li>
+<li>$16$</li>
+<li>$&gt;16$</li>
+</ul>
+<p>$n$比特的信息可以表示$2^n$个二进制数，也就是$2^n$种状态，所以$m$种状态对应了$\text{log}_2(m)$个比特的信息。对于HMM来说，$16$个隐藏单元对应了$16$种状态，所以需要$\text{log}_2(16)=4$个比特的信息，答案为4。</p>
+<h4 id="Problem-2"><a href="#Problem-2" class="headerlink" title="Problem 2"></a>Problem 2</h4><p>This question is about speech recognition. To accurately recognize what phoneme is being spoken at a particular time, one needs to know the sound data from 100ms before that time to 100ms after that time, i.e. a total of 200ms of sound data. Which of the following setups have access to enough sound data to recognize what phoneme was being spoken 100ms into the past? </p>
+<ul>
+<li>A Recurrent Neural Network (RNN) with 200ms of input</li>
+<li>A Recurrent Neural Network (RNN) with 30ms of input</li>
+<li>A feed forward Neural Network with 30ms of input</li>
+<li>A feed forward Neural Network with 200ms of input</li>
+</ul>
+<p>如果存储全部$200$ms的数据，那么一定能识别，所以第一个和第四个选项是正确的，对于RNN来说，只要$30$ms的数据，就可以完成识别。</p>
+<h4 id="Problem-3"><a href="#Problem-3" class="headerlink" title="Problem 3"></a>Problem 3</h4><p>The figure below shows a Recurrent Neural Network (RNN) with one input unit xx, one logistic hidden unit hh, and one linear output unit $y$. The RNN is unrolled in time for $T=0,1$, and $2$.</p>
+<p><img src="https://github.com/Doraemonzzz/md-photo/blob/master/Neural%20Networks%20for%20Machine%20Learning/week7/problem%203.png?raw=true" alt=""></p>
+<p>The network parameters are: $W_{xh}=0.5,W_{hh}=-1.0, W_{hy}=-0.7 , h_{bias}=-1.0$, and $y_{bias}=0.0$. Remember, $\sigma(k) = \frac{1}{1+\exp(-k)}$.</p>
+<p>If the input xx takes the values $9 , 4 , -2$ at time steps $0, 1 ,2$ respectively, what is the value of the output $y$ at $T=1$? Give your answer to at least two digits after the decimal point.</p>
+<p>这题需要计算$T=1$时候的输出，主要用到以下公式</p>
+<script type="math/tex; mode=display">
+\begin{align*} z_0 =& W_{xh}x_0 + h_{\text{bias}} & z_1 =& W_{xh}x_1 + W_{hh}h_0 + h_{\text{bias}} & z_2 =& W_{xh}x_2 + W_{hh}h_1 + h_{\text{bias}} \\ 
+h_0 =& \sigma (z_0) & h_1 =& \sigma (z_1) & h_2 =& \sigma (z_2) \\ 
+y_0 =& W_{hy}h_0 + y_{\text{bias}} & y_1 =& W_{hy}h_1 + y_{\text{bias}} & y_2 =& W_{hy}h_2 + y_{\text{bias}} \\ 
+E_0 =& \frac{1}{2} (t_0 - y_0)^2 & E_1 =& \frac{1}{2} (t_1 - y_1)^2 & E_2 =& \frac{1}{2} (t_2 - y_2)^2 \\ 
+E =& E_0 + E_1 + E_2 \end{align*}</script><p>带入计算即可</p>
+<script type="math/tex; mode=display">
+z_0 = W_{xh}x_0 + h_{\text{bias}}=0.5\times 9-1=3.5\\
+h_0 = \sigma (z_0) = 0.9706877692486436\\
+ z_1 = W_{xh}x_1 + W_{hh}h_0 + h_{\text{bias}}=0.02931223075135625\\
+ h_1 = \sigma (z_1)=0.5073275330397904\\
+  y_1 = W_{hy}h_1 + y_{\text{bias}}=-0.35512927312785325</script><p>所以这题答案为$-0.36$</p>
+<p>这里附上计算的代码</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">from</span> math <span class="token keyword">import</span> exp
+
+Wxh <span class="token operator">=</span> <span class="token number">0.5</span>
+Whh <span class="token operator">=</span> <span class="token operator">-</span><span class="token number">1</span>
+Why <span class="token operator">=</span> <span class="token operator">-</span><span class="token number">0.7</span>
+hbias <span class="token operator">=</span> <span class="token operator">-</span><span class="token number">1</span>
+ybias <span class="token operator">=</span> <span class="token number">0</span>
+x0 <span class="token operator">=</span> <span class="token number">9</span>
+x1 <span class="token operator">=</span> <span class="token number">4</span>
+x2 <span class="token operator">=</span> <span class="token operator">-</span><span class="token number">2</span>
+
+<span class="token keyword">def</span> <span class="token function">f</span><span class="token punctuation">(</span>x<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token keyword">return</span> <span class="token number">1</span> <span class="token operator">/</span> <span class="token punctuation">(</span><span class="token number">1</span> <span class="token operator">+</span> exp<span class="token punctuation">(</span><span class="token operator">-</span>x<span class="token punctuation">)</span><span class="token punctuation">)</span>
+
+z0 <span class="token operator">=</span> Wxh<span class="token operator">*</span>x0 <span class="token operator">+</span> hbias
+h0 <span class="token operator">=</span> f<span class="token punctuation">(</span>z0<span class="token punctuation">)</span>
+z1 <span class="token operator">=</span> Wxh<span class="token operator">*</span>x1 <span class="token operator">+</span> Whh<span class="token operator">*</span>h0 <span class="token operator">+</span> hbias
+h1 <span class="token operator">=</span> f<span class="token punctuation">(</span>z1<span class="token punctuation">)</span>
+y1 <span class="token operator">=</span> Why<span class="token operator">*</span>h1 <span class="token operator">+</span> ybias
+z2 <span class="token operator">=</span> Wxh<span class="token operator">*</span>x2 <span class="token operator">+</span> Whh<span class="token operator">*</span>h1 <span class="token operator">+</span> hbias
+h2 <span class="token operator">=</span> f<span class="token punctuation">(</span>z2<span class="token punctuation">)</span>
+y2 <span class="token operator">=</span> Why<span class="token operator">*</span>h2 <span class="token operator">+</span> ybias<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h4 id="Problem-4"><a href="#Problem-4" class="headerlink" title="Problem 4"></a>Problem 4</h4><p>The figure below shows a Recurrent Neural Network (RNN) with one input unit xx, one logistic hidden unit hh, and one linear output unit $y$. The RNN is unrolled in time for $T=0,1$, and $2$.</p>
+<p><img src="https://github.com/Doraemonzzz/md-photo/blob/master/Neural%20Networks%20for%20Machine%20Learning/week7/problem%203.png?raw=true" alt=""></p>
+<p>The network parameters are: $W_{xh}=-0.1,W_{hh}=0.5, W_{hy}=0.25 , h_{bias}=0.4$, and $y_{bias}=0.0$. </p>
+<p>If the input $x$ takes the values $18 , 9 , -8$ at time steps $0, 1 ,2$ respectively, the hidden unit values will be $0.2 , 0.4 , 0.8$ and the output unit values will be $0.05 , 0.1 , 0.2$ (you can check these values as an exercise). A variable $z$ is defined as the total input to the hidden unit before the logistic nonlinearity.</p>
+<p>If we are using the squared loss, with targets $t_0,t_1,t_2$, then the sequence of calculations required to compute the total error $E$ is as follows:</p>
+<script type="math/tex; mode=display">
+\begin{align*} z_0 =& W_{xh}x_0 + h_{\text{bias}} & z_1 =& W_{xh}x_1 + W_{hh}h_0 + h_{\text{bias}} & z_2 =& W_{xh}x_2 + W_{hh}h_1 + h_{\text{bias}} \\ 
+h_0 =& \sigma (z_0) & h_1 =& \sigma (z_1) & h_2 =& \sigma (z_2) \\ 
+y_0 =& W_{hy}h_0 + y_{\text{bias}} & y_1 =& W_{hy}h_1 + y_{\text{bias}} & y_2 =& W_{hy}h_2 + y_{\text{bias}} \\ 
+E_0 =& \frac{1}{2} (t_0 - y_0)^2 & E_1 =& \frac{1}{2} (t_1 - y_1)^2 & E_2 =& \frac{1}{2} (t_2 - y_2)^2 \\ 
+E =& E_0 + E_1 + E_2 \end{align*}</script><p>If the target output values are $t_0 = 0.1 , t_1=-0.1 , t_2=-0.2​$ and the squared error loss is used, what is the value of the error derivative just before the hidden unit nonlinearity at $T=1​$ (i.e. $\frac{\partial E}{\partial z_1}​$)? Write your answer up to at least the fourth decimal place. </p>
+<p>这题主要就是考察了链式法则，注意$\frac{d\sigma(z)}{dz}=\sigma(z)(1-\sigma(z))$</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+\frac{\partial E}{\partial z_1}&= \frac{\partial E_0}{\partial z_1}+\frac{\partial E_1}{\partial z_1}+\frac{\partial E_2}{\partial z_1}\\
+&=0+ \frac{\partial E_1}{\partial y_1} \frac{\partial y_1}{\partial h_1}\frac{\partial h_1}{\partial z_1}+
+ \frac{\partial E_2}{\partial y_2} \frac{\partial y_2}{\partial h_2}\frac{\partial h_2}{\partial z_2}\frac{\partial z_2}{\partial h_1}\frac{\partial h_1}{\partial z_1}\\
+ &=(y_1-t_1)\times W_{hy}\times\sigma(z_1)\times(1-\sigma(z_1))+
+ (y_2-t_2) \times W_{hy}\times\sigma(z_2)\times(1-\sigma(z_2))\times W_{hh}\times \sigma(z_1)\times(1-\sigma(z_1))\\
+ &\approx 0.01392
+\end{aligned}</script><p>计算代码如下</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">from</span> math <span class="token keyword">import</span> exp
+
+Wxh <span class="token operator">=</span> <span class="token operator">-</span><span class="token number">0.1</span>
+Whh <span class="token operator">=</span> <span class="token number">0.5</span>
+Why <span class="token operator">=</span> <span class="token number">0.25</span>
+hbias <span class="token operator">=</span> <span class="token number">0.4</span>
+ybias <span class="token operator">=</span> <span class="token number">0</span>
+x0 <span class="token operator">=</span> <span class="token number">18</span>
+x1 <span class="token operator">=</span> <span class="token number">9</span>
+x2 <span class="token operator">=</span> <span class="token operator">-</span><span class="token number">8</span>
+h0 <span class="token operator">=</span> <span class="token number">0.2</span>
+h1 <span class="token operator">=</span> <span class="token number">0.4</span>
+h2 <span class="token operator">=</span> <span class="token number">0.8</span>
+y0 <span class="token operator">=</span> <span class="token number">0.05</span>
+y1 <span class="token operator">=</span> <span class="token number">0.1</span>
+y2 <span class="token operator">=</span> <span class="token number">0.2</span>
+t0 <span class="token operator">=</span> <span class="token number">0.1</span>
+t1 <span class="token operator">=</span> <span class="token operator">-</span><span class="token number">0.1</span>
+t2 <span class="token operator">=</span> <span class="token operator">-</span><span class="token number">0.2</span>
+
+<span class="token keyword">def</span> <span class="token function">f</span><span class="token punctuation">(</span>x<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token keyword">return</span> <span class="token number">1</span> <span class="token operator">/</span> <span class="token punctuation">(</span><span class="token number">1</span> <span class="token operator">+</span> exp<span class="token punctuation">(</span><span class="token operator">-</span>x<span class="token punctuation">)</span><span class="token punctuation">)</span>
+
+<span class="token keyword">def</span> <span class="token function">d</span><span class="token punctuation">(</span>x<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token keyword">return</span> f<span class="token punctuation">(</span>x<span class="token punctuation">)</span> <span class="token operator">*</span> <span class="token punctuation">(</span><span class="token number">1</span> <span class="token operator">-</span> f<span class="token punctuation">(</span>x<span class="token punctuation">)</span><span class="token punctuation">)</span>
+
+z0 <span class="token operator">=</span> Wxh<span class="token operator">*</span>x0 <span class="token operator">+</span> hbias
+z1 <span class="token operator">=</span> Wxh<span class="token operator">*</span>x1 <span class="token operator">+</span> Whh<span class="token operator">*</span>h0 <span class="token operator">+</span> hbias
+z2 <span class="token operator">=</span> Wxh<span class="token operator">*</span>x2 <span class="token operator">+</span> Whh<span class="token operator">*</span>h1 <span class="token operator">+</span> hbias
+
+t <span class="token operator">=</span> <span class="token punctuation">(</span>y1 <span class="token operator">-</span> t1<span class="token punctuation">)</span> <span class="token operator">*</span> Why <span class="token operator">*</span> d<span class="token punctuation">(</span>z1<span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token punctuation">(</span>y2 <span class="token operator">-</span> t2<span class="token punctuation">)</span> <span class="token operator">*</span> Why <span class="token operator">*</span> d<span class="token punctuation">(</span>z2<span class="token punctuation">)</span> <span class="token operator">*</span> Whh <span class="token operator">*</span> d<span class="token punctuation">(</span>z1<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h4 id="Problem-5"><a href="#Problem-5" class="headerlink" title="Problem 5"></a>Problem 5</h4><p>Consider a Recurrent Neural Network with one input unit, one logistic hidden unit, and one linear output unit. This RNN is for modeling sequences of length $4$ only, and the output unit exists only at the last time step, i.e. $T=3$. This diagram shows the RNN unrolled in time:</p>
+<p><img src="https://github.com/Doraemonzzz/md-photo/blob/master/Neural%20Networks%20for%20Machine%20Learning/week7/recurrent_net.png?raw=true" alt=""></p>
+<p>Suppose that the model has learned the following parameter values: </p>
+<ul>
+<li>$w_{xh}=1$</li>
+<li>$w_{hh}=2$</li>
+<li>$w_{hy}=1$</li>
+<li>All biases are 0</li>
+</ul>
+<p>For one specific training case, the input is $1$ at $T=0$ and $0$ at $T=1, T=2,$ and $T=3$. The target output (at $T=3$) is $0.5$, and we’re using the squared error loss function.</p>
+<p>We’re interested in the gradient for $w_{xh}$, i.e. $\frac{\partial E}{\partial w_{xh}}$. Because it’s only at $T=0$ that the input is not zero, and it’s only at $T=3$ that there’s an output, the error needs to be backpropagated from $T=3$ to $T=0$, and that’s the kind of situations where RNN’s often get either vanishing gradients or exploding</p>
+<p>gradients. Which of those two occurs in this situation?</p>
+<p>You can either do the calculations, and find the answer that way, or you can find the answer with more thinking and less math, by thinking about the slope $\frac{\partial y}{\partial z}$ of the logistic function, and what role that plays in the backpropagation process.</p>
+<ul>
+<li>Vanishing gradient</li>
+<li>Exploding gradient</li>
+</ul>
+<p>这里直接计算</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+\frac{\partial E}{\partial w_{xh}}
+&=\frac{\partial E}{\partial y_3}\frac{\partial y_3}{\partial h_3}\frac{\partial h_3}{\partial z_3}
+\frac{\partial z_3}{\partial h_2}\frac{\partial h_2}{\partial z_2}\frac{\partial z_2}{\partial h_1}\frac{\partial h_1}{\partial z_1}
+\frac{\partial z_1}{\partial h_0}\frac{\partial h_0}{\partial z_0}\\
+&=(y_3-t_3)\times W_{hy}\times \sigma(z_3)\times(1-\sigma(z_3))   \times W_{hh}\times \sigma(z_2)\times(1-\sigma(z_2))\times W_{hh}\times \sigma(z_1)\times(1-\sigma(z_1))\times W_{hh}\times \sigma(z_0)\times(1-\sigma(z_0))\\
+
+\end{aligned}</script><p>我们通过计算可以知道</p>
+<script type="math/tex; mode=display">
+W_{hh}\times \sigma(z)\times(1-\sigma(z))=2\times \sigma(z)\times(1-\sigma(z))\le 2\times \frac 1 4=\frac 1 2</script><p>所以上述梯度会越来越小，这题选Vanishing gradient</p>
+<h4 id="Problem-6"><a href="#Problem-6" class="headerlink" title="Problem 6"></a>Problem 6</h4><p>Consider the following Recurrent Neural Network (RNN): </p>
+<p><img src="https://github.com/Doraemonzzz/md-photo/blob/master/Neural%20Networks%20for%20Machine%20Learning/week7/q6.png?raw=true" alt=""></p>
+<p>As you can see, the RNN has two input units, two hidden units, and one output unit.</p>
+<p>For this question, every arrow denotes the effect of a variable at time $t$ on a variable at time $t+1$.</p>
+<p>Which feed forward Neural Network is equivalent to this network unrolled in time?</p>
+<p><img src="https://github.com/Doraemonzzz/md-photo/blob/master/Neural%20Networks%20for%20Machine%20Learning/week7/q6_1.png?raw=true" alt=""></p>
+<p><img src="https://github.com/Doraemonzzz/md-photo/blob/master/Neural%20Networks%20for%20Machine%20Learning/week7/q6_2.png?raw=true" alt=""></p>
+<p><img src="https://github.com/Doraemonzzz/md-photo/blob/master/Neural%20Networks%20for%20Machine%20Learning/week7/q6_3.png?raw=true" alt=""></p>
+<p>这题比较简单，$x_1$连接了$h_1,y$，$h_1$连接了$h_1,h_2$，选第一张图。</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">Doraemonzzz</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="http://doraemonzzz.com/2018/08/25/Neural%20Networks%20for%20Machine%20Learning%20Lecture%207/">http://doraemonzzz.com/2018/08/25/Neural%20Networks%20for%20Machine%20Learning%20Lecture%207/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://doraemonzzz.com" target="_blank">Doraemonzzz</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/Neural-Network/">Neural Network</a></div><div class="post_share"><div class="social-share" data-image="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2018/08/30/%E5%A5%87%E5%BC%82%E5%80%BC%E5%88%86%E8%A7%A3(2)%E2%80%94%E2%80%94%E5%A5%87%E5%BC%82%E5%80%BC%E5%88%86%E8%A7%A3%E7%9A%84%E6%80%A7%E8%B4%A8/"><img class="prev-cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">奇异值分解(2)——奇异值分解的性质</div></div></a></div><div class="next-post pull-right"><a href="/2018/08/23/Hoeffding%E4%B8%8D%E7%AD%89%E5%BC%8F%E7%9A%84%E8%AF%81%E6%98%8E/"><img class="next-cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">Hoeffding不等式的证明</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span> 相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2018/06/29/Neural Networks for Machine Learning Lecture 1/" title="Neural Networks for Machine Learning Lecture 1"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2018-06-29</div><div class="title">Neural Networks for Machine Learning Lecture 1</div></div></a></div><div><a href="/2018/09/14/Neural Networks for Machine Learning Lecture 10/" title="Neural Networks for Machine Learning Lecture 10"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2018-09-14</div><div class="title">Neural Networks for Machine Learning Lecture 10</div></div></a></div><div><a href="/2018/09/20/Neural Networks for Machine Learning Lecture 11/" title="Neural Networks for Machine Learning Lecture 11"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2018-09-20</div><div class="title">Neural Networks for Machine Learning Lecture 11</div></div></a></div><div><a href="/2018/09/28/Neural Networks for Machine Learning Lecture 12/" title="Neural Networks for Machine Learning Lecture 12"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2018-09-28</div><div class="title">Neural Networks for Machine Learning Lecture 12</div></div></a></div><div><a href="/2018/10/06/Neural Networks for Machine Learning Lecture 13/" title="Neural Networks for Machine Learning Lecture 13"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2018-10-06</div><div class="title">Neural Networks for Machine Learning Lecture 13</div></div></a></div><div><a href="/2018/10/12/Neural Networks for Machine Learning Lecture 14/" title="Neural Networks for Machine Learning Lecture 14"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2018-10-12</div><div class="title">Neural Networks for Machine Learning Lecture 14</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="card-info-avatar is-center"><img class="avatar-img" src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/><div class="author-info__name">Doraemonzzz</div><div class="author-info__description">个人博客，主要记录有关机器学习，数学以及计算机科学的笔记</div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">610</div></a></div><div class="card-info-data-item is-center"><a href="/tags/"><div class="headline">标签</div><div class="length-num">59</div></a></div><div class="card-info-data-item is-center"><a href="/categories/"><div class="headline">分类</div><div class="length-num">23</div></a></div></div><a class="button--animated" id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/Doraemonzzz" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="/doraemon_zzz@163.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn card-announcement-animation"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#Long-Short-Term-Memory-LSTM"><span class="toc-number">1.</span> <span class="toc-text">Long Short Term Memory (LSTM)</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Quiz"><span class="toc-number"></span> <span class="toc-text">Quiz</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Problem-1"><span class="toc-number">1.</span> <span class="toc-text">Problem 1</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Problem-2"><span class="toc-number">2.</span> <span class="toc-text">Problem 2</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Problem-3"><span class="toc-number">3.</span> <span class="toc-text">Problem 3</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Problem-4"><span class="toc-number">4.</span> <span class="toc-text">Problem 4</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Problem-5"><span class="toc-number">5.</span> <span class="toc-text">Problem 5</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Problem-6"><span class="toc-number">6.</span> <span class="toc-text">Problem 6</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2021/06/06/2021-6-6-%E7%AE%97%E6%B3%95%E6%A6%82%E8%AE%BA(DPV)%E4%B9%A0%E9%A2%98%E8%A7%A3%E7%AD%94%E2%80%94%E2%80%94%E7%AC%AC3%E7%AB%A0-%E5%9B%BE%E7%9A%84%E5%88%86%E8%A7%A3/" title="算法概论(DPV)习题解答——第3章 图的分解"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="算法概论(DPV)习题解答——第3章 图的分解"/></a><div class="content"><a class="title" href="/2021/06/06/2021-6-6-%E7%AE%97%E6%B3%95%E6%A6%82%E8%AE%BA(DPV)%E4%B9%A0%E9%A2%98%E8%A7%A3%E7%AD%94%E2%80%94%E2%80%94%E7%AC%AC3%E7%AB%A0-%E5%9B%BE%E7%9A%84%E5%88%86%E8%A7%A3/" title="算法概论(DPV)习题解答——第3章 图的分解">算法概论(DPV)习题解答——第3章 图的分解</a><time datetime="2021-06-06T14:35:00.000Z" title="发表于 2021-06-06 22:35:00">2021-06-06</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/06/06/2021-6-6-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E7%AC%AC5%E7%AB%A0-%E4%B9%A0%E9%A2%98%E8%A7%A3%E6%9E%90/" title="深入理解计算机系统 第5章 习题解析"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="深入理解计算机系统 第5章 习题解析"/></a><div class="content"><a class="title" href="/2021/06/06/2021-6-6-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E7%AC%AC5%E7%AB%A0-%E4%B9%A0%E9%A2%98%E8%A7%A3%E6%9E%90/" title="深入理解计算机系统 第5章 习题解析">深入理解计算机系统 第5章 习题解析</a><time datetime="2021-06-06T07:23:00.000Z" title="发表于 2021-06-06 15:23:00">2021-06-06</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/06/05/2021-6-5-Stanford-Compiler-PA5%E7%BF%BB%E8%AF%91/" title="Stanford Compiler PA5翻译"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Stanford Compiler PA5翻译"/></a><div class="content"><a class="title" href="/2021/06/05/2021-6-5-Stanford-Compiler-PA5%E7%BF%BB%E8%AF%91/" title="Stanford Compiler PA5翻译">Stanford Compiler PA5翻译</a><time datetime="2021-06-05T06:12:00.000Z" title="发表于 2021-06-05 14:12:00">2021-06-05</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/06/04/2021-6-4-Stanford-Compiler-PA4%E7%BF%BB%E8%AF%91/" title="Stanford Compiler PA4翻译"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Stanford Compiler PA4翻译"/></a><div class="content"><a class="title" href="/2021/06/04/2021-6-4-Stanford-Compiler-PA4%E7%BF%BB%E8%AF%91/" title="Stanford Compiler PA4翻译">Stanford Compiler PA4翻译</a><time datetime="2021-06-03T16:17:00.000Z" title="发表于 2021-06-04 00:17:00">2021-06-04</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/06/03/2021-6-3-%E5%B7%A7%E5%A6%99%E7%9A%84Y%E8%BF%90%E7%AE%97%E7%AC%A6/" title="巧妙的Y运算符"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="巧妙的Y运算符"/></a><div class="content"><a class="title" href="/2021/06/03/2021-6-3-%E5%B7%A7%E5%A6%99%E7%9A%84Y%E8%BF%90%E7%AE%97%E7%AC%A6/" title="巧妙的Y运算符">巧妙的Y运算符</a><time datetime="2021-06-03T00:54:00.000Z" title="发表于 2021-06-03 08:54:00">2021-06-03</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2021 By Doraemonzzz</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><div class="js-pjax"><script>if (!window.MathJax) {
+  window.MathJax = {
+    loader: {
+      source: {
+        '[tex]/amsCd': '[tex]/amscd'
+      }
+    },
+    tex: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]],
+      tags: 'ams'
+    },
+    options: {
+      renderActions: {
+        findScript: [10, doc => {
+          for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+            const display = !!node.type.match(/; *mode=display/)
+            const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+            const text = document.createTextNode('')
+            node.parentNode.replaceChild(text, node)
+            math.start = {node: text, delim: '', n: 0}
+            math.end = {node: text, delim: '', n: 0}
+            doc.math.push(math)
+          }
+        }, ''],
+        addClass: [200,() => {
+          document.querySelectorAll('mjx-container:not([display=\'true\']').forEach( node => {
+            const target = node.parentNode
+            if (!target.classList.contains('has-jax')) {
+              target.classList.add('mathjax-overflow')
+            }
+          })
+        }, '', false]
+      }
+    }
+  }
+  
+  const script = document.createElement('script')
+  script.src = 'https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js'
+  script.id = 'MathJax-script'
+  script.async = true
+  document.head.appendChild(script)
+} else {
+  MathJax.startup.document.state(0)
+  MathJax.texReset()
+  MathJax.typeset()
+}</script></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

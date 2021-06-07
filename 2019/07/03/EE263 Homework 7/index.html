@@ -1,0 +1,600 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>EE263 Homework 7 | Doraemonzzz</title><meta name="keywords" content="EE263"><meta name="author" content="Doraemonzzz"><meta name="copyright" content="Doraemonzzz"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="课程主页：https:&#x2F;&#x2F;see.stanford.edu&#x2F;Course&#x2F;EE263 这次回顾EE263作业7。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="EE263 Homework 7">
+<meta property="og:url" content="http://doraemonzzz.com/2019/07/03/EE263%20Homework%207/index.html">
+<meta property="og:site_name" content="Doraemonzzz">
+<meta property="og:description" content="课程主页：https:&#x2F;&#x2F;see.stanford.edu&#x2F;Course&#x2F;EE263 这次回顾EE263作业7。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg">
+<meta property="article:published_time" content="2019-07-03T09:59:00.000Z">
+<meta property="article:modified_time" content="2019-07-03T10:01:14.700Z">
+<meta property="article:author" content="Doraemonzzz">
+<meta property="article:tag" content="EE263">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="http://doraemonzzz.com/2019/07/03/EE263%20Homework%207/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"prismjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    jQuery: 'https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js',
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+    },
+    fancybox: {
+      js: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isanchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'EE263 Homework 7',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2019-07-03 18:01:14'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    })(window)</script><meta name="generator" content="Hexo 5.4.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="author-avatar"><img class="avatar-img" src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">文章</div><div class="length-num">610</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">标签</div><div class="length-num">59</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/categories/"><div class="headline">分类</div><div class="length-num">23</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">Doraemonzzz</a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">EE263 Homework 7</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2019-07-03T09:59:00.000Z" title="发表于 2019-07-03 17:59:00">2019-07-03</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2019-07-03T10:01:14.700Z" title="更新于 2019-07-03 18:01:14">2019-07-03</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E6%95%B0%E5%AD%A6/">数学</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="EE263 Homework 7"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p>课程主页：<a target="_blank" rel="noopener" href="https://see.stanford.edu/Course/EE263">https://see.stanford.edu/Course/EE263</a></p>
+<p>这次回顾EE263作业7。</p>
+<span id="more"></span>
+<h4 id="10-9"><a href="#10-9" class="headerlink" title="10.9"></a>10.9</h4><p>(a)由行列式展开的特点，构成$s^n$的项为</p>
+<script type="math/tex; mode=display">
+\prod_{i=1}^n(s-a_{ii})</script><p>所以$s^n$的系数为$1$。</p>
+<p>(b)由行列式展开的特点，构成$s^{n-1}$的项为</p>
+<script type="math/tex; mode=display">
+\prod_{i=1}^n(s-a_{ii})</script><p>所以$s^{n-1}$的系数为</p>
+<script type="math/tex; mode=display">
+-\sum_{i=1}^n a_{ii}=-\operatorname{Tr} A</script><p>(c)常数项为$s=0$时的多项式的值，即</p>
+<script type="math/tex; mode=display">
+\mathcal{X}(0)=\operatorname{det}(-A)</script><p>(d)第一个等式由定义即可，所以</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+a_{n-1}&=-\sum_{i=1}^{n} \lambda_{i} \\
+a_{0}&=\prod_{i=1}^{n}\left(-\lambda_{i}\right)
+\end{aligned}</script><h4 id="10-11"><a href="#10-11" class="headerlink" title="10.11"></a>10.11</h4><p>由条件可得</p>
+<script type="math/tex; mode=display">
+A=P^{-1}\Lambda P=\sum_{k=1}^n \lambda_k p_k q_k^T</script><p>(a)</p>
+<p>range：</p>
+<script type="math/tex; mode=display">
+\begin{aligned} 
+\mathcal{R}\left(R_{k}\right) 
+&=\left\{R_{k} x | x \in \mathrm{C}^{n}\right\}\\
+&=\left\{p_{k} q_{k}^{T} x | x \in \mathrm{C}^{n}\right\} \\ 
+&=\left\{\alpha p_{k} | \alpha \in \mathrm{C}\right\}\\
+&=\operatorname{span}\left\{p_{k}\right\} 
+\end{aligned}</script><p>因此</p>
+<script type="math/tex; mode=display">
+\text{rank}(R_k) = 1</script><p>利用正交矩阵的特点可得正交补空间为</p>
+<script type="math/tex; mode=display">
+\mathcal{N}\left(R_{k}\right)=\operatorname{span}\left\{p_{i}, i \neq k\right\}</script><p>(b)因为</p>
+<script type="math/tex; mode=display">
+PQ=QP=I</script><p>所以</p>
+<script type="math/tex; mode=display">
+q_i^T p_j=\delta_{ij}</script><p>那么对于$i\neq j$</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+R_{i} R_{j}
+&=p_iq_i^T p_j q_j^T\\
+&=p_i(q_i^T p_j)q_j^T\\
+&=0
+\end{aligned}</script><p>此外</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+R_{i} R_{i}
+&=p_iq_i^T p_i q_i^T\\
+&=p_i(q_i^T p_i)q_i^T\\
+&=p_iq_i^T\\
+&=R_i
+\end{aligned}</script><p>(c)</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+(s I-A)^{-1}
+&=( P^{-1}sIP-P^{-1}\Lambda P)^{-1}\\
+&=P^{-1}(sI-\Lambda)^{-1} P\\
+&=\sum_{k=1}^{n} \frac{R_{k}}{s-\lambda_{k}}
+\end{aligned}</script><p>(d)因为</p>
+<script type="math/tex; mode=display">
+PQ=QP=I</script><p>所以</p>
+<script type="math/tex; mode=display">
+\sum_{k=1}^n R_k =\sum_{k=1}^n p_{k} q_{k}^{T}=I</script><p>(e)特征值为</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+\lambda_1& =1\\
+\lambda_2 &=-2
+\end{aligned}</script><p>对应的特征向量为</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+p_1 &=\frac 1 {\sqrt{10}}\left[
+ \begin{matrix}
+ 3\\
+1
+  \end{matrix}
+  \right]\\
+ p_2 &= \left[
+ \begin{matrix}
+ 0\\
+ 1
+  \end{matrix}
+  \right]
+\end{aligned}</script><p>即</p>
+<script type="math/tex; mode=display">
+P=\left[
+ \begin{matrix}
+\frac{3}{\sqrt{10}} & 0\\
+\frac{1}{\sqrt{10}} &1
+  \end{matrix}
+  \right]</script><p>所以</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+Q^{-1}&=\left[
+ \begin{matrix}
+  \frac{\sqrt{10}}{3} & 0 \\
+   -\frac 1 3 &1
+  \end{matrix}
+  \right]\\
+ q_1^T&= \left[
+ \begin{matrix}
+     \frac{\sqrt{10}}{3} & 0 
+  \end{matrix}
+  \right]\\
+  q_2^T&=\left[
+ \begin{matrix}
+
+   -\frac 1 3 &1
+  \end{matrix}
+  \right]
+\end{aligned}</script><p>因此</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+R_1&=p_1 q_1^T\\
+&=\frac 1 {\sqrt{10}}\left[
+ \begin{matrix}
+ 3\\
+1
+\end{matrix}
+  \right]\left[
+ \begin{matrix}
+     \frac{\sqrt{10}}{3} & 0 
+  \end{matrix}
+  \right]\\
+  &=\left[
+ \begin{matrix}
+  1 & 0\\
+  \frac 1 3 & 0
+  \end{matrix}
+  \right]\\
+
+  R_2&=p_2 q_2^T\\
+  &=\left[
+ \begin{matrix}
+ 0\\
+ 1
+  \end{matrix}
+  \right]\left[
+ \begin{matrix}
+
+   -\frac 1 3 &1
+  \end{matrix}
+  \right]\\
+  &=\left[
+ \begin{matrix}
+ 0 & 0\\
+    -\frac 1 3 &1
+  \end{matrix}
+  \right]
+\end{aligned}</script><h4 id="10-19"><a href="#10-19" class="headerlink" title="10.19"></a>10.19</h4><p>(a)注意到我们有</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+y(t)
+&=C e^{t A} x(0)\\
+&=C e^{t A}\left(x(0) -x_0+x_0\right)\\
+&=C e^{t A}\left(x(0) -x_0\right)
++ C e^{t A}x_0 \\
+&=C e^{t A}\left(x(0) -x_0\right)+y_{\operatorname{nom}}(t)\\
+
+\end{aligned}</script><p>因为</p>
+<script type="math/tex; mode=display">
+\left\|x(0)-x_{0}\right\| \leq r</script><p>所以</p>
+<script type="math/tex; mode=display">
+-\|C e^{t A} \| r+y_{\operatorname{nom}}(t)\le y(t) \le \|C e^{t A} \|r+y_{\operatorname{nom}}(t)</script><p>即</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+\overline{y}(t)
+&=\| C e^{t A} \|r+y_{\operatorname{nom}}(t) \\
+\underline{y}(t) &=-\|C e^{t A} \|r+y_{\operatorname{nom}}(t)
+\end{aligned}</script><p>(b)</p>
+<pre class="line-numbers language-matlab" data-language="matlab"><code class="language-matlab">n <span class="token operator">=</span> <span class="token number">6</span> <span class="token punctuation">;</span> 
+A <span class="token operator">=</span><span class="token punctuation">[</span><span class="token operator">-</span><span class="token number">0.2880</span> <span class="token operator">-</span><span class="token number">1.0174</span> <span class="token number">0.4625</span> <span class="token number">1.2678</span> <span class="token operator">-</span><span class="token number">1.6342</span> <span class="token number">0.8384</span> <span class="token punctuation">;</span>     <span class="token number">1.5861</span> <span class="token number">0.3352</span> <span class="token number">2.1051</span> <span class="token number">0.2998</span> <span class="token number">0.3260</span> <span class="token number">0.8293</span> <span class="token punctuation">;</span>     <span class="token number">0.2411</span> <span class="token operator">-</span><span class="token number">2.3091</span> <span class="token operator">-</span><span class="token number">0.0736</span> <span class="token operator">-</span><span class="token number">0.6288</span> <span class="token number">0.1439</span> <span class="token number">0.5105</span> <span class="token punctuation">;</span>     <span class="token operator">-</span><span class="token number">1.2803</span> <span class="token number">0.4842</span> <span class="token number">0.7187</span> <span class="token operator">-</span><span class="token number">0.8074</span> <span class="token number">0.0901</span> <span class="token number">1.3939</span> <span class="token punctuation">;</span>     <span class="token number">1.2931</span> <span class="token number">1.0224</span> <span class="token operator">-</span><span class="token number">0.7501</span> <span class="token number">0.0724</span> <span class="token number">0.0088</span> <span class="token number">1.7703</span> <span class="token punctuation">;</span>     <span class="token number">0.5874</span> <span class="token operator">-</span><span class="token number">0.4287</span> <span class="token number">0.5852</span> <span class="token operator">-</span><span class="token number">1.4978</span> <span class="token operator">-</span><span class="token number">1.9009</span> <span class="token operator">-</span><span class="token number">0.1749</span> <span class="token punctuation">]</span><span class="token punctuation">;</span>
+C <span class="token operator">=</span><span class="token punctuation">[</span><span class="token operator">-</span><span class="token number">10.3166</span>  <span class="token number">3.4759</span>  <span class="token operator">-</span><span class="token number">0.8583</span>  <span class="token operator">-</span><span class="token number">2.5407</span>  <span class="token operator">-</span><span class="token number">3.4990</span>  <span class="token number">8.0032</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+x_0 <span class="token operator">=</span><span class="token punctuation">[</span><span class="token operator">-</span><span class="token number">1.2413</span><span class="token punctuation">;</span>       <span class="token number">0.5541</span><span class="token punctuation">;</span>       <span class="token operator">-</span><span class="token number">0.3143</span><span class="token punctuation">;</span>       <span class="token number">1.0052</span><span class="token punctuation">;</span>       <span class="token operator">-</span><span class="token number">0.0480</span><span class="token punctuation">;</span>       <span class="token operator">-</span><span class="token number">0.2018</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+r <span class="token operator">=</span> <span class="token number">0.5000</span><span class="token punctuation">;</span>
+
+<span class="token comment">%(b)</span>
+N <span class="token operator">=</span> <span class="token number">1000</span><span class="token punctuation">;</span>
+t <span class="token operator">=</span> <span class="token function">linspace</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">10</span><span class="token punctuation">,</span> N<span class="token punctuation">)</span><span class="token punctuation">;</span>
+y_max <span class="token operator">=</span> <span class="token function">zeros</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span> N<span class="token punctuation">)</span><span class="token punctuation">;</span>
+y_min <span class="token operator">=</span> <span class="token function">zeros</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span> N<span class="token punctuation">)</span><span class="token punctuation">;</span>
+y_nom <span class="token operator">=</span> <span class="token function">zeros</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span> N<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token keyword">for</span> <span class="token number">i</span> <span class="token operator">=</span> <span class="token number">1</span><span class="token operator">:</span>N
+    ynom <span class="token operator">=</span> C <span class="token operator">*</span> <span class="token function">expm</span><span class="token punctuation">(</span>A <span class="token operator">*</span> <span class="token function">t</span><span class="token punctuation">(</span><span class="token number">i</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token operator">*</span> x_0<span class="token punctuation">;</span>
+    res <span class="token operator">=</span> <span class="token function">norm</span><span class="token punctuation">(</span>C <span class="token operator">*</span> <span class="token function">expm</span><span class="token punctuation">(</span>A <span class="token operator">*</span> <span class="token function">t</span><span class="token punctuation">(</span><span class="token number">i</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token operator">*</span> r<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">y_nom</span><span class="token punctuation">(</span><span class="token number">i</span><span class="token punctuation">)</span> <span class="token operator">=</span> ynom<span class="token punctuation">;</span>
+    <span class="token function">y_max</span><span class="token punctuation">(</span><span class="token number">i</span><span class="token punctuation">)</span> <span class="token operator">=</span> ynom <span class="token operator">+</span> res<span class="token punctuation">;</span>
+    <span class="token function">y_min</span><span class="token punctuation">(</span><span class="token number">i</span><span class="token punctuation">)</span> <span class="token operator">=</span> ynom <span class="token operator">-</span> res<span class="token punctuation">;</span>
+<span class="token keyword">end</span>
+
+<span class="token function">plot</span><span class="token punctuation">(</span>t<span class="token punctuation">,</span> y_nom<span class="token punctuation">,</span> <span class="token string">'b-'</span><span class="token punctuation">,</span> t<span class="token punctuation">,</span> y_min<span class="token punctuation">,</span> <span class="token string">'r--'</span><span class="token punctuation">,</span> t<span class="token punctuation">,</span> y_max<span class="token punctuation">,</span><span class="token string">'r--'</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p><img src="https://github.com/Doraemonzzz/EE263-Introduction-to-Linear-Dynamical-Systems/blob/master/%E4%BD%9C%E4%B8%9A/Homework%207/md/19.jpg?raw=true" alt=""></p>
+<h4 id="11-13"><a href="#11-13" class="headerlink" title="11.13"></a>11.13</h4><p>实正规矩阵的形式为</p>
+<script type="math/tex; mode=display">
+S^{-1} A S=\operatorname{diag}\left(\Lambda_{r},\left[\begin{array}{cc}{\sigma_{r+1}} & {\omega_{r+1}} \\ {-\omega_{r+1}} & {\sigma_{r+1}}\end{array}\right], \ldots,\left[\begin{array}{cc}{\sigma_{n}} & {\omega_{n}} \\ {-\omega_{n}} & {\sigma_{n}}\end{array}\right]\right)</script><p>其中</p>
+<script type="math/tex; mode=display">
+\lambda_{i}=\sigma_{i}+j \omega_{i}, \quad i=r+1, \ldots, n</script><p>下面讨论如何得到$S$，假设</p>
+<script type="math/tex; mode=display">
+S=\left[
+ \begin{matrix}
+s_1  &\ldots  &s_n
+  \end{matrix}
+  \right]</script><p>对于$ 1\le i \le r$，取$s_i$为对应的特征向量即可。</p>
+<p>对于$i\ge r+1$，假设$\lambda_i$对应的复特征向量为</p>
+<script type="math/tex; mode=display">
+p_i +jq_i</script><p>那么</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+A(p_i+jq_i) 
+&=(\sigma_{i}+j \omega_{i})(p_i+jq_i)\\
+&=(\sigma_i p_i -\omega_{i} q_i) +j(\omega_{i}p_i +\sigma_{i} q_i)
+\end{aligned}</script><p>对比实部虚部得到</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+Ap_i &=(\sigma_i p_i -\omega_{i} q_i)\\
+Aq_i &=(\omega_{i}p_i +\sigma_{i} q_i) 
+\end{aligned}</script><p>所以</p>
+<script type="math/tex; mode=display">
+A \left[
+ \begin{matrix}
+   p_i &q_i
+  \end{matrix}
+  \right]=\left[
+ \begin{matrix}
+   p_i &q_i
+  \end{matrix}
+  \right] \left[\begin{array}{cc}{\sigma_{i}} & {\omega_{i}} \\ {-\omega_{i}} & {\sigma_{i}}\end{array}\right]</script><p>利用上式计算即可：</p>
+<pre class="line-numbers language-matlab" data-language="matlab"><code class="language-matlab">N <span class="token operator">=</span> <span class="token number">10</span><span class="token punctuation">;</span>
+
+<span class="token keyword">while</span> <span class="token number">1</span>
+    A <span class="token operator">=</span> <span class="token function">randn</span><span class="token punctuation">(</span>N<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token comment">%特征值分解</span>
+    <span class="token punctuation">[</span>S0<span class="token punctuation">,</span> Lambda<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token function">eig</span><span class="token punctuation">(</span>A<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    Lambda <span class="token operator">=</span> <span class="token function">diag</span><span class="token punctuation">(</span>Lambda<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token comment">%计算复特征值的数量</span>
+    index <span class="token operator">=</span> <span class="token function">imag</span><span class="token punctuation">(</span>Lambda<span class="token punctuation">)</span> <span class="token operator">~=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+    <span class="token keyword">if</span> <span class="token function">sum</span><span class="token punctuation">(</span>index<span class="token punctuation">)</span> <span class="token operator">></span> <span class="token number">0</span>
+        <span class="token keyword">break</span>
+    <span class="token keyword">end</span>
+<span class="token keyword">end</span>
+
+S <span class="token operator">=</span> <span class="token function">zeros</span><span class="token punctuation">(</span>N<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token number">i</span> <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>
+<span class="token keyword">while</span> <span class="token number">i</span> <span class="token operator">&lt;=</span> N
+    <span class="token keyword">if</span> <span class="token function">index</span><span class="token punctuation">(</span><span class="token number">i</span><span class="token punctuation">)</span>
+        <span class="token function">S</span><span class="token punctuation">(</span><span class="token operator">:</span><span class="token punctuation">,</span> <span class="token number">i</span><span class="token punctuation">)</span> <span class="token operator">=</span> <span class="token function">real</span><span class="token punctuation">(</span><span class="token function">S0</span><span class="token punctuation">(</span><span class="token operator">:</span><span class="token punctuation">,</span> <span class="token number">i</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token function">S</span><span class="token punctuation">(</span><span class="token operator">:</span><span class="token punctuation">,</span> <span class="token number">i</span> <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">)</span> <span class="token operator">=</span> <span class="token function">imag</span><span class="token punctuation">(</span><span class="token function">S0</span><span class="token punctuation">(</span><span class="token operator">:</span><span class="token punctuation">,</span> <span class="token number">i</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token number">i</span> <span class="token operator">=</span> <span class="token number">i</span> <span class="token operator">+</span> <span class="token number">2</span><span class="token punctuation">;</span>
+    <span class="token keyword">else</span>
+        <span class="token function">S</span><span class="token punctuation">(</span><span class="token operator">:</span><span class="token punctuation">,</span> <span class="token number">i</span><span class="token punctuation">)</span> <span class="token operator">=</span> <span class="token function">S0</span><span class="token punctuation">(</span><span class="token operator">:</span><span class="token punctuation">,</span> <span class="token number">i</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token number">i</span> <span class="token operator">=</span> <span class="token number">i</span> <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">;</span>
+    <span class="token keyword">end</span>
+<span class="token keyword">end</span>
+
+S <span class="token operator">\</span> A <span class="token operator">*</span> S<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<pre class="line-numbers language-none"><code class="language-none">ans &#x3D;
+    3.3818    0.0000   -0.0000   -0.0000   -0.0000   -0.0000    0.0000   -0.0000    0.0000    0.0000
+    0.0000    1.2037    2.1094   -0.0000   -0.0000   -0.0000    0.0000    0.0000    0.0000    0.0000
+    0.0000   -2.1094    1.2037   -0.0000   -0.0000   -0.0000    0.0000   -0.0000   -0.0000    0.0000
+    0.0000   -0.0000    0.0000   -0.4661    2.4649    0.0000   -0.0000    0.0000   -0.0000   -0.0000
+   -0.0000    0.0000    0.0000   -2.4649   -0.4661   -0.0000   -0.0000    0.0000   -0.0000    0.0000
+   -0.0000   -0.0000    0.0000   -0.0000    0.0000   -2.2108    0.9574   -0.0000    0.0000    0.0000
+    0.0000   -0.0000    0.0000    0.0000   -0.0000   -0.9574   -2.2108    0.0000    0.0000   -0.0000
+   -0.0000   -0.0000    0.0000    0.0000   -0.0000    0.0000   -0.0000   -1.3388    0.0000    0.0000
+    0.0000    0.0000    0.0000    0.0000    0.0000   -0.0000    0.0000    0.0000    1.0193    0.4240
+   -0.0000   -0.0000    0.0000    0.0000    0.0000   -0.0000    0.0000   -0.0000   -0.4240    1.0193<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h4 id="12-1"><a href="#12-1" class="headerlink" title="12.1"></a>12.1</h4><p>(a)</p>
+<p>设</p>
+<script type="math/tex; mode=display">
+A=\left[
+ \begin{matrix}
+a_1^T\\
+\vdots \\
+a_m^T
+  \end{matrix}
+  \right],B=\left[
+ \begin{matrix}
+b_1 &\ldots & b_p
+  \end{matrix}
+  \right]</script><p>那么</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+{[AB]}_{ij}&=a_i^T b_j =0\\
+AB&=\left[
+ \begin{matrix}
+a_1^T B\\
+\vdots \\
+a_m^TB
+  \end{matrix}
+  \right] =0\\
+  AB&=\left[
+ \begin{matrix}
+Ab_1 &\ldots &A b_p
+  \end{matrix}
+  \right] =0
+\end{aligned}</script><p>如果$A$列满秩，那么$Ax=0$不存在非零解，从而$b_i =0$，因此$B=0$，这就与题设矛盾，所以$A$行满秩，即</p>
+<script type="math/tex; mode=display">
+\text{rank}(A)= m \le n</script><p>因为</p>
+<script type="math/tex; mode=display">
+a_i^T B=0 \Leftrightarrow B^T a_i =0</script><p>所以$B^T x=0$有$m$个线性无关的解，因此</p>
+<script type="math/tex; mode=display">
+n-p \ge m\Leftrightarrow n\ge m+p</script><p>(b)正确，实际上，对于$A \in \mathbb{R}^{(2k+1) \times (2k+1)}$，该结论都成立。</p>
+<p>首先由条件可得</p>
+<script type="math/tex; mode=display">
+A=-A^T</script><p>取行列式可得</p>
+<script type="math/tex; mode=display">
+\det (A)= (-1)^{2k+1} \det (A) =-\det (A)</script><p>那么</p>
+<script type="math/tex; mode=display">
+\det (A) =0</script><p>(c)正确</p>
+<script type="math/tex; mode=display">
+(I-A)\left(\sum_{i=0}^{k-1} A^{i}\right)=I</script><p>(d)不正确，反例如下：</p>
+<script type="math/tex; mode=display">
+A= \left[
+ \begin{matrix}
+ 1 &1\\
+0 &2
+  \end{matrix}
+  \right],B=\left[
+ \begin{matrix}
+2 &0\\
+0 &1
+  \end{matrix}
+  \right],AB=\left[
+ \begin{matrix}
+ 2 &1\\
+0 &2
+  \end{matrix}
+  \right]</script><p>(e)正确，证明如下：</p>
+<p>假设$AB$的$\lambda_i$的特征值对应的特征向量为$q_i$，那么</p>
+<script type="math/tex; mode=display">
+ABq_i =\lambda_i q_i\Rightarrow BA (Bq_i)=\lambda_i(Bq_i)</script><p>所以$\lambda_i $也是$BA$的特征值，反之同理。</p>
+<p>(f)不正确，从上题中即可看出</p>
+<p>(g)正确，利用反证法，假设$A$不可对角化，那么$A$存在阶数大于$1$的约当块$J$，不难看出$J^2$无法对角化，与题设矛盾。</p>
+<h4 id="13-1"><a href="#13-1" class="headerlink" title="13.1"></a>13.1</h4><p>首先</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+\left[\begin{matrix}{\dot x} \\ {\dot z}\end{matrix}\right]
+&=\left[\begin{matrix}A x+B_{1} u+B_{2} w_{1}\\ F z+G_{1} v+G_{2} w_{2}
+\end{matrix}\right]\\
+&= \left[\begin{matrix}A x+B_{1} u+B_{2} H_{1} z\\
+F z+G_{1} v+G_{2} \left(C x+D_{1} u+D_{2} w_{1}\right)
+\end{matrix}\right]\\
+&=\left[\begin{matrix}A x+B_{1} u+B_{2} H_{1} z\\
+F z+G_{1} v+G_{2} \left(C x+D_{1} u+D_{2} H_{1} z\right)
+\end{matrix}\right]\\
+&=\left[\begin{matrix}
+A x+B_{2} H_{1} z\\
+F z+G_{2} C x+G_{2} D_{2} H_{1} z
+\end{matrix}\right]
++
+\left[\begin{matrix}
+B_1 u\\
+ G_{2} D_{1} u +G_1 v
+\end{matrix}\right]
+\\
+&=\left[\begin{matrix}
+ A & B_2 H_1 \\
+ G_2 C & F+G_2 D_2 H_1
+\end{matrix}\right]
+\left[\begin{matrix}x \\ z\end{matrix}\right]
++\left[\begin{matrix}
+ B_1  &  0\\
+ G_2 D_1 &G_1
+\end{matrix}\right]
+\left[\begin{matrix}{u} \\ {v}\end{matrix}\right]
+\end{aligned}</script><p>其次</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+y&=H_{2} z+J w_{2}\\
+&=H_2 z +J\left(C x+D_{1} u+D_{2} w_{1}\right) \\
+&=H_2 z +JCx +JD_1 u+JD_2 H_{1} z \\
+&=\left[\begin{matrix}
+ JC & H_2 + JD_2H_1
+\end{matrix}\right]
+\left[\begin{matrix}x \\ z\end{matrix}\right]
++\left[\begin{matrix}
+JD_1  &  0
+\end{matrix}\right]
+\left[\begin{matrix}{u} \\ {v}\end{matrix}\right]
+\end{aligned}</script><h3 id="补充题"><a href="#补充题" class="headerlink" title="补充题"></a>补充题</h3><h4 id="1"><a href="#1" class="headerlink" title="1"></a>1</h4><p>因为</p>
+<script type="math/tex; mode=display">
+Av= \lambda v</script><p>所以</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+f(A) v
+&=\sum_{i=0}^{\infty} a_i A^i v\\
+&=\left(\sum_{i=0}^{\infty} a_i \lambda^i\right) v\\
+&= f(\lambda) v
+\end{aligned}</script><p>代码如下：</p>
+<pre class="line-numbers language-matlab" data-language="matlab"><code class="language-matlab">n <span class="token operator">=</span> <span class="token number">3</span><span class="token punctuation">;</span>
+A <span class="token operator">=</span> <span class="token function">randn</span><span class="token punctuation">(</span>n<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">[</span>S1<span class="token punctuation">,</span> Lambda1<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token function">eig</span><span class="token punctuation">(</span>A<span class="token punctuation">)</span><span class="token punctuation">;</span>
+Lambda1 <span class="token operator">=</span> <span class="token function">diag</span><span class="token punctuation">(</span>Lambda1<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token comment">% method 1</span>
+B <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token function">eye</span><span class="token punctuation">(</span>n<span class="token punctuation">)</span> <span class="token operator">+</span> A<span class="token punctuation">)</span> <span class="token operator">/</span> <span class="token punctuation">(</span><span class="token function">eye</span><span class="token punctuation">(</span>n<span class="token punctuation">)</span> <span class="token operator">-</span> A<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">[</span>S2<span class="token punctuation">,</span> Lambda2<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token function">eig</span><span class="token punctuation">(</span>B<span class="token punctuation">)</span><span class="token punctuation">;</span>
+Lambda2 <span class="token operator">=</span> <span class="token function">diag</span><span class="token punctuation">(</span>Lambda2<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token comment">% method 2</span>
+Lambda3 <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token number">1</span> <span class="token operator">+</span> Lambda1<span class="token punctuation">)</span> <span class="token operator">./</span> <span class="token punctuation">(</span><span class="token number">1</span> <span class="token operator">-</span> Lambda1<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+Lambda2
+Lambda3<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<pre class="line-numbers language-none"><code class="language-none">Lambda2 &#x3D;
+   0.1312 + 1.4362i
+   0.1312 - 1.4362i
+   0.3422 + 0.0000i
+Lambda3 &#x3D;
+   0.3422 + 0.0000i
+   0.1312 + 1.4362i
+   0.1312 - 1.4362i<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">Doraemonzzz</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="http://doraemonzzz.com/2019/07/03/EE263%20Homework%207/">http://doraemonzzz.com/2019/07/03/EE263%20Homework%207/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://doraemonzzz.com" target="_blank">Doraemonzzz</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/EE263/">EE263</a></div><div class="post_share"><div class="social-share" data-image="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2019/07/03/EE261%20Lecture%207%20and%20Lecture%208/"><img class="prev-cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">EE261 Lecture 7 and Lecture 8</div></div></a></div><div class="next-post pull-right"><a href="/2019/07/03/EE263%20Lecture%2016%20Symmetric-matrices-quadratic-forms-matrix/"><img class="next-cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">EE263 Lecture 16 Symmetric matrices, quadratic forms, matrix norm and SVD</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span> 相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2019/05/13/EE263 Homework 1/" title="EE263 Homework 1"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2019-05-13</div><div class="title">EE263 Homework 1</div></div></a></div><div><a href="/2019/05/23/EE263 Homework 2/" title="EE263 Homework 2"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2019-05-23</div><div class="title">EE263 Homework 2</div></div></a></div><div><a href="/2019/05/26/EE263 Homework 3/" title="EE263 Homework 3"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2019-05-26</div><div class="title">EE263 Homework 3</div></div></a></div><div><a href="/2019/06/27/EE263 Homework 5/" title="EE263 Homework 5"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2019-06-27</div><div class="title">EE263 Homework 5</div></div></a></div><div><a href="/2019/06/29/EE263 Homework 6/" title="EE263 Homework 6"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2019-06-29</div><div class="title">EE263 Homework 6</div></div></a></div><div><a href="/2019/07/08/EE263 Homework 8/" title="EE263 Homework 8"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2019-07-08</div><div class="title">EE263 Homework 8</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="card-info-avatar is-center"><img class="avatar-img" src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/><div class="author-info__name">Doraemonzzz</div><div class="author-info__description">个人博客，主要记录有关机器学习，数学以及计算机科学的笔记</div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">610</div></a></div><div class="card-info-data-item is-center"><a href="/tags/"><div class="headline">标签</div><div class="length-num">59</div></a></div><div class="card-info-data-item is-center"><a href="/categories/"><div class="headline">分类</div><div class="length-num">23</div></a></div></div><a class="button--animated" id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/Doraemonzzz" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="/doraemon_zzz@163.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn card-announcement-animation"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#10-9"><span class="toc-number">1.</span> <span class="toc-text">10.9</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#10-11"><span class="toc-number">2.</span> <span class="toc-text">10.11</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#10-19"><span class="toc-number">3.</span> <span class="toc-text">10.19</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#11-13"><span class="toc-number">4.</span> <span class="toc-text">11.13</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#12-1"><span class="toc-number">5.</span> <span class="toc-text">12.1</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#13-1"><span class="toc-number">6.</span> <span class="toc-text">13.1</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A1%A5%E5%85%85%E9%A2%98"><span class="toc-number"></span> <span class="toc-text">补充题</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1"><span class="toc-number">1.</span> <span class="toc-text">1</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2021/06/06/2021-6-6-%E7%AE%97%E6%B3%95%E6%A6%82%E8%AE%BA(DPV)%E4%B9%A0%E9%A2%98%E8%A7%A3%E7%AD%94%E2%80%94%E2%80%94%E7%AC%AC3%E7%AB%A0-%E5%9B%BE%E7%9A%84%E5%88%86%E8%A7%A3/" title="算法概论(DPV)习题解答——第3章 图的分解"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="算法概论(DPV)习题解答——第3章 图的分解"/></a><div class="content"><a class="title" href="/2021/06/06/2021-6-6-%E7%AE%97%E6%B3%95%E6%A6%82%E8%AE%BA(DPV)%E4%B9%A0%E9%A2%98%E8%A7%A3%E7%AD%94%E2%80%94%E2%80%94%E7%AC%AC3%E7%AB%A0-%E5%9B%BE%E7%9A%84%E5%88%86%E8%A7%A3/" title="算法概论(DPV)习题解答——第3章 图的分解">算法概论(DPV)习题解答——第3章 图的分解</a><time datetime="2021-06-06T14:35:00.000Z" title="发表于 2021-06-06 22:35:00">2021-06-06</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/06/06/2021-6-6-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E7%AC%AC5%E7%AB%A0-%E4%B9%A0%E9%A2%98%E8%A7%A3%E6%9E%90/" title="深入理解计算机系统 第5章 习题解析"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="深入理解计算机系统 第5章 习题解析"/></a><div class="content"><a class="title" href="/2021/06/06/2021-6-6-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E7%AC%AC5%E7%AB%A0-%E4%B9%A0%E9%A2%98%E8%A7%A3%E6%9E%90/" title="深入理解计算机系统 第5章 习题解析">深入理解计算机系统 第5章 习题解析</a><time datetime="2021-06-06T07:23:00.000Z" title="发表于 2021-06-06 15:23:00">2021-06-06</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/06/05/2021-6-5-Stanford-Compiler-PA5%E7%BF%BB%E8%AF%91/" title="Stanford Compiler PA5翻译"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Stanford Compiler PA5翻译"/></a><div class="content"><a class="title" href="/2021/06/05/2021-6-5-Stanford-Compiler-PA5%E7%BF%BB%E8%AF%91/" title="Stanford Compiler PA5翻译">Stanford Compiler PA5翻译</a><time datetime="2021-06-05T06:12:00.000Z" title="发表于 2021-06-05 14:12:00">2021-06-05</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/06/04/2021-6-4-Stanford-Compiler-PA4%E7%BF%BB%E8%AF%91/" title="Stanford Compiler PA4翻译"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Stanford Compiler PA4翻译"/></a><div class="content"><a class="title" href="/2021/06/04/2021-6-4-Stanford-Compiler-PA4%E7%BF%BB%E8%AF%91/" title="Stanford Compiler PA4翻译">Stanford Compiler PA4翻译</a><time datetime="2021-06-03T16:17:00.000Z" title="发表于 2021-06-04 00:17:00">2021-06-04</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/06/03/2021-6-3-%E5%B7%A7%E5%A6%99%E7%9A%84Y%E8%BF%90%E7%AE%97%E7%AC%A6/" title="巧妙的Y运算符"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="巧妙的Y运算符"/></a><div class="content"><a class="title" href="/2021/06/03/2021-6-3-%E5%B7%A7%E5%A6%99%E7%9A%84Y%E8%BF%90%E7%AE%97%E7%AC%A6/" title="巧妙的Y运算符">巧妙的Y运算符</a><time datetime="2021-06-03T00:54:00.000Z" title="发表于 2021-06-03 08:54:00">2021-06-03</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2021 By Doraemonzzz</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><div class="js-pjax"><script>if (!window.MathJax) {
+  window.MathJax = {
+    loader: {
+      source: {
+        '[tex]/amsCd': '[tex]/amscd'
+      }
+    },
+    tex: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]],
+      tags: 'ams'
+    },
+    options: {
+      renderActions: {
+        findScript: [10, doc => {
+          for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+            const display = !!node.type.match(/; *mode=display/)
+            const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+            const text = document.createTextNode('')
+            node.parentNode.replaceChild(text, node)
+            math.start = {node: text, delim: '', n: 0}
+            math.end = {node: text, delim: '', n: 0}
+            doc.math.push(math)
+          }
+        }, ''],
+        addClass: [200,() => {
+          document.querySelectorAll('mjx-container:not([display=\'true\']').forEach( node => {
+            const target = node.parentNode
+            if (!target.classList.contains('has-jax')) {
+              target.classList.add('mathjax-overflow')
+            }
+          })
+        }, '', false]
+      }
+    }
+  }
+  
+  const script = document.createElement('script')
+  script.src = 'https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js'
+  script.id = 'MathJax-script'
+  script.async = true
+  document.head.appendChild(script)
+} else {
+  MathJax.startup.document.state(0)
+  MathJax.texReset()
+  MathJax.typeset()
+}</script></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

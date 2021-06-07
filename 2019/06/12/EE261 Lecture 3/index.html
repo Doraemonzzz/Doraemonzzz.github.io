@@ -1,0 +1,383 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>EE261 Lecture 3 | Doraemonzzz</title><meta name="keywords" content="EE261"><meta name="author" content="Doraemonzzz"><meta name="copyright" content="Doraemonzzz"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="课程主页：https:&#x2F;&#x2F;see.stanford.edu&#x2F;Course&#x2F;EE261 这次回顾第三讲，这一讲讨论傅里叶级数成立的条件。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="EE261 Lecture 3">
+<meta property="og:url" content="http://doraemonzzz.com/2019/06/12/EE261%20Lecture%203/index.html">
+<meta property="og:site_name" content="Doraemonzzz">
+<meta property="og:description" content="课程主页：https:&#x2F;&#x2F;see.stanford.edu&#x2F;Course&#x2F;EE261 这次回顾第三讲，这一讲讨论傅里叶级数成立的条件。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg">
+<meta property="article:published_time" content="2019-06-12T14:16:00.000Z">
+<meta property="article:modified_time" content="2019-06-12T14:24:03.859Z">
+<meta property="article:author" content="Doraemonzzz">
+<meta property="article:tag" content="EE261">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="http://doraemonzzz.com/2019/06/12/EE261%20Lecture%203/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"prismjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    jQuery: 'https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js',
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+    },
+    fancybox: {
+      js: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isanchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'EE261 Lecture 3',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2019-06-12 22:24:03'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    })(window)</script><meta name="generator" content="Hexo 5.4.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="author-avatar"><img class="avatar-img" src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">文章</div><div class="length-num">610</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">标签</div><div class="length-num">59</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/categories/"><div class="headline">分类</div><div class="length-num">23</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">Doraemonzzz</a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">EE261 Lecture 3</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2019-06-12T14:16:00.000Z" title="发表于 2019-06-12 22:16:00">2019-06-12</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2019-06-12T14:24:03.859Z" title="更新于 2019-06-12 22:24:03">2019-06-12</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E6%95%B0%E5%AD%A6/">数学</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="EE261 Lecture 3"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p>课程主页：<a target="_blank" rel="noopener" href="https://see.stanford.edu/Course/EE261">https://see.stanford.edu/Course/EE261</a></p>
+<p>这次回顾第三讲，这一讲讨论傅里叶级数成立的条件。</p>
+<span id="more"></span>
+<h4 id="周期非-1-的情形"><a href="#周期非-1-的情形" class="headerlink" title="周期非$1$的情形"></a>周期非$1$的情形</h4><p>我们之前讨论的都是周期为$1$的情形，那么一般情形如何处理？如果$f(t)$周期为$T$，那么</p>
+<script type="math/tex; mode=display">
+g(t)=f(T t)</script><p>周期为$1$。假设</p>
+<script type="math/tex; mode=display">
+g(t)=\sum_{n=-N}^{N} c_{n} e^{2 \pi i n t}</script><p>或者不考虑收敛性，即</p>
+<script type="math/tex; mode=display">
+g(t)=\sum_{n=-\infty}^{\infty} c_{n} e^{2 \pi i n t}</script><p>令$s=Tt$，那么$g(t)= f(s)$，因此</p>
+<script type="math/tex; mode=display">
+f(s)=g(t)=\sum_{n=-\infty}^{\infty} c_{n} e^{2 \pi i n t}=\sum_{n=-\infty}^{\infty} c_{n} e^{2 \pi i n s / T}</script><p>所以现在的简谐波为$e^{2 \pi i n s / T}$。那么系数现在如何计算呢？注意到</p>
+<script type="math/tex; mode=display">
+\hat{g}(n)=\int_{0}^{1} e^{-2 \pi i n t} g(t) d t</script><p>令$s=Tt$，积分变为</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+\int_{0}^{1} e^{-2 \pi i n t} g(t) d t
+&=\int_{0}^{1} e^{-2 \pi i n s/T} g\left( t\right) d ( s/T)  \\
+&=\frac{1}{T} \int_{0}^{T} e^{-2 \pi i n s / T} f(s) d s
+\end{aligned}</script><p>所以周期为$T$的函数$f(t)$的傅里叶级数为</p>
+<script type="math/tex; mode=display">
+\sum_{n=-\infty}^{\infty} c_{n} e^{2 \pi i n t / T}</script><p>其中</p>
+<script type="math/tex; mode=display">
+c_{n}=\frac{1}{T} \int_{0}^{T} e^{-2 \pi i n t / T} f(t) d t</script><p>因为积分区间只要任取长度为$T$的区间即可，所以还可以取</p>
+<script type="math/tex; mode=display">
+c_{n}=\frac{1}{T} \int_{-T / 2}^{T / 2} e^{-2 \pi i n t / T} f(t) d t</script><p><strong>注记</strong>：后续还会使用如下形式的简谐波</p>
+<script type="math/tex; mode=display">
+\frac{1}{\sqrt{T}} e^{2 \pi i n t / T}</script><p>对应系数为</p>
+<script type="math/tex; mode=display">
+c_{n}=\frac{1}{\sqrt{T}} \int_{0}^{T} e^{-2 \pi i n t / T} f(t) d t</script><p>上述讨论都是假设函数能够展开为傅里叶级数的形式，那么这种假设真的成立吗？下面讨论两个例子。</p>
+<h4 id="例-1-方波"><a href="#例-1-方波" class="headerlink" title="例 1 方波"></a>例 1 方波</h4><p>考虑方波：</p>
+<p><img src="https://github.com/Doraemonzzz/md-photo/blob/master/EE261/Lecture%201/2019060201.jpg?raw=true" alt=""></p>
+<p>一个周期内的函数为：</p>
+<script type="math/tex; mode=display">
+f(t)=\left\{\begin{array}{ll}{+1} & {0 \leq t<\frac{1}{2}} \\ {-1} & {\frac{1}{2} \leq t<1}\end{array}\right.</script><p>下面计算其傅里叶系数：</p>
+<script type="math/tex; mode=display">
+\begin{aligned} 
+\hat{f}(n)
+&=\int_{0}^{1} e^{-2 \pi i n t} f(t) d t \\ 
+&=\int_{0}^{1 / 2} e^{-2 \pi i n t} d t-\int_{1 / 2}^{1} e^{-2 \pi i n t} d t \\ 
+&=\left[-\frac{1}{2 \pi i n} e^{-2 \pi i n t}\right]_{0}^{1 / 2}-\left[-\frac{1}{2 \pi i n} e^{-2 \pi i n t}\right]_{1 / 2}^{1}\\
+&=\frac{1}{\pi i n}\left(1-e^{-\pi i n}\right) 
+\end{aligned}</script><p>注意到</p>
+<script type="math/tex; mode=display">
+1-e^{-\pi i n}=\left\{\begin{array}{ll}{0} & {n \text { even }} \\ {2} & {n \text { odd }}\end{array}\right.</script><p>所以傅里叶级数为</p>
+<script type="math/tex; mode=display">
+\sum_{n \neq 0} \frac{1}{\pi i n}\left(1-e^{-\pi i n}\right) e^{2 \pi i n t}=
+\sum_{n \text { odd }} \frac{2}{\pi i n} e^{2 \pi i n t}</script><p>注意到</p>
+<script type="math/tex; mode=display">
+\frac{2}{\pi i n} e^{2 \pi i n t}-\frac{2}{\pi i n} e^{-2 \pi i n t}
+=\frac{2}{\pi i n}\times 2i \sin 2\pi nt=\frac{4}{\pi n}\sin 2\pi nt</script><p>令$n=2k+1$，所以傅里叶级数为</p>
+<script type="math/tex; mode=display">
+f(t)=\frac{4}{\pi} \sum_{k=0}^{\infty} \frac{1}{2 k+1} \sin 2 \pi(2 k+1) t</script><p>考虑有限项表示：</p>
+<script type="math/tex; mode=display">
+f(t)=\frac{4}{\pi} \sum_{k=0}^{N} \frac{1}{2 k+1} \sin 2 \pi(2 k+1) t</script><p>现在的问题是上述等式能否成立？答案是否定的，因为等式右边是有限项连续函数之和，其结果也是连续函数，而$f(t)$不是连续函数，所以等号显然不能成立。</p>
+<h4 id="例-2-三角波"><a href="#例-2-三角波" class="headerlink" title="例 2 三角波"></a>例 2 三角波</h4><p>考虑三角波：</p>
+<p><img src="https://github.com/Doraemonzzz/md-photo/blob/master/EE261/Lecture%201/2019060202.jpg?raw=true" alt=""></p>
+<p>一个周期内的函数为</p>
+<script type="math/tex; mode=display">
+f(t)=\left\{\begin{array}{ll}{\frac{1}{2}+t} & {-\frac{1}{2} \leq t \leq 0} \\ {\frac{1}{2}-t} & {0 \leq t \leq+\frac{1}{2}}\end{array}\right.</script><p>计算其系数得到傅里叶级数：</p>
+<script type="math/tex; mode=display">
+\frac{1}{4}+\sum_{k=0}^{\infty} \frac{2}{\pi^{2}(2 k+1)^{2}} \cos (2 \pi(2 k+1) t)</script><p>考虑有限项表示：</p>
+<script type="math/tex; mode=display">
+f(t)=\frac{1}{4}+\sum_{k=0}^{\infty} \frac{2}{\pi^{2}(2 k+1)^{2}} \cos (2 \pi(2 k+1) t)</script><p>上述等式能否成立？答案依旧是否定的，因为等式右边是有限项可微函数之和，其结果也是可微函数，但是$f(t)$在$\frac 1 2$处不可微。</p>
+<p>这两个例子告诉我们，傅里叶开展需要一定的条件保证，这也是后续讨论的重点。</p>
+<h4 id="理论部分"><a href="#理论部分" class="headerlink" title="理论部分"></a>理论部分</h4><h5 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h5><p>这部分讨论理论基础。</p>
+<p>首先对我们讨论的函数范围进行约束，这里我们只讨论有限能量的函数：</p>
+<script type="math/tex; mode=display">
+\int_{0}^{1}|f(t)|^{2} d t<\infty</script><p>定义如下范数：</p>
+<script type="math/tex; mode=display">
+\|f\|=\left(\int_{0}^{1}|f(t)|^{2} d t\right)^{1 / 2}</script><p>范数有如下性质</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+\|\alpha f\|&=\|\alpha\| \|f\|\\
+\|f+g\| &\le\|f\|+\|g\|
+\end{aligned}</script><p>利用该范数定义距离：</p>
+<script type="math/tex; mode=display">
+\|f-g\|=\left(\int_{0}^{1}|f(t)-g(t)|^{2} d t\right)^{1 / 2}</script><p>那么$|f-g|=0$等价于$f=g$。</p>
+<p>定义$L^{2}([0,1])$是定义在$[0,1]$的全体函数$f(t)$，满足</p>
+<script type="math/tex; mode=display">
+\int_{0}^{1}|f(t)|^{2} d t<\infty</script><p>在上述条件下，可以验证傅里叶系数存在。</p>
+<p>假设$f(t)$属于$L^{2}([0,1])$，令</p>
+<script type="math/tex; mode=display">
+\hat{f}(n)=\int_{0}^{1} e^{-2 \pi i n t} f(t) d t, \quad n=0, \pm 1, \pm 2, \ldots</script><p>那么有如下结论：</p>
+<ol>
+<li><p>任取有限$N$，如下级数</p>
+<script type="math/tex; mode=display">
+\sum_{n=-N}^{N} \hat{f}(n) e^{2 \pi i n t}</script><p>为$L^{2}([0,1])$中次数为$N$的三角多项式对$f(t)$的最佳近似。</p>
+</li>
+<li><p>复指数项$e^{2 \pi i n t},(n=0, \pm 1, \pm 2, \ldots)$形成$L^{2}([0,1])$的正交基，1中的部分和收敛到$f(t)$，这意味着</p>
+<script type="math/tex; mode=display">
+\lim _{N \to \infty}\left\|\sum_{n=-N}^{N} \hat{f}(n) e^{2 \pi i n t}-f(t)\right\|=0</script><p>我们将上述事实写为</p>
+<script type="math/tex; mode=display">
+f(t)=\sum_{n=-\infty}^{\infty} \hat{f}(n) e^{2 \pi i n t}</script></li>
+<li><p>$f(t)$的能量可以由傅里叶系数计算出来：</p>
+<script type="math/tex; mode=display">
+\int_{0}^{1}|f(t)|^{2} d t=\sum_{n=-\infty}^{\infty}|\hat{f}(n)|^{2}</script><p>该结论被称为Rayleigh等式或Parseval定理。</p>
+</li>
+<li><p>如果$\left\{c_{n} : n=0, \pm 1, \pm 2, \ldots\right\}$是任意满足如下条件的复数序列</p>
+<script type="math/tex; mode=display">
+\sum_{n=-\infty}^{\infty}\left|c_{n}\right|^{2}<\infty</script><p>那么函数</p>
+<script type="math/tex; mode=display">
+f(t)=\sum_{n=-\infty}^{\infty} c_{n} e^{2 \pi i n t}</script><p>属于$L^{2}([0,1])$。</p>
+</li>
+</ol>
+<p>上述理论课程中没有给出详细的证明，只需了解即可。</p>
+<h5 id="内积"><a href="#内积" class="headerlink" title="内积"></a>内积</h5><h6 id="向量内积"><a href="#向量内积" class="headerlink" title="向量内积"></a>向量内积</h6><p>这部分介绍内积的概念，首先介绍向量内积。</p>
+<p>记向量为</p>
+<script type="math/tex; mode=display">
+\|{v}\|=\left(v_{1}, v_{2}, \ldots, v_{n}\right)</script><p>$v$的范数定义为</p>
+<script type="math/tex; mode=display">
+\|{v}\|=\left(v_{1}^{2}+v_{2}^{2}+\cdots+v_{n}^{2}\right)^{1 / 2}</script><p>向量$v$和$w$的范数为$|{v}-{w}|$。</p>
+<p>对于向量${v}=\left(v_{1}, v_{2}, \dots, v_{n}\right)$和${w}=\left(w_{1}, w_{2}, \dots, w_{n}\right)$，定义内积为</p>
+<script type="math/tex; mode=display">
+v \cdot {w}=v_{1} w_{1}+v_{2} w_{2}+\cdots+v_{n} w_{n}</script><p>注意到</p>
+<script type="math/tex; mode=display">
+v \cdot v=v_{1} v_{1}+v_{2} v_{2}+\cdots+v_{n} v_{n}</script><p>因此</p>
+<script type="math/tex; mode=display">
+\|{v}\|=({v}, {v})^{1 / 2}</script><p>内积有如下性质：</p>
+<ol>
+<li>$({v}, {v}) \geq 0$并且$({v}, {v})=0$当且仅当$v=0$</li>
+<li>$(v,w)=(w,v)$</li>
+<li>$(\alpha {v}, {w})=\alpha({v}, {w})$</li>
+<li>$(v+w, u)=(v,u)+(w,u)$</li>
+</ol>
+<p>另一种内积的定义为</p>
+<script type="math/tex; mode=display">
+({v}, {w})=\|{v}\|\|{w}\| \cos \theta</script><p>正交基：</p>
+<p>$\mathbb R^n$的标准正交基为</p>
+<script type="math/tex; mode=display">
+{e}_{1}=(1,0, \ldots, 0), 
+{e}_{2}=(0,1, \ldots, 0), \ldots, 
+{e}_{n}=(0,0, \ldots, 1)</script><p>所以$ {v}=\left(v_{1}, v_{2}, \dots, v_{n}\right)$可以表达为</p>
+<script type="math/tex; mode=display">
+{v}=v_{1}{e}_{1}+v_{2} {e}_{2}+\cdots+v_{n} {e}_{n}</script><p>显然我们有</p>
+<script type="math/tex; mode=display">
+\left({e}_{i}, {e}_{j}\right)=\delta_{i j}</script><p>其中</p>
+<script type="math/tex; mode=display">
+\delta_{i j}=\left\{\begin{array}{ll}{1} & {i=j} \\ {0} & {i \neq j}\end{array}\right.</script><p>注意到</p>
+<script type="math/tex; mode=display">
+(v,e_k)=v_k</script><p>因此</p>
+<script type="math/tex; mode=display">
+{v}=\sum_{k=1}^{n}\left({v}, {e}_{k}\right) {e}_{k}</script><p>如果</p>
+<script type="math/tex; mode=display">
+v.w=v^Tw=0</script><p>那么</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+\|v+w \|
+&=(v+w)^T(v+w)\\
+&=v^Tv + w^Tw +v^Tw +w^T w\\
+&=\| v\|^2 +\| w\|^2
+\end{aligned}</script><h6 id="函数内积"><a href="#函数内积" class="headerlink" title="函数内积"></a>函数内积</h6><p>对于$f(t),g(t)\in L^2([0,1])$，定义内积为</p>
+<script type="math/tex; mode=display">
+(f, g)=\int_{0}^{1} f(t) \overline{g(t)} d t</script><p>该内积有如下性质：</p>
+<ol>
+<li>$(f, g)=\overline{(g, f)}$</li>
+<li>$(f, f) \geq 0$并且$({f}, {f})=0$当且仅当$f=0$</li>
+<li>$(\alpha f, g)=\alpha(f, g), (f, \alpha g)=\overline{\alpha}(f, g)$</li>
+<li>$(f+g, h)=(f, h)+(g, h),(f, g+h)=(f, g)+(f, h)$</li>
+</ol>
+<p>并且</p>
+<script type="math/tex; mode=display">
+(f, f)=\int_{0}^{1} f(t) \overline{f(t)} d t=\int_{0}^{1}|f(t)|^{2} d t=\|f\|^{2}</script><p>接下来讨论该内积和傅里叶级数的关系，首先讨论周期为$1$的函数$f(t)$，定义$e_{n}(t)=e^{2 \pi i n t}$，经过计算不难得到</p>
+<script type="math/tex; mode=display">
+\left(e_{n}, e_{m}\right)=\delta_{n m}=\left\{\begin{array}{ll}{1} & {n=m} \\ {0} & {n \neq m}\end{array}\right.</script><p>所以$e_n(t)$正交。</p>
+<p>类似向量内积的情形，我们有</p>
+<script type="math/tex; mode=display">
+\left(f, e_{n}\right)=\int_{0}^{1} f(t) \overline{e_{n}(t)} d t=\int_{0}^{1} f(t) e^{-2 \pi i n t} d t=\hat f(n)</script><p>所以傅里叶级数可以写成</p>
+<script type="math/tex; mode=display">
+f=\sum_{n=-\infty}^{\infty}\left(f, e_{n}\right) e_{n}</script><p>对于周期为$T$的函数$f(t)$，定义</p>
+<script type="math/tex; mode=display">
+e_{n}(t)=\frac{1}{\sqrt{T}} e^{2 \pi i n t / T}</script><p>那么</p>
+<script type="math/tex; mode=display">
+\left(e_{n}, e_{m}\right)=\left\{\begin{array}{ll}{1} & {n=m} \\ {0} & {n \neq m}\end{array}\right.</script><p>计算可得</p>
+<script type="math/tex; mode=display">
+\left(f, e_{n}\right)=\frac{1}{\sqrt{T}} \int_{0}^{T} f(t) e^{-2 \pi i n t / T} d t</script><p>那么我们同样有</p>
+<script type="math/tex; mode=display">
+f=\sum_{n=-\infty}^{\infty}\left(f, e_{n}\right) e_{n}</script><h5 id="瑞利等式"><a href="#瑞利等式" class="headerlink" title="瑞利等式"></a>瑞利等式</h5><p>对于傅里叶系数，我们有如下等式</p>
+<script type="math/tex; mode=display">
+\| f\|^2=\int_{0}^{1}|f(t)|^{2} d t=\sum_{n=-\infty}^{\infty}|\hat{f}(n)|^{2}</script><p>该等式的直观理解可以向量范数</p>
+<script type="math/tex; mode=display">
+\|{v}\|^{2}=v_{1}^{2}+v_{2}^{2}+\cdots+v_{n}^{2}</script><p>证明：</p>
+<p>因为</p>
+<script type="math/tex; mode=display">
+f(t)=\sum_{n=-\infty}^{\infty} \hat{f}(n) e^{2 \pi i n t}=\sum_{n=-\infty}^{\infty}\left(f, e_{n}\right) e_{n}</script><p>所以</p>
+<script type="math/tex; mode=display">
+\begin{aligned} 
+\int_{0}^{1}|f(t)|^{2} d t &=\|f\|^{2}\\
+&=(f, f) \\
+&=\left(\sum_{n=-\infty}^{\infty}\left(f, e_{n}\right) e_{n}, \sum_{m=-\infty}^{\infty}\left(f, e_{m}\right) e_{m}\right) \\
+&=\sum_{n, m}\left(f, e_{n}\right) \overline{\left(f, e_{m}\right)}\left(e_{n}, e_{m}\right)\\
+&=\sum_{n, m=-\infty}^{\infty}\left(f, e_{n}\right) \overline{\left(f, e_{m}\right)} \delta_{n m} \\ 
+&=\sum_{n=-\infty}^{\infty}\left(f, e_{n}\right)\overline{\left(f, e_{n}\right)}\\
+&=\sum_{n=-\infty}^{\infty}\left|\left(f, e_{n}\right)\right|^{2}\\
+&=\sum_{n=-\infty}^{\infty}|\hat{f}(n)|^{2} 
+\end{aligned}</script></article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">Doraemonzzz</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="http://doraemonzzz.com/2019/06/12/EE261%20Lecture%203/">http://doraemonzzz.com/2019/06/12/EE261%20Lecture%203/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://doraemonzzz.com" target="_blank">Doraemonzzz</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/EE261/">EE261</a></div><div class="post_share"><div class="social-share" data-image="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2019/06/12/From%20Nand%20to%20Tetris%20week%207/"><img class="prev-cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">From Nand to Tetris week 7</div></div></a></div><div class="next-post pull-right"><a href="/2019/06/12/EE263%20Lecture%2010%20Autonomous%20linear%20dynamical%20systems/"><img class="next-cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">EE263 Lecture 10 Autonomous linear dynamical systems</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span> 相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2019/06/04/EE261 Lecture 1 and Lecture 2/" title="EE261 Lecture 1 and Lecture 2"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2019-06-04</div><div class="title">EE261 Lecture 1 and Lecture 2</div></div></a></div><div><a href="/2019/07/09/EE261 Lecture 10/" title="EE261 Lecture 10"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2019-07-09</div><div class="title">EE261 Lecture 10</div></div></a></div><div><a href="/2019/07/09/EE261 Lecture 11/" title="EE261 Lecture 11"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2019-07-09</div><div class="title">EE261 Lecture 11</div></div></a></div><div><a href="/2019/07/10/EE261 Lecture 12/" title="EE261 Lecture 12"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2019-07-10</div><div class="title">EE261 Lecture 12</div></div></a></div><div><a href="/2019/07/16/EE261 Lecture 13/" title="EE261 Lecture 13"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2019-07-16</div><div class="title">EE261 Lecture 13</div></div></a></div><div><a href="/2019/07/17/EE261 Lecture 14/" title="EE261 Lecture 14"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2019-07-17</div><div class="title">EE261 Lecture 14</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="card-info-avatar is-center"><img class="avatar-img" src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/><div class="author-info__name">Doraemonzzz</div><div class="author-info__description">个人博客，主要记录有关机器学习，数学以及计算机科学的笔记</div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">610</div></a></div><div class="card-info-data-item is-center"><a href="/tags/"><div class="headline">标签</div><div class="length-num">59</div></a></div><div class="card-info-data-item is-center"><a href="/categories/"><div class="headline">分类</div><div class="length-num">23</div></a></div></div><a class="button--animated" id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/Doraemonzzz" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="/doraemon_zzz@163.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn card-announcement-animation"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%91%A8%E6%9C%9F%E9%9D%9E-1-%E7%9A%84%E6%83%85%E5%BD%A2"><span class="toc-number">1.</span> <span class="toc-text">周期非$1$的情形</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BE%8B-1-%E6%96%B9%E6%B3%A2"><span class="toc-number">2.</span> <span class="toc-text">例 1 方波</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BE%8B-2-%E4%B8%89%E8%A7%92%E6%B3%A2"><span class="toc-number">3.</span> <span class="toc-text">例 2 三角波</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%90%86%E8%AE%BA%E9%83%A8%E5%88%86"><span class="toc-number">4.</span> <span class="toc-text">理论部分</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E7%BB%93%E8%AE%BA"><span class="toc-number">4.1.</span> <span class="toc-text">结论</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%86%85%E7%A7%AF"><span class="toc-number">4.2.</span> <span class="toc-text">内积</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#%E5%90%91%E9%87%8F%E5%86%85%E7%A7%AF"><span class="toc-number">4.2.1.</span> <span class="toc-text">向量内积</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#%E5%87%BD%E6%95%B0%E5%86%85%E7%A7%AF"><span class="toc-number">4.2.2.</span> <span class="toc-text">函数内积</span></a></li></ol></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E7%91%9E%E5%88%A9%E7%AD%89%E5%BC%8F"><span class="toc-number">4.3.</span> <span class="toc-text">瑞利等式</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2021/06/06/2021-6-6-%E7%AE%97%E6%B3%95%E6%A6%82%E8%AE%BA(DPV)%E4%B9%A0%E9%A2%98%E8%A7%A3%E7%AD%94%E2%80%94%E2%80%94%E7%AC%AC3%E7%AB%A0-%E5%9B%BE%E7%9A%84%E5%88%86%E8%A7%A3/" title="算法概论(DPV)习题解答——第3章 图的分解"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="算法概论(DPV)习题解答——第3章 图的分解"/></a><div class="content"><a class="title" href="/2021/06/06/2021-6-6-%E7%AE%97%E6%B3%95%E6%A6%82%E8%AE%BA(DPV)%E4%B9%A0%E9%A2%98%E8%A7%A3%E7%AD%94%E2%80%94%E2%80%94%E7%AC%AC3%E7%AB%A0-%E5%9B%BE%E7%9A%84%E5%88%86%E8%A7%A3/" title="算法概论(DPV)习题解答——第3章 图的分解">算法概论(DPV)习题解答——第3章 图的分解</a><time datetime="2021-06-06T14:35:00.000Z" title="发表于 2021-06-06 22:35:00">2021-06-06</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/06/06/2021-6-6-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E7%AC%AC5%E7%AB%A0-%E4%B9%A0%E9%A2%98%E8%A7%A3%E6%9E%90/" title="深入理解计算机系统 第5章 习题解析"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="深入理解计算机系统 第5章 习题解析"/></a><div class="content"><a class="title" href="/2021/06/06/2021-6-6-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E7%AC%AC5%E7%AB%A0-%E4%B9%A0%E9%A2%98%E8%A7%A3%E6%9E%90/" title="深入理解计算机系统 第5章 习题解析">深入理解计算机系统 第5章 习题解析</a><time datetime="2021-06-06T07:23:00.000Z" title="发表于 2021-06-06 15:23:00">2021-06-06</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/06/05/2021-6-5-Stanford-Compiler-PA5%E7%BF%BB%E8%AF%91/" title="Stanford Compiler PA5翻译"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Stanford Compiler PA5翻译"/></a><div class="content"><a class="title" href="/2021/06/05/2021-6-5-Stanford-Compiler-PA5%E7%BF%BB%E8%AF%91/" title="Stanford Compiler PA5翻译">Stanford Compiler PA5翻译</a><time datetime="2021-06-05T06:12:00.000Z" title="发表于 2021-06-05 14:12:00">2021-06-05</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/06/04/2021-6-4-Stanford-Compiler-PA4%E7%BF%BB%E8%AF%91/" title="Stanford Compiler PA4翻译"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Stanford Compiler PA4翻译"/></a><div class="content"><a class="title" href="/2021/06/04/2021-6-4-Stanford-Compiler-PA4%E7%BF%BB%E8%AF%91/" title="Stanford Compiler PA4翻译">Stanford Compiler PA4翻译</a><time datetime="2021-06-03T16:17:00.000Z" title="发表于 2021-06-04 00:17:00">2021-06-04</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/06/03/2021-6-3-%E5%B7%A7%E5%A6%99%E7%9A%84Y%E8%BF%90%E7%AE%97%E7%AC%A6/" title="巧妙的Y运算符"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="巧妙的Y运算符"/></a><div class="content"><a class="title" href="/2021/06/03/2021-6-3-%E5%B7%A7%E5%A6%99%E7%9A%84Y%E8%BF%90%E7%AE%97%E7%AC%A6/" title="巧妙的Y运算符">巧妙的Y运算符</a><time datetime="2021-06-03T00:54:00.000Z" title="发表于 2021-06-03 08:54:00">2021-06-03</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2021 By Doraemonzzz</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><div class="js-pjax"><script>if (!window.MathJax) {
+  window.MathJax = {
+    loader: {
+      source: {
+        '[tex]/amsCd': '[tex]/amscd'
+      }
+    },
+    tex: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]],
+      tags: 'ams'
+    },
+    options: {
+      renderActions: {
+        findScript: [10, doc => {
+          for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+            const display = !!node.type.match(/; *mode=display/)
+            const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+            const text = document.createTextNode('')
+            node.parentNode.replaceChild(text, node)
+            math.start = {node: text, delim: '', n: 0}
+            math.end = {node: text, delim: '', n: 0}
+            doc.math.push(math)
+          }
+        }, ''],
+        addClass: [200,() => {
+          document.querySelectorAll('mjx-container:not([display=\'true\']').forEach( node => {
+            const target = node.parentNode
+            if (!target.classList.contains('has-jax')) {
+              target.classList.add('mathjax-overflow')
+            }
+          })
+        }, '', false]
+      }
+    }
+  }
+  
+  const script = document.createElement('script')
+  script.src = 'https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js'
+  script.id = 'MathJax-script'
+  script.async = true
+  document.head.appendChild(script)
+} else {
+  MathJax.startup.document.state(0)
+  MathJax.texReset()
+  MathJax.typeset()
+}</script></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

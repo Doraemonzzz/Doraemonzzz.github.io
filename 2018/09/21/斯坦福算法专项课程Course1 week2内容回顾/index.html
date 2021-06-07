@@ -1,0 +1,297 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>斯坦福算法专项课程Course1 week2内容回顾 | Doraemonzzz</title><meta name="keywords" content="斯坦福算法专项课程"><meta name="author" content="Doraemonzzz"><meta name="copyright" content="Doraemonzzz"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="这周的内容主要是再介绍了几个Divide and Conquer的例子，最后给出了分析时间复杂度的Master Method。 课程地址：https:&#x2F;&#x2F;www.coursera.org&#x2F;specializations&#x2F;algorithms">
+<meta property="og:type" content="article">
+<meta property="og:title" content="斯坦福算法专项课程Course1 week2内容回顾">
+<meta property="og:url" content="http://doraemonzzz.com/2018/09/21/%E6%96%AF%E5%9D%A6%E7%A6%8F%E7%AE%97%E6%B3%95%E4%B8%93%E9%A1%B9%E8%AF%BE%E7%A8%8BCourse1%20week2%E5%86%85%E5%AE%B9%E5%9B%9E%E9%A1%BE/index.html">
+<meta property="og:site_name" content="Doraemonzzz">
+<meta property="og:description" content="这周的内容主要是再介绍了几个Divide and Conquer的例子，最后给出了分析时间复杂度的Master Method。 课程地址：https:&#x2F;&#x2F;www.coursera.org&#x2F;specializations&#x2F;algorithms">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg">
+<meta property="article:published_time" content="2018-09-21T15:20:00.000Z">
+<meta property="article:modified_time" content="2021-01-26T10:22:43.815Z">
+<meta property="article:author" content="Doraemonzzz">
+<meta property="article:tag" content="斯坦福算法专项课程">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="http://doraemonzzz.com/2018/09/21/%E6%96%AF%E5%9D%A6%E7%A6%8F%E7%AE%97%E6%B3%95%E4%B8%93%E9%A1%B9%E8%AF%BE%E7%A8%8BCourse1%20week2%E5%86%85%E5%AE%B9%E5%9B%9E%E9%A1%BE/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"prismjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    jQuery: 'https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js',
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+    },
+    fancybox: {
+      js: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isanchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '斯坦福算法专项课程Course1 week2内容回顾',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2021-01-26 18:22:43'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    })(window)</script><meta name="generator" content="Hexo 5.4.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="author-avatar"><img class="avatar-img" src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">文章</div><div class="length-num">610</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">标签</div><div class="length-num">59</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/categories/"><div class="headline">分类</div><div class="length-num">23</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">Doraemonzzz</a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">斯坦福算法专项课程Course1 week2内容回顾</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2018-09-21T15:20:00.000Z" title="发表于 2018-09-21 23:20:00">2018-09-21</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2021-01-26T10:22:43.815Z" title="更新于 2021-01-26 18:22:43">2021-01-26</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E7%AE%97%E6%B3%95/">算法</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="斯坦福算法专项课程Course1 week2内容回顾"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p>这周的内容主要是再介绍了几个Divide and Conquer的例子，最后给出了分析时间复杂度的Master Method。</p>
+<p>课程地址：<a target="_blank" rel="noopener" href="https://www.coursera.org/specializations/algorithms">https://www.coursera.org/specializations/algorithms</a></p>
+<span id="more"></span>
+<h2 id="Course-2-Week-2"><a href="#Course-2-Week-2" class="headerlink" title="Course 2 Week 2"></a>Course 2 Week 2</h2><h3 id="The-Closest-Pair-Problem"><a href="#The-Closest-Pair-Problem" class="headerlink" title="The Closest Pair Problem"></a>The Closest Pair Problem</h3><ul>
+<li>Input:$\mathbb R^2$中$n$个点$P=\{p_1,…,p_n\}$</li>
+<li>Notation:$d(x_i,x_j)$为欧几里得距离</li>
+<li>Output:$P$中两个距离最近的点$p,q$</li>
+</ul>
+<p>这里我们假设每个点的横坐标，纵坐标均不相同。</p>
+<p>这个问题的一维情形可以用排序解决，时间复杂度为$O(n\log n)$，二维情形如果暴力求解，那么时间复杂度为$\theta(n^2)$，现在的目标是把二维情形的时间复杂度降低到$O(n\log n)$。</p>
+<p>我们先把这些点按$x$排序为$P_x$，按$y$排序为$P_y$，这一步需要$O(n\log n)$的时间，但这样做显然是不够的，后面还需要Divide+Conquer，伪代码如下：</p>
+<p><img src="https://github.com/Doraemonzzz/md-photo/blob/master/Coursera%20Stanford%20Algorithms/Part1%20divide%20and%20conquer/week2/2018091701.png?raw=true" alt=""></p>
+<p>备注：$Q_x$为$P_x$的前半部分，按$x$轴排序；$Q_y$为$P_x$的后半部分，按$y$轴排序。</p>
+<p>这个算法的关键是第5步，如果这个步骤只需要花$O(n)$的时间，那么由上一周的讨论我们知道，这个算法总共需要的时间为$O(n\log n)$，所以现在问题就转换为ClosestSplitPair的问题，这里老师先给出算法：</p>
+<p><img src="https://github.com/Doraemonzzz/md-photo/blob/master/Coursera%20Stanford%20Algorithms/Part1%20divide%20and%20conquer/week2/2019090101.jpg?raw=true" alt=""></p>
+<p>补充一下，上图中的$S_y$为横坐标$x\in [\overline x - \delta , \overline x +\delta]$的点按照纵坐标$y$排序之后的点集。</p>
+<p>这个算法最神奇的地方在于，第二重循环只要执行7次，所以保证了时间复杂度为$O(n)$，下面来解释下这个算法，有如下命题：</p>
+<p>令$p\in Q, q\in R$为$d(p,q) &lt; \delta$的split pair，那么</p>
+<ul>
+<li>(A) $p,q \in  S_y$</li>
+<li>(B) $p,q$在$S_y$中最多距离$7$位</li>
+</ul>
+<p>令$p=(x_1,y_1),q=(x_2,y_2)$ </p>
+<p>命题(A)的证明：</p>
+<p>因为$p\in Q, q\in R$，所以$x_1\le \overline x,x_2 \ge \overline x$，而$|x_1-x_2| \le d(p,q) &lt;\delta$，因此$x_1,x_2 \in  [\overline x - \delta , \overline x+\delta]$</p>
+<p>命题(B)的证明：</p>
+<p>先画出以下关键图形：</p>
+<p><img src="https://github.com/Doraemonzzz/md-photo/blob/master/Coursera%20Stanford%20Algorithms/Part1%20divide%20and%20conquer/week2/2018091703.png?raw=true" alt=""></p>
+<p>证明命题（B）需要以下两个引理：</p>
+<p>引理1:$S_y$中纵坐标范围介于$p,q$纵坐标之间的点都落在这8个方格之内。</p>
+<p>引理2:1个方格内最多有1个点。</p>
+<p>引理1的证明：</p>
+<p>首先$|y_1-y_2| \le d(p,q) &lt;\delta$，说明满足条件的点的纵坐标落在方格的纵坐标范围内，其次$S_y$中的点横坐标的范围为$ [\overline x - \delta , \overline x+\delta]$，结合以上两点，满足条件的点都落在这8个方格之内。</p>
+<p>引理2的证明：</p>
+<p>反证法，如果有两个点落在同1个方格内，或者这两个点都属于$Q$，或者都属于$R$，无论那种，这两个点的距离小于等与正方形的对角线的长度$\frac{\sqrt 2 \delta}{2}&lt;\delta$，这与$\delta$的定义相矛盾，所以引理2成立。</p>
+<p>命题（B）证明：</p>
+<p>如果$d(p, q) &lt; \delta$，那么$p,q$肯定属于上图中的蓝色区域（否则纵坐标之差大于$\delta$），如果$p,q$的下标之差大于$7$，那么$9$个点放入$8$个格子，必然有两个点在同一格子内，这就产生了矛盾。</p>
+<p>综上，结合这两个引理可知如果split pair中两点距离小于$\delta$，那么这两个点都属于$S_y$，并且$S_y$中的下标差不会超过7，从而算法是正确的。</p>
+<h3 id="Counting-Inversions"><a href="#Counting-Inversions" class="headerlink" title="Counting Inversions"></a>Counting Inversions</h3><ul>
+<li>Input: 含有数字$1,2,…,n$任意顺序的数组</li>
+<li>逆序数(inversions)的数量，即满足$i&lt;j$​和$a[i]\ge a[j]$的二元组$(i, j)$​的数量</li>
+</ul>
+<p>这个问题还是用Divide and Conquer，有如下算法</p>
+<p><img src="https://github.com/Doraemonzzz/md-photo/blob/master/Coursera%20Stanford%20Algorithms/Part1%20divide%20and%20conquer/week2/2018091801.png?raw=true" alt=""></p>
+<p>这个算法最重要的是解决CountSplitInv部分，即计算$i\le \frac n 2 \le j$，但是$a[i]&gt;a[j]$的数量，和之前的算法一样，我们的目标是希望在$O(n)$的时间内解决这个问题，解决之后就可以使得该算法的运行时间为$O(n\log n)$。</p>
+<p>但是上述算法可能无法很好地解决该问题，所以这里老师给出一个更强的算法，在计算数量的同时给数组排序，如下：</p>
+<p><img src="https://github.com/Doraemonzzz/md-photo/blob/master/Coursera%20Stanford%20Algorithms/Part1%20divide%20and%20conquer/week2/2018091802.png?raw=true" alt=""></p>
+<p>由B,C推出D的过程为merge，操作和归并排序里一样，以一个具体例子来观察merge操作和逆序数数量的关系</p>
+<p><img src="https://github.com/Doraemonzzz/md-photo/blob/master/Coursera%20Stanford%20Algorithms/Part1%20divide%20and%20conquer/week2/2018091803.png?raw=true" alt=""></p>
+<p>将这个过程总结一下，有如下命题：</p>
+<p>split inversions的逆序数量为将第二段数组C中元素$y$复制到D时B中剩余元素的数量之和。</p>
+<p>证明：</p>
+<p>令$x$为第一段数组B中的元素</p>
+<p>1.如果$x$在$y$之前被复制到D，那么$x&lt;y$，说明$(x,y)$不是逆序对。</p>
+<p>2.如果$y$在$x$之前被复制到D，那么$y&lt;x$，说明$(x,y)$是逆序对并且$x$之后的数字和$y$都组成逆序对。</p>
+<p>因为merge的时间为$O(n)$，所以这个算法的时间为$O(n\log n)$</p>
+<h3 id="Matrix-Multiplication"><a href="#Matrix-Multiplication" class="headerlink" title="Matrix Multiplication"></a>Matrix Multiplication</h3><p>如果将每个$n\times n$矩阵拆为$4$个$\frac n2\times \frac n2$，利用Divide and Conquer，有如下算法</p>
+<p><img src="https://github.com/Doraemonzzz/md-photo/blob/master/Coursera%20Stanford%20Algorithms/Part1%20divide%20and%20conquer/week2/2018091805.png?raw=true" alt=""></p>
+<p>这个算法将原问题拆成$8$个子问题，时间复杂度为$\theta(n^3)$，而直接计算的方法也为$\theta(n^3)$，说明这个算法没有提升速度，这时老师介绍了一个神奇的算法：</p>
+<p><img src="https://github.com/Doraemonzzz/md-photo/blob/master/Coursera%20Stanford%20Algorithms/Part1%20divide%20and%20conquer/week2/2018091804.png?raw=true" alt=""></p>
+<p>这个算法的神奇之处为将原问题拆成$7$个子问题，利用主定理，可以计算出时间复杂度小于$\theta(n^3)$。</p>
+<p>接下来回顾主定理。</p>
+<h3 id="Master-Method"><a href="#Master-Method" class="headerlink" title="Master Method"></a>Master Method</h3><p>我们之前讨论的很多算法的时间复杂度都可以写为如下形式</p>
+<script type="math/tex; mode=display">
+T(n) \le  aT\left(\frac n b \right) + O(n^d)</script><p>例如Merge Sort</p>
+<script type="math/tex; mode=display">
+T(n) \le 2 T\left(\frac n 2\right) + O(n)</script><p>Karatsuba Multiplication</p>
+<script type="math/tex; mode=display">
+T(n) \le 3 T\left(\frac n 2 \right) + O(n)</script><p>Master Method描述的就是$T(n) \le  aT(\frac n b) + O(n^d)$可以推出怎样的时间复杂度，我们对原条件变形一下</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+T(1)& \le c\\
+T(n) &\le  aT\left(\frac n b \right) + cn^d
+\end{aligned}</script><p>那么同Merge Sort的算法时间推导过程，可以画出如下树状图</p>
+<p><img src="https://github.com/Doraemonzzz/md-photo/blob/master/Coursera%20Stanford%20Algorithms/Part1%20divide%20and%20conquer/week2/2018091806.png?raw=true" alt=""></p>
+<p>那么第$j$层的时间复杂度小于等于</p>
+<script type="math/tex; mode=display">
+a^j c \left(\frac{n}{b^j}\right)^d =cn^d\left (\frac{a}{b^d}\right)^j</script><p>一共的时间复杂度小于等于</p>
+<script type="math/tex; mode=display">
+ cn^d\sum_{j=0}^{\log_b n} \left(\frac{a}{b^d}\right)^j</script><p>现在讨论这个式子，可以看出，这个式子和$a,b^d$的大小关系有关，分三种情况讨论：</p>
+<h4 id="1-a-b-d"><a href="#1-a-b-d" class="headerlink" title="(1) $a = b^d$"></a>(1) $a = b^d$</h4><p>那么时间复杂度小于等于</p>
+<script type="math/tex; mode=display">
+cn^d\sum_{j=0}^{\log_b n} \left(\frac{a}{b^d} \right)^j= cn^d\sum_{j=0}^{\log_b n} 1 = cn^d \log_b n</script><p>从而时间复杂度为</p>
+<script type="math/tex; mode=display">
+O(n^d \log n)</script><p>讨论其余两种情况之前，先考虑等比级数</p>
+<script type="math/tex; mode=display">
+1+r+...+r^k = \frac{r^{k+1}-1}{r-1}(r\ne 1)</script><p>如果$r&lt;1$，那么</p>
+<script type="math/tex; mode=display">
+1+r+...+r^k = \frac{r^{k+1}-1}{r-1}=\frac{1-r^{k+1}}{1-r} \le \frac{1}{1-r}</script><p>如果$r&gt;1$，那么</p>
+<script type="math/tex; mode=display">
+1+r+...+r^k = \frac{r^{k+1}-1}{r-1}\le r^k \left(\frac r{r+1}\right)</script><p>利用这两个结论继续讨论：</p>
+<h4 id="2-a-gt-b-d"><a href="#2-a-gt-b-d" class="headerlink" title="(2) $a&gt;b^d$"></a>(2) $a&gt;b^d$</h4><p>此时$\frac{a}{b^d} &gt;1$，由等比级数的性质，我们知道</p>
+<script type="math/tex; mode=display">
+cn^d\sum_{j=0}^{\log_b n} \left(\frac{a}{b^d}\right)^j \le
+cn^dD  \left(\frac{a}{b^d}\right)^{\log_b n} = cD a^{\log_b n}=cD n^{\log_ba}</script><p>所以时间复杂度为</p>
+<script type="math/tex; mode=display">
+O( n^{\log_ba})</script><h4 id="3-a-lt-b-d"><a href="#3-a-lt-b-d" class="headerlink" title="(3) $a&lt;b^d$"></a>(3) $a&lt;b^d$</h4><p>此时$\frac{a}{b^d} &lt;1$，由等比级数的性质，我们知道</p>
+<script type="math/tex; mode=display">
+cn^d\sum_{j=0}^{\log_b n} \left (\frac{a}{b^d}\right)^j \le cn^dD= cD n^d</script><p>所以时间复杂度为</p>
+<script type="math/tex; mode=display">
+O(n^d)</script><p>综合以上三种情形，可以得到Master Method：</p>
+<p>如果</p>
+<script type="math/tex; mode=display">
+T(n) \le  aT\left(\frac n b \right) + O(n^d)</script><p>那么</p>
+<script type="math/tex; mode=display">
+T(n)=\begin{cases}
+O(n^d), &a<b^d\\
+O(n^d\log n), &a=b^d\\
+O(n^{\log_b a }), & a>b^d
+\end{cases}</script></article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">Doraemonzzz</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="http://doraemonzzz.com/2018/09/21/%E6%96%AF%E5%9D%A6%E7%A6%8F%E7%AE%97%E6%B3%95%E4%B8%93%E9%A1%B9%E8%AF%BE%E7%A8%8BCourse1%20week2%E5%86%85%E5%AE%B9%E5%9B%9E%E9%A1%BE/">http://doraemonzzz.com/2018/09/21/%E6%96%AF%E5%9D%A6%E7%A6%8F%E7%AE%97%E6%B3%95%E4%B8%93%E9%A1%B9%E8%AF%BE%E7%A8%8BCourse1%20week2%E5%86%85%E5%AE%B9%E5%9B%9E%E9%A1%BE/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://doraemonzzz.com" target="_blank">Doraemonzzz</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E6%96%AF%E5%9D%A6%E7%A6%8F%E7%AE%97%E6%B3%95%E4%B8%93%E9%A1%B9%E8%AF%BE%E7%A8%8B/">斯坦福算法专项课程</a></div><div class="post_share"><div class="social-share" data-image="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2018/09/22/%E6%96%AF%E5%9D%A6%E7%A6%8F%E7%AE%97%E6%B3%95%E4%B8%93%E9%A1%B9%E8%AF%BE%E7%A8%8BCourse1%20week2%E4%B9%A0%E9%A2%98%E8%A7%A3%E6%9E%90/"><img class="prev-cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">斯坦福算法专项课程Course1 week2习题解析</div></div></a></div><div class="next-post pull-right"><a href="/2018/09/20/Coursera%20Cpp%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%20week%202/"><img class="next-cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">Coursera Cpp程序设计 week 2</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span> 相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2018/10/12/斯坦福算法专项课程Course1 Final Exam/" title="斯坦福算法专项课程Course1 Final Exam"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2018-10-12</div><div class="title">斯坦福算法专项课程Course1 Final Exam</div></div></a></div><div><a href="/2018/09/09/斯坦福算法专项课程Course1 week1内容回顾/" title="斯坦福算法专项课程Course1 week1内容回顾"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2018-09-09</div><div class="title">斯坦福算法专项课程Course1 week1内容回顾</div></div></a></div><div><a href="/2018/09/09/斯坦福算法专项课程Course1 week1习题解析/" title="斯坦福算法专项课程Course1 week1习题解析"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2018-09-09</div><div class="title">斯坦福算法专项课程Course1 week1习题解析</div></div></a></div><div><a href="/2019/09/01/斯坦福算法专项课程Course1 week1算法实现/" title="斯坦福算法专项课程Course1 week1算法实现"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2019-09-01</div><div class="title">斯坦福算法专项课程Course1 week1算法实现</div></div></a></div><div><a href="/2018/09/22/斯坦福算法专项课程Course1 week2习题解析/" title="斯坦福算法专项课程Course1 week2习题解析"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2018-09-22</div><div class="title">斯坦福算法专项课程Course1 week2习题解析</div></div></a></div><div><a href="/2019/09/01/斯坦福算法专项课程Course1 week2算法实现/" title="斯坦福算法专项课程Course1 week2算法实现"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2019-09-01</div><div class="title">斯坦福算法专项课程Course1 week2算法实现</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="card-info-avatar is-center"><img class="avatar-img" src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/><div class="author-info__name">Doraemonzzz</div><div class="author-info__description">个人博客，主要记录有关机器学习，数学以及计算机科学的笔记</div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">610</div></a></div><div class="card-info-data-item is-center"><a href="/tags/"><div class="headline">标签</div><div class="length-num">59</div></a></div><div class="card-info-data-item is-center"><a href="/categories/"><div class="headline">分类</div><div class="length-num">23</div></a></div></div><a class="button--animated" id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/Doraemonzzz" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="/doraemon_zzz@163.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn card-announcement-animation"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Course-2-Week-2"><span class="toc-number">1.</span> <span class="toc-text">Course 2 Week 2</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#The-Closest-Pair-Problem"><span class="toc-number">1.1.</span> <span class="toc-text">The Closest Pair Problem</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Counting-Inversions"><span class="toc-number">1.2.</span> <span class="toc-text">Counting Inversions</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Matrix-Multiplication"><span class="toc-number">1.3.</span> <span class="toc-text">Matrix Multiplication</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Master-Method"><span class="toc-number">1.4.</span> <span class="toc-text">Master Method</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-a-b-d"><span class="toc-number">1.4.1.</span> <span class="toc-text">(1) $a &#x3D; b^d$</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-a-gt-b-d"><span class="toc-number">1.4.2.</span> <span class="toc-text">(2) $a&gt;b^d$</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-a-lt-b-d"><span class="toc-number">1.4.3.</span> <span class="toc-text">(3) $a&lt;b^d$</span></a></li></ol></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2021/06/06/2021-6-6-%E7%AE%97%E6%B3%95%E6%A6%82%E8%AE%BA(DPV)%E4%B9%A0%E9%A2%98%E8%A7%A3%E7%AD%94%E2%80%94%E2%80%94%E7%AC%AC3%E7%AB%A0-%E5%9B%BE%E7%9A%84%E5%88%86%E8%A7%A3/" title="算法概论(DPV)习题解答——第3章 图的分解"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="算法概论(DPV)习题解答——第3章 图的分解"/></a><div class="content"><a class="title" href="/2021/06/06/2021-6-6-%E7%AE%97%E6%B3%95%E6%A6%82%E8%AE%BA(DPV)%E4%B9%A0%E9%A2%98%E8%A7%A3%E7%AD%94%E2%80%94%E2%80%94%E7%AC%AC3%E7%AB%A0-%E5%9B%BE%E7%9A%84%E5%88%86%E8%A7%A3/" title="算法概论(DPV)习题解答——第3章 图的分解">算法概论(DPV)习题解答——第3章 图的分解</a><time datetime="2021-06-06T14:35:00.000Z" title="发表于 2021-06-06 22:35:00">2021-06-06</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/06/06/2021-6-6-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E7%AC%AC5%E7%AB%A0-%E4%B9%A0%E9%A2%98%E8%A7%A3%E6%9E%90/" title="深入理解计算机系统 第5章 习题解析"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="深入理解计算机系统 第5章 习题解析"/></a><div class="content"><a class="title" href="/2021/06/06/2021-6-6-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E7%AC%AC5%E7%AB%A0-%E4%B9%A0%E9%A2%98%E8%A7%A3%E6%9E%90/" title="深入理解计算机系统 第5章 习题解析">深入理解计算机系统 第5章 习题解析</a><time datetime="2021-06-06T07:23:00.000Z" title="发表于 2021-06-06 15:23:00">2021-06-06</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/06/05/2021-6-5-Stanford-Compiler-PA5%E7%BF%BB%E8%AF%91/" title="Stanford Compiler PA5翻译"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Stanford Compiler PA5翻译"/></a><div class="content"><a class="title" href="/2021/06/05/2021-6-5-Stanford-Compiler-PA5%E7%BF%BB%E8%AF%91/" title="Stanford Compiler PA5翻译">Stanford Compiler PA5翻译</a><time datetime="2021-06-05T06:12:00.000Z" title="发表于 2021-06-05 14:12:00">2021-06-05</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/06/04/2021-6-4-Stanford-Compiler-PA4%E7%BF%BB%E8%AF%91/" title="Stanford Compiler PA4翻译"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Stanford Compiler PA4翻译"/></a><div class="content"><a class="title" href="/2021/06/04/2021-6-4-Stanford-Compiler-PA4%E7%BF%BB%E8%AF%91/" title="Stanford Compiler PA4翻译">Stanford Compiler PA4翻译</a><time datetime="2021-06-03T16:17:00.000Z" title="发表于 2021-06-04 00:17:00">2021-06-04</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/06/03/2021-6-3-%E5%B7%A7%E5%A6%99%E7%9A%84Y%E8%BF%90%E7%AE%97%E7%AC%A6/" title="巧妙的Y运算符"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="巧妙的Y运算符"/></a><div class="content"><a class="title" href="/2021/06/03/2021-6-3-%E5%B7%A7%E5%A6%99%E7%9A%84Y%E8%BF%90%E7%AE%97%E7%AC%A6/" title="巧妙的Y运算符">巧妙的Y运算符</a><time datetime="2021-06-03T00:54:00.000Z" title="发表于 2021-06-03 08:54:00">2021-06-03</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2021 By Doraemonzzz</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><div class="js-pjax"><script>if (!window.MathJax) {
+  window.MathJax = {
+    loader: {
+      source: {
+        '[tex]/amsCd': '[tex]/amscd'
+      }
+    },
+    tex: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]],
+      tags: 'ams'
+    },
+    options: {
+      renderActions: {
+        findScript: [10, doc => {
+          for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+            const display = !!node.type.match(/; *mode=display/)
+            const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+            const text = document.createTextNode('')
+            node.parentNode.replaceChild(text, node)
+            math.start = {node: text, delim: '', n: 0}
+            math.end = {node: text, delim: '', n: 0}
+            doc.math.push(math)
+          }
+        }, ''],
+        addClass: [200,() => {
+          document.querySelectorAll('mjx-container:not([display=\'true\']').forEach( node => {
+            const target = node.parentNode
+            if (!target.classList.contains('has-jax')) {
+              target.classList.add('mathjax-overflow')
+            }
+          })
+        }, '', false]
+      }
+    }
+  }
+  
+  const script = document.createElement('script')
+  script.src = 'https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js'
+  script.id = 'MathJax-script'
+  script.async = true
+  document.head.appendChild(script)
+} else {
+  MathJax.startup.document.state(0)
+  MathJax.texReset()
+  MathJax.typeset()
+}</script></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

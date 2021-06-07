@@ -1,0 +1,457 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Michael Collins NLP Lecture 10 | Doraemonzzz</title><meta name="keywords" content="Michael Collins NLP"><meta name="author" content="Doraemonzzz"><meta name="copyright" content="Doraemonzzz"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="课程主页：http:&#x2F;&#x2F;www.cs.columbia.edu&#x2F;~cs4705&#x2F; 课程网盘地址： 链接：https:&#x2F;&#x2F;pan.baidu.com&#x2F;s&#x2F;1KijgO7yjL_MVCC9zKZ7Jdg提取码：t1i3  这一讲介绍了对数线性标注模型（MEMMs）。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Michael Collins NLP Lecture 10">
+<meta property="og:url" content="http://doraemonzzz.com/2019/03/02/Michael%20Collins%20NLP%20Lecture%2010/index.html">
+<meta property="og:site_name" content="Doraemonzzz">
+<meta property="og:description" content="课程主页：http:&#x2F;&#x2F;www.cs.columbia.edu&#x2F;~cs4705&#x2F; 课程网盘地址： 链接：https:&#x2F;&#x2F;pan.baidu.com&#x2F;s&#x2F;1KijgO7yjL_MVCC9zKZ7Jdg提取码：t1i3  这一讲介绍了对数线性标注模型（MEMMs）。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg">
+<meta property="article:published_time" content="2019-03-02T06:03:00.000Z">
+<meta property="article:modified_time" content="2020-05-07T06:49:35.428Z">
+<meta property="article:author" content="Doraemonzzz">
+<meta property="article:tag" content="Michael Collins NLP">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="http://doraemonzzz.com/2019/03/02/Michael%20Collins%20NLP%20Lecture%2010/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"prismjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    jQuery: 'https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js',
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+    },
+    fancybox: {
+      js: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isanchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'Michael Collins NLP Lecture 10',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2020-05-07 14:49:35'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    })(window)</script><meta name="generator" content="Hexo 5.4.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="author-avatar"><img class="avatar-img" src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">文章</div><div class="length-num">610</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">标签</div><div class="length-num">59</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/categories/"><div class="headline">分类</div><div class="length-num">23</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">Doraemonzzz</a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">Michael Collins NLP Lecture 10</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2019-03-02T06:03:00.000Z" title="发表于 2019-03-02 14:03:00">2019-03-02</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2020-05-07T06:49:35.428Z" title="更新于 2020-05-07 14:49:35">2020-05-07</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/NLP/">NLP</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="Michael Collins NLP Lecture 10"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p>课程主页：<a target="_blank" rel="noopener" href="http://www.cs.columbia.edu/~cs4705/">http://www.cs.columbia.edu/~cs4705/</a></p>
+<p>课程网盘地址：</p>
+<p>链接：<a target="_blank" rel="noopener" href="https://pan.baidu.com/s/1KijgO7yjL_MVCC9zKZ7Jdg">https://pan.baidu.com/s/1KijgO7yjL_MVCC9zKZ7Jdg</a><br>提取码：t1i3 </p>
+<p>这一讲介绍了对数线性标注模型（MEMMs）。</p>
+<span id="more"></span>
+<h2 id="Chapter-8-MEMMs（对数线性标注模型）"><a href="#Chapter-8-MEMMs（对数线性标注模型）" class="headerlink" title="Chapter 8 MEMMs（对数线性标注模型）"></a>Chapter 8 MEMMs（对数线性标注模型）</h2><h3 id="8-1-介绍"><a href="#8-1-介绍" class="headerlink" title="8.1 介绍"></a>8.1 介绍</h3><p>在本章中，我们将回到标注问题。 我们之前描述了用于标注问题的隐马尔可夫模型（HMM）。本章将描述HMM的强大替代方案，即对数线性标注模型，它直接构建在对数线性模型的思想上。 对数线性标注模型的一个关键优势是它们允许高度灵活的表示，允许将特征轻松集成到模型中。</p>
+<p>​    对数线性标注模型有时被称为“最大熵马尔可夫模型（MEMMs）”。本章将交替使用术语“MEMM”和“对数线性标注模型”。 MEMM这个名字最初由McCallum等人介绍。</p>
+<p>​    对数线性标注模型是条件标注模型。 回想一下，生成标注模型定义了句子$x_1…x_n$与标注序列$y_1…y_n$的联合分布$p(x_1…x_n,y_1…y_n)$。 相反，条件标注模型定义条件分布</p>
+<script type="math/tex; mode=display">
+p(y_1...y_n|x_1...x_n)</script><p>对应于标注序列$y_1…y_n$关于输入句子$x_1…x_n$的条件概率。 我们给出以下定义：</p>
+<h6 id="定义-1-（条件标注模型）"><a href="#定义-1-（条件标注模型）" class="headerlink" title="定义 1 （条件标注模型）"></a>定义 1 （条件标注模型）</h6><p>条件标注模型包括：</p>
+<ul>
+<li><p>一组单词$\mathcal V$（这个集合可能是有限的，可数无限的，甚至是不可数无限的）。</p>
+</li>
+<li><p>一组有限的标注$\mathcal K$。</p>
+</li>
+<li><p>函数$p(y_1…y_n|x_1…x_n)$，使得：</p>
+<ol>
+<li><p>对任意$\langle x_1…x_n,y_1…y_n \rangle \in \mathcal S$，</p>
+<script type="math/tex; mode=display">
+p(y_1...y_n|x_1...x_n) \ge 0</script><p>其中$\mathcal S$是所有序列/标注序列对$\langle x_1…x_n,y_1…y_n \rangle$的集合，其中$n\ge 1,x_i \in \mathcal V,i=1…n$以及$y_i \in \mathcal K,i=1…n$。</p>
+</li>
+<li><p>对于任何$ x_1…x_n,n\ge 1$以及$x_i \in \mathcal V,i=1…n$，</p>
+<script type="math/tex; mode=display">
+\sum_{y_1...y_n \in \mathcal Y(n)}
+p(y_1...y_n|x_1...x_n) =1</script><p>其中$\mathcal Y(n)$是所有标注序列$y_1…y_n$的集合，其中$y_i \in \mathcal K,i=1…n$。</p>
+</li>
+</ol>
+</li>
+</ul>
+<p>​    给定条件标注模型，从句子$x_1…x_n$到标注序列$y_1…y_n$的函数定义为</p>
+<script type="math/tex; mode=display">
+f(x_1...x_n)=
+\arg \max_{y_1...y_n \in \mathcal Y(n)} 
+p(y_1...y_n|x_1...x_n)</script><p>因此，对于任何输入$x_1…x_n$，我们将最高概率标注序列作为模型的输出。</p>
+<p>​    我们留下以下三个问题：</p>
+<ul>
+<li><p>我们如何定义条件标注模型$p(y_1…y_n|x_1…x_n)$？</p>
+</li>
+<li><p>我们如何根据训练样样本计模型的参数？</p>
+</li>
+<li><p>对任何输入$x_1…x_n$，我们如何高效地找到</p>
+<script type="math/tex; mode=display">
+\arg \max_{y_1...y_n \in \mathcal Y(n)} 
+p(y_1...y_n|x_1...x_n)</script></li>
+</ul>
+<p>​    本章的其余部分将描述MEMM如何为这些问题提供解决方案。 简而言之，对数线性模型用于定义条件标注模型。 可以使用用于对数线性模型中的参数估计的标准方法来估计模型的参数。 MEMM做出马尔可夫独立假设，该假设与HMM中的马尔可夫独立性假设密切相关，并且允许使用动态规划有效地计算上述$\arg \max$。</p>
+<h3 id="8-2-三元MEMMs"><a href="#8-2-三元MEMMs" class="headerlink" title="8.2 三元MEMMs"></a>8.2 三元MEMMs</h3><p>本节介绍MEMM的模型形式。 我们专注于三元MEMM，它作出二阶马尔可夫假设，即每个标注取决于前两个标注。 对其他阶马尔可夫模型的推广，例如一阶（二元）或三阶（四元）MEMM，是直截了当的。</p>
+<p>​    我们的任务是对任何输入序列$x_1…x_n$与标注序列$y_1…y_n $的如下条件概率建模</p>
+<script type="math/tex; mode=display">
+P(Y_1=y_1...Y_n=y_n|X_1=x_1...X_n=x_n)</script><p>​    我们首先利用如下分解：</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+&P(Y_1=y_1...Y_n=y_n|X_1=x_1...X_n=x_n)\\
+=&\prod_{i=1}^n P(Y_i=y_i|X_1=x_1...X_n=x_n,
+Y_1=y_1...Y_{i-1}=y_{i-1}) \\
+=&\prod_{i=1}^n P(Y_i=y_i|X_1=x_1...X_n=x_n,
+Y_{i-2}=y_{i-2},Y_{i-1}=y_{i-1}) 
+\end{aligned}</script><p>根据概率的链式法则，第一个等号是准确的。 第二个等号使用了三元组独立性假设，即任何$i\in \{1…n\}$，</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+&P(Y_i=y_i|X_1=x_1...X_n=x_n,
+Y_1=y_1...Y_{i-1}=y_{i-1}) \\
+=& P(Y_i=y_i|X_1=x_1...X_n=x_n,
+Y_{i-2}=y_{i-2},Y_{i-1}=y_{i-1}) 
+\end{aligned}</script><p>这里我们假设</p>
+<script type="math/tex; mode=display">
+y_{-1}=y_0=*</script><p>其中$\star$是模型中表示序列开始的特殊符号。</p>
+<p>​    因此，我们假设随机变量$Y_i$与$Y_1…Y_{i-3}$关于整个输入序列$X_1…X_n$和前两个标注$Y_{i-2}$和$Y_{i-1}$条件独立。 这是一个三元独立假设，即每个标注仅依赖于前两个标注。 我们将看到这种独立性假设允许我们使用动态规划来有效地找到任何输入句子$x_1…x_n $的最高概率标注序列。</p>
+<p>​    请注意，上述假设与三元HMM中的独立性假设有一些相似之处，即</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+&P(Y_i=y_i|
+Y_1=y_1...Y_{i-1}=y_{i-1}) \\
+=& P(Y_i=y_i|
+Y_{i-2}=y_{i-2},Y_{i-1}=y_{i-1}) 
+\end{aligned}</script><p>关键的区别在于我们关于整个输入序列$x_1…x_n $和前两个标注$y_{i-2}$和$y_{i-1}$取条件概率。</p>
+<p>​    最后一步是使用对数线性模型来估计概率</p>
+<script type="math/tex; mode=display">
+P(Y_i=y_i|X_1=x_1...X_n=x_n,
+Y_{i-2}=y_{i-2},Y_{i-1}=y_{i-1})</script><p>对于任何一对序列$x_1…x_n$和$y_1…y_n $，我们将第$i$个“历史”定义为四元组</p>
+<script type="math/tex; mode=display">
+h_i =\langle y_{i-2},y_{i-1},x_1...x_n,i \rangle</script><p>因此，除了序列中的位置$i$之外，$h_i$还捕捉到序列中标注$y_i $的条件信息。 我们假设我们对任何历史$h_i$以及标注$y\in \mathcal K$有特征向量表示$f(h_i,y) \in \mathbb R^d$。特征向量可能会考虑任何历史$h_i$和标注$y$。作为一个例子，我们可能有如下特征：</p>
+<script type="math/tex; mode=display">
+f_1(h_i,y)=\begin{cases}
+1 & 如果x_i =\text{the}以及y=\text{DT}\\
+0 & 其他
+\end{cases}\\
+f_2(h_i,y)=\begin{cases}
+1 & 如果y_{i-1} =\text{V}以及y=\text{DT}\\
+0 & 其他
+\end{cases}\\</script><p>第8.3节描述了一组更完整的示例特征。</p>
+<p>​    最后，我们假设参数向量$\theta \in \mathbb R^d$，以及</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+&P(Y_i=y_i|X_1=x_1...X_n=x_n,
+Y_1=y_1...Y_{i-1}=y_{i-1}) \\
+=& 
+\frac{\exp(\theta. f(h_i,y_i))}
+{\sum_{y\in \mathcal K}\exp(\theta. f(h_i,y_i))}
+\end{aligned}</script><p>将上述内容总结后会产生以下结果：</p>
+<h6 id="定义-2-（三元MEMMs）"><a href="#定义-2-（三元MEMMs）" class="headerlink" title="定义 2 （三元MEMMs）"></a>定义 2 （三元MEMMs）</h6><p>三元MEMM包括</p>
+<ul>
+<li><p>一组单词$\mathcal V$（这个集合可能是有限的，可数无限的，甚至是不可数无限的）。</p>
+</li>
+<li><p>一组有限的标注$\mathcal K$。</p>
+</li>
+<li><p>给定$\mathcal V$和$\mathcal K$，将$\mathcal H$定义为所有可能历史的集合。 集合$\mathcal H$包含形如$\langle y_{i-2},y_{i-1},x_1…x_n,i \rangle$的所有四元组，其中</p>
+<script type="math/tex; mode=display">
+y_{-2}\in \mathcal K \bigcup \{*\}，y_{-1}\in \mathcal K \bigcup \{*\}</script><p>以及$n\ge 1$，对$i=1…n,x_i \in \mathcal V$。 这里*是一个特殊的“开始”符号。</p>
+</li>
+<li><p>一个整数$d$，指定模型中特征的数量。</p>
+</li>
+<li><p>指定模型特征的函数$f: \mathcal H \times \mathcal K \to \mathbb R^d$。</p>
+</li>
+<li><p>参数向量$\theta \in \mathbb R^d$。</p>
+</li>
+</ul>
+<p>​    给定这些元素，我们定义条件标注模型：</p>
+<script type="math/tex; mode=display">
+p(y_1...y_n | x_1...x_n) =\prod_{i=1}^n p(y_i |h_i;\theta)</script><p>其中$h_i =\langle y_{i-2},y_{i-1},x_1…x_n,i \rangle$以及</p>
+<script type="math/tex; mode=display">
+p(y_i |h_i;\theta) = \frac{\exp(\theta. f(h_i,y_i))}
+{\sum_{y\in \mathcal k}\exp(\theta. f(h_i,y_i))}</script><p>​    此时有许多问题。例如我们如何定义特征向量$f(h_i,y)$？ 我们如何从训练数据中学习参数$\theta $？ 我们如何对任意输入序列$x_1…x_n  $找到概率最高的标注序列</p>
+<script type="math/tex; mode=display">
+\arg \max_{y_1...y_n \in \mathcal Y(n)} 
+p(y_1...y_n|x_1...x_n)</script><p>以下部分回答了这些问题。</p>
+<h3 id="8-3-三元MEMMs中的特征"><a href="#8-3-三元MEMMs中的特征" class="headerlink" title="8.3 三元MEMMs中的特征"></a>8.3 三元MEMMs中的特征</h3><p>回顾三元MEMM中的特征向量的定义是函数$f(h,y)\in \mathbb R^d$，其中$h=\langle y_{-2},y_{-1},x_1…x_n,i \rangle$是历史，$y\in \mathcal K $是标注，$d$是指定模型中特征数量的整数。 对$j\in \{1…d\}$的每个特征$f_j(h,y)$可能对历史记录$h$以及标注$y$中的任何信息敏感。这将为模型带来很大的灵活性。 这是三元MEMM相对于三元HMM进行标注的主要优点：可以使用更丰富的一组特征进行标注任务。</p>
+<p>​    在本节中，我们举例说明如何为词性（POS）标注问题定义特征。 我们描述的特征取自Ratnaparkhi（1996）; Ratnaparkhi的实验表明，他们在英语的词性标注问题上给出了很好的表现。 在本节中，我们假设历史$h$是一个四元组$\langle y_{-2},y_{-1},x_1…x_n,i \rangle$。特征如下：</p>
+<h6 id="单词-标注特征"><a href="#单词-标注特征" class="headerlink" title="单词/标注特征"></a>单词/标注特征</h6><p>一个示例单词/标注特征如下：</p>
+<script type="math/tex; mode=display">
+f_{100}(h,y)=\begin{cases}
+1 & 如果x_i =\text{base}以及y=\text{VB}\\
+0 & 其他
+\end{cases}</script><p>此特征对标注的单词$x_i $和该单词的建议标注$y$敏感。 在实际中，除了$\text{base/VB}$，我们将为一组非常大的单词/标注对引入这种形式的特征。例如，我们可以为训练数据中看到的所有单词/标注对引入此形式的特征。</p>
+<p>​    这类特征允许模型捕获特定单词采取特定词性的趋势。 在这个意义上，它和三元HMM中的发射参数$e(x|y)$起类似的作用。 例如，给定上面给出的$f_{100}$的定义，如果$\theta_{100}$取很大的正数，那么$\text{base}$很可能被标注为$\text{VB}$；相反，如果$\theta_{100}$取很小的负数，那么$\text{base}$不大可能被标注为$\text{VB}$。</p>
+<h6 id="前缀和后缀特征"><a href="#前缀和后缀特征" class="headerlink" title="前缀和后缀特征"></a>前缀和后缀特征</h6><script type="math/tex; mode=display">
+f_{101}(h,y)=\begin{cases}
+1 & 如果x_i 以\text{ing}结尾以及y=\text{VBG}\\
+0 & 其他
+\end{cases}</script><p>此特征对标注的单词$x_i$的后缀和建议的标注$y$很敏感。 在实际中，我们将介绍这种形式的大量特征。例如，在Ratnaparkhi的POS标注中，所有在训练数据中看到的长度为$4$的后缀都作为特征（与所有可能的标注一起）。</p>
+<p>​    前缀特征的示例如下：</p>
+<script type="math/tex; mode=display">
+f_{102}(h,y)=\begin{cases}
+1 & 如果x_i 以\text{pre}开始以及y=\text{NN}\\
+0 & 其他
+\end{cases}</script><p>同样，大量前缀特征被使用。 Ratnaparkhi的POS标注器使用了训练数据中所有长度为$4$的前缀。<br>    前缀和后缀特征对于英语和许多其他语言的POS标注以及其他任务都非常有用。 例如，在滨州树库中后缀$\text{ing}$和标注$\text{VBG}$常常一起出现，这是用于动名词的标注；还有很多其他的例子。</p>
+<p>​    至关重要的是，为模型引入前缀和后缀特征非常简单。 这与用于标注的三元HMM形成对比，其中我们使用将低频词映射到捕获拼写特征的“伪单词”的想法。 在对数线性模型中对拼写特征（例如前缀和后缀特征）的集成远不如我们为HMM描述的方法那样特殊。 在实际中，当标注测试数据中不常见或根本没有在训练数据中看到的单词时，拼写特征非常有用。</p>
+<h6 id="三元，二元，一元标注特征"><a href="#三元，二元，一元标注特征" class="headerlink" title="三元，二元，一元标注特征"></a>三元，二元，一元标注特征</h6><p>三元标注特征的示例如下：</p>
+<script type="math/tex; mode=display">
+f_{103}(h,y)=\begin{cases}
+1 & 如果\langle y_{-2},y_{-1},y \rangle 
+=\langle\text{DT,JJ,VB}\rangle \\
+0 & 其他
+\end{cases}</script><p>此特征，与相关参数$\theta_{103 }$一起，与三元HMM中的$q(\text{VB}| \text{DT,JJ})$参数起类似作用，使模型了解三元标注$\langle\text{DT,JJ,VB}\rangle$是可能出现或不太可能出现。 针对大量标注三元组引入了这种形式的特征，例如在训练数据中看到的所有标注三元组。</p>
+<p>​    以下两个特征是二元和一元标注特征的示例：</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+
+f_{104}(h,y)&=\begin{cases}
+1 & 如果\langle y_{-1},y \rangle 
+=\langle\text{JJ,VB}\rangle \\
+0 & 其他
+\end{cases} \\
+f_{105}(h,y)&=\begin{cases}
+1 & 如果\langle y \rangle 
+=\langle\text{VB}\rangle \\
+0 & 其他
+\end{cases}
+\end{aligned}</script><p>第一个特征允许模型了解二元标注$\text{JJ,VB}$是可能出现或不太可能出现；第二个特征允许模型了解标注$\text{VB}$是可能出现或不太可能出现。 同样，模型中通常会引入大量的二元和一元标注特征。</p>
+<p>​    鉴于与三元特征的明显重叠，二元和一元特征乍一看似乎是多余的。例如，可能看起来特征$f_{104}$和$f_{105}$被特征$f_{103}$包含。具体来说，给定参数$\theta_{103},\theta_{104}$和$\theta_{105}$，我们可以将$\theta_{103}$重新定义为$\theta_{103}+\theta_{104}+\theta_{105}$，并且$\theta_{104}=\theta_{105}=0$，在这两组参数下，分布$p(y|x;\theta)$相同。因此，特征$f_{104}$和$f_{105} $显然可以消除。然而，当与参数估计的正则化方法结合使用时，二元和一元特征起着重要作用，类似于在平滑估计技术中使用“后退”估计$q_{ML}(\text{VB|JJ})$和$q_{ML}(\text{VB} )$。粗略地说，加上正则项，如果特征$f_{103}$中的三元组很少，则$\theta_{103}$的值不会在幅度上变得太大，而基于更多样本估计的参数值$\theta_{104}$和$\theta_{105}$将发挥更重要的作用。</p>
+<h6 id="其他上下文特征"><a href="#其他上下文特征" class="headerlink" title="其他上下文特征"></a>其他上下文特征</h6><p>Ratnaparkhi还使用了考虑$x_i$之前或之后单词，以及建议标注的特征。 示例特征如下：</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+
+f_{106}(h,y)&=\begin{cases}
+1 & 如果前一个单词x_{i-1}=\text{the}
+以及y =\text{VB}\\
+0 & 其他
+\end{cases} \\
+f_{107}(h,y)&=\begin{cases}
+1 & 如果后一个单词x_{i+1}=\text{the}
+以及y =\text{VB} \\
+0 & 其他
+\end{cases}
+\end{aligned}</script><p>同样，我们将引入许多这样的特征。 这些特征为模型添加了额外的内容，引入了$x_{i-1}$或$x_{i+1}$与建议标注之间的依赖关系。 再次注意，如何将此形式的上下文特征引入三元HMM并不是很明显。</p>
+<h6 id="其他特征"><a href="#其他特征" class="headerlink" title="其他特征"></a>其他特征</h6><p>我们已经描述了Ratnaparkhi模型的主要特征。 他包括的其他特征包括：1）拼写特征，考虑被标注的单词$x_i$是否包含数字，包含连字符，或包含大写字母; 2）将$x_{i-2}$和$x_{i+2}$处的单词与当前标注$y$结合使用的上下文特征。</p>
+<h3 id="8-4-三元MEME中的参数估计"><a href="#8-4-三元MEME中的参数估计" class="headerlink" title="8.4 三元MEME中的参数估计"></a>8.4 三元MEME中的参数估计</h3><p>可以使用前一章中描述的对数线性模型的参数估计方法来执行三元MEMM中的参数估计。训练数据是$m$个样本$(x^{(k)},y^{(k)})$的集合，$k=1…m$，其中每个$x^{(k)}$是单词序列$x^{(k)}_1…x^{(k)}_{n_k}$，并且每个$y^{(k)}$是标注序列$y^{(k)}_1…y^{(k)}_{n_k}$。 这里$n_k$是第$k$个句子或标注序列的长度。 对于任何$k\in \{1…m\}$，$i\in \{1…n_k\}$，将历史$h_i^{(k)}$定义为$\langle y^{(k)}_{i-2},y^{(k)}_{i-1},x^{(k)}_1…x^{(k)}_{n_k},i \rangle$。 我们假设对于某个整数$d$，我们有一个特征向量定义$f(h,y)\in \mathbb R^d $，因此</p>
+<script type="math/tex; mode=display">
+p(y^{(k)}_i |h^{(k)}_i;\theta) = \frac{\exp(\theta. f(h^{(k)}_i,y_i))}
+{\sum_{y\in \mathcal K}\exp(\theta. f(h^{(k)}_i,y_i))}</script><p>​    正则化的对数似然函数为</p>
+<script type="math/tex; mode=display">
+L(v) =\sum_{k=1}^m \sum_{i=1}^{n_k} \log p(y^{(k)}_i|x^{(k)}_i;\theta) 
+-\frac \lambda 2 \sum_{j=1}^ d \theta_j^2</script><p>第一项是参数$\theta  $的数据的对数似然。 第二项是正则化项，它惩罚大的参数值。 正参数$\lambda $决定了两项的相对权重。优化方法用于查找最大化此函数的参数$\theta^*$：</p>
+<script type="math/tex; mode=display">
+\theta^* =\arg \max_{\theta\in \mathbb R^d} 
+L(\theta)</script><p>​    总之，估计方法是前一章中描述的方法数线性模型中的参数估计的直接应用。</p>
+<h3 id="8-5-对MEMM解码：维特比算法的另一个应用"><a href="#8-5-对MEMM解码：维特比算法的另一个应用" class="headerlink" title="8.5 对MEMM解码：维特比算法的另一个应用"></a>8.5 对MEMM解码：维特比算法的另一个应用</h3><p>我们现在转向在三元MEMM下找到输入序列$x_1…x_n$的最可能的标注序列的问题；也就是找到</p>
+<script type="math/tex; mode=display">
+\arg \max_{y_1...y_n \in \mathcal Y(n)} 
+p(y_1...y_n|x_1...x_n)</script><p>其中</p>
+<script type="math/tex; mode=display">
+p(y_1...y_n | x_1...x_n) =\prod_{i=1}^n p(y_i |h_i;\theta)</script><p>以及$h_i =\langle y_{i-2},y_{i-1},x_1…x_n,i \rangle$。</p>
+<p>​    首先，请注意上述内容和的三元HMM标注器的解码问题的相似性，其中三元HMM的解码问题是找到</p>
+<script type="math/tex; mode=display">
+\arg \max_{y_1...y_n \in \mathcal Y(n)} =q(\text{STOP}|y_{n-1},y_n)\times \prod_{i=1}^n q(y_i|y_{i-2},y_{i-1}) e(x_i|y_i)</script><p>抛开$q(\text{STOP}|y_{n-1},y_n)$项，我们基本上取代</p>
+<script type="math/tex; mode=display">
+\prod_{i=1}^n q(y_i|y_{i-2},y_{i-1})\times e(x_i|y_i)</script><p>为</p>
+<script type="math/tex; mode=display">
+\prod_{i=1}^n p(y_i |h_i;\theta)</script><p>​    两个解码问题的相似性导致三元组MEMM的解码算法与三元HMM的解码算法非常相似。我们再次使用动态规划算法。 算法如图8.1所示。 动态规划算法的基本情形与三元HMM的基本情况相同，即</p>
+<script type="math/tex; mode=display">
+\pi(*,*,0)=1</script><p>递归的情况是</p>
+<script type="math/tex; mode=display">
+\pi(k,u,v) =\max_{w\in \mathcal K_{k-2}}
+(\pi(k-1,w,u)\times p(v|h;\theta))</script><p>其中$h=\langle w,u,x_1…x_n,k \rangle$。（我们再次定义$\mathcal K_{-1}=\mathcal K_{0}=*$，并且$\mathcal K_{-1}=\mathcal K$，$k=1…n$。）</p>
+<p>​    回想一下，三元HMM标注的递归情况是</p>
+<script type="math/tex; mode=display">
+\pi(k, u,v ) =\max_{w \in \mathcal K_{k-2}}
+(\pi(k-1, w,u) \times q(v|w,u)\times e(x_{k}|v))</script><p>因此我们简单地用$p(v|h;\theta)$代替$q(v|w,u)\times e(x_{k}|v)$。</p>
+<p>​    该算法的证明与三元HMM的维特比算法的证明非常相似。 特别是，可以证明，对于所有$k\in \{0…n\},u\in \mathcal K_{k-1}, v\in \mathcal K_{k}$</p>
+<script type="math/tex; mode=display">
+\pi(k, u,v )=\max_{y_{-1}...y_k\in S(k,u,v)}
+\prod_{i=1}^k p(y_i|h_i;\theta)</script><p>其中$S(k,u,v)$是所有序列$y_{-1}y_0…y_k$的集合，其中$y_i\in \mathcal K_i, i=-1…k$以及$y_{k-1}=u,y_k=v$。</p>
+<p><img src="https://github.com/Doraemonzzz/md-photo/blob/master/Michael%20Collins%20NLP/Lecture%2010/2019022401.jpg?raw=true" alt=""></p>
+<h3 id="8-6-总结"><a href="#8-6-总结" class="headerlink" title="8.6 总结"></a>8.6 总结</h3><p>总而言之，三元MEMM背后的主要思想如下：</p>
+<ol>
+<li><p>我们首先进行独立性假设来推导出模型</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+&P(Y_i=y_i|
+Y_1=y_1...Y_{i-1}=y_{i-1}) \\
+=& P(Y_i=y_i|
+Y_{i-2}=y_{i-2},Y_{i-1}=y_{i-1}) 
+\end{aligned}</script><p>然后假设</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+&P(Y_i=y_i|
+Y_{i-2}=y_{i-2},Y_{i-1}=y_{i-1})  \\
+=& p(y_i|h_i;\theta) \\
+=& \frac{\exp(\theta. f(h_i,y_i))}
+{\sum_{y\in \mathcal k}\exp(\theta. f(h_i,y_i))}
+\end{aligned}</script><p>其中$h_i =\langle y_{i-2},y_{i-1},x_1…x_n,i \rangle$，$f(h,y)\in \mathbb R^d$是特征向量，$\theta \in \mathbb R^d$是参数向量。</p>
+</li>
+<li><p>可以使用用于对数线性模型中的参数估计的标准方法来估计参数$\theta $，例如通过优化正则化对数似然函数。</p>
+</li>
+<li><p>解码问题是找到</p>
+<script type="math/tex; mode=display">
+\arg \max_{y_1...y_n \in \mathcal Y(n)} \prod_{i=1}^n p(y_i |h_i;\theta)</script><p>这个问题可以通过使用维特比算法的变体的动态规划算法来解决。该算法与三元HMM的维特比算法密切相关。</p>
+</li>
+<li><p>特征向量$f(h,y)$可以对历史记录$h$以及标注$y$中的任何信息敏感。 这是MEMM相对于HMM标注的主要优势：将特征引入模型更加直接。</p>
+</li>
+</ol>
+<h2 id="本讲测验题"><a href="#本讲测验题" class="headerlink" title="本讲测验题"></a>本讲测验题</h2><h3 id="Coursera部分"><a href="#Coursera部分" class="headerlink" title="Coursera部分"></a>Coursera部分</h3><h4 id="1"><a href="#1" class="headerlink" title="1."></a>1.</h4><p><img src="https://github.com/Doraemonzzz/md-photo/blob/master/Michael%20Collins%20NLP/Lecture%2010/2020050701.jpg?raw=true" alt=""></p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+p(\mathrm{D} | \text { the dog barks, } * *)&=1\\
+p(\mathrm{N} | \text { the dog barks, } * \mathrm{D})&=1\\
+p(\mathrm{V} | \text { the dog barks, } \mathrm{D} \mathrm{N})&=0.5\\
+p(\mathrm{N} | \text { the dog barks, } \mathrm{D} \mathrm{N})&=0.5
+\end{aligned}</script><h4 id="2"><a href="#2" class="headerlink" title="2."></a>2.</h4><p><img src="https://github.com/Doraemonzzz/md-photo/blob/master/Michael%20Collins%20NLP/Lecture%2010/2020050702.jpg?raw=true" alt=""></p>
+<p>(c)</p>
+<h4 id="3"><a href="#3" class="headerlink" title="3."></a>3.</h4><p><img src="https://github.com/Doraemonzzz/md-photo/blob/master/Michael%20Collins%20NLP/Lecture%2010/2020050703.jpg?raw=true" alt=""></p>
+<p>(a)(d)</p>
+<h4 id="4"><a href="#4" class="headerlink" title="4."></a>4.</h4><p><img src="https://github.com/Doraemonzzz/md-photo/blob/master/Michael%20Collins%20NLP/Lecture%2010/2020050704.jpg?raw=true" alt=""></p>
+<p>(c)</p>
+<h4 id="5"><a href="#5" class="headerlink" title="5."></a>5.</h4><p><img src="https://github.com/Doraemonzzz/md-photo/blob/master/Michael%20Collins%20NLP/Lecture%2010/2020050705.jpg?raw=true" alt=""></p>
+<p><img src="https://github.com/Doraemonzzz/md-photo/blob/master/Michael%20Collins%20NLP/Lecture%2010/2020050706.jpg?raw=true" alt=""></p>
+<p>利用公式可得</p>
+<script type="math/tex; mode=display">
+\pi(4, \mathrm{VBD}, \mathrm{DT})=q(\mathrm{DT} | \mathrm{NN}, \mathrm{VBD}, \text { the dog saw the cat }, 4)\times \pi(3, \mathrm{NN}, \mathrm{VBD})=0.008</script></article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">Doraemonzzz</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="http://doraemonzzz.com/2019/03/02/Michael%20Collins%20NLP%20Lecture%2010/">http://doraemonzzz.com/2019/03/02/Michael%20Collins%20NLP%20Lecture%2010/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://doraemonzzz.com" target="_blank">Doraemonzzz</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/Michael-Collins-NLP/">Michael Collins NLP</a></div><div class="post_share"><div class="social-share" data-image="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2019/03/02/CS229%20%E8%80%81%E7%89%88%E4%BD%9C%E4%B8%9A2/"><img class="prev-cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">CS229 老版作业2</div></div></a></div><div class="next-post pull-right"><a href="/2019/03/02/Michael%20Collins%20NLP%20Lecture%209/"><img class="next-cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">Michael Collins NLP Lecture 9</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span> 相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2020/04/08/Michael Collins NLP Homework 1/" title="Michael Collins NLP Homework 1"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-04-08</div><div class="title">Michael Collins NLP Homework 1</div></div></a></div><div><a href="/2020/04/21/Michael Collins NLP Homework 2/" title="Michael Collins NLP Homework 2"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-04-21</div><div class="title">Michael Collins NLP Homework 2</div></div></a></div><div><a href="/2020/05/07/Michael Collins NLP Homework 3/" title="Michael Collins NLP Homework 3"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-05-07</div><div class="title">Michael Collins NLP Homework 3</div></div></a></div><div><a href="/2020/05/18/Michael Collins NLP Homework 4/" title="Michael Collins NLP Homework 4"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-05-18</div><div class="title">Michael Collins NLP Homework 4</div></div></a></div><div><a href="/2019/01/24/Michael Collins NLP Lecture 1/" title="Michael Collins NLP Lecture 1"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2019-01-24</div><div class="title">Michael Collins NLP Lecture 1</div></div></a></div><div><a href="/2019/03/03/Michael Collins NLP Lecture 11/" title="Michael Collins NLP Lecture 11"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2019-03-03</div><div class="title">Michael Collins NLP Lecture 11</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="card-info-avatar is-center"><img class="avatar-img" src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/><div class="author-info__name">Doraemonzzz</div><div class="author-info__description">个人博客，主要记录有关机器学习，数学以及计算机科学的笔记</div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">610</div></a></div><div class="card-info-data-item is-center"><a href="/tags/"><div class="headline">标签</div><div class="length-num">59</div></a></div><div class="card-info-data-item is-center"><a href="/categories/"><div class="headline">分类</div><div class="length-num">23</div></a></div></div><a class="button--animated" id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/Doraemonzzz" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="/doraemon_zzz@163.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn card-announcement-animation"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Chapter-8-MEMMs%EF%BC%88%E5%AF%B9%E6%95%B0%E7%BA%BF%E6%80%A7%E6%A0%87%E6%B3%A8%E6%A8%A1%E5%9E%8B%EF%BC%89"><span class="toc-number">1.</span> <span class="toc-text">Chapter 8 MEMMs（对数线性标注模型）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#8-1-%E4%BB%8B%E7%BB%8D"><span class="toc-number">1.1.</span> <span class="toc-text">8.1 介绍</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#%E5%AE%9A%E4%B9%89-1-%EF%BC%88%E6%9D%A1%E4%BB%B6%E6%A0%87%E6%B3%A8%E6%A8%A1%E5%9E%8B%EF%BC%89"><span class="toc-number">1.1.0.0.1.</span> <span class="toc-text">定义 1 （条件标注模型）</span></a></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#8-2-%E4%B8%89%E5%85%83MEMMs"><span class="toc-number">1.2.</span> <span class="toc-text">8.2 三元MEMMs</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#%E5%AE%9A%E4%B9%89-2-%EF%BC%88%E4%B8%89%E5%85%83MEMMs%EF%BC%89"><span class="toc-number">1.2.0.0.1.</span> <span class="toc-text">定义 2 （三元MEMMs）</span></a></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#8-3-%E4%B8%89%E5%85%83MEMMs%E4%B8%AD%E7%9A%84%E7%89%B9%E5%BE%81"><span class="toc-number">1.3.</span> <span class="toc-text">8.3 三元MEMMs中的特征</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#%E5%8D%95%E8%AF%8D-%E6%A0%87%E6%B3%A8%E7%89%B9%E5%BE%81"><span class="toc-number">1.3.0.0.1.</span> <span class="toc-text">单词&#x2F;标注特征</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#%E5%89%8D%E7%BC%80%E5%92%8C%E5%90%8E%E7%BC%80%E7%89%B9%E5%BE%81"><span class="toc-number">1.3.0.0.2.</span> <span class="toc-text">前缀和后缀特征</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#%E4%B8%89%E5%85%83%EF%BC%8C%E4%BA%8C%E5%85%83%EF%BC%8C%E4%B8%80%E5%85%83%E6%A0%87%E6%B3%A8%E7%89%B9%E5%BE%81"><span class="toc-number">1.3.0.0.3.</span> <span class="toc-text">三元，二元，一元标注特征</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#%E5%85%B6%E4%BB%96%E4%B8%8A%E4%B8%8B%E6%96%87%E7%89%B9%E5%BE%81"><span class="toc-number">1.3.0.0.4.</span> <span class="toc-text">其他上下文特征</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#%E5%85%B6%E4%BB%96%E7%89%B9%E5%BE%81"><span class="toc-number">1.3.0.0.5.</span> <span class="toc-text">其他特征</span></a></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#8-4-%E4%B8%89%E5%85%83MEME%E4%B8%AD%E7%9A%84%E5%8F%82%E6%95%B0%E4%BC%B0%E8%AE%A1"><span class="toc-number">1.4.</span> <span class="toc-text">8.4 三元MEME中的参数估计</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#8-5-%E5%AF%B9MEMM%E8%A7%A3%E7%A0%81%EF%BC%9A%E7%BB%B4%E7%89%B9%E6%AF%94%E7%AE%97%E6%B3%95%E7%9A%84%E5%8F%A6%E4%B8%80%E4%B8%AA%E5%BA%94%E7%94%A8"><span class="toc-number">1.5.</span> <span class="toc-text">8.5 对MEMM解码：维特比算法的另一个应用</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#8-6-%E6%80%BB%E7%BB%93"><span class="toc-number">1.6.</span> <span class="toc-text">8.6 总结</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9C%AC%E8%AE%B2%E6%B5%8B%E9%AA%8C%E9%A2%98"><span class="toc-number">2.</span> <span class="toc-text">本讲测验题</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Coursera%E9%83%A8%E5%88%86"><span class="toc-number">2.1.</span> <span class="toc-text">Coursera部分</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1"><span class="toc-number">2.1.1.</span> <span class="toc-text">1.</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2"><span class="toc-number">2.1.2.</span> <span class="toc-text">2.</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3"><span class="toc-number">2.1.3.</span> <span class="toc-text">3.</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4"><span class="toc-number">2.1.4.</span> <span class="toc-text">4.</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#5"><span class="toc-number">2.1.5.</span> <span class="toc-text">5.</span></a></li></ol></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2021/06/06/2021-6-6-%E7%AE%97%E6%B3%95%E6%A6%82%E8%AE%BA(DPV)%E4%B9%A0%E9%A2%98%E8%A7%A3%E7%AD%94%E2%80%94%E2%80%94%E7%AC%AC3%E7%AB%A0-%E5%9B%BE%E7%9A%84%E5%88%86%E8%A7%A3/" title="算法概论(DPV)习题解答——第3章 图的分解"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="算法概论(DPV)习题解答——第3章 图的分解"/></a><div class="content"><a class="title" href="/2021/06/06/2021-6-6-%E7%AE%97%E6%B3%95%E6%A6%82%E8%AE%BA(DPV)%E4%B9%A0%E9%A2%98%E8%A7%A3%E7%AD%94%E2%80%94%E2%80%94%E7%AC%AC3%E7%AB%A0-%E5%9B%BE%E7%9A%84%E5%88%86%E8%A7%A3/" title="算法概论(DPV)习题解答——第3章 图的分解">算法概论(DPV)习题解答——第3章 图的分解</a><time datetime="2021-06-06T14:35:00.000Z" title="发表于 2021-06-06 22:35:00">2021-06-06</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/06/06/2021-6-6-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E7%AC%AC5%E7%AB%A0-%E4%B9%A0%E9%A2%98%E8%A7%A3%E6%9E%90/" title="深入理解计算机系统 第5章 习题解析"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="深入理解计算机系统 第5章 习题解析"/></a><div class="content"><a class="title" href="/2021/06/06/2021-6-6-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E7%AC%AC5%E7%AB%A0-%E4%B9%A0%E9%A2%98%E8%A7%A3%E6%9E%90/" title="深入理解计算机系统 第5章 习题解析">深入理解计算机系统 第5章 习题解析</a><time datetime="2021-06-06T07:23:00.000Z" title="发表于 2021-06-06 15:23:00">2021-06-06</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/06/05/2021-6-5-Stanford-Compiler-PA5%E7%BF%BB%E8%AF%91/" title="Stanford Compiler PA5翻译"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Stanford Compiler PA5翻译"/></a><div class="content"><a class="title" href="/2021/06/05/2021-6-5-Stanford-Compiler-PA5%E7%BF%BB%E8%AF%91/" title="Stanford Compiler PA5翻译">Stanford Compiler PA5翻译</a><time datetime="2021-06-05T06:12:00.000Z" title="发表于 2021-06-05 14:12:00">2021-06-05</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/06/04/2021-6-4-Stanford-Compiler-PA4%E7%BF%BB%E8%AF%91/" title="Stanford Compiler PA4翻译"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Stanford Compiler PA4翻译"/></a><div class="content"><a class="title" href="/2021/06/04/2021-6-4-Stanford-Compiler-PA4%E7%BF%BB%E8%AF%91/" title="Stanford Compiler PA4翻译">Stanford Compiler PA4翻译</a><time datetime="2021-06-03T16:17:00.000Z" title="发表于 2021-06-04 00:17:00">2021-06-04</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/06/03/2021-6-3-%E5%B7%A7%E5%A6%99%E7%9A%84Y%E8%BF%90%E7%AE%97%E7%AC%A6/" title="巧妙的Y运算符"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="巧妙的Y运算符"/></a><div class="content"><a class="title" href="/2021/06/03/2021-6-3-%E5%B7%A7%E5%A6%99%E7%9A%84Y%E8%BF%90%E7%AE%97%E7%AC%A6/" title="巧妙的Y运算符">巧妙的Y运算符</a><time datetime="2021-06-03T00:54:00.000Z" title="发表于 2021-06-03 08:54:00">2021-06-03</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2021 By Doraemonzzz</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><div class="js-pjax"><script>if (!window.MathJax) {
+  window.MathJax = {
+    loader: {
+      source: {
+        '[tex]/amsCd': '[tex]/amscd'
+      }
+    },
+    tex: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]],
+      tags: 'ams'
+    },
+    options: {
+      renderActions: {
+        findScript: [10, doc => {
+          for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+            const display = !!node.type.match(/; *mode=display/)
+            const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+            const text = document.createTextNode('')
+            node.parentNode.replaceChild(text, node)
+            math.start = {node: text, delim: '', n: 0}
+            math.end = {node: text, delim: '', n: 0}
+            doc.math.push(math)
+          }
+        }, ''],
+        addClass: [200,() => {
+          document.querySelectorAll('mjx-container:not([display=\'true\']').forEach( node => {
+            const target = node.parentNode
+            if (!target.classList.contains('has-jax')) {
+              target.classList.add('mathjax-overflow')
+            }
+          })
+        }, '', false]
+      }
+    }
+  }
+  
+  const script = document.createElement('script')
+  script.src = 'https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js'
+  script.id = 'MathJax-script'
+  script.async = true
+  document.head.appendChild(script)
+} else {
+  MathJax.startup.document.state(0)
+  MathJax.texReset()
+  MathJax.typeset()
+}</script></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

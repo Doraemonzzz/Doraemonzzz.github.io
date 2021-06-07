@@ -1,0 +1,497 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>CS170 Efficient Algorithms and Intractable Problems Hw1 | Doraemonzzz</title><meta name="keywords" content="CS170"><meta name="author" content="Doraemonzzz"><meta name="copyright" content="Doraemonzzz"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="课程主页： https:&#x2F;&#x2F;cs170.org&#x2F; https:&#x2F;&#x2F;inst.eecs.berkeley.edu&#x2F;~cs170&#x2F;fa18&#x2F; 课程视频： https:&#x2F;&#x2F;www.bilibili.com&#x2F;video&#x2F;BV1wK411g7ck 这次回顾Hw1。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="CS170 Efficient Algorithms and Intractable Problems Hw1">
+<meta property="og:url" content="http://doraemonzzz.com/2021/01/10/CS170%20Efficient%20Algorithms%20and%20Intractable%20Problems%20Hw1/index.html">
+<meta property="og:site_name" content="Doraemonzzz">
+<meta property="og:description" content="课程主页： https:&#x2F;&#x2F;cs170.org&#x2F; https:&#x2F;&#x2F;inst.eecs.berkeley.edu&#x2F;~cs170&#x2F;fa18&#x2F; 课程视频： https:&#x2F;&#x2F;www.bilibili.com&#x2F;video&#x2F;BV1wK411g7ck 这次回顾Hw1。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg">
+<meta property="article:published_time" content="2021-01-10T13:58:00.000Z">
+<meta property="article:modified_time" content="2021-03-04T15:22:04.154Z">
+<meta property="article:author" content="Doraemonzzz">
+<meta property="article:tag" content="CS170">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="http://doraemonzzz.com/2021/01/10/CS170%20Efficient%20Algorithms%20and%20Intractable%20Problems%20Hw1/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"prismjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    jQuery: 'https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js',
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+    },
+    fancybox: {
+      js: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isanchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'CS170 Efficient Algorithms and Intractable Problems Hw1',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2021-03-04 23:22:04'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    })(window)</script><meta name="generator" content="Hexo 5.4.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="author-avatar"><img class="avatar-img" src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">文章</div><div class="length-num">610</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">标签</div><div class="length-num">59</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/categories/"><div class="headline">分类</div><div class="length-num">23</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">Doraemonzzz</a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">CS170 Efficient Algorithms and Intractable Problems Hw1</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2021-01-10T13:58:00.000Z" title="发表于 2021-01-10 21:58:00">2021-01-10</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2021-03-04T15:22:04.154Z" title="更新于 2021-03-04 23:22:04">2021-03-04</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E7%AE%97%E6%B3%95/">算法</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="CS170 Efficient Algorithms and Intractable Problems Hw1"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p>课程主页：</p>
+<p><a target="_blank" rel="noopener" href="https://cs170.org/">https://cs170.org/</a></p>
+<p><a target="_blank" rel="noopener" href="https://inst.eecs.berkeley.edu/~cs170/fa18/">https://inst.eecs.berkeley.edu/~cs170/fa18/</a></p>
+<p>课程视频：</p>
+<p><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1wK411g7ck">https://www.bilibili.com/video/BV1wK411g7ck</a></p>
+<p>这次回顾Hw1。</p>
+<span id="more"></span>
+<h4 id="2-Analyze-the-running-time"><a href="#2-Analyze-the-running-time" class="headerlink" title="2.Analyze the running time"></a>2.Analyze the running time</h4><h5 id="a"><a href="#a" class="headerlink" title="(a)"></a>(a)</h5><script type="math/tex; mode=display">
+T(n) \in \Theta(n^2)</script><h5 id="b"><a href="#b" class="headerlink" title="(b)"></a>(b)</h5><p>总时间复杂度为</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+T(n)
+&= \sum_{i=0}^{ \log n} 2^i\\
+&=2^{\log n + 1} - 1\\
+&=2n - 1 \\
+&\in \Theta(n)
+\end{aligned}</script><h5 id="c"><a href="#c" class="headerlink" title="(c)"></a>(c)</h5><p>第$k$轮的$i$为</p>
+<script type="math/tex; mode=display">
+i = 2^{2^{k}}</script><p>令</p>
+<script type="math/tex; mode=display">
+ 2^{2^{k}} = n</script><p>得</p>
+<script type="math/tex; mode=display">
+k = \log \log n</script><p>所以</p>
+<script type="math/tex; mode=display">
+T(n) \in \Theta(\log \log n)</script><h5 id="d"><a href="#d" class="headerlink" title="(d)"></a>(d)</h5><script type="math/tex; mode=display">
+\begin{aligned}
+T(n) & =\sum_{i=1}^n \sum_{j=i^2} ^ n 1\\
+&= \sum_{i=1}^{[\sqrt n]}  \sum_{j=i^2} ^n  1\\
+&=  \sum_{i=1}^{[\sqrt n]} (n - i^2 + 1)\\
+&= n [\sqrt n] - \frac{[\sqrt n]([\sqrt n]+1) ( 2[\sqrt n] + 1)}{6} +[\sqrt n]\\
+&\in \Theta ((\sqrt n)^3)
+\end{aligned}</script><h4 id="3-Asymptotic-Complexity-Comparisons"><a href="#3-Asymptotic-Complexity-Comparisons" class="headerlink" title="3.Asymptotic Complexity Comparisons"></a>3.Asymptotic Complexity Comparisons</h4><h5 id="a-1"><a href="#a-1" class="headerlink" title="(a)"></a>(a)</h5><p>记</p>
+<script type="math/tex; mode=display">
+f_i \le f_j \Leftrightarrow f_i = O(f_j)</script><p>那么排序为</p>
+<script type="math/tex; mode=display">
+f_3 \le  f_7\le f_2 \le f_5 \le f_4
+\le f_9 \le f_8 \le f_6\le f_1</script><h5 id="b-1"><a href="#b-1" class="headerlink" title="(b)"></a>(b)</h5><p>(i)</p>
+<script type="math/tex; mode=display">
+f(n) =\Theta(g (n))</script><p>因为</p>
+<script type="math/tex; mode=display">
+\frac{f(n)} {g(n)}= \frac{\log_3 n}{\log_4 n}= \log_3 4</script><p>(ii)</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+f(n) & = 4n \log n\\
+g(n)&= 3n^2 \log n\\
+f &= O(g)
+\end{aligned}</script><p>(iii)</p>
+<script type="math/tex; mode=display">
+f= \Omega(g)</script><p>(iv)</p>
+<script type="math/tex; mode=display">
+f=\Theta( g)</script><p>(v)</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+f(n) & = 2^\left( \log n  \right)\\
+g(n) & = 2^\left( (\log \log n)^2 \right)
+\end{aligned}</script><p>所以</p>
+<script type="math/tex; mode=display">
+f= \Omega (g)</script><p>(vi)</p>
+<script type="math/tex; mode=display">
+f=\Theta(g)</script><p>(vii)</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+f(n) & = \log (n !)\\
+&=\sum_{i=1}^ n \log i\\
+&\le n \log n \\
+&\ge n \log \frac {n+1}{2} (由凸性)
+\end{aligned}</script><p>所以</p>
+<script type="math/tex; mode=display">
+f=\Theta(g)</script><h4 id="4-Bit-Counter"><a href="#4-Bit-Counter" class="headerlink" title="4.Bit Counter"></a>4.Bit Counter</h4><p>考虑flip过程</p>
+<pre class="line-numbers language-none"><code class="language-none">00...00
+00...01
+...
+01...11
+10...00
+10...01
+...
+11...11
+00...00<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>$n$位的flip可以看成2轮$n-1$位的flip，加上两次对第$n$位的flip，所以</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+T(n)
+&= T(n-1) + 1+T(n-1)+1\\
+T(n)&=2T(n- 1) +2\\
+T(n)+ 2 &= 2(T(n- 1)+2)\\
+&= 2^{n-1}(T(1)  +2)\\
+T(n) &= 2^{n+1} - 2
+\end{aligned}</script><p>从而</p>
+<script type="math/tex; mode=display">
+T(n)=\Theta(2^n)</script><h4 id="5-Recurrence-Relations"><a href="#5-Recurrence-Relations" class="headerlink" title="5.Recurrence Relations"></a>5.Recurrence Relations</h4><p>回顾主定理：</p>
+<p>如果</p>
+<script type="math/tex; mode=display">
+T(n) = aT\left(\frac n b \right) +\Theta(n^d)</script><p>那么</p>
+<script type="math/tex; mode=display">
+T(n)=\begin{cases}
+\Theta(n^d), &a<b^d\\
+\Theta(n^d\log n), &a=b^d\\
+\Theta(n^{\log_b a }), & a>b^d
+\end{cases}</script><h5 id="a-2"><a href="#a-2" class="headerlink" title="(a)"></a>(a)</h5><script type="math/tex; mode=display">
+\begin{aligned}
+a& =4\\
+b&= 2\\
+d&= 1\\
+2=\log_b a & > d =1
+\end{aligned}</script><p>所以</p>
+<script type="math/tex; mode=display">
+T(n) \in \Theta (n^2)</script><h5 id="b-2"><a href="#b-2" class="headerlink" title="(b)"></a>(b)</h5><script type="math/tex; mode=display">
+\begin{aligned}
+a& =4\\
+b&= 3\\
+d&= 2\\
+\log_3 4=\log_b a & < d =2
+\end{aligned}</script><p>所以</p>
+<script type="math/tex; mode=display">
+T(n) \in \Theta (n^2)</script><h5 id="c-1"><a href="#c-1" class="headerlink" title="(c)"></a>(c)</h5><p>利用递归树分析，在第$i$层中，有$3^i$个节点，将如下形式的项合并后共有$i +1$项：</p>
+<script type="math/tex; mode=display">
+T\left( \frac {2^j} {3^ i}   n\right)</script><p>该项的系数为$2^j$，每一项的时间复杂度为</p>
+<script type="math/tex; mode=display">
+\frac {4^j} {9^ i}   n^2</script><p>所以第$i$层的时间复杂度为</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+\sum_{j =0 }^i \frac {8^j} {9^ i}   n^2
+&=\frac{n^2}{9^ i} \times \frac{8^{i+1} - 1}{7}\\
+&= \frac 8 7 \left(\frac 8 9\right)^i n^2  -\frac 1 7 \left(\frac 1 9\right)^i  n^2
+\end{aligned}</script><p>注意递归树的层数是$\Theta(\log n)$数量级的，所以总时间复杂度为</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+T(n)
+&=\sum_{i=1}^{\log n}\left( \frac 8 7 \left(\frac 8 9\right)^i n^2  -\frac 1 7 \left(\frac 1 9\right)^i  n^2 \right)\\
+& \in \Theta(n^2)
+\end{aligned}</script><p>这里使用了结论</p>
+<script type="math/tex; mode=display">
+\sum_{i=0}^n c^i =\Theta(1), 0<c<1</script><h5 id="d-1"><a href="#d-1" class="headerlink" title="(d)"></a>(d)</h5><p>利用递归树分析，在第$i$层中，有$3^i$个节点，每个节点的规模为$n / 4^i$，所以第$i$层的总时间复杂度为</p>
+<script type="math/tex; mode=display">
+3^i \frac{n}{4^i} \log \frac{n}{4^i}
+=\left(\frac 3 4 \right) ^i n\log n - \left(\frac 3 4 \right) ^i i \times \log 4\times n</script><p>注意层数为$\Theta(\log n)$层，所以总时间复杂度为</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+T(n)
+&= \sum_{i=1}^{\log n} \left(\frac 3 4 \right) ^i n\log n - \left(\frac 3 4 \right) ^i i \times \log 4\times n\\
+&\in \Theta(n\log n)
+\end{aligned}</script><h4 id="6-Computing-Factorials"><a href="#6-Computing-Factorials" class="headerlink" title="6.Computing Factorials"></a>6.Computing Factorials</h4><h5 id="a-3"><a href="#a-3" class="headerlink" title="(a)"></a>(a)</h5><p>注意到</p>
+<script type="math/tex; mode=display">
+N!= (N-1)!\times N</script><p>记$N!$对应的比特长为$L(N)$，那么</p>
+<script type="math/tex; mode=display">
+L(N) = L(N- 1) +\Theta(\log N)</script><p>所以</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+L(N)
+&= L(1) +\sum_{i=1}^N \log i\\
+&\le L(1) + N\log N\\
+&\ge L(1) + N \log \frac {N+1}{2}\\
+L(N)&\in \Theta (N\log N)
+\end{aligned}</script><p>注意$N$为$n$比特，即</p>
+<script type="math/tex; mode=display">
+L(N)  \in \Theta (n\log N)</script><p>所以</p>
+<script type="math/tex; mode=display">
+L(N) \in \Theta(n N)</script><h5 id="b-3"><a href="#b-3" class="headerlink" title="(b)"></a>(b)</h5><p>伪代码：</p>
+<pre class="line-numbers language-none"><code class="language-none">s &#x3D; 1
+for i &#x3D; 1, 2, ..., N
+	s &#x3D; s * i
+return i<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+<p>注意$i$的比特数为$\Theta(\log i)$，以及在第$i$步中，$s$的长度为$\Theta(i\log  i)$，从而乘法的时间复杂度为$\Theta(i \log^2 i)$，所以总时间复杂度为</p>
+<script type="math/tex; mode=display">
+T(n) = \Theta \left( \sum_{i=1}^N i\log^2 i\right)</script><p>注意到</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+\sum_{i=1}^N i\log^2 i &\le N\times N \log^2 N\\
+&= N^2 \log^2 N\\
+\sum_{i=1}^N i\log^2 i & \ge \sum_{i=N/ 2}^N i\log^2 i\\
+& \ge \frac N 2  \times \frac N 2 \log^2 \frac{N}{2}
+\end{aligned}</script><p>因此</p>
+<script type="math/tex; mode=display">
+T(n) = \Theta \left( N^2\log^2 N\right)</script><h4 id="7-Four-subpart-Algorithm-Practice"><a href="#7-Four-subpart-Algorithm-Practice" class="headerlink" title="7.Four-subpart Algorithm Practice"></a>7.Four-subpart Algorithm Practice</h4><p>只考虑数组单调递增的情形（单调递减的情形类似）。</p>
+<p>Main idea:</p>
+<p>因为是有序的数组，所以采用二分法。</p>
+<p>Psuedocode:</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python">l <span class="token operator">=</span> <span class="token number">0</span>
+r <span class="token operator">=</span> n <span class="token operator">-</span> <span class="token number">1</span>
+<span class="token keyword">while</span> <span class="token punctuation">(</span>l <span class="token operator">&lt;</span> r<span class="token punctuation">)</span><span class="token punctuation">:</span>
+	m <span class="token operator">=</span> <span class="token punctuation">(</span>l <span class="token operator">+</span> r<span class="token punctuation">)</span> <span class="token operator">/</span> <span class="token number">2</span>
+	<span class="token keyword">if</span> A<span class="token punctuation">[</span>m<span class="token punctuation">]</span> <span class="token operator">&lt;</span> k<span class="token punctuation">:</span>
+        l <span class="token operator">=</span> m <span class="token operator">+</span> <span class="token number">1</span>
+     <span class="token keyword">else</span><span class="token punctuation">:</span>
+        r <span class="token operator">=</span> m
+
+<span class="token keyword">if</span> <span class="token punctuation">(</span>A<span class="token punctuation">[</span>l<span class="token punctuation">]</span> <span class="token operator">!=</span> k<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token keyword">return</span> <span class="token operator">-</span><span class="token number">1</span>
+<span class="token keyword">else</span><span class="token punctuation">:</span>
+	<span class="token keyword">return</span> l<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>Proof of correctness:</p>
+<p>如果A[m] &lt; k，那么位置必然大于m；如果A[m] &gt;= k，那么位置必然小于等于m。</p>
+<p>Running time analysis:</p>
+<script type="math/tex; mode=display">
+T(n) =\Theta(\log n)</script><h4 id="8-Hadamard-matrices"><a href="#8-Hadamard-matrices" class="headerlink" title="8.Hadamard matrices"></a>8.Hadamard matrices</h4><h5 id="a-4"><a href="#a-4" class="headerlink" title="(a)"></a>(a)</h5><script type="math/tex; mode=display">
+\begin{aligned}
+H_0 &=  \left[
+ \begin{matrix}
+1
+  \end{matrix}
+  \right]\\
+  H_1 &=  \left[
+ \begin{matrix}
+1 & 1\\
+1 & -1
+  \end{matrix}
+  \right]\\
+H_2 & = \left[
+ \begin{matrix}
+1 & 1 & 1 & 1\\
+1 & -1 & 1 & -1\\
+1 & 1 & -1 & - 1\\
+1 & -1 & -1 & 1
+  \end{matrix}
+  \right]
+\end{aligned}</script><h5 id="b-4"><a href="#b-4" class="headerlink" title="(b)"></a>(b)</h5><script type="math/tex; mode=display">
+\begin{aligned}
+H_2 v& = \left[
+ \begin{matrix}
+1 & 1 & 1 & 1\\
+1 & -1 & 1 & -1\\
+1 & 1 & -1 & - 1\\
+1 & -1 & -1 & 1
+  \end{matrix}
+  \right]
+  \left[
+ \begin{matrix}
+ 1\\
+ -1\\
+ - 1\\
+ 1
+  \end{matrix}
+  \right]\\
+ &=\left[
+ \begin{matrix}
+ 0\\
+0\\
+ 0\\
+ 4
+  \end{matrix}
+  \right]
+\end{aligned}</script><h5 id="c-2"><a href="#c-2" class="headerlink" title="(c)"></a>(c)</h5><script type="math/tex; mode=display">
+\begin{aligned}
+u_{1}&=H_{1}\left(v_{1}+v_{2}\right)\\
+&=\left[
+ \begin{matrix}
+1 & 1\\
+1 & -1
+  \end{matrix}
+  \right] \left[
+ \begin{matrix}
+0 \\
+0
+  \end{matrix}
+  \right]\\
+  &=\left[
+ \begin{matrix}
+0 \\
+0
+  \end{matrix}
+  \right]\\
+ u_2&=H_{1}\left(v_{1}-v_{2}\right)\\
+&=\left[
+ \begin{matrix}
+1 & 1\\
+1 & -1
+  \end{matrix}
+  \right] \left[
+ \begin{matrix}
+2 \\
+-2
+  \end{matrix}
+  \right]\\
+  &=\left[
+ \begin{matrix}
+0 \\
+4
+  \end{matrix}
+  \right]\\
+  u&= \left[
+ \begin{matrix}
+0 \\
+0\\
+0\\
+4
+  \end{matrix}
+  \right]\\
+  &= H_2 v
+\end{aligned}</script><h5 id="d-2"><a href="#d-2" class="headerlink" title="(d)"></a>(d)</h5><script type="math/tex; mode=display">
+\begin{aligned}
+H_k v
+&=\left[\begin{array}{c|c}
+H_{k-1} & H_{k-1} \\
+\hline H_{k-1} & -H_{k-1}
+\end{array}\right]  \left[\begin{array}{l}
+v_{1} \\
+v_{2}
+\end{array}\right]\\
+&= \left[
+ \begin{matrix}
+H_{k-1} (v_1 +v_2)\\
+H_{k-1} (v_1 -v_2)
+  \end{matrix}
+  \right]
+\end{aligned}</script><h5 id="e"><a href="#e" class="headerlink" title="(e)"></a>(e)</h5><p>利用(d)，不难得到递推算法，时间复杂度满足如下条件：</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+T(n)&=2T\left(\frac n 2\right) +\Theta (n)\\
+T(n) &\in \Theta(n\log n)
+\end{aligned}</script></article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">Doraemonzzz</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="http://doraemonzzz.com/2021/01/10/CS170%20Efficient%20Algorithms%20and%20Intractable%20Problems%20Hw1/">http://doraemonzzz.com/2021/01/10/CS170%20Efficient%20Algorithms%20and%20Intractable%20Problems%20Hw1/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://doraemonzzz.com" target="_blank">Doraemonzzz</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/CS170/">CS170</a></div><div class="post_share"><div class="social-share" data-image="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2021/01/10/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A8%8B%E5%BA%8F%E7%9A%84%E6%9E%84%E9%80%A0%E5%92%8C%E8%A7%A3%E9%87%8A(SICP)%20%E7%AC%AC2%E7%AB%A0%20%E4%B9%A0%E9%A2%98%E8%A7%A3%E6%9E%90%20Part3/"><img class="prev-cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">计算机程序的构造和解释(SICP) 第2章 习题解析 Part3</div></div></a></div><div class="next-post pull-right"><a href="/2021/01/10/CS170%20Efficient%20Algorithms%20and%20Intractable%20Problems%20Section0/"><img class="next-cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">CS170 Efficient Algorithms and Intractable Problems Section0</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span> 相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2021/04/24/2021-4-24-CS170-Efficient-Algorithms-and-Intractable-Problems-HW6/" title="CS170 Efficient Algorithms and Intractable Problems HW6"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-04-24</div><div class="title">CS170 Efficient Algorithms and Intractable Problems HW6</div></div></a></div><div><a href="/2021/04/24/2021-4-24-CS170-Efficient-Algorithms-and-Intractable-Problems-HW7/" title="CS170 Efficient Algorithms and Intractable Problems HW7"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-04-24</div><div class="title">CS170 Efficient Algorithms and Intractable Problems HW7</div></div></a></div><div><a href="/2021/04/24/2021-4-24-CS170-Efficient-Algorithms-and-Intractable-Problems-Section6/" title="CS170 Efficient Algorithms and Intractable Problems Section6"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-04-24</div><div class="title">CS170 Efficient Algorithms and Intractable Problems Section6</div></div></a></div><div><a href="/2021/04/24/2021-4-24-CS170-Efficient-Algorithms-and-Intractable-Problems-Section7/" title="CS170 Efficient Algorithms and Intractable Problems Section7"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-04-24</div><div class="title">CS170 Efficient Algorithms and Intractable Problems Section7</div></div></a></div><div><a href="/2021/05/13/2021-5-13-CS170-Efficient-Algorithms-and-Intractable-Problems-HW8/" title="CS170 Efficient Algorithms and Intractable Problems HW8"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-05-13</div><div class="title">CS170 Efficient Algorithms and Intractable Problems HW8</div></div></a></div><div><a href="/2021/05/13/2021-5-13-CS170-Efficient-Algorithms-and-Intractable-Problems-Section8/" title="CS170 Efficient Algorithms and Intractable Problems Section8"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-05-13</div><div class="title">CS170 Efficient Algorithms and Intractable Problems Section8</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="card-info-avatar is-center"><img class="avatar-img" src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/><div class="author-info__name">Doraemonzzz</div><div class="author-info__description">个人博客，主要记录有关机器学习，数学以及计算机科学的笔记</div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">610</div></a></div><div class="card-info-data-item is-center"><a href="/tags/"><div class="headline">标签</div><div class="length-num">59</div></a></div><div class="card-info-data-item is-center"><a href="/categories/"><div class="headline">分类</div><div class="length-num">23</div></a></div></div><a class="button--animated" id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/Doraemonzzz" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="/doraemon_zzz@163.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn card-announcement-animation"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#2-Analyze-the-running-time"><span class="toc-number">1.</span> <span class="toc-text">2.Analyze the running time</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#a"><span class="toc-number">1.1.</span> <span class="toc-text">(a)</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#b"><span class="toc-number">1.2.</span> <span class="toc-text">(b)</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#c"><span class="toc-number">1.3.</span> <span class="toc-text">(c)</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#d"><span class="toc-number">1.4.</span> <span class="toc-text">(d)</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-Asymptotic-Complexity-Comparisons"><span class="toc-number">2.</span> <span class="toc-text">3.Asymptotic Complexity Comparisons</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#a-1"><span class="toc-number">2.1.</span> <span class="toc-text">(a)</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#b-1"><span class="toc-number">2.2.</span> <span class="toc-text">(b)</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-Bit-Counter"><span class="toc-number">3.</span> <span class="toc-text">4.Bit Counter</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#5-Recurrence-Relations"><span class="toc-number">4.</span> <span class="toc-text">5.Recurrence Relations</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#a-2"><span class="toc-number">4.1.</span> <span class="toc-text">(a)</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#b-2"><span class="toc-number">4.2.</span> <span class="toc-text">(b)</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#c-1"><span class="toc-number">4.3.</span> <span class="toc-text">(c)</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#d-1"><span class="toc-number">4.4.</span> <span class="toc-text">(d)</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#6-Computing-Factorials"><span class="toc-number">5.</span> <span class="toc-text">6.Computing Factorials</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#a-3"><span class="toc-number">5.1.</span> <span class="toc-text">(a)</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#b-3"><span class="toc-number">5.2.</span> <span class="toc-text">(b)</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#7-Four-subpart-Algorithm-Practice"><span class="toc-number">6.</span> <span class="toc-text">7.Four-subpart Algorithm Practice</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#8-Hadamard-matrices"><span class="toc-number">7.</span> <span class="toc-text">8.Hadamard matrices</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#a-4"><span class="toc-number">7.1.</span> <span class="toc-text">(a)</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#b-4"><span class="toc-number">7.2.</span> <span class="toc-text">(b)</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#c-2"><span class="toc-number">7.3.</span> <span class="toc-text">(c)</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#d-2"><span class="toc-number">7.4.</span> <span class="toc-text">(d)</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#e"><span class="toc-number">7.5.</span> <span class="toc-text">(e)</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2021/06/06/2021-6-6-%E7%AE%97%E6%B3%95%E6%A6%82%E8%AE%BA(DPV)%E4%B9%A0%E9%A2%98%E8%A7%A3%E7%AD%94%E2%80%94%E2%80%94%E7%AC%AC3%E7%AB%A0-%E5%9B%BE%E7%9A%84%E5%88%86%E8%A7%A3/" title="算法概论(DPV)习题解答——第3章 图的分解"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="算法概论(DPV)习题解答——第3章 图的分解"/></a><div class="content"><a class="title" href="/2021/06/06/2021-6-6-%E7%AE%97%E6%B3%95%E6%A6%82%E8%AE%BA(DPV)%E4%B9%A0%E9%A2%98%E8%A7%A3%E7%AD%94%E2%80%94%E2%80%94%E7%AC%AC3%E7%AB%A0-%E5%9B%BE%E7%9A%84%E5%88%86%E8%A7%A3/" title="算法概论(DPV)习题解答——第3章 图的分解">算法概论(DPV)习题解答——第3章 图的分解</a><time datetime="2021-06-06T14:35:00.000Z" title="发表于 2021-06-06 22:35:00">2021-06-06</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/06/06/2021-6-6-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E7%AC%AC5%E7%AB%A0-%E4%B9%A0%E9%A2%98%E8%A7%A3%E6%9E%90/" title="深入理解计算机系统 第5章 习题解析"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="深入理解计算机系统 第5章 习题解析"/></a><div class="content"><a class="title" href="/2021/06/06/2021-6-6-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E7%AC%AC5%E7%AB%A0-%E4%B9%A0%E9%A2%98%E8%A7%A3%E6%9E%90/" title="深入理解计算机系统 第5章 习题解析">深入理解计算机系统 第5章 习题解析</a><time datetime="2021-06-06T07:23:00.000Z" title="发表于 2021-06-06 15:23:00">2021-06-06</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/06/05/2021-6-5-Stanford-Compiler-PA5%E7%BF%BB%E8%AF%91/" title="Stanford Compiler PA5翻译"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Stanford Compiler PA5翻译"/></a><div class="content"><a class="title" href="/2021/06/05/2021-6-5-Stanford-Compiler-PA5%E7%BF%BB%E8%AF%91/" title="Stanford Compiler PA5翻译">Stanford Compiler PA5翻译</a><time datetime="2021-06-05T06:12:00.000Z" title="发表于 2021-06-05 14:12:00">2021-06-05</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/06/04/2021-6-4-Stanford-Compiler-PA4%E7%BF%BB%E8%AF%91/" title="Stanford Compiler PA4翻译"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Stanford Compiler PA4翻译"/></a><div class="content"><a class="title" href="/2021/06/04/2021-6-4-Stanford-Compiler-PA4%E7%BF%BB%E8%AF%91/" title="Stanford Compiler PA4翻译">Stanford Compiler PA4翻译</a><time datetime="2021-06-03T16:17:00.000Z" title="发表于 2021-06-04 00:17:00">2021-06-04</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/06/03/2021-6-3-%E5%B7%A7%E5%A6%99%E7%9A%84Y%E8%BF%90%E7%AE%97%E7%AC%A6/" title="巧妙的Y运算符"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="巧妙的Y运算符"/></a><div class="content"><a class="title" href="/2021/06/03/2021-6-3-%E5%B7%A7%E5%A6%99%E7%9A%84Y%E8%BF%90%E7%AE%97%E7%AC%A6/" title="巧妙的Y运算符">巧妙的Y运算符</a><time datetime="2021-06-03T00:54:00.000Z" title="发表于 2021-06-03 08:54:00">2021-06-03</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2021 By Doraemonzzz</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><div class="js-pjax"><script>if (!window.MathJax) {
+  window.MathJax = {
+    loader: {
+      source: {
+        '[tex]/amsCd': '[tex]/amscd'
+      }
+    },
+    tex: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]],
+      tags: 'ams'
+    },
+    options: {
+      renderActions: {
+        findScript: [10, doc => {
+          for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+            const display = !!node.type.match(/; *mode=display/)
+            const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+            const text = document.createTextNode('')
+            node.parentNode.replaceChild(text, node)
+            math.start = {node: text, delim: '', n: 0}
+            math.end = {node: text, delim: '', n: 0}
+            doc.math.push(math)
+          }
+        }, ''],
+        addClass: [200,() => {
+          document.querySelectorAll('mjx-container:not([display=\'true\']').forEach( node => {
+            const target = node.parentNode
+            if (!target.classList.contains('has-jax')) {
+              target.classList.add('mathjax-overflow')
+            }
+          })
+        }, '', false]
+      }
+    }
+  }
+  
+  const script = document.createElement('script')
+  script.src = 'https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js'
+  script.id = 'MathJax-script'
+  script.async = true
+  document.head.appendChild(script)
+} else {
+  MathJax.startup.document.state(0)
+  MathJax.texReset()
+  MathJax.typeset()
+}</script></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

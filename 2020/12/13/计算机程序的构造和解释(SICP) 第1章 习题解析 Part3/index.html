@@ -1,0 +1,882 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>计算机程序的构造和解释(SICP) 第1章 习题解析 Part3 | Doraemonzzz</title><meta name="keywords" content="计算机程序的构造和解释"><meta name="author" content="Doraemonzzz"><meta name="copyright" content="Doraemonzzz"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="这次回顾第一章剩余全部习题。 学习资料： https:&#x2F;&#x2F;ocw.mit.edu&#x2F;courses&#x2F;electrical-engineering-and-computer-science&#x2F;6-001-structure-and-interpretation-of-computer-programs-spring-2005&#x2F;index.htm https:&#x2F;&#x2F;github.com&#x2F;DeathKing&#x2F;">
+<meta property="og:type" content="article">
+<meta property="og:title" content="计算机程序的构造和解释(SICP) 第1章 习题解析 Part3">
+<meta property="og:url" content="http://doraemonzzz.com/2020/12/13/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A8%8B%E5%BA%8F%E7%9A%84%E6%9E%84%E9%80%A0%E5%92%8C%E8%A7%A3%E9%87%8A(SICP)%20%E7%AC%AC1%E7%AB%A0%20%E4%B9%A0%E9%A2%98%E8%A7%A3%E6%9E%90%20Part3/index.html">
+<meta property="og:site_name" content="Doraemonzzz">
+<meta property="og:description" content="这次回顾第一章剩余全部习题。 学习资料： https:&#x2F;&#x2F;ocw.mit.edu&#x2F;courses&#x2F;electrical-engineering-and-computer-science&#x2F;6-001-structure-and-interpretation-of-computer-programs-spring-2005&#x2F;index.htm https:&#x2F;&#x2F;github.com&#x2F;DeathKing&#x2F;">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg">
+<meta property="article:published_time" content="2020-12-13T11:19:00.000Z">
+<meta property="article:modified_time" content="2020-12-13T11:26:18.349Z">
+<meta property="article:author" content="Doraemonzzz">
+<meta property="article:tag" content="计算机程序的构造和解释">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="http://doraemonzzz.com/2020/12/13/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A8%8B%E5%BA%8F%E7%9A%84%E6%9E%84%E9%80%A0%E5%92%8C%E8%A7%A3%E9%87%8A(SICP)%20%E7%AC%AC1%E7%AB%A0%20%E4%B9%A0%E9%A2%98%E8%A7%A3%E6%9E%90%20Part3/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"prismjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    jQuery: 'https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js',
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+    },
+    fancybox: {
+      js: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isanchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '计算机程序的构造和解释(SICP) 第1章 习题解析 Part3',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2020-12-13 19:26:18'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    })(window)</script><meta name="generator" content="Hexo 5.4.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="author-avatar"><img class="avatar-img" src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">文章</div><div class="length-num">610</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">标签</div><div class="length-num">59</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/categories/"><div class="headline">分类</div><div class="length-num">23</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">Doraemonzzz</a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">计算机程序的构造和解释(SICP) 第1章 习题解析 Part3</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2020-12-13T11:19:00.000Z" title="发表于 2020-12-13 19:19:00">2020-12-13</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2020-12-13T11:26:18.349Z" title="更新于 2020-12-13 19:26:18">2020-12-13</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%8E%9F%E7%90%86/">计算机原理</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="计算机程序的构造和解释(SICP) 第1章 习题解析 Part3"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p>这次回顾第一章剩余全部习题。</p>
+<p>学习资料：</p>
+<p><a target="_blank" rel="noopener" href="https://ocw.mit.edu/courses/electrical-engineering-and-computer-science/6-001-structure-and-interpretation-of-computer-programs-spring-2005/index.htm">https://ocw.mit.edu/courses/electrical-engineering-and-computer-science/6-001-structure-and-interpretation-of-computer-programs-spring-2005/index.htm</a></p>
+<p><a target="_blank" rel="noopener" href="https://github.com/DeathKing/Learning-SICP">https://github.com/DeathKing/Learning-SICP</a></p>
+<p><a target="_blank" rel="noopener" href="https://mitpress.mit.edu/sites/default/files/sicp/index.html">https://mitpress.mit.edu/sites/default/files/sicp/index.html</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1Xx41117tr?from=search&amp;seid=14983483066585274454">https://www.bilibili.com/video/BV1Xx41117tr?from=search&amp;seid=14983483066585274454</a></p>
+<p>参考资料：</p>
+<p><a target="_blank" rel="noopener" href="https://sicp.readthedocs.io/en/latest">https://sicp.readthedocs.io/en/latest</a></p>
+<span id="more"></span>
+<p>参考资料：</p>
+<p><a target="_blank" rel="noopener" href="https://sicp.readthedocs.io/en/latest">https://sicp.readthedocs.io/en/latest</a></p>
+<h4 id="1-29-p39"><a href="#1-29-p39" class="headerlink" title="1.29(p39)"></a>1.29(p39)</h4><p>记</p>
+<script type="math/tex; mode=display">
+x_{2k}=y_{2k} + 4y_{2k+1} + y_{2k+2}</script><p>那么</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+&\frac{h}{3}\left[y_{0}+4 y_{1}+2 y_{2}+4 y_{3}+2 y_{4}+\cdots+2 y_{n-2}+4 y_{n-1}+y_{n}\right]\\
+=& \frac h3  \sum_{k=0}^{n/2} x_{2k}
+\end{aligned}</script><p>从而得到代码：</p>
+<pre class="line-numbers language-scheme" data-language="scheme"><code class="language-scheme"><span class="token punctuation">(</span><span class="token keyword">define</span> <span class="token punctuation">(</span><span class="token function">sum</span> term a next b<span class="token punctuation">)</span>
+  <span class="token punctuation">(</span><span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">></span> a b<span class="token punctuation">)</span>
+      <span class="token number">0</span>
+      <span class="token punctuation">(</span><span class="token operator">+</span> <span class="token punctuation">(</span><span class="token function">term</span> a<span class="token punctuation">)</span>
+         <span class="token punctuation">(</span><span class="token function">sum</span> term <span class="token punctuation">(</span><span class="token function">next</span> a<span class="token punctuation">)</span> next b<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+
+<span class="token punctuation">(</span><span class="token keyword">define</span> <span class="token punctuation">(</span><span class="token function">cube</span> x<span class="token punctuation">)</span> <span class="token punctuation">(</span><span class="token operator">*</span> x x x<span class="token punctuation">)</span><span class="token punctuation">)</span>
+
+<span class="token punctuation">(</span><span class="token keyword">define</span> <span class="token punctuation">(</span><span class="token function">simpson</span> f a b n<span class="token punctuation">)</span>
+    <span class="token punctuation">(</span><span class="token keyword">define</span> h <span class="token punctuation">(</span><span class="token operator">/</span> <span class="token punctuation">(</span><span class="token operator">-</span> b a<span class="token punctuation">)</span> n<span class="token punctuation">)</span><span class="token punctuation">)</span>
+    <span class="token punctuation">(</span><span class="token keyword">define</span> <span class="token punctuation">(</span><span class="token function">g</span> a0<span class="token punctuation">)</span>
+        <span class="token punctuation">(</span><span class="token operator">+</span> <span class="token punctuation">(</span><span class="token function">f</span> a0<span class="token punctuation">)</span>
+           <span class="token punctuation">(</span><span class="token operator">*</span> <span class="token number">4</span> <span class="token punctuation">(</span><span class="token function">f</span> <span class="token punctuation">(</span><span class="token operator">+</span> a0 h<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+           <span class="token punctuation">(</span><span class="token function">f</span> <span class="token punctuation">(</span><span class="token operator">+</span> a0 <span class="token punctuation">(</span><span class="token operator">*</span> <span class="token number">2</span> h<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+    <span class="token punctuation">(</span><span class="token keyword">define</span> <span class="token punctuation">(</span><span class="token function">next</span> a<span class="token punctuation">)</span> <span class="token punctuation">(</span><span class="token operator">+</span> a <span class="token punctuation">(</span><span class="token operator">*</span> <span class="token number">2</span> h<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+    <span class="token punctuation">(</span><span class="token operator">*</span> <span class="token punctuation">(</span><span class="token function">sum</span> g a next b<span class="token punctuation">)</span> 
+       <span class="token punctuation">(</span><span class="token operator">/</span> h <span class="token number">3</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+
+<span class="token punctuation">(</span><span class="token function">display</span> <span class="token punctuation">(</span><span class="token function">simpson</span> cube <span class="token number">0</span> <span class="token number">1.0</span> <span class="token number">100</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+<span class="token punctuation">(</span><span class="token builtin">newline</span><span class="token punctuation">)</span>
+<span class="token punctuation">(</span><span class="token function">display</span> <span class="token punctuation">(</span><span class="token function">simpson</span> cube <span class="token number">0</span> <span class="token number">1.0</span> <span class="token number">1000</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<pre class="line-numbers language-none"><code class="language-none">0.25000000000000044
+0.2500000000000006<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<h4 id="1-30-p40"><a href="#1-30-p40" class="headerlink" title="1.30(p40)"></a>1.30(p40)</h4><pre class="line-numbers language-scheme" data-language="scheme"><code class="language-scheme"><span class="token punctuation">(</span><span class="token keyword">define</span> <span class="token punctuation">(</span><span class="token function">sum</span> term a next b<span class="token punctuation">)</span>
+    <span class="token punctuation">(</span><span class="token keyword">define</span> <span class="token punctuation">(</span><span class="token function">iter</span> a result<span class="token punctuation">)</span>
+        <span class="token punctuation">(</span><span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">></span> a b<span class="token punctuation">)</span>
+            result
+            <span class="token punctuation">(</span><span class="token function">iter</span> <span class="token punctuation">(</span><span class="token function">next</span> a<span class="token punctuation">)</span> <span class="token punctuation">(</span><span class="token operator">+</span> result <span class="token punctuation">(</span><span class="token function">term</span> a<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+    <span class="token punctuation">(</span><span class="token function">iter</span> a <span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h4 id="1-31-p40"><a href="#1-31-p40" class="headerlink" title="1.31(p40)"></a>1.31(p40)</h4><p>定义</p>
+<script type="math/tex; mode=display">
+x_{2k}= \frac{(2k)\times (2k + 2)}{(2k + 1)^2}</script><p>那么</p>
+<script type="math/tex; mode=display">
+\pi = 4\times \prod_{k=1}^{\infty} x_{2k}</script><p>定义</p>
+<script type="math/tex; mode=display">
+\pi_n =4\times \prod_{k=1}^{n} x_{2k}</script><p>代码如下：</p>
+<pre class="line-numbers language-scheme" data-language="scheme"><code class="language-scheme"><span class="token punctuation">(</span><span class="token keyword">define</span> <span class="token punctuation">(</span><span class="token function">product1</span> term a next b<span class="token punctuation">)</span>
+  <span class="token punctuation">(</span><span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">></span> a b<span class="token punctuation">)</span>
+      <span class="token number">1</span>
+      <span class="token punctuation">(</span><span class="token operator">*</span> <span class="token punctuation">(</span><span class="token function">term</span> a<span class="token punctuation">)</span>
+         <span class="token punctuation">(</span><span class="token function">product1</span> term <span class="token punctuation">(</span><span class="token function">next</span> a<span class="token punctuation">)</span> next b<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+
+<span class="token punctuation">(</span><span class="token keyword">define</span> <span class="token punctuation">(</span><span class="token function">product2</span> term a next b<span class="token punctuation">)</span>
+    <span class="token punctuation">(</span><span class="token keyword">define</span> <span class="token punctuation">(</span><span class="token function">iter</span> a result<span class="token punctuation">)</span>
+        <span class="token punctuation">(</span><span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">></span> a b<span class="token punctuation">)</span>
+            result
+            <span class="token punctuation">(</span><span class="token function">iter</span> <span class="token punctuation">(</span><span class="token function">next</span> a<span class="token punctuation">)</span> <span class="token punctuation">(</span><span class="token operator">*</span> result <span class="token punctuation">(</span><span class="token function">term</span> a<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+    <span class="token punctuation">(</span><span class="token function">iter</span> a <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+
+<span class="token comment">;; factorial</span>
+<span class="token punctuation">(</span><span class="token keyword">define</span> 
+    <span class="token punctuation">(</span><span class="token function">term</span> a<span class="token punctuation">)</span> a<span class="token punctuation">)</span>
+<span class="token punctuation">(</span><span class="token keyword">define</span> 
+    <span class="token punctuation">(</span><span class="token function">next</span> a<span class="token punctuation">)</span> <span class="token punctuation">(</span><span class="token operator">+</span> a <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+
+<span class="token punctuation">(</span><span class="token keyword">define</span> <span class="token punctuation">(</span><span class="token function">factorial</span> product n<span class="token punctuation">)</span>
+    <span class="token punctuation">(</span><span class="token function">product</span> term <span class="token number">1</span> next n<span class="token punctuation">)</span><span class="token punctuation">)</span>
+
+<span class="token punctuation">(</span><span class="token function">display</span> <span class="token string">"Factorial: "</span><span class="token punctuation">)</span>
+<span class="token punctuation">(</span><span class="token builtin">newline</span><span class="token punctuation">)</span>
+<span class="token punctuation">(</span><span class="token function">display</span> <span class="token string">"Product1: "</span><span class="token punctuation">)</span>
+<span class="token punctuation">(</span><span class="token function">display</span> <span class="token punctuation">(</span><span class="token function">factorial</span> product1 <span class="token number">5</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+<span class="token punctuation">(</span><span class="token builtin">newline</span><span class="token punctuation">)</span>
+<span class="token punctuation">(</span><span class="token function">display</span> <span class="token string">"Product2: "</span><span class="token punctuation">)</span>
+<span class="token punctuation">(</span><span class="token function">display</span> <span class="token punctuation">(</span><span class="token function">factorial</span> product2 <span class="token number">5</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+<span class="token punctuation">(</span><span class="token builtin">newline</span><span class="token punctuation">)</span>
+
+<span class="token comment">;; pi</span>
+<span class="token punctuation">(</span><span class="token keyword">define</span> <span class="token punctuation">(</span><span class="token builtin">square</span> x<span class="token punctuation">)</span>
+    <span class="token punctuation">(</span><span class="token operator">*</span> x x<span class="token punctuation">)</span><span class="token punctuation">)</span>
+
+<span class="token punctuation">(</span><span class="token keyword">define</span> <span class="token punctuation">(</span><span class="token function">term</span> 2k<span class="token punctuation">)</span>
+    <span class="token punctuation">(</span><span class="token operator">/</span> <span class="token punctuation">(</span><span class="token operator">*</span> 2k <span class="token punctuation">(</span><span class="token operator">+</span> 2k <span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">(</span><span class="token builtin">square</span> <span class="token punctuation">(</span><span class="token operator">+</span> 2k <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+<span class="token punctuation">(</span><span class="token keyword">define</span> <span class="token punctuation">(</span><span class="token function">next</span> 2k<span class="token punctuation">)</span>
+    <span class="token punctuation">(</span><span class="token operator">+</span> 2k <span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+
+<span class="token punctuation">(</span><span class="token keyword">define</span> <span class="token punctuation">(</span><span class="token function">pi</span> product n<span class="token punctuation">)</span>
+    <span class="token punctuation">(</span><span class="token operator">*</span> <span class="token number">4</span> <span class="token punctuation">(</span><span class="token function">product</span> term <span class="token number">2.0</span> next <span class="token punctuation">(</span><span class="token operator">*</span> <span class="token number">2</span> n<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+
+<span class="token punctuation">(</span><span class="token function">display</span> <span class="token string">"Pi: "</span><span class="token punctuation">)</span>
+<span class="token punctuation">(</span><span class="token builtin">newline</span><span class="token punctuation">)</span>
+<span class="token punctuation">(</span><span class="token function">display</span> <span class="token string">"Product1: "</span><span class="token punctuation">)</span>
+<span class="token punctuation">(</span><span class="token function">display</span> <span class="token punctuation">(</span><span class="token function">pi</span> product1 <span class="token number">100</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+<span class="token punctuation">(</span><span class="token builtin">newline</span><span class="token punctuation">)</span>
+<span class="token punctuation">(</span><span class="token function">display</span> <span class="token string">"Product2: "</span><span class="token punctuation">)</span>
+<span class="token punctuation">(</span><span class="token function">display</span> <span class="token punctuation">(</span><span class="token function">pi</span> product2 <span class="token number">100</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>结果如下：</p>
+<pre class="line-numbers language-none"><code class="language-none">Factorial:
+Product1: 120
+Product2: 120
+Pi:
+Product1: 3.1493784731686008
+Product2: 3.149378473168601<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h4 id="1-32-p40"><a href="#1-32-p40" class="headerlink" title="1.32(p40)"></a>1.32(p40)</h4><pre class="line-numbers language-scheme" data-language="scheme"><code class="language-scheme"><span class="token comment">; 递归</span>
+<span class="token punctuation">(</span><span class="token keyword">define</span> <span class="token punctuation">(</span><span class="token function">accumulate1</span> combiner null-value term a next b<span class="token punctuation">)</span>
+    <span class="token punctuation">(</span><span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">></span> a b<span class="token punctuation">)</span>
+        null-value
+        <span class="token punctuation">(</span><span class="token function">combiner</span> <span class="token punctuation">(</span><span class="token function">term</span> a<span class="token punctuation">)</span> <span class="token punctuation">(</span><span class="token function">accumulate1</span> combiner null-value term <span class="token punctuation">(</span><span class="token function">next</span> a<span class="token punctuation">)</span> next b<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+
+<span class="token comment">; 迭代</span>
+<span class="token punctuation">(</span><span class="token keyword">define</span> <span class="token punctuation">(</span><span class="token function">accumulate2</span> combiner null-value term a next b<span class="token punctuation">)</span>
+    <span class="token punctuation">(</span><span class="token keyword">define</span> <span class="token punctuation">(</span><span class="token function">iter</span> a result<span class="token punctuation">)</span>
+        <span class="token punctuation">(</span><span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">></span> a b<span class="token punctuation">)</span>
+            result
+            <span class="token punctuation">(</span><span class="token function">iter</span> <span class="token punctuation">(</span><span class="token function">next</span> a<span class="token punctuation">)</span> <span class="token punctuation">(</span><span class="token function">combiner</span> result <span class="token punctuation">(</span><span class="token function">term</span> a<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+    <span class="token punctuation">(</span><span class="token function">iter</span> a null-value<span class="token punctuation">)</span><span class="token punctuation">)</span>
+
+<span class="token comment">; sum</span>
+<span class="token punctuation">(</span><span class="token keyword">define</span> <span class="token punctuation">(</span><span class="token function">sum</span> term a next b<span class="token punctuation">)</span>
+    <span class="token punctuation">(</span><span class="token keyword">define</span> <span class="token punctuation">(</span><span class="token function">combiner</span> a b<span class="token punctuation">)</span>
+        <span class="token punctuation">(</span><span class="token operator">+</span> a b<span class="token punctuation">)</span><span class="token punctuation">)</span>
+    <span class="token punctuation">(</span><span class="token keyword">define</span> null-value <span class="token number">0</span><span class="token punctuation">)</span>
+    <span class="token punctuation">(</span><span class="token function">accumulate1</span> combiner null-value term a next b<span class="token punctuation">)</span><span class="token punctuation">)</span>
+
+<span class="token comment">; prod</span>
+<span class="token punctuation">(</span><span class="token keyword">define</span> <span class="token punctuation">(</span><span class="token function">product</span> term a next b<span class="token punctuation">)</span>
+    <span class="token punctuation">(</span><span class="token keyword">define</span> <span class="token punctuation">(</span><span class="token function">combiner</span> a b<span class="token punctuation">)</span>
+        <span class="token punctuation">(</span><span class="token operator">*</span> a b<span class="token punctuation">)</span><span class="token punctuation">)</span>
+    <span class="token punctuation">(</span><span class="token keyword">define</span> null-value <span class="token number">1</span><span class="token punctuation">)</span>
+    <span class="token punctuation">(</span><span class="token function">accumulate1</span> combiner null-value term a next b<span class="token punctuation">)</span><span class="token punctuation">)</span>
+
+<span class="token comment">; test</span>
+<span class="token comment">; test for sum</span>
+<span class="token punctuation">(</span><span class="token keyword">define</span> <span class="token punctuation">(</span><span class="token function">cube</span> x<span class="token punctuation">)</span> <span class="token punctuation">(</span><span class="token operator">*</span> x x x<span class="token punctuation">)</span><span class="token punctuation">)</span>
+
+<span class="token punctuation">(</span><span class="token keyword">define</span> <span class="token punctuation">(</span><span class="token function">simpson</span> f a b n<span class="token punctuation">)</span>
+    <span class="token punctuation">(</span><span class="token keyword">define</span> h <span class="token punctuation">(</span><span class="token operator">/</span> <span class="token punctuation">(</span><span class="token operator">-</span> b a<span class="token punctuation">)</span> n<span class="token punctuation">)</span><span class="token punctuation">)</span>
+    <span class="token punctuation">(</span><span class="token keyword">define</span> <span class="token punctuation">(</span><span class="token function">g</span> a0<span class="token punctuation">)</span>
+        <span class="token punctuation">(</span><span class="token operator">+</span> <span class="token punctuation">(</span><span class="token function">f</span> a0<span class="token punctuation">)</span>
+           <span class="token punctuation">(</span><span class="token operator">*</span> <span class="token number">4</span> <span class="token punctuation">(</span><span class="token function">f</span> <span class="token punctuation">(</span><span class="token operator">+</span> a0 h<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+           <span class="token punctuation">(</span><span class="token function">f</span> <span class="token punctuation">(</span><span class="token operator">+</span> a0 <span class="token punctuation">(</span><span class="token operator">*</span> <span class="token number">2</span> h<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+    <span class="token punctuation">(</span><span class="token keyword">define</span> <span class="token punctuation">(</span><span class="token function">next</span> a<span class="token punctuation">)</span> <span class="token punctuation">(</span><span class="token operator">+</span> a <span class="token punctuation">(</span><span class="token operator">*</span> <span class="token number">2</span> h<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+    <span class="token punctuation">(</span><span class="token operator">*</span> <span class="token punctuation">(</span><span class="token function">sum</span> g a next b<span class="token punctuation">)</span> 
+       <span class="token punctuation">(</span><span class="token operator">/</span> h <span class="token number">3</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+
+<span class="token punctuation">(</span><span class="token function">display</span> <span class="token string">"Test for accumulate1 and sum:"</span><span class="token punctuation">)</span>
+<span class="token punctuation">(</span><span class="token builtin">newline</span><span class="token punctuation">)</span>
+<span class="token punctuation">(</span><span class="token function">display</span> <span class="token punctuation">(</span><span class="token function">simpson</span> cube <span class="token number">0</span> <span class="token number">1.0</span> <span class="token number">100</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+<span class="token punctuation">(</span><span class="token builtin">newline</span><span class="token punctuation">)</span>
+<span class="token punctuation">(</span><span class="token function">display</span> <span class="token punctuation">(</span><span class="token function">simpson</span> cube <span class="token number">0</span> <span class="token number">1.0</span> <span class="token number">1000</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+<span class="token punctuation">(</span><span class="token builtin">newline</span><span class="token punctuation">)</span>
+
+<span class="token comment">; test for prod</span>
+<span class="token punctuation">(</span><span class="token keyword">define</span> <span class="token punctuation">(</span><span class="token builtin">square</span> x<span class="token punctuation">)</span>
+    <span class="token punctuation">(</span><span class="token operator">*</span> x x<span class="token punctuation">)</span><span class="token punctuation">)</span>
+
+<span class="token punctuation">(</span><span class="token keyword">define</span> <span class="token punctuation">(</span><span class="token function">term</span> 2k<span class="token punctuation">)</span>
+    <span class="token punctuation">(</span><span class="token operator">/</span> <span class="token punctuation">(</span><span class="token operator">*</span> 2k <span class="token punctuation">(</span><span class="token operator">+</span> 2k <span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">(</span><span class="token builtin">square</span> <span class="token punctuation">(</span><span class="token operator">+</span> 2k <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+<span class="token punctuation">(</span><span class="token keyword">define</span> <span class="token punctuation">(</span><span class="token function">next</span> 2k<span class="token punctuation">)</span>
+    <span class="token punctuation">(</span><span class="token operator">+</span> 2k <span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+
+<span class="token punctuation">(</span><span class="token keyword">define</span> <span class="token punctuation">(</span><span class="token function">pi</span> product n<span class="token punctuation">)</span>
+    <span class="token punctuation">(</span><span class="token operator">*</span> <span class="token number">4</span> <span class="token punctuation">(</span><span class="token function">product</span> term <span class="token number">2.0</span> next <span class="token punctuation">(</span><span class="token operator">*</span> <span class="token number">2</span> n<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+
+<span class="token punctuation">(</span><span class="token function">display</span> <span class="token string">"Test for accumulate2 and product:"</span><span class="token punctuation">)</span>
+<span class="token punctuation">(</span><span class="token builtin">newline</span><span class="token punctuation">)</span>
+<span class="token punctuation">(</span><span class="token function">display</span> <span class="token string">"Pi: "</span><span class="token punctuation">)</span>
+<span class="token punctuation">(</span><span class="token function">display</span> <span class="token punctuation">(</span><span class="token function">pi</span> product <span class="token number">100</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>结果：</p>
+<pre class="line-numbers language-none"><code class="language-none">Test for accumulate1 and sum:
+0.25000000000000044
+0.2500000000000006
+Test for accumulate2 and product:
+Pi: 3.1493784731686008<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h4 id="1-33-p40"><a href="#1-33-p40" class="headerlink" title="1.33(p40)"></a>1.33(p40)</h4><p>对之前的代码稍微修改即可，这里(a)的函数包含上下界$a,b$：</p>
+<pre class="line-numbers language-scheme" data-language="scheme"><code class="language-scheme"><span class="token comment">;; prime?</span>
+<span class="token punctuation">(</span><span class="token keyword">define</span> <span class="token punctuation">(</span><span class="token builtin">square</span> a<span class="token punctuation">)</span>
+    <span class="token punctuation">(</span><span class="token operator">*</span> a a<span class="token punctuation">)</span><span class="token punctuation">)</span>
+
+<span class="token punctuation">(</span><span class="token keyword">define</span> <span class="token punctuation">(</span><span class="token function">smallest-divisor</span> n<span class="token punctuation">)</span>
+  <span class="token punctuation">(</span><span class="token function">find-divisor</span> n <span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+
+<span class="token punctuation">(</span><span class="token keyword">define</span> <span class="token punctuation">(</span><span class="token function">find-divisor</span> n test-divisor<span class="token punctuation">)</span>
+  <span class="token punctuation">(</span><span class="token keyword">cond</span> <span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token operator">></span> <span class="token punctuation">(</span><span class="token builtin">square</span> test-divisor<span class="token punctuation">)</span> n<span class="token punctuation">)</span> n<span class="token punctuation">)</span>
+        <span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token function">divides?</span> test-divisor n<span class="token punctuation">)</span> test-divisor<span class="token punctuation">)</span>
+        <span class="token punctuation">(</span><span class="token keyword">else</span> <span class="token punctuation">(</span><span class="token function">find-divisor</span> n <span class="token punctuation">(</span><span class="token operator">+</span> test-divisor <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+
+<span class="token punctuation">(</span><span class="token keyword">define</span> <span class="token punctuation">(</span><span class="token function">divides?</span> a b<span class="token punctuation">)</span>
+  <span class="token punctuation">(</span><span class="token operator">=</span> <span class="token punctuation">(</span><span class="token builtin">remainder</span> b a<span class="token punctuation">)</span> <span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+
+<span class="token punctuation">(</span><span class="token keyword">define</span> <span class="token punctuation">(</span><span class="token function">prime?</span> n<span class="token punctuation">)</span>
+  <span class="token punctuation">(</span><span class="token operator">=</span> n <span class="token punctuation">(</span><span class="token function">smallest-divisor</span> n<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+
+<span class="token comment">;; 1.33</span>
+<span class="token punctuation">(</span><span class="token keyword">define</span> <span class="token punctuation">(</span><span class="token function">filtered-accumulate</span> combiner filter null-value term a next b<span class="token punctuation">)</span>
+    <span class="token punctuation">(</span><span class="token keyword">cond</span> <span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token operator">></span> a b<span class="token punctuation">)</span> null-value<span class="token punctuation">)</span>
+          <span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token function">filter</span> a<span class="token punctuation">)</span> <span class="token punctuation">(</span><span class="token function">combiner</span> <span class="token punctuation">(</span><span class="token function">term</span> a<span class="token punctuation">)</span> <span class="token punctuation">(</span><span class="token function">filtered-accumulate</span> combiner filter null-value term <span class="token punctuation">(</span><span class="token function">next</span> a<span class="token punctuation">)</span> next b<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+          <span class="token punctuation">(</span><span class="token keyword">else</span> <span class="token punctuation">(</span><span class="token function">filtered-accumulate</span> combiner filter null-value term <span class="token punctuation">(</span><span class="token function">next</span> a<span class="token punctuation">)</span> next b<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+
+<span class="token comment">; a</span>
+<span class="token punctuation">(</span><span class="token keyword">define</span> <span class="token punctuation">(</span><span class="token function">prime-sum</span> a b<span class="token punctuation">)</span>
+    <span class="token punctuation">(</span><span class="token keyword">define</span> <span class="token punctuation">(</span><span class="token function">combiner</span> a b<span class="token punctuation">)</span>
+        <span class="token punctuation">(</span><span class="token operator">+</span> a b<span class="token punctuation">)</span><span class="token punctuation">)</span>
+    <span class="token punctuation">(</span><span class="token keyword">define</span> <span class="token punctuation">(</span><span class="token function">filter</span> a<span class="token punctuation">)</span>
+        <span class="token punctuation">(</span><span class="token function">prime?</span> a<span class="token punctuation">)</span><span class="token punctuation">)</span>
+    <span class="token punctuation">(</span><span class="token keyword">define</span> null-value <span class="token number">0</span><span class="token punctuation">)</span>
+    <span class="token punctuation">(</span><span class="token keyword">define</span> <span class="token punctuation">(</span><span class="token function">term</span> a<span class="token punctuation">)</span>
+        a<span class="token punctuation">)</span>
+    <span class="token punctuation">(</span><span class="token keyword">define</span> <span class="token punctuation">(</span><span class="token function">next</span> a<span class="token punctuation">)</span>
+        <span class="token punctuation">(</span><span class="token operator">+</span> a <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+    <span class="token punctuation">(</span><span class="token function">filtered-accumulate</span> combiner filter null-value term a next b<span class="token punctuation">)</span><span class="token punctuation">)</span>
+
+<span class="token comment">; 2 + 3 + 5 + 7 = 17</span>
+<span class="token punctuation">(</span><span class="token function">display</span> <span class="token string">"Test for a: "</span><span class="token punctuation">)</span>
+<span class="token punctuation">(</span><span class="token function">display</span> <span class="token punctuation">(</span><span class="token function">prime-sum</span> <span class="token number">2</span> <span class="token number">10</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+<span class="token punctuation">(</span><span class="token builtin">newline</span><span class="token punctuation">)</span>
+
+<span class="token comment">; b</span>
+<span class="token punctuation">(</span><span class="token keyword">define</span> <span class="token punctuation">(</span><span class="token builtin">gcd</span> a b<span class="token punctuation">)</span>
+  <span class="token punctuation">(</span><span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">=</span> b <span class="token number">0</span><span class="token punctuation">)</span>
+      a
+      <span class="token punctuation">(</span><span class="token builtin">gcd</span> b <span class="token punctuation">(</span><span class="token builtin">remainder</span> a b<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+
+<span class="token punctuation">(</span><span class="token keyword">define</span> <span class="token punctuation">(</span><span class="token function">n-prime-sum</span> n<span class="token punctuation">)</span>
+    <span class="token punctuation">(</span><span class="token keyword">define</span> <span class="token punctuation">(</span><span class="token function">combiner</span> a b<span class="token punctuation">)</span>
+        <span class="token punctuation">(</span><span class="token operator">+</span> a b<span class="token punctuation">)</span><span class="token punctuation">)</span>
+    <span class="token punctuation">(</span><span class="token keyword">define</span> <span class="token punctuation">(</span><span class="token function">filter</span> a<span class="token punctuation">)</span>
+        <span class="token punctuation">(</span><span class="token operator">=</span> <span class="token punctuation">(</span><span class="token builtin">gcd</span> a n<span class="token punctuation">)</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+    <span class="token punctuation">(</span><span class="token keyword">define</span> null-value <span class="token number">0</span><span class="token punctuation">)</span>
+    <span class="token punctuation">(</span><span class="token keyword">define</span> <span class="token punctuation">(</span><span class="token function">term</span> a<span class="token punctuation">)</span>
+        a<span class="token punctuation">)</span>
+    <span class="token punctuation">(</span><span class="token keyword">define</span> <span class="token punctuation">(</span><span class="token function">next</span> a<span class="token punctuation">)</span>
+        <span class="token punctuation">(</span><span class="token operator">+</span> a <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+    <span class="token punctuation">(</span><span class="token function">filtered-accumulate</span> combiner filter null-value term <span class="token number">2</span> next n<span class="token punctuation">)</span><span class="token punctuation">)</span>
+
+<span class="token comment">; 3 + 7 + 9 = 19</span>
+<span class="token punctuation">(</span><span class="token function">display</span> <span class="token string">"Test for b: "</span><span class="token punctuation">)</span>
+<span class="token punctuation">(</span><span class="token function">display</span> <span class="token punctuation">(</span><span class="token function">n-prime-sum</span> <span class="token number">10</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+<span class="token punctuation">(</span><span class="token builtin">newline</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>结果如下：</p>
+<pre class="line-numbers language-none"><code class="language-none">Test for a: 17
+Test for b: 19<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<h4 id="1-34-p44"><a href="#1-34-p44" class="headerlink" title="1.34(p44)"></a>1.34(p44)</h4><pre class="line-numbers language-scheme" data-language="scheme"><code class="language-scheme"><span class="token punctuation">(</span><span class="token keyword">define</span> <span class="token punctuation">(</span><span class="token builtin">square</span> x<span class="token punctuation">)</span>
+    <span class="token punctuation">(</span><span class="token operator">*</span> x x<span class="token punctuation">)</span><span class="token punctuation">)</span>
+
+<span class="token punctuation">(</span><span class="token keyword">define</span> <span class="token punctuation">(</span><span class="token function">f</span> g<span class="token punctuation">)</span>
+  <span class="token punctuation">(</span><span class="token function">g</span> <span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+
+<span class="token comment">; 等价于(square 2)</span>
+<span class="token punctuation">(</span><span class="token function">display</span> <span class="token punctuation">(</span><span class="token function">f</span> square<span class="token punctuation">)</span><span class="token punctuation">)</span>
+<span class="token punctuation">(</span><span class="token builtin">newline</span><span class="token punctuation">)</span>
+
+<span class="token comment">; 等价于((lambda (z) (* z (+ z 1))) 2)</span>
+<span class="token punctuation">(</span><span class="token function">display</span> <span class="token punctuation">(</span><span class="token function">f</span> <span class="token punctuation">(</span><span class="token keyword">lambda</span> <span class="token punctuation">(</span><span class="token lambda-parameter">z</span><span class="token punctuation">)</span> <span class="token punctuation">(</span><span class="token operator">*</span> z <span class="token punctuation">(</span><span class="token operator">+</span> z <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+<span class="token punctuation">(</span><span class="token builtin">newline</span><span class="token punctuation">)</span>
+
+<span class="token comment">; (f f)报错, 等价于(f 2)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>结果如下：</p>
+<pre class="line-numbers language-none"><code class="language-none">4
+6<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<h4 id="1-35-p47"><a href="#1-35-p47" class="headerlink" title="1.35(p47)"></a>1.35(p47)</h4><p>求解方程可得：</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+x&= 1 +\frac 1 x\\
+x^2 -x -1&=0\\
+x& =\frac{1\pm \sqrt 5}{2}
+\end{aligned}</script><p>所以结论成立。</p>
+<p>对应代码：</p>
+<pre class="line-numbers language-scheme" data-language="scheme"><code class="language-scheme"><span class="token punctuation">(</span><span class="token keyword">define</span> tolerance <span class="token number">0.00001</span><span class="token punctuation">)</span>
+
+<span class="token punctuation">(</span><span class="token keyword">define</span> <span class="token punctuation">(</span><span class="token function">fixed-point</span> f first-guess<span class="token punctuation">)</span>
+  <span class="token punctuation">(</span><span class="token keyword">define</span> <span class="token punctuation">(</span><span class="token function">close-enough?</span> v1 v2<span class="token punctuation">)</span>
+    <span class="token punctuation">(</span><span class="token operator">&lt;</span> <span class="token punctuation">(</span><span class="token builtin">abs</span> <span class="token punctuation">(</span><span class="token operator">-</span> v1 v2<span class="token punctuation">)</span><span class="token punctuation">)</span> tolerance<span class="token punctuation">)</span><span class="token punctuation">)</span>
+  <span class="token punctuation">(</span><span class="token keyword">define</span> <span class="token punctuation">(</span><span class="token function">try</span> guess<span class="token punctuation">)</span>
+    <span class="token punctuation">(</span><span class="token keyword">let</span> <span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token function">next</span> <span class="token punctuation">(</span><span class="token function">f</span> guess<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+      <span class="token punctuation">(</span><span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">close-enough?</span> guess next<span class="token punctuation">)</span>
+          next
+          <span class="token punctuation">(</span><span class="token function">try</span> next<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+  <span class="token punctuation">(</span><span class="token function">try</span> first-guess<span class="token punctuation">)</span><span class="token punctuation">)</span>
+
+<span class="token punctuation">(</span><span class="token function">display</span> <span class="token punctuation">(</span><span class="token function">fixed-point</span> <span class="token punctuation">(</span><span class="token keyword">lambda</span> <span class="token punctuation">(</span><span class="token lambda-parameter">x</span><span class="token punctuation">)</span> <span class="token punctuation">(</span><span class="token operator">+</span> <span class="token number">1</span> <span class="token punctuation">(</span><span class="token operator">/</span> <span class="token number">1</span> x<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token number">1.0</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>结果如下：</p>
+<pre class="line-numbers language-none"><code class="language-none">1.6180327868852458<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<h4 id="1-36-p47"><a href="#1-36-p47" class="headerlink" title="1.36(p47)"></a>1.36(p47)</h4><pre class="line-numbers language-scheme" data-language="scheme"><code class="language-scheme"><span class="token punctuation">(</span><span class="token keyword">define</span> tolerance <span class="token number">0.00001</span><span class="token punctuation">)</span>
+
+<span class="token punctuation">(</span><span class="token keyword">define</span> <span class="token punctuation">(</span><span class="token function">fixed-point</span> f first-guess<span class="token punctuation">)</span>
+  <span class="token punctuation">(</span><span class="token keyword">define</span> <span class="token punctuation">(</span><span class="token function">close-enough?</span> v1 v2<span class="token punctuation">)</span>
+    <span class="token punctuation">(</span><span class="token operator">&lt;</span> <span class="token punctuation">(</span><span class="token builtin">abs</span> <span class="token punctuation">(</span><span class="token operator">-</span> v1 v2<span class="token punctuation">)</span><span class="token punctuation">)</span> tolerance<span class="token punctuation">)</span><span class="token punctuation">)</span>
+  <span class="token punctuation">(</span><span class="token keyword">define</span> <span class="token punctuation">(</span><span class="token function">try</span> guess n<span class="token punctuation">)</span>
+    <span class="token punctuation">(</span><span class="token function">display</span> n<span class="token punctuation">)</span>
+    <span class="token punctuation">(</span><span class="token function">display</span> <span class="token string">"th iteration: "</span><span class="token punctuation">)</span>
+    <span class="token punctuation">(</span><span class="token function">display</span> guess<span class="token punctuation">)</span>
+    <span class="token punctuation">(</span><span class="token builtin">newline</span><span class="token punctuation">)</span>
+    <span class="token punctuation">(</span><span class="token keyword">let</span> <span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token function">next</span> <span class="token punctuation">(</span><span class="token function">f</span> guess<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+      <span class="token punctuation">(</span><span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">close-enough?</span> guess next<span class="token punctuation">)</span>
+          next
+          <span class="token punctuation">(</span><span class="token function">try</span> next <span class="token punctuation">(</span><span class="token operator">+</span> n <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+  <span class="token punctuation">(</span><span class="token function">try</span> first-guess <span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+
+<span class="token punctuation">(</span><span class="token function">display</span> <span class="token string">"平均阻尼情形:"</span><span class="token punctuation">)</span>
+<span class="token punctuation">(</span><span class="token builtin">newline</span><span class="token punctuation">)</span>
+<span class="token punctuation">(</span><span class="token function">fixed-point</span> <span class="token punctuation">(</span><span class="token keyword">lambda</span> <span class="token punctuation">(</span><span class="token lambda-parameter">x</span><span class="token punctuation">)</span> <span class="token punctuation">(</span><span class="token operator">/</span> <span class="token punctuation">(</span><span class="token operator">+</span> x <span class="token punctuation">(</span><span class="token operator">/</span> <span class="token punctuation">(</span><span class="token function">log</span> <span class="token number">1000</span><span class="token punctuation">)</span> <span class="token punctuation">(</span><span class="token function">log</span> x<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token number">2.0</span><span class="token punctuation">)</span>
+
+<span class="token punctuation">(</span><span class="token function">display</span> <span class="token string">"不用平均阻尼情形:"</span><span class="token punctuation">)</span>
+<span class="token punctuation">(</span><span class="token builtin">newline</span><span class="token punctuation">)</span>
+<span class="token punctuation">(</span><span class="token function">fixed-point</span> <span class="token punctuation">(</span><span class="token keyword">lambda</span> <span class="token punctuation">(</span><span class="token lambda-parameter">x</span><span class="token punctuation">)</span> <span class="token punctuation">(</span><span class="token operator">/</span> <span class="token punctuation">(</span><span class="token function">log</span> <span class="token number">1000</span><span class="token punctuation">)</span> <span class="token punctuation">(</span><span class="token function">log</span> x<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token number">2.0</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>结果如下：</p>
+<pre class="line-numbers language-none"><code class="language-none">平均阻尼情形:
+0th iteration: 2.0
+1th iteration: 5.9828921423310435
+2th iteration: 4.922168721308343
+3th iteration: 4.628224318195455
+4th iteration: 4.568346513136242
+5th iteration: 4.5577305909237005
+6th iteration: 4.555909809045131
+7th iteration: 4.555599411610624
+8th iteration: 4.5555465521473675
+不用平均阻尼情形:
+0th iteration: 2.0
+1th iteration: 9.965784284662087
+2th iteration: 3.004472209841214
+3th iteration: 6.279195757507157
+4th iteration: 3.759850702401539
+5th iteration: 5.215843784925895
+6th iteration: 4.182207192401397
+7th iteration: 4.8277650983445906
+8th iteration: 4.387593384662677
+9th iteration: 4.671250085763899
+10th iteration: 4.481403616895052
+11th iteration: 4.6053657460929
+12th iteration: 4.5230849678718865
+13th iteration: 4.577114682047341
+14th iteration: 4.541382480151454
+15th iteration: 4.564903245230833
+16th iteration: 4.549372679303342
+17th iteration: 4.559606491913287
+18th iteration: 4.552853875788271
+19th iteration: 4.557305529748263
+20th iteration: 4.554369064436181
+21th iteration: 4.556305311532999
+22th iteration: 4.555028263573554
+23th iteration: 4.555870396702851
+24th iteration: 4.555315001192079
+25th iteration: 4.5556812635433275
+26th iteration: 4.555439715736846
+27th iteration: 4.555599009998291
+28th iteration: 4.555493957531389
+29th iteration: 4.555563237292884
+30th iteration: 4.555517548417651
+31th iteration: 4.555547679306398
+32th iteration: 4.555527808516254
+33th iteration: 4.555540912917957<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h4 id="1-37-p47"><a href="#1-37-p47" class="headerlink" title="1.37(p47)"></a>1.37(p47)</h4><pre class="line-numbers language-scheme" data-language="scheme"><code class="language-scheme"><span class="token punctuation">(</span><span class="token keyword">define</span> <span class="token punctuation">(</span><span class="token function">cont-frac1</span> n d k<span class="token punctuation">)</span>
+    <span class="token punctuation">(</span><span class="token keyword">define</span> <span class="token punctuation">(</span><span class="token function">cont-frac-iter</span> i<span class="token punctuation">)</span>
+        <span class="token punctuation">(</span><span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">=</span> i k<span class="token punctuation">)</span>
+            <span class="token punctuation">(</span><span class="token operator">/</span> <span class="token punctuation">(</span><span class="token function">n</span> k<span class="token punctuation">)</span> <span class="token punctuation">(</span><span class="token function">d</span> k<span class="token punctuation">)</span><span class="token punctuation">)</span>
+            <span class="token punctuation">(</span><span class="token operator">/</span> <span class="token punctuation">(</span><span class="token function">n</span> i<span class="token punctuation">)</span> <span class="token punctuation">(</span><span class="token operator">+</span> <span class="token punctuation">(</span><span class="token function">d</span> i<span class="token punctuation">)</span> <span class="token punctuation">(</span><span class="token function">cont-frac-iter</span> <span class="token punctuation">(</span><span class="token operator">+</span> i <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+    <span class="token punctuation">(</span><span class="token function">cont-frac-iter</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+
+<span class="token comment">; (a) 找到k</span>
+<span class="token punctuation">(</span><span class="token keyword">define</span> tolerance <span class="token number">0.00001</span><span class="token punctuation">)</span>
+<span class="token punctuation">(</span><span class="token keyword">define</span> phi-1 <span class="token punctuation">(</span><span class="token operator">/</span> <span class="token number">1</span> <span class="token number">1.6180327868852458</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+<span class="token punctuation">(</span><span class="token keyword">define</span> <span class="token punctuation">(</span><span class="token function">findk</span> f n d<span class="token punctuation">)</span>
+    <span class="token punctuation">(</span><span class="token keyword">define</span> <span class="token punctuation">(</span><span class="token function">close-enough?</span> v1 v2<span class="token punctuation">)</span>
+        <span class="token punctuation">(</span><span class="token operator">&lt;</span> <span class="token punctuation">(</span><span class="token builtin">abs</span> <span class="token punctuation">(</span><span class="token operator">-</span> v1 v2<span class="token punctuation">)</span><span class="token punctuation">)</span> tolerance<span class="token punctuation">)</span><span class="token punctuation">)</span>
+    <span class="token punctuation">(</span><span class="token keyword">define</span> <span class="token punctuation">(</span><span class="token function">findk-iter</span> k<span class="token punctuation">)</span>
+        <span class="token punctuation">(</span><span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">close-enough?</span> <span class="token punctuation">(</span><span class="token function">f</span> n d k<span class="token punctuation">)</span> phi-1<span class="token punctuation">)</span>
+            k
+            <span class="token punctuation">(</span><span class="token function">findk-iter</span> <span class="token punctuation">(</span><span class="token operator">+</span> k <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+    <span class="token punctuation">(</span><span class="token function">findk-iter</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+
+<span class="token comment">; (a) 递归法</span>
+<span class="token punctuation">(</span><span class="token function">display</span> 
+    <span class="token punctuation">(</span><span class="token function">cont-frac1</span> <span class="token punctuation">(</span><span class="token keyword">lambda</span> <span class="token punctuation">(</span><span class="token lambda-parameter">i</span><span class="token punctuation">)</span> <span class="token number">1.0</span><span class="token punctuation">)</span>
+                <span class="token punctuation">(</span><span class="token keyword">lambda</span> <span class="token punctuation">(</span><span class="token lambda-parameter">i</span><span class="token punctuation">)</span> <span class="token number">1.0</span><span class="token punctuation">)</span>
+                 <span class="token number">10</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+<span class="token punctuation">(</span><span class="token builtin">newline</span><span class="token punctuation">)</span>
+<span class="token punctuation">(</span><span class="token function">display</span> <span class="token string">"k is "</span><span class="token punctuation">)</span>
+<span class="token punctuation">(</span><span class="token function">display</span> 
+    <span class="token punctuation">(</span><span class="token function">findk</span> cont-frac1 <span class="token punctuation">(</span><span class="token keyword">lambda</span> <span class="token punctuation">(</span><span class="token lambda-parameter">i</span><span class="token punctuation">)</span> <span class="token number">1.0</span><span class="token punctuation">)</span>
+                      <span class="token punctuation">(</span><span class="token keyword">lambda</span> <span class="token punctuation">(</span><span class="token lambda-parameter">i</span><span class="token punctuation">)</span> <span class="token number">1.0</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+<span class="token punctuation">(</span><span class="token builtin">newline</span><span class="token punctuation">)</span>
+
+<span class="token comment">; (b) 迭代</span>
+<span class="token punctuation">(</span><span class="token keyword">define</span> <span class="token punctuation">(</span><span class="token function">cont-frac2</span> n d k<span class="token punctuation">)</span>
+    <span class="token punctuation">(</span><span class="token keyword">define</span> <span class="token punctuation">(</span><span class="token function">cont-frac-iter</span> i res<span class="token punctuation">)</span>
+        <span class="token punctuation">(</span><span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">&lt;</span> i <span class="token number">1</span><span class="token punctuation">)</span>
+            res
+            <span class="token punctuation">(</span><span class="token function">cont-frac-iter</span> <span class="token punctuation">(</span><span class="token operator">-</span> i <span class="token number">1</span><span class="token punctuation">)</span> <span class="token punctuation">(</span><span class="token operator">/</span> <span class="token punctuation">(</span><span class="token function">n</span> i<span class="token punctuation">)</span> <span class="token punctuation">(</span><span class="token operator">+</span> <span class="token punctuation">(</span><span class="token function">d</span> i<span class="token punctuation">)</span> res<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+    <span class="token punctuation">(</span><span class="token function">cont-frac-iter</span> k <span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+
+<span class="token punctuation">(</span><span class="token function">display</span> 
+    <span class="token punctuation">(</span><span class="token function">cont-frac2</span> <span class="token punctuation">(</span><span class="token keyword">lambda</span> <span class="token punctuation">(</span><span class="token lambda-parameter">i</span><span class="token punctuation">)</span> <span class="token number">1.0</span><span class="token punctuation">)</span>
+                <span class="token punctuation">(</span><span class="token keyword">lambda</span> <span class="token punctuation">(</span><span class="token lambda-parameter">i</span><span class="token punctuation">)</span> <span class="token number">1.0</span><span class="token punctuation">)</span>
+                 <span class="token number">10</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>结果如下：</p>
+<pre class="line-numbers language-none"><code class="language-none">0.6179775280898876
+k is 12
+0.6179775280898876<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+<h4 id="1-38-p47"><a href="#1-38-p47" class="headerlink" title="1.38(p47)"></a>1.38(p47)</h4><p>$D_i$的计算公式如下：</p>
+<script type="math/tex; mode=display">
+D_i=\begin{cases}
+i &i\le 2\\
+2k+2& i =3k+2, k\ge 1\\
+1& 其他
+\end{cases}</script><p>代码如下：</p>
+<pre class="line-numbers language-scheme" data-language="scheme"><code class="language-scheme"><span class="token punctuation">(</span><span class="token keyword">define</span> <span class="token punctuation">(</span><span class="token function">cont-frac</span> n d k<span class="token punctuation">)</span>
+    <span class="token punctuation">(</span><span class="token keyword">define</span> <span class="token punctuation">(</span><span class="token function">cont-frac-iter</span> i<span class="token punctuation">)</span>
+        <span class="token punctuation">(</span><span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">=</span> i k<span class="token punctuation">)</span>
+            <span class="token punctuation">(</span><span class="token operator">/</span> <span class="token punctuation">(</span><span class="token function">n</span> k<span class="token punctuation">)</span> <span class="token punctuation">(</span><span class="token function">d</span> k<span class="token punctuation">)</span><span class="token punctuation">)</span>
+            <span class="token punctuation">(</span><span class="token operator">/</span> <span class="token punctuation">(</span><span class="token function">n</span> i<span class="token punctuation">)</span> <span class="token punctuation">(</span><span class="token operator">+</span> <span class="token punctuation">(</span><span class="token function">d</span> i<span class="token punctuation">)</span> <span class="token punctuation">(</span><span class="token function">cont-frac-iter</span> <span class="token punctuation">(</span><span class="token operator">+</span> i <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+    <span class="token punctuation">(</span><span class="token function">cont-frac-iter</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+
+<span class="token punctuation">(</span><span class="token keyword">define</span> <span class="token punctuation">(</span><span class="token function">d</span> i<span class="token punctuation">)</span>
+    <span class="token punctuation">(</span><span class="token keyword">define</span> r <span class="token punctuation">(</span><span class="token builtin">remainder</span> <span class="token punctuation">(</span><span class="token operator">-</span> <span class="token number">2</span> i<span class="token punctuation">)</span> <span class="token number">3</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+    <span class="token punctuation">(</span><span class="token keyword">define</span> k <span class="token punctuation">(</span><span class="token operator">/</span> <span class="token punctuation">(</span><span class="token operator">-</span> i <span class="token number">2</span> r<span class="token punctuation">)</span> <span class="token number">3</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+    <span class="token punctuation">(</span><span class="token keyword">cond</span> <span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token operator">&lt;</span> i <span class="token number">3</span><span class="token punctuation">)</span> i<span class="token punctuation">)</span>
+          <span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token operator">=</span> r <span class="token number">0</span><span class="token punctuation">)</span> <span class="token punctuation">(</span><span class="token operator">*</span> <span class="token number">2</span> <span class="token punctuation">(</span><span class="token operator">+</span> <span class="token number">1</span> k<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+          <span class="token punctuation">(</span><span class="token keyword">else</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+
+<span class="token punctuation">(</span><span class="token function">display</span> 
+    <span class="token punctuation">(</span><span class="token operator">+</span> <span class="token number">2</span> <span class="token punctuation">(</span><span class="token function">cont-frac</span> <span class="token punctuation">(</span><span class="token keyword">lambda</span> <span class="token punctuation">(</span><span class="token lambda-parameter">i</span><span class="token punctuation">)</span> <span class="token number">1.0</span><span class="token punctuation">)</span> d <span class="token number">10</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>结果如下：</p>
+<pre class="line-numbers language-none"><code class="language-none">2.7182817182817183<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<h4 id="1-39-p48"><a href="#1-39-p48" class="headerlink" title="1.39(p48)"></a>1.39(p48)</h4><p>注意到有如下试试</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+\tan x
+&=\frac{x}{1-\frac{x^{2} }{3-\frac{x^{2} }{5-\ddots} }}\\
+&= \frac{-x^2}{1-\frac{x^{2} }{3-\frac{x^{2} }{5-\ddots} }} / (-x)
+
+\end{aligned}</script><p>所以取</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+N_i &= -x^2\\
+D_i&= 2i-1
+
+\end{aligned}</script><p>然后利用之前的过程即可，代码如下：</p>
+<pre class="line-numbers language-scheme" data-language="scheme"><code class="language-scheme"><span class="token punctuation">(</span><span class="token keyword">define</span> <span class="token punctuation">(</span><span class="token function">cont-frac</span> n d k<span class="token punctuation">)</span>
+    <span class="token punctuation">(</span><span class="token keyword">define</span> <span class="token punctuation">(</span><span class="token function">cont-frac-iter</span> i<span class="token punctuation">)</span>
+        <span class="token punctuation">(</span><span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">=</span> i k<span class="token punctuation">)</span>
+            <span class="token punctuation">(</span><span class="token operator">/</span> <span class="token punctuation">(</span><span class="token function">n</span> k<span class="token punctuation">)</span> <span class="token punctuation">(</span><span class="token function">d</span> k<span class="token punctuation">)</span><span class="token punctuation">)</span>
+            <span class="token punctuation">(</span><span class="token operator">/</span> <span class="token punctuation">(</span><span class="token function">n</span> i<span class="token punctuation">)</span> <span class="token punctuation">(</span><span class="token operator">+</span> <span class="token punctuation">(</span><span class="token function">d</span> i<span class="token punctuation">)</span> <span class="token punctuation">(</span><span class="token function">cont-frac-iter</span> <span class="token punctuation">(</span><span class="token operator">+</span> i <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+    <span class="token punctuation">(</span><span class="token function">cont-frac-iter</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+
+<span class="token punctuation">(</span><span class="token keyword">define</span> <span class="token punctuation">(</span><span class="token function">tan-cf</span> x k<span class="token punctuation">)</span>
+    <span class="token punctuation">(</span><span class="token operator">/</span> <span class="token punctuation">(</span><span class="token function">cont-frac</span> <span class="token punctuation">(</span><span class="token keyword">lambda</span> <span class="token punctuation">(</span><span class="token lambda-parameter">i</span><span class="token punctuation">)</span> <span class="token punctuation">(</span><span class="token operator">-</span> <span class="token punctuation">(</span><span class="token operator">*</span> x x<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+                  <span class="token punctuation">(</span><span class="token keyword">lambda</span> <span class="token punctuation">(</span><span class="token lambda-parameter">i</span><span class="token punctuation">)</span> <span class="token punctuation">(</span><span class="token operator">-</span> <span class="token punctuation">(</span><span class="token operator">*</span> <span class="token number">2</span> i<span class="token punctuation">)</span> <span class="token number">1.0</span><span class="token punctuation">)</span><span class="token punctuation">)</span> k<span class="token punctuation">)</span>
+                  <span class="token punctuation">(</span><span class="token operator">-</span> x<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+
+<span class="token punctuation">(</span><span class="token function">display</span> <span class="token punctuation">(</span><span class="token function">tan-cf</span> <span class="token number">10</span> <span class="token number">100</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+<span class="token punctuation">(</span><span class="token builtin">newline</span><span class="token punctuation">)</span>
+<span class="token punctuation">(</span><span class="token function">display</span> <span class="token punctuation">(</span><span class="token function">tan</span> <span class="token number">10</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>结果如下：</p>
+<pre class="line-numbers language-none"><code class="language-none">0.6483608274590866
+0.6483608274590866<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<h4 id="1-40-p51"><a href="#1-40-p51" class="headerlink" title="1.40(p51)"></a>1.40(p51)</h4><pre class="line-numbers language-scheme" data-language="scheme"><code class="language-scheme"><span class="token comment">; fixed-point</span>
+<span class="token punctuation">(</span><span class="token keyword">define</span> tolerance <span class="token number">0.00001</span><span class="token punctuation">)</span>
+
+<span class="token punctuation">(</span><span class="token keyword">define</span> <span class="token punctuation">(</span><span class="token function">fixed-point</span> f first-guess<span class="token punctuation">)</span>
+  <span class="token punctuation">(</span><span class="token keyword">define</span> <span class="token punctuation">(</span><span class="token function">close-enough?</span> v1 v2<span class="token punctuation">)</span>
+    <span class="token punctuation">(</span><span class="token operator">&lt;</span> <span class="token punctuation">(</span><span class="token builtin">abs</span> <span class="token punctuation">(</span><span class="token operator">-</span> v1 v2<span class="token punctuation">)</span><span class="token punctuation">)</span> tolerance<span class="token punctuation">)</span><span class="token punctuation">)</span>
+  <span class="token punctuation">(</span><span class="token keyword">define</span> <span class="token punctuation">(</span><span class="token function">try</span> guess<span class="token punctuation">)</span>
+    <span class="token punctuation">(</span><span class="token keyword">let</span> <span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token function">next</span> <span class="token punctuation">(</span><span class="token function">f</span> guess<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+      <span class="token punctuation">(</span><span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">close-enough?</span> guess next<span class="token punctuation">)</span>
+          next
+          <span class="token punctuation">(</span><span class="token function">try</span> next<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+  <span class="token punctuation">(</span><span class="token function">try</span> first-guess<span class="token punctuation">)</span><span class="token punctuation">)</span>
+
+<span class="token comment">; deriv</span>
+<span class="token punctuation">(</span><span class="token keyword">define</span> <span class="token punctuation">(</span><span class="token function">deriv</span> g<span class="token punctuation">)</span>
+  <span class="token punctuation">(</span><span class="token keyword">lambda</span> <span class="token punctuation">(</span><span class="token lambda-parameter">x</span><span class="token punctuation">)</span>
+    <span class="token punctuation">(</span><span class="token operator">/</span> <span class="token punctuation">(</span><span class="token operator">-</span> <span class="token punctuation">(</span><span class="token function">g</span> <span class="token punctuation">(</span><span class="token operator">+</span> x dx<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">(</span><span class="token function">g</span> x<span class="token punctuation">)</span><span class="token punctuation">)</span>
+       dx<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+<span class="token punctuation">(</span><span class="token keyword">define</span> dx <span class="token number">0.00001</span><span class="token punctuation">)</span>
+
+<span class="token comment">; newton method</span>
+<span class="token punctuation">(</span><span class="token keyword">define</span> <span class="token punctuation">(</span><span class="token function">newton-transform</span> g<span class="token punctuation">)</span>
+  <span class="token punctuation">(</span><span class="token keyword">lambda</span> <span class="token punctuation">(</span><span class="token lambda-parameter">x</span><span class="token punctuation">)</span>
+    <span class="token punctuation">(</span><span class="token operator">-</span> x <span class="token punctuation">(</span><span class="token operator">/</span> <span class="token punctuation">(</span><span class="token function">g</span> x<span class="token punctuation">)</span> <span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token function">deriv</span> g<span class="token punctuation">)</span> x<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+
+<span class="token punctuation">(</span><span class="token keyword">define</span> <span class="token punctuation">(</span><span class="token function">newtons-method</span> g guess<span class="token punctuation">)</span>
+  <span class="token punctuation">(</span><span class="token function">fixed-point</span> <span class="token punctuation">(</span><span class="token function">newton-transform</span> g<span class="token punctuation">)</span> guess<span class="token punctuation">)</span><span class="token punctuation">)</span>
+
+<span class="token comment">; cubic</span>
+<span class="token punctuation">(</span><span class="token keyword">define</span> <span class="token punctuation">(</span><span class="token function">cubic</span> a b c<span class="token punctuation">)</span>
+    <span class="token punctuation">(</span><span class="token keyword">lambda</span> <span class="token punctuation">(</span><span class="token lambda-parameter">x</span><span class="token punctuation">)</span> 
+        <span class="token punctuation">(</span><span class="token operator">+</span> <span class="token punctuation">(</span><span class="token operator">*</span> x x x<span class="token punctuation">)</span> <span class="token punctuation">(</span><span class="token operator">*</span> a x x<span class="token punctuation">)</span> <span class="token punctuation">(</span><span class="token operator">*</span> b x<span class="token punctuation">)</span> c<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+
+<span class="token punctuation">(</span><span class="token keyword">define</span> <span class="token punctuation">(</span><span class="token function">root</span> a b c<span class="token punctuation">)</span>
+    <span class="token punctuation">(</span><span class="token function">newtons-method</span> <span class="token punctuation">(</span><span class="token function">cubic</span> a b c<span class="token punctuation">)</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+
+<span class="token comment">; test</span>
+<span class="token punctuation">(</span><span class="token function">display</span> <span class="token punctuation">(</span><span class="token function">root</span> <span class="token number">-1</span> <span class="token number">0</span> <span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>结果如下：</p>
+<pre class="line-numbers language-none"><code class="language-none">-0.9999999999999872<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<h4 id="1-41-p51"><a href="#1-41-p51" class="headerlink" title="1.41(p51)"></a>1.41(p51)</h4><pre class="line-numbers language-scheme" data-language="scheme"><code class="language-scheme"><span class="token punctuation">(</span><span class="token keyword">define</span> <span class="token punctuation">(</span><span class="token function">double</span> f<span class="token punctuation">)</span>
+    <span class="token punctuation">(</span><span class="token keyword">lambda</span> <span class="token punctuation">(</span><span class="token lambda-parameter">x</span><span class="token punctuation">)</span> <span class="token punctuation">(</span><span class="token function">f</span> <span class="token punctuation">(</span><span class="token function">f</span> x<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+
+<span class="token punctuation">(</span><span class="token keyword">define</span> <span class="token punctuation">(</span><span class="token function">inc</span> x<span class="token punctuation">)</span>
+    <span class="token punctuation">(</span><span class="token operator">+</span> x <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+
+<span class="token punctuation">(</span><span class="token function">display</span> <span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token function">double</span> inc<span class="token punctuation">)</span> <span class="token number">5</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+<span class="token punctuation">(</span><span class="token builtin">newline</span><span class="token punctuation">)</span>
+<span class="token punctuation">(</span><span class="token function">display</span> <span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token function">double</span> double<span class="token punctuation">)</span> inc<span class="token punctuation">)</span> <span class="token number">5</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+<span class="token punctuation">(</span><span class="token builtin">newline</span><span class="token punctuation">)</span>
+<span class="token punctuation">(</span><span class="token function">display</span> <span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token function">double</span> <span class="token punctuation">(</span><span class="token function">double</span> double<span class="token punctuation">)</span><span class="token punctuation">)</span> inc<span class="token punctuation">)</span> <span class="token number">5</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+<span class="token punctuation">(</span><span class="token builtin">newline</span><span class="token punctuation">)</span>
+<span class="token punctuation">(</span><span class="token function">display</span> <span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token function">double</span> <span class="token punctuation">(</span><span class="token function">double</span> <span class="token punctuation">(</span><span class="token function">double</span> double<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span> inc<span class="token punctuation">)</span> <span class="token number">5</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>结果如下：</p>
+<pre class="line-numbers language-none"><code class="language-none">7
+9
+21
+261<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+<p>结果说明：</p>
+<p>定义</p>
+<script type="math/tex; mode=display">
+d_n =\begin{cases}
+\mathrm {double} & n = 0\\
+(\mathrm {double}\ d_{n-1} )&n \ge 1
+\end{cases}</script><p>下面用数学归纳法证明：</p>
+<script type="math/tex; mode=display">
+(d_n \ f) = f^{2^{2^n} }</script><p>其中</p>
+<script type="math/tex; mode=display">
+(f^n\ x) =\begin{cases}
+\mathrm (f\ x) & n = 1\\
+(f \ (f^{n -1}\ x ))&n \ge 2
+\end{cases}</script><p>当$n=0$时，</p>
+<script type="math/tex; mode=display">
+((d_n \ f)\ x)=((\mathrm{double} \ f)\ x)=  (f \ (f\ x)) = (f^{2}\ x)</script><p>所以结论成立。</p>
+<p>假设$n=k$时结论成立，那么$n=k+1$时，</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+((d_k \ f)\ x) 
+&=((d_k \ f)\ x) \\
+&= (((\mathrm{double}\ d_{k-1} )\ f)\ x)\\
+&= ((d_{k-1}\ (d_{k-1} \ f))\ x)\\
+&= ((d_{k-1}\ f^{2^{2^{k-1} }})\ x)\\
+&=( {(f^{2^{2^{k-1} }})}^{2^{2^{k-1} }}\ x)\\
+&=( {f^{2^{2^{k-1} }\times 2^{2^{k-1} }} }\ x)\\
+&=(f^{ {2^{2^k} }}\ x)
+\end{aligned}</script><p>所以$n=k+1$时结论也成立。</p>
+<h4 id="1-42-p51"><a href="#1-42-p51" class="headerlink" title="1.42(p51)"></a>1.42(p51)</h4><pre class="line-numbers language-scheme" data-language="scheme"><code class="language-scheme"><span class="token punctuation">(</span><span class="token keyword">define</span> <span class="token punctuation">(</span><span class="token function">compose</span> f g<span class="token punctuation">)</span>
+    <span class="token punctuation">(</span><span class="token keyword">lambda</span> <span class="token punctuation">(</span><span class="token lambda-parameter">x</span><span class="token punctuation">)</span> <span class="token punctuation">(</span><span class="token function">f</span> <span class="token punctuation">(</span><span class="token function">g</span> x<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+
+<span class="token punctuation">(</span><span class="token keyword">define</span> <span class="token punctuation">(</span><span class="token builtin">square</span> x<span class="token punctuation">)</span>
+    <span class="token punctuation">(</span><span class="token operator">*</span> x x<span class="token punctuation">)</span><span class="token punctuation">)</span>
+
+<span class="token punctuation">(</span><span class="token keyword">define</span> <span class="token punctuation">(</span><span class="token function">inc</span> x<span class="token punctuation">)</span>
+    <span class="token punctuation">(</span><span class="token operator">+</span> x <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+
+<span class="token comment">; test</span>
+<span class="token punctuation">(</span><span class="token function">display</span> <span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token function">compose</span> square inc<span class="token punctuation">)</span> <span class="token number">6</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>结果如下：</p>
+<pre class="line-numbers language-none"><code class="language-none">49<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<h4 id="1-43-p51"><a href="#1-43-p51" class="headerlink" title="1.43(p51)"></a>1.43(p51)</h4><p>利用递归即可：</p>
+<pre class="line-numbers language-scheme" data-language="scheme"><code class="language-scheme"><span class="token punctuation">(</span><span class="token keyword">define</span> <span class="token punctuation">(</span><span class="token function">compose</span> f g<span class="token punctuation">)</span>
+    <span class="token punctuation">(</span><span class="token keyword">lambda</span> <span class="token punctuation">(</span><span class="token lambda-parameter">x</span><span class="token punctuation">)</span> <span class="token punctuation">(</span><span class="token function">f</span> <span class="token punctuation">(</span><span class="token function">g</span> x<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+
+<span class="token punctuation">(</span><span class="token keyword">define</span> <span class="token punctuation">(</span><span class="token function">repeated</span> f n<span class="token punctuation">)</span>
+    <span class="token punctuation">(</span><span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">=</span> n <span class="token number">1</span><span class="token punctuation">)</span>
+        f
+        <span class="token punctuation">(</span><span class="token function">compose</span> f <span class="token punctuation">(</span><span class="token function">repeated</span> f <span class="token punctuation">(</span><span class="token operator">-</span> n <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+
+<span class="token punctuation">(</span><span class="token keyword">define</span> <span class="token punctuation">(</span><span class="token builtin">square</span> x<span class="token punctuation">)</span>
+    <span class="token punctuation">(</span><span class="token operator">*</span> x x<span class="token punctuation">)</span><span class="token punctuation">)</span>
+
+<span class="token punctuation">(</span><span class="token function">display</span> <span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token function">repeated</span> square <span class="token number">2</span><span class="token punctuation">)</span> <span class="token number">5</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>结果如下：</p>
+<pre class="line-numbers language-none"><code class="language-none">625<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<h4 id="1-44-p51"><a href="#1-44-p51" class="headerlink" title="1.44(p51)"></a>1.44(p51)</h4><pre class="line-numbers language-scheme" data-language="scheme"><code class="language-scheme"><span class="token punctuation">(</span><span class="token keyword">define</span> <span class="token punctuation">(</span><span class="token function">compose</span> f g<span class="token punctuation">)</span>
+    <span class="token punctuation">(</span><span class="token keyword">lambda</span> <span class="token punctuation">(</span><span class="token lambda-parameter">x</span><span class="token punctuation">)</span> <span class="token punctuation">(</span><span class="token function">f</span> <span class="token punctuation">(</span><span class="token function">g</span> x<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+
+<span class="token punctuation">(</span><span class="token keyword">define</span> <span class="token punctuation">(</span><span class="token function">repeated</span> f n<span class="token punctuation">)</span>
+    <span class="token punctuation">(</span><span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">=</span> n <span class="token number">1</span><span class="token punctuation">)</span>
+        f
+        <span class="token punctuation">(</span><span class="token function">compose</span> f <span class="token punctuation">(</span><span class="token function">repeated</span> f <span class="token punctuation">(</span><span class="token operator">-</span> n <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+
+<span class="token punctuation">(</span><span class="token keyword">define</span> <span class="token punctuation">(</span><span class="token builtin">square</span> x<span class="token punctuation">)</span>
+    <span class="token punctuation">(</span><span class="token operator">*</span> x x<span class="token punctuation">)</span><span class="token punctuation">)</span>
+
+<span class="token punctuation">(</span><span class="token keyword">define</span> dx <span class="token number">0.00001</span><span class="token punctuation">)</span>
+
+<span class="token punctuation">(</span><span class="token keyword">define</span> <span class="token punctuation">(</span><span class="token function">smooth</span> f<span class="token punctuation">)</span>
+    <span class="token punctuation">(</span><span class="token keyword">lambda</span> <span class="token punctuation">(</span><span class="token lambda-parameter">x</span><span class="token punctuation">)</span> <span class="token punctuation">(</span><span class="token operator">/</span> <span class="token punctuation">(</span><span class="token operator">+</span> <span class="token punctuation">(</span><span class="token function">f</span> <span class="token punctuation">(</span><span class="token operator">-</span> x dx<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">(</span><span class="token function">f</span> x<span class="token punctuation">)</span> <span class="token punctuation">(</span><span class="token function">f</span> <span class="token punctuation">(</span><span class="token operator">+</span> x dx<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token number">3</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+
+<span class="token punctuation">(</span><span class="token keyword">define</span> <span class="token punctuation">(</span><span class="token function">nth-smooth</span> f n<span class="token punctuation">)</span>
+    <span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token function">repeated</span> smooth n<span class="token punctuation">)</span> f<span class="token punctuation">)</span><span class="token punctuation">)</span>
+
+<span class="token comment">; test</span>
+<span class="token punctuation">(</span><span class="token function">display</span> <span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token function">smooth</span> square<span class="token punctuation">)</span> <span class="token number">1.1</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+<span class="token punctuation">(</span><span class="token builtin">newline</span><span class="token punctuation">)</span>
+<span class="token punctuation">(</span><span class="token function">display</span> <span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token function">nth-smooth</span> square <span class="token number">5</span><span class="token punctuation">)</span> <span class="token number">1.1</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>结果如下：</p>
+<pre class="line-numbers language-none"><code class="language-none">1.2100000000666669
+1.2100000003333333<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<h4 id="1-45-p52"><a href="#1-45-p52" class="headerlink" title="1.45(p52)"></a>1.45(p52)</h4><pre class="line-numbers language-scheme" data-language="scheme"><code class="language-scheme"><span class="token comment">; fixed-point</span>
+<span class="token punctuation">(</span><span class="token keyword">define</span> tolerance <span class="token number">0.0000001</span><span class="token punctuation">)</span>
+
+<span class="token punctuation">(</span><span class="token keyword">define</span> <span class="token punctuation">(</span><span class="token function">fixed-point</span> f first-guess<span class="token punctuation">)</span>
+  <span class="token punctuation">(</span><span class="token keyword">define</span> <span class="token punctuation">(</span><span class="token function">close-enough?</span> v1 v2<span class="token punctuation">)</span>
+    <span class="token punctuation">(</span><span class="token operator">&lt;</span> <span class="token punctuation">(</span><span class="token builtin">abs</span> <span class="token punctuation">(</span><span class="token operator">-</span> v1 v2<span class="token punctuation">)</span><span class="token punctuation">)</span> tolerance<span class="token punctuation">)</span><span class="token punctuation">)</span>
+  <span class="token punctuation">(</span><span class="token keyword">define</span> <span class="token punctuation">(</span><span class="token function">try</span> guess<span class="token punctuation">)</span>
+    <span class="token punctuation">(</span><span class="token keyword">let</span> <span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token function">next</span> <span class="token punctuation">(</span><span class="token function">f</span> guess<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+      <span class="token punctuation">(</span><span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">close-enough?</span> guess next<span class="token punctuation">)</span>
+          next
+          <span class="token punctuation">(</span><span class="token function">try</span> next<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+  <span class="token punctuation">(</span><span class="token function">try</span> first-guess<span class="token punctuation">)</span><span class="token punctuation">)</span>
+
+<span class="token comment">; average-damp</span>
+<span class="token punctuation">(</span><span class="token keyword">define</span> <span class="token punctuation">(</span><span class="token function">average-damp</span> f<span class="token punctuation">)</span>
+  <span class="token punctuation">(</span><span class="token keyword">lambda</span> <span class="token punctuation">(</span><span class="token lambda-parameter">x</span><span class="token punctuation">)</span> <span class="token punctuation">(</span><span class="token function">average</span> x <span class="token punctuation">(</span><span class="token function">f</span> x<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+
+<span class="token punctuation">(</span><span class="token keyword">define</span> <span class="token punctuation">(</span><span class="token function">average</span> x y<span class="token punctuation">)</span>
+  <span class="token punctuation">(</span><span class="token operator">/</span> <span class="token punctuation">(</span><span class="token operator">+</span> x y<span class="token punctuation">)</span> <span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+
+<span class="token comment">; repeated</span>
+<span class="token punctuation">(</span><span class="token keyword">define</span> <span class="token punctuation">(</span><span class="token function">compose</span> f g<span class="token punctuation">)</span>
+    <span class="token punctuation">(</span><span class="token keyword">lambda</span> <span class="token punctuation">(</span><span class="token lambda-parameter">x</span><span class="token punctuation">)</span> <span class="token punctuation">(</span><span class="token function">f</span> <span class="token punctuation">(</span><span class="token function">g</span> x<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+
+<span class="token punctuation">(</span><span class="token keyword">define</span> <span class="token punctuation">(</span><span class="token function">repeated</span> f n<span class="token punctuation">)</span>
+    <span class="token punctuation">(</span><span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">=</span> n <span class="token number">1</span><span class="token punctuation">)</span>
+        f
+        <span class="token punctuation">(</span><span class="token function">compose</span> f <span class="token punctuation">(</span><span class="token function">repeated</span> f <span class="token punctuation">(</span><span class="token operator">-</span> n <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+
+<span class="token comment">; exp</span>
+<span class="token punctuation">(</span><span class="token keyword">define</span> <span class="token punctuation">(</span><span class="token builtin">expt</span> b n<span class="token punctuation">)</span>
+    <span class="token punctuation">(</span><span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">=</span> n <span class="token number">0</span><span class="token punctuation">)</span>
+        <span class="token number">1</span>
+        <span class="token punctuation">(</span><span class="token operator">*</span> b <span class="token punctuation">(</span><span class="token builtin">expt</span> b <span class="token punctuation">(</span><span class="token operator">-</span> n <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+
+<span class="token comment">; k次阻尼</span>
+<span class="token punctuation">(</span><span class="token keyword">define</span> <span class="token punctuation">(</span><span class="token function">kth-average-damp</span> f k<span class="token punctuation">)</span>
+    <span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token function">repeated</span> average-damp k<span class="token punctuation">)</span> f<span class="token punctuation">)</span><span class="token punctuation">)</span>
+
+<span class="token comment">; nth-root</span>
+<span class="token punctuation">(</span><span class="token keyword">define</span> <span class="token punctuation">(</span><span class="token function">nth-root</span> x n k<span class="token punctuation">)</span>
+    <span class="token punctuation">(</span><span class="token function">fixed-point</span> <span class="token punctuation">(</span><span class="token function">kth-average-damp</span> <span class="token punctuation">(</span><span class="token keyword">lambda</span> <span class="token punctuation">(</span><span class="token lambda-parameter">y</span><span class="token punctuation">)</span> <span class="token punctuation">(</span><span class="token operator">/</span> x <span class="token punctuation">(</span><span class="token builtin">expt</span> y <span class="token punctuation">(</span><span class="token operator">-</span> n <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span> k<span class="token punctuation">)</span> <span class="token number">1.0</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+
+<span class="token punctuation">(</span><span class="token function">display</span> <span class="token punctuation">(</span><span class="token function">nth-root</span> <span class="token number">5</span> <span class="token number">4</span> <span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+<span class="token punctuation">(</span><span class="token builtin">newline</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>结果如下：</p>
+<pre class="line-numbers language-scheme" data-language="scheme"><code class="language-scheme"><span class="token number">1.4953487812212205</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<h4 id="1-46-p52"><a href="#1-46-p52" class="headerlink" title="1.46(p52)"></a>1.46(p52)</h4><pre class="line-numbers language-scheme" data-language="scheme"><code class="language-scheme"><span class="token punctuation">(</span><span class="token keyword">define</span> <span class="token punctuation">(</span><span class="token function">iterative-improve</span> good-enough? improve<span class="token punctuation">)</span>
+    <span class="token punctuation">(</span><span class="token keyword">define</span> <span class="token punctuation">(</span><span class="token function">iterative-improve-iter</span> x<span class="token punctuation">)</span>
+        <span class="token punctuation">(</span><span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">good-enough?</span> x<span class="token punctuation">)</span>
+            x
+            <span class="token punctuation">(</span><span class="token function">iterative-improve-iter</span> <span class="token punctuation">(</span><span class="token function">improve</span> x<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+    iterative-improve-iter<span class="token punctuation">)</span>
+
+<span class="token comment">; sqrt</span>
+<span class="token punctuation">(</span><span class="token keyword">define</span> <span class="token punctuation">(</span><span class="token builtin">square</span> x<span class="token punctuation">)</span>
+    <span class="token punctuation">(</span><span class="token operator">*</span> x x<span class="token punctuation">)</span><span class="token punctuation">)</span>
+
+<span class="token punctuation">(</span><span class="token keyword">define</span> <span class="token punctuation">(</span><span class="token function">average</span> x y<span class="token punctuation">)</span>
+    <span class="token punctuation">(</span><span class="token operator">/</span> <span class="token punctuation">(</span><span class="token operator">+</span> x y<span class="token punctuation">)</span> <span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+
+<span class="token punctuation">(</span><span class="token keyword">define</span> <span class="token punctuation">(</span><span class="token function">sqrt</span> x<span class="token punctuation">)</span>
+    <span class="token punctuation">(</span><span class="token keyword">define</span> <span class="token punctuation">(</span><span class="token function">good-enough?</span> guess<span class="token punctuation">)</span>
+        <span class="token punctuation">(</span><span class="token operator">&lt;</span> <span class="token punctuation">(</span><span class="token builtin">abs</span> <span class="token punctuation">(</span><span class="token operator">-</span> <span class="token punctuation">(</span><span class="token builtin">square</span> guess<span class="token punctuation">)</span> x<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token number">0.0001</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+    <span class="token punctuation">(</span><span class="token keyword">define</span> <span class="token punctuation">(</span><span class="token function">improve</span> guess<span class="token punctuation">)</span>
+        <span class="token punctuation">(</span><span class="token function">average</span> guess <span class="token punctuation">(</span><span class="token operator">/</span> x guess<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+    <span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token function">iterative-improve</span> good-enough? improve<span class="token punctuation">)</span> <span class="token number">1.0</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+
+<span class="token punctuation">(</span><span class="token function">display</span> <span class="token punctuation">(</span><span class="token function">sqrt</span> <span class="token number">2.0</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+<span class="token punctuation">(</span><span class="token builtin">newline</span><span class="token punctuation">)</span>
+
+<span class="token comment">; fixed-point</span>
+<span class="token punctuation">(</span><span class="token keyword">define</span> tolerance <span class="token number">0.00001</span><span class="token punctuation">)</span>
+
+<span class="token punctuation">(</span><span class="token keyword">define</span> <span class="token punctuation">(</span><span class="token function">fixed-point</span> f first-guess<span class="token punctuation">)</span>
+    <span class="token punctuation">(</span><span class="token keyword">define</span> <span class="token punctuation">(</span><span class="token function">good-enough?</span> guess<span class="token punctuation">)</span>
+        <span class="token punctuation">(</span><span class="token operator">&lt;</span> <span class="token punctuation">(</span><span class="token builtin">abs</span> <span class="token punctuation">(</span><span class="token operator">-</span> <span class="token punctuation">(</span><span class="token function">f</span> guess<span class="token punctuation">)</span> guess<span class="token punctuation">)</span><span class="token punctuation">)</span> tolerance<span class="token punctuation">)</span><span class="token punctuation">)</span>
+    <span class="token punctuation">(</span><span class="token keyword">define</span> <span class="token punctuation">(</span><span class="token function">improve</span> guess<span class="token punctuation">)</span>
+        <span class="token punctuation">(</span><span class="token function">average</span> guess <span class="token punctuation">(</span><span class="token function">f</span> guess<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+    <span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token function">iterative-improve</span> good-enough? improve<span class="token punctuation">)</span> <span class="token number">1.0</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+
+<span class="token punctuation">(</span><span class="token keyword">define</span> <span class="token punctuation">(</span><span class="token function">sqrt-fixed-point</span> x<span class="token punctuation">)</span>
+  <span class="token punctuation">(</span><span class="token function">fixed-point</span> <span class="token punctuation">(</span><span class="token keyword">lambda</span> <span class="token punctuation">(</span><span class="token lambda-parameter">y</span><span class="token punctuation">)</span> <span class="token punctuation">(</span><span class="token function">average</span> y <span class="token punctuation">(</span><span class="token operator">/</span> x y<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+               <span class="token number">1.0</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+<span class="token punctuation">(</span><span class="token function">display</span> <span class="token punctuation">(</span><span class="token function">sqrt-fixed-point</span> <span class="token number">2.0</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+<span class="token punctuation">(</span><span class="token builtin">newline</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>结果如下：</p>
+<pre class="line-numbers language-none"><code class="language-none">1.4142156862745097
+1.4142047060743028<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre></article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">Doraemonzzz</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="http://doraemonzzz.com/2020/12/13/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A8%8B%E5%BA%8F%E7%9A%84%E6%9E%84%E9%80%A0%E5%92%8C%E8%A7%A3%E9%87%8A(SICP)%20%E7%AC%AC1%E7%AB%A0%20%E4%B9%A0%E9%A2%98%E8%A7%A3%E6%9E%90%20Part3/">http://doraemonzzz.com/2020/12/13/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A8%8B%E5%BA%8F%E7%9A%84%E6%9E%84%E9%80%A0%E5%92%8C%E8%A7%A3%E9%87%8A(SICP)%20%E7%AC%AC1%E7%AB%A0%20%E4%B9%A0%E9%A2%98%E8%A7%A3%E6%9E%90%20Part3/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://doraemonzzz.com" target="_blank">Doraemonzzz</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A8%8B%E5%BA%8F%E7%9A%84%E6%9E%84%E9%80%A0%E5%92%8C%E8%A7%A3%E9%87%8A/">计算机程序的构造和解释</a></div><div class="post_share"><div class="social-share" data-image="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2020/12/20/MIT%206.172%20L4%20Assembly%20Language%20and%20Computer%20Architecture%20Part%202/"><img class="prev-cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">MIT 6.172 L4 Assembly Language and Computer Architecture Part 2</div></div></a></div><div class="next-post pull-right"><a href="/2020/12/06/MIT%206.172%20L4%20Assembly%20Language%20and%20Computer%20Architecture%20%20Part%201/"><img class="next-cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">MIT 6.172 L4 Assembly Language and Computer Architecture Part 1</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span> 相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2021/04/13/2021-4-13-计算机程序的构造和解释(SICP)环境配置(续)/" title="计算机程序的构造和解释(SICP)环境配置(wsl2 + vscode + mit scheme)"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-04-13</div><div class="title">计算机程序的构造和解释(SICP)环境配置(wsl2 + vscode + mit scheme)</div></div></a></div><div><a href="/2021/04/20/2021-4-20-计算机程序的构造和解释(SICP)-第3章-习题解析-Part6/" title="计算机程序的构造和解释(SICP) 第3章 习题解析 Part6"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-04-20</div><div class="title">计算机程序的构造和解释(SICP) 第3章 习题解析 Part6</div></div></a></div><div><a href="/2021/04/24/2021-4-24-计算机程序的构造和解释(SICP)-第3章-习题解析-Part7/" title="计算机程序的构造和解释(SICP) 第3章 习题解析 Part7"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-04-24</div><div class="title">计算机程序的构造和解释(SICP) 第3章 习题解析 Part7</div></div></a></div><div><a href="/2021/05/17/2021-5-17-计算机程序的构造和解释(SICP)-第4章-习题解析-Part1/" title="计算机程序的构造和解释(SICP) 第4章 习题解析 Part1"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-05-17</div><div class="title">计算机程序的构造和解释(SICP) 第4章 习题解析 Part1</div></div></a></div><div><a href="/2021/05/04/2021-5-4-计算机程序的构造和解释(SICP)-第3章-习题解析-Part8/" title="计算机程序的构造和解释(SICP) 第3章 习题解析 Part8"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-05-04</div><div class="title">计算机程序的构造和解释(SICP) 第3章 习题解析 Part8</div></div></a></div><div><a href="/2021/06/03/2021-6-3-巧妙的Y运算符/" title="巧妙的Y运算符"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-06-03</div><div class="title">巧妙的Y运算符</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="card-info-avatar is-center"><img class="avatar-img" src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/><div class="author-info__name">Doraemonzzz</div><div class="author-info__description">个人博客，主要记录有关机器学习，数学以及计算机科学的笔记</div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">610</div></a></div><div class="card-info-data-item is-center"><a href="/tags/"><div class="headline">标签</div><div class="length-num">59</div></a></div><div class="card-info-data-item is-center"><a href="/categories/"><div class="headline">分类</div><div class="length-num">23</div></a></div></div><a class="button--animated" id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/Doraemonzzz" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="/doraemon_zzz@163.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn card-announcement-animation"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-29-p39"><span class="toc-number">1.</span> <span class="toc-text">1.29(p39)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-30-p40"><span class="toc-number">2.</span> <span class="toc-text">1.30(p40)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-31-p40"><span class="toc-number">3.</span> <span class="toc-text">1.31(p40)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-32-p40"><span class="toc-number">4.</span> <span class="toc-text">1.32(p40)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-33-p40"><span class="toc-number">5.</span> <span class="toc-text">1.33(p40)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-34-p44"><span class="toc-number">6.</span> <span class="toc-text">1.34(p44)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-35-p47"><span class="toc-number">7.</span> <span class="toc-text">1.35(p47)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-36-p47"><span class="toc-number">8.</span> <span class="toc-text">1.36(p47)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-37-p47"><span class="toc-number">9.</span> <span class="toc-text">1.37(p47)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-38-p47"><span class="toc-number">10.</span> <span class="toc-text">1.38(p47)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-39-p48"><span class="toc-number">11.</span> <span class="toc-text">1.39(p48)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-40-p51"><span class="toc-number">12.</span> <span class="toc-text">1.40(p51)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-41-p51"><span class="toc-number">13.</span> <span class="toc-text">1.41(p51)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-42-p51"><span class="toc-number">14.</span> <span class="toc-text">1.42(p51)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-43-p51"><span class="toc-number">15.</span> <span class="toc-text">1.43(p51)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-44-p51"><span class="toc-number">16.</span> <span class="toc-text">1.44(p51)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-45-p52"><span class="toc-number">17.</span> <span class="toc-text">1.45(p52)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-46-p52"><span class="toc-number">18.</span> <span class="toc-text">1.46(p52)</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2021/06/06/2021-6-6-%E7%AE%97%E6%B3%95%E6%A6%82%E8%AE%BA(DPV)%E4%B9%A0%E9%A2%98%E8%A7%A3%E7%AD%94%E2%80%94%E2%80%94%E7%AC%AC3%E7%AB%A0-%E5%9B%BE%E7%9A%84%E5%88%86%E8%A7%A3/" title="算法概论(DPV)习题解答——第3章 图的分解"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="算法概论(DPV)习题解答——第3章 图的分解"/></a><div class="content"><a class="title" href="/2021/06/06/2021-6-6-%E7%AE%97%E6%B3%95%E6%A6%82%E8%AE%BA(DPV)%E4%B9%A0%E9%A2%98%E8%A7%A3%E7%AD%94%E2%80%94%E2%80%94%E7%AC%AC3%E7%AB%A0-%E5%9B%BE%E7%9A%84%E5%88%86%E8%A7%A3/" title="算法概论(DPV)习题解答——第3章 图的分解">算法概论(DPV)习题解答——第3章 图的分解</a><time datetime="2021-06-06T14:35:00.000Z" title="发表于 2021-06-06 22:35:00">2021-06-06</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/06/06/2021-6-6-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E7%AC%AC5%E7%AB%A0-%E4%B9%A0%E9%A2%98%E8%A7%A3%E6%9E%90/" title="深入理解计算机系统 第5章 习题解析"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="深入理解计算机系统 第5章 习题解析"/></a><div class="content"><a class="title" href="/2021/06/06/2021-6-6-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E7%AC%AC5%E7%AB%A0-%E4%B9%A0%E9%A2%98%E8%A7%A3%E6%9E%90/" title="深入理解计算机系统 第5章 习题解析">深入理解计算机系统 第5章 习题解析</a><time datetime="2021-06-06T07:23:00.000Z" title="发表于 2021-06-06 15:23:00">2021-06-06</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/06/05/2021-6-5-Stanford-Compiler-PA5%E7%BF%BB%E8%AF%91/" title="Stanford Compiler PA5翻译"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Stanford Compiler PA5翻译"/></a><div class="content"><a class="title" href="/2021/06/05/2021-6-5-Stanford-Compiler-PA5%E7%BF%BB%E8%AF%91/" title="Stanford Compiler PA5翻译">Stanford Compiler PA5翻译</a><time datetime="2021-06-05T06:12:00.000Z" title="发表于 2021-06-05 14:12:00">2021-06-05</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/06/04/2021-6-4-Stanford-Compiler-PA4%E7%BF%BB%E8%AF%91/" title="Stanford Compiler PA4翻译"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Stanford Compiler PA4翻译"/></a><div class="content"><a class="title" href="/2021/06/04/2021-6-4-Stanford-Compiler-PA4%E7%BF%BB%E8%AF%91/" title="Stanford Compiler PA4翻译">Stanford Compiler PA4翻译</a><time datetime="2021-06-03T16:17:00.000Z" title="发表于 2021-06-04 00:17:00">2021-06-04</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/06/03/2021-6-3-%E5%B7%A7%E5%A6%99%E7%9A%84Y%E8%BF%90%E7%AE%97%E7%AC%A6/" title="巧妙的Y运算符"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="巧妙的Y运算符"/></a><div class="content"><a class="title" href="/2021/06/03/2021-6-3-%E5%B7%A7%E5%A6%99%E7%9A%84Y%E8%BF%90%E7%AE%97%E7%AC%A6/" title="巧妙的Y运算符">巧妙的Y运算符</a><time datetime="2021-06-03T00:54:00.000Z" title="发表于 2021-06-03 08:54:00">2021-06-03</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2021 By Doraemonzzz</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><div class="js-pjax"><script>if (!window.MathJax) {
+  window.MathJax = {
+    loader: {
+      source: {
+        '[tex]/amsCd': '[tex]/amscd'
+      }
+    },
+    tex: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]],
+      tags: 'ams'
+    },
+    options: {
+      renderActions: {
+        findScript: [10, doc => {
+          for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+            const display = !!node.type.match(/; *mode=display/)
+            const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+            const text = document.createTextNode('')
+            node.parentNode.replaceChild(text, node)
+            math.start = {node: text, delim: '', n: 0}
+            math.end = {node: text, delim: '', n: 0}
+            doc.math.push(math)
+          }
+        }, ''],
+        addClass: [200,() => {
+          document.querySelectorAll('mjx-container:not([display=\'true\']').forEach( node => {
+            const target = node.parentNode
+            if (!target.classList.contains('has-jax')) {
+              target.classList.add('mathjax-overflow')
+            }
+          })
+        }, '', false]
+      }
+    }
+  }
+  
+  const script = document.createElement('script')
+  script.src = 'https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js'
+  script.id = 'MathJax-script'
+  script.async = true
+  document.head.appendChild(script)
+} else {
+  MathJax.startup.document.state(0)
+  MathJax.texReset()
+  MathJax.typeset()
+}</script></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

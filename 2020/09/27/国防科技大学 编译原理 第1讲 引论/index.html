@@ -1,0 +1,434 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>国防科技大学 编译原理 第1讲 引论 | Doraemonzzz</title><meta name="keywords" content="国防科技大学编译原理"><meta name="author" content="Doraemonzzz"><meta name="copyright" content="Doraemonzzz"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="课程主页： https:&#x2F;&#x2F;www.icourse163.org&#x2F;course&#x2F;NUDT-1003101005?tid&#x3D;1460976445 斯坦福的编译原理课程感觉有些地方比较难理解，所以选择了中国大学MOOC上的课程进行补充，挑选后感觉国防科技大学的编译原理内容最全，所以决定学习这门课程。 这次回顾第1讲：引论。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="国防科技大学 编译原理 第1讲 引论">
+<meta property="og:url" content="http://doraemonzzz.com/2020/09/27/%E5%9B%BD%E9%98%B2%E7%A7%91%E6%8A%80%E5%A4%A7%E5%AD%A6%20%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86%20%E7%AC%AC1%E8%AE%B2%20%E5%BC%95%E8%AE%BA/index.html">
+<meta property="og:site_name" content="Doraemonzzz">
+<meta property="og:description" content="课程主页： https:&#x2F;&#x2F;www.icourse163.org&#x2F;course&#x2F;NUDT-1003101005?tid&#x3D;1460976445 斯坦福的编译原理课程感觉有些地方比较难理解，所以选择了中国大学MOOC上的课程进行补充，挑选后感觉国防科技大学的编译原理内容最全，所以决定学习这门课程。 这次回顾第1讲：引论。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg">
+<meta property="article:published_time" content="2020-09-27T15:13:00.000Z">
+<meta property="article:modified_time" content="2021-01-17T15:05:00.590Z">
+<meta property="article:author" content="Doraemonzzz">
+<meta property="article:tag" content="国防科技大学编译原理">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="http://doraemonzzz.com/2020/09/27/%E5%9B%BD%E9%98%B2%E7%A7%91%E6%8A%80%E5%A4%A7%E5%AD%A6%20%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86%20%E7%AC%AC1%E8%AE%B2%20%E5%BC%95%E8%AE%BA/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"prismjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    jQuery: 'https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js',
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+    },
+    fancybox: {
+      js: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isanchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '国防科技大学 编译原理 第1讲 引论',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2021-01-17 23:05:00'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    })(window)</script><meta name="generator" content="Hexo 5.4.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="author-avatar"><img class="avatar-img" src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">文章</div><div class="length-num">610</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">标签</div><div class="length-num">59</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/categories/"><div class="headline">分类</div><div class="length-num">23</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">Doraemonzzz</a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">国防科技大学 编译原理 第1讲 引论</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2020-09-27T15:13:00.000Z" title="发表于 2020-09-27 23:13:00">2020-09-27</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2021-01-17T15:05:00.590Z" title="更新于 2021-01-17 23:05:00">2021-01-17</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/">编译原理</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="国防科技大学 编译原理 第1讲 引论"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p>课程主页：</p>
+<p><a target="_blank" rel="noopener" href="https://www.icourse163.org/course/NUDT-1003101005?tid=1460976445">https://www.icourse163.org/course/NUDT-1003101005?tid=1460976445</a></p>
+<p>斯坦福的编译原理课程感觉有些地方比较难理解，所以选择了中国大学MOOC上的课程进行补充，挑选后感觉国防科技大学的编译原理内容最全，所以决定学习这门课程。</p>
+<p>这次回顾第1讲：引论。</p>
+<span id="more"></span>
+<h3 id="第1讲-引论"><a href="#第1讲-引论" class="headerlink" title="第1讲 引论"></a>第1讲 引论</h3><h4 id="什么是编译程序"><a href="#什么是编译程序" class="headerlink" title="什么是编译程序"></a>什么是编译程序</h4><h5 id="翻译程序-Translator"><a href="#翻译程序-Translator" class="headerlink" title="翻译程序(Translator)"></a>翻译程序(Translator)</h5><p>翻译程序是把某一种语言程序(称为源语言程序)等价地转换成另一种语言程序(称为目标语言程序)的程序。</p>
+<p><img src="https://github.com/Doraemonzzz/md-photo/blob/master/%E5%9B%BD%E9%98%B2%E7%A7%91%E6%8A%80%E5%A4%A7%E5%AD%A6%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/%E7%AC%AC1%E8%AE%B2/2020092901.jpg?raw=true" alt=""></p>
+<h5 id="编译程序-Compiler"><a href="#编译程序-Compiler" class="headerlink" title="编译程序(Compiler)"></a>编译程序(Compiler)</h5><p>编译程序是把某一种高级语言程序等价地转换成另一种低级语言程序(如汇编语言或机器语言程序)的程序。</p>
+<p><img src="https://github.com/Doraemonzzz/md-photo/blob/master/%E5%9B%BD%E9%98%B2%E7%A7%91%E6%8A%80%E5%A4%A7%E5%AD%A6%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/%E7%AC%AC1%E8%AE%B2/2020092902.jpg?raw=true" alt=""></p>
+<p>根据不同的用途和侧重，编译程序还可以进一步分为如下几类：</p>
+<ul>
+<li>诊断编译程序(Diagnostic Compiler)：帮助开发和调试。</li>
+<li>优化编译程序(Optimizing Compiler)：提高目标代码的效率。</li>
+<li>交叉编译程序(Cross Compiler)：运行编译程序的计算机叫<strong>宿主机</strong>，运行目标语言程序机器的机器叫<strong>目标机</strong>。如果编译程序产生出不同于宿主机的机器代码，那么就称其为交叉编译程序。</li>
+<li>可变目标编译程序(Retargetable Compiler)：不需要重写程序中与机器无关的部分，只要改变和目标机器有关的部分，就能针对不同的目标平台生成不同的目标机器上的代码，这类编译程序称为可变目标编译程序。</li>
+</ul>
+<h5 id="解释程序-Interpreter"><a href="#解释程序-Interpreter" class="headerlink" title="解释程序(Interpreter)"></a>解释程序(Interpreter)</h5><p>解释程序把源语言写的源程序作为输入，但不产生目标程序，而是边解释边执行源程序。</p>
+<p><img src="https://github.com/Doraemonzzz/md-photo/blob/master/%E5%9B%BD%E9%98%B2%E7%A7%91%E6%8A%80%E5%A4%A7%E5%AD%A6%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/%E7%AC%AC1%E8%AE%B2/2020092903.jpg?raw=true" alt=""></p>
+<h5 id="类比"><a href="#类比" class="headerlink" title="类比"></a>类比</h5><p>背景是我们有一个英语说明书，但是工作人员只会中文，下面用两种方式使用说明书。</p>
+<p>第一种方式是让别人将说明书翻译为中文，然后给工作人员使用，这种方式对应了编译：</p>
+<p><img src="https://github.com/Doraemonzzz/md-photo/blob/master/%E5%9B%BD%E9%98%B2%E7%A7%91%E6%8A%80%E5%A4%A7%E5%AD%A6%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/%E7%AC%AC1%E8%AE%B2/2020092904.jpg?raw=true" alt=""></p>
+<p>第二种方式是请翻译人员将说明书逐句翻译，工作人员据此工作，这种方式对应了解释：</p>
+<p><img src="https://github.com/Doraemonzzz/md-photo/blob/master/%E5%9B%BD%E9%98%B2%E7%A7%91%E6%8A%80%E5%A4%A7%E5%AD%A6%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/%E7%AC%AC1%E8%AE%B2/2020092905.jpg?raw=true" alt=""></p>
+<h4 id="为什么要学习编译原理"><a href="#为什么要学习编译原理" class="headerlink" title="为什么要学习编译原理"></a>为什么要学习编译原理</h4><h5 id="计算思维"><a href="#计算思维" class="headerlink" title="计算思维"></a>计算思维</h5><ul>
+<li>计算思维包括一系列广泛的计算机科学的思维方法<ul>
+<li>抽象</li>
+<li>自动化</li>
+<li>问题分解</li>
+<li>递归</li>
+<li>权衡</li>
+<li>保护、冗余、容错、纠错和恢复</li>
+<li>利用启发式推理来寻求解答</li>
+<li>在不确定情况下的规划、学习和调度</li>
+<li>…</li>
+</ul>
+</li>
+</ul>
+<h5 id="关于编译理论与技术"><a href="#关于编译理论与技术" class="headerlink" title="关于编译理论与技术"></a>关于编译理论与技术</h5><ul>
+<li>编译理论与技术<ul>
+<li>计算机科学与技术中理论和实践相结合的最好典范</li>
+</ul>
+</li>
+<li>体现了很多典型的计算思维方法</li>
+<li>ACM 图灵奖<ul>
+<li>授予在计算机技术领域作出突出贡献的科学家</li>
+<li>程序设计语言、编译相关的获奖者是最多的</li>
+</ul>
+</li>
+</ul>
+<h5 id="计算思维vs-编译"><a href="#计算思维vs-编译" class="headerlink" title="计算思维vs.编译"></a>计算思维vs.编译</h5><ul>
+<li>抽象(Abstraction)<ul>
+<li>忽略一个主题中与当前问题(或目标)无关的那些方面，以便更充分地注意与当前问题(或目标)有关的方面</li>
+<li>从众多的事物中抽取出共同的、本质性的特征，舍弃其非本质的特征</li>
+<li>是一种从个体把握一般、从现象把握本质的认知过程和思维方法</li>
+<li>编译原理中的”抽象”<ul>
+<li>有限自动机</li>
+<li>形式文法</li>
+<li>…</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>自动化(Automation)<ul>
+<li>将抽象思维的结果在计算机上实现，是一个将计算思维成果物化的过程，也是将理论成果应用于技术的实践</li>
+<li>自动化的思维方法不仅体现在编译程序本身的工作机制上，更体现在了编译程序的生成工具的研究和设计上</li>
+<li>编译原理中的”自动化“ <ul>
+<li>有限自动机</li>
+<li>预测分析程序</li>
+<li>算符优先分析</li>
+<li>LR分析</li>
+<li>…</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>分解(Decomposition)<ul>
+<li>将大规模的复杂问题分解成若干个较小规模的、更简单的问题加以解决</li>
+<li>编译原理中的”问题分解”<ul>
+<li>为什么编译程序引入中间语言？</li>
+<li>为什么编译分成多个阶段？</li>
+<li>为什么分析过程分成多遍？</li>
+<li>…</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>递归(Recursion)<ul>
+<li>编译原理中的”递归”<ul>
+<li>递归下降分析</li>
+<li>基于树遍历的属性计算</li>
+<li>语法制导翻译</li>
+<li>…</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>权衡(折衷, Tradeoff )<ul>
+<li>理论可实现vs. 实际可实现</li>
+<li>编译原理中的”权衡”<ul>
+<li>用上下文无关文法来描述和处理高级程序设计语言</li>
+<li>优化措施的选择</li>
+<li>…</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h5 id="学习编译原理的意义"><a href="#学习编译原理的意义" class="headerlink" title="学习编译原理的意义"></a>学习编译原理的意义</h5><ul>
+<li>学习编译程序构造原理，技术<ul>
+<li>提高对计算机系统总体认识</li>
+<li>感悟计算思维</li>
+<li>更好地理解“计算”</li>
+</ul>
+</li>
+<li>更好地理解高级语言</li>
+<li>运用编译原理和方法构造实用工具<ul>
+<li>用“计算”的眼光看世界</li>
+<li>用计算解决实际问题</li>
+</ul>
+</li>
+</ul>
+<h4 id="编译过程"><a href="#编译过程" class="headerlink" title="编译过程"></a>编译过程</h4><p>编译程序是怎样把高级语言(如C++)翻译成低级语言(如机器指令)的？将编译和翻译类比：</p>
+<p><img src="https://github.com/Doraemonzzz/md-photo/blob/master/%E5%9B%BD%E9%98%B2%E7%A7%91%E6%8A%80%E5%A4%A7%E5%AD%A6%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/%E7%AC%AC1%E8%AE%B2/2020092906.jpg?raw=true" alt=""></p>
+<h5 id="词法分析"><a href="#词法分析" class="headerlink" title="词法分析"></a>词法分析</h5><ul>
+<li>任务: 输入源程序，对构成源程序的字符串进行扫描和分解，识别出单词符号</li>
+<li>依循的原则：构词规则</li>
+<li>描述工具：有限自动机</li>
+<li><img src="https://github.com/Doraemonzzz/md-photo/blob/master/%E5%9B%BD%E9%98%B2%E7%A7%91%E6%8A%80%E5%A4%A7%E5%AD%A6%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/%E7%AC%AC1%E8%AE%B2/2020092907.jpg?raw=true" alt=""></li>
+</ul>
+<h5 id="语法分析"><a href="#语法分析" class="headerlink" title="语法分析"></a>语法分析</h5><ul>
+<li>任务：在词法分析的基础上，根据语法规则把单词符号串分解成各类语法单位(语法范畴)</li>
+<li>依循的原则：语法规则</li>
+<li>描述工具：上下文无关文法</li>
+<li><img src="https://github.com/Doraemonzzz/md-photo/blob/master/%E5%9B%BD%E9%98%B2%E7%A7%91%E6%8A%80%E5%A4%A7%E5%AD%A6%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/%E7%AC%AC1%E8%AE%B2/2020092908.jpg?raw=true" alt=""></li>
+</ul>
+<h5 id="中间代码产生"><a href="#中间代码产生" class="headerlink" title="中间代码产生"></a>中间代码产生</h5><ul>
+<li>任务：对各类语法单位按语言的语义进行初步翻译</li>
+<li>依循的原则：语义规则</li>
+<li>描述工具：属性文法</li>
+<li>中间代码：三元式，四元式，树，…</li>
+<li>Z:=X + 0.618 * Y 翻译成四元式为</li>
+<li><img src="https://github.com/Doraemonzzz/md-photo/blob/master/%E5%9B%BD%E9%98%B2%E7%A7%91%E6%8A%80%E5%A4%A7%E5%AD%A6%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/%E7%AC%AC1%E8%AE%B2/2020092909.jpg?raw=true" alt=""></li>
+</ul>
+<h5 id="优化"><a href="#优化" class="headerlink" title="优化"></a>优化</h5><ul>
+<li>任务：对前阶段产生的中间代码进行加工变换，以期在最后阶段产生更高效的目标代码</li>
+<li>依循的原则：程序的等价变换规则</li>
+</ul>
+<pre class="line-numbers language-none"><code class="language-none">FOR K:&#x3D;1 TO 100 DO
+BEGIN  
+    X :&#x3D; I+1;
+    M :&#x3D; I + 10 * K;
+    N :&#x3D; J + 10 * K;
+END<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>优化前：</p>
+<p><img src="https://github.com/Doraemonzzz/md-photo/blob/master/%E5%9B%BD%E9%98%B2%E7%A7%91%E6%8A%80%E5%A4%A7%E5%AD%A6%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/%E7%AC%AC1%E8%AE%B2/2020092910.jpg?raw=true" alt=""></p>
+<p>一共需要400次加法，200次乘法。</p>
+<p>优化后：</p>
+<p><img src="https://github.com/Doraemonzzz/md-photo/blob/master/%E5%9B%BD%E9%98%B2%E7%A7%91%E6%8A%80%E5%A4%A7%E5%AD%A6%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/%E7%AC%AC1%E8%AE%B2/2020092911.jpg?raw=true" alt=""></p>
+<p>一共需要301次加法。</p>
+<h5 id="目标代码产生"><a href="#目标代码产生" class="headerlink" title="目标代码产生"></a>目标代码产生</h5><ul>
+<li>任务: 把中间代码变换成特定机器上的目标代码</li>
+<li>依赖于硬件系统结构和机器指令的含义</li>
+<li>目标代码三种形式<ul>
+<li>汇编指令代码: 需要进行汇编</li>
+<li>绝对指令代码: 可直接运行</li>
+<li>可重新定位指令代码: 需要连接</li>
+</ul>
+</li>
+</ul>
+<p>考虑如下例子：</p>
+<p><img src="https://github.com/Doraemonzzz/md-photo/blob/master/%E5%9B%BD%E9%98%B2%E7%A7%91%E6%8A%80%E5%A4%A7%E5%AD%A6%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/%E7%AC%AC1%E8%AE%B2/2020092912.jpg?raw=true" alt=""></p>
+<p>分别开发模块A,B,C，每个模块中分别有程序a,b,c。模块可以相互组合，注意a在全部程序中的地址是无法确定的，但是其在A中的相对地址是可以确定的，这样编译出来的结果为可重定位的指令代码。</p>
+<p>再来看一个具体例子：</p>
+<p><img src="https://github.com/Doraemonzzz/md-photo/blob/master/%E5%9B%BD%E9%98%B2%E7%A7%91%E6%8A%80%E5%A4%A7%E5%AD%A6%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/%E7%AC%AC1%E8%AE%B2/2020092913.jpg?raw=true" alt=""></p>
+<p>机器指令的四个部分分别为操作码，寄存器操作数，操作数标志，第二操作数(地址)。</p>
+<p>绿色部分的第一第三条为可重定位指令代码，加上偏移L之后得到可执行文件。</p>
+<h4 id="结构"><a href="#结构" class="headerlink" title="结构"></a>结构</h4><h5 id="编译程序总框"><a href="#编译程序总框" class="headerlink" title="编译程序总框"></a>编译程序总框</h5><p><img src="https://github.com/Doraemonzzz/md-photo/blob/master/%E5%9B%BD%E9%98%B2%E7%A7%91%E6%8A%80%E5%A4%A7%E5%AD%A6%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/%E7%AC%AC1%E8%AE%B2/2020092914.jpg?raw=true" alt=""></p>
+<h5 id="出错处理"><a href="#出错处理" class="headerlink" title="出错处理"></a>出错处理</h5><ul>
+<li>出错处理程序<ul>
+<li>发现源程序中的错误，把有关错误信息报告给用户</li>
+</ul>
+</li>
+<li>语法错误<ul>
+<li>源程序中不符合语法（或词法）规则的错误</li>
+<li>非法字符、括号不匹配、缺少；、…</li>
+</ul>
+</li>
+<li>语义错误<ul>
+<li>源程序中不符合语义规则的错误</li>
+<li>说明错误、作用域错误、类型不一致、…</li>
+</ul>
+</li>
+</ul>
+<h5 id="遍-pass"><a href="#遍-pass" class="headerlink" title="遍(pass)"></a>遍(pass)</h5><ul>
+<li>所谓”遍”， 就是对源程序或源程序的中间表示从头到尾扫描一次</li>
+<li>阶段与遍是不同的概念<ul>
+<li>一遍可以由若干段组成</li>
+<li>一个阶段也可以分若干遍来完成</li>
+</ul>
+</li>
+</ul>
+<h5 id="编译前端与后端"><a href="#编译前端与后端" class="headerlink" title="编译前端与后端"></a>编译前端与后端</h5><p><img src="https://github.com/Doraemonzzz/md-photo/blob/master/%E5%9B%BD%E9%98%B2%E7%A7%91%E6%8A%80%E5%A4%A7%E5%AD%A6%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/%E7%AC%AC1%E8%AE%B2/2020092915.jpg?raw=true" alt=""></p>
+<ul>
+<li>编译前端<ul>
+<li>与源语言有关，如词法分析，语法分析，语义分析与中间代码产生，与机器无关的优化</li>
+</ul>
+</li>
+<li>编译后端<ul>
+<li>与目标机有关，与目标机有关的优化，目标代码产生</li>
+</ul>
+</li>
+<li>带来的好处<ul>
+<li>程序逻辑结构清晰</li>
+<li>优化更充分，有利于移植</li>
+</ul>
+</li>
+</ul>
+<p>编译过程和编译程序结构之间的关系如下：</p>
+<p><img src="https://github.com/Doraemonzzz/md-photo/blob/master/%E5%9B%BD%E9%98%B2%E7%A7%91%E6%8A%80%E5%A4%A7%E5%AD%A6%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/%E7%AC%AC1%E8%AE%B2/2020092916.jpg?raw=true" alt=""></p>
+<h4 id="编译程序的生成"><a href="#编译程序的生成" class="headerlink" title="编译程序的生成"></a>编译程序的生成</h4><h5 id="以汇编语言和机器语言为工具"><a href="#以汇编语言和机器语言为工具" class="headerlink" title="以汇编语言和机器语言为工具"></a>以汇编语言和机器语言为工具</h5><ul>
+<li>优点: 可以针对具体的机器，充分发挥计算机的系统功能；生成的程序效率高</li>
+<li>缺点: 程序难读、难写、易出错、难维护、生产的效率低</li>
+</ul>
+<h5 id="高级语言书写"><a href="#高级语言书写" class="headerlink" title="高级语言书写"></a>高级语言书写</h5><ul>
+<li><img src="https://github.com/Doraemonzzz/md-photo/blob/master/%E5%9B%BD%E9%98%B2%E7%A7%91%E6%8A%80%E5%A4%A7%E5%AD%A6%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/%E7%AC%AC1%E8%AE%B2/2020092917.jpg?raw=true" alt=""></li>
+<li>程序易读、易理解、容易维护、生产的效率高</li>
+<li>利用已有的某种语言的编译程序实现另一语言的编译程序</li>
+<li><img src="https://github.com/Doraemonzzz/md-photo/blob/master/%E5%9B%BD%E9%98%B2%E7%A7%91%E6%8A%80%E5%A4%A7%E5%AD%A6%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/%E7%AC%AC1%E8%AE%B2/2020092918.jpg?raw=true" alt=""><ul>
+<li>现在已有利用A语言编写的L1到A的编译程序，要产生L2到A的编译程序，思路为利用L1语言编写L2到A的编译器C，然后利用L1到A的编译器编译C。</li>
+</ul>
+</li>
+</ul>
+<h5 id="移植方法"><a href="#移植方法" class="headerlink" title="移植方法"></a>移植方法</h5><ul>
+<li>把一种机器上的编译程序移植到另一种机器上</li>
+<li><img src="https://github.com/Doraemonzzz/md-photo/blob/master/%E5%9B%BD%E9%98%B2%E7%A7%91%E6%8A%80%E5%A4%A7%E5%AD%A6%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/%E7%AC%AC1%E8%AE%B2/2020092919.jpg?raw=true" alt=""></li>
+<li>解释：假设我们已有L语言到A代码的编译器P1，现在利用L语言编写L语言到B代码的编译器P2，将P2输入P1，可以得到P2的A代码版本，接着将P2的L语言程序输入给P2的A代码版本，于是得到P2的B代码版本</li>
+</ul>
+<h5 id="自编译方式"><a href="#自编译方式" class="headerlink" title="自编译方式"></a>自编译方式</h5><p><img src="https://github.com/Doraemonzzz/md-photo/blob/master/%E5%9B%BD%E9%98%B2%E7%A7%91%E6%8A%80%E5%A4%A7%E5%AD%A6%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/%E7%AC%AC1%E8%AE%B2/2020092920.jpg?raw=true" alt=""></p>
+<p>先对L语言的核心部分L1利用低级语言实现编译程序，然后以L1为开发工具，实现L1+L2的部分的编译器，以此类推实现整个L的编译器。</p>
+<h5 id="编译程序自动产生"><a href="#编译程序自动产生" class="headerlink" title="编译程序自动产生"></a>编译程序自动产生</h5><ul>
+<li>编译程序-编译程序，编译程序产生器，编译程序书写系统</li>
+<li>LEX：词法分析程序产生器</li>
+<li>YACC：语法分析程序产生器</li>
+</ul>
+<p>这些工具的工作模式如下：</p>
+<p><img src="https://github.com/Doraemonzzz/md-photo/blob/master/%E5%9B%BD%E9%98%B2%E7%A7%91%E6%8A%80%E5%A4%A7%E5%AD%A6%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/%E7%AC%AC1%E8%AE%B2/2020092921.jpg?raw=true" alt=""></p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">Doraemonzzz</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="http://doraemonzzz.com/2020/09/27/%E5%9B%BD%E9%98%B2%E7%A7%91%E6%8A%80%E5%A4%A7%E5%AD%A6%20%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86%20%E7%AC%AC1%E8%AE%B2%20%E5%BC%95%E8%AE%BA/">http://doraemonzzz.com/2020/09/27/%E5%9B%BD%E9%98%B2%E7%A7%91%E6%8A%80%E5%A4%A7%E5%AD%A6%20%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86%20%E7%AC%AC1%E8%AE%B2%20%E5%BC%95%E8%AE%BA/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://doraemonzzz.com" target="_blank">Doraemonzzz</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E5%9B%BD%E9%98%B2%E7%A7%91%E6%8A%80%E5%A4%A7%E5%AD%A6%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/">国防科技大学编译原理</a></div><div class="post_share"><div class="social-share" data-image="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2020/09/29/%E5%9B%BD%E9%98%B2%E7%A7%91%E6%8A%80%E5%A4%A7%E5%AD%A6%20%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86%20%E7%AC%AC2%E8%AE%B2%20%E9%AB%98%E7%BA%A7%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E8%AF%AD%E8%A8%80%E6%A6%82%E8%BF%B0/"><img class="prev-cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">国防科技大学 编译原理 第2讲 高级程序设计语言概述</div></div></a></div><div class="next-post pull-right"><a href="/2020/09/26/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%20%E7%AC%AC2%E7%AB%A0%20%E4%B9%A0%E9%A2%98%E8%A7%A3%E6%9E%90%20Part2/"><img class="next-cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">深入理解计算机系统 第2章 习题解析 Part2</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span> 相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2020/11/04/国防科技大学 编译原理 第11讲 语法分析——自下而上分析2/" title="国防科技大学 编译原理 第11讲 语法分析——自下而上分析2"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-11-04</div><div class="title">国防科技大学 编译原理 第11讲 语法分析——自下而上分析2</div></div></a></div><div><a href="/2020/11/12/国防科技大学 编译原理 第12讲 语法分析——自下而上分析3/" title="国防科技大学 编译原理 第12讲 语法分析——自下而上分析3"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-11-12</div><div class="title">国防科技大学 编译原理 第12讲 语法分析——自下而上分析3</div></div></a></div><div><a href="/2020/11/22/国防科技大学 编译原理 第13讲 语法分析——自下而上分析4/" title="国防科技大学 编译原理 第13讲 语法分析——自下而上分析4"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-11-22</div><div class="title">国防科技大学 编译原理 第13讲 语法分析——自下而上分析4</div></div></a></div><div><a href="/2020/09/29/国防科技大学 编译原理 第2讲 高级程序设计语言概述/" title="国防科技大学 编译原理 第2讲 高级程序设计语言概述"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-09-29</div><div class="title">国防科技大学 编译原理 第2讲 高级程序设计语言概述</div></div></a></div><div><a href="/2020/10/07/国防科技大学 编译原理 第3讲 高级程序设计语言的语法描述/" title="国防科技大学 编译原理 第3讲 高级程序设计语言的语法描述"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-10-07</div><div class="title">国防科技大学 编译原理 第3讲 高级程序设计语言的语法描述</div></div></a></div><div><a href="/2020/10/08/国防科技大学 编译原理 第4讲 词法分析1/" title="国防科技大学 编译原理 第4讲 词法分析1"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-10-08</div><div class="title">国防科技大学 编译原理 第4讲 词法分析1</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="card-info-avatar is-center"><img class="avatar-img" src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/><div class="author-info__name">Doraemonzzz</div><div class="author-info__description">个人博客，主要记录有关机器学习，数学以及计算机科学的笔记</div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">610</div></a></div><div class="card-info-data-item is-center"><a href="/tags/"><div class="headline">标签</div><div class="length-num">59</div></a></div><div class="card-info-data-item is-center"><a href="/categories/"><div class="headline">分类</div><div class="length-num">23</div></a></div></div><a class="button--animated" id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/Doraemonzzz" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="/doraemon_zzz@163.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn card-announcement-animation"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC1%E8%AE%B2-%E5%BC%95%E8%AE%BA"><span class="toc-number">1.</span> <span class="toc-text">第1讲 引论</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF%E7%BC%96%E8%AF%91%E7%A8%8B%E5%BA%8F"><span class="toc-number">1.1.</span> <span class="toc-text">什么是编译程序</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E7%BF%BB%E8%AF%91%E7%A8%8B%E5%BA%8F-Translator"><span class="toc-number">1.1.1.</span> <span class="toc-text">翻译程序(Translator)</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E7%BC%96%E8%AF%91%E7%A8%8B%E5%BA%8F-Compiler"><span class="toc-number">1.1.2.</span> <span class="toc-text">编译程序(Compiler)</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E8%A7%A3%E9%87%8A%E7%A8%8B%E5%BA%8F-Interpreter"><span class="toc-number">1.1.3.</span> <span class="toc-text">解释程序(Interpreter)</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E7%B1%BB%E6%AF%94"><span class="toc-number">1.1.4.</span> <span class="toc-text">类比</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E5%AD%A6%E4%B9%A0%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86"><span class="toc-number">1.2.</span> <span class="toc-text">为什么要学习编译原理</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E8%AE%A1%E7%AE%97%E6%80%9D%E7%BB%B4"><span class="toc-number">1.2.1.</span> <span class="toc-text">计算思维</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%85%B3%E4%BA%8E%E7%BC%96%E8%AF%91%E7%90%86%E8%AE%BA%E4%B8%8E%E6%8A%80%E6%9C%AF"><span class="toc-number">1.2.2.</span> <span class="toc-text">关于编译理论与技术</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E8%AE%A1%E7%AE%97%E6%80%9D%E7%BB%B4vs-%E7%BC%96%E8%AF%91"><span class="toc-number">1.2.3.</span> <span class="toc-text">计算思维vs.编译</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%AD%A6%E4%B9%A0%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86%E7%9A%84%E6%84%8F%E4%B9%89"><span class="toc-number">1.2.4.</span> <span class="toc-text">学习编译原理的意义</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%BC%96%E8%AF%91%E8%BF%87%E7%A8%8B"><span class="toc-number">1.3.</span> <span class="toc-text">编译过程</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E8%AF%8D%E6%B3%95%E5%88%86%E6%9E%90"><span class="toc-number">1.3.1.</span> <span class="toc-text">词法分析</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E8%AF%AD%E6%B3%95%E5%88%86%E6%9E%90"><span class="toc-number">1.3.2.</span> <span class="toc-text">语法分析</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E4%B8%AD%E9%97%B4%E4%BB%A3%E7%A0%81%E4%BA%A7%E7%94%9F"><span class="toc-number">1.3.3.</span> <span class="toc-text">中间代码产生</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E4%BC%98%E5%8C%96"><span class="toc-number">1.3.4.</span> <span class="toc-text">优化</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E7%9B%AE%E6%A0%87%E4%BB%A3%E7%A0%81%E4%BA%A7%E7%94%9F"><span class="toc-number">1.3.5.</span> <span class="toc-text">目标代码产生</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%BB%93%E6%9E%84"><span class="toc-number">1.4.</span> <span class="toc-text">结构</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E7%BC%96%E8%AF%91%E7%A8%8B%E5%BA%8F%E6%80%BB%E6%A1%86"><span class="toc-number">1.4.1.</span> <span class="toc-text">编译程序总框</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%87%BA%E9%94%99%E5%A4%84%E7%90%86"><span class="toc-number">1.4.2.</span> <span class="toc-text">出错处理</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E9%81%8D-pass"><span class="toc-number">1.4.3.</span> <span class="toc-text">遍(pass)</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E7%BC%96%E8%AF%91%E5%89%8D%E7%AB%AF%E4%B8%8E%E5%90%8E%E7%AB%AF"><span class="toc-number">1.4.4.</span> <span class="toc-text">编译前端与后端</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%BC%96%E8%AF%91%E7%A8%8B%E5%BA%8F%E7%9A%84%E7%94%9F%E6%88%90"><span class="toc-number">1.5.</span> <span class="toc-text">编译程序的生成</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E4%BB%A5%E6%B1%87%E7%BC%96%E8%AF%AD%E8%A8%80%E5%92%8C%E6%9C%BA%E5%99%A8%E8%AF%AD%E8%A8%80%E4%B8%BA%E5%B7%A5%E5%85%B7"><span class="toc-number">1.5.1.</span> <span class="toc-text">以汇编语言和机器语言为工具</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E9%AB%98%E7%BA%A7%E8%AF%AD%E8%A8%80%E4%B9%A6%E5%86%99"><span class="toc-number">1.5.2.</span> <span class="toc-text">高级语言书写</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E7%A7%BB%E6%A4%8D%E6%96%B9%E6%B3%95"><span class="toc-number">1.5.3.</span> <span class="toc-text">移植方法</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E8%87%AA%E7%BC%96%E8%AF%91%E6%96%B9%E5%BC%8F"><span class="toc-number">1.5.4.</span> <span class="toc-text">自编译方式</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E7%BC%96%E8%AF%91%E7%A8%8B%E5%BA%8F%E8%87%AA%E5%8A%A8%E4%BA%A7%E7%94%9F"><span class="toc-number">1.5.5.</span> <span class="toc-text">编译程序自动产生</span></a></li></ol></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2021/06/06/2021-6-6-%E7%AE%97%E6%B3%95%E6%A6%82%E8%AE%BA(DPV)%E4%B9%A0%E9%A2%98%E8%A7%A3%E7%AD%94%E2%80%94%E2%80%94%E7%AC%AC3%E7%AB%A0-%E5%9B%BE%E7%9A%84%E5%88%86%E8%A7%A3/" title="算法概论(DPV)习题解答——第3章 图的分解"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="算法概论(DPV)习题解答——第3章 图的分解"/></a><div class="content"><a class="title" href="/2021/06/06/2021-6-6-%E7%AE%97%E6%B3%95%E6%A6%82%E8%AE%BA(DPV)%E4%B9%A0%E9%A2%98%E8%A7%A3%E7%AD%94%E2%80%94%E2%80%94%E7%AC%AC3%E7%AB%A0-%E5%9B%BE%E7%9A%84%E5%88%86%E8%A7%A3/" title="算法概论(DPV)习题解答——第3章 图的分解">算法概论(DPV)习题解答——第3章 图的分解</a><time datetime="2021-06-06T14:35:00.000Z" title="发表于 2021-06-06 22:35:00">2021-06-06</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/06/06/2021-6-6-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E7%AC%AC5%E7%AB%A0-%E4%B9%A0%E9%A2%98%E8%A7%A3%E6%9E%90/" title="深入理解计算机系统 第5章 习题解析"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="深入理解计算机系统 第5章 习题解析"/></a><div class="content"><a class="title" href="/2021/06/06/2021-6-6-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E7%AC%AC5%E7%AB%A0-%E4%B9%A0%E9%A2%98%E8%A7%A3%E6%9E%90/" title="深入理解计算机系统 第5章 习题解析">深入理解计算机系统 第5章 习题解析</a><time datetime="2021-06-06T07:23:00.000Z" title="发表于 2021-06-06 15:23:00">2021-06-06</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/06/05/2021-6-5-Stanford-Compiler-PA5%E7%BF%BB%E8%AF%91/" title="Stanford Compiler PA5翻译"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Stanford Compiler PA5翻译"/></a><div class="content"><a class="title" href="/2021/06/05/2021-6-5-Stanford-Compiler-PA5%E7%BF%BB%E8%AF%91/" title="Stanford Compiler PA5翻译">Stanford Compiler PA5翻译</a><time datetime="2021-06-05T06:12:00.000Z" title="发表于 2021-06-05 14:12:00">2021-06-05</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/06/04/2021-6-4-Stanford-Compiler-PA4%E7%BF%BB%E8%AF%91/" title="Stanford Compiler PA4翻译"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Stanford Compiler PA4翻译"/></a><div class="content"><a class="title" href="/2021/06/04/2021-6-4-Stanford-Compiler-PA4%E7%BF%BB%E8%AF%91/" title="Stanford Compiler PA4翻译">Stanford Compiler PA4翻译</a><time datetime="2021-06-03T16:17:00.000Z" title="发表于 2021-06-04 00:17:00">2021-06-04</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/06/03/2021-6-3-%E5%B7%A7%E5%A6%99%E7%9A%84Y%E8%BF%90%E7%AE%97%E7%AC%A6/" title="巧妙的Y运算符"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="巧妙的Y运算符"/></a><div class="content"><a class="title" href="/2021/06/03/2021-6-3-%E5%B7%A7%E5%A6%99%E7%9A%84Y%E8%BF%90%E7%AE%97%E7%AC%A6/" title="巧妙的Y运算符">巧妙的Y运算符</a><time datetime="2021-06-03T00:54:00.000Z" title="发表于 2021-06-03 08:54:00">2021-06-03</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2021 By Doraemonzzz</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><div class="js-pjax"><script>if (!window.MathJax) {
+  window.MathJax = {
+    loader: {
+      source: {
+        '[tex]/amsCd': '[tex]/amscd'
+      }
+    },
+    tex: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]],
+      tags: 'ams'
+    },
+    options: {
+      renderActions: {
+        findScript: [10, doc => {
+          for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+            const display = !!node.type.match(/; *mode=display/)
+            const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+            const text = document.createTextNode('')
+            node.parentNode.replaceChild(text, node)
+            math.start = {node: text, delim: '', n: 0}
+            math.end = {node: text, delim: '', n: 0}
+            doc.math.push(math)
+          }
+        }, ''],
+        addClass: [200,() => {
+          document.querySelectorAll('mjx-container:not([display=\'true\']').forEach( node => {
+            const target = node.parentNode
+            if (!target.classList.contains('has-jax')) {
+              target.classList.add('mathjax-overflow')
+            }
+          })
+        }, '', false]
+      }
+    }
+  }
+  
+  const script = document.createElement('script')
+  script.src = 'https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js'
+  script.id = 'MathJax-script'
+  script.async = true
+  document.head.appendChild(script)
+} else {
+  MathJax.startup.document.state(0)
+  MathJax.texReset()
+  MathJax.typeset()
+}</script></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

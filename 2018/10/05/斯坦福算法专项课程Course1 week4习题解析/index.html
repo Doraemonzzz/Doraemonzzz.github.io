@@ -1,0 +1,443 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>斯坦福算法专项课程Course1 week4习题解析 | Doraemonzzz</title><meta name="keywords" content="斯坦福算法专项课程"><meta name="author" content="Doraemonzzz"><meta name="copyright" content="Doraemonzzz"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="这一部分将带来Course1 week4的习题解析。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="斯坦福算法专项课程Course1 week4习题解析">
+<meta property="og:url" content="http://doraemonzzz.com/2018/10/05/%E6%96%AF%E5%9D%A6%E7%A6%8F%E7%AE%97%E6%B3%95%E4%B8%93%E9%A1%B9%E8%AF%BE%E7%A8%8BCourse1%20week4%E4%B9%A0%E9%A2%98%E8%A7%A3%E6%9E%90/index.html">
+<meta property="og:site_name" content="Doraemonzzz">
+<meta property="og:description" content="这一部分将带来Course1 week4的习题解析。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg">
+<meta property="article:published_time" content="2018-10-05T15:30:00.000Z">
+<meta property="article:modified_time" content="2021-06-06T20:18:53.145Z">
+<meta property="article:author" content="Doraemonzzz">
+<meta property="article:tag" content="斯坦福算法专项课程">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="http://doraemonzzz.com/2018/10/05/%E6%96%AF%E5%9D%A6%E7%A6%8F%E7%AE%97%E6%B3%95%E4%B8%93%E9%A1%B9%E8%AF%BE%E7%A8%8BCourse1%20week4%E4%B9%A0%E9%A2%98%E8%A7%A3%E6%9E%90/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"prismjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    jQuery: 'https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js',
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+    },
+    fancybox: {
+      js: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isanchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '斯坦福算法专项课程Course1 week4习题解析',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2021-06-07 04:18:53'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    })(window)</script><meta name="generator" content="Hexo 5.4.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="author-avatar"><img class="avatar-img" src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">文章</div><div class="length-num">610</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">标签</div><div class="length-num">59</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/categories/"><div class="headline">分类</div><div class="length-num">23</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">Doraemonzzz</a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">斯坦福算法专项课程Course1 week4习题解析</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2018-10-05T15:30:00.000Z" title="发表于 2018-10-05 23:30:00">2018-10-05</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2021-06-06T20:18:53.145Z" title="更新于 2021-06-07 04:18:53">2021-06-07</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E7%AE%97%E6%B3%95/">算法</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="斯坦福算法专项课程Course1 week4习题解析"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p>这一部分将带来Course1 week4的习题解析。</p>
+<span id="more"></span>
+<h4 id="选择题"><a href="#选择题" class="headerlink" title="选择题"></a>选择题</h4><h5 id="选择题-1"><a href="#选择题-1" class="headerlink" title="选择题 1"></a>选择题 1</h5><p>$n$个节点的树最多有多少个不同的minimum cuts?</p>
+<ul>
+<li>$n$</li>
+<li>$C_n^2$</li>
+<li>$2^n -2$</li>
+<li>$n-1$</li>
+</ul>
+<p>树中minimum cuts对应的边的数量为$1$条，$n$个节点的树有$n-1$条边，每条边对应一个minimum cuts，所以一共有$n-1$个不同的minimum cuts</p>
+<h5 id="选择题-2"><a href="#选择题-2" class="headerlink" title="选择题 2"></a>选择题 2</h5><p>让“output”表示Karger的min cut算法在给定$n$个点连通图上的结果，并令$p = \frac{1}{\binom n 2}$。</p>
+<p>以下哪项陈述属实？</p>
+<ul>
+<li><p>对于每个有$n$个顶点的图$G$和每个min cut $(A,B)$</p>
+<script type="math/tex; mode=display">
+\Pr [\text{out}=(A,B)] \le p</script></li>
+<li><p>对于每个有$n$个顶点的图$G$，存在一个min cut $(A,B)$使得</p>
+<script type="math/tex; mode=display">
+\Pr [\text{out}=(A,B)] \ge p</script></li>
+<li><p>对于每个有$n$个顶点的图$G$，存在一个min cut $(A,B)$使得</p>
+<script type="math/tex; mode=display">
+\Pr [\text{out}=(A,B)] \le p</script></li>
+<li><p>对于每个有$n$个顶点的图$G$和每个min cut $(A,B)$</p>
+<script type="math/tex; mode=display">
+\Pr [\text{out}=(A,B)] \ge p</script></li>
+<li><p>存在一个$n$个顶点的图$G$和一个min cut $(A,B)$</p>
+<script type="math/tex; mode=display">
+\Pr [\text{out}=(A,B)] \le p</script></li>
+</ul>
+<p>回顾讲义可知，第2，4个选项肯定正确，除此之外，第5个选项也正确，只要取课件中的圆环作为图即可。</p>
+<h5 id="选择题-3"><a href="#选择题-3" class="headerlink" title="选择题 3"></a>选择题 3</h5><p>$0.5&lt;α&lt;1$。假设您正在使用RANDOMIZED SELECT查找数组中的中间元素（如讲座中所述）。</p>
+<p>在第一次迭代之后，您正在寻找的元素所在的子数组的大小 $≤α $倍于原始数组的大小的概率是多少？</p>
+<ul>
+<li>$\alpha -\frac 1 2 $</li>
+<li>$2\alpha -1$</li>
+<li>$1-\frac \alpha 2 $</li>
+<li>$1-\alpha$</li>
+</ul>
+<p>只要我们选择次序位于$1-\alpha$到$\alpha$倍原数组长度的元素即可，所以概率为$\alpha -(1-\alpha) =2\alpha -1$</p>
+<h5 id="选择题-4"><a href="#选择题-4" class="headerlink" title="选择题 4"></a>选择题 4</h5><p>$0.5&lt;α&lt;1$并且独立于$n$。考虑执行RSelect，你总能抛弃至少$1- α$ 倍剩余元素。在终止之前，您将进行的最大递归调用次数是多少？</p>
+<ul>
+<li>$-\frac{\log(n)}{\alpha}$</li>
+<li>$-\frac{\log(n)}{\log(1-\alpha)}$</li>
+<li>$-\frac{\log(n)}{\log(\frac 12 +\alpha)}$</li>
+<li>$-\frac{\log(n)}{\log \alpha}$</li>
+</ul>
+<p>每一轮至少丢弃$(1-\alpha)$倍的元素，所以$i$轮后剩余元素个数小于等于：</p>
+<script type="math/tex; mode=display">
+\alpha ^ i n</script><p>令$\alpha^i n=1$可得</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+\alpha^i n&=1 \\
+  i\log \alpha + \log n &=0 \\
+  i& = -\frac{ \log n}{\log \alpha }
+\end{aligned}</script><p>所以第4项正确</p>
+<h5 id="选择题-5"><a href="#选择题-5" class="headerlink" title="选择题 5"></a>选择题 5</h5><p>minimum s-t cut 问题如下。输入是无向图，图的两个不同顶点标记为“s”和“t”。目标是计算满足s,t在切割的不同侧上的最小切割（即，最少数量的交叉边缘）。</p>
+<p>假设有人通过API为您提供了这个minimum s-t cut问题的子程序。你的工作就是解决最初的minimum cut（讲座中讨论的问题），当你所能做的就是调用给定的minimum s-t cut子程序。（也就是说，目标是将minimum cut问题减少到minimum s-t cut问题。）</p>
+<p>现在假设给出了一个minimum cut问题的实例 - 也就是说，给出了一个无向图（没有特殊标记的顶点）并且需要计算minimum cut。</p>
+<p>您需要调用给定的minimum s-t cut子程序以确保您找到给定图形的minimum cut的最小次数是多少？</p>
+<ul>
+<li>$2^n$</li>
+<li>$n-1$</li>
+<li>$\binom n 2$</li>
+<li>$n$</li>
+</ul>
+<p>对于minimum cut问题，任意一个顶点必然属于cut的某一边，所以我们任取一个顶点$s$，对其余$n-1$个点分别求出minimum s-t cut，然后取其中最小值即可得出minimum cut，所以这题的答案为$n-1$</p>
+<h4 id="编程题"><a href="#编程题" class="headerlink" title="编程题"></a>编程题</h4><p>实现Random Contraction Algorithm算法：</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">import</span> numpy <span class="token keyword">as</span> np
+<span class="token keyword">import</span> copy
+
+V <span class="token operator">=</span> <span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span>
+<span class="token keyword">with</span> <span class="token builtin">open</span><span class="token punctuation">(</span><span class="token string">"kargerMinCut.txt"</span><span class="token punctuation">)</span> <span class="token keyword">as</span> f<span class="token punctuation">:</span>
+    <span class="token keyword">for</span> i <span class="token keyword">in</span> f<span class="token punctuation">.</span>readlines<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+        data <span class="token operator">=</span> <span class="token builtin">list</span><span class="token punctuation">(</span><span class="token builtin">map</span><span class="token punctuation">(</span><span class="token builtin">int</span><span class="token punctuation">,</span> i<span class="token punctuation">.</span>strip<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span>split<span class="token punctuation">(</span><span class="token string">'\t'</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+        <span class="token comment">#邻接表</span>
+        V<span class="token punctuation">[</span>data<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">]</span> <span class="token operator">=</span> np<span class="token punctuation">.</span>array<span class="token punctuation">(</span>data<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">:</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+
+<span class="token keyword">def</span> <span class="token function">Contraction</span><span class="token punctuation">(</span>Vertex<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token keyword">while</span> <span class="token builtin">len</span><span class="token punctuation">(</span>Vertex<span class="token punctuation">)</span> <span class="token operator">></span> <span class="token number">2</span><span class="token punctuation">:</span>
+        <span class="token comment">#选择节点</span>
+        u <span class="token operator">=</span> np<span class="token punctuation">.</span>random<span class="token punctuation">.</span>choice<span class="token punctuation">(</span><span class="token builtin">list</span><span class="token punctuation">(</span>Vertex<span class="token punctuation">.</span>keys<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+        v <span class="token operator">=</span> np<span class="token punctuation">.</span>random<span class="token punctuation">.</span>choice<span class="token punctuation">(</span>Vertex<span class="token punctuation">[</span>u<span class="token punctuation">]</span><span class="token punctuation">)</span>
+        <span class="token comment">#更新u, v</span>
+        adj_v <span class="token operator">=</span> Vertex<span class="token punctuation">[</span>v<span class="token punctuation">]</span>
+        <span class="token comment">#合并相邻节点</span>
+        adj_u <span class="token operator">=</span> np<span class="token punctuation">.</span>append<span class="token punctuation">(</span>Vertex<span class="token punctuation">[</span>u<span class="token punctuation">]</span><span class="token punctuation">,</span> Vertex<span class="token punctuation">[</span>v<span class="token punctuation">]</span><span class="token punctuation">)</span>
+        adj_u <span class="token operator">=</span> adj_u<span class="token punctuation">[</span><span class="token punctuation">(</span>adj_u <span class="token operator">!=</span> v<span class="token punctuation">)</span> <span class="token operator">&amp;</span> <span class="token punctuation">(</span>adj_u <span class="token operator">!=</span> u<span class="token punctuation">)</span><span class="token punctuation">]</span>
+        Vertex<span class="token punctuation">[</span>u<span class="token punctuation">]</span> <span class="token operator">=</span> adj_u
+        <span class="token comment">#删除v</span>
+        Vertex<span class="token punctuation">.</span>pop<span class="token punctuation">(</span>v<span class="token punctuation">)</span>
+        <span class="token comment">#更新其余元素</span>
+        <span class="token keyword">for</span> i <span class="token keyword">in</span> adj_v<span class="token punctuation">:</span>
+            <span class="token keyword">if</span> i <span class="token operator">!=</span> u<span class="token punctuation">:</span>
+                vec <span class="token operator">=</span> Vertex<span class="token punctuation">[</span>i<span class="token punctuation">]</span>
+                <span class="token comment">#替换</span>
+                vec<span class="token punctuation">[</span>vec <span class="token operator">==</span> v<span class="token punctuation">]</span> <span class="token operator">=</span> u
+                Vertex<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">=</span> vec
+    
+    n <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>
+    <span class="token keyword">for</span> i <span class="token keyword">in</span> Vertex<span class="token punctuation">:</span>
+        n<span class="token punctuation">.</span>append<span class="token punctuation">(</span><span class="token builtin">len</span><span class="token punctuation">(</span>Vertex<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+    <span class="token keyword">return</span> np<span class="token punctuation">.</span><span class="token builtin">min</span><span class="token punctuation">(</span>n<span class="token punctuation">)</span>
+
+n <span class="token operator">=</span> <span class="token builtin">len</span><span class="token punctuation">(</span>V<span class="token punctuation">)</span>
+N <span class="token operator">=</span> <span class="token builtin">int</span><span class="token punctuation">(</span>n <span class="token operator">**</span> <span class="token number">2</span> <span class="token operator">*</span> np<span class="token punctuation">.</span>log<span class="token punctuation">(</span>n<span class="token punctuation">)</span><span class="token punctuation">)</span>
+N <span class="token operator">=</span> <span class="token number">100</span>
+Res <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>
+<span class="token keyword">for</span> i <span class="token keyword">in</span> <span class="token builtin">range</span><span class="token punctuation">(</span>N<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token comment">#深复制</span>
+    Vertex <span class="token operator">=</span> copy<span class="token punctuation">.</span>deepcopy<span class="token punctuation">(</span>V<span class="token punctuation">)</span>
+    <span class="token comment">#计算结果</span>
+    num <span class="token operator">=</span> Contraction<span class="token punctuation">(</span>Vertex<span class="token punctuation">)</span>
+    Res<span class="token punctuation">.</span>append<span class="token punctuation">(</span>num<span class="token punctuation">)</span>
+    
+<span class="token keyword">print</span><span class="token punctuation">(</span>np<span class="token punctuation">.</span><span class="token builtin">min</span><span class="token punctuation">(</span>Res<span class="token punctuation">)</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<pre class="line-numbers language-none"><code class="language-none">17<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<h4 id="思考题"><a href="#思考题" class="headerlink" title="思考题"></a>思考题</h4><h5 id="思考题1"><a href="#思考题1" class="headerlink" title="思考题1"></a>思考题1</h5><p>Prove that the worst-case expected running time of every randomized comparison-based sorting algorithm is $\Omega(n \log n)$. (Here the worst-case is over inputs, and the expectation is over the random coin flips made by the algorithm.)</p>
+<p>参考资料：<a target="_blank" rel="noopener" href="https://www.cs.cmu.edu/~avrim/451f11/lectures/lect0913.pdf">https://www.cs.cmu.edu/~avrim/451f11/lectures/lect0913.pdf</a></p>
+<p>这题我主要不是很理解随机排序算法是如何定义的，参考资料中写到可以把随机排序算法看成确定排序算法的一个概率分布。设任意随机排序算法为$A$，确定排序算法族记为$\lbrace A_k\rbrace $，所以随机排序算法的比较次数$N$为</p>
+<script type="math/tex; mode=display">
+N=\sum_{i}P(A_i) \times \#A_i比较的次数</script><p>所以</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+E[N] &=\sum_{i} E [P(A_i) \times  \#A_i比较的次数] \\
+&= \sum_{i} P(A_i) \times E [ \#A_i比较的次数] 
+\end{aligned}</script><p>注意确定性排序算法的比较次数大于等于$ \log_2 n!$，因此</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+E[N] &= \sum_{i} P(A_i) \times E [ \#A_i比较的次数]  \\
+&\ge  \sum_{i} P(A_i)  \log_2 n!\\
+&=  \log_2 n!\\
+&\ge \log_2  (\frac{n}{e})^n  \\
+&= n  \log_2  (\frac{n}{e})
+\end{aligned}</script><p>因此结论成立。</p>
+<h5 id="思考题2"><a href="#思考题2" class="headerlink" title="思考题2"></a>思考题2</h5><p>Suppose we modify the deterministic linear-time selection algorithm by grouping the elements into groups of 7, rather than groups of 5. (Use the “median-of-medians” as the pivot, as before.) Does the algorithm still run in $O(n)$ time? What if we use groups of 3?</p>
+<p>回顾算法</p>
+<p><img src="https://github.com/Doraemonzzz/md-photo/blob/master/Coursera%20Stanford%20Algorithms/Part1%20divide%20and%20conquer/week4/2018100103.png?raw=true" alt=""></p>
+<p><img src="https://github.com/Doraemonzzz/md-photo/blob/master/Coursera%20Stanford%20Algorithms/Part1%20divide%20and%20conquer/week4/2018100104.png?raw=true" alt=""></p>
+<p>将5改为7或3后，步骤1,2,4,5时间都没变，步骤3变为$T(\frac{n}{7})$或$T(\frac{n}{3})$，接着看步骤6,7</p>
+<p><img src="https://github.com/Doraemonzzz/md-photo/blob/master/Coursera%20Stanford%20Algorithms/Part1%20divide%20and%20conquer/week4/2018100105.png?raw=true" alt=""></p>
+<p>其中</p>
+<ul>
+<li>$k =$组数</li>
+<li>令$x_i=k$个“middle elements”中第$i$小的元素，所以pivot$= x_{\frac k 2}$</li>
+</ul>
+<p>如果改为$7$，那么$k =\frac {n}{7}$，从而大于$x_{\frac k 2}$的元素数量至少为</p>
+<script type="math/tex; mode=display">
+4\times  (k - \frac k 2  +1) -1 = 2 k +3 = 2  \frac n 7 +3=\frac 2 {7}n +3 >  \frac 2 {7}n</script><p>小于$x_{\frac k 2}$的元素数量至少为</p>
+<script type="math/tex; mode=display">
+4\times  (k - \frac k 2  +1) -1 = 2 k +3 = 2  \frac n 7 +3=\frac 2 {7}n +3 >  \frac 2 {7}n</script><p>所以$x_{\frac k 2}$一直位于$\frac 2 {7}n$到$\frac 5{7}n$的位置，所以步骤6,7的运行时间小于等于$T(\frac 5{7}n)$，从而有如下递推式</p>
+<script type="math/tex; mode=display">
+T(n) \le cn + T(\frac 1 7 n) +  T(\frac 5 7 n)</script><p>下面证明$T(n) \le 7cn$。</p>
+<p>$n=1$时显然成立，假设$n&lt; k$时，$T(n) \le 7cn$，那么$n=k$时</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+T(k) 
+& \le ck +  T(\frac 1 7 k) +  T(\frac 5 7 k)\\
+&\le ck +  7c\frac 1 7  k + 7c  \frac 5{7}k \\
+&=  7ck
+\end{aligned}</script><p>所以$n=k$时结论也成立，从而$T(n) \le 7cn$。</p>
+<p>如果改为3，那么$k =\frac {n}{3}$，从而大于$x_{\frac k 2}$的元素数量至少为</p>
+<script type="math/tex; mode=display">
+2\times  (k - \frac k 2  +1) -1 = k +1  = \frac n 3  +1 >  \frac 1 {3}n</script><p>小于$x_{\frac k 2}$的元素数量至少为</p>
+<script type="math/tex; mode=display">
+2\times  (k - \frac k 2  +1) -1 = k +1  = \frac n 3  +1 >  \frac 1 {3}n</script><p>所以$x_{\frac k 2}$一直位于$\frac 1 {3}n$到$\frac 2{3}n$的位置，所以步骤6,7的运行时间小于等于$T(\frac 2{3}n)$，从而有如下递推式</p>
+<script type="math/tex; mode=display">
+T(n) \le cn + T(\frac 1 3 n) +  T(\frac 2 3 n)</script><p>对这个式子再递推一轮可得</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+T(n) &\le cn + T(\frac 1 3 n) +  T(\frac 2 3 n) \\
+&\le  cn + \Big(\frac 1 3 cn + T(\frac 1 9 n) +  T(\frac 2 9 n)  \Big) +  \Big(\frac 2 3 cn + T(\frac 2 3 n) +  T(\frac 4 9 n)  \Big)  \\
+&= 2cn + T(\frac 1 9 n) +  2T(\frac 2 9 n) + T(\frac 4 9 n) 
+\end{aligned}</script><p>归纳法可得（利用二项式定理）</p>
+<script type="math/tex; mode=display">
+T(n) \le kcn +\sum_{i=0}^k C_k^iT\left(\frac {2^i}{3^k} n \right)</script><p>当$\frac{2^k}{3^k} n &lt;1$，即$ k\ge \log_{\frac 2 3} n$时，后一项全为0，所以</p>
+<script type="math/tex; mode=display">
+T(n)\le  c n\log_{\frac 2 3} n</script><p>从而$T(n) =O(n\log n)$，所以这时候第6,7步的运行时间不再为$O(n)$，所以无法保证deterministic linear-time selection算法的时间复杂度仍然为$O(n)$</p>
+<h5 id="思考题3"><a href="#思考题3" class="headerlink" title="思考题3"></a>思考题3</h5><p>Given an array of $n$ distinct (but unsorted) elements $x_1,x_2,\ldots,x_n$ with positive weights $w_1,w_2,\ldots,w_n$ such that $\sum_{i=1}^n w_i = W$, a <em>weighted median</em> is an element $x_k$ for which the total weight of all elements with value less than $x_k$(i.e., $\sum_{x_i \lt x_k} w_i$) is at most $W/2$, and also the total weight of elements with value larger than $x_k$ (i.e., $\sum_{x_i \gt x_k} w_i$) is at most $W/2$. Observe that there are at most two weighted medians. Show how to compute all weighted medians in $O(n)$ worst-case time.</p>
+<p>利用partion的思路，首先找到$x_1,x_2,\ldots,x_n$的中位数$x_{i}$，将数组分为小于$x_i$以及大于$x_i$的两部分，分别求和，记为$S_1,S_2$，接着分为两种情形：</p>
+<ul>
+<li>$S_1\le W/2$且$S_2 \le W/2$<ul>
+<li>返回$x_i$</li>
+</ul>
+</li>
+<li>$S_1&gt; W/2$<ul>
+<li>在小于$x_i$的数组中递归使用该算法。</li>
+</ul>
+</li>
+<li>$S_2&gt; W/2$<ul>
+<li>在大于$x_i$的数组中递归使用该算法。</li>
+</ul>
+</li>
+</ul>
+<p>注意这个算法递归调用部分是对当前部分求中位数，求和部分依旧是对全数组。</p>
+<p>由第四周的内容可知，找到中位数以及partion的时间都为$O(n)$，所以算法时间复杂度为：</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+T(n) \le T(\frac n 2) + O(n)
+
+\end{aligned}</script><p>此时</p>
+<script type="math/tex; mode=display">
+a=1,b=2,d=1\\
+a<b^d</script><script type="math/tex; mode=display">
+T(n) = O(n)</script><h5 id="思考题4"><a href="#思考题4" class="headerlink" title="思考题4"></a>思考题4</h5><p>We showed in an optional video lecture that every undirected graph has only polynomially (in the number $n$ of vertices) different minimum cuts. Is this also true for directed graphs? Prove it or give a counterexample.</p>
+<p>我认为和无向图情形没有变化，因为之前的证明中主要是利用了如下事实（证明参考另一篇博客）</p>
+<script type="math/tex; mode=display">
+\sum_v \text{degree}(v) = 2m</script><p>利用这个可以推出different minimum cuts的数量$\le \frac{n(n-1)}{2}$</p>
+<h5 id="思考题5"><a href="#思考题5" class="headerlink" title="思考题5"></a>思考题5</h5><p>For a parameter $\alpha \ge 1$, an <em>$\alpha$-minimum cut</em> is one for which the number of crossing edges is at most $\alpha$ times that of a minimum cut. How many $\alpha$-minimum cuts can an undirected graph have, as a function of $\alpha$ and the number $n$ of vertices? Prove the best upper bound that you can.</p>
+<p>这里假设$\alpha $为整数，下述记号同课件内容，对老师介绍的方法稍作修改：一共迭代$n-2\alpha $次。现在计算</p>
+<script type="math/tex; mode=display">
+\Pr[\overline S_1  \overline S_2... \overline S_{n-2\alpha}]</script><p>记minimum cut的crossing edge的数量为$k_0$，$\alpha$-minimum cut的crossing edge的数量为$k$，那么</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+k&\le \alpha k_0\\
+k_0 &\ge \frac k \alpha
+\end{aligned}\\
+\Pr[S_1] = \frac{\sharp \text{crossing edge}的数量}{\sharp 边的总数} = \frac{k}{m}</script><p>定义度(degree)为每个节点连接的边的数量，显然我们有如下等式：</p>
+<script type="math/tex; mode=display">
+\sum_v \text{degree}(v) = 2m</script><p>所以</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+2m &\ge k_0 n \ge  \frac{kn}{\alpha} \\
+ \frac{k}{m} &\le \frac {2\alpha} n \\
+ \Pr[S_1] & = \frac{k}{m}\le\frac {2\alpha} n \\
+\Pr[\overline S_1] &\ge 1- \frac {2\alpha} n
+\end{aligned}</script><p>同理可得</p>
+<script type="math/tex; mode=display">
+\Pr[\overline S_i| \overline S_1...\overline S_{i-1}] \ge 1 - \frac{2\alpha}{n+1 - i}</script><p>从而</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+\Pr[\overline S_1  \overline S_2... \overline S_{n-2\alpha}]
+&= \Pr[\overline S_1] \Pr[\overline S_2 |\overline S_1 ]... \Pr[\overline S_{n-2\alpha}| \overline S_1...\overline S_{n-2\alpha-1}] \\
+& \ge (1- \frac {2\alpha} n )  (1- \frac  {2\alpha} {n-1} ) ...
+(1- \frac  {2\alpha} {2\alpha+1} ) \\
+
+&= \frac{(n-2\alpha)!\times (2\alpha)!}{n! } \\
+&=\frac{ (2\alpha)!}{\prod_{i=0}^{2\alpha-1}(n-i)! } \\
+& =\prod_{i=0}^{2\alpha-1}  \frac{2\alpha-i}{n-i}\\
+\end{aligned}</script><p>注意</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+ \frac{2\alpha-i}{n-i} &\ge \frac 1 n  \Leftrightarrow \\
+(2\alpha-i) n &\ge n-i
+\end{aligned}</script><p>由于$2\alpha-i \ge 1$，所以上式成立，从而</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+\Pr[\overline S_1  \overline S_2... \overline S_{n-2\alpha}]
+&\ge \prod_{i=0}^{2\alpha-1}  \frac{2\alpha-i}{n-i}\\
+
+&\ge  \frac 1 {n^{2\alpha} }
+\end{aligned}</script><p>由课件中最后一点可知，假设有$t$个$\alpha$-minimum cut，那么</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+t \times  \frac 1 {n^{2\alpha} } &\le 1\\
+t &\le n^{2\alpha}
+\end{aligned}</script></article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">Doraemonzzz</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="http://doraemonzzz.com/2018/10/05/%E6%96%AF%E5%9D%A6%E7%A6%8F%E7%AE%97%E6%B3%95%E4%B8%93%E9%A1%B9%E8%AF%BE%E7%A8%8BCourse1%20week4%E4%B9%A0%E9%A2%98%E8%A7%A3%E6%9E%90/">http://doraemonzzz.com/2018/10/05/%E6%96%AF%E5%9D%A6%E7%A6%8F%E7%AE%97%E6%B3%95%E4%B8%93%E9%A1%B9%E8%AF%BE%E7%A8%8BCourse1%20week4%E4%B9%A0%E9%A2%98%E8%A7%A3%E6%9E%90/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://doraemonzzz.com" target="_blank">Doraemonzzz</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E6%96%AF%E5%9D%A6%E7%A6%8F%E7%AE%97%E6%B3%95%E4%B8%93%E9%A1%B9%E8%AF%BE%E7%A8%8B/">斯坦福算法专项课程</a></div><div class="post_share"><div class="social-share" data-image="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2018/10/06/%E5%8F%B0%E5%A4%A7%E5%AE%9E%E5%88%86%E6%9E%90%E5%8D%95%E5%85%83%203%20%E6%B5%8B%E5%BA%A6%201/"><img class="prev-cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">台大实分析单元 3 测度 1</div></div></a></div><div class="next-post pull-right"><a href="/2018/10/03/%E5%8F%B0%E5%A4%A7%E5%AE%9E%E5%88%86%E6%9E%90%E5%8D%95%E5%85%83%202%20%E5%8F%AF%E5%8A%A0%E6%80%A7/"><img class="next-cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">台大实分析单元 2 可加性</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span> 相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2018/10/12/斯坦福算法专项课程Course1 Final Exam/" title="斯坦福算法专项课程Course1 Final Exam"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2018-10-12</div><div class="title">斯坦福算法专项课程Course1 Final Exam</div></div></a></div><div><a href="/2018/09/09/斯坦福算法专项课程Course1 week1内容回顾/" title="斯坦福算法专项课程Course1 week1内容回顾"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2018-09-09</div><div class="title">斯坦福算法专项课程Course1 week1内容回顾</div></div></a></div><div><a href="/2018/09/09/斯坦福算法专项课程Course1 week1习题解析/" title="斯坦福算法专项课程Course1 week1习题解析"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2018-09-09</div><div class="title">斯坦福算法专项课程Course1 week1习题解析</div></div></a></div><div><a href="/2019/09/01/斯坦福算法专项课程Course1 week1算法实现/" title="斯坦福算法专项课程Course1 week1算法实现"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2019-09-01</div><div class="title">斯坦福算法专项课程Course1 week1算法实现</div></div></a></div><div><a href="/2018/09/22/斯坦福算法专项课程Course1 week2习题解析/" title="斯坦福算法专项课程Course1 week2习题解析"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2018-09-22</div><div class="title">斯坦福算法专项课程Course1 week2习题解析</div></div></a></div><div><a href="/2018/09/21/斯坦福算法专项课程Course1 week2内容回顾/" title="斯坦福算法专项课程Course1 week2内容回顾"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2018-09-21</div><div class="title">斯坦福算法专项课程Course1 week2内容回顾</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="card-info-avatar is-center"><img class="avatar-img" src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/><div class="author-info__name">Doraemonzzz</div><div class="author-info__description">个人博客，主要记录有关机器学习，数学以及计算机科学的笔记</div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">610</div></a></div><div class="card-info-data-item is-center"><a href="/tags/"><div class="headline">标签</div><div class="length-num">59</div></a></div><div class="card-info-data-item is-center"><a href="/categories/"><div class="headline">分类</div><div class="length-num">23</div></a></div></div><a class="button--animated" id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/Doraemonzzz" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="/doraemon_zzz@163.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn card-announcement-animation"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%80%89%E6%8B%A9%E9%A2%98"><span class="toc-number">1.</span> <span class="toc-text">选择题</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E9%80%89%E6%8B%A9%E9%A2%98-1"><span class="toc-number">1.1.</span> <span class="toc-text">选择题 1</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E9%80%89%E6%8B%A9%E9%A2%98-2"><span class="toc-number">1.2.</span> <span class="toc-text">选择题 2</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E9%80%89%E6%8B%A9%E9%A2%98-3"><span class="toc-number">1.3.</span> <span class="toc-text">选择题 3</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E9%80%89%E6%8B%A9%E9%A2%98-4"><span class="toc-number">1.4.</span> <span class="toc-text">选择题 4</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E9%80%89%E6%8B%A9%E9%A2%98-5"><span class="toc-number">1.5.</span> <span class="toc-text">选择题 5</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%BC%96%E7%A8%8B%E9%A2%98"><span class="toc-number">2.</span> <span class="toc-text">编程题</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%80%9D%E8%80%83%E9%A2%98"><span class="toc-number">3.</span> <span class="toc-text">思考题</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%80%9D%E8%80%83%E9%A2%981"><span class="toc-number">3.1.</span> <span class="toc-text">思考题1</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%80%9D%E8%80%83%E9%A2%982"><span class="toc-number">3.2.</span> <span class="toc-text">思考题2</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%80%9D%E8%80%83%E9%A2%983"><span class="toc-number">3.3.</span> <span class="toc-text">思考题3</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%80%9D%E8%80%83%E9%A2%984"><span class="toc-number">3.4.</span> <span class="toc-text">思考题4</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%80%9D%E8%80%83%E9%A2%985"><span class="toc-number">3.5.</span> <span class="toc-text">思考题5</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2021/06/06/2021-6-6-%E7%AE%97%E6%B3%95%E6%A6%82%E8%AE%BA(DPV)%E4%B9%A0%E9%A2%98%E8%A7%A3%E7%AD%94%E2%80%94%E2%80%94%E7%AC%AC3%E7%AB%A0-%E5%9B%BE%E7%9A%84%E5%88%86%E8%A7%A3/" title="算法概论(DPV)习题解答——第3章 图的分解"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="算法概论(DPV)习题解答——第3章 图的分解"/></a><div class="content"><a class="title" href="/2021/06/06/2021-6-6-%E7%AE%97%E6%B3%95%E6%A6%82%E8%AE%BA(DPV)%E4%B9%A0%E9%A2%98%E8%A7%A3%E7%AD%94%E2%80%94%E2%80%94%E7%AC%AC3%E7%AB%A0-%E5%9B%BE%E7%9A%84%E5%88%86%E8%A7%A3/" title="算法概论(DPV)习题解答——第3章 图的分解">算法概论(DPV)习题解答——第3章 图的分解</a><time datetime="2021-06-06T14:35:00.000Z" title="发表于 2021-06-06 22:35:00">2021-06-06</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/06/06/2021-6-6-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E7%AC%AC5%E7%AB%A0-%E4%B9%A0%E9%A2%98%E8%A7%A3%E6%9E%90/" title="深入理解计算机系统 第5章 习题解析"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="深入理解计算机系统 第5章 习题解析"/></a><div class="content"><a class="title" href="/2021/06/06/2021-6-6-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E7%AC%AC5%E7%AB%A0-%E4%B9%A0%E9%A2%98%E8%A7%A3%E6%9E%90/" title="深入理解计算机系统 第5章 习题解析">深入理解计算机系统 第5章 习题解析</a><time datetime="2021-06-06T07:23:00.000Z" title="发表于 2021-06-06 15:23:00">2021-06-06</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/06/05/2021-6-5-Stanford-Compiler-PA5%E7%BF%BB%E8%AF%91/" title="Stanford Compiler PA5翻译"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Stanford Compiler PA5翻译"/></a><div class="content"><a class="title" href="/2021/06/05/2021-6-5-Stanford-Compiler-PA5%E7%BF%BB%E8%AF%91/" title="Stanford Compiler PA5翻译">Stanford Compiler PA5翻译</a><time datetime="2021-06-05T06:12:00.000Z" title="发表于 2021-06-05 14:12:00">2021-06-05</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/06/04/2021-6-4-Stanford-Compiler-PA4%E7%BF%BB%E8%AF%91/" title="Stanford Compiler PA4翻译"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Stanford Compiler PA4翻译"/></a><div class="content"><a class="title" href="/2021/06/04/2021-6-4-Stanford-Compiler-PA4%E7%BF%BB%E8%AF%91/" title="Stanford Compiler PA4翻译">Stanford Compiler PA4翻译</a><time datetime="2021-06-03T16:17:00.000Z" title="发表于 2021-06-04 00:17:00">2021-06-04</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/06/03/2021-6-3-%E5%B7%A7%E5%A6%99%E7%9A%84Y%E8%BF%90%E7%AE%97%E7%AC%A6/" title="巧妙的Y运算符"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="巧妙的Y运算符"/></a><div class="content"><a class="title" href="/2021/06/03/2021-6-3-%E5%B7%A7%E5%A6%99%E7%9A%84Y%E8%BF%90%E7%AE%97%E7%AC%A6/" title="巧妙的Y运算符">巧妙的Y运算符</a><time datetime="2021-06-03T00:54:00.000Z" title="发表于 2021-06-03 08:54:00">2021-06-03</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2021 By Doraemonzzz</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><div class="js-pjax"><script>if (!window.MathJax) {
+  window.MathJax = {
+    loader: {
+      source: {
+        '[tex]/amsCd': '[tex]/amscd'
+      }
+    },
+    tex: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]],
+      tags: 'ams'
+    },
+    options: {
+      renderActions: {
+        findScript: [10, doc => {
+          for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+            const display = !!node.type.match(/; *mode=display/)
+            const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+            const text = document.createTextNode('')
+            node.parentNode.replaceChild(text, node)
+            math.start = {node: text, delim: '', n: 0}
+            math.end = {node: text, delim: '', n: 0}
+            doc.math.push(math)
+          }
+        }, ''],
+        addClass: [200,() => {
+          document.querySelectorAll('mjx-container:not([display=\'true\']').forEach( node => {
+            const target = node.parentNode
+            if (!target.classList.contains('has-jax')) {
+              target.classList.add('mathjax-overflow')
+            }
+          })
+        }, '', false]
+      }
+    }
+  }
+  
+  const script = document.createElement('script')
+  script.src = 'https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js'
+  script.id = 'MathJax-script'
+  script.async = true
+  document.head.appendChild(script)
+} else {
+  MathJax.startup.document.state(0)
+  MathJax.texReset()
+  MathJax.typeset()
+}</script></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

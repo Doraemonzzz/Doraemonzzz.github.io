@@ -1,0 +1,658 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Digital Signal Processing 1 Basic Concepts and Algorithms Week4 | Doraemonzzz</title><meta name="keywords" content="DSP"><meta name="author" content="Doraemonzzz"><meta name="copyright" content="Doraemonzzz"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="课程主页：https:&#x2F;&#x2F;www.coursera.org&#x2F;learn&#x2F;dsp1 这一讲介绍了Fourier Analysis: the Basics。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Digital Signal Processing 1 Basic Concepts and Algorithms Week4">
+<meta property="og:url" content="http://doraemonzzz.com/2020/06/05/Digital%20Signal%20Processing%201%20Basic%20Concepts%20and%20Algorithms%20Week4/index.html">
+<meta property="og:site_name" content="Doraemonzzz">
+<meta property="og:description" content="课程主页：https:&#x2F;&#x2F;www.coursera.org&#x2F;learn&#x2F;dsp1 这一讲介绍了Fourier Analysis: the Basics。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg">
+<meta property="article:published_time" content="2020-06-05T07:17:00.000Z">
+<meta property="article:modified_time" content="2020-06-20T10:55:25.382Z">
+<meta property="article:author" content="Doraemonzzz">
+<meta property="article:tag" content="DSP">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="http://doraemonzzz.com/2020/06/05/Digital%20Signal%20Processing%201%20Basic%20Concepts%20and%20Algorithms%20Week4/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"prismjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    jQuery: 'https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js',
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+    },
+    fancybox: {
+      js: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isanchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'Digital Signal Processing 1 Basic Concepts and Algorithms Week4',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2020-06-20 18:55:25'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    })(window)</script><meta name="generator" content="Hexo 5.4.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="author-avatar"><img class="avatar-img" src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">文章</div><div class="length-num">610</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">标签</div><div class="length-num">59</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/categories/"><div class="headline">分类</div><div class="length-num">23</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">Doraemonzzz</a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">Digital Signal Processing 1 Basic Concepts and Algorithms Week4</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2020-06-05T07:17:00.000Z" title="发表于 2020-06-05 15:17:00">2020-06-05</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2020-06-20T10:55:25.382Z" title="更新于 2020-06-20 18:55:25">2020-06-20</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E6%95%B0%E5%AD%97%E4%BF%A1%E5%8F%B7%E5%A4%84%E7%90%86/">数字信号处理</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="Digital Signal Processing 1 Basic Concepts and Algorithms Week4"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p>课程主页：<a target="_blank" rel="noopener" href="https://www.coursera.org/learn/dsp1">https://www.coursera.org/learn/dsp1</a></p>
+<p>这一讲介绍了Fourier Analysis: the Basics。</p>
+<span id="more"></span>
+<h4 id="DFS-离散傅里叶序列"><a href="#DFS-离散傅里叶序列" class="headerlink" title="DFS(离散傅里叶序列)"></a>DFS(离散傅里叶序列)</h4><p>DFS是DFT的周期扩展，公式如下：</p>
+<p>合成公式：</p>
+<script type="math/tex; mode=display">
+\mathbf x[n]=\frac{1}{N} \sum_{k=0}^{N-1}\mathbf  X[k] e^{j \frac{2 \pi}{N} n k}, \quad n\in \mathbb Z</script><p>分析公式：</p>
+<script type="math/tex; mode=display">
+\mathbf X[k]=\sum_{n=0}^{N-1}\mathbf  x[n] e^{-j \frac{2 \pi}{N} n k}, \quad k\in \mathbb Z</script><p>不难看出$\mathbf x[n]$和$\mathbf X[k]$的周期均为$N$，连续$ N $个傅立叶系数可捕获所有信息。</p>
+<h3 id="DFT-DFS-DTFT"><a href="#DFT-DFS-DTFT" class="headerlink" title="DFT,DFS,DTFT"></a>DFT,DFS,DTFT</h3><h4 id="L-周期的DFT"><a href="#L-周期的DFT" class="headerlink" title="$L$周期的DFT"></a>$L$周期的DFT</h4><p>假设原始信号为$\bar {\mathrm x}[n]$，考虑其周期扩张$\mathrm y[n]$：</p>
+<script type="math/tex; mode=display">
+\mathrm y[n]= \bar {\mathrm x}[n \mod M]</script><p>现在对其做DFT得到</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+X_{L}[k] &=\sum_{n=0}^{L M-1} y[n] e^{-j \frac{2 \pi}{L M} n k} \quad k=0,1,2 \ldots, L M-1 \\
+&=\sum_{p=0}^{L-1} \sum_{n=0}^{M-1} y[n+p M] e^{-j \frac{2 \pi}{L M}(n+p M) k} \\
+&=\sum_{p=0}^{L-1} \sum_{n=0}^{M-1} y[n] e^{-j \frac{2 \pi}{L M} n k} e^{-j \frac{2 \pi}{L} p k} \\
+&=\left(\sum_{p=0}^{L-1} e^{-j \frac{2 \pi}{L} p k}\right) \sum_{n=0}^{M-1} \bar{x}[n] e^{-j \frac{2 \pi}{ M} n \frac kL}
+\end{aligned}</script><p>注意到如下事实</p>
+<script type="math/tex; mode=display">
+\sum_{p=0}^{L-1} e^{-j \frac{2 \pi}{L} p k}=\left\{\begin{array}{ll}
+L & k=uM, u\in \mathbb Z\\
+0 &其他
+\end{array}\right.</script><p>所以</p>
+<script type="math/tex; mode=display">
+X_{L}[k]=\left\{\begin{array}{ll}
+L \bar{X}[k / L] & \text { if } k=0, L, 2 L, 3 L, \ldots \\
+0 & \text { otherwise }
+\end{array}\right.</script><h4 id="DFTF-离散时间傅里叶变换"><a href="#DFTF-离散时间傅里叶变换" class="headerlink" title="DFTF(离散时间傅里叶变换)"></a>DFTF(离散时间傅里叶变换)</h4><p>定义：</p>
+<ul>
+<li><p>$\mathrm x[n] \in \ell_{2}(\mathbb{Z})$</p>
+</li>
+<li><p>定义$\omega \in \mathbb{R}$的函数</p>
+<script type="math/tex; mode=display">
+F(\omega)=\sum_{n=-\infty}^{\infty} \mathrm x[n] e^{-j \omega n}</script></li>
+<li><p>逆变换（如果$F(\omega)$存在）：</p>
+<script type="math/tex; mode=display">
+\mathrm x[n]=\frac{1}{2 \pi} \int_{-\pi}^{\pi} F(\omega) e^{j \omega n} d \omega, \quad n \in \mathbb{Z}</script></li>
+</ul>
+<h5 id="基本性质"><a href="#基本性质" class="headerlink" title="基本性质"></a>基本性质</h5><ul>
+<li><p>$F(\omega)$以$2\pi$为周期</p>
+</li>
+<li><p>为了表达这点，记$F(\omega)$为</p>
+<script type="math/tex; mode=display">
+X\left(e^{j \omega}\right)=\sum_{n=-\infty}^{\infty} x[n] e^{-j \omega n}</script></li>
+<li><p>为了方便起见，$X\left(e^{j \omega}\right)$定义在区间$[-\pi, \pi]$</p>
+</li>
+</ul>
+<h5 id="例子"><a href="#例子" class="headerlink" title="例子"></a>例子</h5><script type="math/tex; mode=display">
+x[n]=\alpha^{n} u[n]</script><p>那么DTFT为</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+X\left(e^{j \omega}\right) &=\sum_{n=-\infty}^{\infty} x[n] e^{-j \omega n} \\
+&=\sum_{n=0}^{\infty}\left(\alpha e^{-j \omega}\right)^{n} \\
+&=\frac{1}{1-\alpha e^{-j \omega}}
+\end{aligned}</script><h4 id="三者比较"><a href="#三者比较" class="headerlink" title="三者比较"></a>三者比较</h4><ul>
+<li>有限长度信号：DFT</li>
+<li>周期序列：DFS</li>
+<li>无限序列：DTFT</li>
+</ul>
+<h3 id="DTFT：直觉和性质"><a href="#DTFT：直觉和性质" class="headerlink" title="DTFT：直觉和性质"></a>DTFT：直觉和性质</h3><h4 id="存在性"><a href="#存在性" class="headerlink" title="存在性"></a>存在性</h4><p>对于绝对可和序列，DFTF存在，因为</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+\left|X\left(e^{j \omega}\right)\right| &=\left|\sum_{n=-\infty}^{\infty} x[n] e^{-j \omega n}\right| \\
+& \leq \sum_{n=-\infty}^{\infty}\left|x[n] e^{-j \omega n}\right| \\
+&=\sum_{n=-\infty}^{\infty}|x[n]| \\
+&<\infty
+\end{aligned}</script><p>现在计算逆变换可得</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+\frac{1}{2 \pi} \int_{-\pi}^{\pi} X\left(\mathrm{e}^{j \omega}\right) \mathrm{e}^{j \omega n} d \omega &=\frac{1}{2 \pi} \int_{-\pi}^{\pi}\left(\sum_{k=-\infty}^{\infty} x[k] e^{-j \omega k}\right) e^{j \omega n} d \omega \\
+&=x[n]
+\end{aligned}</script><h4 id="基变换视角"><a href="#基变换视角" class="headerlink" title="基变换视角"></a>基变换视角</h4><ul>
+<li><p>将DFTF视为$\mathbb{C}^{\infty}$的内积：</p>
+<script type="math/tex; mode=display">
+\sum_{n=-\infty}^{\infty} x[n] e^{-j \omega n}=\left\langle e^{j \omega n}, x[n]\right\rangle</script></li>
+<li><p>“基”是无限不可数集$\left\{e^{j \omega n}\right\}_{ \omega \in \mathbb{R}}$</p>
+</li>
+</ul>
+<h4 id="DFT-DFS-DTFT的比较"><a href="#DFT-DFS-DTFT的比较" class="headerlink" title="DFT,DFS,DTFT的比较"></a>DFT,DFS,DTFT的比较</h4><p>DFT</p>
+<p><img src="https://github.com/Doraemonzzz/md-photo/blob/master/Digital%20Signal%20Processing/Digital%20Signal%20Processing%201/week4/2020060501.jpg?raw=true" alt=""></p>
+<p>DFS</p>
+<p><img src="https://github.com/Doraemonzzz/md-photo/blob/master/Digital%20Signal%20Processing/Digital%20Signal%20Processing%201/week4/2020060502.jpg?raw=true" alt=""></p>
+<p>DFTF</p>
+<p><img src="https://github.com/Doraemonzzz/md-photo/blob/master/Digital%20Signal%20Processing/Digital%20Signal%20Processing%201/week4/2020060503.jpg?raw=true" alt=""></p>
+<h4 id="性质"><a href="#性质" class="headerlink" title="性质"></a>性质</h4><ol>
+<li><p>linearity</p>
+<script type="math/tex; mode=display">
+\text { DTFT}\{\alpha x[n]+\beta y[n]\}=\alpha X\left(e^{j \omega}\right)+\beta Y\left(e^{j \omega}\right)</script></li>
+<li><p>time shift</p>
+<script type="math/tex; mode=display">
+\text { DTFT}\{x[n-M]\}=e^{-j \omega M} X\left(e^{j \omega}\right)</script></li>
+<li><p>modulation (dual)</p>
+<script type="math/tex; mode=display">
+\text { DTFT}\left\{e^{j \omega_{0} n} x[n]\right\}=X\left(e^{j\left(\omega-\omega_{0}\right)}\right)</script></li>
+<li><p>time reversal</p>
+<script type="math/tex; mode=display">
+\text { DTFT}\{x[-n]\}=X\left(e^{-j \omega}\right)</script></li>
+<li><p>conjugation</p>
+<script type="math/tex; mode=display">
+\text { DTFT}\left\{x^{*}[n]\right\}=X^{*}\left(e^{-j \omega}\right)</script></li>
+<li><p>如果$x[n]$对称，那么DTFT对称</p>
+<script type="math/tex; mode=display">
+x[n]=x[-n] \Longleftrightarrow X\left(e^{j \omega}\right)=X\left(e^{-j \omega}\right)</script></li>
+<li><p>如果$x[n]$Hermitian对称，那么DTFT是Hermitian对称</p>
+<script type="math/tex; mode=display">
+x[n]=x^{*}[n] \Longleftrightarrow X\left(e^{j \omega}\right)=X^{*}\left(e^{-j \omega}\right)</script></li>
+<li><p>如果$x[n]$是实数，DTFT的模长是对称的</p>
+<script type="math/tex; mode=display">
+x[n] \in \mathbb{R} \Longleftrightarrow\left|X\left(e^{j \omega}\right)\right|=\left|X\left(e^{-j \omega}\right)\right|</script></li>
+<li><p>如果$x[n]$是实对称，那么$X\left(e^{j \omega}\right)$也是实对称</p>
+</li>
+</ol>
+<p>证明：</p>
+<p>2.</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+\text { DTFT}\{x[n-M]\}
+&=\sum_{n=-\infty}^{\infty} \mathrm x[n-m] e^{-j \omega n}\\
+&=\sum_{n=-\infty}^{\infty} \mathrm x[n] e^{-j \omega (n+m)}\\
+&=e^{-j \omega M} X\left(e^{j \omega}\right)
+\end{aligned}</script><p>3.</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+\text { DTFT}\{e^{j \omega_{0} n} x[n]\}
+&=\sum_{n=-\infty}^{\infty} e^{j \omega_{0} n}\mathrm x[n] e^{-j \omega n}\\
+&=\sum_{n=-\infty}^{\infty} \mathrm x[n] e^{-j (\omega-\omega_0) n}\\
+&=X\left(e^{j\left(\omega-\omega_{0}\right)}\right)
+\end{aligned}</script><h4 id="例子-1"><a href="#例子-1" class="headerlink" title="例子"></a>例子</h4><h5 id="1"><a href="#1" class="headerlink" title="1"></a>1</h5><script type="math/tex; mode=display">
+\text { DTFT}\{\delta[n]\}=\left\langle e^{j \omega n}, \delta[n]\right\rangle=1</script><h5 id="2-Dirac-delta函数"><a href="#2-Dirac-delta函数" class="headerlink" title="2.Dirac delta函数"></a>2.Dirac delta函数</h5><script type="math/tex; mode=display">
+\text { DTFT}\{1\}=\sum_{n=-\infty}^{\infty} e^{-j \omega n}=?</script><p>可以看到$1$的DTFT暂时没有定义，为了解决这点，引入Dirac delta函数:</p>
+<script type="math/tex; mode=display">
+\int_{-\infty}^{\infty} \delta(t-s) f(t) d t=f(s)</script><p>定义</p>
+<script type="math/tex; mode=display">
+\tilde{\delta}(\omega)=2 \pi \sum_{k=-\infty}^{\infty} \delta(\omega-2 \pi k)</script><p>那么</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+\operatorname{IDTFT}\{\tilde{\delta}(\omega -\omega_0)\} &=\frac{1}{2 \pi} \int_{-\pi}^{\pi} \tilde{\delta}(\omega-\omega_0) e^{j \omega n} d \omega \\
+&= \int_{-\pi}^{\pi}\sum_{k=-\infty}^{\infty} \delta(\omega-\omega_0-2 \pi k)e^{j \omega n} d \omega\\
+&=\int_{-\pi}^{\pi} \delta(\omega-\omega_0-2\pi s) e^{j \omega n} d \omega,(\omega-\omega_0-2\pi s\in [-\pi ,\pi]) \\
+&=\left.e^{j (\omega_0+2\pi s) n}\right|_{\omega=0}\\
+&=e^{j \omega_0 n}
+\end{aligned}</script><p>即</p>
+<script type="math/tex; mode=display">
+\operatorname{IDTFT}\{\tilde{\delta}(\omega) \}  = 1</script><p>所以可得如下性质</p>
+<ul>
+<li>$\text{DTFT}\{1\}=\tilde{\delta}(\omega)$</li>
+<li>$\text{DTFT}\left\{e^{j \omega_{0} n}\right\}=\tilde{\delta}\left(\omega-\omega_{0}\right)$</li>
+<li>$\text{DTFT}\left\{\cos \omega_{0} n\right\}=\left[\tilde{\delta}\left(\omega-\omega_{0}\right)+\tilde{\delta}\left(\omega+\omega_{0}\right)\right] / 2$</li>
+<li>$\text{DTFT}\left\{\sin \omega_{0} n\right\}=-j\left[\tilde{\delta}\left(\omega-\omega_{0}\right)-\tilde{\delta}\left(\omega+\omega_{0}\right)\right] / 2$</li>
+</ul>
+<h3 id="变换之间的关系"><a href="#变换之间的关系" class="headerlink" title="变换之间的关系"></a>变换之间的关系</h3><h4 id="周期信号"><a href="#周期信号" class="headerlink" title="周期信号"></a>周期信号</h4><script type="math/tex; mode=display">
+\tilde{x}[n]=x[n \quad \bmod N]</script><p>那么</p>
+<script type="math/tex; mode=display">
+\begin{aligned} \tilde{X}\left(e^{j \omega}\right) &=\sum_{n=-\infty}^{\infty} \tilde{x}[n] e^{-j \omega n} \\ 
+&=\sum_{n=-\infty}^{\infty}\left(\frac{1}{N} \sum_{k=0}^{N-1} \tilde{X}[k] e^{j \frac{2 \pi}{N} n k}\right) e^{-j \omega n} \\ 
+&=\frac{1}{N} \sum_{k=0}^{N-1} \tilde{X}[k]\left(\sum_{n=-\infty}^{\infty} e^{j \frac{2 \pi}{N} n k} e^{-j \omega n}\right) \\
+&= \frac{1}{N} \sum_{k=0}^{N-1} \tilde{X}[k]\text{ DTFT}\{e^{j \frac{2 \pi}{N} n k}\}\\
+&= \frac{1}{N} \sum_{k=0}^{N-1} \tilde{X}[k]\tilde{\delta}\left(\omega-\frac{2 \pi}{N} k\right)
+\end{aligned}</script><h4 id="紧支集信号"><a href="#紧支集信号" class="headerlink" title="紧支集信号"></a>紧支集信号</h4><script type="math/tex; mode=display">
+\bar{x}[n]=\left\{\begin{array}{ll}x[n] & 0 \leq n<N \\ 0 & \text { otherwise }\end{array}\right.</script><p>那么</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+\bar{X}\left(e^{j \omega}\right) 
+&=\sum_{n=-\infty}^{\infty} \bar{x}[n] e^{-j \omega n}\\
+&=\sum_{n=0}^{N-1} x[n] e^{-j \omega n} \\
+&=\sum_{n=0}^{N-1}\left(\frac{1}{N} \sum_{k=0}^{N-1} X[k] e^{j \frac{2 \pi}{N} n k}\right) e^{-j \omega n}\\
+&=\frac{1}{N} \sum_{k=0}^{N-1} X[k]\left(\sum_{n=0}^{N-1} e^{-j\left(\omega-\frac{2 \pi}{N} k\right) n}\right)\\
+&= \frac{1}{N} \sum_{k=0}^{N-1} X[k] 
+\bar{R}\left(e^{j\left(\omega-\frac{2 \pi}{N} k\right)}\right)
+\end{aligned}</script><p>其中</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+\bar{R}\left(e^{j\omega}\right) 
+&= \text{DTFT}(\bar r[n])\\
+\bar{r}[n]
+&=\left\{\begin{array}{ll}
+1 & 0 \leq n<N \\
+0 & \text { otherwise }
+\end{array}\right.
+\end{aligned}</script><p>利用定义可得</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+\bar{R}\left(e^{j \omega}\right) &=\sum_{n=0}^{N-1} e^{-j \omega n} \\
+&=\frac{1-e^{-j \omega N}}{1-e^{-j \omega}} \\
+&=\frac{e^{-j \frac{\omega N}{2}}\left[e^{j \frac{\omega N}{2}}-e^{-j \frac{\omega N}{2}}\right]}{e^{-j \frac{\omega}{2}}\left[e^{j \frac{\omega}{2}}-e^{-j \frac{\omega}{2}}\right]} \\
+&=\frac{\sin \left(\frac{\omega}{2} N\right)}{\sin \left(\frac{\omega}{2}\right)} e^{-j \frac{\omega}{2}(N-1)}
+\end{aligned}</script><h4 id="0填充"><a href="#0填充" class="headerlink" title="0填充"></a>0填充</h4><p>考虑</p>
+<script type="math/tex; mode=display">
+{x}'[n]=\left\{\begin{array}{ll}x[n] & 0 \leq n<N \\ 0 &  N\le n < M
+
+\end{array}\right.</script><p>那么</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+X_{M}[h] 
+&=\sum_{n=0}^{M-1} x^{\prime}[n] e^{-j \frac{2 \pi}{M} n h}\\
+&=\sum_{n=0}^{N-1} x[n] e^{-j \frac{2 \pi}{M} n h} \\
+&=\sum_{n=0}^{N-1}\left(\frac{1}{N} \sum_{k=0}^{N-1} X_{N}[k] e^{j \frac{2 \pi}{N} n k}\right) e^{-j \frac{2 \pi}{M} n h} \\
+ &=\frac{1}{N} \sum_{k=0}^{N-1} X_{N}[k]\left(\sum_{n=0}^{N-1} e^{-j\left(\frac{2 \pi}{M} h-\frac{2 \pi}{N} k\right) n}\right) \\
+
+&=\left.\bar{X}\left(e^{j \omega}\right)\right|_{\omega=\frac{2 \pi}{M} h} \\
+\end{aligned}</script><p>注意最后一步由定义得到：</p>
+<script type="math/tex; mode=display">
+X\left(e^{j \omega}\right)=\sum_{n=-\infty}^{\infty} x[n] e^{-j \omega n}</script><h3 id="Sinusoidal-Modulation"><a href="#Sinusoidal-Modulation" class="headerlink" title="Sinusoidal Modulation"></a>Sinusoidal Modulation</h3><script type="math/tex; mode=display">
+\begin{aligned}
+\text { DTFT }\left\{x[n] \cos \left(\omega_{c} n\right)\right\} &=\text { DTFT}\left\{\frac{1}{2} e^{j \omega_{c} n} x[n]+\frac{1}{2} e^{-j \omega_{c} n} x[n]\right\} \\
+&=\frac{1}{2}\left[X\left(e^{j\left(\omega-\omega_{c}\right)}\right)+X\left(e^{j\left(\omega+\omega_{c}\right)}\right)\right]
+\end{aligned}</script><h3 id="FFT"><a href="#FFT" class="headerlink" title="FFT"></a>FFT</h3><p>DFT的时间复杂度为$O(N^2)$，现在希望减少其时间复杂度，这里介绍FFT。</p>
+<p>记</p>
+<script type="math/tex; mode=display">
+W_N=e^{-j \frac{2 \pi}{N}}</script><p>如果$N$明确，那么简记为$W$。</p>
+<p>假设$N$为$2$的幂，对DFT进行变形：</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+X[k]=& \sum_{n=0}^{N / 2-1} x[2 n] W^{2 n k}+\sum_{n=0}^{N / 2-1} x[2 n+1] W^{(2 n+1) k} \\
+=& \sum_{n=0}^{N / 2-1} x[2 n] W^{2 n k}+\sum_{n=0}^{N / 2-1} x[2 n+1] W^{2 n k+k} \\
+=& \sum_{n=0}^{N / 2-1} x[2 n] W_{N / 2}^{n k}+W^{k} \sum_{n=0}^{N / 2-1} x[2 n+1] W_{N / 2}^{n k} \\
+=& X_{k}^{\prime}+W^{k} X^{\prime \prime}_{k}, \quad k=0,1, \ldots, N-1
+\end{aligned}</script><p>所以$X[k]$可由两个DFT($X_k’,X_k’’$)计算得到，现在对其变形可得：</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+X[k]&=X_{k}^{\prime}+W^{k} X^{\prime \prime}_{k}, \quad k=0,1, \ldots, \frac{N}{2}-1 \\
+X[k+N / 2]&= \sum_{n=0}^{N / 2-1} x[2 n] W_{N / 2}^{n(k+N / 2)}+W^{k+N / 2} \sum_{n=0}^{N / 2-1} x[2 n+1] W_{N / 2}^{n(k+N / 2)} \\
+&=\sum_{n=0}^{N / 2-1} x[2 n] W_{N / 2}^{n k}-W^{k} \sum_{n=0}^{N / 2-1} x[2 n+1] W_{N / 2}^{n k} \\
+&=X_{k}^{\prime}-W^{k} X^{\prime \prime}_{k}, \quad k=0,1, \ldots, \frac{N}{2}-1
+\end{aligned}</script><p>所以不难得到时间复杂度$T(N)$的关系为</p>
+<script type="math/tex; mode=display">
+T(N)=2T(N/2) + O(N)</script><p>所以</p>
+<script type="math/tex; mode=display">
+T(N)=O(N\log N)</script><h3 id="DFT的矩阵分解视角"><a href="#DFT的矩阵分解视角" class="headerlink" title="DFT的矩阵分解视角"></a>DFT的矩阵分解视角</h3><ul>
+<li>分离偶数和奇数样本</li>
+<li>计算两个大小为$N、2$的DFT，分别输出$ X ^ {\prime} [k] $和$ X ‘’[k] $</li>
+<li>计算$ X’ [k] $和$ W ^ {k} X’’ [k] $的和与差</li>
+</ul>
+<p>来看一个具体例子：</p>
+<script type="math/tex; mode=display">
+\mathbf{W}_{8}=\left[\begin{array}{cccccc}
+1 & 1 & 1 & 1 & \dots & 1 \\
+1 & W^{1} & W^{2} & W^{3} & \dots & W^{7} \\
+1 & W^{2} & W^{4} & W^{6} & \dots & W^{14} \\
+1 & W^{7} & W^{14} & W^{21} & \dots & W^{49}
+\end{array}\right]</script><p>第一个步骤对应的矩阵为</p>
+<script type="math/tex; mode=display">
+\mathbf{D}_{8}=\left[\begin{array}{llllllll}
+1 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+0 & 0 & 1 & 0 & 0 & 0 & 0 & 0 \\
+0 & 0 & 0 & 0 & 1 & 0 & 0 & 0 \\
+0 & 0 & 0 & 0 & 0 & 0 & 1 & 0 \\
+0 & 1 & 0 & 0 & 0 & 0 & 0 & 0 \\
+0 & 0 & 0 & 1 & 0 & 0 & 0 & 0 \\
+0 & 0 & 0 & 0 & 0 & 1 & 0 & 0 \\
+0 & 0 & 0 & 0 & 0 & 0 & 0 & 1
+\end{array}\right]</script><p>第二个步骤对应的矩阵为</p>
+<script type="math/tex; mode=display">
+\left[\begin{array}{cc}
+\mathrm{W}_{4} & 0_{4} \\
+0_{4} & \mathrm{W}_{4}
+\end{array}\right]=\left[\begin{array}{ccccccc}
+1 & 1 & 1 & 1 & & & \\
+1 & j & -1 & -j & & & & \\
+1 & -1 & 1 & -1 & & & & \\
+1 & -j & -1 & j & & & & \\
+& & & &  1 & 1 & 1 & 1 \\
+& & & & 1 & j & -1 & -j \\
+& & & & 1 & -1 & 1 & -1 \\
+& & & & 1 & -j & -1 & j
+\end{array}\right]</script><p>第三个步骤的第一部分对应如下矩阵</p>
+<script type="math/tex; mode=display">
+\left[\begin{array}{ll}
+I_{4} & 0_{4} \\
+0_{4} & \Lambda_{4}
+\end{array}\right]=
+\left[\begin{array}{cccccccc}
+1 & & & & \\
+& 1 & & \\
+& & 1 & \\
+& &  & 1& \\
+& & &  & 1\\
+& & & && W \\
+& & & &&& W^2 \\
+& & & &&&& W^{3}
+\end{array}\right]</script><p>第二部分对应如下矩阵</p>
+<script type="math/tex; mode=display">
+\mathbf{S}_{8}=\left[\begin{array}{cc}
+\mathbf{I}_{4} & \mathbf{I}_{4} \\
+\mathbf{I}_{4} & -\mathbf{I}_{4}
+\end{array}\right]=\left[\begin{array}{cccccccc}
+1 & 0 & 0 & 0 & 1 & 0 & 0 & 0 \\
+0 & 1 & 0 & 0 & 0 & 1 & 0 & 0 \\
+0 & 0 & 1 & 0 & 0 & 0 & 1 & 0 \\
+0 & 0 & 0 & 1 & 0 & 0 & 0 & 1 \\
+1 & 0 & 0 & 0 & -1 & 0 & 0 & 0 \\
+0 & 1 & 0 & 0 & 0 & -1 & 0 & 0 \\
+0 & 0 & 1 & 0 & 0 & 0 & -1 & 0 \\
+0 & 0 & 0 & 1 & 0 & 0 & 0 & -1
+\end{array}\right]</script><p>综上，矩阵分解如下</p>
+<script type="math/tex; mode=display">
+\mathrm{W}_{8}=
+\left[\begin{array}{cc}
+\mathrm{I}_{4} & \mathrm{I}_{4} \\
+{\mathrm{l}_{4}} & -\mathrm{I}_{4}
+\end{array}\right] 
+\cdot
+\left[
+\begin{array}{cc}
+\mathrm{I}_{4} & 0_{4} \\
+0_{4} & \Lambda_{4}
+\end{array}
+\right] 
+\cdot
+
+\left[\begin{array}{cc}
+\mathrm{W}_{4} & 0_{4} \\
+0_{4} & \mathrm{W}_{4}
+\end{array}\right] \cdot \mathrm{D}_{8}</script><h3 id="习题"><a href="#习题" class="headerlink" title="习题"></a>习题</h3><h4 id="1-1"><a href="#1-1" class="headerlink" title="1"></a>1</h4><p>(Difficulty: $\star$ ) Consider the magnitude DTFTs $\left|X\left(e^{j \omega}\right)\right|$ and $\left|Y\left(e^{j \omega}\right)\right|$ shown below, where vertical lines represent Dirac deltas:</p>
+<p><img src="https://github.com/Doraemonzzz/md-photo/blob/master/Digital%20Signal%20Processing/Digital%20Signal%20Processing%201/week4/1.png?raw=true" alt=""></p>
+<p><img src="https://github.com/Doraemonzzz/md-photo/blob/master/Digital%20Signal%20Processing/Digital%20Signal%20Processing%201/week4/2.png?raw=true" alt=""></p>
+<p>Both underlying signals $x[n]$ and $y[n]$ are periodic. Find their periods and write them below, separated by a space. Please write the smallest period, i.e. a 5 -periodic signal is also obviously 15 -periodic but we’re interested in 5.<br>Enter the period of $x[n]$ and $y[n]$ with a unique white space in between.</p>
+<p>查看频率即可，$x$的频率为</p>
+<script type="math/tex; mode=display">
+\pm \frac {k\pi}{6},k=0,\ldots ,6</script><p>对应的周期为</p>
+<script type="math/tex; mode=display">
+\frac{12}{k } ,k=1,\ldots, 6</script><p>所以$x$的周期为</p>
+<script type="math/tex; mode=display">
+12</script><p>$y$的频率为</p>
+<script type="math/tex; mode=display">
+\pm \frac {2\pi }3</script><p>所以$y$的周期为</p>
+<script type="math/tex; mode=display">
+3</script><p>答案为</p>
+<pre class="line-numbers language-none"><code class="language-none">12 6<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<h4 id="2"><a href="#2" class="headerlink" title="2"></a>2</h4><p>(Difficulty: $\star$ ) We will see in later lectures that communication systems must fulfill what is called the “bandwidth constraint”, that is, the energy of the signals that they transmit must strictly fit into pre-defined frequency bands. In this problem we will look at the bandwidth constraint in the discrete-time domain.</p>
+<p>The signal $x[n]$ is real-valued and its spectrum is nonzero only over the $[-\pi / 8, \pi / 8]$ interval. Due to the bandwidth constraint we need to “fit” the signal over the bands indicated in green in the following figure</p>
+<p><img src="https://github.com/Doraemonzzz/md-photo/blob/master/Digital%20Signal%20Processing/Digital%20Signal%20Processing%201/week4/3.png?raw=true" alt=""></p>
+<p>To this aim, we need to design a processing block $\mathcal{H}$ in order to convert $x[n]$ into a sequence $s[n]$ satisfying the following requirements:<br>The support of the DTFT of $s[n]$ must be limited to $[-3 \pi / 4,-\pi / 2] \cup[\pi / 2,3 \pi / 4]$<br>The sequence $s[n]$ must be real-valued $(x[n]$ is real-valued)<br>Which of the following input/output relationships for $\mathcal{H}$ meet both requirements? (check all correct answers):</p>
+<ul>
+<li>$s[n]=e^{j \frac{5 \pi}{8} n} \cdot x[n]$</li>
+<li>$s[n]=\sin \left(\frac{21 \pi}{8} n\right) \cdot x[n]$</li>
+<li>$s[n]=\cos \left(\frac{5 \pi}{8} n\right) \cdot x[n]$</li>
+<li>$s[n]=\operatorname{IDTFT}\left\{X\left(e^{j(\omega-5 \pi / 8)}\right)\right\}$</li>
+</ul>
+<p>回顾如下公式</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+\text { DTFT }\left\{x[n] \cos \left(\omega_{c} n\right)\right\} &=\text { DTFT}\left\{\frac{1}{2} e^{j \omega_{c} n} x[n]+\frac{1}{2} e^{-j \omega_{c} n} x[n]\right\} \\
+&=\frac{1}{2}\left[X\left(e^{j\left(\omega-\omega_{c}\right)}\right)+X\left(e^{j\left(\omega+\omega_{c}\right)}\right)\right]\\
+
+\text { DTFT }\left\{x[n] \sin \left(\omega_{c} n\right)\right\} &=\text { DTFT}\left\{\frac{1}{2j} e^{j \omega_{c} n} x[n]-\frac{1}{2j} e^{-j \omega_{c} n} x[n]\right\} \\
+&=\frac{1}{2j}\left[X\left(e^{j\left(\omega-\omega_{c}\right)}\right)-X\left(e^{j\left(\omega+\omega_{c}\right)}\right)\right]
+
+\end{aligned}</script><p>而</p>
+<script type="math/tex; mode=display">
+\sin \left(\frac{21 \pi}{8} n\right) =
+\sin \left( \frac {5\pi} 8\right)</script><p>注意第四项不满足实数的要求，所以选择2,3</p>
+<h4 id="3"><a href="#3" class="headerlink" title="3"></a>3</h4><p>(Difficulty: $\star$ ) Consider the length- $L$ signal<br>$x[n]=\left\{\begin{array}{ll}1 &amp; 0 \leq n \leq M-1 \\ 0 &amp; M \leq n \leq L-1\end{array}\right.$<br>Write out the closed-form analytical expression for its DFT coefficients $X[k]$<br>Be careful with your typing since the regular-expression parser can be a bit picky. Check Coursera help to enter math expression. In particular, remember that in the Coursera platform the symbols are different:<br>$I(\text { capital i) is used for the imaginary unit instead of } j$</p>
+<ul>
+<li>Euler’s number is $E$ instead of $e$<br>you can also use the exponential function $\exp (\cdot)$</li>
+<li>$\pi$ is defined as $p i$<br>The only other symbols you’ll need for the answer are the case-sensitive variables $k, M, L$<br>Finally, do not forget to validate your syntax by clicking “Preview” before submitting your answer.<br>For instance, the expression $e^{j(\pi L+3 \pi)} /(k+M)$ should be entered as</li>
+</ul>
+<p>利用定义可得</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+\mathbf X[k]
+&=\sum_{n=0}^{L-1}\mathbf  x[n] e^{-j \frac{2 \pi}{L} n k}\\
+&=\sum_{n=0}^{M-1}e^{-j \frac{2 \pi}{L} n k}\\
+&= \frac{1-e^{-j\frac{2\pi}{L}kM}}{1-e^{-j\frac{2\pi}{L}k}}\\
+&= \frac{\sin \frac{\pi kM}{L}}{\sin \frac{\pi k}{L}}e^{-\frac{j\pi k(M-1)}{L}}
+\end{aligned}</script><pre class="line-numbers language-none"><code class="language-none">E^(-I*pi&#x2F;L*(M-1)*k)*sin(pi&#x2F;L*M*k)&#x2F;sin(pi&#x2F;L*k)<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<h4 id="4"><a href="#4" class="headerlink" title="4"></a>4</h4><p>The real and imaginary parts of $X\left(e^{j \omega}\right)$ are:</p>
+<p><img src="https://github.com/Doraemonzzz/md-photo/blob/master/Digital%20Signal%20Processing/Digital%20Signal%20Processing%201/week4/4.png?raw=true" alt=""></p>
+<p><img src="https://github.com/Doraemonzzz/md-photo/blob/master/Digital%20Signal%20Processing/Digital%20Signal%20Processing%201/week4/5.png?raw=true" alt=""></p>
+<p>After examining the plots, check all the correct statements below.</p>
+<ul>
+<li>$x[n]$ is Hermitian-symmetric $x[n]=x^{*}[-n]$</li>
+<li>$x[n]$ is 0-mean, i.e. $\sum_{n \in \mathbb{Z}} x[n]=0$</li>
+<li>$x[n]$ is real-valued.</li>
+</ul>
+<p>回顾如下性质：</p>
+<ul>
+<li><p>如果$x[n]$Hermitian对称，那么DTFT是Hermitian对称</p>
+<script type="math/tex; mode=display">
+x[n]=x^{*}[n] \Longleftrightarrow X\left(e^{j \omega}\right)=X^{*}\left(e^{-j \omega}\right)</script></li>
+<li><p>如果$x[n]$是实数，DTFT的模长是对称的</p>
+<script type="math/tex; mode=display">
+x[n] \in \mathbb{R} \Longleftrightarrow\left|X\left(e^{j \omega}\right)\right|=\left|X\left(e^{-j \omega}\right)\right|</script></li>
+</ul>
+<p>另一方面</p>
+<script type="math/tex; mode=display">
+\sum_{n \in \mathbb{Z}} x[n]=\text{DFT}\left(X^{*}\left(e^{-j \omega}\right)\right)\big |_{\omega=0}=0</script><p>所以选2,3</p>
+<h4 id="5"><a href="#5" class="headerlink" title="5"></a>5</h4><p>(Difficulty: $\star \star)$ Consider a signal $x[n]$ and its DTFT $X\left(e^{j \omega}\right) .$ Assume $X\left(e^{j \omega}\right)$ is differentiable. Compute the inverse DTFT of<br>$j \frac{d}{d \omega} X\left(e^{j \omega}\right)$</p>
+<p>注意到</p>
+<script type="math/tex; mode=display">
+X\left(e^{j \omega}\right)=\sum_{n=-\infty}^{\infty} x[n] e^{-j \omega n}</script><p>所以</p>
+<script type="math/tex; mode=display">
+j \frac{d}{d \omega} X\left(e^{j \omega}\right)
+=\sum_{n=-\infty}^{\infty}n x[n] e^{-j \omega n}</script><p>即</p>
+<script type="math/tex; mode=display">
+\text{IDTFT}\left(j \frac{d}{d \omega} X\left(e^{j \omega}\right)\right)=nx[n]</script><pre class="line-numbers language-none"><code class="language-none">n*x[n]<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<h4 id="6"><a href="#6" class="headerlink" title="6"></a>6</h4><p>(Difficulty: $\star$ ) Which property of the DTFT allows you to easily compute the inverse DTFT of $4 X\left(e^{j \omega}\right) / \pi-2$ once you know $x[n] ?$ Just type the name of the property.</p>
+<pre class="line-numbers language-none"><code class="language-none">linearity<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<h4 id="7"><a href="#7" class="headerlink" title="7"></a>7</h4><p>(Difficulty: $\star$ ) Take a length- $N$ signal $x[n]$ and its DFT $X[k],$ with $0 \leq n, k, \leq N-1$. Next, consider its periodized version $\tilde{x}[n]=x[n \bmod N]$ with its DFS $\tilde{X}[k]$ where now $n, k \in \mathbb{Z}$<br>Which of the following statements are true?</p>
+<ul>
+<li>$\tilde{X}[-2]=X[2]$ for all $x[n]$ and $N&gt;2$</li>
+<li>$\tilde{X}[l]=X[l \bmod N],$ for all $l \in \mathbb{Z}$</li>
+<li>$\tilde{X}[k+l N]=X[k],$ for all $l \in \mathbb{Z}$ and $k=0, \ldots, N-1$</li>
+</ul>
+<p>由定义可得</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+\tilde{\mathbf X}[k]
+&=\sum_{n=0}^{N-1} \tilde{\mathbf  x}[n] e^{-j \frac{2 \pi}{N} n k}\\
+&= \sum_{n=0}^{N-1} {\mathbf  x}[n] e^{-j \frac{2 \pi}{N} n k}\\
+&= \sum_{n=0}^{N-1} {\mathbf  x}[n] e^{-j \frac{2 \pi}{N} n (k\mod N)}\\
+&= {\mathbf X}[k\mod N]
+\end{aligned}</script><p>所以选择2,3</p>
+<h4 id="8"><a href="#8" class="headerlink" title="8"></a>8</h4><p>(Difficulty: $\star$ ) In the class, we learned how the modulation theorem can help us tune a musical instrument. Martin showed us an example with a bass but of course the same works with a classical guitar. Listen carefully to these two samples (with earphones, if possible); each audio clip is the recording of two notes played together:</p>
+<ul>
+<li>Addio clip A</li>
+<li>Audio clip B</li>
+</ul>
+<p>Select the correct options below.</p>
+<ul>
+<li>The notes are in tune in both audio clips</li>
+<li>The notes are in tune in audio clip $A$ and out of tune in audio clip $B$</li>
+<li>The notes are out of tune in both audio clips</li>
+<li>The notes are in tune in audio clip $\mathrm{B}$ and out of tune in audio clip $\mathrm{A}$</li>
+</ul>
+<p>这题不太理解，选第二项</p>
+<h4 id="9"><a href="#9" class="headerlink" title="9"></a>9</h4><p>(Difficulty: $\star \star)$ A ringback tone is the sound you hear in your landline telephone when the remote phone you are trying to call is ringing.<br>In most European countries, the ringback tone is a single sinusoid turned on and off periodically while in the USA, the ringbback tone is the sum of 2 sinusoids with relatively close frequencies turned on and off periodically.<br>Here are two audio clips:</p>
+<ul>
+<li>Sample $A$</li>
+<li>Sample $B$</li>
+</ul>
+<p>Just by listening to the clips, you should be able to identify the US ringback tone. Explain in the box below what helped you identify the US tone. Use the wording and concepts that appear in the lecture slides. No credit, without a proper explanation, e.g., “I live there” is not an answer.<br>(use only lowercase letters in your answer)</p>
+<p>US tone has beats from the frequency</p>
+<h4 id="10"><a href="#10" class="headerlink" title="10"></a>10</h4><p>(Difficulty: $\star$ ) As explained in previous question, the European and US ringback tones are composed of one or two sinusoids respectively, multiplied by a square wave switching between 0 and $1 .$ This multiplication by a square wave periodically mutes the sinusoid(s).<br>Look at the following magnitude DTFT plots (each plot shows the interval $[-\pi, \pi]):$</p>
+<p><img src="https://github.com/Doraemonzzz/md-photo/blob/master/Digital%20Signal%20Processing/Digital%20Signal%20Processing%201/week4/6.png?raw=true" alt=""></p>
+<p>Select the correct statement amongst the choices below.</p>
+<ul>
+<li>Spectrum (a) corresponds to the European ringback tone.</li>
+<li>Spectrum (a) corresponds to the US ringback tone.</li>
+<li>Spectrum (b) corresponds to the European ringback tone.</li>
+<li>Spectrum (b) corresponds to the US ringback tone.</li>
+</ul>
+<p>选择第一项</p>
+<h4 id="11"><a href="#11" class="headerlink" title="11"></a>11</h4><p>(Difficulty: $\star$ ) Consider the sequences</p>
+<script type="math/tex; mode=display">
+\begin{array}{l}
+x_{1}[n]=\cos (2 \pi n \cdot \sqrt{2} / 30) \\
+x_{2}[n]=\cos (2 \pi n \cdot 1.41421356 / 30)
+\end{array}</script><p>with $n \in \mathbb{Z}$<br>Select the correct statements below.</p>
+<ul>
+<li>There exists $N \in \mathbb{N}$ for which $x_{1}[n]$ has a DFS of size $N$</li>
+<li>There exists $N \in \mathbb{N}$ for which $x_{2}[n]$ has a DFS of size $N$</li>
+</ul>
+<p>只要考虑周期性即可，选择第二项。</p>
+<h4 id="12"><a href="#12" class="headerlink" title="12"></a>12</h4><p>(Difficulty: $\star \star$ ) Consider a signal $x[n] ;$ the only thing we know about the signal is that its DTFT is strictly bandlimited between $-\frac{\pi}{10}$ and $\frac{\pi}{10} .$ We now modulate the signal to obtain $y[n]=x[n] \cos \left(\omega_{c} n\right)$<br>Among the possibilities below, select all the values for $\omega_{c}$ that allow us to perfectly demodulate $y[n]$</p>
+<ul>
+<li>$\frac{\pi}{20}$</li>
+<li>$\frac{\pi}{3}$</li>
+<li>$\frac{9\pi}{10}$</li>
+<li>$\frac{11 \pi}{12}$</li>
+</ul>
+<p>条件是不重叠，并且频率为高频（小于等于$\pi$但接近$\pi $）</p>
+<ul>
+<li>$|\frac{\pi}{20}-\frac \pi {10}| &lt;\frac{\pi}{10}$</li>
+<li>$|\frac{\pi}{3}-\frac \pi {10}| &gt;\frac{\pi}{10},|\frac{\pi}{3}+\frac \pi {10}|&lt;\pi $</li>
+<li>$|\frac{9\pi}{10}-\frac \pi {10}| &gt;\frac{\pi}{10},|\frac{9\pi}{10}+\frac \pi {10}|=\pi$</li>
+<li>$|\frac{11\pi}{12}-\frac \pi {10}| &gt;\frac{\pi}{10},|\frac{11\pi}{12}+\frac \pi {10}|&gt;\pi$</li>
+</ul>
+<p>所以选择2,3</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">Doraemonzzz</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="http://doraemonzzz.com/2020/06/05/Digital%20Signal%20Processing%201%20Basic%20Concepts%20and%20Algorithms%20Week4/">http://doraemonzzz.com/2020/06/05/Digital%20Signal%20Processing%201%20Basic%20Concepts%20and%20Algorithms%20Week4/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://doraemonzzz.com" target="_blank">Doraemonzzz</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/DSP/">DSP</a></div><div class="post_share"><div class="social-share" data-image="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2020/06/08/Information%20Theory,%20Inference%20and%20Learning%20Algorithms%20Lecture%205/"><img class="prev-cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">Information Theory, Inference and Learning Algorithms Lecture 5</div></div></a></div><div class="next-post pull-right"><a href="/2020/06/05/Information%20Theory,%20Inference%20and%20Learning%20Algorithms%20Lecture%204/"><img class="next-cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">Information Theory, Inference and Learning Algorithms Lecture 4</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span> 相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2020/05/19/Digital Signal Processing 1 Basic Concepts and Algorithms Week1/" title="Digital Signal Processing 1 Basic Concepts and Algorithms Week1"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-05-19</div><div class="title">Digital Signal Processing 1 Basic Concepts and Algorithms Week1</div></div></a></div><div><a href="/2020/06/02/Digital Signal Processing 1 Basic Concepts and Algorithms Week2/" title="Digital Signal Processing 1 Basic Concepts and Algorithms Week2"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-06-02</div><div class="title">Digital Signal Processing 1 Basic Concepts and Algorithms Week2</div></div></a></div><div><a href="/2020/07/02/Digital Signal Processing 2 Filtering Week2 习题/" title="Digital Signal Processing 2 Filtering Week2 习题"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-07-02</div><div class="title">Digital Signal Processing 2 Filtering Week2 习题</div></div></a></div><div><a href="/2020/06/18/Digital Signal Processing 2 Filtering Week1/" title="Digital Signal Processing 2 Filtering Week1"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-06-18</div><div class="title">Digital Signal Processing 2 Filtering Week1</div></div></a></div><div><a href="/2020/06/18/Digital Signal Processing 2 Filtering Week2/" title="Digital Signal Processing 2 Filtering Week2"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-06-18</div><div class="title">Digital Signal Processing 2 Filtering Week2</div></div></a></div><div><a href="/2020/07/02/Digital Signal Processing 2 Filtering Week3 习题/" title="Digital Signal Processing 2 Filtering Week3 习题"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-07-02</div><div class="title">Digital Signal Processing 2 Filtering Week3 习题</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="card-info-avatar is-center"><img class="avatar-img" src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/><div class="author-info__name">Doraemonzzz</div><div class="author-info__description">个人博客，主要记录有关机器学习，数学以及计算机科学的笔记</div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">610</div></a></div><div class="card-info-data-item is-center"><a href="/tags/"><div class="headline">标签</div><div class="length-num">59</div></a></div><div class="card-info-data-item is-center"><a href="/categories/"><div class="headline">分类</div><div class="length-num">23</div></a></div></div><a class="button--animated" id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/Doraemonzzz" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="/doraemon_zzz@163.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn card-announcement-animation"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#DFS-%E7%A6%BB%E6%95%A3%E5%82%85%E9%87%8C%E5%8F%B6%E5%BA%8F%E5%88%97"><span class="toc-number">1.</span> <span class="toc-text">DFS(离散傅里叶序列)</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#DFT-DFS-DTFT"><span class="toc-number"></span> <span class="toc-text">DFT,DFS,DTFT</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#L-%E5%91%A8%E6%9C%9F%E7%9A%84DFT"><span class="toc-number">1.</span> <span class="toc-text">$L$周期的DFT</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#DFTF-%E7%A6%BB%E6%95%A3%E6%97%B6%E9%97%B4%E5%82%85%E9%87%8C%E5%8F%B6%E5%8F%98%E6%8D%A2"><span class="toc-number">2.</span> <span class="toc-text">DFTF(离散时间傅里叶变换)</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%9F%BA%E6%9C%AC%E6%80%A7%E8%B4%A8"><span class="toc-number">2.1.</span> <span class="toc-text">基本性质</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E4%BE%8B%E5%AD%90"><span class="toc-number">2.2.</span> <span class="toc-text">例子</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%B8%89%E8%80%85%E6%AF%94%E8%BE%83"><span class="toc-number">3.</span> <span class="toc-text">三者比较</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#DTFT%EF%BC%9A%E7%9B%B4%E8%A7%89%E5%92%8C%E6%80%A7%E8%B4%A8"><span class="toc-number"></span> <span class="toc-text">DTFT：直觉和性质</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AD%98%E5%9C%A8%E6%80%A7"><span class="toc-number">1.</span> <span class="toc-text">存在性</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%9F%BA%E5%8F%98%E6%8D%A2%E8%A7%86%E8%A7%92"><span class="toc-number">2.</span> <span class="toc-text">基变换视角</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#DFT-DFS-DTFT%E7%9A%84%E6%AF%94%E8%BE%83"><span class="toc-number">3.</span> <span class="toc-text">DFT,DFS,DTFT的比较</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%80%A7%E8%B4%A8"><span class="toc-number">4.</span> <span class="toc-text">性质</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BE%8B%E5%AD%90-1"><span class="toc-number">5.</span> <span class="toc-text">例子</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#1"><span class="toc-number">5.1.</span> <span class="toc-text">1</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#2-Dirac-delta%E5%87%BD%E6%95%B0"><span class="toc-number">5.2.</span> <span class="toc-text">2.Dirac delta函数</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%98%E6%8D%A2%E4%B9%8B%E9%97%B4%E7%9A%84%E5%85%B3%E7%B3%BB"><span class="toc-number"></span> <span class="toc-text">变换之间的关系</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%91%A8%E6%9C%9F%E4%BF%A1%E5%8F%B7"><span class="toc-number">1.</span> <span class="toc-text">周期信号</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%B4%A7%E6%94%AF%E9%9B%86%E4%BF%A1%E5%8F%B7"><span class="toc-number">2.</span> <span class="toc-text">紧支集信号</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#0%E5%A1%AB%E5%85%85"><span class="toc-number">3.</span> <span class="toc-text">0填充</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Sinusoidal-Modulation"><span class="toc-number"></span> <span class="toc-text">Sinusoidal Modulation</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#FFT"><span class="toc-number"></span> <span class="toc-text">FFT</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#DFT%E7%9A%84%E7%9F%A9%E9%98%B5%E5%88%86%E8%A7%A3%E8%A7%86%E8%A7%92"><span class="toc-number"></span> <span class="toc-text">DFT的矩阵分解视角</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B9%A0%E9%A2%98"><span class="toc-number"></span> <span class="toc-text">习题</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-1"><span class="toc-number">1.</span> <span class="toc-text">1</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2"><span class="toc-number">2.</span> <span class="toc-text">2</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3"><span class="toc-number">3.</span> <span class="toc-text">3</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4"><span class="toc-number">4.</span> <span class="toc-text">4</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#5"><span class="toc-number">5.</span> <span class="toc-text">5</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#6"><span class="toc-number">6.</span> <span class="toc-text">6</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#7"><span class="toc-number">7.</span> <span class="toc-text">7</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#8"><span class="toc-number">8.</span> <span class="toc-text">8</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#9"><span class="toc-number">9.</span> <span class="toc-text">9</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#10"><span class="toc-number">10.</span> <span class="toc-text">10</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#11"><span class="toc-number">11.</span> <span class="toc-text">11</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#12"><span class="toc-number">12.</span> <span class="toc-text">12</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2021/06/06/2021-6-6-%E7%AE%97%E6%B3%95%E6%A6%82%E8%AE%BA(DPV)%E4%B9%A0%E9%A2%98%E8%A7%A3%E7%AD%94%E2%80%94%E2%80%94%E7%AC%AC3%E7%AB%A0-%E5%9B%BE%E7%9A%84%E5%88%86%E8%A7%A3/" title="算法概论(DPV)习题解答——第3章 图的分解"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="算法概论(DPV)习题解答——第3章 图的分解"/></a><div class="content"><a class="title" href="/2021/06/06/2021-6-6-%E7%AE%97%E6%B3%95%E6%A6%82%E8%AE%BA(DPV)%E4%B9%A0%E9%A2%98%E8%A7%A3%E7%AD%94%E2%80%94%E2%80%94%E7%AC%AC3%E7%AB%A0-%E5%9B%BE%E7%9A%84%E5%88%86%E8%A7%A3/" title="算法概论(DPV)习题解答——第3章 图的分解">算法概论(DPV)习题解答——第3章 图的分解</a><time datetime="2021-06-06T14:35:00.000Z" title="发表于 2021-06-06 22:35:00">2021-06-06</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/06/06/2021-6-6-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E7%AC%AC5%E7%AB%A0-%E4%B9%A0%E9%A2%98%E8%A7%A3%E6%9E%90/" title="深入理解计算机系统 第5章 习题解析"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="深入理解计算机系统 第5章 习题解析"/></a><div class="content"><a class="title" href="/2021/06/06/2021-6-6-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E7%AC%AC5%E7%AB%A0-%E4%B9%A0%E9%A2%98%E8%A7%A3%E6%9E%90/" title="深入理解计算机系统 第5章 习题解析">深入理解计算机系统 第5章 习题解析</a><time datetime="2021-06-06T07:23:00.000Z" title="发表于 2021-06-06 15:23:00">2021-06-06</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/06/05/2021-6-5-Stanford-Compiler-PA5%E7%BF%BB%E8%AF%91/" title="Stanford Compiler PA5翻译"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Stanford Compiler PA5翻译"/></a><div class="content"><a class="title" href="/2021/06/05/2021-6-5-Stanford-Compiler-PA5%E7%BF%BB%E8%AF%91/" title="Stanford Compiler PA5翻译">Stanford Compiler PA5翻译</a><time datetime="2021-06-05T06:12:00.000Z" title="发表于 2021-06-05 14:12:00">2021-06-05</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/06/04/2021-6-4-Stanford-Compiler-PA4%E7%BF%BB%E8%AF%91/" title="Stanford Compiler PA4翻译"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Stanford Compiler PA4翻译"/></a><div class="content"><a class="title" href="/2021/06/04/2021-6-4-Stanford-Compiler-PA4%E7%BF%BB%E8%AF%91/" title="Stanford Compiler PA4翻译">Stanford Compiler PA4翻译</a><time datetime="2021-06-03T16:17:00.000Z" title="发表于 2021-06-04 00:17:00">2021-06-04</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/06/03/2021-6-3-%E5%B7%A7%E5%A6%99%E7%9A%84Y%E8%BF%90%E7%AE%97%E7%AC%A6/" title="巧妙的Y运算符"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="巧妙的Y运算符"/></a><div class="content"><a class="title" href="/2021/06/03/2021-6-3-%E5%B7%A7%E5%A6%99%E7%9A%84Y%E8%BF%90%E7%AE%97%E7%AC%A6/" title="巧妙的Y运算符">巧妙的Y运算符</a><time datetime="2021-06-03T00:54:00.000Z" title="发表于 2021-06-03 08:54:00">2021-06-03</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2021 By Doraemonzzz</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><div class="js-pjax"><script>if (!window.MathJax) {
+  window.MathJax = {
+    loader: {
+      source: {
+        '[tex]/amsCd': '[tex]/amscd'
+      }
+    },
+    tex: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]],
+      tags: 'ams'
+    },
+    options: {
+      renderActions: {
+        findScript: [10, doc => {
+          for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+            const display = !!node.type.match(/; *mode=display/)
+            const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+            const text = document.createTextNode('')
+            node.parentNode.replaceChild(text, node)
+            math.start = {node: text, delim: '', n: 0}
+            math.end = {node: text, delim: '', n: 0}
+            doc.math.push(math)
+          }
+        }, ''],
+        addClass: [200,() => {
+          document.querySelectorAll('mjx-container:not([display=\'true\']').forEach( node => {
+            const target = node.parentNode
+            if (!target.classList.contains('has-jax')) {
+              target.classList.add('mathjax-overflow')
+            }
+          })
+        }, '', false]
+      }
+    }
+  }
+  
+  const script = document.createElement('script')
+  script.src = 'https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js'
+  script.id = 'MathJax-script'
+  script.async = true
+  document.head.appendChild(script)
+} else {
+  MathJax.startup.document.state(0)
+  MathJax.texReset()
+  MathJax.typeset()
+}</script></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

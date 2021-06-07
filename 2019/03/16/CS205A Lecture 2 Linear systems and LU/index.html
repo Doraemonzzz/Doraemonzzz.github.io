@@ -1,0 +1,442 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>CS205A Lecture 2 Linear systems and LU | Doraemonzzz</title><meta name="keywords" content="CS205A"><meta name="author" content="Doraemonzzz"><meta name="copyright" content="Doraemonzzz"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="课程主页：https:&#x2F;&#x2F;graphics.stanford.edu&#x2F;courses&#x2F;cs205a-13-fall&#x2F;schedule.html 这次回顾第二讲，这一讲主要讨论了线性方程组的求解以及LU分解。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="CS205A Lecture 2 Linear systems and LU">
+<meta property="og:url" content="http://doraemonzzz.com/2019/03/16/CS205A%20Lecture%202%20Linear%20systems%20and%20LU/index.html">
+<meta property="og:site_name" content="Doraemonzzz">
+<meta property="og:description" content="课程主页：https:&#x2F;&#x2F;graphics.stanford.edu&#x2F;courses&#x2F;cs205a-13-fall&#x2F;schedule.html 这次回顾第二讲，这一讲主要讨论了线性方程组的求解以及LU分解。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg">
+<meta property="article:published_time" content="2019-03-16T14:19:00.000Z">
+<meta property="article:modified_time" content="2019-03-18T16:54:21.716Z">
+<meta property="article:author" content="Doraemonzzz">
+<meta property="article:tag" content="CS205A">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="http://doraemonzzz.com/2019/03/16/CS205A%20Lecture%202%20Linear%20systems%20and%20LU/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"prismjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    jQuery: 'https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js',
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+    },
+    fancybox: {
+      js: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isanchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'CS205A Lecture 2 Linear systems and LU',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2019-03-19 00:54:21'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    })(window)</script><meta name="generator" content="Hexo 5.4.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="author-avatar"><img class="avatar-img" src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">文章</div><div class="length-num">610</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">标签</div><div class="length-num">59</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/categories/"><div class="headline">分类</div><div class="length-num">23</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">Doraemonzzz</a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">CS205A Lecture 2 Linear systems and LU</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2019-03-16T14:19:00.000Z" title="发表于 2019-03-16 22:19:00">2019-03-16</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2019-03-18T16:54:21.716Z" title="更新于 2019-03-19 00:54:21">2019-03-19</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E6%95%B0%E5%80%BC%E5%88%86%E6%9E%90/">数值分析</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="CS205A Lecture 2 Linear systems and LU"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p>课程主页：<a target="_blank" rel="noopener" href="https://graphics.stanford.edu/courses/cs205a-13-fall/schedule.html">https://graphics.stanford.edu/courses/cs205a-13-fall/schedule.html</a></p>
+<p>这次回顾第二讲，这一讲主要讨论了线性方程组的求解以及LU分解。</p>
+<span id="more"></span>
+<h2 id="Chapter-2-线性系统和LU分解"><a href="#Chapter-2-线性系统和LU分解" class="headerlink" title="Chapter 2 线性系统和LU分解"></a>Chapter 2 线性系统和LU分解</h2><h3 id="线性系统的可求解性"><a href="#线性系统的可求解性" class="headerlink" title="线性系统的可求解性"></a>线性系统的可求解性</h3><p>线性方程组的形式如下：</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+A\vec x &=\vec b \\
+A& \in \mathbb R^{m\times n}\\
+\vec x& \in \mathbb R^{ n}\\
+\vec b& \in \mathbb R^{m}
+\end{aligned}</script><p>解的情形一共以下三种：</p>
+<ol>
+<li><p>唯一解：</p>
+<script type="math/tex; mode=display">
+\left(
+ \begin{matrix}
+   1 & 0  \\
+   0 & 1
+  \end{matrix}
+  \right) \left(
+ \begin{matrix}
+   x \\
+  y
+  \end{matrix}
+  \right) =\left(
+ \begin{matrix}
+ -1  \\
+1
+  \end{matrix}
+  \right)</script></li>
+<li><p>无解：</p>
+<script type="math/tex; mode=display">
+\left(
+ \begin{matrix}
+   1 & 0  \\
+  1 & 0
+  \end{matrix}
+  \right) \left(
+ \begin{matrix}
+   x \\
+  y
+  \end{matrix}
+  \right) =\left(
+ \begin{matrix}
+ -1  \\
+1
+  \end{matrix}
+  \right)</script></li>
+<li><p>无穷多组解：</p>
+<script type="math/tex; mode=display">
+\left(
+ \begin{matrix}
+   1 & 0  \\
+  1 & 0
+  \end{matrix}
+  \right) \left(
+ \begin{matrix}
+   x \\
+  y
+  \end{matrix}
+  \right) =\left(
+ \begin{matrix}
+ -1  \\
+-1
+  \end{matrix}
+  \right)</script></li>
+</ol>
+<p>这一讲我们只讨论$A$是<strong>可逆方阵</strong>的情形。注意求解线性方程组并不需要计算$A^{-1}$，这是因为$A^{-1}$的计算成本太大。</p>
+<h3 id="消元法"><a href="#消元法" class="headerlink" title="消元法"></a>消元法</h3><p>课程中老师演示了消元法求解线性方程组的过程，其中只涉及到三种操作：</p>
+<ol>
+<li>对调矩阵中某两行。</li>
+<li>用非零常数乘以矩阵的某一行。</li>
+<li>将矩阵的某一个行乘以常数$c$后加到另一行。</li>
+</ol>
+<p>这三种操作对应了三种矩阵：</p>
+<h4 id="置换"><a href="#置换" class="headerlink" title="置换"></a>置换</h4><p>假设$e_i $是$m$维向量，且$e_i$第$i$个元素为$1$，其余元素都为$0$，定义如下置换映射（该映射为双射）：</p>
+<script type="math/tex; mode=display">
+\sigma:\{1,...,m\}\to \{1,...,m\}</script><p>那么第一种操作对应的矩阵为：</p>
+<script type="math/tex; mode=display">
+P_{\sigma} = \left(
+ \begin{matrix}
+  \vec e_{\sigma(1)}^T \\
+\vec e_{\sigma(2)}^T \\
+\ldots \\
+\vec e_{\sigma(m)}^T
+  \end{matrix}
+  \right)</script><h4 id="伸缩"><a href="#伸缩" class="headerlink" title="伸缩"></a>伸缩</h4><p>第二种操作对应的矩阵为：</p>
+<script type="math/tex; mode=display">
+S_a =\text{diag} \{a_1,a_2,...,a_m\}</script><h4 id="消除"><a href="#消除" class="headerlink" title="消除"></a>消除</h4><p>对第$k$行乘以$c$加到第$l$行对应的矩阵为：</p>
+<script type="math/tex; mode=display">
+E= I+c \vec e_l \vec e_k^T</script><p>注意以上三种矩阵都可可逆。</p>
+<p>消元法可以用左乘这些矩阵来代替，用$E$表示上述三种矩阵，所以消元的过程可表示为</p>
+<script type="math/tex; mode=display">
+E_k...E_1 A\vec x = E_k...E_1 \vec b</script><p>最后我们的结果是</p>
+<script type="math/tex; mode=display">
+E_k...E_1 A=I</script><p>从而</p>
+<script type="math/tex; mode=display">
+\vec x = E_k...E_1 \vec b</script><p>因此</p>
+<script type="math/tex; mode=display">
+A= E_{1}^{-1}...E_{k}^{-1}</script><h3 id="高斯消元法"><a href="#高斯消元法" class="headerlink" title="高斯消元法"></a>高斯消元法</h3><p>将消元法稍作总结即可得到高斯消元法，分为两个步骤，分别是Forward Substitution和Back Substitution。</p>
+<h4 id="Forward-Substitution"><a href="#Forward-Substitution" class="headerlink" title="Forward Substitution"></a>Forward Substitution</h4><p>首先得到增广矩阵：</p>
+<script type="math/tex; mode=display">
+( A | \vec b)
+= \left(
+    \begin{array}{cccc|c}
+      \times  & \times  & \times  & \times  & \times   \\
+  \times  & \times  & \times  & \times  & \times   \\
+    \times  & \times  & \times  & \times  & \times   \\
+      \times  & \times  & \times  & \times  & \times   \\
+    \end{array}
+\right)</script><p>利用伸缩操作将第一行第一列的元素变为$1$（这里假设这个步骤可行），得到</p>
+<script type="math/tex; mode=display">
+\left(
+    \begin{array}{cccc|c}
+    1  & \times  & \times  & \times  & \times   \\
+  \times  & \times  & \times  & \times  & \times   \\
+    \times  & \times  & \times  & \times  & \times   \\
+      \times  & \times  & \times  & \times  & \times   \\
+    \end{array}
+\right)</script><p>用第三类变化将第一列的其余元素都变为$0​$可得</p>
+<script type="math/tex; mode=display">
+\left(
+    \begin{array}{cccc|c}
+    1  & \times  & \times  & \times  & \times   \\
+0  & \times  & \times  & \times  & \times   \\
+ 0 & \times  & \times  & \times  & \times   \\
+  0  & \times  & \times  & \times  & \times   \\
+    \end{array}
+\right)</script><p>对其余每列重复该操作，最终得到</p>
+<script type="math/tex; mode=display">
+\left(
+    \begin{array}{cccc|c}
+    1  & \times  & \times  & \times  & \times   \\
+0  & 1  & \times  & \times  & \times   \\
+ 0 & 0 & 1  & \times  & \times   \\
+  0  &0 & 0  & 1  & \times   \\
+    \end{array}
+\right)</script><p>Forward Substitution最终结果得到的是上三角矩阵，接下的步骤是Back Substitution。</p>
+<h4 id="Back-Substitution"><a href="#Back-Substitution" class="headerlink" title="Back Substitution"></a>Back Substitution</h4><p>Back Substitution的步骤是将上三角矩阵变成单位阵，首先对最后一列进行操作：</p>
+<script type="math/tex; mode=display">
+\left(
+    \begin{array}{cccc|c}
+    1  & \times  & \times  & 0  & \times   \\
+0  & 1  & \times  &0  & \times   \\
+ 0 & 0 & 1  & 0  & \times   \\
+  0  &0 & 0  & 1  & \times   \\
+    \end{array}
+\right)</script><p>重复此步骤最终得到</p>
+<script type="math/tex; mode=display">
+\left(
+    \begin{array}{cccc|c}
+    1  & 0 & 0 & 0  & \times   \\
+0  & 1  & 0  &0  & \times   \\
+ 0 & 0 & 1  & 0  & \times   \\
+  0  &0 & 0  & 1  & \times   \\
+    \end{array}
+\right)</script><p>最后一列即为方程组的解，整个过程的算法如下：</p>
+<p><img src="https://github.com/Doraemonzzz/md-photo/blob/master/CS205A/Lecture%202/20190318.jpg?raw=true" alt=""></p>
+<p>接着分析算法时间复杂度，注意每一步操作都是对一整行进行，所以每一步操作的时间复杂度为$O(n)$，因为一共有$O(n^2)$个步骤，所以算法的时间复杂度为$O(n^3)​$。</p>
+<h4 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h4><p>高斯消元法会带来一定的问题，首先考虑下例</p>
+<script type="math/tex; mode=display">
+\left(
+ \begin{matrix}
+  0 & 1  \\
+   1 & 0
+  \end{matrix}
+  \right)</script><p>显然之前的算法无法处理上述情形。接着考虑下例</p>
+<script type="math/tex; mode=display">
+\left(
+ \begin{matrix}
+   \epsilon & 1  \\
+   1 & 0
+  \end{matrix}
+  \right)</script><p>利用之前的算法，我们会得到</p>
+<script type="math/tex; mode=display">
+\left(
+ \begin{matrix}
+  1 & \frac 1\epsilon   \\
+   0& -\frac 1\epsilon
+  \end{matrix}
+  \right)</script><p>因此我们会得到$\frac 1 \epsilon ​$的项，如果$\epsilon ​$非常小，那么$\frac 1 \epsilon ​$会非常大，这就会产生误差。</p>
+<p>解决上述问题的方法是选主元：即<strong>交换行和列以避免除以很小的数或零</strong>，选主元有两个主要策略：</p>
+<p>1.部分主元：交换行，使得当前列绝对值最大的元素出现在对角线位置。<br>2.全局主元：交换行列，使得绝对值最大的元素出现在对角线位置。</p>
+<p>如果我们有一系列线性方程组：</p>
+<script type="math/tex; mode=display">
+A\vec x =\vec b_1\\
+A\vec x =\vec b_2\\
+\vdots</script><p>因为对$A$的操作相同，所以可以将上述方程组合并为</p>
+<script type="math/tex; mode=display">
+A\vec x = (\vec b_1 ,\vec b_2,...,)</script><p>这样可以减少很多重复操作。</p>
+<h3 id="LU-分解"><a href="#LU-分解" class="headerlink" title="$LU$分解"></a>$LU$分解</h3><p>首先考虑对上三角矩阵进行高斯消元法：</p>
+<script type="math/tex; mode=display">
+\left(
+    \begin{array}{cccc|c}
+    1  & \times  & \times  & \times  & \times   \\
+0  & 1  & \times  & \times  & \times   \\
+ 0 & 0 & 1  & \times  & \times   \\
+  0  &0 & 0  & 1  & \times   \\
+    \end{array}
+\right)</script><p>由之前的算法可知，一共要循环$n$次，注意到这里为上三角矩阵，所以每一轮迭代的时间复杂度实际上为$O(n)$（因为不需考虑$0$元素），所以总共的时间复杂度为$O(n^2)$，同理可知，对下三角矩阵使用高斯消元法的时间复杂度也为$O(n^2)$。这个重要的结果是$LU$分解的出发点。</p>
+<p>回顾高斯消元法，我们知道Forward Substitution的过程实际上是左乘一些列初等矩阵，得到</p>
+<script type="math/tex; mode=display">
+E_k...E_1 A\vec x = E_k...E_1 \vec b</script><p>其中$U=E_k…E_1 A​$是上三角矩阵，那么</p>
+<script type="math/tex; mode=display">
+A=(E_{1}^{-1}...E_{k}^{-1})U \triangleq LU</script><p>其中</p>
+<script type="math/tex; mode=display">
+L= E_{1}^{-1}...E_{k}^{-1}</script><p>注意$E_i​$为下三角矩阵，所以$L​$也为下三角矩阵，因此$A=LU​$将$A​$分解为下三角矩阵和上三角矩阵的乘积，所以原方程组即为</p>
+<script type="math/tex; mode=display">
+LU \vec x = \vec b</script><p>结合之前的讨论可知，我们可以把原问题拆成两个子问题：</p>
+<script type="math/tex; mode=display">
+L\vec y = \vec b\\
+U\vec x =\vec y</script><p>因为$L$是下三角矩阵，$U$是上三角矩阵，所以上述算法的时间复杂度为$O(n^2)$。</p>
+<h4 id="实现-LU"><a href="#实现-LU" class="headerlink" title="实现$LU$"></a>实现$LU$</h4><p>作为一个小技巧，我们可以把$L,U​$存储到一个矩阵中来减少空间开销，原理很简单，构造对角矩阵$S​$，使得$LS​$的对角元为$1​$，那么</p>
+<script type="math/tex; mode=display">
+LU=(LS)(S^{-1}U)</script><p>因为$S​$为对角矩阵，所以$LS,S^{-1}U​$仍然分别为下三角矩阵和上三角矩阵，最终存储结果如下：</p>
+<script type="math/tex; mode=display">
+\left(
+    \begin{matrix}
+ U    & U  & U  & U   \\
+L  & U  &U & U    \\
+ L & L & U  & U    \\
+ L  &L & L & U    \\
+    \end{matrix}
+\right)</script><p>在不交换行和列来选择主元的条件下，$LU$分解伪代码如下：</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token comment">// Takes as input an n-by -n matrix A[i,j]</span>
+<span class="token comment">// Edits A in place to obtain the compact LU factorization described above</span>
+<span class="token keyword">for</span> pivot from <span class="token number">1</span> to n <span class="token punctuation">&#123;</span>
+	pivotValue <span class="token operator">=</span> A<span class="token punctuation">[</span>pivot <span class="token punctuation">,</span> pivot <span class="token punctuation">]</span><span class="token punctuation">;</span> <span class="token comment">// Bad assumption that this is nonzero !</span>
+    <span class="token keyword">for</span> eliminationRow <span class="token function">from</span> <span class="token punctuation">(</span> pivot <span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">)</span> to n <span class="token punctuation">&#123;</span> <span class="token comment">// Eliminate values beneath the pivot</span>
+        <span class="token comment">// How much to scale the pivot row to eliminate the value in the current</span>
+        <span class="token comment">// row; notice we 're not scaling the pivot row to 1, so we divide by the</span>
+        <span class="token comment">// pivot value</span>
+        scale <span class="token operator">=</span> A<span class="token punctuation">[</span> eliminationRow <span class="token punctuation">,</span> pivot <span class="token punctuation">]</span> <span class="token operator">/</span> pivotValue <span class="token punctuation">;</span>
+        <span class="token comment">// Since we / subtract / scale times the pivot row from the current row</span>
+        <span class="token comment">// during Gaussian elimination , we / add/ it in the inverse operation</span>
+        <span class="token comment">// stored in L</span>
+        A<span class="token punctuation">[</span> eliminationRow <span class="token punctuation">,</span> pivot <span class="token punctuation">]</span> <span class="token operator">=</span> scale <span class="token punctuation">;</span>
+        <span class="token comment">// Now , as in Gaussian elimination , perform the row operation on the rest</span>
+        <span class="token comment">// of the row: this will become U</span>
+        <span class="token keyword">for</span> eliminationCol <span class="token function">from</span> <span class="token punctuation">(</span> pivot <span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">)</span> to n
+        	A<span class="token punctuation">[</span> eliminationRow <span class="token punctuation">,</span> eliminationCol <span class="token punctuation">]</span> <span class="token operator">-=</span> A<span class="token punctuation">[</span>pivot <span class="token punctuation">,</span> eliminationCol <span class="token punctuation">]</span> <span class="token operator">*</span> scale <span class="token punctuation">;</span>
+     <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>代码解释：</p>
+<p>因为</p>
+<script type="math/tex; mode=display">
+L= E_{1}^{-1}...E_{k}^{-1}</script><p>所以$L$中存储的是$E_i^{-1}$，因为$E_{i}$对应的是减法（消去某行的元素），所以$E_i^{-1}$对应的是加法，这一步对应了</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp">scale <span class="token operator">=</span> A<span class="token punctuation">[</span> eliminationRow <span class="token punctuation">,</span> pivot <span class="token punctuation">]</span> <span class="token operator">/</span> pivotValue <span class="token punctuation">;</span>
+A<span class="token punctuation">[</span> eliminationRow <span class="token punctuation">,</span> pivot <span class="token punctuation">]</span> <span class="token operator">=</span> scale <span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<p>然后</p>
+<script type="math/tex; mode=display">
+U=E_k...E_1 A</script><p>对应的代码为</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">for</span> eliminationCol <span class="token keyword">from</span> <span class="token punctuation">(</span> pivot <span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">)</span> to n
+        A<span class="token punctuation">[</span> eliminationRow <span class="token punctuation">,</span> eliminationCol <span class="token punctuation">]</span> <span class="token operator">-=</span> A<span class="token punctuation">[</span>pivot <span class="token punctuation">,</span> eliminationCol <span class="token punctuation">]</span> <span class="token operator">*</span> scale <span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">Doraemonzzz</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="http://doraemonzzz.com/2019/03/16/CS205A%20Lecture%202%20Linear%20systems%20and%20LU/">http://doraemonzzz.com/2019/03/16/CS205A%20Lecture%202%20Linear%20systems%20and%20LU/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://doraemonzzz.com" target="_blank">Doraemonzzz</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/CS205A/">CS205A</a></div><div class="post_share"><div class="social-share" data-image="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2019/03/17/CS205A%20Lecture%203%20More%20LU;%20conditioning%20and%20sensitivity/"><img class="prev-cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">CS205A Lecture 3 More LU; conditioning and sensitivity</div></div></a></div><div class="next-post pull-right"><a href="/2019/03/16/CS205A%20Lecture%201%20Introduction;%20numerics;%20error%20analysis/"><img class="next-cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">CS205A Lecture 1 Introduction; numerics; error analysis</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span> 相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2019/03/24/CS205A HW0/" title="CS205A HW0"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2019-03-24</div><div class="title">CS205A HW0</div></div></a></div><div><a href="/2019/03/25/CS205A HW1/" title="CS205A HW1"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2019-03-25</div><div class="title">CS205A HW1</div></div></a></div><div><a href="/2019/03/31/CS205A HW2/" title="CS205A HW2"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2019-03-31</div><div class="title">CS205A HW2</div></div></a></div><div><a href="/2019/04/10/CS205A HW4/" title="CS205A HW4"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2019-04-10</div><div class="title">CS205A HW4</div></div></a></div><div><a href="/2019/03/31/CS205A HW3/" title="CS205A HW3"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2019-03-31</div><div class="title">CS205A HW3</div></div></a></div><div><a href="/2019/04/24/CS205A HW5/" title="CS205A HW5"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2019-04-24</div><div class="title">CS205A HW5</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="card-info-avatar is-center"><img class="avatar-img" src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/><div class="author-info__name">Doraemonzzz</div><div class="author-info__description">个人博客，主要记录有关机器学习，数学以及计算机科学的笔记</div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">610</div></a></div><div class="card-info-data-item is-center"><a href="/tags/"><div class="headline">标签</div><div class="length-num">59</div></a></div><div class="card-info-data-item is-center"><a href="/categories/"><div class="headline">分类</div><div class="length-num">23</div></a></div></div><a class="button--animated" id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/Doraemonzzz" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="/doraemon_zzz@163.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn card-announcement-animation"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Chapter-2-%E7%BA%BF%E6%80%A7%E7%B3%BB%E7%BB%9F%E5%92%8CLU%E5%88%86%E8%A7%A3"><span class="toc-number">1.</span> <span class="toc-text">Chapter 2 线性系统和LU分解</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BA%BF%E6%80%A7%E7%B3%BB%E7%BB%9F%E7%9A%84%E5%8F%AF%E6%B1%82%E8%A7%A3%E6%80%A7"><span class="toc-number">1.1.</span> <span class="toc-text">线性系统的可求解性</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B6%88%E5%85%83%E6%B3%95"><span class="toc-number">1.2.</span> <span class="toc-text">消元法</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%BD%AE%E6%8D%A2"><span class="toc-number">1.2.1.</span> <span class="toc-text">置换</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BC%B8%E7%BC%A9"><span class="toc-number">1.2.2.</span> <span class="toc-text">伸缩</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%B6%88%E9%99%A4"><span class="toc-number">1.2.3.</span> <span class="toc-text">消除</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%AB%98%E6%96%AF%E6%B6%88%E5%85%83%E6%B3%95"><span class="toc-number">1.3.</span> <span class="toc-text">高斯消元法</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Forward-Substitution"><span class="toc-number">1.3.1.</span> <span class="toc-text">Forward Substitution</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Back-Substitution"><span class="toc-number">1.3.2.</span> <span class="toc-text">Back Substitution</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%88%86%E6%9E%90"><span class="toc-number">1.3.3.</span> <span class="toc-text">分析</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#LU-%E5%88%86%E8%A7%A3"><span class="toc-number">1.4.</span> <span class="toc-text">$LU$分解</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AE%9E%E7%8E%B0-LU"><span class="toc-number">1.4.1.</span> <span class="toc-text">实现$LU$</span></a></li></ol></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2021/06/06/2021-6-6-%E7%AE%97%E6%B3%95%E6%A6%82%E8%AE%BA(DPV)%E4%B9%A0%E9%A2%98%E8%A7%A3%E7%AD%94%E2%80%94%E2%80%94%E7%AC%AC3%E7%AB%A0-%E5%9B%BE%E7%9A%84%E5%88%86%E8%A7%A3/" title="算法概论(DPV)习题解答——第3章 图的分解"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="算法概论(DPV)习题解答——第3章 图的分解"/></a><div class="content"><a class="title" href="/2021/06/06/2021-6-6-%E7%AE%97%E6%B3%95%E6%A6%82%E8%AE%BA(DPV)%E4%B9%A0%E9%A2%98%E8%A7%A3%E7%AD%94%E2%80%94%E2%80%94%E7%AC%AC3%E7%AB%A0-%E5%9B%BE%E7%9A%84%E5%88%86%E8%A7%A3/" title="算法概论(DPV)习题解答——第3章 图的分解">算法概论(DPV)习题解答——第3章 图的分解</a><time datetime="2021-06-06T14:35:00.000Z" title="发表于 2021-06-06 22:35:00">2021-06-06</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/06/06/2021-6-6-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E7%AC%AC5%E7%AB%A0-%E4%B9%A0%E9%A2%98%E8%A7%A3%E6%9E%90/" title="深入理解计算机系统 第5章 习题解析"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="深入理解计算机系统 第5章 习题解析"/></a><div class="content"><a class="title" href="/2021/06/06/2021-6-6-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E7%AC%AC5%E7%AB%A0-%E4%B9%A0%E9%A2%98%E8%A7%A3%E6%9E%90/" title="深入理解计算机系统 第5章 习题解析">深入理解计算机系统 第5章 习题解析</a><time datetime="2021-06-06T07:23:00.000Z" title="发表于 2021-06-06 15:23:00">2021-06-06</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/06/05/2021-6-5-Stanford-Compiler-PA5%E7%BF%BB%E8%AF%91/" title="Stanford Compiler PA5翻译"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Stanford Compiler PA5翻译"/></a><div class="content"><a class="title" href="/2021/06/05/2021-6-5-Stanford-Compiler-PA5%E7%BF%BB%E8%AF%91/" title="Stanford Compiler PA5翻译">Stanford Compiler PA5翻译</a><time datetime="2021-06-05T06:12:00.000Z" title="发表于 2021-06-05 14:12:00">2021-06-05</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/06/04/2021-6-4-Stanford-Compiler-PA4%E7%BF%BB%E8%AF%91/" title="Stanford Compiler PA4翻译"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Stanford Compiler PA4翻译"/></a><div class="content"><a class="title" href="/2021/06/04/2021-6-4-Stanford-Compiler-PA4%E7%BF%BB%E8%AF%91/" title="Stanford Compiler PA4翻译">Stanford Compiler PA4翻译</a><time datetime="2021-06-03T16:17:00.000Z" title="发表于 2021-06-04 00:17:00">2021-06-04</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/06/03/2021-6-3-%E5%B7%A7%E5%A6%99%E7%9A%84Y%E8%BF%90%E7%AE%97%E7%AC%A6/" title="巧妙的Y运算符"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="巧妙的Y运算符"/></a><div class="content"><a class="title" href="/2021/06/03/2021-6-3-%E5%B7%A7%E5%A6%99%E7%9A%84Y%E8%BF%90%E7%AE%97%E7%AC%A6/" title="巧妙的Y运算符">巧妙的Y运算符</a><time datetime="2021-06-03T00:54:00.000Z" title="发表于 2021-06-03 08:54:00">2021-06-03</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2021 By Doraemonzzz</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><div class="js-pjax"><script>if (!window.MathJax) {
+  window.MathJax = {
+    loader: {
+      source: {
+        '[tex]/amsCd': '[tex]/amscd'
+      }
+    },
+    tex: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]],
+      tags: 'ams'
+    },
+    options: {
+      renderActions: {
+        findScript: [10, doc => {
+          for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+            const display = !!node.type.match(/; *mode=display/)
+            const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+            const text = document.createTextNode('')
+            node.parentNode.replaceChild(text, node)
+            math.start = {node: text, delim: '', n: 0}
+            math.end = {node: text, delim: '', n: 0}
+            doc.math.push(math)
+          }
+        }, ''],
+        addClass: [200,() => {
+          document.querySelectorAll('mjx-container:not([display=\'true\']').forEach( node => {
+            const target = node.parentNode
+            if (!target.classList.contains('has-jax')) {
+              target.classList.add('mathjax-overflow')
+            }
+          })
+        }, '', false]
+      }
+    }
+  }
+  
+  const script = document.createElement('script')
+  script.src = 'https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js'
+  script.id = 'MathJax-script'
+  script.async = true
+  document.head.appendChild(script)
+} else {
+  MathJax.startup.document.state(0)
+  MathJax.texReset()
+  MathJax.typeset()
+}</script></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

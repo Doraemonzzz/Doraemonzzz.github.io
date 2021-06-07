@@ -1,0 +1,473 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Michael Collins NLP Homework 2 | Doraemonzzz</title><meta name="keywords" content="Michael Collins NLP"><meta name="author" content="Doraemonzzz"><meta name="copyright" content="Doraemonzzz"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="课程主页：http:&#x2F;&#x2F;www.cs.columbia.edu&#x2F;~cs4705&#x2F; 课程网盘地址： 链接：https:&#x2F;&#x2F;pan.baidu.com&#x2F;s&#x2F;1KijgO7yjL_MVCC9zKZ7Jdg提取码：t1i3  这一次回顾Michael Collins NLP作业2。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Michael Collins NLP Homework 2">
+<meta property="og:url" content="http://doraemonzzz.com/2020/04/21/Michael%20Collins%20NLP%20Homework%202/index.html">
+<meta property="og:site_name" content="Doraemonzzz">
+<meta property="og:description" content="课程主页：http:&#x2F;&#x2F;www.cs.columbia.edu&#x2F;~cs4705&#x2F; 课程网盘地址： 链接：https:&#x2F;&#x2F;pan.baidu.com&#x2F;s&#x2F;1KijgO7yjL_MVCC9zKZ7Jdg提取码：t1i3  这一次回顾Michael Collins NLP作业2。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg">
+<meta property="article:published_time" content="2020-04-21T04:02:00.000Z">
+<meta property="article:modified_time" content="2020-05-07T12:30:33.634Z">
+<meta property="article:author" content="Doraemonzzz">
+<meta property="article:tag" content="Michael Collins NLP">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="http://doraemonzzz.com/2020/04/21/Michael%20Collins%20NLP%20Homework%202/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"prismjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    jQuery: 'https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js',
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+    },
+    fancybox: {
+      js: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isanchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'Michael Collins NLP Homework 2',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2020-05-07 20:30:33'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    })(window)</script><meta name="generator" content="Hexo 5.4.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="author-avatar"><img class="avatar-img" src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">文章</div><div class="length-num">610</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">标签</div><div class="length-num">59</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/categories/"><div class="headline">分类</div><div class="length-num">23</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">Doraemonzzz</a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">Michael Collins NLP Homework 2</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2020-04-21T04:02:00.000Z" title="发表于 2020-04-21 12:02:00">2020-04-21</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2020-05-07T12:30:33.634Z" title="更新于 2020-05-07 20:30:33">2020-05-07</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/NLP/">NLP</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="Michael Collins NLP Homework 2"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p>课程主页：<a target="_blank" rel="noopener" href="http://www.cs.columbia.edu/~cs4705/">http://www.cs.columbia.edu/~cs4705/</a></p>
+<p>课程网盘地址：</p>
+<p>链接：<a target="_blank" rel="noopener" href="https://pan.baidu.com/s/1KijgO7yjL_MVCC9zKZ7Jdg">https://pan.baidu.com/s/1KijgO7yjL_MVCC9zKZ7Jdg</a><br>提取码：t1i3 </p>
+<p>这一次回顾Michael Collins NLP作业2。</p>
+<span id="more"></span>
+<h4 id="Question-1"><a href="#Question-1" class="headerlink" title="Question 1"></a>Question 1</h4><p>(a)只需要指出变化的部分即可，其余部分保持不变：</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+f(\text{S} \to \text{NP NP VP}) &=\text{S} \to \text{NP NP}_1 ,p=0.3\\
+f(\text{VP}\to\text{Vt NP PP})&=\text{VP}\to\text{Vt NP}_2,p=0.2\\
+f(\text{NP}\to \text{DT NN NN}) & = 
+\text{NP}\to \text{DT NN}_1 ,p=0.3
+\end{aligned}</script><p>增加如下规则：</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+\text{NP}_1&\to\text{NP VP},p=1\\ 
+\text{NP}_2&\to\text{NP PP}, p=1\\
+\text{NN}_1&\to  \text{NN NN},p=0.3
+\end{aligned}</script><p>(b)根据上述规则即可，略过。</p>
+<h4 id="Question-2"><a href="#Question-2" class="headerlink" title="Question 2"></a>Question 2</h4><p>(a)第一部分：</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+q(\text{S}\to \text{NP VP})&=\frac{6}{6}=1\\
+q(\text{VP}\to \text{V1 SBAR})&=\frac{3}{9} =\frac 1 3\\
+q(\text{VP}\to \text{VP ADVP})&=\frac{3}{9} =\frac 1 3\\
+q(\text{VP}\to \text{V2})&=\frac{3}{9} =\frac 1 3\\
+q(\text{SBAR}\to \text{COMP S})&=\frac{3}{3}=1
+\end{aligned}</script><p>第二部分：</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+q(\text{NP}\to \text{John}) &=q(\text{NP}\to \text{Bill})=q(\text{NP}\to \text{Fred})
+=q(\text{NP}\to \text{Jeff})=\frac{1}{6}\\
+q(\text{NP}\to \text{Sally}) &=\frac{2}{6}
+=\frac 13 \\
+q(\text{V1}\to \text{said})&=q(\text{V1}\to \text{declared})
+=q(\text{V1}\to \text{pronounced}) =\frac 1 3 \\
+q(\text{V2}\to \text{snored})&=q(\text{V2}\to \text{ran})
+=q(\text{V2}\to \text{swam}) =\frac 1 3 \\
+q(\text{COMP}\to \text{that})& =1\\
+q(\text{ADVP}\to \text{loudly})&=q(\text{ADVP}\to \text{quickly})
+=q(\text{elegantly}\to \text{swam}) =\frac 1 3 \\
+\end{aligned}</script><p>(b)(c)作图较麻烦，这里略过。</p>
+<h4 id="Question-3"><a href="#Question-3" class="headerlink" title="Question 3"></a>Question 3</h4><p>(a)利用平衡二叉树的结构：左子树的叶节点数量和右子树的叶节点数量相同</p>
+<script type="math/tex; mode=display">
+\pi(i, j, X)=\max _{X \rightarrow Y Z \in R }
+\left(q(X \rightarrow Y Z) \times \pi\left(i,\left[\frac {i+j} 2\right], Y\right) \times 
+\pi\left(\left[\frac {i+j} 2\right]+1, j, Z\right)\right)</script><h4 id="Question-4"><a href="#Question-4" class="headerlink" title="Question 4"></a>Question 4</h4><pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">import</span> json
+
+<span class="token comment">#### Part 1 计数</span>
+<span class="token keyword">def</span> <span class="token function">Count</span><span class="token punctuation">(</span>File<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    Count_x <span class="token operator">=</span> <span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span>
+    <span class="token keyword">with</span> <span class="token builtin">open</span><span class="token punctuation">(</span>File<span class="token punctuation">)</span> <span class="token keyword">as</span> f<span class="token punctuation">:</span>
+        <span class="token keyword">for</span> i <span class="token keyword">in</span> f<span class="token punctuation">.</span>readlines<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+            <span class="token comment">#分隔数据</span>
+            data <span class="token operator">=</span> i<span class="token punctuation">.</span>split<span class="token punctuation">(</span><span class="token punctuation">)</span>
+            <span class="token comment">#判断</span>
+            <span class="token keyword">if</span> data<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span> <span class="token operator">==</span> <span class="token string">"UNARYRULE"</span><span class="token punctuation">:</span>
+                <span class="token comment">#计算Count(x)</span>
+                <span class="token keyword">if</span> data<span class="token punctuation">[</span><span class="token number">3</span><span class="token punctuation">]</span> <span class="token keyword">in</span> Count_x<span class="token punctuation">:</span>
+                    Count_x<span class="token punctuation">[</span>data<span class="token punctuation">[</span><span class="token number">3</span><span class="token punctuation">]</span><span class="token punctuation">]</span> <span class="token operator">+=</span> <span class="token builtin">float</span><span class="token punctuation">(</span>data<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+                <span class="token keyword">else</span><span class="token punctuation">:</span>
+                    Count_x<span class="token punctuation">[</span>data<span class="token punctuation">[</span><span class="token number">3</span><span class="token punctuation">]</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token builtin">float</span><span class="token punctuation">(</span>data<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+    
+    <span class="token keyword">return</span> Count_x
+
+<span class="token comment">#### Part 2 处理低频词</span>
+<span class="token keyword">def</span> <span class="token function">Replace_word</span><span class="token punctuation">(</span>tree<span class="token punctuation">,</span> Count_x<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token comment">#基本情形</span>
+    <span class="token keyword">if</span> <span class="token builtin">len</span><span class="token punctuation">(</span>tree<span class="token punctuation">)</span> <span class="token operator">==</span> <span class="token number">2</span><span class="token punctuation">:</span>
+        word <span class="token operator">=</span> tree<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span>
+        <span class="token keyword">if</span> word <span class="token keyword">not</span> <span class="token keyword">in</span> Count_x<span class="token punctuation">:</span>
+            tree<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token string">"_RARE_"</span>
+        <span class="token keyword">elif</span> Count_x<span class="token punctuation">[</span>word<span class="token punctuation">]</span> <span class="token operator">&lt;</span> <span class="token number">5</span><span class="token punctuation">:</span>
+            tree<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token string">"_RARE_"</span>
+    <span class="token keyword">else</span><span class="token punctuation">:</span>
+        Replace_word<span class="token punctuation">(</span>tree<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">,</span> Count_x<span class="token punctuation">)</span>
+        Replace_word<span class="token punctuation">(</span>tree<span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">]</span><span class="token punctuation">,</span> Count_x<span class="token punctuation">)</span>
+
+<span class="token comment">#### Part 3 换并输出</span>
+<span class="token keyword">def</span> <span class="token function">Replace</span><span class="token punctuation">(</span>File<span class="token punctuation">,</span> output<span class="token punctuation">,</span> Count_x<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    Res <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>
+    <span class="token keyword">with</span> <span class="token builtin">open</span><span class="token punctuation">(</span>File<span class="token punctuation">)</span> <span class="token keyword">as</span> f<span class="token punctuation">:</span>
+        <span class="token keyword">for</span> i <span class="token keyword">in</span> f<span class="token punctuation">.</span>readlines<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+            tree <span class="token operator">=</span> json<span class="token punctuation">.</span>loads<span class="token punctuation">(</span>i<span class="token punctuation">,</span> encoding<span class="token operator">=</span><span class="token string">"utf-8"</span><span class="token punctuation">)</span>
+            Replace_word<span class="token punctuation">(</span>tree<span class="token punctuation">,</span> Count_x<span class="token punctuation">)</span>
+            res <span class="token operator">=</span> json<span class="token punctuation">.</span>dumps<span class="token punctuation">(</span>tree<span class="token punctuation">)</span>
+            Res<span class="token punctuation">.</span>append<span class="token punctuation">(</span>res<span class="token punctuation">)</span>
+            
+    <span class="token keyword">with</span> <span class="token builtin">open</span><span class="token punctuation">(</span>output<span class="token punctuation">,</span> <span class="token string">"w+"</span><span class="token punctuation">)</span> <span class="token keyword">as</span> f<span class="token punctuation">:</span>
+        <span class="token keyword">for</span> i <span class="token keyword">in</span> Res<span class="token punctuation">:</span>
+            f<span class="token punctuation">.</span>write<span class="token punctuation">(</span>i<span class="token punctuation">)</span>
+            f<span class="token punctuation">.</span>write<span class="token punctuation">(</span><span class="token string">"\n"</span><span class="token punctuation">)</span>
+            
+<span class="token keyword">def</span> <span class="token function">Replace_dev</span><span class="token punctuation">(</span>File<span class="token punctuation">,</span> output<span class="token punctuation">,</span> Count_x<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    Res <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>
+    <span class="token keyword">with</span> <span class="token builtin">open</span><span class="token punctuation">(</span>File<span class="token punctuation">)</span> <span class="token keyword">as</span> f<span class="token punctuation">:</span>
+        <span class="token keyword">for</span> i <span class="token keyword">in</span> f<span class="token punctuation">.</span>readlines<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+            data <span class="token operator">=</span> i<span class="token punctuation">.</span>strip<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span>split<span class="token punctuation">(</span><span class="token string">" "</span><span class="token punctuation">)</span>
+            <span class="token keyword">for</span> j <span class="token keyword">in</span> <span class="token builtin">range</span><span class="token punctuation">(</span><span class="token builtin">len</span><span class="token punctuation">(</span>data<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+                <span class="token keyword">if</span> data<span class="token punctuation">[</span>j<span class="token punctuation">]</span> <span class="token keyword">not</span> <span class="token keyword">in</span> Count_x <span class="token keyword">or</span> Count_x<span class="token punctuation">[</span>data<span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token punctuation">]</span> <span class="token operator">&lt;</span> <span class="token number">5</span><span class="token punctuation">:</span>
+                    data<span class="token punctuation">[</span>j<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token string">"_RARE_"</span>
+            Res<span class="token punctuation">.</span>append<span class="token punctuation">(</span><span class="token string">" "</span><span class="token punctuation">.</span>join<span class="token punctuation">(</span>data<span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token string">"\n"</span><span class="token punctuation">)</span>
+    
+    <span class="token keyword">with</span> <span class="token builtin">open</span><span class="token punctuation">(</span>output<span class="token punctuation">,</span> <span class="token string">"w+"</span><span class="token punctuation">)</span> <span class="token keyword">as</span> f<span class="token punctuation">:</span>
+        <span class="token keyword">for</span> i <span class="token keyword">in</span> Res<span class="token punctuation">:</span>
+            f<span class="token punctuation">.</span>writelines<span class="token punctuation">(</span>i<span class="token punctuation">)</span>
+
+<span class="token comment">#### 运行</span>
+File <span class="token operator">=</span> <span class="token string">"cfg.counts"</span>
+Count_x <span class="token operator">=</span> Count<span class="token punctuation">(</span>File<span class="token punctuation">)</span>
+
+<span class="token comment">#训练数据</span>
+f1 <span class="token operator">=</span> <span class="token string">"parse_train.dat"</span>
+o1 <span class="token operator">=</span> <span class="token string">"parse_train_proc.dat"</span>
+Replace<span class="token punctuation">(</span>f1<span class="token punctuation">,</span> o1<span class="token punctuation">,</span> Count_x<span class="token punctuation">)</span>
+
+<span class="token comment">#测试数据</span>
+f2 <span class="token operator">=</span> <span class="token string">"parse_dev.dat"</span>
+o2 <span class="token operator">=</span> <span class="token string">"parse_dev_proc.dat"</span>
+Replace_dev<span class="token punctuation">(</span>f2<span class="token punctuation">,</span> o2<span class="token punctuation">,</span> Count_x<span class="token punctuation">)</span>
+
+<span class="token comment">#python count_cfg_freq.py parse_train_proc.dat > cfg_proc.counts</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h4 id="Question-5"><a href="#Question-5" class="headerlink" title="Question 5"></a>Question 5</h4><pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">import</span> json
+
+<span class="token comment">#### Part 1 计算MLE</span>
+<span class="token comment">#计数</span>
+<span class="token keyword">def</span> <span class="token function">Generate_count</span><span class="token punctuation">(</span>File<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    Count_xyy <span class="token operator">=</span> <span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span>
+    Count_xy <span class="token operator">=</span> <span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span>
+    Count_x <span class="token operator">=</span> <span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span>
+    Count_y <span class="token operator">=</span> <span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span>
+    <span class="token keyword">with</span> <span class="token builtin">open</span><span class="token punctuation">(</span>File<span class="token punctuation">)</span> <span class="token keyword">as</span> f<span class="token punctuation">:</span>
+        <span class="token keyword">for</span> i <span class="token keyword">in</span> f<span class="token punctuation">.</span>readlines<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+            <span class="token comment">#分隔数据</span>
+            data <span class="token operator">=</span> i<span class="token punctuation">.</span>strip<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span>split<span class="token punctuation">(</span><span class="token punctuation">)</span>
+            <span class="token comment">#判断</span>
+            <span class="token keyword">if</span> data<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span> <span class="token operator">==</span> <span class="token string">"NONTERMINAL"</span><span class="token punctuation">:</span>
+                Count_x<span class="token punctuation">[</span>data<span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">]</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token builtin">float</span><span class="token punctuation">(</span>data<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+            <span class="token keyword">elif</span> data<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span> <span class="token operator">==</span> <span class="token string">"BINARYRULE"</span><span class="token punctuation">:</span>
+                <span class="token keyword">if</span> data<span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">]</span> <span class="token keyword">not</span> <span class="token keyword">in</span> Count_xyy<span class="token punctuation">:</span>
+                    Count_xyy<span class="token punctuation">[</span>data<span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">]</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span>
+                Count_xyy<span class="token punctuation">[</span>data<span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">]</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token punctuation">(</span>data<span class="token punctuation">[</span><span class="token number">3</span><span class="token punctuation">]</span><span class="token punctuation">,</span> data<span class="token punctuation">[</span><span class="token number">4</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token builtin">float</span><span class="token punctuation">(</span>data<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+            <span class="token keyword">else</span><span class="token punctuation">:</span>
+                <span class="token keyword">if</span> data<span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">]</span> <span class="token keyword">not</span> <span class="token keyword">in</span> Count_xy<span class="token punctuation">:</span>
+                    Count_xy<span class="token punctuation">[</span>data<span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">]</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span>
+                Count_xy<span class="token punctuation">[</span>data<span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">]</span><span class="token punctuation">]</span><span class="token punctuation">[</span>data<span class="token punctuation">[</span><span class="token number">3</span><span class="token punctuation">]</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token builtin">float</span><span class="token punctuation">(</span>data<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+                <span class="token comment">#统计单词数量</span>
+                <span class="token keyword">if</span> data<span class="token punctuation">[</span><span class="token number">3</span><span class="token punctuation">]</span> <span class="token keyword">in</span> Count_y<span class="token punctuation">:</span>
+                    Count_y<span class="token punctuation">[</span>data<span class="token punctuation">[</span><span class="token number">3</span><span class="token punctuation">]</span><span class="token punctuation">]</span> <span class="token operator">+=</span> <span class="token builtin">float</span><span class="token punctuation">(</span>data<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+                <span class="token keyword">else</span><span class="token punctuation">:</span>
+                    Count_y<span class="token punctuation">[</span>data<span class="token punctuation">[</span><span class="token number">3</span><span class="token punctuation">]</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token builtin">float</span><span class="token punctuation">(</span>data<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+                    
+    <span class="token keyword">return</span> Count_xyy<span class="token punctuation">,</span> Count_xy<span class="token punctuation">,</span> Count_x<span class="token punctuation">,</span> Count_y
+
+<span class="token keyword">def</span> <span class="token function">Generate_mle</span><span class="token punctuation">(</span>Count_xyy<span class="token punctuation">,</span> Count_xy<span class="token punctuation">,</span> Count_x<span class="token punctuation">,</span> Count_y<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token comment">#计算MLE</span>
+    q_xyy <span class="token operator">=</span> <span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span>
+    q_xy <span class="token operator">=</span> <span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span>
+    <span class="token keyword">for</span> i <span class="token keyword">in</span> Count_x<span class="token punctuation">:</span>
+        q_xy<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span>
+        q_xyy<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span>
+        <span class="token keyword">if</span> i <span class="token keyword">in</span> Count_xy<span class="token punctuation">:</span>
+            <span class="token keyword">for</span> j <span class="token keyword">in</span> Count_xy<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">:</span>
+                q_xy<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">[</span>j<span class="token punctuation">]</span> <span class="token operator">=</span> Count_xy<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">[</span>j<span class="token punctuation">]</span> <span class="token operator">/</span> Count_x<span class="token punctuation">[</span>i<span class="token punctuation">]</span>
+        <span class="token keyword">if</span> i <span class="token keyword">in</span> Count_xyy<span class="token punctuation">:</span>
+            <span class="token keyword">for</span> k <span class="token keyword">in</span> Count_xyy<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">:</span>
+                q_xyy<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">[</span>k<span class="token punctuation">]</span> <span class="token operator">=</span> Count_xyy<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">[</span>k<span class="token punctuation">]</span> <span class="token operator">/</span> Count_x<span class="token punctuation">[</span>i<span class="token punctuation">]</span>
+                
+    <span class="token keyword">return</span> q_xyy<span class="token punctuation">,</span> q_xy
+
+<span class="token comment">#### Part2: CKY</span>
+<span class="token keyword">def</span> <span class="token function">CKY</span><span class="token punctuation">(</span>word<span class="token punctuation">,</span> Count_xyy<span class="token punctuation">,</span> Count_xy<span class="token punctuation">,</span> Count_x<span class="token punctuation">,</span> Count_y<span class="token punctuation">,</span> q_xyy<span class="token punctuation">,</span> q_xy<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    n <span class="token operator">=</span> <span class="token builtin">len</span><span class="token punctuation">(</span>word<span class="token punctuation">)</span>
+    Pi <span class="token operator">=</span> <span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span>
+    Bp <span class="token operator">=</span> <span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span>
+    <span class="token keyword">for</span> i <span class="token keyword">in</span> <span class="token builtin">range</span><span class="token punctuation">(</span>n<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token keyword">for</span> j <span class="token keyword">in</span> <span class="token builtin">range</span><span class="token punctuation">(</span>i<span class="token punctuation">,</span> n<span class="token punctuation">)</span><span class="token punctuation">:</span>
+            Pi<span class="token punctuation">[</span><span class="token punctuation">(</span>i<span class="token punctuation">,</span> j<span class="token punctuation">)</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span>
+            Bp<span class="token punctuation">[</span><span class="token punctuation">(</span>i<span class="token punctuation">,</span> j<span class="token punctuation">)</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span>
+    
+    <span class="token keyword">for</span> i <span class="token keyword">in</span> <span class="token builtin">range</span><span class="token punctuation">(</span>n<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token keyword">for</span> x <span class="token keyword">in</span> Count_x<span class="token punctuation">:</span>
+            <span class="token keyword">if</span> x <span class="token keyword">in</span> Count_xy <span class="token keyword">and</span> word<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token keyword">in</span> Count_xy<span class="token punctuation">[</span>x<span class="token punctuation">]</span><span class="token punctuation">:</span>
+                Pi<span class="token punctuation">[</span><span class="token punctuation">(</span>i<span class="token punctuation">,</span> i<span class="token punctuation">)</span><span class="token punctuation">]</span><span class="token punctuation">[</span>x<span class="token punctuation">]</span> <span class="token operator">=</span> q_xy<span class="token punctuation">[</span>x<span class="token punctuation">]</span><span class="token punctuation">[</span>word<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">]</span>
+                
+    <span class="token keyword">for</span> l <span class="token keyword">in</span> <span class="token builtin">range</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span> n<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token keyword">for</span> i <span class="token keyword">in</span> <span class="token builtin">range</span><span class="token punctuation">(</span>n <span class="token operator">-</span> l<span class="token punctuation">)</span><span class="token punctuation">:</span>
+            j <span class="token operator">=</span> i <span class="token operator">+</span> l
+            <span class="token keyword">for</span> X <span class="token keyword">in</span> Count_x<span class="token punctuation">:</span>
+                <span class="token comment">#概率</span>
+                p <span class="token operator">=</span> <span class="token number">0</span>
+                <span class="token comment">#最佳规则以及位置</span>
+                y1 <span class="token operator">=</span> <span class="token string">""</span>
+                z1 <span class="token operator">=</span> <span class="token string">""</span>
+                s1 <span class="token operator">=</span> <span class="token string">""</span>
+                <span class="token keyword">if</span> X <span class="token keyword">in</span> q_xyy<span class="token punctuation">:</span>
+                    <span class="token keyword">for</span> <span class="token punctuation">(</span>Y<span class="token punctuation">,</span> Z<span class="token punctuation">)</span> <span class="token keyword">in</span> q_xyy<span class="token punctuation">[</span>X<span class="token punctuation">]</span><span class="token punctuation">:</span>
+                        <span class="token keyword">for</span> s <span class="token keyword">in</span> <span class="token builtin">range</span><span class="token punctuation">(</span>i<span class="token punctuation">,</span> j<span class="token punctuation">)</span><span class="token punctuation">:</span>
+                            <span class="token keyword">if</span> Y <span class="token keyword">in</span> Pi<span class="token punctuation">[</span><span class="token punctuation">(</span>i<span class="token punctuation">,</span> s<span class="token punctuation">)</span><span class="token punctuation">]</span> <span class="token keyword">and</span> Z <span class="token keyword">in</span> Pi<span class="token punctuation">[</span><span class="token punctuation">(</span>s <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">,</span> j<span class="token punctuation">)</span><span class="token punctuation">]</span><span class="token punctuation">:</span>
+                                p1 <span class="token operator">=</span> q_xyy<span class="token punctuation">[</span>X<span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token punctuation">(</span>Y<span class="token punctuation">,</span> Z<span class="token punctuation">)</span><span class="token punctuation">]</span> <span class="token operator">*</span> Pi<span class="token punctuation">[</span><span class="token punctuation">(</span>i<span class="token punctuation">,</span> s<span class="token punctuation">)</span><span class="token punctuation">]</span><span class="token punctuation">[</span>Y<span class="token punctuation">]</span> <span class="token operator">*</span> Pi<span class="token punctuation">[</span><span class="token punctuation">(</span>s <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">,</span> j<span class="token punctuation">)</span><span class="token punctuation">]</span><span class="token punctuation">[</span>Z<span class="token punctuation">]</span>
+                                <span class="token keyword">if</span> p1 <span class="token operator">></span> p<span class="token punctuation">:</span>
+                                    p <span class="token operator">=</span> p1
+                                    y1 <span class="token operator">=</span> Y
+                                    z1 <span class="token operator">=</span> Z
+                                    s1 <span class="token operator">=</span> s
+                <span class="token comment">#更新最大值</span>
+                <span class="token keyword">if</span> p <span class="token operator">></span> <span class="token number">0</span><span class="token punctuation">:</span>
+                    Pi<span class="token punctuation">[</span><span class="token punctuation">(</span>i<span class="token punctuation">,</span> j<span class="token punctuation">)</span><span class="token punctuation">]</span><span class="token punctuation">[</span>X<span class="token punctuation">]</span> <span class="token operator">=</span> p
+                    Bp<span class="token punctuation">[</span><span class="token punctuation">(</span>i<span class="token punctuation">,</span> j<span class="token punctuation">)</span><span class="token punctuation">]</span><span class="token punctuation">[</span>X<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token punctuation">(</span>y1<span class="token punctuation">,</span> z1<span class="token punctuation">,</span> s1<span class="token punctuation">)</span>
+    
+    pmax <span class="token operator">=</span> <span class="token number">0</span>
+    node <span class="token operator">=</span> <span class="token string">""</span>
+    <span class="token keyword">if</span> <span class="token string">"S"</span> <span class="token keyword">in</span> Pi<span class="token punctuation">[</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span> n <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">]</span><span class="token punctuation">:</span>
+        pmax <span class="token operator">=</span> Pi<span class="token punctuation">[</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span> n <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token string">"S"</span><span class="token punctuation">]</span>
+        node <span class="token operator">=</span> <span class="token string">"S"</span>
+    <span class="token keyword">else</span><span class="token punctuation">:</span>
+        <span class="token keyword">for</span> i <span class="token keyword">in</span> Pi<span class="token punctuation">[</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span> n <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">]</span><span class="token punctuation">:</span>
+            <span class="token keyword">if</span> Pi<span class="token punctuation">[</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span> n <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">]</span><span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">></span> pmax<span class="token punctuation">:</span>
+                pmax <span class="token operator">=</span> Pi<span class="token punctuation">[</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span> n <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">]</span><span class="token punctuation">[</span>i<span class="token punctuation">]</span>
+                node <span class="token operator">=</span> i
+    
+    <span class="token keyword">return</span> Pi<span class="token punctuation">,</span> Bp<span class="token punctuation">,</span> node
+
+<span class="token comment">#生成树</span>
+<span class="token keyword">def</span> <span class="token function">tree</span><span class="token punctuation">(</span>Bp<span class="token punctuation">,</span> word<span class="token punctuation">,</span> i<span class="token punctuation">,</span> j<span class="token punctuation">,</span> node<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token keyword">if</span> j <span class="token operator">==</span> i<span class="token punctuation">:</span>
+        <span class="token keyword">return</span> <span class="token punctuation">[</span>node<span class="token punctuation">,</span> word<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">]</span>
+    <span class="token keyword">else</span><span class="token punctuation">:</span>
+        lnode<span class="token punctuation">,</span> rnode<span class="token punctuation">,</span> k <span class="token operator">=</span> Bp<span class="token punctuation">[</span><span class="token punctuation">(</span>i<span class="token punctuation">,</span> j<span class="token punctuation">)</span><span class="token punctuation">]</span><span class="token punctuation">[</span>node<span class="token punctuation">]</span>
+        left <span class="token operator">=</span> tree<span class="token punctuation">(</span>Bp<span class="token punctuation">,</span> word<span class="token punctuation">,</span> i<span class="token punctuation">,</span> k<span class="token punctuation">,</span> lnode<span class="token punctuation">)</span>
+        right <span class="token operator">=</span> tree<span class="token punctuation">(</span>Bp<span class="token punctuation">,</span> word<span class="token punctuation">,</span> k <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">,</span> j<span class="token punctuation">,</span> rnode<span class="token punctuation">)</span>
+        <span class="token keyword">return</span> <span class="token punctuation">[</span>node<span class="token punctuation">,</span> left<span class="token punctuation">,</span> right<span class="token punctuation">]</span>
+
+<span class="token comment">#生成结果</span>
+<span class="token keyword">def</span> <span class="token function">Generate</span><span class="token punctuation">(</span>File<span class="token punctuation">,</span> output<span class="token punctuation">,</span> Count_xyy<span class="token punctuation">,</span> Count_xy<span class="token punctuation">,</span> Count_x<span class="token punctuation">,</span> Count_y<span class="token punctuation">,</span> q_xyy<span class="token punctuation">,</span> q_xy<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    Res <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>
+    <span class="token keyword">with</span> <span class="token builtin">open</span><span class="token punctuation">(</span>File<span class="token punctuation">)</span> <span class="token keyword">as</span> f<span class="token punctuation">:</span>
+        <span class="token keyword">for</span> i <span class="token keyword">in</span> f<span class="token punctuation">.</span>readlines<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+            data <span class="token operator">=</span> i<span class="token punctuation">.</span>strip<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span>split<span class="token punctuation">(</span><span class="token string">" "</span><span class="token punctuation">)</span>
+            word <span class="token operator">=</span> i<span class="token punctuation">.</span>strip<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span>split<span class="token punctuation">(</span><span class="token string">" "</span><span class="token punctuation">)</span>
+            <span class="token keyword">for</span> j <span class="token keyword">in</span> <span class="token builtin">range</span><span class="token punctuation">(</span><span class="token builtin">len</span><span class="token punctuation">(</span>data<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+                <span class="token keyword">if</span> data<span class="token punctuation">[</span>j<span class="token punctuation">]</span> <span class="token keyword">not</span> <span class="token keyword">in</span> Count_y <span class="token keyword">or</span> Count_y<span class="token punctuation">[</span>data<span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token punctuation">]</span> <span class="token operator">&lt;</span> <span class="token number">5</span><span class="token punctuation">:</span>
+                    data<span class="token punctuation">[</span>j<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token string">"_RARE_"</span>
+            
+            <span class="token comment">#CKY算法</span>
+            Pi<span class="token punctuation">,</span> Bp<span class="token punctuation">,</span> node <span class="token operator">=</span> CKY<span class="token punctuation">(</span>data<span class="token punctuation">,</span> Count_xyy<span class="token punctuation">,</span> Count_xy<span class="token punctuation">,</span> Count_x<span class="token punctuation">,</span> Count_y<span class="token punctuation">,</span> q_xyy<span class="token punctuation">,</span> q_xy<span class="token punctuation">)</span>
+            n <span class="token operator">=</span> <span class="token builtin">len</span><span class="token punctuation">(</span>word<span class="token punctuation">)</span>
+            <span class="token comment">#生成树</span>
+            res <span class="token operator">=</span> tree<span class="token punctuation">(</span>Bp<span class="token punctuation">,</span> word<span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> n <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">,</span> node<span class="token punctuation">)</span>
+            Res<span class="token punctuation">.</span>append<span class="token punctuation">(</span>res<span class="token punctuation">)</span>
+            
+    <span class="token keyword">with</span> <span class="token builtin">open</span><span class="token punctuation">(</span>output<span class="token punctuation">,</span> <span class="token string">"w+"</span><span class="token punctuation">)</span> <span class="token keyword">as</span> f<span class="token punctuation">:</span>
+        <span class="token keyword">for</span> res <span class="token keyword">in</span> Res<span class="token punctuation">:</span>
+            r <span class="token operator">=</span> json<span class="token punctuation">.</span>dumps<span class="token punctuation">(</span>res<span class="token punctuation">)</span>
+            f<span class="token punctuation">.</span>write<span class="token punctuation">(</span>r<span class="token punctuation">)</span>
+            f<span class="token punctuation">.</span>write<span class="token punctuation">(</span><span class="token string">"\n"</span><span class="token punctuation">)</span>
+            
+<span class="token comment">#### 运行</span>
+File <span class="token operator">=</span> <span class="token string">"cfg_proc.counts"</span>
+f1 <span class="token operator">=</span> <span class="token string">"parse_dev.dat"</span>
+o1 <span class="token operator">=</span> <span class="token string">"parse_dev_result.dat"</span>
+Count_xyy<span class="token punctuation">,</span> Count_xy<span class="token punctuation">,</span> Count_x<span class="token punctuation">,</span> Count_y <span class="token operator">=</span> Generate_count<span class="token punctuation">(</span>File<span class="token punctuation">)</span>
+q_xyy<span class="token punctuation">,</span> q_xy <span class="token operator">=</span> Generate_mle<span class="token punctuation">(</span>Count_xyy<span class="token punctuation">,</span> Count_xy<span class="token punctuation">,</span> Count_x<span class="token punctuation">,</span> Count_y<span class="token punctuation">)</span>
+Generate<span class="token punctuation">(</span>f1<span class="token punctuation">,</span> o1<span class="token punctuation">,</span> Count_xyy<span class="token punctuation">,</span> Count_xy<span class="token punctuation">,</span> Count_x<span class="token punctuation">,</span> Count_y<span class="token punctuation">,</span> q_xyy<span class="token punctuation">,</span> q_xy<span class="token punctuation">)</span>
+
+<span class="token comment">#检测结果</span>
+<span class="token comment">#python eval_parser.py parse_dev.key parse_dev_result.dat</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h4 id="Question-6"><a href="#Question-6" class="headerlink" title="Question 6"></a>Question 6</h4><pre class="line-numbers language-none"><code class="language-none">from Q4 import *
+from Q5 import *
+
+#### Q6
+File1 &#x3D; &quot;cfg_vert.counts&quot;
+Count_x &#x3D; Count(File1)
+f1 &#x3D; &quot;parse_train_vert.dat&quot;
+o1 &#x3D; &quot;parse_train_vert_proc.dat&quot;
+Replace(f1, o1, Count_x)
+
+#python count_cfg_freq.py parse_train_vert_proc.dat &gt; cfg_vert_proc.counts
+
+File2 &#x3D; &quot;cfg_vert_proc.counts&quot;
+f2 &#x3D; &quot;parse_dev.dat&quot;
+o2 &#x3D; &quot;parse_dev_vert_result.dat&quot;
+Count_xyy, Count_xy, Count_x, Count_y &#x3D; Generate_count(File2)
+q_xyy, q_xy &#x3D; Generate_mle(Count_xyy, Count_xy, Count_x, Count_y)
+Generate(f2, o2, Count_xyy, Count_xy, Count_x, Count_y, q_xyy, q_xy)<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">Doraemonzzz</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="http://doraemonzzz.com/2020/04/21/Michael%20Collins%20NLP%20Homework%202/">http://doraemonzzz.com/2020/04/21/Michael%20Collins%20NLP%20Homework%202/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://doraemonzzz.com" target="_blank">Doraemonzzz</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/Michael-Collins-NLP/">Michael Collins NLP</a></div><div class="post_share"><div class="social-share" data-image="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2020/04/21/CS224N%20Natural%20Language%20Processing%20with%20Deep%20Learning%20Lecture%209/"><img class="prev-cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">CS224N Natural Language Processing with Deep Learning Lecture 9</div></div></a></div><div class="next-post pull-right"><a href="/2020/04/18/CS50%20Introduction%20to%20Artificial%20Intelligence%20with%20Python%20Lecture%202/"><img class="next-cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">CS50 Introduction to Artificial Intelligence with Python Lecture 2</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span> 相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2020/04/08/Michael Collins NLP Homework 1/" title="Michael Collins NLP Homework 1"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-04-08</div><div class="title">Michael Collins NLP Homework 1</div></div></a></div><div><a href="/2020/05/07/Michael Collins NLP Homework 3/" title="Michael Collins NLP Homework 3"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-05-07</div><div class="title">Michael Collins NLP Homework 3</div></div></a></div><div><a href="/2020/05/18/Michael Collins NLP Homework 4/" title="Michael Collins NLP Homework 4"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-05-18</div><div class="title">Michael Collins NLP Homework 4</div></div></a></div><div><a href="/2019/01/24/Michael Collins NLP Lecture 1/" title="Michael Collins NLP Lecture 1"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2019-01-24</div><div class="title">Michael Collins NLP Lecture 1</div></div></a></div><div><a href="/2019/03/03/Michael Collins NLP Lecture 11/" title="Michael Collins NLP Lecture 11"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2019-03-03</div><div class="title">Michael Collins NLP Lecture 11</div></div></a></div><div><a href="/2019/03/03/Michael Collins NLP Lecture 13/" title="Michael Collins NLP Lecture 13"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2019-03-03</div><div class="title">Michael Collins NLP Lecture 13</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="card-info-avatar is-center"><img class="avatar-img" src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/><div class="author-info__name">Doraemonzzz</div><div class="author-info__description">个人博客，主要记录有关机器学习，数学以及计算机科学的笔记</div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">610</div></a></div><div class="card-info-data-item is-center"><a href="/tags/"><div class="headline">标签</div><div class="length-num">59</div></a></div><div class="card-info-data-item is-center"><a href="/categories/"><div class="headline">分类</div><div class="length-num">23</div></a></div></div><a class="button--animated" id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/Doraemonzzz" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="/doraemon_zzz@163.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn card-announcement-animation"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#Question-1"><span class="toc-number">1.</span> <span class="toc-text">Question 1</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Question-2"><span class="toc-number">2.</span> <span class="toc-text">Question 2</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Question-3"><span class="toc-number">3.</span> <span class="toc-text">Question 3</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Question-4"><span class="toc-number">4.</span> <span class="toc-text">Question 4</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Question-5"><span class="toc-number">5.</span> <span class="toc-text">Question 5</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Question-6"><span class="toc-number">6.</span> <span class="toc-text">Question 6</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2021/06/06/2021-6-6-%E7%AE%97%E6%B3%95%E6%A6%82%E8%AE%BA(DPV)%E4%B9%A0%E9%A2%98%E8%A7%A3%E7%AD%94%E2%80%94%E2%80%94%E7%AC%AC3%E7%AB%A0-%E5%9B%BE%E7%9A%84%E5%88%86%E8%A7%A3/" title="算法概论(DPV)习题解答——第3章 图的分解"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="算法概论(DPV)习题解答——第3章 图的分解"/></a><div class="content"><a class="title" href="/2021/06/06/2021-6-6-%E7%AE%97%E6%B3%95%E6%A6%82%E8%AE%BA(DPV)%E4%B9%A0%E9%A2%98%E8%A7%A3%E7%AD%94%E2%80%94%E2%80%94%E7%AC%AC3%E7%AB%A0-%E5%9B%BE%E7%9A%84%E5%88%86%E8%A7%A3/" title="算法概论(DPV)习题解答——第3章 图的分解">算法概论(DPV)习题解答——第3章 图的分解</a><time datetime="2021-06-06T14:35:00.000Z" title="发表于 2021-06-06 22:35:00">2021-06-06</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/06/06/2021-6-6-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E7%AC%AC5%E7%AB%A0-%E4%B9%A0%E9%A2%98%E8%A7%A3%E6%9E%90/" title="深入理解计算机系统 第5章 习题解析"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="深入理解计算机系统 第5章 习题解析"/></a><div class="content"><a class="title" href="/2021/06/06/2021-6-6-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E7%AC%AC5%E7%AB%A0-%E4%B9%A0%E9%A2%98%E8%A7%A3%E6%9E%90/" title="深入理解计算机系统 第5章 习题解析">深入理解计算机系统 第5章 习题解析</a><time datetime="2021-06-06T07:23:00.000Z" title="发表于 2021-06-06 15:23:00">2021-06-06</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/06/05/2021-6-5-Stanford-Compiler-PA5%E7%BF%BB%E8%AF%91/" title="Stanford Compiler PA5翻译"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Stanford Compiler PA5翻译"/></a><div class="content"><a class="title" href="/2021/06/05/2021-6-5-Stanford-Compiler-PA5%E7%BF%BB%E8%AF%91/" title="Stanford Compiler PA5翻译">Stanford Compiler PA5翻译</a><time datetime="2021-06-05T06:12:00.000Z" title="发表于 2021-06-05 14:12:00">2021-06-05</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/06/04/2021-6-4-Stanford-Compiler-PA4%E7%BF%BB%E8%AF%91/" title="Stanford Compiler PA4翻译"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Stanford Compiler PA4翻译"/></a><div class="content"><a class="title" href="/2021/06/04/2021-6-4-Stanford-Compiler-PA4%E7%BF%BB%E8%AF%91/" title="Stanford Compiler PA4翻译">Stanford Compiler PA4翻译</a><time datetime="2021-06-03T16:17:00.000Z" title="发表于 2021-06-04 00:17:00">2021-06-04</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/06/03/2021-6-3-%E5%B7%A7%E5%A6%99%E7%9A%84Y%E8%BF%90%E7%AE%97%E7%AC%A6/" title="巧妙的Y运算符"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="巧妙的Y运算符"/></a><div class="content"><a class="title" href="/2021/06/03/2021-6-3-%E5%B7%A7%E5%A6%99%E7%9A%84Y%E8%BF%90%E7%AE%97%E7%AC%A6/" title="巧妙的Y运算符">巧妙的Y运算符</a><time datetime="2021-06-03T00:54:00.000Z" title="发表于 2021-06-03 08:54:00">2021-06-03</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2021 By Doraemonzzz</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><div class="js-pjax"><script>if (!window.MathJax) {
+  window.MathJax = {
+    loader: {
+      source: {
+        '[tex]/amsCd': '[tex]/amscd'
+      }
+    },
+    tex: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]],
+      tags: 'ams'
+    },
+    options: {
+      renderActions: {
+        findScript: [10, doc => {
+          for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+            const display = !!node.type.match(/; *mode=display/)
+            const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+            const text = document.createTextNode('')
+            node.parentNode.replaceChild(text, node)
+            math.start = {node: text, delim: '', n: 0}
+            math.end = {node: text, delim: '', n: 0}
+            doc.math.push(math)
+          }
+        }, ''],
+        addClass: [200,() => {
+          document.querySelectorAll('mjx-container:not([display=\'true\']').forEach( node => {
+            const target = node.parentNode
+            if (!target.classList.contains('has-jax')) {
+              target.classList.add('mathjax-overflow')
+            }
+          })
+        }, '', false]
+      }
+    }
+  }
+  
+  const script = document.createElement('script')
+  script.src = 'https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js'
+  script.id = 'MathJax-script'
+  script.async = true
+  document.head.appendChild(script)
+} else {
+  MathJax.startup.document.state(0)
+  MathJax.texReset()
+  MathJax.typeset()
+}</script></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

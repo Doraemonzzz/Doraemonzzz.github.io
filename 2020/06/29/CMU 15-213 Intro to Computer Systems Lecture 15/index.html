@@ -1,0 +1,946 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>CMU 15-213 Intro to Computer Systems Lecture 15 | Doraemonzzz</title><meta name="keywords" content="CMU 15-213"><meta name="author" content="Doraemonzzz"><meta name="copyright" content="Doraemonzzz"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="课程主页：http:&#x2F;&#x2F;www.cs.cmu.edu&#x2F;afs&#x2F;cs&#x2F;academic&#x2F;class&#x2F;15213-f15&#x2F;www&#x2F;schedule.html 课程资料：https:&#x2F;&#x2F;github.com&#x2F;EugeneLiu&#x2F;translationCSAPP 课程视频：https:&#x2F;&#x2F;www.bilibili.com&#x2F;video&#x2F;av31289365&#x2F; 这一讲介绍了信号和非本地跳转。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="CMU 15-213 Intro to Computer Systems Lecture 15">
+<meta property="og:url" content="http://doraemonzzz.com/2020/06/29/CMU%2015-213%20Intro%20to%20Computer%20Systems%20Lecture%2015/index.html">
+<meta property="og:site_name" content="Doraemonzzz">
+<meta property="og:description" content="课程主页：http:&#x2F;&#x2F;www.cs.cmu.edu&#x2F;afs&#x2F;cs&#x2F;academic&#x2F;class&#x2F;15213-f15&#x2F;www&#x2F;schedule.html 课程资料：https:&#x2F;&#x2F;github.com&#x2F;EugeneLiu&#x2F;translationCSAPP 课程视频：https:&#x2F;&#x2F;www.bilibili.com&#x2F;video&#x2F;av31289365&#x2F; 这一讲介绍了信号和非本地跳转。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg">
+<meta property="article:published_time" content="2020-06-29T12:17:00.000Z">
+<meta property="article:modified_time" content="2020-07-11T07:10:11.839Z">
+<meta property="article:author" content="Doraemonzzz">
+<meta property="article:tag" content="CMU 15-213">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="http://doraemonzzz.com/2020/06/29/CMU%2015-213%20Intro%20to%20Computer%20Systems%20Lecture%2015/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"prismjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    jQuery: 'https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js',
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+    },
+    fancybox: {
+      js: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isanchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'CMU 15-213 Intro to Computer Systems Lecture 15',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2020-07-11 15:10:11'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    })(window)</script><meta name="generator" content="Hexo 5.4.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="author-avatar"><img class="avatar-img" src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">文章</div><div class="length-num">610</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">标签</div><div class="length-num">59</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/categories/"><div class="headline">分类</div><div class="length-num">23</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">Doraemonzzz</a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">CMU 15-213 Intro to Computer Systems Lecture 15</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2020-06-29T12:17:00.000Z" title="发表于 2020-06-29 20:17:00">2020-06-29</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2020-07-11T07:10:11.839Z" title="更新于 2020-07-11 15:10:11">2020-07-11</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%8E%9F%E7%90%86/">计算机原理</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="CMU 15-213 Intro to Computer Systems Lecture 15"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p>课程主页：<a target="_blank" rel="noopener" href="http://www.cs.cmu.edu/afs/cs/academic/class/15213-f15/www/schedule.html">http://www.cs.cmu.edu/afs/cs/academic/class/15213-f15/www/schedule.html</a></p>
+<p>课程资料：<a target="_blank" rel="noopener" href="https://github.com/EugeneLiu/translationCSAPP">https://github.com/EugeneLiu/translationCSAPP</a></p>
+<p>课程视频：<a target="_blank" rel="noopener" href="https://www.bilibili.com/video/av31289365/">https://www.bilibili.com/video/av31289365/</a></p>
+<p>这一讲介绍了信号和非本地跳转。</p>
+<span id="more"></span>
+<h4 id="Shells"><a href="#Shells" class="headerlink" title="Shells"></a>Shells</h4><h5 id="Linux进程层次结构"><a href="#Linux进程层次结构" class="headerlink" title="Linux进程层次结构"></a>Linux进程层次结构</h5><p><img src="https://github.com/Doraemonzzz/md-photo/blob/master/CMU%2015-213%20Intro%20to%20Computer%20Systems/Lecture15/2020062901.jpg?raw=true" alt=""></p>
+<p>使用pstree命令可以看到层次结构。</p>
+<h5 id="Shell程序"><a href="#Shell程序" class="headerlink" title="Shell程序"></a>Shell程序</h5><ul>
+<li>Shell是代表用户运行程序的应用程序。<ul>
+<li>sh</li>
+<li>csh/tcsh</li>
+<li>bash</li>
+</ul>
+</li>
+</ul>
+<p>简易的Shell实现如下：</p>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">&#123;</span>
+    <span class="token keyword">char</span> cmdline<span class="token punctuation">[</span>MAXLINE<span class="token punctuation">]</span><span class="token punctuation">;</span> <span class="token comment">/* command line */</span>
+
+    <span class="token keyword">while</span> <span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token comment">/* read */</span>
+        <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"> "</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token function">Fgets</span><span class="token punctuation">(</span>cmdline<span class="token punctuation">,</span> MAXLINE<span class="token punctuation">,</span> <span class="token constant">stdin</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">feof</span><span class="token punctuation">(</span><span class="token constant">stdin</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+            <span class="token function">exit</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+        <span class="token comment">/* evaluate */</span>
+        <span class="token function">eval</span><span class="token punctuation">(</span>cmdline<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">void</span> <span class="token function">eval</span><span class="token punctuation">(</span><span class="token keyword">char</span> <span class="token operator">*</span>cmdline<span class="token punctuation">)</span>
+<span class="token punctuation">&#123;</span>
+    <span class="token keyword">char</span> <span class="token operator">*</span>argv<span class="token punctuation">[</span>MAXARGS<span class="token punctuation">]</span><span class="token punctuation">;</span> <span class="token comment">/* Argument list execve() */</span>
+    <span class="token keyword">char</span> buf<span class="token punctuation">[</span>MAXLINE<span class="token punctuation">]</span><span class="token punctuation">;</span>   <span class="token comment">/* Holds modified command line */</span>
+    <span class="token keyword">int</span> bg<span class="token punctuation">;</span>              <span class="token comment">/* Should the job run in bg or fg? */</span>
+    <span class="token class-name">pid_t</span> pid<span class="token punctuation">;</span>           <span class="token comment">/* Process id */</span>
+
+    <span class="token function">strcpy</span><span class="token punctuation">(</span>buf<span class="token punctuation">,</span> cmdline<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    bg <span class="token operator">=</span> <span class="token function">parseline</span><span class="token punctuation">(</span>buf<span class="token punctuation">,</span> argv<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>argv<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span> <span class="token operator">==</span> <span class="token constant">NULL</span><span class="token punctuation">)</span>
+        <span class="token keyword">return</span><span class="token punctuation">;</span>   <span class="token comment">/* Ignore empty lines */</span>
+
+    <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span><span class="token function">builtin_command</span><span class="token punctuation">(</span>argv<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token punctuation">(</span>pid <span class="token operator">=</span> <span class="token function">Fork</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>   <span class="token comment">/* Child runs user job */</span>
+            <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">execve</span><span class="token punctuation">(</span>argv<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">,</span> argv<span class="token punctuation">,</span> environ<span class="token punctuation">)</span> <span class="token operator">&lt;</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+                <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"%s: Command not found.\n"</span><span class="token punctuation">,</span> argv<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                <span class="token function">exit</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token punctuation">&#125;</span>
+        <span class="token punctuation">&#125;</span>
+
+        <span class="token comment">/* Parent waits for foreground job to terminate */</span>
+	<span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>bg<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+            <span class="token keyword">int</span> status<span class="token punctuation">;</span>
+            <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">waitpid</span><span class="token punctuation">(</span>pid<span class="token punctuation">,</span> <span class="token operator">&amp;</span>status<span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token operator">&lt;</span> <span class="token number">0</span><span class="token punctuation">)</span>
+                <span class="token function">unix_error</span><span class="token punctuation">(</span><span class="token string">"waitfg: waitpid error"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">&#125;</span>
+        <span class="token keyword">else</span>
+            <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"%d %s"</span><span class="token punctuation">,</span> pid<span class="token punctuation">,</span> cmdline<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+    <span class="token keyword">return</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h4 id="简单Shell例子的问题"><a href="#简单Shell例子的问题" class="headerlink" title="简单Shell例子的问题"></a>简单Shell例子的问题</h4><ul>
+<li>我们的示例shell正确地等待并获得前台作业</li>
+<li>但是后台作业呢？<ul>
+<li>终结时将变成“僵死进程”</li>
+<li>因为shell（通常）不会终止，所以永远不会回收</li>
+<li>会造成内存泄漏，可能导致内核内存不足</li>
+</ul>
+</li>
+<li>解决方案：异常控制流<ul>
+<li>当后台进程完成时，内核将中断常规进程以提醒我们</li>
+<li>在Unix中，警报机制称为信号</li>
+</ul>
+</li>
+</ul>
+<h4 id="信号"><a href="#信号" class="headerlink" title="信号"></a>信号</h4><ul>
+<li>信号是一条小消息，用于通知进程系统中发生了某种类型的事件<ul>
+<li>类似于异常和中断</li>
+<li>从内核（有时是在另一个进程的请求下）发送到一个进程</li>
+<li>信号类型由整数ID(1-30)标识</li>
+<li>信号中的唯一信息就是其ID和到达的事实</li>
+</ul>
+</li>
+</ul>
+<p>信号序号及其对应事件：</p>
+<p><img src="https://github.com/Doraemonzzz/md-photo/blob/master/CMU%2015-213%20Intro%20to%20Computer%20Systems/Lecture15/2020062902.jpg?raw=true" alt=""></p>
+<h5 id="信号概念：传递信号"><a href="#信号概念：传递信号" class="headerlink" title="信号概念：传递信号"></a>信号概念：传递信号</h5><ul>
+<li>内核通过在目标进程的上下文中更新某些状态来将信号发送（传递）到目标进程</li>
+<li>内核出于以下原因之一发送信号：<ul>
+<li>内核检测到系统事件，例如被零除（SIGFPE）或子进程终止（SIGCHLD）。</li>
+<li>另一个进程调用了kill，以明确请求内核将信号发送到目标进程。</li>
+</ul>
+</li>
+</ul>
+<h5 id="信号概念：接收信号"><a href="#信号概念：接收信号" class="headerlink" title="信号概念：接收信号"></a>信号概念：接收信号</h5><ul>
+<li><p>当目标进程被内核强制以某种方式对信号的传递做出反应时，它就接收了信号</p>
+</li>
+<li><p>一些可能的反应方式：</p>
+<ul>
+<li><p><strong>忽略</strong>信号（不执行任何操作）</p>
+</li>
+<li><p><strong>终止</strong>进程（可选转储内存）</p>
+</li>
+<li><p>通过执行称为信号处理程序的用户级函数来<strong>捕获</strong>信号</p>
+<ul>
+<li><p>类似于响应异步中断而调用的硬件异常处理程序：</p>
+<p><img src="https://github.com/Doraemonzzz/md-photo/blob/master/CMU%2015-213%20Intro%20to%20Computer%20Systems/Lecture15/2020062903.jpg?raw=true" alt=""></p>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h5 id="信号概念：待处理-Pending-和阻塞-Blocked-信号"><a href="#信号概念：待处理-Pending-和阻塞-Blocked-信号" class="headerlink" title="信号概念：待处理(Pending)和阻塞(Blocked)信号"></a>信号概念：待处理(Pending)和阻塞(Blocked)信号</h5><ul>
+<li>如果已发送但尚未接收到信号，则信号是<strong>待处理</strong><ul>
+<li>任何特定类型最多有一个待处理信号</li>
+<li>重要提示：信号不会排队等待<ul>
+<li>如果某个进程具有类型为k的待处理信号，则丢弃发送给该进程的后续类型为k的信号</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>一个进程可能会<strong>阻塞</strong>某些信号的接收<ul>
+<li>可以传递被阻塞的信号，但是直到信号被解除阻塞才可以接收</li>
+</ul>
+</li>
+<li>最多收到一次待处理信号</li>
+<li>内核在每个进程的上下文中维护待处理(Pending)和阻塞(Blocked)的比特向量</li>
+<li>待处理：表示待处理信号集<ul>
+<li>当传递类型为k的信号时，内核将会设置pending的第k位</li>
+<li>当接收到类型为k的信号时，内核清除pending的第k位</li>
+</ul>
+</li>
+<li>阻塞：表示已阻止信号的集合<ul>
+<li>可以使用sigprocmask函数设置和清除</li>
+<li>也称为信号屏蔽(signal mask)。</li>
+</ul>
+</li>
+</ul>
+<h5 id="信号概念：进程组"><a href="#信号概念：进程组" class="headerlink" title="信号概念：进程组"></a>信号概念：进程组</h5><ul>
+<li><p>每个进程仅属于一个进程组</p>
+<p><img src="https://github.com/Doraemonzzz/md-photo/blob/master/CMU%2015-213%20Intro%20to%20Computer%20Systems/Lecture15/2020062904.jpg?raw=true" alt=""></p>
+</li>
+<li><p>getpgrp()：返回当前进程的进程组</p>
+</li>
+<li><p>setpgid()：更改进程的进程组</p>
+</li>
+</ul>
+<h5 id="使用-bin-kill程序传递信号"><a href="#使用-bin-kill程序传递信号" class="headerlink" title="使用/bin/kill程序传递信号"></a>使用/bin/kill程序传递信号</h5><ul>
+<li>/bin/kill程序向进程或进程组发送任意信号</li>
+<li>例子<ul>
+<li>/bin/kill –9 24818发送SIGKILL来处理24818</li>
+<li>/bin/kill –9 –24817将SIGKILL发送到进程组24817中的每个进程</li>
+</ul>
+</li>
+</ul>
+<pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">linux<span class="token operator">></span> ./forks <span class="token number">16</span> 
+Child1: <span class="token assign-left variable">pid</span><span class="token operator">=</span><span class="token number">24818</span> <span class="token assign-left variable">pgrp</span><span class="token operator">=</span><span class="token number">24817</span> 
+Child2: <span class="token assign-left variable">pid</span><span class="token operator">=</span><span class="token number">24819</span> <span class="token assign-left variable">pgrp</span><span class="token operator">=</span><span class="token number">24817</span> 
+ 
+linux<span class="token operator">></span> <span class="token function">ps</span> 
+  PID TTY          TIME CMD 
+<span class="token number">24788</span> pts/2    00:00:00 tcsh 
+<span class="token number">24818</span> pts/2    00:00:02 forks 
+<span class="token number">24819</span> pts/2    00:00:02 forks 
+<span class="token number">24820</span> pts/2    00:00:00 <span class="token function">ps</span> 
+linux<span class="token operator">></span> /bin/kill -9 -24817 
+linux<span class="token operator">></span> <span class="token function">ps</span>  
+  PID TTY          TIME CMD 
+<span class="token number">24788</span> pts/2    00:00:00 tcsh 
+<span class="token number">24823</span> pts/2    00:00:00 <span class="token function">ps</span> 
+linux<span class="token operator">></span> <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h5 id="从键盘传递信号"><a href="#从键盘传递信号" class="headerlink" title="从键盘传递信号"></a>从键盘传递信号</h5><ul>
+<li>键入ctrl-c(ctrl-z)会导致内核向前台进程组中的每个作业发送SIGINT(SIGTSTP)。<ul>
+<li>SIGINT–默认操作是终止每个进程</li>
+<li>SIGTSTP–默认操作是停止(挂起)每个进程</li>
+</ul>
+</li>
+</ul>
+<p>例子：</p>
+<pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">bluefish<span class="token operator">></span> ./forks <span class="token number">17</span>
+Child: <span class="token assign-left variable">pid</span><span class="token operator">=</span><span class="token number">28108</span> <span class="token assign-left variable">pgrp</span><span class="token operator">=</span><span class="token number">28107</span>
+Parent: <span class="token assign-left variable">pid</span><span class="token operator">=</span><span class="token number">28107</span> <span class="token assign-left variable">pgrp</span><span class="token operator">=</span><span class="token number">28107</span>
+<span class="token operator">&lt;</span>types ctrl-z<span class="token operator">></span>
+Suspended
+bluefish<span class="token operator">></span> <span class="token function">ps</span> w
+  PID TTY      STAT   TIME COMMAND
+<span class="token number">27699</span> pts/8    Ss     <span class="token number">0</span>:00 -tcsh
+<span class="token number">28107</span> pts/8    T      <span class="token number">0</span>:01 ./forks <span class="token number">17</span>
+<span class="token number">28108</span> pts/8    T      <span class="token number">0</span>:01 ./forks <span class="token number">17</span>
+<span class="token number">28109</span> pts/8    R+     <span class="token number">0</span>:00 <span class="token function">ps</span> w
+bluefish<span class="token operator">></span> <span class="token function">fg</span>
+./forks <span class="token number">17</span>
+<span class="token operator">&lt;</span>types ctrl-c<span class="token operator">></span>
+bluefish<span class="token operator">></span> <span class="token function">ps</span> w
+  PID TTY      STAT   TIME COMMAND
+<span class="token number">27699</span> pts/8    Ss     <span class="token number">0</span>:00 -tcsh
+<span class="token number">28110</span> pts/8    R+     <span class="token number">0</span>:00 <span class="token function">ps</span> w<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h5 id="使用kill函数传递信号"><a href="#使用kill函数传递信号" class="headerlink" title="使用kill函数传递信号"></a>使用kill函数传递信号</h5><pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">void</span> <span class="token function">fork12</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">&#123;</span>
+    <span class="token class-name">pid_t</span> pid<span class="token punctuation">[</span>N<span class="token punctuation">]</span><span class="token punctuation">;</span>
+    <span class="token keyword">int</span> i<span class="token punctuation">;</span>
+    <span class="token keyword">int</span> child_status<span class="token punctuation">;</span>
+
+    <span class="token keyword">for</span> <span class="token punctuation">(</span>i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> N<span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token punctuation">(</span>pid<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token function">fork</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+            <span class="token comment">/* Child: Infinite Loop */</span>
+            <span class="token keyword">while</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span>
+                <span class="token punctuation">;</span>
+        <span class="token punctuation">&#125;</span>
+    
+    <span class="token keyword">for</span> <span class="token punctuation">(</span>i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> N<span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"Killing process %d\n"</span><span class="token punctuation">,</span> pid<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token function">kill</span><span class="token punctuation">(</span>pid<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">,</span> SIGINT<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+
+    <span class="token keyword">for</span> <span class="token punctuation">(</span>i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> N<span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token class-name">pid_t</span> wpid <span class="token operator">=</span> <span class="token function">wait</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>child_status<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">WIFEXITED</span><span class="token punctuation">(</span>child_status<span class="token punctuation">)</span><span class="token punctuation">)</span>
+            <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"Child %d terminated with exit status %d\n"</span><span class="token punctuation">,</span>
+                   wpid<span class="token punctuation">,</span> <span class="token function">WEXITSTATUS</span><span class="token punctuation">(</span>child_status<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">else</span>
+            <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"Child %d terminated abnormally\n"</span><span class="token punctuation">,</span> wpid<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h5 id="接收信号"><a href="#接收信号" class="headerlink" title="接收信号"></a>接收信号</h5><ul>
+<li>假设内核正在从异常处理程序中返回并准备将控制权传递给进程p</li>
+<li>内核计算$\text{pnb = pending &amp; ~blocked}$<ul>
+<li>进程p的非阻塞信号集</li>
+</ul>
+</li>
+<li>如果($\text{pnb == 0}$)<ul>
+<li>将控制传递给p的逻辑流程中的下一条指令</li>
+</ul>
+</li>
+<li>否则<ul>
+<li>在pnb中选择最小非零位k并强制进程p接收信号k</li>
+<li>信号的接收触发了p的某种动作</li>
+<li>对pnb中的所有非零k重复上述操作</li>
+<li>将控制传递给逻辑流中的下一条指令以用于p</li>
+</ul>
+</li>
+</ul>
+<h5 id="默认动作"><a href="#默认动作" class="headerlink" title="默认动作"></a>默认动作</h5><ul>
+<li>每种信号类型都有一个预定义的默认操作，它是以下之一：<ul>
+<li>该进程终止</li>
+<li>该进程将停止，直到通过SIGCONT信号重新启动</li>
+<li>该进程忽略了信号</li>
+</ul>
+</li>
+</ul>
+<h5 id="设置信号处理器"><a href="#设置信号处理器" class="headerlink" title="设置信号处理器"></a>设置信号处理器</h5><ul>
+<li>信号函数会修改与信号signum接收相关的默认操作：<ul>
+<li>$\text{handler_t <em> signal(int signum, handler_t </em> handler)}$</li>
+</ul>
+</li>
+<li>handler的不同值：<ul>
+<li>SIG_IGN：忽略signum类型的信号</li>
+<li>SIG_DFL：收到signum类型的信号后恢复为默认操作</li>
+<li>否则，handler是用户级信号处理程序的地址。<ul>
+<li>当进程接收到信号类型为signum的信号时调用</li>
+<li>称为“设置”处理程序</li>
+<li>执行处理程序称为“捕捉”或“处理”信号</li>
+<li>当处理程序执行其return语句时，控制权返回到进程的控制流中的指令，该指令被接收到信号而中断</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>例子：</p>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">void</span> <span class="token function">sigint_handler</span><span class="token punctuation">(</span><span class="token keyword">int</span> sig<span class="token punctuation">)</span> <span class="token comment">/* SIGINT handler */</span>
+<span class="token punctuation">&#123;</span>
+    <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"So you think you can stop the bomb with ctrl-c, do you?\n"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">sleep</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"Well..."</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">fflush</span><span class="token punctuation">(</span><span class="token constant">stdout</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">sleep</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"OK. :-)\n"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">exit</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">&#123;</span>
+    <span class="token comment">/* Install the SIGINT handler */</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">signal</span><span class="token punctuation">(</span>SIGINT<span class="token punctuation">,</span> sigint_handler<span class="token punctuation">)</span> <span class="token operator">==</span> SIG_ERR<span class="token punctuation">)</span>
+        <span class="token function">unix_error</span><span class="token punctuation">(</span><span class="token string">"signal error"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token comment">/* Wait for the receipt of a signal */</span>
+    <span class="token function">pause</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h5 id="处理程序作为并发流信号"><a href="#处理程序作为并发流信号" class="headerlink" title="处理程序作为并发流信号"></a>处理程序作为并发流信号</h5><ul>
+<li>信号处理程序是与主程序同时运行的独立逻辑流（不是进程）</li>
+</ul>
+<p><img src="https://github.com/Doraemonzzz/md-photo/blob/master/CMU%2015-213%20Intro%20to%20Computer%20Systems/Lecture15/2020062905.jpg?raw=true" alt=""></p>
+<h5 id="嵌套信号处理程序"><a href="#嵌套信号处理程序" class="headerlink" title="嵌套信号处理程序"></a>嵌套信号处理程序</h5><ul>
+<li>处理程序可以被其他处理程序中断</li>
+</ul>
+<p><img src="https://github.com/Doraemonzzz/md-photo/blob/master/CMU%2015-213%20Intro%20to%20Computer%20Systems/Lecture15/2020062906.jpg?raw=true" alt=""></p>
+<h5 id="阻塞和解除阻塞信号"><a href="#阻塞和解除阻塞信号" class="headerlink" title="阻塞和解除阻塞信号"></a>阻塞和解除阻塞信号</h5><ul>
+<li>隐式阻塞机制<ul>
+<li>内核阻止当前正在处理的任何类型的待处理信号。</li>
+<li>例如，一个SIGINT处理程序不能被另一个SIGINT中断</li>
+</ul>
+</li>
+<li>显式阻塞和解除阻塞机制<ul>
+<li>sigprocmask函数</li>
+</ul>
+</li>
+<li>配套函数<ul>
+<li>sigemptyset –创建空集</li>
+<li>sigfillset –添加要设置的每个信号编号</li>
+<li>sigaddset –添加信号编号进行设置</li>
+<li>sigdelset –从集中删除信号编号</li>
+</ul>
+</li>
+</ul>
+<h5 id="安全信号处理"><a href="#安全信号处理" class="headerlink" title="安全信号处理"></a>安全信号处理</h5><ul>
+<li>处理程序之所以棘手，是因为它们与主程序并发并且共享相同的全局数据结构。<ul>
+<li>共享的数据结构可能会损坏。</li>
+</ul>
+</li>
+<li>我们将在后续探讨并发问题。</li>
+<li>目前，这里有一些准则可以帮助您避免麻烦。</li>
+</ul>
+<h5 id="编写安全处理程序的准则"><a href="#编写安全处理程序的准则" class="headerlink" title="编写安全处理程序的准则"></a>编写安全处理程序的准则</h5><ul>
+<li>G0：处理程序尽可能简单<ul>
+<li>例如，设置全局标志并返回</li>
+</ul>
+</li>
+<li>G1：仅在处理程序中调用异步信号安全函数<ul>
+<li>printf，sprintf，malloc和exit不安全！</li>
+</ul>
+</li>
+<li>G2：在进入和退出时保存并还原errno<ul>
+<li>这样其他处理程序就不会覆盖您的errno值</li>
+</ul>
+</li>
+<li>G3：通过暂时阻止所有信号来保护对共享数据结构的访问。</li>
+<li>G4：将全局变量声明为volatile<ul>
+<li>为了防止编译器将它们存储在寄存器中</li>
+</ul>
+</li>
+<li>G5：将全局标志声明为volatile sig_atomic_t<ul>
+<li>flag：只适用于读取或写入的变量（例如，flag=1，flag++不适用）</li>
+<li>以这种方式声明的标志不需要像其他全局变量那样受到保护</li>
+</ul>
+</li>
+</ul>
+<h5 id="异步信号安全"><a href="#异步信号安全" class="headerlink" title="异步信号安全"></a>异步信号安全</h5><ul>
+<li>如果函数是可重入的（例如，存储在堆栈帧中的所有变量（只访问局部变量））或不可被信号中断，则该函数是异步信号安全的。</li>
+<li>Posix保证117个函数是异步信号安全的<ul>
+<li>资料来源：“man 7 signal”</li>
+<li>列表中的常用函数：<ul>
+<li>_exit, write, wait, waitpid, sleep, kill</li>
+</ul>
+</li>
+<li>不在列表中的常用函数：<ul>
+<li>printf,  sprintf, malloc, exit </li>
+<li>不幸的事实：write是唯一异步信号安全的输出函数</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h5 id="安全地生成格式化输出"><a href="#安全地生成格式化输出" class="headerlink" title="安全地生成格式化输出"></a>安全地生成格式化输出</h5><ul>
+<li><p>在处理程序中使用csapp.c中的可重入SIO（安全I/O库）。</p>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token class-name">ssize_t</span> <span class="token function">sio_puts</span><span class="token punctuation">(</span><span class="token keyword">char</span> s<span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token comment">/* Put string */</span>
+<span class="token class-name">ssize_t</span> <span class="token function">sio_putl</span><span class="token punctuation">(</span><span class="token keyword">long</span> v<span class="token punctuation">)</span>   <span class="token comment">/* Put long */</span>
+<span class="token keyword">void</span> <span class="token function">sio_error</span><span class="token punctuation">(</span><span class="token keyword">char</span> s<span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">)</span>   <span class="token comment">/* Put msg &amp; exit */</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+</li>
+</ul>
+<p>例子：</p>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">void</span> <span class="token function">sigint_handler</span><span class="token punctuation">(</span><span class="token keyword">int</span> sig<span class="token punctuation">)</span> <span class="token comment">/* Safe SIGINT handler */</span>
+<span class="token punctuation">&#123;</span>
+    <span class="token function">Sio_puts</span><span class="token punctuation">(</span><span class="token string">"So you think you can stop the bomb with ctrl-c, do you?\n"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">sleep</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">Sio_puts</span><span class="token punctuation">(</span><span class="token string">"Well..."</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">sleep</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">Sio_puts</span><span class="token punctuation">(</span><span class="token string">"OK. :-)\n"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">_exit</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h5 id="正确的信号处理"><a href="#正确的信号处理" class="headerlink" title="正确的信号处理"></a>正确的信号处理</h5><ul>
+<li>待处理信号未排队<ul>
+<li>对于每种信号类型，一比特表示信号是否在处理。</li>
+<li>因此最多有一个任何特定类型的待处理信号。</li>
+</ul>
+</li>
+<li>不能使用信号来计数事件，例如终止子进程的事件。</li>
+</ul>
+<h5 id="可移植的信号处理"><a href="#可移植的信号处理" class="headerlink" title="可移植的信号处理"></a>可移植的信号处理</h5><ul>
+<li>不同版本的Unix可以具有不同的信号处理语义<ul>
+<li>一些较旧的系统在捕获信号后将操作恢复为默认值</li>
+<li>某些中断的系统调用可以使用errno == EINTR返回</li>
+<li>某些系统不会阻止正在处理的信号类型</li>
+</ul>
+</li>
+<li>解决方案：sigaction函数，它允许用户在设置信号处理时，明确指定他们想要的信号处理语义。</li>
+</ul>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;signal.h></span></span>
+
+<span class="token keyword">int</span> <span class="token function">sigaction</span><span class="token punctuation">(</span><span class="token keyword">int</span> signum<span class="token punctuation">,</span> <span class="token keyword">struct</span> <span class="token class-name">sigaction</span> <span class="token operator">*</span>act<span class="token punctuation">,</span>
+              <span class="token keyword">struct</span> <span class="token class-name">sigaction</span> <span class="token operator">*</span>oldact<span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+<p>sigaction函数的使用较为复杂，实际中常用Signal函数，它调用sigaction：</p>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token class-name">handler_t</span> <span class="token operator">*</span><span class="token function">Signal</span><span class="token punctuation">(</span><span class="token keyword">int</span> signum<span class="token punctuation">,</span> <span class="token class-name">handler_t</span> <span class="token operator">*</span>handler<span class="token punctuation">)</span>
+<span class="token punctuation">&#123;</span>
+    <span class="token keyword">struct</span> <span class="token class-name">sigaction</span> action<span class="token punctuation">,</span> old_action<span class="token punctuation">;</span>
+
+    action<span class="token punctuation">.</span>sa_handler <span class="token operator">=</span> handler<span class="token punctuation">;</span>
+    <span class="token function">sigemptyset</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>action<span class="token punctuation">.</span>sa_mask<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">/* Block sigs of type being handled */</span>
+    action<span class="token punctuation">.</span>sa_flags <span class="token operator">=</span> SA_RESTART<span class="token punctuation">;</span> <span class="token comment">/* Restart syscalls if possible */</span>
+
+    <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">sigaction</span><span class="token punctuation">(</span>signum<span class="token punctuation">,</span> <span class="token operator">&amp;</span>action<span class="token punctuation">,</span> <span class="token operator">&amp;</span>old_action<span class="token punctuation">)</span> <span class="token operator">&lt;</span> <span class="token number">0</span><span class="token punctuation">)</span>
+        <span class="token function">unix_error</span><span class="token punctuation">(</span><span class="token string">"Signal error"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">return</span> <span class="token punctuation">(</span>old_action<span class="token punctuation">.</span>sa_handler<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h5 id="同步流以避免竞争-race"><a href="#同步流以避免竞争-race" class="headerlink" title="同步流以避免竞争(race)"></a>同步流以避免竞争(race)</h5><ul>
+<li>简单shell有轻微的同步错误，因为它假定父级运行在子级之前。</li>
+</ul>
+<p>错误示例：</p>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token keyword">int</span> argc<span class="token punctuation">,</span> <span class="token keyword">char</span> <span class="token operator">*</span><span class="token operator">*</span>argv<span class="token punctuation">)</span>
+<span class="token punctuation">&#123;</span>
+    <span class="token keyword">int</span> pid<span class="token punctuation">;</span>
+    <span class="token class-name">sigset_t</span> mask_all<span class="token punctuation">,</span> prev_all<span class="token punctuation">;</span>
+
+    <span class="token function">Sigfillset</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>mask_all<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">Signal</span><span class="token punctuation">(</span>SIGCHLD<span class="token punctuation">,</span> handler<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">initjobs</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">/* Initialize the job list */</span>
+
+    <span class="token keyword">while</span> <span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token punctuation">(</span>pid <span class="token operator">=</span> <span class="token function">Fork</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span> <span class="token comment">/* Child */</span>
+            <span class="token function">Execve</span><span class="token punctuation">(</span><span class="token string">"/bin/date"</span><span class="token punctuation">,</span> argv<span class="token punctuation">,</span> <span class="token constant">NULL</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">&#125;</span>
+        <span class="token function">Sigprocmask</span><span class="token punctuation">(</span>SIG_BLOCK<span class="token punctuation">,</span> <span class="token operator">&amp;</span>mask_all<span class="token punctuation">,</span> <span class="token operator">&amp;</span>prev_all<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">/* Parent */</span>
+        <span class="token function">addjob</span><span class="token punctuation">(</span>pid<span class="token punctuation">)</span><span class="token punctuation">;</span>  <span class="token comment">/* Add the child to the job list */</span>
+        <span class="token function">Sigprocmask</span><span class="token punctuation">(</span>SIG_SETMASK<span class="token punctuation">,</span> <span class="token operator">&amp;</span>prev_all<span class="token punctuation">,</span> <span class="token constant">NULL</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+    <span class="token function">exit</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token keyword">void</span> <span class="token function">handler</span><span class="token punctuation">(</span><span class="token keyword">int</span> sig<span class="token punctuation">)</span>
+<span class="token punctuation">&#123;</span>
+    <span class="token keyword">int</span> olderrno <span class="token operator">=</span> errno<span class="token punctuation">;</span>
+    <span class="token class-name">sigset_t</span> mask_all<span class="token punctuation">,</span> prev_all<span class="token punctuation">;</span>
+    <span class="token class-name">pid_t</span> pid<span class="token punctuation">;</span>
+
+    <span class="token function">Sigfillset</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>mask_all<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">while</span> <span class="token punctuation">(</span><span class="token punctuation">(</span>pid <span class="token operator">=</span> <span class="token function">waitpid</span><span class="token punctuation">(</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token constant">NULL</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token operator">></span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span> <span class="token comment">/* Reap child */</span>
+        <span class="token function">Sigprocmask</span><span class="token punctuation">(</span>SIG_BLOCK<span class="token punctuation">,</span> <span class="token operator">&amp;</span>mask_all<span class="token punctuation">,</span> <span class="token operator">&amp;</span>prev_all<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token function">deletejob</span><span class="token punctuation">(</span>pid<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">/* Delete the child from the job list */</span>
+        <span class="token function">Sigprocmask</span><span class="token punctuation">(</span>SIG_SETMASK<span class="token punctuation">,</span> <span class="token operator">&amp;</span>prev_all<span class="token punctuation">,</span> <span class="token constant">NULL</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>errno <span class="token operator">!=</span> ECHILD<span class="token punctuation">)</span>
+        <span class="token function">Sio_error</span><span class="token punctuation">(</span><span class="token string">"waitpid error"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    errno <span class="token operator">=</span> olderrno<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>上述代码是错误的，因为main函数的addjob和处理程序中的deletejob存在竞争（即不一定保证先调用addjob，然后调用deletejob）。</p>
+<p>正确代码：</p>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token keyword">int</span> argc<span class="token punctuation">,</span> <span class="token keyword">char</span> <span class="token operator">*</span><span class="token operator">*</span>argv<span class="token punctuation">)</span>
+<span class="token punctuation">&#123;</span>
+    <span class="token keyword">int</span> pid<span class="token punctuation">;</span>
+    <span class="token class-name">sigset_t</span> mask_all<span class="token punctuation">,</span> mask_one<span class="token punctuation">,</span> prev_one<span class="token punctuation">;</span>
+
+    <span class="token function">Sigfillset</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>mask_all<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">Sigemptyset</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>mask_one<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">Sigaddset</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>mask_one<span class="token punctuation">,</span> SIGCHLD<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">Signal</span><span class="token punctuation">(</span>SIGCHLD<span class="token punctuation">,</span> handler<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">initjobs</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">/* Initialize the job list */</span>
+
+    <span class="token keyword">while</span> <span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token function">Sigprocmask</span><span class="token punctuation">(</span>SIG_BLOCK<span class="token punctuation">,</span> <span class="token operator">&amp;</span>mask_one<span class="token punctuation">,</span> <span class="token operator">&amp;</span>prev_one<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">/* Block SIGCHLD */</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token punctuation">(</span>pid <span class="token operator">=</span> <span class="token function">Fork</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span> <span class="token comment">/* Child process */</span>
+            <span class="token function">Sigprocmask</span><span class="token punctuation">(</span>SIG_SETMASK<span class="token punctuation">,</span> <span class="token operator">&amp;</span>prev_one<span class="token punctuation">,</span> <span class="token constant">NULL</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">/* Unblock SIGCHLD */</span>
+            <span class="token function">Execve</span><span class="token punctuation">(</span><span class="token string">"/bin/date"</span><span class="token punctuation">,</span> argv<span class="token punctuation">,</span> <span class="token constant">NULL</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">&#125;</span>
+        <span class="token function">Sigprocmask</span><span class="token punctuation">(</span>SIG_BLOCK<span class="token punctuation">,</span> <span class="token operator">&amp;</span>mask_all<span class="token punctuation">,</span> <span class="token constant">NULL</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">/* Parent process */</span>
+	    <span class="token function">addjob</span><span class="token punctuation">(</span>pid<span class="token punctuation">)</span><span class="token punctuation">;</span>  <span class="token comment">/* Add the child to the job list */</span>
+        <span class="token function">Sigprocmask</span><span class="token punctuation">(</span>SIG_SETMASK<span class="token punctuation">,</span> <span class="token operator">&amp;</span>prev_one<span class="token punctuation">,</span> <span class="token constant">NULL</span><span class="token punctuation">)</span><span class="token punctuation">;</span>  <span class="token comment">/* Unblock SIGCHLD */</span>
+    <span class="token punctuation">&#125;</span>
+    <span class="token function">exit</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h5 id="显式地等待信号"><a href="#显式地等待信号" class="headerlink" title="显式地等待信号"></a>显式地等待信号</h5><ul>
+<li><p>程序的处理程序显式等待SIGCHLD到达。</p>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">volatile</span> <span class="token class-name">sig_atomic_t</span> pid<span class="token punctuation">;</span>
+
+<span class="token keyword">void</span> <span class="token function">sigchld_handler</span><span class="token punctuation">(</span><span class="token keyword">int</span> s<span class="token punctuation">)</span>
+<span class="token punctuation">&#123;</span>
+    <span class="token keyword">int</span> olderrno <span class="token operator">=</span> errno<span class="token punctuation">;</span>
+    pid <span class="token operator">=</span> <span class="token function">Waitpid</span><span class="token punctuation">(</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token constant">NULL</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">/* Main is waiting for nonzero pid */</span>
+    errno <span class="token operator">=</span> olderrno<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token keyword">void</span> <span class="token function">sigint_handler</span><span class="token punctuation">(</span><span class="token keyword">int</span> s<span class="token punctuation">)</span>
+<span class="token punctuation">&#123;</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token keyword">int</span> argc<span class="token punctuation">,</span> <span class="token keyword">char</span> <span class="token operator">*</span><span class="token operator">*</span>argv<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token class-name">sigset_t</span> mask<span class="token punctuation">,</span> prev<span class="token punctuation">;</span>
+    <span class="token function">Signal</span><span class="token punctuation">(</span>SIGCHLD<span class="token punctuation">,</span> sigchld_handler<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">Signal</span><span class="token punctuation">(</span>SIGINT<span class="token punctuation">,</span> sigint_handler<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">Sigemptyset</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>mask<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">Sigaddset</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>mask<span class="token punctuation">,</span> SIGCHLD<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">while</span> <span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+	<span class="token function">Sigprocmask</span><span class="token punctuation">(</span>SIG_BLOCK<span class="token punctuation">,</span> <span class="token operator">&amp;</span>mask<span class="token punctuation">,</span> <span class="token operator">&amp;</span>prev<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">/* Block SIGCHLD */</span>
+	<span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">Fork</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token comment">/* Child */</span>
+            <span class="token function">exit</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token comment">/* Parent */</span>
+	pid <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+	<span class="token function">Sigprocmask</span><span class="token punctuation">(</span>SIG_SETMASK<span class="token punctuation">,</span> <span class="token operator">&amp;</span>prev<span class="token punctuation">,</span> <span class="token constant">NULL</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">/* Unblock SIGCHLD */</span>
+
+	<span class="token comment">/* Wait for SIGCHLD to be received (wasteful!) */</span>
+	<span class="token keyword">while</span> <span class="token punctuation">(</span><span class="token operator">!</span>pid<span class="token punctuation">)</span>
+            <span class="token punctuation">;</span>
+	<span class="token comment">/* Do some work after receiving SIGCHLD */</span>
+        <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"."</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+    <span class="token function">exit</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+</li>
+<li><p>程序正确，但是非常浪费资源。</p>
+</li>
+<li><p>其他选择：</p>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">while</span> <span class="token punctuation">(</span><span class="token operator">!</span>pid<span class="token punctuation">)</span> <span class="token comment">/* Race! */</span>
+    <span class="token function">pause</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token keyword">while</span> <span class="token punctuation">(</span><span class="token operator">!</span>pid<span class="token punctuation">)</span> <span class="token comment">/* Too slow! */</span>
+    <span class="token function">sleep</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+</li>
+<li><p>解决方案：sigsuspend函数</p>
+<ul>
+<li><p>int sigsuspend(const sigset_t *mask)</p>
+</li>
+<li><p>该函数等价于下述代码的原子（不可中断）版本</p>
+<pre class="line-numbers language-none"><code class="language-none">sigprocmask(SIG_BLOCK, &amp;mask, &amp;prev);
+pause();
+sigprocmask(SIG_SETMASK, &amp;prev, NULL);<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+</li>
+</ul>
+</li>
+<li><p>修改后的代码如下：</p>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token keyword">int</span> argc<span class="token punctuation">,</span> <span class="token keyword">char</span> <span class="token operator">*</span><span class="token operator">*</span>argv<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token class-name">sigset_t</span> mask<span class="token punctuation">,</span> prev<span class="token punctuation">;</span>
+    <span class="token function">Signal</span><span class="token punctuation">(</span>SIGCHLD<span class="token punctuation">,</span> sigchld_handler<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">Signal</span><span class="token punctuation">(</span>SIGINT<span class="token punctuation">,</span> sigint_handler<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">Sigemptyset</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>mask<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">Sigaddset</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>mask<span class="token punctuation">,</span> SIGCHLD<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">while</span> <span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token function">Sigprocmask</span><span class="token punctuation">(</span>SIG_BLOCK<span class="token punctuation">,</span> <span class="token operator">&amp;</span>mask<span class="token punctuation">,</span> <span class="token operator">&amp;</span>prev<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">/* Block SIGCHLD */</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">Fork</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token comment">/* Child */</span>
+            <span class="token function">exit</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+ 
+       <span class="token comment">/* Wait for SIGCHLD to be received */</span>
+        pid <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+        <span class="token keyword">while</span> <span class="token punctuation">(</span><span class="token operator">!</span>pid<span class="token punctuation">)</span>
+            <span class="token function">Sigsuspend</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>prev<span class="token punctuation">)</span><span class="token punctuation">;</span>
+ 
+       <span class="token comment">/* Optionally unblock SIGCHLD */</span>
+        <span class="token function">Sigprocmask</span><span class="token punctuation">(</span>SIG_SETMASK<span class="token punctuation">,</span> <span class="token operator">&amp;</span>prev<span class="token punctuation">,</span> <span class="token constant">NULL</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token comment">/* Do some work after receiving SIGCHLD */</span>
+        <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"."</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+    <span class="token function">exit</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+</li>
+</ul>
+<h4 id="非本地跳转"><a href="#非本地跳转" class="headerlink" title="非本地跳转"></a>非本地跳转</h4><h5 id="非本地跳转：setjmp-longjmp"><a href="#非本地跳转：setjmp-longjmp" class="headerlink" title="非本地跳转：setjmp/longjmp"></a>非本地跳转：setjmp/longjmp</h5><ul>
+<li>强大（但很危险）的用户级机制，可将控制权转移到任意位置<ul>
+<li>控制方式打破程序调用/返回规则</li>
+<li>对于错误恢复和信号处理很有用</li>
+</ul>
+</li>
+<li>int setjmp(jmp_buf j)<ul>
+<li>必须在longjmp之前调用</li>
+<li>标识后续longjmp的返回位置</li>
+<li>调用一次，返回一次或多次</li>
+</ul>
+</li>
+<li>实现方式：<ul>
+<li>通过在jmp_buf中存储当前的寄存器上下文，堆栈指针和PC值来记住位置</li>
+<li>返回0</li>
+</ul>
+</li>
+<li>void longjmp(jmp_buf j, int i)<ul>
+<li>含义：<ul>
+<li>从跳转缓冲区j中恢复调用环境，然后触发一个从最近一次初始化j的setjmp调用的返回</li>
+<li>这次返回i而不是0</li>
+</ul>
+</li>
+<li>在setjmp之后调用</li>
+<li>调用一次，但永不返回</li>
+</ul>
+</li>
+<li>longjmp实现：<ul>
+<li>从跳转缓冲区j恢复寄存器上下文（堆栈指针，基址指针，PC值）</li>
+<li>将％eax（返回值）设置为i</li>
+<li>跳转到由PC指示的位置，该位置存储在jump buf j中</li>
+</ul>
+</li>
+</ul>
+<h5 id="例子"><a href="#例子" class="headerlink" title="例子"></a>例子</h5><ul>
+<li><p>目标：从深度嵌套的函数直接返回到原始调用者</p>
+</li>
+<li><p>例子：</p>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c">jmp_buf buf<span class="token punctuation">;</span>
+
+<span class="token keyword">int</span> error1 <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token keyword">int</span> error2 <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>
+
+<span class="token keyword">void</span> <span class="token function">foo</span><span class="token punctuation">(</span><span class="token keyword">void</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token function">bar</span><span class="token punctuation">(</span><span class="token keyword">void</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">&#123;</span>
+    <span class="token keyword">switch</span><span class="token punctuation">(</span><span class="token function">setjmp</span><span class="token punctuation">(</span>buf<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">case</span> <span class="token number">0</span><span class="token operator">:</span>
+        <span class="token function">foo</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">break</span><span class="token punctuation">;</span>
+    <span class="token keyword">case</span> <span class="token number">1</span><span class="token operator">:</span>
+        <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"Detected an error1 condition in foo\n"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">break</span><span class="token punctuation">;</span>
+    <span class="token keyword">case</span> <span class="token number">2</span><span class="token operator">:</span>
+        <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"Detected an error2 condition in foo\n"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">break</span><span class="token punctuation">;</span>
+    <span class="token keyword">default</span><span class="token operator">:</span>
+        <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"Unknown error condition in foo\n"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+    <span class="token function">exit</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token comment">/* Deeply nested function foo */</span>
+<span class="token keyword">void</span> <span class="token function">foo</span><span class="token punctuation">(</span><span class="token keyword">void</span><span class="token punctuation">)</span>
+<span class="token punctuation">&#123;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>error1<span class="token punctuation">)</span>
+		<span class="token function">longjmp</span><span class="token punctuation">(</span>buf<span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">bar</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token keyword">void</span> <span class="token function">bar</span><span class="token punctuation">(</span><span class="token keyword">void</span><span class="token punctuation">)</span>
+<span class="token punctuation">&#123;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>error2<span class="token punctuation">)</span>
+        <span class="token function">longjmp</span><span class="token punctuation">(</span>buf<span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+</li>
+<li><p>上述例子中，main函数首先调用setjmp以保存当前的调用环境，然后调用函数foo，foo依次调用函数bar。如果foo或者bar遇到一个错误，它们立即通过一次longjmp调用从setjmp返回。setjmp的非零返回值指明了错误类型，随后可以被解码，且在代码中的某个位置进行处理。</p>
+</li>
+</ul>
+<h5 id="非本地跳转的局限性"><a href="#非本地跳转的局限性" class="headerlink" title="非本地跳转的局限性"></a>非本地跳转的局限性</h5><ul>
+<li><p>在堆栈规则内工作</p>
+<ul>
+<li>只能跳到已调用但尚未完成的函数环境</li>
+</ul>
+</li>
+<li><p>例1：</p>
+  <pre class="line-numbers language-c" data-language="c"><code class="language-c">jmp_buf env<span class="token punctuation">;</span>
+
+<span class="token function">P1</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">&#123;</span>
+  <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">setjmp</span><span class="token punctuation">(</span>env<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token comment">/* Long Jump to here */</span>
+  <span class="token punctuation">&#125;</span> <span class="token keyword">else</span> <span class="token punctuation">&#123;</span>
+    <span class="token function">P2</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token function">P2</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">&#123;</span>  <span class="token punctuation">.</span> <span class="token punctuation">.</span> <span class="token punctuation">.</span> <span class="token function">P2</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token punctuation">.</span> <span class="token punctuation">.</span> <span class="token punctuation">.</span> <span class="token function">P3</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token punctuation">&#125;</span>
+
+<span class="token function">P3</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">&#123;</span>
+  <span class="token function">longjmp</span><span class="token punctuation">(</span>env<span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<ul>
+<li><p>堆栈图：</p>
+<p><img src="https://github.com/Doraemonzzz/md-photo/blob/master/CMU%2015-213%20Intro%20to%20Computer%20Systems/Lecture15/2020063001.jpg?raw=true" alt=""></p>
+</li>
+</ul>
+</li>
+<li><p>例2：</p>
+  <pre class="line-numbers language-c" data-language="c"><code class="language-c">jmp_buf env<span class="token punctuation">;</span>
+
+<span class="token function">P1</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">&#123;</span>
+  <span class="token function">P2</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token function">P3</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token function">P2</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">&#123;</span>
+   <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">setjmp</span><span class="token punctuation">(</span>env<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token comment">/* Long Jump to here */</span>
+  <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token function">P3</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">&#123;</span>
+  <span class="token function">longjmp</span><span class="token punctuation">(</span>env<span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<ul>
+<li><p>堆栈图：</p>
+<p>  <img src="https://github.com/Doraemonzzz/md-photo/blob/master/CMU%2015-213%20Intro%20to%20Computer%20Systems/Lecture15/2020063002.jpg?raw=true" alt=""></p>
+</li>
+</ul>
+</li>
+</ul>
+<h5 id="综合例子"><a href="#综合例子" class="headerlink" title="综合例子"></a>综合例子</h5><pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">"csapp.h"</span></span>
+
+sigjmp_buf buf<span class="token punctuation">;</span>
+
+<span class="token keyword">void</span> <span class="token function">handler</span><span class="token punctuation">(</span><span class="token keyword">int</span> sig<span class="token punctuation">)</span>
+<span class="token punctuation">&#123;</span>
+    <span class="token function">siglongjmp</span><span class="token punctuation">(</span>buf<span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">&#123;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span><span class="token function">sigsetjmp</span><span class="token punctuation">(</span>buf<span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token function">Signal</span><span class="token punctuation">(</span>SIGINT<span class="token punctuation">,</span> handler<span class="token punctuation">)</span><span class="token punctuation">;</span>
+	    <span class="token function">Sio_puts</span><span class="token punctuation">(</span><span class="token string">"starting\n"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+    <span class="token keyword">else</span>
+        <span class="token function">Sio_puts</span><span class="token punctuation">(</span><span class="token string">"restarting\n"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">while</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+		<span class="token function">Sleep</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		<span class="token function">Sio_puts</span><span class="token punctuation">(</span><span class="token string">"processing...\n"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+    <span class="token function">exit</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">/* Control never reaches here */</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>结果：</p>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c">greatwhite<span class="token operator">></span> <span class="token punctuation">.</span><span class="token operator">/</span>restart
+starting
+processing<span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+processing<span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+processing<span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+Ctrl<span class="token operator">-</span>c
+restarting
+processing<span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+processing<span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+Ctrl<span class="token operator">-</span>c
+restarting
+processing<span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+processing<span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+processing<span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h4 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h4><ul>
+<li>信号提供进程级异常处理<ul>
+<li>可以从用户程序生成</li>
+<li>可以通过声明信号处理程序来定义效果</li>
+<li>编写信号处理程序时要非常小心</li>
+</ul>
+</li>
+<li>非本地跳转提供了进程内的异常控制流<ul>
+<li>在堆栈规则的约束下</li>
+</ul>
+</li>
+</ul>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">Doraemonzzz</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="http://doraemonzzz.com/2020/06/29/CMU%2015-213%20Intro%20to%20Computer%20Systems%20Lecture%2015/">http://doraemonzzz.com/2020/06/29/CMU%2015-213%20Intro%20to%20Computer%20Systems%20Lecture%2015/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://doraemonzzz.com" target="_blank">Doraemonzzz</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/CMU-15-213/">CMU 15-213</a></div><div class="post_share"><div class="social-share" data-image="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2020/06/30/%E5%8F%B0%E4%BA%A4%E5%A4%A7%E9%9A%8F%E6%9C%BA%E8%BF%87%E7%A8%8B%20Lecture%203/"><img class="prev-cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">台交大随机过程 Lecture 3</div></div></a></div><div class="next-post pull-right"><a href="/2020/06/28/Hexo%E5%8D%9A%E5%AE%A2%E6%8A%A5%E9%94%99/"><img class="next-cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">Hexo博客报错</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span> 相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2020/06/08/CMU 15-213 Intro to Computer Systems Lecture 10/" title="CMU 15-213 Intro to Computer Systems Lecture 10"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-06-08</div><div class="title">CMU 15-213 Intro to Computer Systems Lecture 10</div></div></a></div><div><a href="/2020/04/30/CMU 15-213 Intro to Computer Systems Lecture 1/" title="CMU 15-213 Intro to Computer Systems Lecture 1"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-04-30</div><div class="title">CMU 15-213 Intro to Computer Systems Lecture 1</div></div></a></div><div><a href="/2020/06/09/CMU 15-213 Intro to Computer Systems Lecture 11/" title="CMU 15-213 Intro to Computer Systems Lecture 11"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-06-09</div><div class="title">CMU 15-213 Intro to Computer Systems Lecture 11</div></div></a></div><div><a href="/2020/06/16/CMU 15-213 Intro to Computer Systems Lecture 13/" title="CMU 15-213 Intro to Computer Systems Lecture 13"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-06-16</div><div class="title">CMU 15-213 Intro to Computer Systems Lecture 13</div></div></a></div><div><a href="/2020/06/10/CMU 15-213 Intro to Computer Systems Lecture 12/" title="CMU 15-213 Intro to Computer Systems Lecture 12"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-06-10</div><div class="title">CMU 15-213 Intro to Computer Systems Lecture 12</div></div></a></div><div><a href="/2020/07/15/CMU 15-213 Intro to Computer Systems Lecture 17/" title="CMU 15-213 Intro to Computer Systems Lecture 17"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-07-15</div><div class="title">CMU 15-213 Intro to Computer Systems Lecture 17</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="card-info-avatar is-center"><img class="avatar-img" src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/><div class="author-info__name">Doraemonzzz</div><div class="author-info__description">个人博客，主要记录有关机器学习，数学以及计算机科学的笔记</div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">610</div></a></div><div class="card-info-data-item is-center"><a href="/tags/"><div class="headline">标签</div><div class="length-num">59</div></a></div><div class="card-info-data-item is-center"><a href="/categories/"><div class="headline">分类</div><div class="length-num">23</div></a></div></div><a class="button--animated" id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/Doraemonzzz" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="/doraemon_zzz@163.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn card-announcement-animation"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#Shells"><span class="toc-number">1.</span> <span class="toc-text">Shells</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#Linux%E8%BF%9B%E7%A8%8B%E5%B1%82%E6%AC%A1%E7%BB%93%E6%9E%84"><span class="toc-number">1.1.</span> <span class="toc-text">Linux进程层次结构</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#Shell%E7%A8%8B%E5%BA%8F"><span class="toc-number">1.2.</span> <span class="toc-text">Shell程序</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%AE%80%E5%8D%95Shell%E4%BE%8B%E5%AD%90%E7%9A%84%E9%97%AE%E9%A2%98"><span class="toc-number">2.</span> <span class="toc-text">简单Shell例子的问题</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BF%A1%E5%8F%B7"><span class="toc-number">3.</span> <span class="toc-text">信号</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E4%BF%A1%E5%8F%B7%E6%A6%82%E5%BF%B5%EF%BC%9A%E4%BC%A0%E9%80%92%E4%BF%A1%E5%8F%B7"><span class="toc-number">3.1.</span> <span class="toc-text">信号概念：传递信号</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E4%BF%A1%E5%8F%B7%E6%A6%82%E5%BF%B5%EF%BC%9A%E6%8E%A5%E6%94%B6%E4%BF%A1%E5%8F%B7"><span class="toc-number">3.2.</span> <span class="toc-text">信号概念：接收信号</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E4%BF%A1%E5%8F%B7%E6%A6%82%E5%BF%B5%EF%BC%9A%E5%BE%85%E5%A4%84%E7%90%86-Pending-%E5%92%8C%E9%98%BB%E5%A1%9E-Blocked-%E4%BF%A1%E5%8F%B7"><span class="toc-number">3.3.</span> <span class="toc-text">信号概念：待处理(Pending)和阻塞(Blocked)信号</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E4%BF%A1%E5%8F%B7%E6%A6%82%E5%BF%B5%EF%BC%9A%E8%BF%9B%E7%A8%8B%E7%BB%84"><span class="toc-number">3.4.</span> <span class="toc-text">信号概念：进程组</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8-bin-kill%E7%A8%8B%E5%BA%8F%E4%BC%A0%E9%80%92%E4%BF%A1%E5%8F%B7"><span class="toc-number">3.5.</span> <span class="toc-text">使用&#x2F;bin&#x2F;kill程序传递信号</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E4%BB%8E%E9%94%AE%E7%9B%98%E4%BC%A0%E9%80%92%E4%BF%A1%E5%8F%B7"><span class="toc-number">3.6.</span> <span class="toc-text">从键盘传递信号</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8kill%E5%87%BD%E6%95%B0%E4%BC%A0%E9%80%92%E4%BF%A1%E5%8F%B7"><span class="toc-number">3.7.</span> <span class="toc-text">使用kill函数传递信号</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%8E%A5%E6%94%B6%E4%BF%A1%E5%8F%B7"><span class="toc-number">3.8.</span> <span class="toc-text">接收信号</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E9%BB%98%E8%AE%A4%E5%8A%A8%E4%BD%9C"><span class="toc-number">3.9.</span> <span class="toc-text">默认动作</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E8%AE%BE%E7%BD%AE%E4%BF%A1%E5%8F%B7%E5%A4%84%E7%90%86%E5%99%A8"><span class="toc-number">3.10.</span> <span class="toc-text">设置信号处理器</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%A4%84%E7%90%86%E7%A8%8B%E5%BA%8F%E4%BD%9C%E4%B8%BA%E5%B9%B6%E5%8F%91%E6%B5%81%E4%BF%A1%E5%8F%B7"><span class="toc-number">3.11.</span> <span class="toc-text">处理程序作为并发流信号</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%B5%8C%E5%A5%97%E4%BF%A1%E5%8F%B7%E5%A4%84%E7%90%86%E7%A8%8B%E5%BA%8F"><span class="toc-number">3.12.</span> <span class="toc-text">嵌套信号处理程序</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E9%98%BB%E5%A1%9E%E5%92%8C%E8%A7%A3%E9%99%A4%E9%98%BB%E5%A1%9E%E4%BF%A1%E5%8F%B7"><span class="toc-number">3.13.</span> <span class="toc-text">阻塞和解除阻塞信号</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%AE%89%E5%85%A8%E4%BF%A1%E5%8F%B7%E5%A4%84%E7%90%86"><span class="toc-number">3.14.</span> <span class="toc-text">安全信号处理</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E7%BC%96%E5%86%99%E5%AE%89%E5%85%A8%E5%A4%84%E7%90%86%E7%A8%8B%E5%BA%8F%E7%9A%84%E5%87%86%E5%88%99"><span class="toc-number">3.15.</span> <span class="toc-text">编写安全处理程序的准则</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%BC%82%E6%AD%A5%E4%BF%A1%E5%8F%B7%E5%AE%89%E5%85%A8"><span class="toc-number">3.16.</span> <span class="toc-text">异步信号安全</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%AE%89%E5%85%A8%E5%9C%B0%E7%94%9F%E6%88%90%E6%A0%BC%E5%BC%8F%E5%8C%96%E8%BE%93%E5%87%BA"><span class="toc-number">3.17.</span> <span class="toc-text">安全地生成格式化输出</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%AD%A3%E7%A1%AE%E7%9A%84%E4%BF%A1%E5%8F%B7%E5%A4%84%E7%90%86"><span class="toc-number">3.18.</span> <span class="toc-text">正确的信号处理</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%8F%AF%E7%A7%BB%E6%A4%8D%E7%9A%84%E4%BF%A1%E5%8F%B7%E5%A4%84%E7%90%86"><span class="toc-number">3.19.</span> <span class="toc-text">可移植的信号处理</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%90%8C%E6%AD%A5%E6%B5%81%E4%BB%A5%E9%81%BF%E5%85%8D%E7%AB%9E%E4%BA%89-race"><span class="toc-number">3.20.</span> <span class="toc-text">同步流以避免竞争(race)</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%98%BE%E5%BC%8F%E5%9C%B0%E7%AD%89%E5%BE%85%E4%BF%A1%E5%8F%B7"><span class="toc-number">3.21.</span> <span class="toc-text">显式地等待信号</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%9D%9E%E6%9C%AC%E5%9C%B0%E8%B7%B3%E8%BD%AC"><span class="toc-number">4.</span> <span class="toc-text">非本地跳转</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E9%9D%9E%E6%9C%AC%E5%9C%B0%E8%B7%B3%E8%BD%AC%EF%BC%9Asetjmp-longjmp"><span class="toc-number">4.1.</span> <span class="toc-text">非本地跳转：setjmp&#x2F;longjmp</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E4%BE%8B%E5%AD%90"><span class="toc-number">4.2.</span> <span class="toc-text">例子</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E9%9D%9E%E6%9C%AC%E5%9C%B0%E8%B7%B3%E8%BD%AC%E7%9A%84%E5%B1%80%E9%99%90%E6%80%A7"><span class="toc-number">4.3.</span> <span class="toc-text">非本地跳转的局限性</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E7%BB%BC%E5%90%88%E4%BE%8B%E5%AD%90"><span class="toc-number">4.4.</span> <span class="toc-text">综合例子</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-number">5.</span> <span class="toc-text">总结</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2021/06/06/2021-6-6-%E7%AE%97%E6%B3%95%E6%A6%82%E8%AE%BA(DPV)%E4%B9%A0%E9%A2%98%E8%A7%A3%E7%AD%94%E2%80%94%E2%80%94%E7%AC%AC3%E7%AB%A0-%E5%9B%BE%E7%9A%84%E5%88%86%E8%A7%A3/" title="算法概论(DPV)习题解答——第3章 图的分解"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="算法概论(DPV)习题解答——第3章 图的分解"/></a><div class="content"><a class="title" href="/2021/06/06/2021-6-6-%E7%AE%97%E6%B3%95%E6%A6%82%E8%AE%BA(DPV)%E4%B9%A0%E9%A2%98%E8%A7%A3%E7%AD%94%E2%80%94%E2%80%94%E7%AC%AC3%E7%AB%A0-%E5%9B%BE%E7%9A%84%E5%88%86%E8%A7%A3/" title="算法概论(DPV)习题解答——第3章 图的分解">算法概论(DPV)习题解答——第3章 图的分解</a><time datetime="2021-06-06T14:35:00.000Z" title="发表于 2021-06-06 22:35:00">2021-06-06</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/06/06/2021-6-6-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E7%AC%AC5%E7%AB%A0-%E4%B9%A0%E9%A2%98%E8%A7%A3%E6%9E%90/" title="深入理解计算机系统 第5章 习题解析"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="深入理解计算机系统 第5章 习题解析"/></a><div class="content"><a class="title" href="/2021/06/06/2021-6-6-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E7%AC%AC5%E7%AB%A0-%E4%B9%A0%E9%A2%98%E8%A7%A3%E6%9E%90/" title="深入理解计算机系统 第5章 习题解析">深入理解计算机系统 第5章 习题解析</a><time datetime="2021-06-06T07:23:00.000Z" title="发表于 2021-06-06 15:23:00">2021-06-06</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/06/05/2021-6-5-Stanford-Compiler-PA5%E7%BF%BB%E8%AF%91/" title="Stanford Compiler PA5翻译"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Stanford Compiler PA5翻译"/></a><div class="content"><a class="title" href="/2021/06/05/2021-6-5-Stanford-Compiler-PA5%E7%BF%BB%E8%AF%91/" title="Stanford Compiler PA5翻译">Stanford Compiler PA5翻译</a><time datetime="2021-06-05T06:12:00.000Z" title="发表于 2021-06-05 14:12:00">2021-06-05</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/06/04/2021-6-4-Stanford-Compiler-PA4%E7%BF%BB%E8%AF%91/" title="Stanford Compiler PA4翻译"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Stanford Compiler PA4翻译"/></a><div class="content"><a class="title" href="/2021/06/04/2021-6-4-Stanford-Compiler-PA4%E7%BF%BB%E8%AF%91/" title="Stanford Compiler PA4翻译">Stanford Compiler PA4翻译</a><time datetime="2021-06-03T16:17:00.000Z" title="发表于 2021-06-04 00:17:00">2021-06-04</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/06/03/2021-6-3-%E5%B7%A7%E5%A6%99%E7%9A%84Y%E8%BF%90%E7%AE%97%E7%AC%A6/" title="巧妙的Y运算符"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="巧妙的Y运算符"/></a><div class="content"><a class="title" href="/2021/06/03/2021-6-3-%E5%B7%A7%E5%A6%99%E7%9A%84Y%E8%BF%90%E7%AE%97%E7%AC%A6/" title="巧妙的Y运算符">巧妙的Y运算符</a><time datetime="2021-06-03T00:54:00.000Z" title="发表于 2021-06-03 08:54:00">2021-06-03</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2021 By Doraemonzzz</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><div class="js-pjax"><script>if (!window.MathJax) {
+  window.MathJax = {
+    loader: {
+      source: {
+        '[tex]/amsCd': '[tex]/amscd'
+      }
+    },
+    tex: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]],
+      tags: 'ams'
+    },
+    options: {
+      renderActions: {
+        findScript: [10, doc => {
+          for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+            const display = !!node.type.match(/; *mode=display/)
+            const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+            const text = document.createTextNode('')
+            node.parentNode.replaceChild(text, node)
+            math.start = {node: text, delim: '', n: 0}
+            math.end = {node: text, delim: '', n: 0}
+            doc.math.push(math)
+          }
+        }, ''],
+        addClass: [200,() => {
+          document.querySelectorAll('mjx-container:not([display=\'true\']').forEach( node => {
+            const target = node.parentNode
+            if (!target.classList.contains('has-jax')) {
+              target.classList.add('mathjax-overflow')
+            }
+          })
+        }, '', false]
+      }
+    }
+  }
+  
+  const script = document.createElement('script')
+  script.src = 'https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js'
+  script.id = 'MathJax-script'
+  script.async = true
+  document.head.appendChild(script)
+} else {
+  MathJax.startup.document.state(0)
+  MathJax.texReset()
+  MathJax.typeset()
+}</script></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

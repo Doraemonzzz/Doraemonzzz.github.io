@@ -1,0 +1,609 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>CS205A Lecture 5 Column spaces and QR | Doraemonzzz</title><meta name="keywords" content="CS205A"><meta name="author" content="Doraemonzzz"><meta name="copyright" content="Doraemonzzz"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="课程主页：https:&#x2F;&#x2F;graphics.stanford.edu&#x2F;courses&#x2F;cs205a-13-fall&#x2F;schedule.html 这次回顾第五讲，这一讲主要介绍了$QR$分解。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="CS205A Lecture 5 Column spaces and QR">
+<meta property="og:url" content="http://doraemonzzz.com/2019/03/27/CS205A%20Lecture%205%20Column%20spaces%20and%20QR/index.html">
+<meta property="og:site_name" content="Doraemonzzz">
+<meta property="og:description" content="课程主页：https:&#x2F;&#x2F;graphics.stanford.edu&#x2F;courses&#x2F;cs205a-13-fall&#x2F;schedule.html 这次回顾第五讲，这一讲主要介绍了$QR$分解。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg">
+<meta property="article:published_time" content="2019-03-26T16:59:00.000Z">
+<meta property="article:modified_time" content="2019-03-26T17:31:43.057Z">
+<meta property="article:author" content="Doraemonzzz">
+<meta property="article:tag" content="CS205A">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="http://doraemonzzz.com/2019/03/27/CS205A%20Lecture%205%20Column%20spaces%20and%20QR/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"prismjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    jQuery: 'https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js',
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+    },
+    fancybox: {
+      js: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isanchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'CS205A Lecture 5 Column spaces and QR',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2019-03-27 01:31:43'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    })(window)</script><meta name="generator" content="Hexo 5.4.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="author-avatar"><img class="avatar-img" src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">文章</div><div class="length-num">610</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">标签</div><div class="length-num">59</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/categories/"><div class="headline">分类</div><div class="length-num">23</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">Doraemonzzz</a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">CS205A Lecture 5 Column spaces and QR</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2019-03-26T16:59:00.000Z" title="发表于 2019-03-27 00:59:00">2019-03-27</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2019-03-26T17:31:43.057Z" title="更新于 2019-03-27 01:31:43">2019-03-27</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E6%95%B0%E5%80%BC%E5%88%86%E6%9E%90/">数值分析</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="CS205A Lecture 5 Column spaces and QR"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p>课程主页：<a target="_blank" rel="noopener" href="https://graphics.stanford.edu/courses/cs205a-13-fall/schedule.html">https://graphics.stanford.edu/courses/cs205a-13-fall/schedule.html</a></p>
+<p>这次回顾第五讲，这一讲主要介绍了$QR$分解。</p>
+<span id="more"></span>
+<h2 id="Chapter-4-列空间和-QR-分解"><a href="#Chapter-4-列空间和-QR-分解" class="headerlink" title="Chapter 4 列空间和$QR$分解"></a>Chapter 4 列空间和$QR$分解</h2><h3 id="正规方程的结构"><a href="#正规方程的结构" class="headerlink" title="正规方程的结构"></a>正规方程的结构</h3><p>上一讲主要介绍了对称矩阵的一些性质，现在考虑$A^TA$的条件数：</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+\text{cond }A^T A
+&=||A^T A||.||(A^T A)^{-1}||\\
+&\approx  ||A^T||.||A||.||A^{-1}||.||(A^T)^{-1}||\\
+&=||A||^2 ||A^{-1}||^2\\
+&=(\text{cond }A)^2
+\end{aligned}</script><p>这说明如下方程更加不稳定：</p>
+<script type="math/tex; mode=display">
+A^TA \vec x =\vec b</script><p>注意到</p>
+<script type="math/tex; mode=display">
+\text{cond } I_{n} =1</script><p>所以如果我们有</p>
+<script type="math/tex; mode=display">
+A^T A=I_n</script><p>那么就不会有不稳定的情形发生，这就引入了正交性的概念。</p>
+<h3 id="正交性"><a href="#正交性" class="headerlink" title="正交性"></a>正交性</h3><p>对于矩阵</p>
+<script type="math/tex; mode=display">
+Q= \left(
+ \begin{matrix}
+  \mid & \mid & & \mid  \\
+\vec q_1 &\vec q_2 & \ldots & \vec q_n \\
+\mid & \mid & & \mid  
+  \end{matrix}
+  \right)</script><p>我们计算$Q^T Q$</p>
+<script type="math/tex; mode=display">
+Q^TQ= \left(
+ \begin{matrix}
+  — (q_1)^T— \\
+— (q_2)^T— \\
+\vdots\\
+— (q_n)^T— 
+  \end{matrix}
+  \right)\left(
+ \begin{matrix}
+  \mid & \mid & & \mid  \\
+\vec q_1 &\vec q_2 & \ldots & \vec q_n \\
+\mid & \mid & & \mid  
+  \end{matrix}
+  \right)
+  =\left(
+ \begin{matrix}
+\vec q_1.\vec q_1 &\vec q_1.\vec q_2 &\ldots& \vec q_1.\vec q_n \\
+\vec q_2.\vec q_1 &\vec q_2.\vec q_2 &\ldots &\vec q_2.\vec q_n \\
+\vdots &\vdots &\ldots &\vdots\\
+\vec q_n.\vec q_1 &\vec q_n.\vec q_2 &\ldots& \vec q_n.\vec q_n 
+  \end{matrix}
+  \right)</script><p>如果</p>
+<script type="math/tex; mode=display">
+Q^T Q=I_n</script><p>那么</p>
+<script type="math/tex; mode=display">
+\vec q_i .\vec q_j=\begin{cases}
+1 & i=j\\
+0 &i\neq j
+\end{cases}</script><p>我们给出如下定义：</p>
+<h4 id="定义-4-1-正交性，正交矩阵"><a href="#定义-4-1-正交性，正交矩阵" class="headerlink" title="定义 4.1 (正交性，正交矩阵)"></a>定义 4.1 (正交性，正交矩阵)</h4><p>一组向量$\{\vec v_1,…,\vec v_k \}$正交当且仅当</p>
+<script type="math/tex; mode=display">
+\vec v_i .\vec v_j=\begin{cases}
+1 & i=j\\
+0 &i\neq j
+\end{cases}</script><p>如果一个方阵的列向量正交，那么称其为正交矩阵。</p>
+<h4 id="性质"><a href="#性质" class="headerlink" title="性质"></a>性质</h4><p>正交矩阵有如下一些性质：</p>
+<ol>
+<li><script type="math/tex; mode=display">
+Q^{-1}=Q^T</script><p>这一点是显然的，由逆矩阵的定义即可得到。这个性质告诉我们正交矩阵的逆可以直接得到，大大减少了运算量。</p>
+</li>
+<li><script type="math/tex; mode=display">
+(Q\vec x ).(Q\vec y ) =\vec x^T Q^T Q \vec y =\vec x^T \vec y  =\vec x .\vec y</script><p>这个性质表明正交矩阵保持内积不变。</p>
+</li>
+<li><p>对性质2中取$\vec x =\vec y$，那么</p>
+<script type="math/tex; mode=display">
+||Q\vec x ||^2 =\vec x^T Q^T Q \vec x =\vec x^T \vec x  =||\vec x ||^2</script><p>这个性质表明正交矩阵保持模长不变。</p>
+</li>
+</ol>
+<p>由性质2，3，我们知道$Q$对应于几何变换，即保持长度和角度不变。</p>
+<h3 id="对非正交矩阵的处理"><a href="#对非正交矩阵的处理" class="headerlink" title="对非正交矩阵的处理"></a>对非正交矩阵的处理</h3><p>首先回顾我们一直讨论的问题：</p>
+<script type="math/tex; mode=display">
+\min_{\vec x} ||A\vec x -\vec b||</script><p>从几何角度来看，可以理解为上述问题是在将$\vec b$投影到$A$的列空间，所以这一部分主要从列空间的角度讨论，我们先给出如下引理：</p>
+<h4 id="引理-4-1-列空间的不变性"><a href="#引理-4-1-列空间的不变性" class="headerlink" title="引理 4.1 (列空间的不变性)"></a>引理 4.1 (列空间的不变性)</h4><p>对于任意$A\in \mathbb R^{m\times n}$和可逆矩阵$B\in \mathbb R^{n\times n}$，我们有</p>
+<script type="math/tex; mode=display">
+\text{col }A =\text{col }AB</script><p>证明：$\forall \vec b \in \text{col }A​$，存在$\vec x​$，使得</p>
+<script type="math/tex; mode=display">
+\vec b = A\vec x</script><p>因为$B​$可逆，所以</p>
+<script type="math/tex; mode=display">
+\vec b = (AB) (B^{-1}\vec x) \in \text{col }AB</script><p>所以</p>
+<script type="math/tex; mode=display">
+\text{col }A \subset \text{col }AB</script><p>$\forall \vec c \in \text{col }AB​$，存在$\vec y​$，使得</p>
+<script type="math/tex; mode=display">
+\vec c = (AB)\vec y =A(B\vec y )\in \text{col }A</script><p>所以</p>
+<script type="math/tex; mode=display">
+ \text{col }AB \subset \text{col }A</script><p>因此</p>
+<script type="math/tex; mode=display">
+\text{col }A =\text{col }AB</script><p>上述性质提醒我们可以使用初等列变换对$A$进行操作，直至其变成正交矩阵，即</p>
+<script type="math/tex; mode=display">
+Q= AE_1E_2...E_k</script><p>如果$E_i$可逆，那么上述引理告诉我们</p>
+<script type="math/tex; mode=display">
+\text{col }Q =\text{col }A</script><p>那么</p>
+<script type="math/tex; mode=display">
+A=QR ,R=E^{-1}_k E^{-1}_{k-1}... E^{-1}_{1}</script><p>如果得到上述分解，考虑正规方程</p>
+<script type="math/tex; mode=display">
+A^TA\vec x = A^T\vec b</script><p>那么我们有</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+\vec x 
+&= (A^T A)^{-1} A^T\vec b\\
+&=(R^T Q^T Q R)^{-1}R^T Q^T  \vec b\\
+&=(R^TR)^{-1}R^T Q^T  \vec b\\
+&=R^{-1}(R^T)^{-1}R^T Q^T\vec b \\
+&=R^{-1}Q^T\vec b
+\end{aligned}</script><p>或者等价的</p>
+<script type="math/tex; mode=display">
+R\vec x = Q^T \vec b</script><p>如果我们设计$R$为三角阵，那么求解$R\vec x = Q^T \vec b$只是在执行back-substitution。关于$QR$分解，常见的有两种方法，分别在后面介绍。</p>
+<h3 id="Gram-Schmidt正交化"><a href="#Gram-Schmidt正交化" class="headerlink" title="Gram-Schmidt正交化"></a>Gram-Schmidt正交化</h3><p>介绍Gram-Schmidt正交化之前，首先考虑投影问题。</p>
+<h4 id="投影"><a href="#投影" class="headerlink" title="投影"></a>投影</h4><p>投影问题的形式如下：对于向量$\vec a ,\vec b$，下式何时最小</p>
+<script type="math/tex; mode=display">
+\min_c ||c\vec a -\vec b||^2</script><p>这是$A\vec x =\vec b$的特殊形式，我们知道上述问题的解为</p>
+<script type="math/tex; mode=display">
+c = \frac{\vec a^T \vec b}{\vec a^T \vec a} =\frac{\vec a .\vec b}{||\vec a||^2}</script><p>我们称如下量为$\vec b $在$\vec a$上的投影：</p>
+<script type="math/tex; mode=display">
+\text{proj}_{\vec a} \vec b =c\vec a =\frac{\vec a .\vec b}{||\vec a||^2} \vec a</script><p>接着，我们考虑残差$\vec b - \text{proj}_{\vec a} \vec b$和$\vec a ​$的关系：</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+\vec a . (\vec b - \text{proj}_{\vec a} \vec b)
+&=\vec a .\vec b - \vec a .\Big(\frac{\vec a .\vec b}{||\vec a||^2} \vec a  \Big)\\
+&=\vec a .\vec b- \frac{\vec a .\vec b}{||\vec a||^2} (\vec a .\vec a )\\
+&=\vec a .\vec b-\vec a .\vec b\\
+&=0
+\end{aligned}</script><p>上述事实告诉我们，我们将$\vec b$分解为平行于$\vec a $的部分和正交于$\vec a​$的部分。</p>
+<p>现在，假设向量$\hat a_1 ,\hat a_2,…,\hat a_k​$正交（$||\hat a_i ||=1​$），那么对于每个$i​$，我们有</p>
+<script type="math/tex; mode=display">
+\text{proj}_{\vec a_i} \vec b =({\hat a_i .\vec b}) \hat a_i</script><p>进一步，我们可以将$\vec b$投影到$\{\hat a_1 ,\hat a_2,…,\hat a_k\}$张成的子空间，通过对下式关于$c_1,…,c_k \in \mathbb R$最小化，</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+|| c_1 \hat a_1 +c_2 \hat a_2+...+c_k \hat a_k -\vec b||^2
+&=\Big(\sum_{i=1}^k\sum_{j=1}^k c_i c_j(\hat a_i.\hat a_j)   \Big)
+-2\vec b .\Big(\sum_{i=1}^k c_i \hat a_i  \Big)+\vec b.\vec b\\
+&= \sum_{i=1}^k (c_i^2  -2c_i \vec b. \hat a_i )+||\vec b||^2
+\end{aligned}</script><p>最后一步是因为</p>
+<script type="math/tex; mode=display">
+\vec a_i .\vec a_j=\begin{cases}
+1 & i=j\\
+0 &i\neq j
+\end{cases}</script><p>对上式关于$c_i$求偏导，不难得到</p>
+<script type="math/tex; mode=display">
+c_i =\hat a_i .\vec b</script><p>所以</p>
+<script type="math/tex; mode=display">
+\text{proj}_{\text{span}\{\hat a_1 ,\hat a_2,...,\hat a_k\}} \vec b =
+
+\sum_{i=1}^k({\hat a_i .\vec b}) \hat a_i</script><p>并且不难得到</p>
+<script type="math/tex; mode=display">
+\hat a_i .(\vec b -\text{proj}_{\text{span}\{\hat a_1 ,\hat a_2,...,\hat a_k\}} \vec b)=0</script><p>将上述内容整理一下即得到Gram-Schmidt正交化方法：</p>
+<p>输入：线性独立的向量$\{\vec v_1 ,…\vec v_k\}​$</p>
+<p>输入：正交基$\{\hat v_1 ,…\hat v_k\}$</p>
+<ol>
+<li><p>令</p>
+<script type="math/tex; mode=display">
+\hat a_1 =\frac{\vec v_1}{||\vec v_1||}</script></li>
+<li><p>对$i=2…k$</p>
+<ol>
+<li><p>计算</p>
+<script type="math/tex; mode=display">
+\vec p_i =\text{proj}_{\text{span}\{\hat a_1 ,\hat a_2,...,\hat a_{i-1}\}} \vec v_i</script></li>
+<li></li>
+</ol>
+<script type="math/tex; mode=display">
+\hat a_i =\frac{\vec v_i -\vec p_i }{||\vec v_i -\vec p_i ||}</script></li>
+</ol>
+<p>不难发现，对所有的$i$，我们有</p>
+<script type="math/tex; mode=display">
+{\text{span}\{\hat v_1 ,\hat v_2,...,\hat v_i\}}={\text{span}\{\hat a_1 ,\hat a_2,...,\hat a_i\}}</script><p>Gram-Schmidt正交化可以解决很多问题，但有时候会产生数值不稳定性，考虑如下列子</p>
+<script type="math/tex; mode=display">
+\vec v_1 = \left(
+ \begin{matrix}
+1\\
+1
+  \end{matrix}
+  \right), \vec v_2=\left(
+ \begin{matrix}
+1+\epsilon\\
+1
+  \end{matrix}
+  \right)</script><p>此时显然有正交基</p>
+<script type="math/tex; mode=display">
+(1,0),(0,1)</script><p>但是如果使用Gram-Schmidt正交化，则有</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+\hat a_1 & =\frac{\vec v_1}{||\vec v_1||}
+=\frac 1 {\sqrt 2}  \left(
+ \begin{matrix}
+1\\
+1
+  \end{matrix}
+  \right) \\
+ \vec p_2 &=\frac {2+\epsilon}{2}\left(
+ \begin{matrix}
+1\\
+1
+  \end{matrix}
+  \right) \\
+  \vec v_2 -\vec p_2 &=
+  \left(
+ \begin{matrix}
+1+\epsilon\\
+1
+  \end{matrix}
+  \right) -\frac {2+\epsilon}{2}\left(
+ \begin{matrix}
+1\\
+1
+  \end{matrix}
+  \right) \\
+  &=\frac 1 2 \left(
+ \begin{matrix}
+\epsilon\\
+- \epsilon
+  \end{matrix}
+  \right) 
+\end{aligned}</script><p>注意到</p>
+<script type="math/tex; mode=display">
+||  \vec v_2 -\vec p_2|| =\frac {\sqrt 2 } 2 \epsilon</script><p>如果$\epsilon $很小，那么除以上述量会产生计算问题。</p>
+<h3 id="Householder变换"><a href="#Householder变换" class="headerlink" title="Householder变换"></a>Householder变换</h3><p>Householder变换采取高斯消元法的思路，我们不断左乘正交矩阵$Q_i$，最终将$A$变为上三角矩阵，具体形式如下</p>
+<script type="math/tex; mode=display">
+Q_k...Q_1 A= R</script><p>所以</p>
+<script type="math/tex; mode=display">
+A= Q_1^T ...Q_k^T R =Q R\\
+Q= Q_1^T ...Q_k^T</script><p>注意正交矩阵有无数种，Householder变换选择特殊的正交矩阵——反射矩阵，这是因为反射矩阵可以很方便的用投影表示出来。事实上，$2\text{proj}_{\vec v} \vec b -\vec b$为$\vec b$关于$\vec v $的反射向量，并且</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+2\text{proj}_{\vec v} \vec b -\vec b
+&= 2\frac{\vec v .\vec b}{\vec v .\vec v}\vec v - \vec b \\
+&=2\vec v.\frac{\vec v^T\vec b}{\vec v^T\vec v} - \vec b \\
+&=\Big(\frac{2\vec v\vec v^T}{\vec v^T\vec v}-I_n \Big)\vec b\\
+&\triangleq -H_{\vec v}\vec b
+\end{aligned}</script><p>所以反射可以看成对$\vec b​$做线性变换，事实上，我们还有</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+H_{\vec v}^T H_{\vec v}
+&=\Big(I_n -\frac{2\vec v\vec v^T}{\vec v^T\vec v}\Big)^T\Big(I_n -\frac{2\vec v\vec v^T}{\vec v^T\vec v} \Big)\\
+&=\Big(I_n -\frac{2\vec v\vec v^T}{\vec v^T\vec v}\Big)\Big(I_n -\frac{2\vec v\vec v^T}{\vec v^T\vec v}\Big)\\
+&=I_n+\frac{2\vec v\vec v^T}{\vec v^T\vec v}\frac{2\vec v\vec v^T}{\vec v^T\vec v}-\frac{2\vec v\vec v^T}{\vec v^T\vec v}-\frac{2\vec v\vec v^T}{\vec v^T\vec v} \\
+&=I_n+\frac{4(\vec v\vec v^T)(\vec v^T\vec v)}{(\vec v^T\vec v)(\vec v^T\vec v)}
+-\frac{4\vec v\vec v^T}{\vec v^T\vec v} \\
+&=I_n+\frac{4\vec v\vec v^T}{\vec v^T\vec v}-\frac{4\vec v\vec v^T}{\vec v^T\vec v}\\
+&=I_n
+\end{aligned}</script><p>从而$H_{\vec v}$为正交矩阵，我们利用这一点来介绍Householder变换。</p>
+<p>假设我们在做高斯消元法forward substitution的第一步，记矩阵$A$的第一列为$\vec a $，第一个单位向向量为$\vec e_1$，那么第一步消元的效果为除了第一行第一列元素以外都变成$0​$，即</p>
+<script type="math/tex; mode=display">
+H_{\vec v} A=  \left(
+ \begin{matrix}
+  c & \times  & \times  &\times   \\
+  0 & \times  & \times  &\times \\
+    \vdots & \vdots  & \vdots  &\vdots \\
+  0 & \times  & \times  &\times 
+  \end{matrix}
+  \right)</script><p>所以</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+c\vec e_1 
+&= H_{\vec v} \vec a \\
+&=\Big(I_n-\frac{2\vec v\vec v^T}{\vec v^T\vec v} \Big)\vec a  \\
+&=\vec a  - 2\vec v \frac{\vec v^T\vec a}{\vec v^T\vec v}
+\end{aligned}</script><p>移项可得</p>
+<script type="math/tex; mode=display">
+\vec v =(\vec a -c\vec e_{1}) .\frac{\vec v^T \vec v}{2 \vec v^T \vec a }</script><p>所以$\vec v$平行于$\vec a -c\vec e_1$，因为$\vec v$的模长不改变$H_{\vec v}$，所以不妨选择</p>
+<script type="math/tex; mode=display">
+\vec v =a-c\vec e_1</script><p>从而</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+1 &=\frac{\vec v^T \vec v}{2 \vec v^T \vec a } \\
+&=\frac{(a-c\vec e_1)^T (a-c\vec e_1)}{2 (a-c\vec e_1)^T \vec a}\\
+&=\frac{||\vec a||^2 -2c\vec e_1 .\vec a +c^2}{2(\vec a .\vec a -c\vec e_1 .\vec a )}
+\end{aligned}</script><p>即</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+||\vec a||^2 -2c\vec e_1 .\vec a +c^2 &=2(\vec a .\vec a -c\vec e_1 .\vec a ) \\
+c^2 &=||\vec a ||^2 \\
+c&=\pm ||\vec a ||
+\end{aligned}</script><p>现在将上述步骤推广，假设进行到第$k$步，记$A$的第$k​$列为</p>
+<script type="math/tex; mode=display">
+\vec a = \left(
+ \begin{matrix}
+ \vec a_1 \\
+
+
+ \vec a_{2}
+  \end{matrix}
+  \right)</script><p>其中$\vec a _1 \in \mathbb R^{k-1},\vec a _2 \in \mathbb R^{n-k+1}$，$a_0$是实数，消元以后的结果为</p>
+<script type="math/tex; mode=display">
+H_{\vec v} \vec a = \left(
+ \begin{matrix}
+ \vec a_1 \\
+ c \\
+
+0
+  \end{matrix}
+  \right)</script><p>所以</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+\Big(I_n-\frac{2\vec v\vec v^T}{\vec v^T\vec v} \Big)\vec a &= \left(
+ \begin{matrix}
+ \vec a_1 \\
+ c \\0
+  \end{matrix}
+  \right) \\
+  \vec a -2\vec v \frac{\vec v^T \vec a}{\vec v^T\vec v} &=\left(
+ \begin{matrix}
+ \vec a_1 \\
+ c \\0
+  \end{matrix}
+  \right) \\
+
+  2\vec v \frac{\vec v^T\vec a}{\vec v^T\vec v} &
+  =  \vec a -\left(
+ \begin{matrix}
+ \vec a_1 \\
+ c \\0
+  \end{matrix}
+  \right)\\
+  &=\left(
+ \begin{matrix}
+ \vec a_1 \\
+
+ \vec a_{2}
+  \end{matrix}
+  \right) -\left(
+ \begin{matrix}
+ \vec a_1 \\
+ c \\0
+  \end{matrix}
+  \right) \\
+ &=  \left(
+ \begin{matrix}
+0\\
+
+ \vec a_{2}
+  \end{matrix}
+  \right) -c e_k 
+\end{aligned}</script><p>同之前讨论，我们取</p>
+<script type="math/tex; mode=display">
+\vec v = \left(
+ \begin{matrix}
+ 0 \\
+
+ \vec a_{2}
+  \end{matrix}
+  \right) -c e_k</script><p>所以</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+  \frac{2\vec v^T\vec a}{\vec v^T\vec v} &=1  \\
+  2\vec v^T\vec a&=\vec v^T\vec v \\
+  2\Big(\left(
+ \begin{matrix}
+ 0 \\
+
+ \vec a_{2}
+  \end{matrix}
+  \right) -c e_k\Big)^T \left(
+ \begin{matrix}
+ \vec a_1 \\
+ \vec a_2
+  \end{matrix}
+  \right)
+  &=\Big(\left(
+ \begin{matrix}
+ 0 \\
+
+ \vec a_{2}
+  \end{matrix}
+  \right) -c e_k\Big)^T\Big(\left(
+ \begin{matrix}
+ 0 \\
+
+ \vec a_{2}
+  \end{matrix}
+  \right) -c e_k\Big)\\
+  2(|| \vec a_2||^2-c e_k^T \vec a )&= ||\vec a_2||^2
+  +c^2 -2c e_k^T \vec a  \\
+  c^2 &=||\vec a _2 ||^2
+\end{aligned}</script><p>所以最终结果为</p>
+<script type="math/tex; mode=display">
+\vec v = \left(
+ \begin{matrix}
+ 0 \\
+
+ \vec a_{2}
+  \end{matrix}
+  \right) -c e_k \\
+  c=\pm ||\vec a_2||</script><h3 id="约化的-QR-分解"><a href="#约化的-QR-分解" class="headerlink" title="约化的$QR$分解"></a>约化的$QR$分解</h3><p>之前讨论的操作都是在方阵上，对于非方阵$A\in \mathbb R^{m\times n }$也可以进行同样的操作，但是Gram-Schmidt正交化和Householder变换的结果有一些不同：</p>
+<ul>
+<li><p>如果使用Gram-Schmidt正交化，因为使用的是列变换，所以最终结果为</p>
+<script type="math/tex; mode=display">
+Q\in \mathbb R^{m\times n}, R\in \mathbb R^{n\times n}</script></li>
+<li><p>如果使用Householder变换，因为是使用正交矩阵进行消元，所以最终结果为</p>
+<script type="math/tex; mode=display">
+Q\in \mathbb R^{m\times m}, R\in \mathbb R^{m\times n}</script></li>
+</ul>
+<p>假设现在有$m\gg n$，因为数值稳定性，我们更倾向于使用Householder变换，但是$m\times m$的矩阵可能非常大，幸运的是，我们知道$R$为上三角矩阵，所以</p>
+<script type="math/tex; mode=display">
+R= \left(
+ \begin{matrix}
+   \times  & \times  & \times  \\
+   0 & \times  & \times  \\
+   0 & 0& \times  \\
+   0&0&0\\
+   0&0&0
+  \end{matrix}
+  \right)</script><p>因此</p>
+<script type="math/tex; mode=display">
+A=QR= \left(
+ \begin{matrix}
+Q_1 & Q_2
+  \end{matrix}
+  \right)\left(
+ \begin{matrix}
+R_1 \\ 0
+  \end{matrix}
+  \right)=Q_1 R_1</script><p>这里</p>
+<script type="math/tex; mode=display">
+Q_1\in \mathbb R^{m\times n}, R_1\in \mathbb R^{n\times n}</script><p>这种形式被称为$A$的约化的$QR$分解。</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">Doraemonzzz</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="http://doraemonzzz.com/2019/03/27/CS205A%20Lecture%205%20Column%20spaces%20and%20QR/">http://doraemonzzz.com/2019/03/27/CS205A%20Lecture%205%20Column%20spaces%20and%20QR/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://doraemonzzz.com" target="_blank">Doraemonzzz</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/CS205A/">CS205A</a></div><div class="post_share"><div class="social-share" data-image="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2019/03/28/CS205A%20Lecture%206%20Eigenproblems;%20How%20they%20arise,%20properties/"><img class="prev-cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">CS205A Lecture 6 Eigenproblems, How they arise, properties</div></div></a></div><div class="next-post pull-right"><a href="/2019/03/25/CS205A%20HW1/"><img class="next-cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">CS205A HW1</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span> 相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2019/03/24/CS205A HW0/" title="CS205A HW0"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2019-03-24</div><div class="title">CS205A HW0</div></div></a></div><div><a href="/2019/03/25/CS205A HW1/" title="CS205A HW1"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2019-03-25</div><div class="title">CS205A HW1</div></div></a></div><div><a href="/2019/03/31/CS205A HW2/" title="CS205A HW2"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2019-03-31</div><div class="title">CS205A HW2</div></div></a></div><div><a href="/2019/04/10/CS205A HW4/" title="CS205A HW4"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2019-04-10</div><div class="title">CS205A HW4</div></div></a></div><div><a href="/2019/03/31/CS205A HW3/" title="CS205A HW3"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2019-03-31</div><div class="title">CS205A HW3</div></div></a></div><div><a href="/2019/04/24/CS205A HW5/" title="CS205A HW5"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2019-04-24</div><div class="title">CS205A HW5</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="card-info-avatar is-center"><img class="avatar-img" src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/><div class="author-info__name">Doraemonzzz</div><div class="author-info__description">个人博客，主要记录有关机器学习，数学以及计算机科学的笔记</div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">610</div></a></div><div class="card-info-data-item is-center"><a href="/tags/"><div class="headline">标签</div><div class="length-num">59</div></a></div><div class="card-info-data-item is-center"><a href="/categories/"><div class="headline">分类</div><div class="length-num">23</div></a></div></div><a class="button--animated" id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/Doraemonzzz" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="/doraemon_zzz@163.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn card-announcement-animation"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Chapter-4-%E5%88%97%E7%A9%BA%E9%97%B4%E5%92%8C-QR-%E5%88%86%E8%A7%A3"><span class="toc-number">1.</span> <span class="toc-text">Chapter 4 列空间和$QR$分解</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%AD%A3%E8%A7%84%E6%96%B9%E7%A8%8B%E7%9A%84%E7%BB%93%E6%9E%84"><span class="toc-number">1.1.</span> <span class="toc-text">正规方程的结构</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%AD%A3%E4%BA%A4%E6%80%A7"><span class="toc-number">1.2.</span> <span class="toc-text">正交性</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AE%9A%E4%B9%89-4-1-%E6%AD%A3%E4%BA%A4%E6%80%A7%EF%BC%8C%E6%AD%A3%E4%BA%A4%E7%9F%A9%E9%98%B5"><span class="toc-number">1.2.1.</span> <span class="toc-text">定义 4.1 (正交性，正交矩阵)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%80%A7%E8%B4%A8"><span class="toc-number">1.2.2.</span> <span class="toc-text">性质</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AF%B9%E9%9D%9E%E6%AD%A3%E4%BA%A4%E7%9F%A9%E9%98%B5%E7%9A%84%E5%A4%84%E7%90%86"><span class="toc-number">1.3.</span> <span class="toc-text">对非正交矩阵的处理</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%BC%95%E7%90%86-4-1-%E5%88%97%E7%A9%BA%E9%97%B4%E7%9A%84%E4%B8%8D%E5%8F%98%E6%80%A7"><span class="toc-number">1.3.1.</span> <span class="toc-text">引理 4.1 (列空间的不变性)</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Gram-Schmidt%E6%AD%A3%E4%BA%A4%E5%8C%96"><span class="toc-number">1.4.</span> <span class="toc-text">Gram-Schmidt正交化</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%8A%95%E5%BD%B1"><span class="toc-number">1.4.1.</span> <span class="toc-text">投影</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Householder%E5%8F%98%E6%8D%A2"><span class="toc-number">1.5.</span> <span class="toc-text">Householder变换</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BA%A6%E5%8C%96%E7%9A%84-QR-%E5%88%86%E8%A7%A3"><span class="toc-number">1.6.</span> <span class="toc-text">约化的$QR$分解</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2021/06/06/2021-6-6-%E7%AE%97%E6%B3%95%E6%A6%82%E8%AE%BA(DPV)%E4%B9%A0%E9%A2%98%E8%A7%A3%E7%AD%94%E2%80%94%E2%80%94%E7%AC%AC3%E7%AB%A0-%E5%9B%BE%E7%9A%84%E5%88%86%E8%A7%A3/" title="算法概论(DPV)习题解答——第3章 图的分解"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="算法概论(DPV)习题解答——第3章 图的分解"/></a><div class="content"><a class="title" href="/2021/06/06/2021-6-6-%E7%AE%97%E6%B3%95%E6%A6%82%E8%AE%BA(DPV)%E4%B9%A0%E9%A2%98%E8%A7%A3%E7%AD%94%E2%80%94%E2%80%94%E7%AC%AC3%E7%AB%A0-%E5%9B%BE%E7%9A%84%E5%88%86%E8%A7%A3/" title="算法概论(DPV)习题解答——第3章 图的分解">算法概论(DPV)习题解答——第3章 图的分解</a><time datetime="2021-06-06T14:35:00.000Z" title="发表于 2021-06-06 22:35:00">2021-06-06</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/06/06/2021-6-6-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E7%AC%AC5%E7%AB%A0-%E4%B9%A0%E9%A2%98%E8%A7%A3%E6%9E%90/" title="深入理解计算机系统 第5章 习题解析"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="深入理解计算机系统 第5章 习题解析"/></a><div class="content"><a class="title" href="/2021/06/06/2021-6-6-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E7%AC%AC5%E7%AB%A0-%E4%B9%A0%E9%A2%98%E8%A7%A3%E6%9E%90/" title="深入理解计算机系统 第5章 习题解析">深入理解计算机系统 第5章 习题解析</a><time datetime="2021-06-06T07:23:00.000Z" title="发表于 2021-06-06 15:23:00">2021-06-06</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/06/05/2021-6-5-Stanford-Compiler-PA5%E7%BF%BB%E8%AF%91/" title="Stanford Compiler PA5翻译"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Stanford Compiler PA5翻译"/></a><div class="content"><a class="title" href="/2021/06/05/2021-6-5-Stanford-Compiler-PA5%E7%BF%BB%E8%AF%91/" title="Stanford Compiler PA5翻译">Stanford Compiler PA5翻译</a><time datetime="2021-06-05T06:12:00.000Z" title="发表于 2021-06-05 14:12:00">2021-06-05</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/06/04/2021-6-4-Stanford-Compiler-PA4%E7%BF%BB%E8%AF%91/" title="Stanford Compiler PA4翻译"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Stanford Compiler PA4翻译"/></a><div class="content"><a class="title" href="/2021/06/04/2021-6-4-Stanford-Compiler-PA4%E7%BF%BB%E8%AF%91/" title="Stanford Compiler PA4翻译">Stanford Compiler PA4翻译</a><time datetime="2021-06-03T16:17:00.000Z" title="发表于 2021-06-04 00:17:00">2021-06-04</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/06/03/2021-6-3-%E5%B7%A7%E5%A6%99%E7%9A%84Y%E8%BF%90%E7%AE%97%E7%AC%A6/" title="巧妙的Y运算符"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="巧妙的Y运算符"/></a><div class="content"><a class="title" href="/2021/06/03/2021-6-3-%E5%B7%A7%E5%A6%99%E7%9A%84Y%E8%BF%90%E7%AE%97%E7%AC%A6/" title="巧妙的Y运算符">巧妙的Y运算符</a><time datetime="2021-06-03T00:54:00.000Z" title="发表于 2021-06-03 08:54:00">2021-06-03</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2021 By Doraemonzzz</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><div class="js-pjax"><script>if (!window.MathJax) {
+  window.MathJax = {
+    loader: {
+      source: {
+        '[tex]/amsCd': '[tex]/amscd'
+      }
+    },
+    tex: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]],
+      tags: 'ams'
+    },
+    options: {
+      renderActions: {
+        findScript: [10, doc => {
+          for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+            const display = !!node.type.match(/; *mode=display/)
+            const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+            const text = document.createTextNode('')
+            node.parentNode.replaceChild(text, node)
+            math.start = {node: text, delim: '', n: 0}
+            math.end = {node: text, delim: '', n: 0}
+            doc.math.push(math)
+          }
+        }, ''],
+        addClass: [200,() => {
+          document.querySelectorAll('mjx-container:not([display=\'true\']').forEach( node => {
+            const target = node.parentNode
+            if (!target.classList.contains('has-jax')) {
+              target.classList.add('mathjax-overflow')
+            }
+          })
+        }, '', false]
+      }
+    }
+  }
+  
+  const script = document.createElement('script')
+  script.src = 'https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js'
+  script.id = 'MathJax-script'
+  script.async = true
+  document.head.appendChild(script)
+} else {
+  MathJax.startup.document.state(0)
+  MathJax.texReset()
+  MathJax.typeset()
+}</script></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

@@ -1,0 +1,345 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Information Theory, Inference and Learning Algorithms Lecture 8 | Doraemonzzz</title><meta name="keywords" content="信息论"><meta name="author" content="Doraemonzzz"><meta name="copyright" content="Doraemonzzz"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="课程主页：http:&#x2F;&#x2F;www.inference.org.uk&#x2F;mackay&#x2F;itprnn&#x2F;，http:&#x2F;&#x2F;www.inference.org.uk&#x2F;itprnn_lectures&#x2F; 课程视频：https:&#x2F;&#x2F;www.bilibili.com&#x2F;video&#x2F;BV14b411G7wn?from&#x3D;search&amp;seid&#x3D;1786094286746981315，https:&#x2F;&#x2F;www.youtu">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Information Theory, Inference and Learning Algorithms Lecture 8">
+<meta property="og:url" content="http://doraemonzzz.com/2020/06/22/Information%20Theory,%20Inference%20and%20Learning%20Algorithms%20Lecture%208/index.html">
+<meta property="og:site_name" content="Doraemonzzz">
+<meta property="og:description" content="课程主页：http:&#x2F;&#x2F;www.inference.org.uk&#x2F;mackay&#x2F;itprnn&#x2F;，http:&#x2F;&#x2F;www.inference.org.uk&#x2F;itprnn_lectures&#x2F; 课程视频：https:&#x2F;&#x2F;www.bilibili.com&#x2F;video&#x2F;BV14b411G7wn?from&#x3D;search&amp;seid&#x3D;1786094286746981315，https:&#x2F;&#x2F;www.youtu">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg">
+<meta property="article:published_time" content="2020-06-22T11:59:00.000Z">
+<meta property="article:modified_time" content="2020-06-28T06:48:11.811Z">
+<meta property="article:author" content="Doraemonzzz">
+<meta property="article:tag" content="信息论">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="http://doraemonzzz.com/2020/06/22/Information%20Theory,%20Inference%20and%20Learning%20Algorithms%20Lecture%208/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"prismjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    jQuery: 'https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js',
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+    },
+    fancybox: {
+      js: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isanchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'Information Theory, Inference and Learning Algorithms Lecture 8',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2020-06-28 14:48:11'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    })(window)</script><meta name="generator" content="Hexo 5.4.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="author-avatar"><img class="avatar-img" src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">文章</div><div class="length-num">610</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">标签</div><div class="length-num">59</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/categories/"><div class="headline">分类</div><div class="length-num">23</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">Doraemonzzz</a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">Information Theory, Inference and Learning Algorithms Lecture 8</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2020-06-22T11:59:00.000Z" title="发表于 2020-06-22 19:59:00">2020-06-22</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2020-06-28T06:48:11.811Z" title="更新于 2020-06-28 14:48:11">2020-06-28</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E6%95%B0%E5%AD%A6/">数学</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="Information Theory, Inference and Learning Algorithms Lecture 8"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p>课程主页：<a target="_blank" rel="noopener" href="http://www.inference.org.uk/mackay/itprnn/，http://www.inference.org.uk/itprnn_lectures/">http://www.inference.org.uk/mackay/itprnn/，http://www.inference.org.uk/itprnn_lectures/</a></p>
+<p>课程视频：<a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV14b411G7wn?from=search&amp;seid=1786094286746981315，https://www.youtube.com/watch?v=BCiZc0n6COY&amp;list=PLruBu5BI5n4aFpG32iMbdWoRVAA-Vcso6">https://www.bilibili.com/video/BV14b411G7wn?from=search&amp;seid=1786094286746981315，https://www.youtube.com/watch?v=BCiZc0n6COY&amp;list=PLruBu5BI5n4aFpG32iMbdWoRVAA-Vcso6</a></p>
+<p>课程书籍：<a target="_blank" rel="noopener" href="https://book.douban.com/subject/1893050/">https://book.douban.com/subject/1893050/</a></p>
+<p>这次回顾第八讲，第八讲介绍了噪声信道编码定理。</p>
+<p>备注：笔记参考了中文书籍。</p>
+<span id="more"></span>
+<h3 id="噪声信道编码定理"><a href="#噪声信道编码定理" class="headerlink" title="噪声信道编码定理"></a>噪声信道编码定理</h3><ol>
+<li><p>对于每个离散的无记忆信道，信道容量</p>
+<script type="math/tex; mode=display">
+
+C=\max _{\mathscr{P}_{X} } I(X ; Y)</script><p>具有如下性质。对于任意 $\varepsilon&gt;0$ 和 $R&lt;C,$ 当 $N$ 足够大时,存在一个长度为 $N$ 的码 $,$ 码率 $\geqslant R$ 和一个译码算法，使得最大分组差错概率 $&lt;\varepsilon$。</p>
+</li>
+<li><p>如果误码率$p_{\mathrm{b} }$是可接受的，则不高于 $R\left(p_{\mathrm{b} }\right)$的码率是可达的，其中</p>
+<script type="math/tex; mode=display">
+R\left(p_{\mathrm{b} }\right)=\frac{C}{1-H_{2}\left(p_{\mathrm{b} }\right)}</script></li>
+<li><p>对于任意 $p_{\mathrm{b} },$ 高于$R\left(p_{\mathrm{b} }\right)$的码率是不可达的：</p>
+<p><img src="https://github.com/Doraemonzzz/md-photo/blob/master/Information%20Theory,%20Inference%20and%20Learning%20Algorithms/Lecture%208/2020062201.jpg?raw=true" alt=""></p>
+<p>在 $R, p_{\mathrm{b} }$平面上，可证明区域(1,2)可达，而区域(3)不可达。</p>
+</li>
+</ol>
+<p>备注：</p>
+<p>特定码$\mathscr B$的分组差错概率为</p>
+<script type="math/tex; mode=display">
+p_{\mathrm{B} }(\mathscr{B}) \equiv P(\hat{s} \neq s | \mathscr{P})</script><p>误码率 $p_{\mathrm{b} }$的定义为</p>
+<script type="math/tex; mode=display">
+\left\langle p_{\mathrm{B} }\right\rangle\equiv\sum_{\mathscr{E} } P(\hat{\boldsymbol{s} } \neq \boldsymbol{s} | \mathscr{B}) {P}(\mathscr{B})</script><p>最大分组差错概率定义为</p>
+<script type="math/tex; mode=display">
+p_{\mathrm{BM} }(\mathscr{B}) \equiv \max P(\hat{s} \neq s | s, \mathscr{B})</script><h3 id="联合典型序列"><a href="#联合典型序列" class="headerlink" title="联合典型序列"></a>联合典型序列</h3><h4 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h4><p>联合典型性：一对长度为$N$的序列$\boldsymbol{x}$和$\boldsymbol{y}$, 被定义为关于分布 $P(x, y)$ 是联合典型的(容差为 $\beta),$ 如果满足</p>
+<script type="math/tex; mode=display">
+\begin{array}{c}
+\boldsymbol{x} \text { 是 } P(\boldsymbol{x}) \text { 的典型, 即 }\left|\frac{1}{N} \log \frac{1}{P(x)}-H(X)\right|<\beta \\
+\boldsymbol{y} \text { 是 } P(\boldsymbol{y}) \text { 的典型, 即 }\left|\frac{1}{N} \log \frac{1}{P(\boldsymbol{y})}-{H}(Y)\right|<\boldsymbol{\beta} \\
+\boldsymbol{x}, \boldsymbol{y} \text { 是 } P(\boldsymbol{x}, \boldsymbol{y}) \text { 的典型, 即 }\left|\frac{1}{N} \log \frac{1}{P(\boldsymbol{x}, \boldsymbol{y})}-H(X, Y)\right|<\boldsymbol{\beta}
+\end{array}</script><p>联合典型集：$J_{N \beta}$ 是长度为$N$的所有联合典型序列对的集合。</p>
+<h4 id="联合典型性定理"><a href="#联合典型性定理" class="headerlink" title="联合典型性定理"></a>联合典型性定理</h4><p>总体$(XY)^N$定义为</p>
+<script type="math/tex; mode=display">
+P(x, y)=\prod_{n=1}^{N} P\left(x_{n}, y_{n}\right)</script><p>从总体$(X Y)^{N}$中选择$\boldsymbol{x}$和$\boldsymbol{y}$，则有</p>
+<ol>
+<li><p>当 $N \rightarrow \infty$ 时，$\boldsymbol{x}$和$\boldsymbol{y}$是联合典型序列 (容差$\beta$)的概率趋向于 $1_{\circ}$</p>
+</li>
+<li><p>联合典型序列的数量$|J_{N\beta}|$接近 $2^{N H(X, Y)}$，精确地有</p>
+<script type="math/tex; mode=display">
+\left|J_{N \beta}\right| \leqslant 2^{N(H(X, Y)+\beta)}</script></li>
+<li><p>如果 $\boldsymbol{x}^{\prime} \sim X^{N}$ 和 $\boldsymbol{y}^{\prime} \sim Y^{N}$，即 $\boldsymbol{x}^{\prime}$ 和 $\boldsymbol{y}^{\prime}$ 是与 $P(\boldsymbol{x}, \boldsymbol{y})$ 具有相同边缘分布的独立样本，则$(\boldsymbol{x}^{\prime}, \boldsymbol{y}^{\prime})$ 属于联合典型集的概率约为 $2^{-N I\left(X; Y\right)}$ 。更精确的表示为</p>
+<script type="math/tex; mode=display">
+P\left(\left(x^{\prime}, y^{\prime}\right) \in J_{N \beta}\right) \leqslant 2^{-N(I(X ; Y)-3 \beta)}</script></li>
+</ol>
+<p>证明：</p>
+<p>第一部分：</p>
+<p>类似Lecture 3的思路即可：</p>
+<p>首先定义：</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+T_{N \beta}^{(x)}
+&=\left\{\boldsymbol{x} \in \mathscr{H}_{X}^{N}:\left|\frac{1}{N} \log \frac{1}{P(x)}-H(X)\right|<\beta\right\}\\
+T_{N \beta}^{(y)}
+&=\left\{\boldsymbol{y} \in \mathscr{H}_{Y}^{N}:\left|\frac{1}{N} \log \frac{1}{P(y)}-H(Y)\right|<\beta\right\}\\
+T_{N \beta}^{(xy)}
+&=\left\{\boldsymbol{xy} \in \mathscr{H}_{XY}^{N}:\left|\frac{1}{N} \log \frac{1}{P(x,y)}-H(X,Y)\right|<\beta\right\}\\
+\sigma_x^2&= \operatorname{var}\left[\log _{2}\left(1 / P\left(x\right)\right)\right]\\
+\sigma_y^2&= \operatorname{var}\left[\log _{2}\left(1 / P\left(y\right)\right)\right]\\
+\sigma_{xy}^2&= \operatorname{var}\left[\log _{2}\left(1 / P\left(x,y\right)\right)\right]
+\end{aligned}</script><p>利用弱大数定律，我们有</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+P(x\in T_{N\beta}^{(x)})&\ge 1-\frac {\sigma_x^2 }{\beta^2N}\\
+P(y\in T_{N\beta}^{(y)})&\ge 1-\frac {\sigma_y^2 }{\beta^2N}\\
+P(xy\in T_{N\beta}^{(xy)})&\ge 1-\frac {\sigma_{xy}^2 }{\beta^2N}\\
+\end{aligned}</script><p>注意到我们有</p>
+<script type="math/tex; mode=display">
+J_{N \beta}=  T_{N\beta}^{(x)} \cap  T_{N\beta}^{(y)} \cap  T_{N\beta}^{(xy)}</script><p>所以</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+P(x\in J_{N\beta})
+&= P(x\in T_{N\beta}^{(x)} \cap  T_{N\beta}^{(y)} \cap  T_{N\beta}^{(xy)})\\
+&= 1- P\left(x\in \overline{T_{N\beta}^{(x)} } \cup   \overline{T_{N\beta}^{(y)} } \cup   \overline{T_{N\beta}^{(xy)} }\right)\\
+&\ge 1- P\left(x\in \overline{T_{N\beta}^{(x)} }\right)-
+P\left(y\in \overline{T_{N\beta}^{(y)} }\right)-
+P\left(xy\in \overline{T_{N\beta}^{(xy)} }\right)\\
+&\ge 1- \frac {\sigma_x^2 }{\beta^2N} -\frac {\sigma_y^2 }{\beta^2N} -\frac {\sigma_{xy}^2 }{\beta^2N}\\
+&\to 1
+\end{aligned}</script><p>第二部分：</p>
+<p>将Lecture 3的$P(x)$替换为$P(x,y)$即可</p>
+<p>第三部分：</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+P\left(\left(\boldsymbol{x}^{\prime}, \boldsymbol{y}^{\prime}\right) \in J_{N \beta}\right) &=\sum_{(x, y) \in J_{N \beta} } P(\boldsymbol{x}) P(\boldsymbol{y}) \\
+& \leqslant\left|J_{N \beta}\right| 2^{-N(H(X)-\beta)} 2^{-N(H(Y)-\beta)} \\
+& \leqslant 2^{N(H(X, Y)+\beta)-N(H(X)+H(Y)-2 \beta)}\\
+&=2^{-N(I(X ; Y)-3 \beta)}
+\end{aligned}</script><p>典型集的图示如下：</p>
+<p><img src="https://github.com/Doraemonzzz/md-photo/blob/master/Information%20Theory,%20Inference%20and%20Learning%20Algorithms/Lecture%208/2020062202.jpg?raw=true" alt=""></p>
+<p>两个独立的典型向量是联合典型的概率为</p>
+<script type="math/tex; mode=display">
+P\left(\left(x^{\prime}, y^{\prime}\right) \in J_{N \beta}\right) \simeq 2^{-N(I(X ; Y))}</script><p>因为独立典型对的总数是虚线矩形的面积 $2^{N H(X)} 2^{N H(Y)}$，联合典型对的数量约为$2^{NH(X,Y)}$，所以出现一个典型对的概率约为</p>
+<script type="math/tex; mode=display">
+2^{N H(X, Y)} / 2^{N H(X)+N H(Y)}=2^{-N I(X ; Y)}</script><h3 id="噪声信道编码定理的证明"><a href="#噪声信道编码定理的证明" class="headerlink" title="噪声信道编码定理的证明"></a>噪声信道编码定理的证明</h3><h4 id="随机编码和典型集译码"><a href="#随机编码和典型集译码" class="headerlink" title="随机编码和典型集译码"></a>随机编码和典型集译码</h4><p>考虑如下译码系统：</p>
+<ol>
+<li><p>固定$P(x)$，并按照如下概率随机地产生$\left(N, N R^{\prime}\right)=(N, K)$码$\mathscr{B}$ 中的$S=2^{N{R}^{\prime} }$个码字（即均匀分布）：</p>
+<script type="math/tex; mode=display">
+P(x)=\prod_{n=1}^{N} P\left(x_{n}\right)</script></li>
+<li><p>发送方和接收方都知道该码字。</p>
+</li>
+<li><p>从 $\{1,2, \cdots, 2^{N R}\}$ 中选择消息$s$，并传输$\boldsymbol{x}^{(s)}$。接收信号为 $\boldsymbol{y}$，满足：</p>
+<script type="math/tex; mode=display">
+P\left(y | x^{(s)}\right)=\prod_{n=1}^{N} P\left(y_{n} | x_{n}^{(s)}\right)</script></li>
+<li><p>信号由典型集译码法来译码：</p>
+<p>如果 $\left(\boldsymbol{x}^{(\hat s)}, \boldsymbol{y}\right)$ 是联合典型的且没有其他 $s^{\prime}$ 使得 $\left(\boldsymbol{x}^{\left(s^{\prime}\right)}, \boldsymbol{y}\right)$ 是联合典型的，则$y$被译码为$\hat s$；否则认为译码失败($\hat s=0$)</p>
+</li>
+<li><p>如果$\hat s\neq s$，则出现一个译码错误。</p>
+</li>
+</ol>
+<h4 id="证明的第一部分"><a href="#证明的第一部分" class="headerlink" title="证明的第一部分"></a>证明的第一部分</h4><p>在上译码系统的基础上进行证明，即我们希望证明</p>
+<script type="math/tex; mode=display">
+p_{\mathrm{BM} }(\mathscr{E}) \equiv \max P(\hat{s} \neq s | s, \mathscr{R}) <\epsilon</script><p>不失一般性，假设$s=1$。</p>
+<p>我们首先证明误码率</p>
+<script type="math/tex; mode=display">
+\left\langle p_{\mathrm{B} }\right\rangle\equiv\sum_{\mathscr{E} } P(\hat{\boldsymbol{s} } \neq \boldsymbol{s} | \mathscr{B}) \boldsymbol{P}(\mathscr{B})</script><p>可以任意小，这里注意译码一共有两种错误：</p>
+<ul>
+<li>(a)输出$y$和输入$x^{(s)}$不是联合典型的</li>
+<li>(b)$\mathscr{B}$有其他码字与$y$是联合典型的</li>
+</ul>
+<p>(a)令输入$x^{(1)}$和输出$y$不是联合典型的概率为$\delta$，那么根据联合典型定理的第一部分，当$N\to \infty$时$\delta \to 0$，所以对于任意$\delta $，都存在$N(\delta)$，使得</p>
+<script type="math/tex; mode=display">
+P\left(\left(x^{(1)}, y\right) \notin J_{N \beta}\right) \leqslant \delta</script><p>(b)根据联合典型定理的第三部分，对于$s’\neq 1$，$x^{(s’)}$和$y$是联合典型的概率$\le 2^{-N(I(X ; Y)-3 \boldsymbol{\beta})}$，注意到$s’$一共有$2^{NR’}-1$个值可以考虑。</p>
+<p>综合上述两点，误码率 $p_{\mathrm{b} }$满足</p>
+<script type="math/tex; mode=display">
+\begin{aligned}\left\langle p_{\mathrm{B} }\right\rangle & \leqslant \delta+\sum_{s^{\prime}=2}^{2^{N R^{\prime} } } 2^{-N(I(X ; Y)-3 \beta)} \\ 
+
+& \leqslant \delta+ 2^{N R^{\prime} }2^{-N(I(X ; Y)-3 \beta)} \\
+& \leqslant \delta+2^{-N\left(I(X ; Y)-R^{\prime}-3 \beta\right)} \end{aligned}</script><p>所以如果</p>
+<script type="math/tex; mode=display">
+R^{\prime}<I(X ; Y)-3 \beta</script><p>那么随着$N$增加，$p_{\mathrm{B} }$必然小于$2\delta$。</p>
+<p>现在进行三个改动：</p>
+<ol>
+<li><p>选择输入$P(x)$为最优输入分布。于是$R’ &lt; I(X;Y)-3\beta$变成$R’&lt;C-3\beta$（注意$\beta$是任意值，所以$R’$可以和$C$任意逼近）</p>
+</li>
+<li><p>因为</p>
+<script type="math/tex; mode=display">
+\left\langle p_{\mathrm{B} }\right\rangle\equiv\sum_{\mathscr{E} } P(\hat{\boldsymbol{s} } \neq \boldsymbol{s} | \mathscr{B}) {P}(\mathscr{B})<2\delta</script><p>所以必然存在一个码，使得</p>
+<script type="math/tex; mode=display">
+p_{\mathrm{B} }(\mathscr{B}) \equiv P(\hat{s} \neq s | \mathscr{P}) < 2\delta</script></li>
+<li><p>为了证明最大差错概率$p_{\text{BM} }$也可以很小，现在对码进行修改：将$P(\hat{s} \neq s | \mathscr{P}) $从大到小排列，记为$P_1\le P_2\le \ldots \le P_{2^{NR’} }$，对应的先验概率为记为$P^{(i)}$，那么由于先验是均匀分布（我们的假设），所以</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+\left\langle p_{\mathrm{B} }\right\rangle
+&=\sum_{\mathscr{E} } P(\hat{\boldsymbol{s} } \neq \boldsymbol{s} | \mathscr{B}) {P}(\mathscr{B})\\
+&=\sum_{i=1}^{2^{NR'} } P_i P^{(i)}\\
+&\ge \sum_{i=2^{NR'-1}+1}^{2^{NR'} } P_i P^{(i)} \\
+&\ge P_{2^{NR'-1} } \sum_{i=2^{NR'-1}+1}^{2^{NR'} }P^{(i)} \\
+&= \frac 1 2  P_{i=2^{NR'-1} }
+\end{aligned}</script><p>注意$p_{\text{B} }&lt;2\delta$，所以</p>
+<script type="math/tex; mode=display">
+P_{2^{NR'-1} } < 4\delta</script><p>现在删除$P_{i}, i&gt; 2^{NR’-1}$的码字，用剩下的码字定义一个新码，该新码有$2^{NR’-1}$个码字，最大分组差错概率$&lt;4\delta$，码率为$(NR’-1)/N= R’-1/N$。</p>
+</li>
+</ol>
+<p>定理的第二第三部分暂时还没吃透，这部分的笔记后续补充。</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">Doraemonzzz</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="http://doraemonzzz.com/2020/06/22/Information%20Theory,%20Inference%20and%20Learning%20Algorithms%20Lecture%208/">http://doraemonzzz.com/2020/06/22/Information%20Theory,%20Inference%20and%20Learning%20Algorithms%20Lecture%208/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://doraemonzzz.com" target="_blank">Doraemonzzz</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E4%BF%A1%E6%81%AF%E8%AE%BA/">信息论</a></div><div class="post_share"><div class="social-share" data-image="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2020/06/23/Digital%20Signal%20Processing%202%20Filtering%20Week1%20%E4%B9%A0%E9%A2%98/"><img class="prev-cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">Digital Signal Processing 2 Filtering Week1 习题</div></div></a></div><div class="next-post pull-right"><a href="/2020/06/22/%E5%8F%B0%E4%BA%A4%E5%A4%A7%E9%9A%8F%E6%9C%BA%E8%BF%87%E7%A8%8B%20Lecture%201/"><img class="next-cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">台交大随机过程 Lecture 1</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span> 相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2020/05/25/Information Theory, Inference and Learning Algorithms Lecture 1/" title="Information Theory, Inference and Learning Algorithms Lecture 1"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-05-25</div><div class="title">Information Theory, Inference and Learning Algorithms Lecture 1</div></div></a></div><div><a href="/2020/05/26/Information Theory, Inference and Learning Algorithms Lecture 2/" title="Information Theory, Inference and Learning Algorithms Lecture 2"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-05-26</div><div class="title">Information Theory, Inference and Learning Algorithms Lecture 2</div></div></a></div><div><a href="/2020/06/04/Information Theory, Inference and Learning Algorithms Lecture 3/" title="Information Theory, Inference and Learning Algorithms Lecture 3"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-06-04</div><div class="title">Information Theory, Inference and Learning Algorithms Lecture 3</div></div></a></div><div><a href="/2020/06/05/Information Theory, Inference and Learning Algorithms Lecture 4/" title="Information Theory, Inference and Learning Algorithms Lecture 4"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-06-05</div><div class="title">Information Theory, Inference and Learning Algorithms Lecture 4</div></div></a></div><div><a href="/2020/06/08/Information Theory, Inference and Learning Algorithms Lecture 5/" title="Information Theory, Inference and Learning Algorithms Lecture 5"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-06-08</div><div class="title">Information Theory, Inference and Learning Algorithms Lecture 5</div></div></a></div><div><a href="/2020/06/09/Information Theory, Inference and Learning Algorithms Lecture 6/" title="Information Theory, Inference and Learning Algorithms Lecture 6"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-06-09</div><div class="title">Information Theory, Inference and Learning Algorithms Lecture 6</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="card-info-avatar is-center"><img class="avatar-img" src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/><div class="author-info__name">Doraemonzzz</div><div class="author-info__description">个人博客，主要记录有关机器学习，数学以及计算机科学的笔记</div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">610</div></a></div><div class="card-info-data-item is-center"><a href="/tags/"><div class="headline">标签</div><div class="length-num">59</div></a></div><div class="card-info-data-item is-center"><a href="/categories/"><div class="headline">分类</div><div class="length-num">23</div></a></div></div><a class="button--animated" id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/Doraemonzzz" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="/doraemon_zzz@163.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn card-announcement-animation"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%99%AA%E5%A3%B0%E4%BF%A1%E9%81%93%E7%BC%96%E7%A0%81%E5%AE%9A%E7%90%86"><span class="toc-number">1.</span> <span class="toc-text">噪声信道编码定理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%81%94%E5%90%88%E5%85%B8%E5%9E%8B%E5%BA%8F%E5%88%97"><span class="toc-number">2.</span> <span class="toc-text">联合典型序列</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5"><span class="toc-number">2.1.</span> <span class="toc-text">基本概念</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%81%94%E5%90%88%E5%85%B8%E5%9E%8B%E6%80%A7%E5%AE%9A%E7%90%86"><span class="toc-number">2.2.</span> <span class="toc-text">联合典型性定理</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%99%AA%E5%A3%B0%E4%BF%A1%E9%81%93%E7%BC%96%E7%A0%81%E5%AE%9A%E7%90%86%E7%9A%84%E8%AF%81%E6%98%8E"><span class="toc-number">3.</span> <span class="toc-text">噪声信道编码定理的证明</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%9A%8F%E6%9C%BA%E7%BC%96%E7%A0%81%E5%92%8C%E5%85%B8%E5%9E%8B%E9%9B%86%E8%AF%91%E7%A0%81"><span class="toc-number">3.1.</span> <span class="toc-text">随机编码和典型集译码</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%AF%81%E6%98%8E%E7%9A%84%E7%AC%AC%E4%B8%80%E9%83%A8%E5%88%86"><span class="toc-number">3.2.</span> <span class="toc-text">证明的第一部分</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2021/06/06/2021-6-6-%E7%AE%97%E6%B3%95%E6%A6%82%E8%AE%BA(DPV)%E4%B9%A0%E9%A2%98%E8%A7%A3%E7%AD%94%E2%80%94%E2%80%94%E7%AC%AC3%E7%AB%A0-%E5%9B%BE%E7%9A%84%E5%88%86%E8%A7%A3/" title="算法概论(DPV)习题解答——第3章 图的分解"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="算法概论(DPV)习题解答——第3章 图的分解"/></a><div class="content"><a class="title" href="/2021/06/06/2021-6-6-%E7%AE%97%E6%B3%95%E6%A6%82%E8%AE%BA(DPV)%E4%B9%A0%E9%A2%98%E8%A7%A3%E7%AD%94%E2%80%94%E2%80%94%E7%AC%AC3%E7%AB%A0-%E5%9B%BE%E7%9A%84%E5%88%86%E8%A7%A3/" title="算法概论(DPV)习题解答——第3章 图的分解">算法概论(DPV)习题解答——第3章 图的分解</a><time datetime="2021-06-06T14:35:00.000Z" title="发表于 2021-06-06 22:35:00">2021-06-06</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/06/06/2021-6-6-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E7%AC%AC5%E7%AB%A0-%E4%B9%A0%E9%A2%98%E8%A7%A3%E6%9E%90/" title="深入理解计算机系统 第5章 习题解析"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="深入理解计算机系统 第5章 习题解析"/></a><div class="content"><a class="title" href="/2021/06/06/2021-6-6-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E7%AC%AC5%E7%AB%A0-%E4%B9%A0%E9%A2%98%E8%A7%A3%E6%9E%90/" title="深入理解计算机系统 第5章 习题解析">深入理解计算机系统 第5章 习题解析</a><time datetime="2021-06-06T07:23:00.000Z" title="发表于 2021-06-06 15:23:00">2021-06-06</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/06/05/2021-6-5-Stanford-Compiler-PA5%E7%BF%BB%E8%AF%91/" title="Stanford Compiler PA5翻译"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Stanford Compiler PA5翻译"/></a><div class="content"><a class="title" href="/2021/06/05/2021-6-5-Stanford-Compiler-PA5%E7%BF%BB%E8%AF%91/" title="Stanford Compiler PA5翻译">Stanford Compiler PA5翻译</a><time datetime="2021-06-05T06:12:00.000Z" title="发表于 2021-06-05 14:12:00">2021-06-05</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/06/04/2021-6-4-Stanford-Compiler-PA4%E7%BF%BB%E8%AF%91/" title="Stanford Compiler PA4翻译"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Stanford Compiler PA4翻译"/></a><div class="content"><a class="title" href="/2021/06/04/2021-6-4-Stanford-Compiler-PA4%E7%BF%BB%E8%AF%91/" title="Stanford Compiler PA4翻译">Stanford Compiler PA4翻译</a><time datetime="2021-06-03T16:17:00.000Z" title="发表于 2021-06-04 00:17:00">2021-06-04</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/06/03/2021-6-3-%E5%B7%A7%E5%A6%99%E7%9A%84Y%E8%BF%90%E7%AE%97%E7%AC%A6/" title="巧妙的Y运算符"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="巧妙的Y运算符"/></a><div class="content"><a class="title" href="/2021/06/03/2021-6-3-%E5%B7%A7%E5%A6%99%E7%9A%84Y%E8%BF%90%E7%AE%97%E7%AC%A6/" title="巧妙的Y运算符">巧妙的Y运算符</a><time datetime="2021-06-03T00:54:00.000Z" title="发表于 2021-06-03 08:54:00">2021-06-03</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2021 By Doraemonzzz</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><div class="js-pjax"><script>if (!window.MathJax) {
+  window.MathJax = {
+    loader: {
+      source: {
+        '[tex]/amsCd': '[tex]/amscd'
+      }
+    },
+    tex: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]],
+      tags: 'ams'
+    },
+    options: {
+      renderActions: {
+        findScript: [10, doc => {
+          for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+            const display = !!node.type.match(/; *mode=display/)
+            const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+            const text = document.createTextNode('')
+            node.parentNode.replaceChild(text, node)
+            math.start = {node: text, delim: '', n: 0}
+            math.end = {node: text, delim: '', n: 0}
+            doc.math.push(math)
+          }
+        }, ''],
+        addClass: [200,() => {
+          document.querySelectorAll('mjx-container:not([display=\'true\']').forEach( node => {
+            const target = node.parentNode
+            if (!target.classList.contains('has-jax')) {
+              target.classList.add('mathjax-overflow')
+            }
+          })
+        }, '', false]
+      }
+    }
+  }
+  
+  const script = document.createElement('script')
+  script.src = 'https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js'
+  script.id = 'MathJax-script'
+  script.async = true
+  document.head.appendChild(script)
+} else {
+  MathJax.startup.document.state(0)
+  MathJax.texReset()
+  MathJax.typeset()
+}</script></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

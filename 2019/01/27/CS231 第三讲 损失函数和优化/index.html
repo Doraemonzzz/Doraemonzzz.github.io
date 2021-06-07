@@ -1,0 +1,317 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>CS231 第三讲 损失函数和优化 | Doraemonzzz</title><meta name="keywords" content="CS231"><meta name="author" content="Doraemonzzz"><meta name="copyright" content="Doraemonzzz"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="课程视频地址：https:&#x2F;&#x2F;study.163.com&#x2F;courses-search?keyword&#x3D;CS231 课程主页：http:&#x2F;&#x2F;cs231n.stanford.edu&#x2F;2017&#x2F; 这一讲主要介绍损失函数和优化。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="CS231 第三讲 损失函数和优化">
+<meta property="og:url" content="http://doraemonzzz.com/2019/01/27/CS231%20%E7%AC%AC%E4%B8%89%E8%AE%B2%20%E6%8D%9F%E5%A4%B1%E5%87%BD%E6%95%B0%E5%92%8C%E4%BC%98%E5%8C%96/index.html">
+<meta property="og:site_name" content="Doraemonzzz">
+<meta property="og:description" content="课程视频地址：https:&#x2F;&#x2F;study.163.com&#x2F;courses-search?keyword&#x3D;CS231 课程主页：http:&#x2F;&#x2F;cs231n.stanford.edu&#x2F;2017&#x2F; 这一讲主要介绍损失函数和优化。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg">
+<meta property="article:published_time" content="2019-01-27T01:23:00.000Z">
+<meta property="article:modified_time" content="2019-02-12T13:11:59.757Z">
+<meta property="article:author" content="Doraemonzzz">
+<meta property="article:tag" content="CS231">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="http://doraemonzzz.com/2019/01/27/CS231%20%E7%AC%AC%E4%B8%89%E8%AE%B2%20%E6%8D%9F%E5%A4%B1%E5%87%BD%E6%95%B0%E5%92%8C%E4%BC%98%E5%8C%96/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"prismjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    jQuery: 'https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js',
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+    },
+    fancybox: {
+      js: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isanchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'CS231 第三讲 损失函数和优化',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2019-02-12 21:11:59'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    })(window)</script><meta name="generator" content="Hexo 5.4.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="author-avatar"><img class="avatar-img" src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">文章</div><div class="length-num">610</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">标签</div><div class="length-num">59</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/categories/"><div class="headline">分类</div><div class="length-num">23</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">Doraemonzzz</a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">CS231 第三讲 损失函数和优化</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2019-01-27T01:23:00.000Z" title="发表于 2019-01-27 09:23:00">2019-01-27</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2019-02-12T13:11:59.757Z" title="更新于 2019-02-12 21:11:59">2019-02-12</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/">机器学习</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="CS231 第三讲 损失函数和优化"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p>课程视频地址：<a target="_blank" rel="noopener" href="https://study.163.com/courses-search?keyword=CS231">https://study.163.com/courses-search?keyword=CS231</a></p>
+<p>课程主页：<a target="_blank" rel="noopener" href="http://cs231n.stanford.edu/2017/">http://cs231n.stanford.edu/2017/</a></p>
+<p>这一讲主要介绍损失函数和优化。</p>
+<span id="more"></span>
+<h4 id="损失函数"><a href="#损失函数" class="headerlink" title="损失函数"></a>损失函数</h4><p>损失函数告诉我们分类器有多好，给定图片数据集$\{(x_i,y_i)\}_{i=1}^N$，$x_i$为图片，$y_i$为标签，定义我们的损失为</p>
+<script type="math/tex; mode=display">
+L =\frac 1 N \sum_i L_i(f(x_i, W), y_i)</script><p>其中$L_i​$为损失函数。下面先介绍多类别支持向量机损失函数。(Multiclass SVM loss)</p>
+<h5 id="多类别支持向量机损失"><a href="#多类别支持向量机损失" class="headerlink" title="多类别支持向量机损失"></a>多类别支持向量机损失</h5><p>令</p>
+<script type="math/tex; mode=display">
+s = f(x_i, W)</script><p>然后定义SVM损失为</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+L_i
+&=\sum_{j\neq y_i} \begin{cases}
+0 &如果 s_{y_i} \ge s_j +1\\
+ s_j -s_{y_i}+1 & 其他
+\end{cases}    \\
+&= \sum_{j\neq y_i} \max(0, s_j -s_{y_i}+1)
+\end{aligned}</script><p>这个损失函数也被称为“折叶损失”（hinge loss），损失函数图像如下</p>
+<p><img src="https://github.com/Doraemonzzz/md-photo/blob/master/CS231/Lecture%203/2018012703.jpg?raw=true" alt=""></p>
+<p>这个函数首先判断图片的正确分类的得分$(s_{y_i})$是否超过其余分类得分($s_j $)加$1$，如果成立，则损失为$0$，否则损失为$s_j -s_{y_i}+1$。我们来看一个具体的例子</p>
+<p><img src="https://github.com/Doraemonzzz/md-photo/blob/master/CS231/Lecture%203/2018012701a.jpg?raw=true" alt=""></p>
+<p>猫的$s_{y_i}=3.2​$，所以</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+L_i&=\max(0, 5.1-3.2+1) + \max(0, -1.7-3.2+1)\\
+&=\max(0, 2.9) + \max(0,-3.9)\\
+&=2.9+0\\
+&=2.9
+\end{aligned}</script><p>类似的，我们可以计算出汽车以及青蛙的损失，结果如下</p>
+<p><img src="https://github.com/Doraemonzzz/md-photo/blob/master/CS231/Lecture%203/2018012702.jpg?raw=true" alt=""></p>
+<p>所以总损失为</p>
+<script type="math/tex; mode=display">
+L=(2.9 + 0+12.9) /3 = 5.27</script><p>接下来考虑如下几个问题。</p>
+<p>1.如果汽车分数有稍微改变，损失函数会发生什么变化？</p>
+<p>因为汽车的正确分数$s_{y_i}$比$s_j+1$大很多，所以稍微改变$s_{y_i}$不会改变损失。</p>
+<p>2.损失函数的最大值和最小值分别为多少？</p>
+<p>从图像中就可以看出，损失的最小值为$0$，最大为$\infty$。</p>
+<p>3.在一开始$W​$很小，所以$s\approx 0​$，那么此时的损失函数大约是多少？</p>
+<p>此时$ \max(0, s_j -s_{y_i}+1)\approx 1​$，所以由公式$L_i=\sum_{j\neq y_i} \max(0, s_j -s_{y_i}+1)​$可知，</p>
+<script type="math/tex; mode=display">
+L_i \approx K-1</script><p>其中$K​$为分类总数。这个结果通常用来检验代码是否出错。</p>
+<p>4.如果损失函数的求和是遍历所有类别（包括$j=y_i$），那么损失函数为多少？</p>
+<p>利用公式即可，此时损失函数是原有的损失函数加$1$。</p>
+<p>5.如果我们损失函数采用均值而不是求和，那么会怎么样？</p>
+<p>没有影响，最后只是相差常数倍而已。</p>
+<p>6.如果我们使用</p>
+<script type="math/tex; mode=display">
+L_i=\sum_{j\neq y_i} \max(0, s_j -s_{y_i}+1)^2</script><p>会怎么样？</p>
+<p>这样会对异常值更加敏感。</p>
+<p>7.如果我们找到$W$，使得</p>
+<script type="math/tex; mode=display">
+L =\frac 1 N \sum_i L_i(f(x_i, W), y_i)=
+\frac 1 N \sum_i \sum_{j\neq y_i} \max(0, s_j -s_{y_i}+1) = 0</script><p>那么$W$是唯一的吗？</p>
+<p>不是，这是因为</p>
+<script type="math/tex; mode=display">
+s= Wx_i</script><p>所以</p>
+<script type="math/tex; mode=display">
+s_j = W_j x_i</script><p>如果</p>
+<script type="math/tex; mode=display">
+s_{y_i} \ge s_j +1 \\
+s_{y_i} -s_j\ge  1 \\
+(W_{y_i}-W_j) x_i \ge 1</script><p>那么</p>
+<script type="math/tex; mode=display">
+2(W_{y_i}-W_j) x_i \ge 1</script><p>从而$2W$也会使得$L=0$。</p>
+<p>这个事实告诉我们应该对$W$也进行约束，于是定义如下损失</p>
+<script type="math/tex; mode=display">
+L = \frac 1 N \sum_i L_i(f(x_i, W), y_i)+ \lambda R(W)</script><p>第一项称为数据损失，第二项称为正则化项，$\lambda$为超参数，比较常见的正则化项如下：</p>
+<p><img src="https://github.com/Doraemonzzz/md-photo/blob/master/CS231/Lecture%203/2018012704.jpg?raw=true" alt=""></p>
+<h5 id="Softmax分类器"><a href="#Softmax分类器" class="headerlink" title="Softmax分类器"></a>Softmax分类器</h5><p>首先定义如下概率</p>
+<script type="math/tex; mode=display">
+P(Y= k|X= x_i) =\frac{e^{s_k}}{\sum_j e^{s_j}} \\
+s= f(x_i;W)</script><p>我们想最大化对数似然函数，而这也等价于最小化如下式子</p>
+<script type="math/tex; mode=display">
+L_i = -\log P(Y= y_i|X= x_i)= -\log
+\Big(\frac{e^{s_{y_i}}}{\sum_j e^{s_j}}\Big)</script><p>来看一个具体的例子：</p>
+<p><img src="https://github.com/Doraemonzzz/md-photo/blob/master/CS231/Lecture%203/2018012705.jpg?raw=true" alt=""></p>
+<p>接着来看如下几个问题。</p>
+<p>1.损失函数$L_i​$的最大值，最小值分别是多少？</p>
+<p>因为$P(Y= y_i|X= x_i)\in [0,1]$，所以$L_i \in [0,\infty)$</p>
+<p>2.在一开始$W$很小，所以$s\approx 0$，那么此时的损失函数大约是多少？</p>
+<p>此时$e^{s_j}\approx 1$，如假设有$K$类，那么</p>
+<script type="math/tex; mode=display">
+L_i \approx-\log \Big(\frac{1}{K}\Big) = \log K</script><p>同样的，这个结果也通常用来检验代码是否出错。</p>
+<p>把上述内容总结一下：</p>
+<p><img src="https://github.com/Doraemonzzz/md-photo/blob/master/CS231/Lecture%203/2018012706.jpg?raw=true" alt=""></p>
+<p>所以接下来的问题是如何找到最优的$W$，这就进入一下个主题——优化。</p>
+<h4 id="优化"><a href="#优化" class="headerlink" title="优化"></a>优化</h4><p>现在的目标是找到最优的$W$，下面分别介绍两种方法。</p>
+<h5 id="1-随机搜索"><a href="#1-随机搜索" class="headerlink" title="1.随机搜索"></a>1.随机搜索</h5><p>该策略很简单，反复迭代，随机初始化$W$，然后比较其和当前最优解的效果即可。代码如下</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token comment"># assume X_train is the data where each column is an example (e.g. 3073 x 50,000)</span>
+<span class="token comment"># assume Y_train are the labels (e.g. 1D array of 50,000)</span>
+<span class="token comment"># assume the function L evaluates the loss function</span>
+
+bestloss <span class="token operator">=</span> <span class="token builtin">float</span><span class="token punctuation">(</span><span class="token string">"inf"</span><span class="token punctuation">)</span> <span class="token comment"># Python assigns the highest possible float value</span>
+<span class="token keyword">for</span> num <span class="token keyword">in</span> <span class="token builtin">xrange</span><span class="token punctuation">(</span><span class="token number">1000</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+  W <span class="token operator">=</span> np<span class="token punctuation">.</span>random<span class="token punctuation">.</span>randn<span class="token punctuation">(</span><span class="token number">10</span><span class="token punctuation">,</span> <span class="token number">3073</span><span class="token punctuation">)</span> <span class="token operator">*</span> <span class="token number">0.0001</span> <span class="token comment"># generate random parameters</span>
+  loss <span class="token operator">=</span> L<span class="token punctuation">(</span>X_train<span class="token punctuation">,</span> Y_train<span class="token punctuation">,</span> W<span class="token punctuation">)</span> <span class="token comment"># get the loss over the entire training set</span>
+  <span class="token keyword">if</span> loss <span class="token operator">&lt;</span> bestloss<span class="token punctuation">:</span> <span class="token comment"># keep track of the best solution</span>
+    bestloss <span class="token operator">=</span> loss
+    bestW <span class="token operator">=</span> W
+  <span class="token keyword">print</span> <span class="token string">'in attempt %d the loss was %f, best %f'</span> <span class="token operator">%</span> <span class="token punctuation">(</span>num<span class="token punctuation">,</span> loss<span class="token punctuation">,</span> bestloss<span class="token punctuation">)</span>
+
+<span class="token comment"># prints:</span>
+<span class="token comment"># in attempt 0 the loss was 9.401632, best 9.401632</span>
+<span class="token comment"># in attempt 1 the loss was 8.959668, best 8.959668</span>
+<span class="token comment"># in attempt 2 the loss was 9.044034, best 8.959668</span>
+<span class="token comment"># in attempt 3 the loss was 9.278948, best 8.959668</span>
+<span class="token comment"># in attempt 4 the loss was 8.857370, best 8.857370</span>
+<span class="token comment"># in attempt 5 the loss was 8.943151, best 8.857370</span>
+<span class="token comment"># in attempt 6 the loss was 8.605604, best 8.605604</span>
+<span class="token comment"># ... (trunctated: continues for 1000 lines)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>（代码参考地址：<a target="_blank" rel="noopener" href="https://cs231n.github.io/optimization-1/）">https://cs231n.github.io/optimization-1/）</a></p>
+<p>这种方法的效果很糟糕，正确率大约15%左右。</p>
+<h5 id="2-跟随梯度"><a href="#2-跟随梯度" class="headerlink" title="2.跟随梯度"></a>2.跟随梯度</h5><p>这个策略的思路很简单，假设我们位于山谷，我们想最快到达谷底，很自然的想法就是沿着最陡的方向前进：</p>
+<p><img src="https://github.com/Doraemonzzz/md-photo/blob/master/CS231/Lecture%203/2018012707.jpg?raw=true" alt=""></p>
+<p>函数最陡的方向就是梯度方向了，一维的情形就是计算导数</p>
+<script type="math/tex; mode=display">
+\frac{df(x)}{dx} = \lim_{h\ \to 0} \frac{f(x + h) - f(x)}{h}</script><p>高维的情形则需计算梯度（偏导数），利用定义计算数值梯度</p>
+<p><img src="https://github.com/Doraemonzzz/md-photo/blob/master/CS231/Lecture%203/2018012708.jpg?raw=true" alt=""></p>
+<p>但实际上，这个方法很不可取，因为数据维度往往非常大，所以计算一次梯度需要的时间很多，比较正确的方法是使用微积分直接求出梯度，所以我们需要计算</p>
+<script type="math/tex; mode=display">
+\nabla _WL = \frac 1 N \sum_{i=1}^N\nabla _W L_i(f(x_i, W), y_i)+ \lambda\nabla _W R(W)</script><p>上述方法被称为<strong>梯度下降</strong>。但是注意这个方法依旧有一个问题，因为实际中数据量也非常大，所以如果按照上述公式计算一次梯度还是需要非常久，所以我们常使用<strong>小批量数据梯度下降</strong>，设定一个批量值batch，每次只计算batch个数据的梯度即可，在实际中，batch通常取32/64/128，代码如下</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token comment"># Vanilla Minibatch Gradient Descent</span>
+
+<span class="token keyword">while</span> <span class="token boolean">True</span><span class="token punctuation">:</span>
+  data_batch <span class="token operator">=</span> sample_training_data<span class="token punctuation">(</span>data<span class="token punctuation">,</span> <span class="token number">256</span><span class="token punctuation">)</span> <span class="token comment"># sample 256 examples</span>
+  weights_grad <span class="token operator">=</span> evaluate_gradient<span class="token punctuation">(</span>loss_fun<span class="token punctuation">,</span> data_batch<span class="token punctuation">,</span> weights<span class="token punctuation">)</span>
+  weights <span class="token operator">+=</span> <span class="token operator">-</span> step_size <span class="token operator">*</span> weights_grad <span class="token comment"># perform parameter update</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>（代码参考地址：<a target="_blank" rel="noopener" href="https://cs231n.github.io/optimization-1/）">https://cs231n.github.io/optimization-1/）</a></p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">Doraemonzzz</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="http://doraemonzzz.com/2019/01/27/CS231%20%E7%AC%AC%E4%B8%89%E8%AE%B2%20%E6%8D%9F%E5%A4%B1%E5%87%BD%E6%95%B0%E5%92%8C%E4%BC%98%E5%8C%96/">http://doraemonzzz.com/2019/01/27/CS231%20%E7%AC%AC%E4%B8%89%E8%AE%B2%20%E6%8D%9F%E5%A4%B1%E5%87%BD%E6%95%B0%E5%92%8C%E4%BC%98%E5%8C%96/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://doraemonzzz.com" target="_blank">Doraemonzzz</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/CS231/">CS231</a></div><div class="post_share"><div class="social-share" data-image="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2019/01/27/CS229%20Lesson%2020%20%E7%AD%96%E7%95%A5%E6%90%9C%E7%B4%A2/"><img class="prev-cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">CS229 Lesson 20 策略搜索</div></div></a></div><div class="next-post pull-right"><a href="/2019/01/26/%E9%AB%98%E7%AD%89%E6%A6%82%E7%8E%87%E8%AE%BA%E7%AC%AC%E5%8D%81%E4%BA%8C%E8%AE%B2/"><img class="next-cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">高等概率论第十二讲</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span> 相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2019/01/23/CS231 第一讲 课程简介/" title="CS231 第一讲 课程简介"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2019-01-23</div><div class="title">CS231 第一讲 课程简介</div></div></a></div><div><a href="/2019/02/10/CS231 第七讲 训练神经网络（下）/" title="CS231 第七讲 训练神经网络（下）"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2019-02-10</div><div class="title">CS231 第七讲 训练神经网络（下）</div></div></a></div><div><a href="/2019/02/10/CS231 第九讲 CNN架构/" title="CS231 第九讲 CNN架构"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2019-02-10</div><div class="title">CS231 第九讲 CNN架构</div></div></a></div><div><a href="/2019/01/24/CS231 第二讲 图像分类/" title="CS231 第二讲 图像分类"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2019-01-24</div><div class="title">CS231 第二讲 图像分类</div></div></a></div><div><a href="/2019/01/31/CS231 第五讲 卷积神经网络/" title="CS231 第五讲 卷积神经网络"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2019-01-31</div><div class="title">CS231 第五讲 卷积神经网络</div></div></a></div><div><a href="/2019/02/10/CS231 第八讲 深度学习软件/" title="CS231 第八讲 深度学习软件"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2019-02-10</div><div class="title">CS231 第八讲 深度学习软件</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="card-info-avatar is-center"><img class="avatar-img" src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/><div class="author-info__name">Doraemonzzz</div><div class="author-info__description">个人博客，主要记录有关机器学习，数学以及计算机科学的笔记</div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">610</div></a></div><div class="card-info-data-item is-center"><a href="/tags/"><div class="headline">标签</div><div class="length-num">59</div></a></div><div class="card-info-data-item is-center"><a href="/categories/"><div class="headline">分类</div><div class="length-num">23</div></a></div></div><a class="button--animated" id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/Doraemonzzz" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="/doraemon_zzz@163.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn card-announcement-animation"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%8D%9F%E5%A4%B1%E5%87%BD%E6%95%B0"><span class="toc-number">1.</span> <span class="toc-text">损失函数</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%A4%9A%E7%B1%BB%E5%88%AB%E6%94%AF%E6%8C%81%E5%90%91%E9%87%8F%E6%9C%BA%E6%8D%9F%E5%A4%B1"><span class="toc-number">1.1.</span> <span class="toc-text">多类别支持向量机损失</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#Softmax%E5%88%86%E7%B1%BB%E5%99%A8"><span class="toc-number">1.2.</span> <span class="toc-text">Softmax分类器</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BC%98%E5%8C%96"><span class="toc-number">2.</span> <span class="toc-text">优化</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#1-%E9%9A%8F%E6%9C%BA%E6%90%9C%E7%B4%A2"><span class="toc-number">2.1.</span> <span class="toc-text">1.随机搜索</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#2-%E8%B7%9F%E9%9A%8F%E6%A2%AF%E5%BA%A6"><span class="toc-number">2.2.</span> <span class="toc-text">2.跟随梯度</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2021/06/06/2021-6-6-%E7%AE%97%E6%B3%95%E6%A6%82%E8%AE%BA(DPV)%E4%B9%A0%E9%A2%98%E8%A7%A3%E7%AD%94%E2%80%94%E2%80%94%E7%AC%AC3%E7%AB%A0-%E5%9B%BE%E7%9A%84%E5%88%86%E8%A7%A3/" title="算法概论(DPV)习题解答——第3章 图的分解"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="算法概论(DPV)习题解答——第3章 图的分解"/></a><div class="content"><a class="title" href="/2021/06/06/2021-6-6-%E7%AE%97%E6%B3%95%E6%A6%82%E8%AE%BA(DPV)%E4%B9%A0%E9%A2%98%E8%A7%A3%E7%AD%94%E2%80%94%E2%80%94%E7%AC%AC3%E7%AB%A0-%E5%9B%BE%E7%9A%84%E5%88%86%E8%A7%A3/" title="算法概论(DPV)习题解答——第3章 图的分解">算法概论(DPV)习题解答——第3章 图的分解</a><time datetime="2021-06-06T14:35:00.000Z" title="发表于 2021-06-06 22:35:00">2021-06-06</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/06/06/2021-6-6-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E7%AC%AC5%E7%AB%A0-%E4%B9%A0%E9%A2%98%E8%A7%A3%E6%9E%90/" title="深入理解计算机系统 第5章 习题解析"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="深入理解计算机系统 第5章 习题解析"/></a><div class="content"><a class="title" href="/2021/06/06/2021-6-6-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E7%AC%AC5%E7%AB%A0-%E4%B9%A0%E9%A2%98%E8%A7%A3%E6%9E%90/" title="深入理解计算机系统 第5章 习题解析">深入理解计算机系统 第5章 习题解析</a><time datetime="2021-06-06T07:23:00.000Z" title="发表于 2021-06-06 15:23:00">2021-06-06</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/06/05/2021-6-5-Stanford-Compiler-PA5%E7%BF%BB%E8%AF%91/" title="Stanford Compiler PA5翻译"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Stanford Compiler PA5翻译"/></a><div class="content"><a class="title" href="/2021/06/05/2021-6-5-Stanford-Compiler-PA5%E7%BF%BB%E8%AF%91/" title="Stanford Compiler PA5翻译">Stanford Compiler PA5翻译</a><time datetime="2021-06-05T06:12:00.000Z" title="发表于 2021-06-05 14:12:00">2021-06-05</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/06/04/2021-6-4-Stanford-Compiler-PA4%E7%BF%BB%E8%AF%91/" title="Stanford Compiler PA4翻译"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Stanford Compiler PA4翻译"/></a><div class="content"><a class="title" href="/2021/06/04/2021-6-4-Stanford-Compiler-PA4%E7%BF%BB%E8%AF%91/" title="Stanford Compiler PA4翻译">Stanford Compiler PA4翻译</a><time datetime="2021-06-03T16:17:00.000Z" title="发表于 2021-06-04 00:17:00">2021-06-04</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/06/03/2021-6-3-%E5%B7%A7%E5%A6%99%E7%9A%84Y%E8%BF%90%E7%AE%97%E7%AC%A6/" title="巧妙的Y运算符"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="巧妙的Y运算符"/></a><div class="content"><a class="title" href="/2021/06/03/2021-6-3-%E5%B7%A7%E5%A6%99%E7%9A%84Y%E8%BF%90%E7%AE%97%E7%AC%A6/" title="巧妙的Y运算符">巧妙的Y运算符</a><time datetime="2021-06-03T00:54:00.000Z" title="发表于 2021-06-03 08:54:00">2021-06-03</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2021 By Doraemonzzz</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><div class="js-pjax"><script>if (!window.MathJax) {
+  window.MathJax = {
+    loader: {
+      source: {
+        '[tex]/amsCd': '[tex]/amscd'
+      }
+    },
+    tex: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]],
+      tags: 'ams'
+    },
+    options: {
+      renderActions: {
+        findScript: [10, doc => {
+          for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+            const display = !!node.type.match(/; *mode=display/)
+            const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+            const text = document.createTextNode('')
+            node.parentNode.replaceChild(text, node)
+            math.start = {node: text, delim: '', n: 0}
+            math.end = {node: text, delim: '', n: 0}
+            doc.math.push(math)
+          }
+        }, ''],
+        addClass: [200,() => {
+          document.querySelectorAll('mjx-container:not([display=\'true\']').forEach( node => {
+            const target = node.parentNode
+            if (!target.classList.contains('has-jax')) {
+              target.classList.add('mathjax-overflow')
+            }
+          })
+        }, '', false]
+      }
+    }
+  }
+  
+  const script = document.createElement('script')
+  script.src = 'https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js'
+  script.id = 'MathJax-script'
+  script.async = true
+  document.head.appendChild(script)
+} else {
+  MathJax.startup.document.state(0)
+  MathJax.texReset()
+  MathJax.typeset()
+}</script></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

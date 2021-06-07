@@ -1,0 +1,277 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Stanford Compiler PA5翻译 | Doraemonzzz</title><meta name="keywords" content="斯坦福大学编译原理"><meta name="author" content="Doraemonzzz"><meta name="copyright" content="Doraemonzzz"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="课程主页： https:&#x2F;&#x2F;www.edx.org&#x2F;course&#x2F;compilers 课程视频： https:&#x2F;&#x2F;www.bilibili.com&#x2F;video&#x2F;BV1NE411376V?p&#x3D;20&amp;t&#x3D;6 这部分对PA5进行翻译。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Stanford Compiler PA5翻译">
+<meta property="og:url" content="http://doraemonzzz.com/2021/06/05/2021-6-5-Stanford-Compiler-PA5%E7%BF%BB%E8%AF%91/index.html">
+<meta property="og:site_name" content="Doraemonzzz">
+<meta property="og:description" content="课程主页： https:&#x2F;&#x2F;www.edx.org&#x2F;course&#x2F;compilers 课程视频： https:&#x2F;&#x2F;www.bilibili.com&#x2F;video&#x2F;BV1NE411376V?p&#x3D;20&amp;t&#x3D;6 这部分对PA5进行翻译。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg">
+<meta property="article:published_time" content="2021-06-05T06:12:00.000Z">
+<meta property="article:modified_time" content="2021-06-06T16:01:52.439Z">
+<meta property="article:author" content="Doraemonzzz">
+<meta property="article:tag" content="斯坦福大学编译原理">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="http://doraemonzzz.com/2021/06/05/2021-6-5-Stanford-Compiler-PA5%E7%BF%BB%E8%AF%91/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"prismjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    jQuery: 'https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js',
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+    },
+    fancybox: {
+      js: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isanchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'Stanford Compiler PA5翻译',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2021-06-07 00:01:52'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    })(window)</script><meta name="generator" content="Hexo 5.4.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="author-avatar"><img class="avatar-img" src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">文章</div><div class="length-num">610</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">标签</div><div class="length-num">59</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/categories/"><div class="headline">分类</div><div class="length-num">23</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">Doraemonzzz</a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">Stanford Compiler PA5翻译</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2021-06-05T06:12:00.000Z" title="发表于 2021-06-05 14:12:00">2021-06-05</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2021-06-06T16:01:52.439Z" title="更新于 2021-06-07 00:01:52">2021-06-07</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/">编译原理</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="Stanford Compiler PA5翻译"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p>课程主页：</p>
+<p><a target="_blank" rel="noopener" href="https://www.edx.org/course/compilers">https://www.edx.org/course/compilers</a></p>
+<p>课程视频：</p>
+<p><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1NE411376V?p=20&amp;t=6">https://www.bilibili.com/video/BV1NE411376V?p=20&amp;t=6</a></p>
+<p>这部分对PA5进行翻译。</p>
+<span id="more"></span>
+<h1 id="编程作业V"><a href="#编程作业V" class="headerlink" title="编程作业V"></a>编程作业V</h1><h2 id="1-简介"><a href="#1-简介" class="headerlink" title="1. 简介"></a>1. 简介</h2><p>在本作业中，您将实现一个代码生成器。成功完成后，您将拥有一个功能齐全的Cool编译器！</p>
+<p>​    代码生成器使用PA3中构造的AST和PA4中执行的静态分析。你的代码生成器应该产生MIPS汇编代码，忠实地实现任何正确的Cool程序。代码生成中没有错误恢复——所有错误的Cool程序都已被编译器的前端阶段检测到。<br>​<br>​    与静态分析任务一样，此任务具有相当大的设计决策空间。如果生成器生成的代码工作正常，则程序是正确的；如何实现这个目标取决于你自己。我们会建议一些我们认为会让你的生活更轻松的惯例，但你不必接受我们的建议。一如既往，在README文件中解释并证明您的设计决策。这个任务的代码量大约是前一个编程任务的两倍，尽管它们共享很多相同的基础结构。<strong>早点开始</strong>！<br>​<br>​    获得一个正确的代码生成器的关键是透彻地了解Cool构造的预期行为以及运行时系统和生成的代码之间的接口。Cool程序的预期行为由Cool参考手册第13节中给出的Cool操作语义定义。回想一下，这只是语言结构意义的说明，而不是如何实现它们。运行时系统和生成的代码之间的接口在Cool运行时系统（The Cool Runtime System）中给出。有关运行时系统对生成代码的要求的详细讨论，请参见该文档。本讲义和前面提到的文档中有很多信息，您需要了解其中的大部分内容才能编写正确的代码生成器。请仔细阅读。</p>
+<h2 id="2-文件和目录"><a href="#2-文件和目录" class="headerlink" title="2. 文件和目录"></a>2. 文件和目录</h2><p>要开始编程任务，请从OpenClassroom网站下载启动程序代码，并将其解压缩到本地计算机上的目录中。确保下载与计算机体系结构匹配的压缩包。您也可以从“资源”页面单独下载此任务的各个部分，但我们强烈建议您按原样下载并使用完整的tarball。</p>
+<p>​    有了编程作业的工作副本后，请转到当前分配的目录。对于作业的C++版本，请导航至</p>
+<pre class="line-numbers language-none"><code class="language-none">[cool root]&#x2F;assignments&#x2F;PA5&#x2F;<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>对于Java，请导航至</p>
+<pre class="line-numbers language-none"><code class="language-none">[cool root]&#x2F;assignments&#x2F;PA5J&#x2F;<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>（请注意路径名中的”J”。）在此目录中输入make将设置工作区并将许多文件复制到您的目录中。该目录中的某些文件是只读的（使用符号链接）。您不应该编辑这些文件，实际上，如果您制作和修改这些文件，可能会发现无法完成作业，请参见README文件中的说明。</p>
+<p>​    我们现在描述项目的每个版本最重要的文件。</p>
+<h3 id="2-1-C-版本"><a href="#2-1-C-版本" class="headerlink" title="2.1 C++版本"></a>2.1 C++版本</h3><p>这是您可能想要修改的文件列表。您应该已经熟悉以前作业中的大多数其他文件。有关其他文件的详细信息，请参阅README文件。</p>
+<ul>
+<li><p>$\text{cgen.cc}$</p>
+<p>这个文件将包含几乎所有的代码生成器代码。代码生成器的入口是$\text{program class::cgen(ostream&amp;)}$方法，它在AST的root上调用。除了常用的常量之外，我们还提供了用于发出MIPS指令的函数、用于编码字符串、整数和布尔值，以及类表($\text{CgenClassTable}$) 的骨架。 您可以使用提供的代码或将其替换为您自己的PA4继承图。</p>
+</li>
+<li><p>$\text{cgen.h}$</p>
+<p>此文件是代码生成器的头文件。您可以在此文件中添加任何您喜欢的内容。它提供了用于实现继承图的类。您可以根据需要替换或修改它们。</p>
+</li>
+<li><p>$\text{emit.h}$</p>
+<p>该文件包含用于发射MIPS指令等的各种代码生成宏。您可以修改此文件。</p>
+</li>
+<li><p>$\text{cool-tree.h}$</p>
+<p>像往常一样，这些文件包含AST节点的类声明。您可以向$\text{cool-tree.h}$中的类添加字段或方法声明。方法的实现应该添加到$\text{cgen.cc}$。</p>
+</li>
+<li><p>$\text{cgen_supp.cc}$</p>
+<p>此文件包含代码生成器的一般支持代码。 您会在这里找到许多方便的函数。按照您认为合适的方式添加到文件中，但不要更改已经存在的任何内容。</p>
+</li>
+<li><p>$\text{example.cl}$</p>
+<p>此文件应包含您自己设计的测试程序。 尽可能多地测试代码生成器的功能。</p>
+</li>
+<li><p>$\text{README}$</p>
+<p>该文件将包含您的作业的记录。解释设计决策、代码的结构以及为什么认为自己的设计是好的（即为什么它会导致正确和健壮的程序）至关重要。用文本解释事物以及注释代码是作业的一部分。</p>
+</li>
+</ul>
+<h3 id="2-2-Java版本"><a href="#2-2-Java版本" class="headerlink" title="2.2 Java版本"></a>2.2 Java版本</h3><p>这是您可能想要修改的文件列表。 您应该已经熟悉以前作业中的大多数其他文件。 有关附加文件的详细信息，请参阅 README 文件。</p>
+<ul>
+<li><p>$\text{CgenClassTable.java}$和$\text{CgenNode.java}$这些文件为代码生成器提供了继承图的实现。您需要完成$\text{CgenClassTable}$才能构建您的代码生成器。您可以使用提供的代码或将其替换为您自己的PA4继承图。</p>
+</li>
+<li><p>$\text{StringSymbol.java, IntSymbol.java}$和$\text{BoolConst.java}$</p>
+<p>这些文件提供对Cool常量的支持。您将需要完成生成常量定义的方法。</p>
+</li>
+<li><p>$\text{cool-tree.java}$</p>
+<p>该文件包含AST节点的定义。您需要在这个文件中为Cool表达式添加代码生成例程（$\text{code(PrintStream)}$）。代码生成器通过调用类程序的$\text{cgen(PrintStream)}$方法调用。您可以添加新方法，但不要修改现有声明。</p>
+</li>
+<li><p>$\text{TreeConstants.java}$</p>
+<p>和以前一样，这个文件定义了一些有用的符号常量。随意添加您自己的。</p>
+</li>
+<li><p>$\text{CgenSupport.java}$</p>
+<p>该文件包含代码生成器的一般支持代码。 您将在这里找到许多方便的函数，包括用于发出MIPS指令的函数。随意添加代码，但不要更改已经存在的任何内容。</p>
+</li>
+<li><p>$\text{example.cl}$</p>
+<p>此文件应包含您自己设计的测试程序。 尽可能多地测试代码生成器的功能。</p>
+</li>
+<li><p>$\text{README}$</p>
+<p>该文件将包含您的作业的记录。解释设计决策、代码的结构以及为什么认为自己的设计是好的（即为什么它会导致正确和健壮的程序）至关重要。用文本解释事物以及注释代码是作业的一部分。</p>
+</li>
+</ul>
+<h2 id="3-设计"><a href="#3-设计" class="headerlink" title="3. 设计"></a>3. 设计</h2><p>在继续之前，我们建议您阅读The Cool Runtime System以熟悉运行时系统对代码生成器的要求。</p>
+<p>​    在高层次上考虑您的设计，您的代码生成器将需要执行以下任务： </p>
+<ol>
+<li>确定并发出全局常量（例如原型对象）的代码。</li>
+<li>确定并发出全局表的代码，例如$\text{class_nameTab}$、类$\text{class_objTab}$和分派表。</li>
+<li>为每个类的初始化方法确定并发出代码。</li>
+<li><p>为每个方法定义确定并发出代码。</p>
+<p> 有许多可能的方法来编写代码生成器。一种合理的策略是分两次执行代码生成。第一遍决定每个类的对象布局，特别是每个属性存储在对象中的偏移量。使用此信息，第二遍递归遍历每个特征并为每个表达式生成堆栈机器代码。</p>
+<p> 在设计代码生成器时，您必须牢记以下几点： </p>
+</li>
+</ol>
+<ul>
+<li>您的代码生成器必须与Cool运行时系统一起正常工作，这在Cool Runtime System 手册中进行了解释。</li>
+<li>您应该清楚地了解Cool程序的运行时语义。Cool参考手册的第一部分非正式地描述了语义，手册的第13节给出了Cool程序应该如何运行的精确描述。</li>
+<li>您应该了解MIPS指令集。类网页上的 spim文档中提供了MIPS操作的概述。</li>
+<li><p>您应该决定您生成的代码将观察和期望哪些不变量（即，哪些寄存器将被保存，哪些可能会被覆盖等）。 您可能还会发现参考讲义中有关代码生成的信息很有用。</p>
+<p>  您不需要生成与coolc相同的代码。coolc包括一个非常简单的寄存器分配器和此作业不需要的其他小更改。唯一的要求是生成与运行时系统一起正确运行的代码。</p>
+</li>
+</ul>
+<h3 id="3-1-运行时错误检查"><a href="#3-1-运行时错误检查" class="headerlink" title="3.1 运行时错误检查"></a>3.1 运行时错误检查</h3><p>Cool手册的结尾列出了六个会终止程序的错误。 其中，您生成的代码应该捕获前三个——对void分派、对void使用case和缺少分支——并在中止之前打印合适的错误消息。您可以允许SPIM捕捉除以零。捕获最后两个错误——子字符串超出范围和堆溢出——是 trap.handler中的运行时系统的责任。请参阅 Cool Runtime System手册的图 4，了解为您显示错误消息的函数列表。</p>
+<h3 id="3-2-垃圾收集"><a href="#3-2-垃圾收集" class="headerlink" title="3.2 垃圾收集"></a>3.2 垃圾收集</h3><p>您的代码生成器必须与Cool运行时系统中的分代垃圾收集器一起正常工作。骨架包含函数$\text{code_select_gc(C++)}$和$\text{CgenClassTable.codeSelectGc(Java)}$，它们生成代码，如果从命令行设置标志GC。 影响垃圾回收的命令行标志是-g,-t,-T。 默认情况下禁用垃圾收集； 标志-g启用它。启用后，垃圾收集器不仅会回收内存，还会验证“-1”是否将堆中的所有对象分开，从而检查程序（或收集器！）是否不小心覆盖了对象的末尾。-t和-T标志用于附加测试。使用-t，收集器会非常频繁地执行收集（在每次分配时）。 垃圾收集器不直接使用-T； 在coolc 中，-T选项会导致生成额外的代码来执行更多的运行时有效性检查。您可以随意使用（或不使用）-T。</p>
+<p>​    对于您的实现，最简单的开始方法是根本不使用收集器（这是默认设置）。当您决定使用收集器时，请务必仔细查看 Cool Runtime System手册中描述的垃圾收集接口。确保您的代码生成器在所有情况下都能正确地与垃圾收集器一起工作并非易事。</p>
+<h2 id="4-测试和调试"><a href="#4-测试和调试" class="headerlink" title="4. 测试和调试"></a>4. 测试和调试</h2><p>您将需要一个正常工作的扫描器、解析器和语义分析器来测试您的代码生成器。您可以使用自己的组件或来自coolc的组件。默认情况下，使用coolc组件。要改变这一点，用您自己scanner/parser/semantic analyzer替换lexer、parser和/或semant可执行文件（它们是项目目录中的符号链接）。即使您使用自己的组件，最好至少用coolc扫描程序、解析器和语义分析器测试一次代码生成器。</p>
+<p>​    您将使用mycoolc运行代码生成器，mycoolc是一个shell脚本，它将代码生成器与其他编译器阶段“粘合”在一起。注意mycoolc使用-c标志来调试代码生成器；使用此标志只会导致CGEN调试（C++版本中的全局变量和java版本中的类标志的静态字段）被设置。添加实际代码以生成有用的调试信息取决于您。有关详细信息，请参见README。</p>
+<h3 id="4-1-Coolaid"><a href="#4-1-Coolaid" class="headerlink" title="4.1 Coolaid"></a>4.1 Coolaid</h3><p>CoolRuntime系统手册提到了Coolaid，这是一个用于验证Cool代码生成器生成的MIPS汇编代码的某些属性的工具。为了做到这一点，Coolaid对汇编代码施加了超出运行时系统要求的额外限制。课程工作人员不支持Coolaid，它也不是项目所必需的，因此可以安全地忽略CoolRuntime系统手册中列出的任何Coolaid特定限制。但是，即使不使用Coolaid，在决定如何构造汇编代码时，您也会发现这些附加限制很有用。</p>
+<h4 id="4-2-Spim和XSpim"><a href="#4-2-Spim和XSpim" class="headerlink" title="4.2 Spim和XSpim"></a>4.2 Spim和XSpim</h4><p>可执行文件Spim和XSpim（位于[cool root]/bin/）是MIPS体系结构的模拟器，您可以在其上运行生成的代码。程序xspim的工作原理与spim类似，它允许您运行MIPS汇编程序。但是，它有许多特性，这些特性允许您检查虚拟机的状态，包括程序的内存位置、寄存器、数据段和代码段。您还可以设置断点和单步执行程序。spim/xspim的文档在课程网页上。</p>
+<p><strong>警告</strong>。使用spim进行调试比较困难的一点是spim是汇编代码的解释器，而不是真正的汇编程序。如果代码或数据定义引用了未定义的标签，则仅当执行的代码实际引用了此类标签时，才会显示错误。此外，只有出现在程序代码部分的未定义标签才会报告错误。如果您引用了未定义标签的常量数据定义，spim不会告诉您任何事情。对于这些未定义的标签，它只假设值为0。</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">Doraemonzzz</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="http://doraemonzzz.com/2021/06/05/2021-6-5-Stanford-Compiler-PA5%E7%BF%BB%E8%AF%91/">http://doraemonzzz.com/2021/06/05/2021-6-5-Stanford-Compiler-PA5%E7%BF%BB%E8%AF%91/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://doraemonzzz.com" target="_blank">Doraemonzzz</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E6%96%AF%E5%9D%A6%E7%A6%8F%E5%A4%A7%E5%AD%A6%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/">斯坦福大学编译原理</a></div><div class="post_share"><div class="social-share" data-image="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2021/06/06/2021-6-6-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E7%AC%AC5%E7%AB%A0-%E4%B9%A0%E9%A2%98%E8%A7%A3%E6%9E%90/"><img class="prev-cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">深入理解计算机系统 第5章 习题解析</div></div></a></div><div class="next-post pull-right"><a href="/2021/06/04/2021-6-4-Stanford-Compiler-PA4%E7%BF%BB%E8%AF%91/"><img class="next-cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">Stanford Compiler PA4翻译</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span> 相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2021/04/15/2021-4-15-Stanford-Compiler-Week-5-Cool-Type-Checking/" title="Stanford Compiler Week 5 Cool Type Checking"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-04-15</div><div class="title">Stanford Compiler Week 5 Cool Type Checking</div></div></a></div><div><a href="/2021/04/20/2021-4-20-Stanford-Compiler-实验环境配置（续）/" title="Stanford Compiler 实验环境配置（续）"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-04-20</div><div class="title">Stanford Compiler 实验环境配置（续）</div></div></a></div><div><a href="/2021/04/24/2021-4-24-Stanford-Compiler-PA3翻译/" title="Stanford Compiler PA3翻译"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-04-24</div><div class="title">Stanford Compiler PA3翻译</div></div></a></div><div><a href="/2021/04/24/2021-4-24-Stanford-Compiler-Week-6-Code-Generation-Part-1/" title="Stanford Compiler Week 6 Code Generation Part 1"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-04-24</div><div class="title">Stanford Compiler Week 6 Code Generation Part 1</div></div></a></div><div><a href="/2021/04/24/2021-4-24-Stanford-Compiler-Week-6-Runtime-Organization/" title="Stanford Compiler Week 6 Runtime Organization"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-04-24</div><div class="title">Stanford Compiler Week 6 Runtime Organization</div></div></a></div><div><a href="/2021/04/26/2021-4-26-Stanford-Compiler-Week-6-Code-Generation-Part-2/" title="Stanford Compiler Week 6 Code Generation Part 2"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-04-26</div><div class="title">Stanford Compiler Week 6 Code Generation Part 2</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="card-info-avatar is-center"><img class="avatar-img" src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/><div class="author-info__name">Doraemonzzz</div><div class="author-info__description">个人博客，主要记录有关机器学习，数学以及计算机科学的笔记</div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">610</div></a></div><div class="card-info-data-item is-center"><a href="/tags/"><div class="headline">标签</div><div class="length-num">59</div></a></div><div class="card-info-data-item is-center"><a href="/categories/"><div class="headline">分类</div><div class="length-num">23</div></a></div></div><a class="button--animated" id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/Doraemonzzz" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="/doraemon_zzz@163.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn card-announcement-animation"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%BC%96%E7%A8%8B%E4%BD%9C%E4%B8%9AV"><span class="toc-number">1.</span> <span class="toc-text">编程作业V</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-%E7%AE%80%E4%BB%8B"><span class="toc-number">1.1.</span> <span class="toc-text">1. 简介</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-%E6%96%87%E4%BB%B6%E5%92%8C%E7%9B%AE%E5%BD%95"><span class="toc-number">1.2.</span> <span class="toc-text">2. 文件和目录</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1-C-%E7%89%88%E6%9C%AC"><span class="toc-number">1.2.1.</span> <span class="toc-text">2.1 C++版本</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2-Java%E7%89%88%E6%9C%AC"><span class="toc-number">1.2.2.</span> <span class="toc-text">2.2 Java版本</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-%E8%AE%BE%E8%AE%A1"><span class="toc-number">1.3.</span> <span class="toc-text">3. 设计</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#3-1-%E8%BF%90%E8%A1%8C%E6%97%B6%E9%94%99%E8%AF%AF%E6%A3%80%E6%9F%A5"><span class="toc-number">1.3.1.</span> <span class="toc-text">3.1 运行时错误检查</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-2-%E5%9E%83%E5%9C%BE%E6%94%B6%E9%9B%86"><span class="toc-number">1.3.2.</span> <span class="toc-text">3.2 垃圾收集</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-%E6%B5%8B%E8%AF%95%E5%92%8C%E8%B0%83%E8%AF%95"><span class="toc-number">1.4.</span> <span class="toc-text">4. 测试和调试</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#4-1-Coolaid"><span class="toc-number">1.4.1.</span> <span class="toc-text">4.1 Coolaid</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#4-2-Spim%E5%92%8CXSpim"><span class="toc-number">1.4.1.1.</span> <span class="toc-text">4.2 Spim和XSpim</span></a></li></ol></li></ol></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2021/06/06/2021-6-6-%E7%AE%97%E6%B3%95%E6%A6%82%E8%AE%BA(DPV)%E4%B9%A0%E9%A2%98%E8%A7%A3%E7%AD%94%E2%80%94%E2%80%94%E7%AC%AC3%E7%AB%A0-%E5%9B%BE%E7%9A%84%E5%88%86%E8%A7%A3/" title="算法概论(DPV)习题解答——第3章 图的分解"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="算法概论(DPV)习题解答——第3章 图的分解"/></a><div class="content"><a class="title" href="/2021/06/06/2021-6-6-%E7%AE%97%E6%B3%95%E6%A6%82%E8%AE%BA(DPV)%E4%B9%A0%E9%A2%98%E8%A7%A3%E7%AD%94%E2%80%94%E2%80%94%E7%AC%AC3%E7%AB%A0-%E5%9B%BE%E7%9A%84%E5%88%86%E8%A7%A3/" title="算法概论(DPV)习题解答——第3章 图的分解">算法概论(DPV)习题解答——第3章 图的分解</a><time datetime="2021-06-06T14:35:00.000Z" title="发表于 2021-06-06 22:35:00">2021-06-06</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/06/06/2021-6-6-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E7%AC%AC5%E7%AB%A0-%E4%B9%A0%E9%A2%98%E8%A7%A3%E6%9E%90/" title="深入理解计算机系统 第5章 习题解析"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="深入理解计算机系统 第5章 习题解析"/></a><div class="content"><a class="title" href="/2021/06/06/2021-6-6-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E7%AC%AC5%E7%AB%A0-%E4%B9%A0%E9%A2%98%E8%A7%A3%E6%9E%90/" title="深入理解计算机系统 第5章 习题解析">深入理解计算机系统 第5章 习题解析</a><time datetime="2021-06-06T07:23:00.000Z" title="发表于 2021-06-06 15:23:00">2021-06-06</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/06/05/2021-6-5-Stanford-Compiler-PA5%E7%BF%BB%E8%AF%91/" title="Stanford Compiler PA5翻译"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Stanford Compiler PA5翻译"/></a><div class="content"><a class="title" href="/2021/06/05/2021-6-5-Stanford-Compiler-PA5%E7%BF%BB%E8%AF%91/" title="Stanford Compiler PA5翻译">Stanford Compiler PA5翻译</a><time datetime="2021-06-05T06:12:00.000Z" title="发表于 2021-06-05 14:12:00">2021-06-05</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/06/04/2021-6-4-Stanford-Compiler-PA4%E7%BF%BB%E8%AF%91/" title="Stanford Compiler PA4翻译"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Stanford Compiler PA4翻译"/></a><div class="content"><a class="title" href="/2021/06/04/2021-6-4-Stanford-Compiler-PA4%E7%BF%BB%E8%AF%91/" title="Stanford Compiler PA4翻译">Stanford Compiler PA4翻译</a><time datetime="2021-06-03T16:17:00.000Z" title="发表于 2021-06-04 00:17:00">2021-06-04</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/06/03/2021-6-3-%E5%B7%A7%E5%A6%99%E7%9A%84Y%E8%BF%90%E7%AE%97%E7%AC%A6/" title="巧妙的Y运算符"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="巧妙的Y运算符"/></a><div class="content"><a class="title" href="/2021/06/03/2021-6-3-%E5%B7%A7%E5%A6%99%E7%9A%84Y%E8%BF%90%E7%AE%97%E7%AC%A6/" title="巧妙的Y运算符">巧妙的Y运算符</a><time datetime="2021-06-03T00:54:00.000Z" title="发表于 2021-06-03 08:54:00">2021-06-03</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2021 By Doraemonzzz</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><div class="js-pjax"><script>if (!window.MathJax) {
+  window.MathJax = {
+    loader: {
+      source: {
+        '[tex]/amsCd': '[tex]/amscd'
+      }
+    },
+    tex: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]],
+      tags: 'ams'
+    },
+    options: {
+      renderActions: {
+        findScript: [10, doc => {
+          for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+            const display = !!node.type.match(/; *mode=display/)
+            const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+            const text = document.createTextNode('')
+            node.parentNode.replaceChild(text, node)
+            math.start = {node: text, delim: '', n: 0}
+            math.end = {node: text, delim: '', n: 0}
+            doc.math.push(math)
+          }
+        }, ''],
+        addClass: [200,() => {
+          document.querySelectorAll('mjx-container:not([display=\'true\']').forEach( node => {
+            const target = node.parentNode
+            if (!target.classList.contains('has-jax')) {
+              target.classList.add('mathjax-overflow')
+            }
+          })
+        }, '', false]
+      }
+    }
+  }
+  
+  const script = document.createElement('script')
+  script.src = 'https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js'
+  script.id = 'MathJax-script'
+  script.async = true
+  document.head.appendChild(script)
+} else {
+  MathJax.startup.document.state(0)
+  MathJax.texReset()
+  MathJax.typeset()
+}</script></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

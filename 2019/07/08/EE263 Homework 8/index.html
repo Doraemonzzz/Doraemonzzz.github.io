@@ -1,0 +1,638 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>EE263 Homework 8 | Doraemonzzz</title><meta name="keywords" content="EE263"><meta name="author" content="Doraemonzzz"><meta name="copyright" content="Doraemonzzz"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="课程主页：https:&#x2F;&#x2F;see.stanford.edu&#x2F;Course&#x2F;EE263 这次回顾EE263作业8。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="EE263 Homework 8">
+<meta property="og:url" content="http://doraemonzzz.com/2019/07/08/EE263%20Homework%208/index.html">
+<meta property="og:site_name" content="Doraemonzzz">
+<meta property="og:description" content="课程主页：https:&#x2F;&#x2F;see.stanford.edu&#x2F;Course&#x2F;EE263 这次回顾EE263作业8。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg">
+<meta property="article:published_time" content="2019-07-08T08:06:00.000Z">
+<meta property="article:modified_time" content="2019-07-08T08:06:13.791Z">
+<meta property="article:author" content="Doraemonzzz">
+<meta property="article:tag" content="EE263">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="http://doraemonzzz.com/2019/07/08/EE263%20Homework%208/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"prismjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    jQuery: 'https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js',
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+    },
+    fancybox: {
+      js: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isanchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'EE263 Homework 8',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2019-07-08 16:06:13'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    })(window)</script><meta name="generator" content="Hexo 5.4.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="author-avatar"><img class="avatar-img" src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">文章</div><div class="length-num">610</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">标签</div><div class="length-num">59</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/categories/"><div class="headline">分类</div><div class="length-num">23</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">Doraemonzzz</a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">EE263 Homework 8</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2019-07-08T08:06:00.000Z" title="发表于 2019-07-08 16:06:00">2019-07-08</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2019-07-08T08:06:13.791Z" title="更新于 2019-07-08 16:06:13">2019-07-08</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E6%95%B0%E5%AD%A6/">数学</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="EE263 Homework 8"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p>课程主页：<a target="_blank" rel="noopener" href="https://see.stanford.edu/Course/EE263">https://see.stanford.edu/Course/EE263</a></p>
+<p>这次回顾EE263作业8。</p>
+<span id="more"></span>
+<h4 id="13-17"><a href="#13-17" class="headerlink" title="13.17"></a>13.17</h4><p>(a)$z^{-1}$的作用为延迟算子，所以</p>
+<script type="math/tex; mode=display">
+A=\left[\begin{array}{cccc}{0} & {\cdots} & {} & {} \\ {1} & {0} & {\cdots} & {} \\ {0} & {1} & {0} & {\cdots} & {} \\ {} & {} & {\ddots} & {} \\ {0} & {\cdots} & {0} & {1} & {0}\end{array}\right], \quad B=\left[\begin{array}{c}{1} \\ {0} \\ {\vdots} \\ {0}\end{array}\right], \quad C=\left[\begin{array}{ccc}{0} & {\cdots} & {0} & {1}\end{array}\right], \quad D=0</script><p>(b)$A$的特征值全为$0$</p>
+<p>(c)</p>
+<script type="math/tex; mode=display">
+A=
+\left[\begin{matrix}{0} & {\cdots} & {} & {}& 10^{-5} \\ {1} & {0} & {\cdots} & {} \\ {0} & {1} & {0} & {\cdots} & {} \\ {} & {} & {\ddots} & {} \\ {0} & {\cdots} & {0} & {1} & {0}\end{matrix}\right],
+
+\quad B=\left[\begin{array}{c}{1} \\ {0} \\ {\vdots} \\ {0}\end{array}\right], \quad C=\left[\begin{array}{ccc}{0} & {\cdots} & {0} & {1}\end{array}\right], \quad D=0</script><p>(d)</p>
+<script type="math/tex; mode=display">
+\det (\lambda I-A)=\lambda^{100}-10^{-5}</script><p>特征值为</p>
+<script type="math/tex; mode=display">
+\lambda =10^{-5/100} e^{2\pi k/100}, k=0,\ldots, 99</script><p>(e)系统的效果没有太大变化，但是特征值变化很大。</p>
+<h4 id="14-2"><a href="#14-2" class="headerlink" title="14.2"></a>14.2</h4><p>假设$A$的秩为$r$，其正交分解为</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+A&=Q \Lambda Q^T \\
+&=\sum_{i=1}^n \lambda_i q_i q_i^T\\
+&=\sum_{i=1}^r \lambda_i q_i q_i^T\\
+&=\sum_{i=1}^k \lambda_i q_i q_i^T, k\ge r
+\end{aligned}</script><p>这里假设</p>
+<script type="math/tex; mode=display">
+\lambda_i =0, i=r+1,\ldots ,n \\
+\lambda_1 \ge \ldots \ge \lambda _r</script><p>(a)如果$f(x)=| Fx|^2$，那么结论显然成立。</p>
+<p>如果$f(x)$半正定，那么$\lambda_r &gt;0 $，记</p>
+<script type="math/tex; mode=display">
+F=  \left[
+ \begin{matrix}
+  \sqrt{\lambda_1} q_1^T  & \\
+  \vdots \\
+  \sqrt{\lambda_k} q_k^T
+  \end{matrix}
+  \right] \in \mathbb R^{k\times n}</script><p>那么</p>
+<script type="math/tex; mode=display">
+F^T F=\sum_{i=1}^k \lambda_i q_i q_i^T =A</script><p>从而</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+f(x)
+&=x^T Ax\\
+&= x^T F^T Fx\\
+&= \| Fx\|^2
+\end{aligned}</script><p>不难看出最小的$k=r$</p>
+<p>(b)因为</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+\|F x\|^{2}-\|G x\|^{2}
+&=x^T\left(F^T F-G^TG\right) x
+\end{aligned}</script><p>所以</p>
+<script type="math/tex; mode=display">
+A=F^TF-G^TG</script><p>将正负特征值区分开来，设</p>
+<script type="math/tex; mode=display">
+\lambda_1 \ge  \ldots \ge \lambda_s >0 >\lambda_{s+1}\ldots \ge \lambda _{s+t}, s+t=r</script><p>那么</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+A&=\sum_{i=1}^r \lambda_i q_i q_i^T \\
+&=\sum_{i=1}^s \lambda_i q_i q_i^T - \sum_{i=1}^t (-\lambda_{s+i})  q_{s+i} q_{s+i}^T
+\end{aligned}</script><p>所以我们可取</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+F&=  \left[
+ \begin{matrix}
+  \sqrt{\lambda_1} q_1^T  & \\
+  \vdots \\
+  \sqrt{\lambda_s} q_s^T
+  \end{matrix}
+  \right] \in \mathbb R^{s\times n} \\
+
+ G&=  \left[
+ \begin{matrix}
+  \sqrt{-\lambda_{s+1}} q_{s+1}^T  & \\
+  \vdots \\
+  \sqrt{-\lambda_{s+t}} q_{s+t}^T
+  \end{matrix}
+  \right] \in \mathbb R^{t\times n} 
+\end{aligned}</script><p>那么</p>
+<script type="math/tex; mode=display">
+F^T F-G^TG= \sum_{i=1}^r \lambda_i q_i q_i^T =A</script><h4 id="14-3"><a href="#14-3" class="headerlink" title="14.3"></a>14.3</h4><p>(a)$\forall x\in \mathbb R^n$，</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+x^T Z^T AZx
+&= (Zx)^T A(Zx)\\
+&\ge 0
+\end{aligned}</script><p>(b)必要性由(a)即可，只需证明充分性。</p>
+<p>$\forall x\in \mathbb R^n$，取</p>
+<script type="math/tex; mode=display">
+y= T^{-1} x</script><p>那么</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+y^T T^T ATy
+&=(Ty)^T A(Ty)\\
+&= x ^TAx\\
+&\ge 0
+\end{aligned}</script><p>所以</p>
+<script type="math/tex; mode=display">
+A\ge 0</script><h4 id="14-4"><a href="#14-4" class="headerlink" title="14.4"></a>14.4</h4><p>(a)$\forall x \in \mathbb R^n$，那么</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+x^T (\alpha A) x
+&=\alpha(x^T Ax)\\
+& \ge 0\\
+
+x^T (A +B) x
+&=x^T Ax+x^T Bx\\
+& \ge 0\\
+\end{aligned}</script><p>(b)假设$k$阶子矩阵为$A_k$，对应的行为$i_1,\ldots ,i_k$，现在$\forall x \in \mathbb R^k $，构造$\tilde x\in \mathbb R^n$使得</p>
+<script type="math/tex; mode=display">
+\tilde x_{j}=\begin{cases}
+x_j & j \in \{i_1,\ldots ,i_k\}\\
+0 & 其他
+\end{cases}</script><p>那么</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+x^T A_k x
+&=\tilde x^T A\tilde x \\
+&\ge 0
+\end{aligned}</script><p>(c)取$x=e_i$即可</p>
+<p>(d)考虑子矩阵</p>
+<script type="math/tex; mode=display">
+A_2 = \left[
+ \begin{matrix}
+  A_{ii} & A_{ij}\\
+  A_{ji} & A_{jj}
+  \end{matrix}
+  \right]</script><p>由(b)可得$A_2$半正定，所以</p>
+<script type="math/tex; mode=display">
+x^T A_2 x 
+=A_{ii} x_1^2 +2A_{ij} x_1 x_2+A_{jj} x_2^2 \ge 0</script><p>恒成立，从而</p>
+<script type="math/tex; mode=display">
+\Delta =4A_{ij}^2 -4A_{ii} A_{jj} \le 0</script><p>即</p>
+<script type="math/tex; mode=display">
+\left|A_{i j}\right| \leq \sqrt{A_{i i} A_{j j}}</script><h4 id="14-6"><a href="#14-6" class="headerlink" title="14.6"></a>14.6</h4><p>(a)</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+G_{ji}
+&=\int_{a}^{b} f_{j}(t) f_{i}(t) d t\\
+&=\int_{a}^{b} f_{i}(t) f_{j}(t) d t\\
+&=G_{ij}
+\end{aligned}</script><p>记</p>
+<script type="math/tex; mode=display">
+f(t)=\left[\begin{array}{llll}{f_{1}(t)} & {f_{2}(t)} & {\cdots} & {f_{n}(t)}\end{array}\right]^{T}</script><p>那么</p>
+<script type="math/tex; mode=display">
+\begin{aligned} 
+f(t) f(t)^{T}&=\left[\begin{array}{c}{f_{1}(t)} \\ {f_{2}(t)} \\ {\vdots} \\ {f_{n}(t)}\end{array}\right] \\
+&=\left[\begin{matrix}
+{f_{1}(t) f_{1}(t)} & {f_{1}(t) f_{2}(t)} & {\dots} & {f_{2}(t) f_{n}(t)} \\ 
+{f_{2}(t) f_{1}(t)} & {f_{2}(t) f_{2}(t)} & {\cdots} & {f_{2}(t) f_{n}(t)} \\ 
+ \vdots & \vdots \\ & & \vdots\\
+{f_{n}(t) f_{1}(t)} & {f_{n}(t) f_{2}(t)} & {\cdots} & {f_{n}(t) f_{n}(t)}
+
+\end{matrix}\right]\\
+G&= \int_a^b f(t) f(t)^T dt
+\end{aligned}</script><p>现在$\forall x \in \mathbb R^n$，我们有</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+x^T G x
+&=  x^T\left( \int_a^b f(t) f(t)^T dt\right) x\\
+&=\int_a^b (x^T f(t)) (x^T f(t))^T dt \\
+&\ge 0
+\end{aligned}</script><p>所以</p>
+<script type="math/tex; mode=display">
+G \ge 0</script><p>(b)记</p>
+<script type="math/tex; mode=display">
+G= \left[
+ \begin{matrix}
+g_1 &\ldots & g_n
+  \end{matrix}
+  \right]</script><p>其中</p>
+<script type="math/tex; mode=display">
+g_i = \left[
+ \begin{matrix}
+    \int_{a}^{b} f_{1}(t) f_{i}(t) d t\\
+    \vdots \\
+     \int_{a}^{b} f_{n}(t) f_{i}(t) d t
+  \end{matrix}
+  \right]</script><p>$\Leftarrow$：如果$f_{1}, \ldots, f_{n}$线性相关，那么存在不全为零的系数$\alpha_1 ,\ldots ,\alpha_n$，使得</p>
+<script type="math/tex; mode=display">
+\sum_{i=1}^n \alpha_i f_i(t) =0</script><p>所以$\forall k=1,\ldots ,n$，</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+\sum_{i=1}^n \alpha_i  f_k(t)f_i(t) &=0 \\
+\sum_{i=1}^n\alpha_i  \int_{a}^b f_k(t)f_i(t) dt & =0
+\end{aligned}</script><p>即</p>
+<script type="math/tex; mode=display">
+\sum_{i=1}^n \alpha_i g_i =0</script><p>即$G$奇异</p>
+<p>$\Rightarrow$：</p>
+<p>如果$G$奇异，那么存在不全为零的系数$\alpha_1 ,\ldots ,\alpha_n$，使得</p>
+<script type="math/tex; mode=display">
+\sum_{i=1}^n \alpha_i g_i =0</script><p>所以$\forall k=1,\ldots ,n$，</p>
+<script type="math/tex; mode=display">
+\sum_{i=1}^n\alpha_i  \int_{a}^b f_k(t)f_i(t) dt  =0</script><p>记</p>
+<script type="math/tex; mode=display">
+h(t)= \sum_{i=1}^n \alpha_i f_i(t)</script><p>那么上式等价于</p>
+<script type="math/tex; mode=display">
+\int_a^b f_k(t) h(t) dt=0</script><p>因此</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+\int_a^b \sum_{k=1}^n \alpha_k f_k(t) h(t) dt
+&= \int_a^b h^2(t) dt\\
+&=0
+\end{aligned}</script><p>从而</p>
+<script type="math/tex; mode=display">
+h(t)=0</script><p>即$f_1,\ldots, f_n$线性相关</p>
+<h4 id="14-8"><a href="#14-8" class="headerlink" title="14.8"></a>14.8</h4><script type="math/tex; mode=display">
+\begin{aligned}
+\sum_{i=1}^{n-1}\left(x_{i+1}-x_{i}\right)^{2}
+&=\sum_{i=1}^{n-1}
+\left(x_{i+1}^{2}+x_{i}^{2}-2x_ix_{i+1}\right)\\
+&=x_1^2 +x_{n}^2+2\sum_{i=2}^{n-1} x_i^2-2\sum_{i=1}^{n-1}x_i x_{i+1}
+\end{aligned}</script><p>因此</p>
+<script type="math/tex; mode=display">
+P= \left[
+ \begin{matrix}
+1 & -1 & 0 &\ldots & 0 & 0 \\
+-1 & 2 &-1 & \ldots & 0 & 0\\
+0 & -1 &2 & \ldots & 0 &0 \\
+\vdots&\vdots & \vdots &  \ddots  &  \vdots & \vdots\\
+0 & 0 &0 & \ldots & 2  &-1 \\
+0 & 0 &0 & \ldots & -1  &1 \\
+  \end{matrix}
+  \right]</script><p>显然有</p>
+<script type="math/tex; mode=display">
+P\ge 0</script><p>另一方面，如果</p>
+<script type="math/tex; mode=display">
+x_i = 1 ,i=1,\ldots ,n</script><p>那么</p>
+<script type="math/tex; mode=display">
+\sum_{i=1}^{n-1}\left(x_{i+1}-x_{i}\right)^{2}=0</script><p>所以$P$不是正定矩阵，因此</p>
+<script type="math/tex; mode=display">
+P\ge 0</script><h4 id="14-9"><a href="#14-9" class="headerlink" title="14.9"></a>14.9</h4><p>取$x=e_i$可得</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+e_i^T Ae_i &= a_{ii}\\
+e_i^TBe_i &= b_{ii}\\
+a_{ii} &= b_{ii}
+\end{aligned}</script><p>取$x=e_i +e_j$得到</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+(e_i+e_j)^T A(e_i+e_j) &= a_{ii}+a_{jj} +a_{ij}+a_{ji}=a_{ii}+a_{jj}+2a_{ij} \\
+(e_i+e_j)^T B(e_i+e_j) &= b_{ii}+b_{jj} +b_{ij}+b_{ji}=b_{ii}+b_{jj}+2b_{ij} \\
+a_{ij} &= b_{ij}
+\end{aligned}</script><h4 id="14-11"><a href="#14-11" class="headerlink" title="14.11"></a>14.11</h4><p>注意到</p>
+<script type="math/tex; mode=display">
+\| A\|=\max _{x \neq 0} \frac{\|A x\|}{\|x\|}</script><p>所以$\forall x$，我们有</p>
+<script type="math/tex; mode=display">
+\frac{\|A x\|}{\|x\|} < 1 \Rightarrow 
+\|A x\| < \|x\|</script><p>由上式可得，$A$的特征值的绝对值小于$1$，所以$I+A$的特征值的绝对值大于$0$，从而$I+A$可逆。</p>
+<h4 id="14-13"><a href="#14-13" class="headerlink" title="14.13"></a>14.13</h4><p>满奇异值分解为</p>
+<script type="math/tex; mode=display">
+A=U \Sigma V^{T}</script><p>其中</p>
+<ul>
+<li>$A \in \mathbb{R}^{n \times n}, {\operatorname {Rank}}(A)=r$</li>
+<li>$U \in \mathbb{R}^{n \times n}, U^{T} U=UU^T=I$</li>
+<li>$V \in \mathbb{R}^{n \times n}, V^{T} V=VV^T=I$</li>
+<li>$\Sigma=\operatorname{diag}\left(\sigma_{1}, \ldots, \sigma_{n}\right)$，其中$\sigma_{1} \geq \cdots \geq \sigma_{n}&gt;0$</li>
+</ul>
+<p>所以</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+A^TA &=  V\Sigma U^T U \Sigma V^{T}\\
+&= V\Sigma^2 V^T\\
+
+AA^T &=  U \Sigma V^{T} V\Sigma U^T\\
+&= U\Sigma^2 U^T
+\end{aligned}</script><p>因为</p>
+<script type="math/tex; mode=display">
+A=A^T</script><p>所以</p>
+<script type="math/tex; mode=display">
+AA^T= A^T A</script><p>所以$v_i ,u_i$都是$\sigma_i^2$对应的特征向量，且范数为$1$，从而可得</p>
+<script type="math/tex; mode=display">
+u_i = \pm v_i</script><p>因为</p>
+<script type="math/tex; mode=display">
+Av_i =\sigma_i u_i =\pm \sigma_i v_i</script><p>所以特征值和奇异值的关系为</p>
+<script type="math/tex; mode=display">
+|\lambda_i| =\sigma_i</script><h4 id="14-21"><a href="#14-21" class="headerlink" title="14.21"></a>14.21</h4><p>设$A$的正交分解为</p>
+<script type="math/tex; mode=display">
+S=Q\Lambda Q^T</script><p>记</p>
+<script type="math/tex; mode=display">
+\Lambda^{\frac 12 } = \text{diag}\left(\sqrt{\lambda_1},
+\ldots, \sqrt{\lambda_n} \right)</script><p>注意这里假设</p>
+<script type="math/tex; mode=display">
+\lambda_1 \ge \ldots \ge \lambda_n  > 0</script><p>那么</p>
+<script type="math/tex; mode=display">
+S=\left (\Lambda^{\frac 12 } Q^T \right)^T
+\left (\Lambda^{\frac 12 } Q^T \right)</script><p>从而</p>
+<script type="math/tex; mode=display">
+x^T Sx = \left (\Lambda^{\frac 12 } Q^T x \right)^T
+\left (\Lambda^{\frac 12 } Q^T x \right)</script><p>因此</p>
+<script type="math/tex; mode=display">
+\mathcal{E}_{1} = \left\{ x\Big |
+\left\|\Lambda^{\frac 12 } Q^T x \right \| \le 1 \right\}</script><p>另一方面</p>
+<script type="math/tex; mode=display">
+x= A^{-1} y</script><p>所以</p>
+<script type="math/tex; mode=display">
+\mathcal{E}_{2} = \left\{ y\Big |
+\left\|A^{-1} y\right \| \le 1 \right\}</script><p>(a)对比后不难发现，</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+A^{-1}&= \Lambda^{\frac 12 } Q^T\\
+A&= Q \Lambda^{-\frac 12 }
+\end{aligned}</script><p>(b)</p>
+<script type="math/tex; mode=display">
+A^{-1}= \Lambda^{\frac 12 }  Q^T
+\Rightarrow S=\left (\Lambda^{\frac 12 } Q^T \right)^T
+\left (\Lambda^{\frac 12 } Q^T \right) =A^{-T} A^{-1}
+=(AA^T) ^{-1}</script><p>(c)对$\mathcal{E}_{2}$稍作变形，</p>
+<script type="math/tex; mode=display">
+\mathcal{E}_{2} = \left\{ y\Big |
+\left\|A^{-1} y\right \| \le 1 \right\}=
+\left\{ y\Big |
+y^T (AA^T)^{-1} y \le 1 \right\}</script><p>另一方面</p>
+<script type="math/tex; mode=display">
+\mathcal{E}_{1}=\left\{x | x^{T} S x \leq 1\right\}</script><p>假设$A$的SVD为</p>
+<script type="math/tex; mode=display">
+A=U \Sigma V^{T}</script><p>那么</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+(AA^T)^{-1}
+&=(U\Sigma^2  U^T)^{-1}\\
+&= U\Sigma^{-2} U^T
+\end{aligned}</script><p>注意</p>
+<script type="math/tex; mode=display">
+S=Q\Lambda Q^T</script><p>所以可以取</p>
+<script type="math/tex; mode=display">
+A= Q\lambda^{-\frac 12 } V^T</script><p>其中$V$任意正交矩阵。</p>
+<h4 id="14-33"><a href="#14-33" class="headerlink" title="14.33"></a>14.33</h4><p>考虑在如下条件下</p>
+<script type="math/tex; mode=display">
+\frac{1}{N} \sum_{i=1}^{N} x_{i}=0, \quad \frac{1}{N} \sum_{i=1}^{N} x_{i} x_{i}^{T}=I</script><p>最小化</p>
+<script type="math/tex; mode=display">
+J^2=\frac{1}{N} \sum_{i=1}^{N}\left\|y_{i}-A x_{i}-b\right\|^{2}
+=\frac{1}{N} \sum_{i=1}^{N}
+\left(y_i^T y_i +x_i^TA^T Ax_i +b^T b-2y_i^T Ax_i -2y_i^T b-2b^T Ax_i\right)</script><p>先关于$b$求梯度可得</p>
+<script type="math/tex; mode=display">
+\nabla_{b} J^2 =\frac 1 N \sum_{i=1}^{N}\left(2b -2y_i-2 Ax_i \right)=0</script><p>利用之前的条件可得</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+\frac 1 N \sum_{i=1}^{N}\left(2b -2y_i-2 Ax_i \right) & =0\\
+Nb-\sum_{i=1}^N y_i -A\sum_{i=1}^N x_i &=0 \\
+b&=\frac 1 N \sum_{i=1}^N y_i
+\end{aligned}</script><p>现在令</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+z_i &=y_i -b \\
+X&=\left[\begin{array}{lll}{x_{1}} & {\cdots} & {x_{N}}\end{array}\right] \in \mathbb{R}^{m \times N} \\
+Z&=\left[\begin{array}{lll}{z_{1}} & {\cdots} & {z_{N}}\end{array}\right] \in \mathbb{R}^{n \times N}
+\end{aligned}</script><p>那么</p>
+<script type="math/tex; mode=display">
+J^2= \frac{1}{N} \| Z-AX \|_F^2</script><p>假设$Z$的奇异值分解为</p>
+<script type="math/tex; mode=display">
+Z= U\Sigma V^T</script><p>$m$的一个合适的选择如下：选择$m$，使得$\sigma_m \gg  \sigma_{m+1}$，由最佳近似的性质可得，我们应该选择</p>
+<script type="math/tex; mode=display">
+AX =\sum_{i=1}^m \sigma_i u_i v_i ^T =U_m \Sigma_m V_m^T</script><p>这里</p>
+<script type="math/tex; mode=display">
+U_m \in \mathbb R^{n\times m}, \Sigma_m \in \mathbb R^{m\times m},
+V_m \in \mathbb R^{N\times m}</script><p>现在取</p>
+<script type="math/tex; mode=display">
+A=\frac 1 {\sqrt N }U_m \Sigma_m, X=\sqrt N  V_m^T</script><p>那么</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+\frac 1 N \sum_{i=1}^{N} x_{i} x_{i}^{T}
+&=\frac 1N XX^T\\
+&=\frac1 N  N V_m^T V_m\\
+&=I \\
+\sum_{i=1}^{N} x_{i} &= X1_N\\
+&=\sqrt N  V_m^T 1_N \\
+&=0
+\end{aligned}</script><p>其中最后一个等号的原因如下：</p>
+<p>我们有</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+\sum_{i=1}^N z_i =Z 1_N= U\Sigma V^T 1_N =0
+\end{aligned}</script><p>因为$U\Sigma $列满秩，所以我们有</p>
+<script type="math/tex; mode=display">
+V^T 1_N =0</script><p>这可以推出</p>
+<script type="math/tex; mode=display">
+V_m^T 1_N = 0</script><p>将内容总结如下：</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+z_i &=y_i -b \\
+X&=\left[\begin{array}{lll}{x_{1}} & {\cdots} & {x_{N}}\end{array}\right] \in \mathbb{R}^{m \times N} \\
+Z&=\left[\begin{array}{lll}{z_{1}} & {\cdots} & {z_{N}}\end{array}\right] \in \mathbb{R}^{n \times N} \\
+A&=\frac 1 {\sqrt N }U_m \Sigma_m\\
+X&=\sqrt N  V_m^T
+\end{aligned}</script><p>(b)代码如下：</p>
+<pre class="line-numbers language-matlab" data-language="matlab"><code class="language-matlab"><span class="token comment">%b</span>
+b <span class="token operator">=</span> <span class="token function">mean</span><span class="token punctuation">(</span>Y<span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token comment">%Z</span>
+Z <span class="token operator">=</span> Y <span class="token operator">-</span> b <span class="token operator">*</span> <span class="token function">ones</span><span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">,</span> N<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token comment">%SVD</span>
+<span class="token punctuation">[</span>U<span class="token punctuation">,</span> Sigma<span class="token punctuation">,</span> V<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token function">svd</span><span class="token punctuation">(</span>Z<span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+tmp <span class="token operator">=</span> <span class="token function">diag</span><span class="token punctuation">(</span>Sigma<span class="token punctuation">)</span>
+m <span class="token operator">=</span> <span class="token number">3</span><span class="token punctuation">;</span>
+Sigmam <span class="token operator">=</span> <span class="token function">diag</span><span class="token punctuation">(</span><span class="token function">tmp</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token operator">:</span> <span class="token number">3</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+<span class="token comment">%A, X</span>
+A <span class="token operator">=</span> <span class="token function">U</span><span class="token punctuation">(</span><span class="token operator">:</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token operator">:</span>m<span class="token punctuation">)</span> <span class="token operator">*</span> Sigmam <span class="token operator">/</span> <span class="token function">sqrt</span><span class="token punctuation">(</span>N<span class="token punctuation">)</span><span class="token punctuation">;</span>
+X <span class="token operator">=</span> <span class="token function">V</span><span class="token punctuation">(</span><span class="token operator">:</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token operator">:</span>m<span class="token punctuation">)</span><span class="token operator">'</span> <span class="token operator">*</span> <span class="token function">sqrt</span><span class="token punctuation">(</span>N<span class="token punctuation">)</span><span class="token punctuation">;</span>
+X <span class="token operator">*</span> <span class="token function">ones</span><span class="token punctuation">(</span>N<span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">)</span>
+<span class="token number">1</span> <span class="token operator">/</span> N <span class="token operator">*</span> X <span class="token operator">*</span> X<span class="token operator">'</span>
+<span class="token comment">%res</span>
+res <span class="token operator">=</span> Z <span class="token operator">-</span> A <span class="token operator">*</span> X<span class="token punctuation">;</span>
+Norm <span class="token operator">=</span> <span class="token function">zeros</span><span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">,</span> N<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">for</span> <span class="token number">i</span> <span class="token operator">=</span> <span class="token number">1</span><span class="token operator">:</span>N
+    <span class="token function">Norm</span><span class="token punctuation">(</span><span class="token number">i</span><span class="token punctuation">)</span> <span class="token operator">=</span> <span class="token function">norm</span><span class="token punctuation">(</span><span class="token function">res</span><span class="token punctuation">(</span><span class="token operator">:</span><span class="token punctuation">,</span> <span class="token number">i</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">end</span>
+Norm <span class="token operator">=</span> <span class="token function">sort</span><span class="token punctuation">(</span>Norm<span class="token punctuation">,</span> <span class="token string">'descend'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token function">plot</span><span class="token punctuation">(</span>Norm<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p><img src="./33.jpg" alt=""></p>
+<h3 id="补充题"><a href="#补充题" class="headerlink" title="补充题"></a>补充题</h3><h4 id="1"><a href="#1" class="headerlink" title="1"></a>1</h4><p>(a)取</p>
+<script type="math/tex; mode=display">
+A= \left[
+ \begin{matrix}
+  1 & -5\\
+  0 & 1
+  \end{matrix}
+  \right], x=\left[
+ \begin{matrix}
+  1 \\
+  1
+  \end{matrix}
+  \right]</script><p>那么</p>
+<script type="math/tex; mode=display">
+x^T Ax =1+1-5=-3</script><p>正确的做法是先计算</p>
+<script type="math/tex; mode=display">
+B=\frac 1 2(A+A^T)</script><p>如果$B$的特征值非负，那么$x^T A x \ge 0$</p>
+<p>(b)</p>
+<script type="math/tex; mode=display">
+A= \left[
+ \begin{matrix}
+ 2& 0\\
+  0 & 2
+  \end{matrix}
+  \right],B=  \left[
+ \begin{matrix}
+1 & 0\\
+  0 & 3
+  \end{matrix}
+  \right]</script><p>那么</p>
+<script type="math/tex; mode=display">
+A-B=\left[
+ \begin{matrix}
+ 1& 0\\
+  0 & -1
+  \end{matrix}
+  \right],
+  B-A=\left[
+ \begin{matrix}
+ -1& 0\\
+  0 & 1
+  \end{matrix}
+  \right]</script></article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">Doraemonzzz</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="http://doraemonzzz.com/2019/07/08/EE263%20Homework%208/">http://doraemonzzz.com/2019/07/08/EE263%20Homework%208/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://doraemonzzz.com" target="_blank">Doraemonzzz</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/EE263/">EE263</a></div><div class="post_share"><div class="social-share" data-image="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2019/07/08/From%20Nand%20to%20Tetris%20week%209/"><img class="prev-cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">From Nand to Tetris week 9</div></div></a></div><div class="next-post pull-right"><a href="/2019/07/06/EE263%20Lecture%2018%20SVD%20Applications/"><img class="next-cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">EE263 Lecture 18 SVD Applications</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span> 相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2019/05/13/EE263 Homework 1/" title="EE263 Homework 1"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2019-05-13</div><div class="title">EE263 Homework 1</div></div></a></div><div><a href="/2019/05/23/EE263 Homework 2/" title="EE263 Homework 2"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2019-05-23</div><div class="title">EE263 Homework 2</div></div></a></div><div><a href="/2019/05/26/EE263 Homework 3/" title="EE263 Homework 3"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2019-05-26</div><div class="title">EE263 Homework 3</div></div></a></div><div><a href="/2019/06/27/EE263 Homework 5/" title="EE263 Homework 5"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2019-06-27</div><div class="title">EE263 Homework 5</div></div></a></div><div><a href="/2019/06/29/EE263 Homework 6/" title="EE263 Homework 6"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2019-06-29</div><div class="title">EE263 Homework 6</div></div></a></div><div><a href="/2019/07/03/EE263 Homework 7/" title="EE263 Homework 7"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2019-07-03</div><div class="title">EE263 Homework 7</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="card-info-avatar is-center"><img class="avatar-img" src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/><div class="author-info__name">Doraemonzzz</div><div class="author-info__description">个人博客，主要记录有关机器学习，数学以及计算机科学的笔记</div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">610</div></a></div><div class="card-info-data-item is-center"><a href="/tags/"><div class="headline">标签</div><div class="length-num">59</div></a></div><div class="card-info-data-item is-center"><a href="/categories/"><div class="headline">分类</div><div class="length-num">23</div></a></div></div><a class="button--animated" id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/Doraemonzzz" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="/doraemon_zzz@163.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn card-announcement-animation"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#13-17"><span class="toc-number">1.</span> <span class="toc-text">13.17</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#14-2"><span class="toc-number">2.</span> <span class="toc-text">14.2</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#14-3"><span class="toc-number">3.</span> <span class="toc-text">14.3</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#14-4"><span class="toc-number">4.</span> <span class="toc-text">14.4</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#14-6"><span class="toc-number">5.</span> <span class="toc-text">14.6</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#14-8"><span class="toc-number">6.</span> <span class="toc-text">14.8</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#14-9"><span class="toc-number">7.</span> <span class="toc-text">14.9</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#14-11"><span class="toc-number">8.</span> <span class="toc-text">14.11</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#14-13"><span class="toc-number">9.</span> <span class="toc-text">14.13</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#14-21"><span class="toc-number">10.</span> <span class="toc-text">14.21</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#14-33"><span class="toc-number">11.</span> <span class="toc-text">14.33</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A1%A5%E5%85%85%E9%A2%98"><span class="toc-number"></span> <span class="toc-text">补充题</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1"><span class="toc-number">1.</span> <span class="toc-text">1</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2021/06/06/2021-6-6-%E7%AE%97%E6%B3%95%E6%A6%82%E8%AE%BA(DPV)%E4%B9%A0%E9%A2%98%E8%A7%A3%E7%AD%94%E2%80%94%E2%80%94%E7%AC%AC3%E7%AB%A0-%E5%9B%BE%E7%9A%84%E5%88%86%E8%A7%A3/" title="算法概论(DPV)习题解答——第3章 图的分解"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="算法概论(DPV)习题解答——第3章 图的分解"/></a><div class="content"><a class="title" href="/2021/06/06/2021-6-6-%E7%AE%97%E6%B3%95%E6%A6%82%E8%AE%BA(DPV)%E4%B9%A0%E9%A2%98%E8%A7%A3%E7%AD%94%E2%80%94%E2%80%94%E7%AC%AC3%E7%AB%A0-%E5%9B%BE%E7%9A%84%E5%88%86%E8%A7%A3/" title="算法概论(DPV)习题解答——第3章 图的分解">算法概论(DPV)习题解答——第3章 图的分解</a><time datetime="2021-06-06T14:35:00.000Z" title="发表于 2021-06-06 22:35:00">2021-06-06</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/06/06/2021-6-6-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E7%AC%AC5%E7%AB%A0-%E4%B9%A0%E9%A2%98%E8%A7%A3%E6%9E%90/" title="深入理解计算机系统 第5章 习题解析"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="深入理解计算机系统 第5章 习题解析"/></a><div class="content"><a class="title" href="/2021/06/06/2021-6-6-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E7%AC%AC5%E7%AB%A0-%E4%B9%A0%E9%A2%98%E8%A7%A3%E6%9E%90/" title="深入理解计算机系统 第5章 习题解析">深入理解计算机系统 第5章 习题解析</a><time datetime="2021-06-06T07:23:00.000Z" title="发表于 2021-06-06 15:23:00">2021-06-06</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/06/05/2021-6-5-Stanford-Compiler-PA5%E7%BF%BB%E8%AF%91/" title="Stanford Compiler PA5翻译"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Stanford Compiler PA5翻译"/></a><div class="content"><a class="title" href="/2021/06/05/2021-6-5-Stanford-Compiler-PA5%E7%BF%BB%E8%AF%91/" title="Stanford Compiler PA5翻译">Stanford Compiler PA5翻译</a><time datetime="2021-06-05T06:12:00.000Z" title="发表于 2021-06-05 14:12:00">2021-06-05</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/06/04/2021-6-4-Stanford-Compiler-PA4%E7%BF%BB%E8%AF%91/" title="Stanford Compiler PA4翻译"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Stanford Compiler PA4翻译"/></a><div class="content"><a class="title" href="/2021/06/04/2021-6-4-Stanford-Compiler-PA4%E7%BF%BB%E8%AF%91/" title="Stanford Compiler PA4翻译">Stanford Compiler PA4翻译</a><time datetime="2021-06-03T16:17:00.000Z" title="发表于 2021-06-04 00:17:00">2021-06-04</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/06/03/2021-6-3-%E5%B7%A7%E5%A6%99%E7%9A%84Y%E8%BF%90%E7%AE%97%E7%AC%A6/" title="巧妙的Y运算符"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="巧妙的Y运算符"/></a><div class="content"><a class="title" href="/2021/06/03/2021-6-3-%E5%B7%A7%E5%A6%99%E7%9A%84Y%E8%BF%90%E7%AE%97%E7%AC%A6/" title="巧妙的Y运算符">巧妙的Y运算符</a><time datetime="2021-06-03T00:54:00.000Z" title="发表于 2021-06-03 08:54:00">2021-06-03</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2021 By Doraemonzzz</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><div class="js-pjax"><script>if (!window.MathJax) {
+  window.MathJax = {
+    loader: {
+      source: {
+        '[tex]/amsCd': '[tex]/amscd'
+      }
+    },
+    tex: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]],
+      tags: 'ams'
+    },
+    options: {
+      renderActions: {
+        findScript: [10, doc => {
+          for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+            const display = !!node.type.match(/; *mode=display/)
+            const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+            const text = document.createTextNode('')
+            node.parentNode.replaceChild(text, node)
+            math.start = {node: text, delim: '', n: 0}
+            math.end = {node: text, delim: '', n: 0}
+            doc.math.push(math)
+          }
+        }, ''],
+        addClass: [200,() => {
+          document.querySelectorAll('mjx-container:not([display=\'true\']').forEach( node => {
+            const target = node.parentNode
+            if (!target.classList.contains('has-jax')) {
+              target.classList.add('mathjax-overflow')
+            }
+          })
+        }, '', false]
+      }
+    }
+  }
+  
+  const script = document.createElement('script')
+  script.src = 'https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js'
+  script.id = 'MathJax-script'
+  script.async = true
+  document.head.appendChild(script)
+} else {
+  MathJax.startup.document.state(0)
+  MathJax.texReset()
+  MathJax.typeset()
+}</script></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

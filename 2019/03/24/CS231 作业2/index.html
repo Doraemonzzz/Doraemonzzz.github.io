@@ -1,0 +1,972 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>CS231 作业2 | Doraemonzzz</title><meta name="keywords" content="CS231"><meta name="author" content="Doraemonzzz"><meta name="copyright" content="Doraemonzzz"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="课程视频地址：https:&#x2F;&#x2F;study.163.com&#x2F;courses-search?keyword&#x3D;CS231 课程主页：http:&#x2F;&#x2F;cs231n.stanford.edu&#x2F;2017&#x2F; 参考资料： https:&#x2F;&#x2F;github.com&#x2F;Halfish&#x2F;cs231n&#x2F;tree&#x2F;master&#x2F;assignment2&#x2F;cs231n https:&#x2F;&#x2F;github.com&#x2F;wjbKimberly&#x2F;cs">
+<meta property="og:type" content="article">
+<meta property="og:title" content="CS231 作业2">
+<meta property="og:url" content="http://doraemonzzz.com/2019/03/24/CS231%20%E4%BD%9C%E4%B8%9A2/index.html">
+<meta property="og:site_name" content="Doraemonzzz">
+<meta property="og:description" content="课程视频地址：https:&#x2F;&#x2F;study.163.com&#x2F;courses-search?keyword&#x3D;CS231 课程主页：http:&#x2F;&#x2F;cs231n.stanford.edu&#x2F;2017&#x2F; 参考资料： https:&#x2F;&#x2F;github.com&#x2F;Halfish&#x2F;cs231n&#x2F;tree&#x2F;master&#x2F;assignment2&#x2F;cs231n https:&#x2F;&#x2F;github.com&#x2F;wjbKimberly&#x2F;cs">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg">
+<meta property="article:published_time" content="2019-03-24T13:30:00.000Z">
+<meta property="article:modified_time" content="2019-03-26T16:58:37.431Z">
+<meta property="article:author" content="Doraemonzzz">
+<meta property="article:tag" content="CS231">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="http://doraemonzzz.com/2019/03/24/CS231%20%E4%BD%9C%E4%B8%9A2/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"prismjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    jQuery: 'https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js',
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+    },
+    fancybox: {
+      js: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isanchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'CS231 作业2',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2019-03-27 00:58:37'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    })(window)</script><meta name="generator" content="Hexo 5.4.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="author-avatar"><img class="avatar-img" src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">文章</div><div class="length-num">610</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">标签</div><div class="length-num">59</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/categories/"><div class="headline">分类</div><div class="length-num">23</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">Doraemonzzz</a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">CS231 作业2</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2019-03-24T13:30:00.000Z" title="发表于 2019-03-24 21:30:00">2019-03-24</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2019-03-26T16:58:37.431Z" title="更新于 2019-03-27 00:58:37">2019-03-27</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/">机器学习</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="CS231 作业2"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p>课程视频地址：<a target="_blank" rel="noopener" href="https://study.163.com/courses-search?keyword=CS231">https://study.163.com/courses-search?keyword=CS231</a></p>
+<p>课程主页：<a target="_blank" rel="noopener" href="http://cs231n.stanford.edu/2017/">http://cs231n.stanford.edu/2017/</a></p>
+<p>参考资料：</p>
+<p><a target="_blank" rel="noopener" href="https://github.com/Halfish/cs231n/tree/master/assignment2/cs231n">https://github.com/Halfish/cs231n/tree/master/assignment2/cs231n</a></p>
+<p><a target="_blank" rel="noopener" href="https://github.com/wjbKimberly/cs231n_spring_2017_assignment/blob/master/assignment2/TensorFlow.ipynb">https://github.com/wjbKimberly/cs231n_spring_2017_assignment/blob/master/assignment2/TensorFlow.ipynb</a></p>
+<p>我的代码地址：<a target="_blank" rel="noopener" href="https://github.com/Doraemonzzz/CS231n">https://github.com/Doraemonzzz/CS231n</a></p>
+<p>这一部分回顾作业2的重点。</p>
+<span id="more"></span>
+<h4 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h4><p>如果读取数据的时候报错，那么需要修改data_utils.py文件中如下函数：</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">def</span> <span class="token function">get_CIFAR10_data</span><span class="token punctuation">(</span>num_training<span class="token operator">=</span><span class="token number">49000</span><span class="token punctuation">,</span> num_validation<span class="token operator">=</span><span class="token number">1000</span><span class="token punctuation">,</span> num_test<span class="token operator">=</span><span class="token number">1000</span><span class="token punctuation">,</span>
+                     subtract_mean<span class="token operator">=</span><span class="token boolean">True</span><span class="token punctuation">)</span><span class="token punctuation">:</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<p>找到</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python">cifar10_dir <span class="token operator">=</span> <span class="token string">'cs231n/datasets/cifar-10-batches-py'</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>将其修改为自己存放数据的位置即可。</p>
+<h4 id="1-全连接神经网络"><a href="#1-全连接神经网络" class="headerlink" title="1.全连接神经网络"></a>1.全连接神经网络</h4><p>为了后面叙述方便，这里做以下假设</p>
+<script type="math/tex; mode=display">
+X\in \mathbb R^{N\times D}, W\in \mathbb R^{D\times M} ,b\in \mathbb R^M</script><h5 id="Affine-layer-foward"><a href="#Affine-layer-foward" class="headerlink" title="Affine layer: foward"></a>Affine layer: foward</h5><p>这部分很简单，只要知道输出为</p>
+<script type="math/tex; mode=display">
+S=XW+b \in \mathbb R^{N\times M}</script><p>即可，对应代码为</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python">N <span class="token operator">=</span> x<span class="token punctuation">.</span>shape<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span>
+X <span class="token operator">=</span> x<span class="token punctuation">.</span>reshape<span class="token punctuation">(</span>N<span class="token punctuation">,</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span>
+out <span class="token operator">=</span> X<span class="token punctuation">.</span>dot<span class="token punctuation">(</span>w<span class="token punctuation">)</span> <span class="token operator">+</span> b<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+<h5 id="Affine-layer-backward"><a href="#Affine-layer-backward" class="headerlink" title="Affine layer: backward"></a>Affine layer: backward</h5><p>上一次作业最后，我们推导了</p>
+<script type="math/tex; mode=display">
+\nabla_W f =\nabla_W S \times \nabla_S f =X^T F\in \mathbb R^{D\times M} \\
+\nabla_b f 为F按行求和后的矩阵</script><p>其中$F$为反向传播的输入，这部分只要根据定义即可验证，记忆方式很简单，只要匹配矩阵的维度即可，有了上述公式，不难得到这部分对应的代码为</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token comment">#转换形状</span>
+N <span class="token operator">=</span> x<span class="token punctuation">.</span>shape<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span>
+X <span class="token operator">=</span> x<span class="token punctuation">.</span>reshape<span class="token punctuation">(</span>N<span class="token punctuation">,</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span>
+dx <span class="token operator">=</span> dout<span class="token punctuation">.</span>dot<span class="token punctuation">(</span>w<span class="token punctuation">.</span>T<span class="token punctuation">)</span>
+<span class="token comment">#转换为原来的形状</span>
+dx <span class="token operator">=</span> np<span class="token punctuation">.</span>reshape<span class="token punctuation">(</span>dx<span class="token punctuation">,</span> x<span class="token punctuation">.</span>shape<span class="token punctuation">)</span>
+dw <span class="token operator">=</span> X<span class="token punctuation">.</span>T<span class="token punctuation">.</span>dot<span class="token punctuation">(</span>dout<span class="token punctuation">)</span>
+db <span class="token operator">=</span> np<span class="token punctuation">.</span><span class="token builtin">sum</span><span class="token punctuation">(</span>dout<span class="token punctuation">,</span> axis<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h5 id="ReLU-layer-forward"><a href="#ReLU-layer-forward" class="headerlink" title="ReLU layer: forward"></a>ReLU layer: forward</h5><p>没什么好说的，直接根据定义：</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python">out <span class="token operator">=</span> np<span class="token punctuation">.</span>copy<span class="token punctuation">(</span>x<span class="token punctuation">)</span>
+out<span class="token punctuation">[</span>out <span class="token operator">&lt;</span> <span class="token number">0</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token number">0</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<h5 id="ReLU-layer-backward"><a href="#ReLU-layer-backward" class="headerlink" title="ReLU layer: backward"></a>ReLU layer: backward</h5><p>只要将输入小于$0$的位置的梯度取$0$即可：</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python">dx <span class="token operator">=</span> np<span class="token punctuation">.</span>copy<span class="token punctuation">(</span>dout<span class="token punctuation">)</span>
+dx<span class="token punctuation">[</span>x <span class="token operator">&lt;</span> <span class="token number">0</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token number">0</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<h5 id="Two-layer-network"><a href="#Two-layer-network" class="headerlink" title="Two-layer network"></a>Two-layer network</h5><p>实现两层神经网络，这里的网络架构为affine - relu - affine - softmax。</p>
+<p>第一步，初始化：</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python">W1 <span class="token operator">=</span> np<span class="token punctuation">.</span>random<span class="token punctuation">.</span>randn<span class="token punctuation">(</span>input_dim<span class="token punctuation">,</span> hidden_dim<span class="token punctuation">)</span> <span class="token operator">*</span> weight_scale
+b1 <span class="token operator">=</span> np<span class="token punctuation">.</span>zeros<span class="token punctuation">(</span>hidden_dim<span class="token punctuation">)</span>
+W2 <span class="token operator">=</span> np<span class="token punctuation">.</span>random<span class="token punctuation">.</span>randn<span class="token punctuation">(</span>hidden_dim<span class="token punctuation">,</span> num_classes<span class="token punctuation">)</span> <span class="token operator">*</span> weight_scale
+b2 <span class="token operator">=</span> np<span class="token punctuation">.</span>zeros<span class="token punctuation">(</span>num_classes<span class="token punctuation">)</span>
+self<span class="token punctuation">.</span>params<span class="token punctuation">[</span><span class="token string">"W1"</span><span class="token punctuation">]</span> <span class="token operator">=</span> W1
+self<span class="token punctuation">.</span>params<span class="token punctuation">[</span><span class="token string">"b1"</span><span class="token punctuation">]</span> <span class="token operator">=</span> b1
+self<span class="token punctuation">.</span>params<span class="token punctuation">[</span><span class="token string">"W2"</span><span class="token punctuation">]</span> <span class="token operator">=</span> W2
+self<span class="token punctuation">.</span>params<span class="token punctuation">[</span><span class="token string">"b2"</span><span class="token punctuation">]</span> <span class="token operator">=</span> b2<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>第二步，前向传播：</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python">W1 <span class="token operator">=</span> self<span class="token punctuation">.</span>params<span class="token punctuation">[</span><span class="token string">"W1"</span><span class="token punctuation">]</span>
+b1 <span class="token operator">=</span> self<span class="token punctuation">.</span>params<span class="token punctuation">[</span><span class="token string">"b1"</span><span class="token punctuation">]</span>
+W2 <span class="token operator">=</span> self<span class="token punctuation">.</span>params<span class="token punctuation">[</span><span class="token string">"W2"</span><span class="token punctuation">]</span>
+b2 <span class="token operator">=</span> self<span class="token punctuation">.</span>params<span class="token punctuation">[</span><span class="token string">"b2"</span><span class="token punctuation">]</span>
+
+<span class="token comment">#中间层</span>
+z1<span class="token punctuation">,</span> cache1 <span class="token operator">=</span> affine_relu_forward<span class="token punctuation">(</span>X<span class="token punctuation">,</span> W1<span class="token punctuation">,</span> b1<span class="token punctuation">)</span>
+<span class="token comment">#输出</span>
+scores<span class="token punctuation">,</span> cache2 <span class="token operator">=</span> affine_forward<span class="token punctuation">(</span>z1<span class="token punctuation">,</span> W2<span class="token punctuation">,</span> b2<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>第三步：反向传播：</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token comment">#损失以及dout</span>
+loss<span class="token punctuation">,</span> dout <span class="token operator">=</span> softmax_loss<span class="token punctuation">(</span>scores<span class="token punctuation">,</span> y<span class="token punctuation">)</span>
+<span class="token comment">#加上正则项</span>
+loss <span class="token operator">+=</span> self<span class="token punctuation">.</span>reg <span class="token operator">*</span> <span class="token punctuation">(</span>np<span class="token punctuation">.</span><span class="token builtin">sum</span><span class="token punctuation">(</span>W2 <span class="token operator">**</span> <span class="token number">2</span><span class="token punctuation">)</span> <span class="token operator">+</span> np<span class="token punctuation">.</span><span class="token builtin">sum</span><span class="token punctuation">(</span>W1 <span class="token operator">**</span> <span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token operator">/</span> <span class="token number">2</span>
+<span class="token comment">#计算dW2,db2</span>
+dz1<span class="token punctuation">,</span> dW2<span class="token punctuation">,</span> db2 <span class="token operator">=</span> affine_backward<span class="token punctuation">(</span>dout<span class="token punctuation">,</span> cache2<span class="token punctuation">)</span>
+<span class="token comment">#加上正则项</span>
+dW2 <span class="token operator">+=</span> self<span class="token punctuation">.</span>reg <span class="token operator">*</span> W2
+<span class="token comment">#计算dW1,db1</span>
+dx<span class="token punctuation">,</span> dW1<span class="token punctuation">,</span> db1 <span class="token operator">=</span> affine_relu_backward<span class="token punctuation">(</span>dz1<span class="token punctuation">,</span> cache1<span class="token punctuation">)</span>
+dW1 <span class="token operator">+=</span> self<span class="token punctuation">.</span>reg <span class="token operator">*</span> W1
+<span class="token comment">#存入字典</span>
+grads<span class="token punctuation">[</span><span class="token string">"W1"</span><span class="token punctuation">]</span> <span class="token operator">=</span> dW1
+grads<span class="token punctuation">[</span><span class="token string">"b1"</span><span class="token punctuation">]</span> <span class="token operator">=</span> db1
+grads<span class="token punctuation">[</span><span class="token string">"W2"</span><span class="token punctuation">]</span> <span class="token operator">=</span> dW2
+grads<span class="token punctuation">[</span><span class="token string">"b2"</span><span class="token punctuation">]</span> <span class="token operator">=</span> db2<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h5 id="Multilayer-network"><a href="#Multilayer-network" class="headerlink" title="Multilayer network"></a>Multilayer network</h5><p>这部分是上一部分的推广。</p>
+<p>第一步，初始化，注意这里要根据是输入层，输出层还是中间层来分情况讨论：</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">for</span> i <span class="token keyword">in</span> <span class="token builtin">range</span><span class="token punctuation">(</span>self<span class="token punctuation">.</span>num_layers<span class="token punctuation">)</span><span class="token punctuation">:</span>
+	<span class="token keyword">if</span> i <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">:</span>
+		W <span class="token operator">=</span> np<span class="token punctuation">.</span>random<span class="token punctuation">.</span>randn<span class="token punctuation">(</span>input_dim<span class="token punctuation">,</span> hidden_dims<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token operator">*</span> weight_scale
+		b <span class="token operator">=</span> np<span class="token punctuation">.</span>zeros<span class="token punctuation">(</span>hidden_dims<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">)</span>
+	<span class="token keyword">elif</span> i <span class="token operator">==</span> self<span class="token punctuation">.</span>num_layers <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">:</span>
+		W <span class="token operator">=</span> np<span class="token punctuation">.</span>random<span class="token punctuation">.</span>randn<span class="token punctuation">(</span>hidden_dims<span class="token punctuation">[</span>i<span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">,</span> num_classes<span class="token punctuation">)</span> <span class="token operator">*</span> weight_scale
+		b <span class="token operator">=</span> np<span class="token punctuation">.</span>zeros<span class="token punctuation">(</span>num_classes<span class="token punctuation">)</span>
+	<span class="token keyword">else</span><span class="token punctuation">:</span>
+		W <span class="token operator">=</span> np<span class="token punctuation">.</span>random<span class="token punctuation">.</span>randn<span class="token punctuation">(</span>hidden_dims<span class="token punctuation">[</span>i<span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">,</span> hidden_dims<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token operator">*</span> weight_scale
+		b <span class="token operator">=</span> np<span class="token punctuation">.</span>zeros<span class="token punctuation">(</span>hidden_dims<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">)</span>
+        
+	self<span class="token punctuation">.</span>params<span class="token punctuation">[</span><span class="token string">"W"</span><span class="token operator">+</span><span class="token builtin">str</span><span class="token punctuation">(</span>i<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">]</span> <span class="token operator">=</span> W
+	self<span class="token punctuation">.</span>params<span class="token punctuation">[</span><span class="token string">"b"</span><span class="token operator">+</span><span class="token builtin">str</span><span class="token punctuation">(</span>i<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">]</span> <span class="token operator">=</span> b<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>第二步，前向传播，这里要分是否是输出层来讨论：</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python">x <span class="token operator">=</span> X
+<span class="token comment">#记录缓存</span>
+Cache <span class="token operator">=</span> <span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span>
+Cache_dropout <span class="token operator">=</span> <span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span>
+<span class="token keyword">for</span> i <span class="token keyword">in</span> <span class="token builtin">range</span><span class="token punctuation">(</span>self<span class="token punctuation">.</span>num_layers<span class="token punctuation">)</span><span class="token punctuation">:</span>
+	W <span class="token operator">=</span> self<span class="token punctuation">.</span>params<span class="token punctuation">[</span><span class="token string">"W"</span><span class="token operator">+</span><span class="token builtin">str</span><span class="token punctuation">(</span>i<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">]</span>
+	b <span class="token operator">=</span> self<span class="token punctuation">.</span>params<span class="token punctuation">[</span><span class="token string">"b"</span><span class="token operator">+</span><span class="token builtin">str</span><span class="token punctuation">(</span>i<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">]</span>
+	<span class="token keyword">if</span> i <span class="token operator">&lt;</span> self<span class="token punctuation">.</span>num_layers <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">:</span>
+		x<span class="token punctuation">,</span> cache <span class="token operator">=</span> affine_relu_forward<span class="token punctuation">(</span>x<span class="token punctuation">,</span> W<span class="token punctuation">,</span> b<span class="token punctuation">)</span>
+	<span class="token keyword">else</span><span class="token punctuation">:</span>
+		x<span class="token punctuation">,</span> cache <span class="token operator">=</span> affine_forward<span class="token punctuation">(</span>x<span class="token punctuation">,</span> W<span class="token punctuation">,</span> b<span class="token punctuation">)</span>
+	<span class="token comment">#存入缓存</span>
+	Cache<span class="token punctuation">[</span><span class="token string">"cache"</span><span class="token operator">+</span><span class="token builtin">str</span><span class="token punctuation">(</span>i<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">]</span> <span class="token operator">=</span> cache
+    
+<span class="token comment">#输出</span>
+scores <span class="token operator">=</span> x<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>第三步，反向传播，依旧要分是否是输出层来讨论</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token comment">#损失以及dout</span>
+loss<span class="token punctuation">,</span> dout <span class="token operator">=</span> softmax_loss<span class="token punctuation">(</span>scores<span class="token punctuation">,</span> y<span class="token punctuation">)</span>
+<span class="token comment">#加上正则项</span>
+<span class="token keyword">for</span> i <span class="token keyword">in</span> <span class="token builtin">range</span><span class="token punctuation">(</span>self<span class="token punctuation">.</span>num_layers<span class="token punctuation">)</span><span class="token punctuation">:</span>
+	W <span class="token operator">=</span> self<span class="token punctuation">.</span>params<span class="token punctuation">[</span><span class="token string">"W"</span><span class="token operator">+</span><span class="token builtin">str</span><span class="token punctuation">(</span>i<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">]</span>
+	loss <span class="token operator">+=</span> self<span class="token punctuation">.</span>reg <span class="token operator">*</span> <span class="token punctuation">(</span>np<span class="token punctuation">.</span><span class="token builtin">sum</span><span class="token punctuation">(</span>W <span class="token operator">**</span> <span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token operator">/</span> <span class="token number">2</span>
+<span class="token comment">#计算dWi</span>
+<span class="token keyword">for</span> i <span class="token keyword">in</span> <span class="token builtin">range</span><span class="token punctuation">(</span>self<span class="token punctuation">.</span>num_layers<span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+	cache <span class="token operator">=</span> Cache<span class="token punctuation">[</span><span class="token string">"cache"</span><span class="token operator">+</span><span class="token builtin">str</span><span class="token punctuation">(</span>i<span class="token punctuation">)</span><span class="token punctuation">]</span>
+	W <span class="token operator">=</span> self<span class="token punctuation">.</span>params<span class="token punctuation">[</span><span class="token string">"W"</span><span class="token operator">+</span><span class="token builtin">str</span><span class="token punctuation">(</span>i<span class="token punctuation">)</span><span class="token punctuation">]</span>
+	<span class="token keyword">if</span> i <span class="token operator">==</span> self<span class="token punctuation">.</span>num_layers<span class="token punctuation">:</span>
+		dz<span class="token punctuation">,</span> dW<span class="token punctuation">,</span> db <span class="token operator">=</span> affine_backward<span class="token punctuation">(</span>dout<span class="token punctuation">,</span> cache<span class="token punctuation">)</span>
+	<span class="token keyword">else</span><span class="token punctuation">:</span>
+		dz<span class="token punctuation">,</span> dW<span class="token punctuation">,</span> db <span class="token operator">=</span> affine_relu_backward<span class="token punctuation">(</span>dz<span class="token punctuation">,</span> cache<span class="token punctuation">)</span>
+
+	<span class="token comment">#加上正则项</span>
+	dW <span class="token operator">+=</span> self<span class="token punctuation">.</span>reg <span class="token operator">*</span> W
+	<span class="token comment">#存入字典</span>
+	grads<span class="token punctuation">[</span><span class="token string">"W"</span><span class="token operator">+</span><span class="token builtin">str</span><span class="token punctuation">(</span>i<span class="token punctuation">)</span><span class="token punctuation">]</span> <span class="token operator">=</span> dW
+	grads<span class="token punctuation">[</span><span class="token string">"b"</span><span class="token operator">+</span><span class="token builtin">str</span><span class="token punctuation">(</span>i<span class="token punctuation">)</span><span class="token punctuation">]</span> <span class="token operator">=</span> db<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>这部分内容只需要细心就可以完成，并不是很难。</p>
+<h5 id="SGD-Momentum"><a href="#SGD-Momentum" class="headerlink" title="SGD+Momentum"></a>SGD+Momentum</h5><p>这里使用的更新公式如下：</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+v_{t+1} &= \rho v_t -\alpha \nabla f(x_t+\rho v_t) \\
+x_{t+1}&= x_t + v_{t+1}
+\end{aligned}</script><pre class="line-numbers language-python" data-language="python"><code class="language-python">v <span class="token operator">=</span> config<span class="token punctuation">[</span><span class="token string">"momentum"</span><span class="token punctuation">]</span> <span class="token operator">*</span> v <span class="token operator">-</span> config<span class="token punctuation">[</span><span class="token string">'learning_rate'</span><span class="token punctuation">]</span> <span class="token operator">*</span> dw
+next_w <span class="token operator">=</span> w <span class="token operator">+</span> v<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<h5 id="RMSProp"><a href="#RMSProp" class="headerlink" title="RMSProp"></a>RMSProp</h5><pre class="line-numbers language-python" data-language="python"><code class="language-python">config<span class="token punctuation">[</span><span class="token string">'cache'</span><span class="token punctuation">]</span> <span class="token operator">=</span> config<span class="token punctuation">[</span><span class="token string">'decay_rate'</span><span class="token punctuation">]</span> <span class="token operator">*</span> config<span class="token punctuation">[</span><span class="token string">'cache'</span><span class="token punctuation">]</span> <span class="token operator">+</span> <span class="token punctuation">(</span><span class="token number">1</span> <span class="token operator">-</span> config<span class="token punctuation">[</span><span class="token string">'decay_rate'</span><span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token operator">*</span> dx <span class="token operator">*</span> dx
+next_x <span class="token operator">=</span> x <span class="token operator">-</span> config<span class="token punctuation">[</span><span class="token string">'learning_rate'</span><span class="token punctuation">]</span> <span class="token operator">*</span> dx <span class="token operator">/</span> <span class="token punctuation">(</span>np<span class="token punctuation">.</span>sqrt<span class="token punctuation">(</span>config<span class="token punctuation">[</span><span class="token string">'cache'</span><span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token operator">+</span> config<span class="token punctuation">[</span><span class="token string">'epsilon'</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<h5 id="Adam"><a href="#Adam" class="headerlink" title="Adam"></a>Adam</h5><pre class="line-numbers language-python" data-language="python"><code class="language-python">config<span class="token punctuation">[</span><span class="token string">'m'</span><span class="token punctuation">]</span> <span class="token operator">=</span> config<span class="token punctuation">[</span><span class="token string">'beta1'</span><span class="token punctuation">]</span> <span class="token operator">*</span> config<span class="token punctuation">[</span><span class="token string">'m'</span><span class="token punctuation">]</span> <span class="token operator">+</span> <span class="token punctuation">(</span><span class="token number">1</span> <span class="token operator">-</span> config<span class="token punctuation">[</span><span class="token string">'beta1'</span><span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token operator">*</span> dx
+config<span class="token punctuation">[</span><span class="token string">'v'</span><span class="token punctuation">]</span> <span class="token operator">=</span> config<span class="token punctuation">[</span><span class="token string">'beta2'</span><span class="token punctuation">]</span> <span class="token operator">*</span> config<span class="token punctuation">[</span><span class="token string">'v'</span><span class="token punctuation">]</span> <span class="token operator">+</span> <span class="token punctuation">(</span><span class="token number">1</span> <span class="token operator">-</span> config<span class="token punctuation">[</span><span class="token string">'beta2'</span><span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token operator">*</span> dx <span class="token operator">*</span> dx
+first_unbias <span class="token operator">=</span> config<span class="token punctuation">[</span><span class="token string">'m'</span><span class="token punctuation">]</span> <span class="token operator">/</span> <span class="token punctuation">(</span><span class="token number">1</span> <span class="token operator">-</span> config<span class="token punctuation">[</span><span class="token string">'beta1'</span><span class="token punctuation">]</span> <span class="token operator">**</span> config<span class="token punctuation">[</span><span class="token string">'t'</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+second_unbias <span class="token operator">=</span> config<span class="token punctuation">[</span><span class="token string">'v'</span><span class="token punctuation">]</span> <span class="token operator">/</span> <span class="token punctuation">(</span><span class="token number">1</span> <span class="token operator">-</span> config<span class="token punctuation">[</span><span class="token string">'beta2'</span><span class="token punctuation">]</span> <span class="token operator">**</span> config<span class="token punctuation">[</span><span class="token string">'t'</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+next_x <span class="token operator">=</span> x <span class="token operator">-</span> config<span class="token punctuation">[</span><span class="token string">'learning_rate'</span><span class="token punctuation">]</span> <span class="token operator">*</span> first_unbias <span class="token operator">/</span> <span class="token punctuation">(</span>np<span class="token punctuation">.</span>sqrt<span class="token punctuation">(</span>second_unbias<span class="token punctuation">)</span> <span class="token operator">+</span> config<span class="token punctuation">[</span><span class="token string">'epsilon'</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+config<span class="token punctuation">[</span><span class="token string">'t'</span><span class="token punctuation">]</span> <span class="token operator">+=</span> <span class="token number">1</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h4 id="2-批量标准化"><a href="#2-批量标准化" class="headerlink" title="2.批量标准化"></a>2.批量标准化</h4><h5 id="Batch-normalization-Forward"><a href="#Batch-normalization-Forward" class="headerlink" title="Batch normalization: Forward"></a>Batch normalization: Forward</h5><p>计算公式如下：</p>
+<p><img src="https://github.com/Doraemonzzz/md-photo/blob/master/CS231/Lecture%206/2019020213.jpg?raw=true" alt=""></p>
+<p>分为两部分，首先是训练部分，对应代码如下：</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token comment">#计算样本均值</span>
+sample_mean <span class="token operator">=</span> np<span class="token punctuation">.</span>mean<span class="token punctuation">(</span>x<span class="token punctuation">,</span> axis<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">)</span>
+<span class="token comment">#计算样本方差</span>
+sample_var <span class="token operator">=</span> np<span class="token punctuation">.</span>var<span class="token punctuation">(</span>x<span class="token punctuation">,</span> axis<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">)</span>
+
+<span class="token comment">#记录系数</span>
+k <span class="token operator">=</span> np<span class="token punctuation">.</span>sqrt<span class="token punctuation">(</span>sample_var <span class="token operator">+</span> eps<span class="token punctuation">)</span>
+x1 <span class="token operator">=</span> <span class="token punctuation">(</span>x <span class="token operator">-</span> sample_mean<span class="token punctuation">)</span> <span class="token operator">/</span> k
+out <span class="token operator">=</span> gamma <span class="token operator">*</span> x1 <span class="token operator">+</span> beta
+
+cache<span class="token punctuation">.</span>append<span class="token punctuation">(</span>k<span class="token punctuation">)</span>
+cache<span class="token punctuation">.</span>append<span class="token punctuation">(</span>sample_mean<span class="token punctuation">)</span>
+cache<span class="token punctuation">.</span>append<span class="token punctuation">(</span>x1<span class="token punctuation">)</span>
+
+running_mean <span class="token operator">=</span> momentum <span class="token operator">*</span> running_mean <span class="token operator">+</span> <span class="token punctuation">(</span><span class="token number">1</span> <span class="token operator">-</span> momentum<span class="token punctuation">)</span> <span class="token operator">*</span> sample_mean
+running_var <span class="token operator">=</span> momentum <span class="token operator">*</span> running_var <span class="token operator">+</span> <span class="token punctuation">(</span><span class="token number">1</span> <span class="token operator">-</span> momentum<span class="token punctuation">)</span> <span class="token operator">*</span> sample_var<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>最后一步是记录均值和方差的滑动平均值，这是为了给测试时使用，对应代码如下：</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python">x1 <span class="token operator">=</span> <span class="token punctuation">(</span>x <span class="token operator">-</span> running_mean<span class="token punctuation">)</span> <span class="token operator">/</span> np<span class="token punctuation">.</span>sqrt<span class="token punctuation">(</span>running_var <span class="token operator">+</span> eps<span class="token punctuation">)</span>
+out <span class="token operator">=</span> gamma <span class="token operator">*</span> x1 <span class="token operator">+</span> beta<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<p>备注，这里多记录了三个缓存的量，k对应的量为</p>
+<script type="math/tex; mode=display">
+{\sqrt{\sigma_{\mathcal B}^2+\epsilon}}</script><p>x1对应的量为</p>
+<script type="math/tex; mode=display">
+\hat x_i</script><p>out即为输出</p>
+<script type="math/tex; mode=display">
+\gamma \hat x_i+\beta</script><p>这三部分在反向传播的时候都需要使用。</p>
+<h5 id="Batch-Normalization-backward"><a href="#Batch-Normalization-backward" class="headerlink" title="Batch Normalization: backward"></a>Batch Normalization: backward</h5><p>这里我直接用求导的方法计算了，实际上完成了optional部分的作业，这里是作业最难的部分之一。</p>
+<p>假设批量标准化后得到的矩阵为</p>
+<script type="math/tex; mode=display">
+Y= \left(
+    \begin{matrix}
+      y^{(1)}_1 & \ldots  & y^{(1)}_d \\
+   \ldots& \ldots  &\ldots \\
+ y^{(m)}_1 & \ldots  & y^{(m)}_d \\
+    \end{matrix}
+\right) \in \mathbb R^{m\times d}</script><p>注意$\beta ,\gamma$实际上为向量，即</p>
+<script type="math/tex; mode=display">
+\beta  =(\beta_1,...,\beta_d)\\
+\gamma  =(\gamma_1,...,\gamma_d)</script><p>$\beta_j ,\gamma_j$分别作用在第$j$个分量上，即</p>
+<script type="math/tex; mode=display">
+y^{(i)}_j =\gamma_j \hat x^{(i)}_j +\beta_j</script><p>假设我们的函数为</p>
+<script type="math/tex; mode=display">
+f(y_1,...,y_d)</script><p>反向传播传入的参数为</p>
+<script type="math/tex; mode=display">
+(\frac{\partial f}{\partial y_1},...,\frac{\partial f}{\partial y_d})</script><p>我们求$f$关于各个量的偏导数：</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+\frac{\partial f}{\partial \beta_k}
+&=\sum_{i=1}^m \sum_{j=1}^d\frac{\partial f}{\partial y^{(i)}_j}
+\frac{\partial y^{(i)}_j}{\partial \beta_k} \\
+&=\sum_{i=1}^m \sum_{j=1}^d\frac{\partial f}{\partial y^{(i)}_j}
+\frac{\partial(\gamma_j\hat  x^{(i)}_j +\beta_j)}{\partial \beta_k}  \\
+&=\sum_{i=1}^m \frac{\partial f}{\partial y^{(i)}_k}
+\end{aligned}</script><p>对应代码为</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python">dbeta <span class="token operator">=</span> np<span class="token punctuation">.</span><span class="token builtin">sum</span><span class="token punctuation">(</span>dout <span class="token punctuation">,</span>axis<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<script type="math/tex; mode=display">
+\begin{aligned}
+\frac{\partial f}{\partial \gamma_k}
+&=\sum_{i=1}^m \sum_{j=1}^d\frac{\partial f}{\partial y^{(i)}_j}
+\frac{\partial y^{(i)}_j}{\partial \gamma_k} \\
+&=\sum_{i=1}^m \sum_{j=1}^d\frac{\partial f}{\partial y^{(i)}_j}
+\frac{\partial(\gamma_j\hat  x^{(i)}_j +\beta_j)}{\partial \gamma_k}  \\
+&=\sum_{i=1}^m \frac{\partial f}{\partial y^{(i)}_k}\hat x^{(i)}_k
+\end{aligned}</script><p>对应代码为</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python">dgamma <span class="token operator">=</span> np<span class="token punctuation">.</span><span class="token builtin">sum</span><span class="token punctuation">(</span>dout <span class="token operator">*</span> x1<span class="token punctuation">,</span> axis<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<script type="math/tex; mode=display">
+\begin{aligned}
+\frac{\partial f}{\partial x^{(i)}_k}
+&=\sum_{s=1}^m \sum_{t=1}^d\frac{\partial f}{\partial y^{(s)}_t}
+\frac{\partial y^{(s)}_t}{\partial \hat x_t^{(s)}} 
+\frac{\partial \hat x_t^{(s)}}{\partial  x_k^{(i)}}\\
+&=\sum_{s=1}^m \frac{\partial f}{\partial y^{(s)}_k}
+\frac{\partial y^{(s)}_k}{\partial \hat x_k^{(s)}} 
+\frac{\partial \hat x_k^{(s)}}{\partial  x_k^{(i)}}  \\
+&=\sum_{s=1}^m \frac{\partial f}{\partial y^{(s)}_k}
+\frac{\partial(\gamma_k\hat  x^{(s)}_k +\beta_k)}{\partial \hat x_k^{(s)}} 
+\frac{\partial \hat x_k^{(s)}}{\partial  x_k^{(i)}}  \\
+&=\sum_{s=1}^m \gamma_k\frac{\partial f}{\partial y^{(s)}_k}
+
+\frac{\partial \hat x_k^{(s)}}{\partial  x_k^{(i)}}  \\
+&=\gamma_k\sum_{s=1}^m \frac{\partial f}{\partial y^{(s)}_k}
+
+\frac{\partial \hat x_k^{(s)}}{\partial  x_k^{(i)}} 
+\end{aligned}</script><p>下面重点计算$\frac{\partial \hat x_k^{(s)}}{\partial  x_k^{(i)}} ​$，首先回顾计算公式</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+\hat x_k^{(s)} &=\frac{x_k^{(s)}-\mu_k}{\sqrt{\sigma_k^2 +\epsilon}} \\
+ \mu_k &=\frac 1 m\sum_{i=1}^m  x_k^{(i)}\\
+ \sigma_k^2&= \frac 1 m \sum_{i=1}^m ( x_k^{(i)} -\mu_k)^2\\
+ &=\frac 1 m \sum_{i=1}^m\Big((x_k^{(i)})^2 -2\mu_k x_k^{(i)}+\mu_k^2  \Big)\\
+ &=\frac 1 m \sum_{i=1}^m(x_k^{(i)})^2 -\frac 2 m  \mu_k \Big(\sum_{i=1}^m x_k^{(i)}\Big)+\mu_k ^2 \\
+ &=\frac 1 m \sum_{i=1}^m(x_k^{(i)})^2 -\frac 2 m  
+ \Big(\frac 1 m\sum_{i=1}^m  x_k^{(i)}\Big)
+ \Big(\sum_{i=1}^m x_k^{(i)}\Big)+\Big(\frac 1 m\sum_{i=1}^m  x_k^{(i)}\Big)^2\\
+ &=\frac 1 m \sum_{i=1}^m(x_k^{(i)})^2-\frac 1 {m^2}\Big(\sum_{i=1}^m  x_k^{(i)}\Big)^2
+\end{aligned}</script><p>所以我们有</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+\frac{\partial \sigma_k^2 }{\partial x_k^{(i)}}
+&= \frac 2 m  x_k^{(i)}  -\frac 2 {m^2}\Big(\sum_{i=1}^m  x_k^{(i)}\Big)\\
+&=\frac 2 m \Big( x_k^{(i)} -\mu_k \Big)\\
+\frac{\partial \mu_k }{\partial x_k^{(i)}}
+&=\frac 1 m
+\end{aligned}</script><p>有了准备工作，现在来计算$\frac{\partial \hat x_k^{(s)}}{\partial  x_k^{(i)}} $：</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+\frac{\partial \hat x_k^{(s)}}{\partial  x_k^{(i)}}
+&=\frac{\partial }{\partial  x_k^{(i)}}\Big( \frac{x_k^{(s)}-\mu_k}{\sqrt{\sigma_k^2 +\epsilon}} \Big)\\
+&=\frac{\partial (x_k^{(s)}-\mu_k) }{\partial  x_k^{(i)}} \frac{1}{\sqrt{\sigma_k^2 +\epsilon}} +(x_k^{(s)}-\mu_k) \frac{\partial}{\partial  x_k^{(i)}}
+\Big(\frac{1}{\sqrt{\sigma_k^2 +\epsilon}}\Big)\\
+&=\frac{1\{s=i\}-\frac 1 m}{\sqrt{\sigma_k^2 +\epsilon}}+(x_k^{(s)}-\mu_k)(-\frac 1 2)\frac 1 {(\sqrt{\sigma_k^2 +\epsilon})^3}
+\frac{\partial  \sigma_k^{2}}{\partial  x_k^{(i)}}\\
+&=\frac{1\{s=i\}-\frac 1 m}{\sqrt{\sigma_k^2 +\epsilon}}+(x_k^{(s)}-\mu_k)(-\frac 1 2)\frac 1 {(\sqrt{\sigma_k^2 +\epsilon})^3}
+\frac 2 m \Big( x_k^{(i)} -\mu_k \Big)\\
+&=\frac{1\{s=i\}-\frac 1 m}{\sqrt{\sigma_k^2 +\epsilon}}-\frac 1 m \frac{(x_k^{(s)}-\mu_k)( x_k^{(i)} -\mu_k )}
+{\sqrt{(\sigma_k^2 +\epsilon)^3}}
+\end{aligned}</script><p>所以</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+\frac{\partial f}{\partial x^{(i)}_k}
+&=\gamma_k\sum_{s=1}^m \frac{\partial f}{\partial y^{(s)}_k}
+\frac{\partial \hat x_k^{(s)}}{\partial  x_k^{(i)}} \\
+&=\gamma_k\sum_{s=1}^m \frac{\partial f}{\partial y^{(s)}_k}
+\Big(\frac{1\{s=i\}-\frac 1 m}{\sqrt{\sigma_k^2 +\epsilon}} -\frac 1 m \frac{(x_k^{(s)}-\mu_k)( x_k^{(i)} -\mu_k )}
+{\sqrt{(\sigma_k^2 +\epsilon)^3}} \Big)\\
+&=\gamma_k \Big(  
+\frac{\frac{\partial f}{\partial y^{(i)}_k}}{\sqrt{\sigma_k^2 +\epsilon}}
+-\frac {\sum_{s=1}^m \frac{\partial f}{\partial y^{(s)}_k} }{m\sqrt{\sigma_k^2 +\epsilon}}
+\Big)- \gamma_k\frac {1} m\frac{( x_k^{(i)} -\mu_k )}
+{\sqrt{(\sigma_k^2 +\epsilon)^3}} \sum_{s=1}^ m\frac{\partial f}{\partial y^{(s)}_k}(x_k^{(s)}-\mu_k) \\
+&= \frac{\gamma_k.\frac{\partial f}{\partial y^{(i)}_k}}{\sqrt{\sigma_k^2 +\epsilon}}
+-\frac {\gamma_k.\big(\sum_{s=1}^m \frac{\partial f}{\partial y^{(s)}_k}\big )}{m\sqrt{\sigma_k^2 +\epsilon}}- \gamma_k\frac {1} m\frac{( x_k^{(i)} -\mu_k )}
+{\sqrt{(\sigma_k^2 +\epsilon)^3}} \sum_{s=1}^ m\frac{\partial f}{\partial y^{(s)}_k}(x_k^{(s)}-\mu_k) 
+\end{aligned}</script><p>将上述内容分为三部分计算，首先是</p>
+<script type="math/tex; mode=display">
+\frac{\gamma_k.\frac{\partial f}{\partial y^{(i)}_k}}{\sqrt{\sigma_k^2 +\epsilon}}</script><p>将分子写为矩阵的形式：</p>
+<script type="math/tex; mode=display">
+\left(
+ \begin{matrix}
+   \gamma_1.\frac{\partial f}{\partial y^{(1)}_1} & \ldots &  \gamma_d.\frac{\partial f}{\partial y^{(1)}_d} \\
+  \ldots &\ldots &\ldots \\
+ \gamma_1.\frac{\partial f}{\partial y^{(m)}_1} & \ldots &  
+ \gamma_d.\frac{\partial f}{\partial y^{(m)}_d}
+  \end{matrix}
+  \right)</script><p>利用numpy的广播机制，上述矩阵为</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python">gamma <span class="token operator">*</span> dout<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>注意k为</p>
+<script type="math/tex; mode=display">
+{\sqrt{\sigma_{\mathcal B}^2+\epsilon}}</script><p>所以再次利用numpy的广播机制，第一项可以计算为</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python">t1 <span class="token operator">=</span> gamma <span class="token operator">*</span> dout <span class="token operator">/</span> k<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>接着计算第二项:</p>
+<script type="math/tex; mode=display">
+-\frac {\gamma_k.\big(\sum_{s=1}^m \frac{\partial f}{\partial y^{(s)}_k}\big )}{m\sqrt{\sigma_k^2 +\epsilon}}</script><p>依旧利用numpy的广播机制，不难得到</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python">m <span class="token operator">=</span> x<span class="token punctuation">.</span>shape<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span>
+t2 <span class="token operator">=</span> <span class="token operator">-</span> gamma <span class="token operator">/</span> m <span class="token operator">*</span> np<span class="token punctuation">.</span><span class="token builtin">sum</span><span class="token punctuation">(</span>dout<span class="token punctuation">,</span> axis<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">.</span>reshape<span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span> <span class="token operator">/</span> k<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<p>最后是计算：</p>
+<script type="math/tex; mode=display">
+- \gamma_k\frac {1} m\frac{( x_k^{(i)} -\mu_k )}
+{\sqrt{(\sigma_k^2 +\epsilon)^3}} \sum_{s=1}^ m\frac{\partial f}{\partial y^{(s)}_k}(x_k^{(s)}-\mu_k)</script><p>这一项比较复杂，我们先计算</p>
+<script type="math/tex; mode=display">
+\sum_{s=1}^ m\frac{\partial f}{\partial y^{(s)}_k}(x_k^{(s)}-\mu_k)</script><p>首先是中心化矩阵：</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python">t3 <span class="token operator">=</span> x <span class="token operator">-</span> sample_mean<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>其次不难看出$\frac{\partial f}{\partial y^{(s)}_k}(x_k^{(s)}-\mu_k)$为梯度矩阵和中心化矩阵对应元素相乘的结果，所以$\sum_{s=1}^ m\frac{\partial f}{\partial y^{(s)}_k}(x_k^{(s)}-\mu_k)$为该矩阵按行求和得到结果，所以代码为：</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python">t4 <span class="token operator">=</span> np<span class="token punctuation">.</span><span class="token builtin">sum</span><span class="token punctuation">(</span>dout <span class="token operator">*</span> t3<span class="token punctuation">,</span> axis<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">.</span>reshape<span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>最后，利用numpy广播机制可以计算</p>
+<script type="math/tex; mode=display">
+- \gamma_k\frac {1} m\frac{( x_k^{(i)} -\mu_k )}
+{\sqrt{(\sigma_k^2 +\epsilon)^3}} \sum_{s=1}^ m\frac{\partial f}{\partial y^{(s)}_k}(x_k^{(s)}-\mu_k)</script><p>对应代码为</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python">t5 <span class="token operator">=</span> <span class="token operator">-</span> gamma <span class="token operator">/</span> m <span class="token operator">*</span> t3 <span class="token operator">/</span> <span class="token punctuation">(</span>k <span class="token operator">**</span> <span class="token number">3</span><span class="token punctuation">)</span> <span class="token operator">*</span> t4<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>最后将上述三项相加即可得到总梯度</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python">dx<span class="token operator">=</span> t1 <span class="token operator">+</span> t2 <span class="token operator">+</span> t5<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<h5 id="Fully-Connected-Nets-with-Batch-Normalization"><a href="#Fully-Connected-Nets-with-Batch-Normalization" class="headerlink" title="Fully Connected Nets with Batch Normalization"></a>Fully Connected Nets with Batch Normalization</h5><p>这部分是修改Connected Nets的代码，因为网络结构为affine_batchnorm_relu，所以编写如下辅助函数：</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">def</span> <span class="token function">affine_batchnorm_relu_forward</span><span class="token punctuation">(</span>x<span class="token punctuation">,</span> W<span class="token punctuation">,</span> b<span class="token punctuation">,</span> gamma<span class="token punctuation">,</span> beta<span class="token punctuation">,</span> bn_params<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token comment">#affline</span>
+    x<span class="token punctuation">,</span> cache_affine <span class="token operator">=</span> affine_forward<span class="token punctuation">(</span>x<span class="token punctuation">,</span> W<span class="token punctuation">,</span> b<span class="token punctuation">)</span>
+    <span class="token comment">#batchnorm</span>
+    x<span class="token punctuation">,</span> cache_batch <span class="token operator">=</span> batchnorm_forward<span class="token punctuation">(</span>x<span class="token punctuation">,</span> gamma<span class="token punctuation">,</span> beta<span class="token punctuation">,</span> bn_params<span class="token punctuation">)</span>
+    <span class="token comment">#relu</span>
+    x<span class="token punctuation">,</span> cache_relu <span class="token operator">=</span> relu_forward<span class="token punctuation">(</span>x<span class="token punctuation">)</span>
+    
+    <span class="token keyword">return</span> x<span class="token punctuation">,</span> <span class="token punctuation">(</span>cache_affine<span class="token punctuation">,</span> cache_batch<span class="token punctuation">,</span> cache_relu<span class="token punctuation">)</span>
+
+<span class="token keyword">def</span> <span class="token function">affine_batchnorm_relu_backward</span><span class="token punctuation">(</span>dout<span class="token punctuation">,</span> cache<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    cache_affine<span class="token punctuation">,</span> cache_batch<span class="token punctuation">,</span> cache_relu <span class="token operator">=</span> cache
+    <span class="token comment">#relu</span>
+    dx <span class="token operator">=</span> relu_backward<span class="token punctuation">(</span>dout<span class="token punctuation">,</span> cache_relu<span class="token punctuation">)</span>
+    <span class="token comment">#batchnorm</span>
+    dx<span class="token punctuation">,</span> dgamma<span class="token punctuation">,</span> dbeta <span class="token operator">=</span> batchnorm_backward<span class="token punctuation">(</span>dx<span class="token punctuation">,</span> cache_batch<span class="token punctuation">)</span>
+    <span class="token comment">#affline</span>
+    dx<span class="token punctuation">,</span> dw<span class="token punctuation">,</span> db <span class="token operator">=</span> affine_backward<span class="token punctuation">(</span>dx<span class="token punctuation">,</span> cache_affine<span class="token punctuation">)</span>
+    
+    <span class="token keyword">return</span> dx<span class="token punctuation">,</span> dw<span class="token punctuation">,</span> db<span class="token punctuation">,</span> dgamma<span class="token punctuation">,</span> dbeta<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>这部分只是将代码模块化，接着修改Connected Nets，首先是初始化部分：</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">for</span> i <span class="token keyword">in</span> <span class="token builtin">range</span><span class="token punctuation">(</span>self<span class="token punctuation">.</span>num_layers<span class="token punctuation">)</span><span class="token punctuation">:</span>
+	<span class="token keyword">if</span> i <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">:</span>
+		W <span class="token operator">=</span> np<span class="token punctuation">.</span>random<span class="token punctuation">.</span>randn<span class="token punctuation">(</span>input_dim<span class="token punctuation">,</span> hidden_dims<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token operator">*</span> weight_scale
+		b <span class="token operator">=</span> np<span class="token punctuation">.</span>zeros<span class="token punctuation">(</span>hidden_dims<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">)</span>
+	<span class="token keyword">elif</span> i <span class="token operator">==</span> self<span class="token punctuation">.</span>num_layers <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">:</span>
+		W <span class="token operator">=</span> np<span class="token punctuation">.</span>random<span class="token punctuation">.</span>randn<span class="token punctuation">(</span>hidden_dims<span class="token punctuation">[</span>i<span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">,</span> num_classes<span class="token punctuation">)</span> <span class="token operator">*</span> weight_scale
+		b <span class="token operator">=</span> np<span class="token punctuation">.</span>zeros<span class="token punctuation">(</span>num_classes<span class="token punctuation">)</span>
+	<span class="token keyword">else</span><span class="token punctuation">:</span>
+		W <span class="token operator">=</span> np<span class="token punctuation">.</span>random<span class="token punctuation">.</span>randn<span class="token punctuation">(</span>hidden_dims<span class="token punctuation">[</span>i<span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">,</span> hidden_dims<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token operator">*</span> weight_scale
+		b <span class="token operator">=</span> np<span class="token punctuation">.</span>zeros<span class="token punctuation">(</span>hidden_dims<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">)</span>
+	
+	<span class="token keyword">if</span> self<span class="token punctuation">.</span>use_batchnorm <span class="token keyword">and</span> i <span class="token operator">!=</span> self<span class="token punctuation">.</span>num_layers <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">:</span>
+		gamma <span class="token operator">=</span> np<span class="token punctuation">.</span>ones<span class="token punctuation">(</span>hidden_dims<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">)</span>
+		beta <span class="token operator">=</span> np<span class="token punctuation">.</span>zeros<span class="token punctuation">(</span>hidden_dims<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">)</span>
+		self<span class="token punctuation">.</span>params<span class="token punctuation">[</span><span class="token string">"gamma"</span><span class="token operator">+</span><span class="token builtin">str</span><span class="token punctuation">(</span>i<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">]</span> <span class="token operator">=</span> gamma
+		self<span class="token punctuation">.</span>params<span class="token punctuation">[</span><span class="token string">"beta"</span><span class="token operator">+</span><span class="token builtin">str</span><span class="token punctuation">(</span>i<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">]</span> <span class="token operator">=</span> beta
+	
+	self<span class="token punctuation">.</span>params<span class="token punctuation">[</span><span class="token string">"W"</span><span class="token operator">+</span><span class="token builtin">str</span><span class="token punctuation">(</span>i<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">]</span> <span class="token operator">=</span> W
+	self<span class="token punctuation">.</span>params<span class="token punctuation">[</span><span class="token string">"b"</span><span class="token operator">+</span><span class="token builtin">str</span><span class="token punctuation">(</span>i<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">]</span> <span class="token operator">=</span> b<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>接着是前向传播部分：</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python">x <span class="token operator">=</span> X
+<span class="token comment">#记录缓存</span>
+Cache <span class="token operator">=</span> <span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span>
+Cache_dropout <span class="token operator">=</span> <span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span>
+<span class="token keyword">for</span> i <span class="token keyword">in</span> <span class="token builtin">range</span><span class="token punctuation">(</span>self<span class="token punctuation">.</span>num_layers<span class="token punctuation">)</span><span class="token punctuation">:</span>
+	W <span class="token operator">=</span> self<span class="token punctuation">.</span>params<span class="token punctuation">[</span><span class="token string">"W"</span><span class="token operator">+</span><span class="token builtin">str</span><span class="token punctuation">(</span>i<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">]</span>
+	b <span class="token operator">=</span> self<span class="token punctuation">.</span>params<span class="token punctuation">[</span><span class="token string">"b"</span><span class="token operator">+</span><span class="token builtin">str</span><span class="token punctuation">(</span>i<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">]</span>
+	<span class="token keyword">if</span> i <span class="token operator">&lt;</span> self<span class="token punctuation">.</span>num_layers <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">:</span>
+		<span class="token comment">#batchnorm</span>
+		<span class="token keyword">if</span> self<span class="token punctuation">.</span>use_batchnorm<span class="token punctuation">:</span>
+			gamma <span class="token operator">=</span> self<span class="token punctuation">.</span>params<span class="token punctuation">[</span><span class="token string">"gamma"</span><span class="token operator">+</span><span class="token builtin">str</span><span class="token punctuation">(</span>i<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">]</span>
+			beta <span class="token operator">=</span> self<span class="token punctuation">.</span>params<span class="token punctuation">[</span><span class="token string">"beta"</span><span class="token operator">+</span><span class="token builtin">str</span><span class="token punctuation">(</span>i<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">]</span>
+			x<span class="token punctuation">,</span> cache <span class="token operator">=</span> affine_batchnorm_relu_forward<span class="token punctuation">(</span>x<span class="token punctuation">,</span> W<span class="token punctuation">,</span> b<span class="token punctuation">,</span> gamma<span class="token punctuation">,</span> beta<span class="token punctuation">,</span> self<span class="token punctuation">.</span>bn_params<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">)</span>
+		<span class="token keyword">else</span><span class="token punctuation">:</span>
+			x<span class="token punctuation">,</span> cache <span class="token operator">=</span> affine_relu_forward<span class="token punctuation">(</span>x<span class="token punctuation">,</span> W<span class="token punctuation">,</span> b<span class="token punctuation">)</span>
+	<span class="token keyword">else</span><span class="token punctuation">:</span>
+		x<span class="token punctuation">,</span> cache <span class="token operator">=</span> affine_forward<span class="token punctuation">(</span>x<span class="token punctuation">,</span> W<span class="token punctuation">,</span> b<span class="token punctuation">)</span>
+	<span class="token comment">#存入缓存</span>
+	Cache<span class="token punctuation">[</span><span class="token string">"cache"</span><span class="token operator">+</span><span class="token builtin">str</span><span class="token punctuation">(</span>i<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">]</span> <span class="token operator">=</span> cache
+	
+<span class="token comment">#输出</span>
+scores <span class="token operator">=</span> x<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>最后是反向传播部分：</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token comment">#损失以及dout</span>
+loss<span class="token punctuation">,</span> dout <span class="token operator">=</span> softmax_loss<span class="token punctuation">(</span>scores<span class="token punctuation">,</span> y<span class="token punctuation">)</span>
+<span class="token comment">#加上正则项</span>
+<span class="token keyword">for</span> i <span class="token keyword">in</span> <span class="token builtin">range</span><span class="token punctuation">(</span>self<span class="token punctuation">.</span>num_layers<span class="token punctuation">)</span><span class="token punctuation">:</span>
+	W <span class="token operator">=</span> self<span class="token punctuation">.</span>params<span class="token punctuation">[</span><span class="token string">"W"</span><span class="token operator">+</span><span class="token builtin">str</span><span class="token punctuation">(</span>i<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">]</span>
+	loss <span class="token operator">+=</span> self<span class="token punctuation">.</span>reg <span class="token operator">*</span> <span class="token punctuation">(</span>np<span class="token punctuation">.</span><span class="token builtin">sum</span><span class="token punctuation">(</span>W <span class="token operator">**</span> <span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token operator">/</span> <span class="token number">2</span>
+<span class="token comment">#计算dWi</span>
+dz<span class="token punctuation">,</span> dW<span class="token punctuation">,</span> db<span class="token punctuation">,</span> dgamma<span class="token punctuation">,</span> dbeta <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">0</span>
+<span class="token keyword">for</span> i <span class="token keyword">in</span> <span class="token builtin">range</span><span class="token punctuation">(</span>self<span class="token punctuation">.</span>num_layers<span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+	cache <span class="token operator">=</span> Cache<span class="token punctuation">[</span><span class="token string">"cache"</span><span class="token operator">+</span><span class="token builtin">str</span><span class="token punctuation">(</span>i<span class="token punctuation">)</span><span class="token punctuation">]</span>
+	W <span class="token operator">=</span> self<span class="token punctuation">.</span>params<span class="token punctuation">[</span><span class="token string">"W"</span><span class="token operator">+</span><span class="token builtin">str</span><span class="token punctuation">(</span>i<span class="token punctuation">)</span><span class="token punctuation">]</span>
+	<span class="token keyword">if</span> i <span class="token operator">==</span> self<span class="token punctuation">.</span>num_layers<span class="token punctuation">:</span>
+		dz<span class="token punctuation">,</span> dW<span class="token punctuation">,</span> db <span class="token operator">=</span> affine_backward<span class="token punctuation">(</span>dout<span class="token punctuation">,</span> cache<span class="token punctuation">)</span>
+	<span class="token keyword">else</span><span class="token punctuation">:</span>
+		<span class="token keyword">if</span> self<span class="token punctuation">.</span>use_batchnorm<span class="token punctuation">:</span>
+			dz<span class="token punctuation">,</span> dW<span class="token punctuation">,</span> db<span class="token punctuation">,</span> dgamma<span class="token punctuation">,</span> dbeta <span class="token operator">=</span> affine_batchnorm_relu_backward<span class="token punctuation">(</span>dz<span class="token punctuation">,</span> cache<span class="token punctuation">)</span>
+			grads<span class="token punctuation">[</span><span class="token string">"gamma"</span><span class="token operator">+</span><span class="token builtin">str</span><span class="token punctuation">(</span>i<span class="token punctuation">)</span><span class="token punctuation">]</span> <span class="token operator">=</span> dgamma
+			grads<span class="token punctuation">[</span><span class="token string">"beta"</span><span class="token operator">+</span><span class="token builtin">str</span><span class="token punctuation">(</span>i<span class="token punctuation">)</span><span class="token punctuation">]</span> <span class="token operator">=</span> dbeta
+		<span class="token keyword">else</span><span class="token punctuation">:</span>
+			dz<span class="token punctuation">,</span> dW<span class="token punctuation">,</span> db <span class="token operator">=</span> affine_relu_backward<span class="token punctuation">(</span>dz<span class="token punctuation">,</span> cache<span class="token punctuation">)</span>
+
+	<span class="token comment">#加上正则项</span>
+	dW <span class="token operator">+=</span> self<span class="token punctuation">.</span>reg <span class="token operator">*</span> W
+	<span class="token comment">#存入字典</span>
+	grads<span class="token punctuation">[</span><span class="token string">"W"</span><span class="token operator">+</span><span class="token builtin">str</span><span class="token punctuation">(</span>i<span class="token punctuation">)</span><span class="token punctuation">]</span> <span class="token operator">=</span> dW
+	grads<span class="token punctuation">[</span><span class="token string">"b"</span><span class="token operator">+</span><span class="token builtin">str</span><span class="token punctuation">(</span>i<span class="token punctuation">)</span><span class="token punctuation">]</span> <span class="token operator">=</span> db<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h4 id="3-随机失活（Dropout）"><a href="#3-随机失活（Dropout）" class="headerlink" title="3.随机失活（Dropout）"></a>3.随机失活（Dropout）</h4><h5 id="Dropout-forward-pass"><a href="#Dropout-forward-pass" class="headerlink" title="Dropout forward pass"></a>Dropout forward pass</h5><p>具体公式可以参考<a href="http://doraemonzzz.com/2019/02/10/CS231%20%E7%AC%AC%E4%B8%83%E8%AE%B2%20%E8%AE%AD%E7%BB%83%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%EF%BC%88%E4%B8%8B%EF%BC%89/">笔记</a>，这里直接给出代码，首先是前向传播，分为训练部分以及测试部分：</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">if</span> mode <span class="token operator">==</span> <span class="token string">'train'</span><span class="token punctuation">:</span>
+	mask <span class="token operator">=</span> <span class="token punctuation">(</span>np<span class="token punctuation">.</span>random<span class="token punctuation">.</span>rand<span class="token punctuation">(</span>x<span class="token punctuation">.</span>shape<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">,</span> x<span class="token punctuation">.</span>shape<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token operator">&lt;</span> p<span class="token punctuation">)</span> <span class="token operator">/</span> p
+	out <span class="token operator">=</span> x <span class="token operator">*</span> mask
+<span class="token keyword">elif</span> mode <span class="token operator">==</span> <span class="token string">'test'</span><span class="token punctuation">:</span>
+	out <span class="token operator">=</span> x<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h5 id="Dropout-backward-pass"><a href="#Dropout-backward-pass" class="headerlink" title="Dropout backward pass"></a>Dropout backward pass</h5><p>其次是反向传播，依旧分为训练部分和测试部分：</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">if</span> mode <span class="token operator">==</span> <span class="token string">'train'</span><span class="token punctuation">:</span>
+	dx <span class="token operator">=</span> dout <span class="token operator">*</span> mask
+<span class="token keyword">elif</span> mode <span class="token operator">==</span> <span class="token string">'test'</span><span class="token punctuation">:</span>
+	dx <span class="token operator">=</span> dout<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+<h5 id="Fully-connected-nets-with-Dropout"><a href="#Fully-connected-nets-with-Dropout" class="headerlink" title="Fully-connected nets with Dropout"></a>Fully-connected nets with Dropout</h5><p>只需增加一个判断即可，前向传播：</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python">x <span class="token operator">=</span> X
+<span class="token comment">#记录缓存</span>
+Cache <span class="token operator">=</span> <span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span>
+Cache_dropout <span class="token operator">=</span> <span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span>
+<span class="token keyword">for</span> i <span class="token keyword">in</span> <span class="token builtin">range</span><span class="token punctuation">(</span>self<span class="token punctuation">.</span>num_layers<span class="token punctuation">)</span><span class="token punctuation">:</span>
+	W <span class="token operator">=</span> self<span class="token punctuation">.</span>params<span class="token punctuation">[</span><span class="token string">"W"</span><span class="token operator">+</span><span class="token builtin">str</span><span class="token punctuation">(</span>i<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">]</span>
+	b <span class="token operator">=</span> self<span class="token punctuation">.</span>params<span class="token punctuation">[</span><span class="token string">"b"</span><span class="token operator">+</span><span class="token builtin">str</span><span class="token punctuation">(</span>i<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">]</span>
+	<span class="token keyword">if</span> i <span class="token operator">&lt;</span> self<span class="token punctuation">.</span>num_layers <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">:</span>
+		<span class="token comment">#batchnorm</span>
+		<span class="token keyword">if</span> self<span class="token punctuation">.</span>use_batchnorm<span class="token punctuation">:</span>
+			gamma <span class="token operator">=</span> self<span class="token punctuation">.</span>params<span class="token punctuation">[</span><span class="token string">"gamma"</span><span class="token operator">+</span><span class="token builtin">str</span><span class="token punctuation">(</span>i<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">]</span>
+			beta <span class="token operator">=</span> self<span class="token punctuation">.</span>params<span class="token punctuation">[</span><span class="token string">"beta"</span><span class="token operator">+</span><span class="token builtin">str</span><span class="token punctuation">(</span>i<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">]</span>
+			x<span class="token punctuation">,</span> cache <span class="token operator">=</span> affine_batchnorm_relu_forward<span class="token punctuation">(</span>x<span class="token punctuation">,</span> W<span class="token punctuation">,</span> b<span class="token punctuation">,</span> gamma<span class="token punctuation">,</span> beta<span class="token punctuation">,</span> self<span class="token punctuation">.</span>bn_params<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">)</span>
+		<span class="token keyword">else</span><span class="token punctuation">:</span>
+			x<span class="token punctuation">,</span> cache <span class="token operator">=</span> affine_relu_forward<span class="token punctuation">(</span>x<span class="token punctuation">,</span> W<span class="token punctuation">,</span> b<span class="token punctuation">)</span>
+			
+		<span class="token keyword">if</span> self<span class="token punctuation">.</span>use_dropout<span class="token punctuation">:</span>
+			x<span class="token punctuation">,</span> cache_dropout <span class="token operator">=</span> dropout_forward<span class="token punctuation">(</span>x<span class="token punctuation">,</span> self<span class="token punctuation">.</span>dropout_param<span class="token punctuation">)</span>
+			Cache_dropout<span class="token punctuation">[</span><span class="token string">"cache"</span><span class="token operator">+</span><span class="token builtin">str</span><span class="token punctuation">(</span>i<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">]</span> <span class="token operator">=</span> cache_dropout
+	<span class="token keyword">else</span><span class="token punctuation">:</span>
+		x<span class="token punctuation">,</span> cache <span class="token operator">=</span> affine_forward<span class="token punctuation">(</span>x<span class="token punctuation">,</span> W<span class="token punctuation">,</span> b<span class="token punctuation">)</span>
+	<span class="token comment">#存入缓存</span>
+	Cache<span class="token punctuation">[</span><span class="token string">"cache"</span><span class="token operator">+</span><span class="token builtin">str</span><span class="token punctuation">(</span>i<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">]</span> <span class="token operator">=</span> cache
+	
+<span class="token comment">#输出</span>
+scores <span class="token operator">=</span> x<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>反向传播：</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token comment">#损失以及dout</span>
+loss<span class="token punctuation">,</span> dout <span class="token operator">=</span> softmax_loss<span class="token punctuation">(</span>scores<span class="token punctuation">,</span> y<span class="token punctuation">)</span>
+<span class="token comment">#加上正则项</span>
+<span class="token keyword">for</span> i <span class="token keyword">in</span> <span class="token builtin">range</span><span class="token punctuation">(</span>self<span class="token punctuation">.</span>num_layers<span class="token punctuation">)</span><span class="token punctuation">:</span>
+	W <span class="token operator">=</span> self<span class="token punctuation">.</span>params<span class="token punctuation">[</span><span class="token string">"W"</span><span class="token operator">+</span><span class="token builtin">str</span><span class="token punctuation">(</span>i<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">]</span>
+	loss <span class="token operator">+=</span> self<span class="token punctuation">.</span>reg <span class="token operator">*</span> <span class="token punctuation">(</span>np<span class="token punctuation">.</span><span class="token builtin">sum</span><span class="token punctuation">(</span>W <span class="token operator">**</span> <span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token operator">/</span> <span class="token number">2</span>
+<span class="token comment">#计算dWi</span>
+dz<span class="token punctuation">,</span> dW<span class="token punctuation">,</span> db<span class="token punctuation">,</span> dgamma<span class="token punctuation">,</span> dbeta <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">0</span>
+<span class="token keyword">for</span> i <span class="token keyword">in</span> <span class="token builtin">range</span><span class="token punctuation">(</span>self<span class="token punctuation">.</span>num_layers<span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+	cache <span class="token operator">=</span> Cache<span class="token punctuation">[</span><span class="token string">"cache"</span><span class="token operator">+</span><span class="token builtin">str</span><span class="token punctuation">(</span>i<span class="token punctuation">)</span><span class="token punctuation">]</span>
+	W <span class="token operator">=</span> self<span class="token punctuation">.</span>params<span class="token punctuation">[</span><span class="token string">"W"</span><span class="token operator">+</span><span class="token builtin">str</span><span class="token punctuation">(</span>i<span class="token punctuation">)</span><span class="token punctuation">]</span>
+	<span class="token keyword">if</span> i <span class="token operator">==</span> self<span class="token punctuation">.</span>num_layers<span class="token punctuation">:</span>
+		dz<span class="token punctuation">,</span> dW<span class="token punctuation">,</span> db <span class="token operator">=</span> affine_backward<span class="token punctuation">(</span>dout<span class="token punctuation">,</span> cache<span class="token punctuation">)</span>
+	<span class="token keyword">else</span><span class="token punctuation">:</span>
+		<span class="token keyword">if</span> self<span class="token punctuation">.</span>use_dropout<span class="token punctuation">:</span>
+			cache_dropout <span class="token operator">=</span> Cache_dropout<span class="token punctuation">[</span><span class="token string">"cache"</span><span class="token operator">+</span><span class="token builtin">str</span><span class="token punctuation">(</span>i<span class="token punctuation">)</span><span class="token punctuation">]</span>
+			dz <span class="token operator">=</span> dropout_backward<span class="token punctuation">(</span>dz<span class="token punctuation">,</span> cache_dropout<span class="token punctuation">)</span>
+		<span class="token keyword">if</span> self<span class="token punctuation">.</span>use_batchnorm<span class="token punctuation">:</span>
+			dz<span class="token punctuation">,</span> dW<span class="token punctuation">,</span> db<span class="token punctuation">,</span> dgamma<span class="token punctuation">,</span> dbeta <span class="token operator">=</span> affine_batchnorm_relu_backward<span class="token punctuation">(</span>dz<span class="token punctuation">,</span> cache<span class="token punctuation">)</span>
+			grads<span class="token punctuation">[</span><span class="token string">"gamma"</span><span class="token operator">+</span><span class="token builtin">str</span><span class="token punctuation">(</span>i<span class="token punctuation">)</span><span class="token punctuation">]</span> <span class="token operator">=</span> dgamma
+			grads<span class="token punctuation">[</span><span class="token string">"beta"</span><span class="token operator">+</span><span class="token builtin">str</span><span class="token punctuation">(</span>i<span class="token punctuation">)</span><span class="token punctuation">]</span> <span class="token operator">=</span> dbeta
+		<span class="token keyword">else</span><span class="token punctuation">:</span>
+			dz<span class="token punctuation">,</span> dW<span class="token punctuation">,</span> db <span class="token operator">=</span> affine_relu_backward<span class="token punctuation">(</span>dz<span class="token punctuation">,</span> cache<span class="token punctuation">)</span>
+
+	<span class="token comment">#加上正则项</span>
+	dW <span class="token operator">+=</span> self<span class="token punctuation">.</span>reg <span class="token operator">*</span> W
+	<span class="token comment">#存入字典</span>
+	grads<span class="token punctuation">[</span><span class="token string">"W"</span><span class="token operator">+</span><span class="token builtin">str</span><span class="token punctuation">(</span>i<span class="token punctuation">)</span><span class="token punctuation">]</span> <span class="token operator">=</span> dW
+	grads<span class="token punctuation">[</span><span class="token string">"b"</span><span class="token operator">+</span><span class="token builtin">str</span><span class="token punctuation">(</span>i<span class="token punctuation">)</span><span class="token punctuation">]</span> <span class="token operator">=</span> db<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h4 id="4-在CIFAR-10上运行卷积神经网络"><a href="#4-在CIFAR-10上运行卷积神经网络" class="headerlink" title="4.在CIFAR-10上运行卷积神经网络"></a>4.在CIFAR-10上运行卷积神经网络</h4><p>为了方便讨论，这里定义如下变量：$x$是图像数据，维度为$(N, C, H, W)$；$w$为卷积核，维度为$(F, C, HH, WW)$；$b$为偏置项，维度为$(F, )$，其中$N$是图像的数量，$C$是channel数量（RGB图像中这一项为$3$），$H,W$是图像的长宽，$F$是卷积核的数量，$HH,WW$是卷积核的长宽。此外，定义stride为步长，pad为填充数量，那么根据公式，得到填充后的数据$x_$的维度为$(N, C, H_2, W_2)​$，其中</p>
+<script type="math/tex; mode=display">
+H_2=H+2\times \text{pad}, W_2=W+2\times \text{pad}</script><p>输出维度为$(N,F,H_1,W_1)​$，其中</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+H_1 &= 1+ (H+2\times \text{pad}-HH) / \text{stride} \\
+W_1 &= 1+ (W+2\times \text{pad}-WW) / \text{stride}\\
+\end{aligned}</script><p>记输出为out，考虑第out第$i,j $个元素</p>
+<script type="math/tex; mode=display">
+\text{res}=\text{out}[i][j]\in \mathbb R^{H_1 \times W_1}</script><p>该元素由$x_1=x_[i]\in \mathbb R^{C\times  H_2\times W_2}$和$w_1= w[j]\in \mathbb R^{C\times  HH \times WW}$计算得到，其第$s,t$个元素的计算方法如下：</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python">x1 <span class="token operator">=</span> x_<span class="token punctuation">[</span>i<span class="token punctuation">]</span>
+w1 <span class="token operator">=</span> w<span class="token punctuation">[</span>j<span class="token punctuation">]</span>
+res<span class="token punctuation">[</span>s<span class="token punctuation">]</span><span class="token punctuation">[</span>t<span class="token punctuation">]</span> <span class="token operator">=</span> np<span class="token punctuation">.</span><span class="token builtin">sum</span><span class="token punctuation">(</span>x1<span class="token punctuation">[</span><span class="token punctuation">:</span><span class="token punctuation">,</span> s<span class="token operator">*</span>stride<span class="token punctuation">:</span> s<span class="token operator">*</span>stride<span class="token operator">+</span>HH<span class="token punctuation">,</span> t<span class="token operator">*</span>stride<span class="token punctuation">:</span> t<span class="token operator">*</span>stride<span class="token operator">+</span>WW<span class="token punctuation">]</span> <span class="token operator">*</span> w1<span class="token punctuation">)</span> <span class="token operator">+</span> b<span class="token punctuation">[</span>j<span class="token punctuation">]</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+<p>（备注，利用numpy的广播机制，实际中可以最后加上$b[j]$）</p>
+<p>为了方便反向传播的讨论，这里记</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python">x1<span class="token punctuation">[</span><span class="token punctuation">:</span><span class="token punctuation">,</span> s<span class="token operator">*</span>stride<span class="token punctuation">:</span> s<span class="token operator">*</span>stride<span class="token operator">+</span>HH<span class="token punctuation">,</span> t<span class="token operator">*</span>stride<span class="token punctuation">:</span> t<span class="token operator">*</span>stride<span class="token operator">+</span>WW<span class="token punctuation">]</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>为$x’\in \mathbb R^{C\times HH\times WW}​$，注意$w_1\in \mathbb R^{C\times  HH \times WW}​$，$b[j]\in \mathbb R​$为对应偏置项，那么</p>
+<script type="math/tex; mode=display">
+\text{res}[s][t]=
+\sum_{l=1}^C \sum_{s=1}^{HH} \sum_{t=1}^{WW} (x'[l][s][t] \times  w_1[l][s][t]) + b[j]</script><p>那么</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+\frac{\partial  (\text{res}[s][t])}{\partial (x'[l][s][t])}
+&=  w_1[l][s][t] \\
+\frac{\partial  (\text{res}[s][t])}{\partial (w_1[l][s][t])}
+&=  x'[l][s][t] \\
+\frac{\partial  (\text{res}[s][t])}{\partial (b[j])}
+&= 1
+\end{aligned}</script><p>因此</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+\nabla_{x'} { (\text{res}[s][t])}
+&=  w_1\in  \mathbb R^{C\times  HH \times WW} \\
+\nabla_{w_1} { (\text{res}[s][t])}
+&=  x'\in \mathbb R^{C\times HH\times WW} \\
+\nabla_{b[j]} { (\text{res}[s][t])}
+&=1
+\end{aligned}</script><p>记反向传播的输入为dout，其第$i,j$个元素为</p>
+<script type="math/tex; mode=display">
+\text{dout1}=\text{dout}[i][j]\in \mathbb R^{H_1 \times W_1}</script><p>假设最后作用在out上的函数为$f​$，那么我们有</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+
+\nabla_{\text{out}} { f} &= \text{dout} \\
+\nabla_{\text{out[i][j]}} { f}&=\nabla_{\text{res}} { f} = \text{dout}[i][j]= \text{dout1} \in \mathbb R^{H_1 \times W_1} 
+\end{aligned}</script><p>所以</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+\nabla_{x'} { f}
+&= \frac{\partial f}{\partial (\text{res}[s][t])}   \nabla_{x'} { (\text{res}[s][t])}=
+\text{dout1}[s][t].w_1\\
+\nabla_{w_1} { f}
+&= \frac{\partial f}{\partial (\text{res}[s][t])}   \nabla_{w_1} { (\text{res}[s][t])}=
+\text{dout1}[s][t].x'\\
+\nabla_{b} { f}
+&=\frac{\partial f}{\partial (\text{res}[s][t])}   \nabla_{b} { (\text{res}[s][t])}=
+\text{dout1}[s][t]
+\end{aligned}</script><p>对应代码如下：</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">for</span> s <span class="token keyword">in</span> <span class="token builtin">range</span><span class="token punctuation">(</span>H1<span class="token punctuation">)</span><span class="token punctuation">:</span>
+	<span class="token keyword">for</span> t <span class="token keyword">in</span> <span class="token builtin">range</span><span class="token punctuation">(</span>W1<span class="token punctuation">)</span><span class="token punctuation">:</span>
+		dw1 <span class="token operator">+=</span> x1<span class="token punctuation">[</span><span class="token punctuation">:</span><span class="token punctuation">,</span> s<span class="token operator">*</span>stride<span class="token punctuation">:</span> s<span class="token operator">*</span>stride<span class="token operator">+</span>HH<span class="token punctuation">,</span> t<span class="token operator">*</span>stride<span class="token punctuation">:</span> t<span class="token operator">*</span>stride<span class="token operator">+</span>WW<span class="token punctuation">]</span> <span class="token operator">*</span> dout1<span class="token punctuation">[</span>s<span class="token punctuation">]</span><span class="token punctuation">[</span>t<span class="token punctuation">]</span>
+		dx1<span class="token punctuation">[</span><span class="token punctuation">:</span><span class="token punctuation">,</span> s<span class="token operator">*</span>stride<span class="token punctuation">:</span> s<span class="token operator">*</span>stride<span class="token operator">+</span>HH<span class="token punctuation">,</span> t<span class="token operator">*</span>stride<span class="token punctuation">:</span> t<span class="token operator">*</span>stride<span class="token operator">+</span>WW<span class="token punctuation">]</span> <span class="token operator">+=</span> w1 <span class="token operator">*</span> dout1<span class="token punctuation">[</span>s<span class="token punctuation">]</span><span class="token punctuation">[</span>t<span class="token punctuation">]</span>
+		db1 <span class="token operator">+=</span> dout1<span class="token punctuation">[</span>s<span class="token punctuation">]</span><span class="token punctuation">[</span>t<span class="token punctuation">]</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>剩余部分只要利用循环即可完成。</p>
+<h5 id="Convolution-Naive-forward-pass"><a href="#Convolution-Naive-forward-pass" class="headerlink" title="Convolution: Naive forward pass"></a>Convolution: Naive forward pass</h5><p>首先是利用np.pad函数进行$0​$填充：</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python">stride <span class="token operator">=</span> conv_param<span class="token punctuation">[</span><span class="token string">"stride"</span><span class="token punctuation">]</span>
+pad <span class="token operator">=</span> conv_param<span class="token punctuation">[</span><span class="token string">"pad"</span><span class="token punctuation">]</span>
+x_ <span class="token operator">=</span> np<span class="token punctuation">.</span>pad<span class="token punctuation">(</span>x<span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token punctuation">(</span>pad<span class="token punctuation">,</span> pad<span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token punctuation">(</span>pad<span class="token punctuation">,</span> pad<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token string">"constant"</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+<p>然后计算输出维度：</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token comment">#输入维度</span>
+N<span class="token punctuation">,</span> C<span class="token punctuation">,</span> H<span class="token punctuation">,</span> W <span class="token operator">=</span> x<span class="token punctuation">.</span>shape
+F<span class="token punctuation">,</span> C<span class="token punctuation">,</span> HH<span class="token punctuation">,</span> WW <span class="token operator">=</span> w<span class="token punctuation">.</span>shape
+<span class="token comment">#输出维度</span>
+H1 <span class="token operator">=</span> <span class="token number">1</span> <span class="token operator">+</span> <span class="token punctuation">(</span>H <span class="token operator">+</span> <span class="token number">2</span> <span class="token operator">*</span> pad <span class="token operator">-</span> HH<span class="token punctuation">)</span> <span class="token operator">//</span> stride
+W1 <span class="token operator">=</span> <span class="token number">1</span> <span class="token operator">+</span> <span class="token punctuation">(</span>W <span class="token operator">+</span> <span class="token number">2</span> <span class="token operator">*</span> pad <span class="token operator">-</span> WW<span class="token punctuation">)</span> <span class="token operator">//</span> stride
+out <span class="token operator">=</span> np<span class="token punctuation">.</span>zeros<span class="token punctuation">(</span><span class="token punctuation">(</span>N<span class="token punctuation">,</span> F<span class="token punctuation">,</span> H1<span class="token punctuation">,</span> W1<span class="token punctuation">)</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>然后根据定义计算即可，这里用循环的方法：</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">for</span> i <span class="token keyword">in</span> <span class="token builtin">range</span><span class="token punctuation">(</span>N<span class="token punctuation">)</span><span class="token punctuation">:</span>
+	<span class="token keyword">for</span> j <span class="token keyword">in</span> <span class="token builtin">range</span><span class="token punctuation">(</span>F<span class="token punctuation">)</span><span class="token punctuation">:</span>
+		x1 <span class="token operator">=</span> x_<span class="token punctuation">[</span>i<span class="token punctuation">]</span>
+		w1 <span class="token operator">=</span> w<span class="token punctuation">[</span>j<span class="token punctuation">]</span>
+		res <span class="token operator">=</span> np<span class="token punctuation">.</span>zeros<span class="token punctuation">(</span><span class="token punctuation">(</span>H1<span class="token punctuation">,</span> W1<span class="token punctuation">)</span><span class="token punctuation">)</span>
+		<span class="token keyword">for</span> s <span class="token keyword">in</span> <span class="token builtin">range</span><span class="token punctuation">(</span>H1<span class="token punctuation">)</span><span class="token punctuation">:</span>
+			<span class="token keyword">for</span> t <span class="token keyword">in</span> <span class="token builtin">range</span><span class="token punctuation">(</span>W1<span class="token punctuation">)</span><span class="token punctuation">:</span>
+				res<span class="token punctuation">[</span>s<span class="token punctuation">]</span><span class="token punctuation">[</span>t<span class="token punctuation">]</span> <span class="token operator">=</span> np<span class="token punctuation">.</span><span class="token builtin">sum</span><span class="token punctuation">(</span>x1<span class="token punctuation">[</span><span class="token punctuation">:</span><span class="token punctuation">,</span> s<span class="token operator">*</span>stride<span class="token punctuation">:</span> s<span class="token operator">*</span>stride<span class="token operator">+</span>HH<span class="token punctuation">,</span> t<span class="token operator">*</span>stride<span class="token punctuation">:</span> t<span class="token operator">*</span>stride<span class="token operator">+</span>WW<span class="token punctuation">]</span> <span class="token operator">*</span> w1<span class="token punctuation">)</span>
+		res <span class="token operator">+=</span> b<span class="token punctuation">[</span>j<span class="token punctuation">]</span>
+		out<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">[</span>j<span class="token punctuation">]</span> <span class="token operator">=</span> res<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h5 id="Aside-Image-processing-via-convolutions"><a href="#Aside-Image-processing-via-convolutions" class="headerlink" title="Aside: Image processing via convolutions"></a>Aside: Image processing via convolutions</h5><p>这部分如果出现如下报错：</p>
+<pre class="line-numbers language-none"><code class="language-none">cannot import name imread<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>只需要安装Pillow即可：</p>
+<pre class="line-numbers language-none"><code class="language-none">pip install Pillow<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<h5 id="Convolution-Naive-backward-pass"><a href="#Convolution-Naive-backward-pass" class="headerlink" title="Convolution: Naive backward pass"></a>Convolution: Naive backward pass</h5><p>之前已经介绍了大部分内容，后续只要循环遍历即可，首先是初始化工作：</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python">x<span class="token punctuation">,</span> w<span class="token punctuation">,</span> b<span class="token punctuation">,</span> conv_param <span class="token operator">=</span> cache
+stride <span class="token operator">=</span> conv_param<span class="token punctuation">[</span><span class="token string">"stride"</span><span class="token punctuation">]</span>
+pad <span class="token operator">=</span> conv_param<span class="token punctuation">[</span><span class="token string">"pad"</span><span class="token punctuation">]</span>
+<span class="token comment">#填充</span>
+x_ <span class="token operator">=</span> np<span class="token punctuation">.</span>pad<span class="token punctuation">(</span>x<span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token punctuation">(</span>pad<span class="token punctuation">,</span> pad<span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token punctuation">(</span>pad<span class="token punctuation">,</span> pad<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token string">"constant"</span><span class="token punctuation">)</span>
+<span class="token comment">#输入维度</span>
+N<span class="token punctuation">,</span> C<span class="token punctuation">,</span> H<span class="token punctuation">,</span> W <span class="token operator">=</span> x<span class="token punctuation">.</span>shape
+F<span class="token punctuation">,</span> C<span class="token punctuation">,</span> HH<span class="token punctuation">,</span> WW <span class="token operator">=</span> w<span class="token punctuation">.</span>shape
+H2<span class="token punctuation">,</span> W2 <span class="token operator">=</span> x_<span class="token punctuation">.</span>shape<span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">:</span><span class="token punctuation">]</span>
+<span class="token comment">#输出维度</span>
+dx <span class="token operator">=</span> np<span class="token punctuation">.</span>zeros_like<span class="token punctuation">(</span>x_<span class="token punctuation">)</span>
+dw <span class="token operator">=</span> np<span class="token punctuation">.</span>zeros_like<span class="token punctuation">(</span>w<span class="token punctuation">)</span>
+db <span class="token operator">=</span> np<span class="token punctuation">.</span>zeros_like<span class="token punctuation">(</span>b<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>接着是循环遍历：</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">for</span> i <span class="token keyword">in</span> <span class="token builtin">range</span><span class="token punctuation">(</span>N<span class="token punctuation">)</span><span class="token punctuation">:</span>
+	<span class="token keyword">for</span> j <span class="token keyword">in</span> <span class="token builtin">range</span><span class="token punctuation">(</span>F<span class="token punctuation">)</span><span class="token punctuation">:</span>
+		t1 <span class="token operator">=</span> dout<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">[</span>j<span class="token punctuation">]</span>
+		<span class="token comment">#获得维度</span>
+		H1<span class="token punctuation">,</span> W1 <span class="token operator">=</span> t1<span class="token punctuation">.</span>shape
+		<span class="token comment">#初始化梯度</span>
+		dx1 <span class="token operator">=</span> np<span class="token punctuation">.</span>zeros<span class="token punctuation">(</span><span class="token punctuation">(</span>C<span class="token punctuation">,</span> H2<span class="token punctuation">,</span> W2<span class="token punctuation">)</span><span class="token punctuation">)</span>
+		dw1 <span class="token operator">=</span> np<span class="token punctuation">.</span>zeros<span class="token punctuation">(</span><span class="token punctuation">(</span>C<span class="token punctuation">,</span> HH<span class="token punctuation">,</span> WW<span class="token punctuation">)</span><span class="token punctuation">)</span>
+		db1 <span class="token operator">=</span> <span class="token number">0</span>
+		<span class="token comment">#当前维度的x, w</span>
+		x1 <span class="token operator">=</span> x_<span class="token punctuation">[</span>i<span class="token punctuation">]</span>
+		w1 <span class="token operator">=</span> w<span class="token punctuation">[</span>j<span class="token punctuation">]</span>
+		<span class="token comment">#当前维度的dout</span>
+		dout1 <span class="token operator">=</span> dout<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">[</span>j<span class="token punctuation">]</span>
+		<span class="token keyword">for</span> s <span class="token keyword">in</span> <span class="token builtin">range</span><span class="token punctuation">(</span>H1<span class="token punctuation">)</span><span class="token punctuation">:</span>
+			<span class="token keyword">for</span> t <span class="token keyword">in</span> <span class="token builtin">range</span><span class="token punctuation">(</span>W1<span class="token punctuation">)</span><span class="token punctuation">:</span>
+				dw1 <span class="token operator">+=</span> x1<span class="token punctuation">[</span><span class="token punctuation">:</span><span class="token punctuation">,</span> s<span class="token operator">*</span>stride<span class="token punctuation">:</span> s<span class="token operator">*</span>stride<span class="token operator">+</span>HH<span class="token punctuation">,</span> t<span class="token operator">*</span>stride<span class="token punctuation">:</span> t<span class="token operator">*</span>stride<span class="token operator">+</span>WW<span class="token punctuation">]</span> <span class="token operator">*</span> dout1<span class="token punctuation">[</span>s<span class="token punctuation">]</span><span class="token punctuation">[</span>t<span class="token punctuation">]</span>
+				dx1<span class="token punctuation">[</span><span class="token punctuation">:</span><span class="token punctuation">,</span> s<span class="token operator">*</span>stride<span class="token punctuation">:</span> s<span class="token operator">*</span>stride<span class="token operator">+</span>HH<span class="token punctuation">,</span> t<span class="token operator">*</span>stride<span class="token punctuation">:</span> t<span class="token operator">*</span>stride<span class="token operator">+</span>WW<span class="token punctuation">]</span> <span class="token operator">+=</span> w1 <span class="token operator">*</span> dout1<span class="token punctuation">[</span>s<span class="token punctuation">]</span><span class="token punctuation">[</span>t<span class="token punctuation">]</span>
+				db1 <span class="token operator">+=</span> dout1<span class="token punctuation">[</span>s<span class="token punctuation">]</span><span class="token punctuation">[</span>t<span class="token punctuation">]</span>
+		db<span class="token punctuation">[</span>j<span class="token punctuation">]</span> <span class="token operator">+=</span> db1
+		dx<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">+=</span> dx1
+		dw<span class="token punctuation">[</span>j<span class="token punctuation">]</span> <span class="token operator">+=</span> dw1<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>$i,j$部分的循环只是对$dx, dw$的第一个维度进行遍历，注意我们最后计算的实际上是填充后的梯度，所以输出应该为</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python">dx <span class="token operator">=</span> dx<span class="token punctuation">[</span><span class="token punctuation">:</span><span class="token punctuation">,</span> <span class="token punctuation">:</span><span class="token punctuation">,</span> pad<span class="token punctuation">:</span> pad<span class="token operator">+</span>H<span class="token punctuation">,</span> pad<span class="token punctuation">:</span> pad<span class="token operator">+</span>W<span class="token punctuation">]</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<h5 id="Max-pooling-Naive-forward"><a href="#Max-pooling-Naive-forward" class="headerlink" title="Max pooling: Naive forward"></a>Max pooling: Naive forward</h5><p>这部分和前项传播类似，只是将之前的卷积操作换成取最大值：</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python">pool_height <span class="token operator">=</span> pool_param<span class="token punctuation">[</span><span class="token string">"pool_height"</span><span class="token punctuation">]</span>
+pool_width <span class="token operator">=</span> pool_param<span class="token punctuation">[</span><span class="token string">"pool_width"</span><span class="token punctuation">]</span>
+stride <span class="token operator">=</span> pool_param<span class="token punctuation">[</span><span class="token string">"stride"</span><span class="token punctuation">]</span>
+<span class="token comment">#输入维度</span>
+N<span class="token punctuation">,</span> C<span class="token punctuation">,</span> H<span class="token punctuation">,</span> W <span class="token operator">=</span> x<span class="token punctuation">.</span>shape
+<span class="token comment">#输出维度</span>
+H1 <span class="token operator">=</span> <span class="token number">1</span> <span class="token operator">+</span> <span class="token punctuation">(</span>H <span class="token operator">-</span> pool_height<span class="token punctuation">)</span> <span class="token operator">//</span> stride
+W1 <span class="token operator">=</span> <span class="token number">1</span> <span class="token operator">+</span> <span class="token punctuation">(</span>W <span class="token operator">-</span> pool_width<span class="token punctuation">)</span> <span class="token operator">//</span> stride
+
+out <span class="token operator">=</span> np<span class="token punctuation">.</span>zeros<span class="token punctuation">(</span><span class="token punctuation">(</span>N<span class="token punctuation">,</span> C<span class="token punctuation">,</span> H1<span class="token punctuation">,</span> W1<span class="token punctuation">)</span><span class="token punctuation">)</span>
+<span class="token keyword">for</span> i <span class="token keyword">in</span> <span class="token builtin">range</span><span class="token punctuation">(</span>N<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token keyword">for</span> j <span class="token keyword">in</span> <span class="token builtin">range</span><span class="token punctuation">(</span>C<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        x1 <span class="token operator">=</span> x<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">[</span>j<span class="token punctuation">]</span>
+        res <span class="token operator">=</span> np<span class="token punctuation">.</span>zeros<span class="token punctuation">(</span><span class="token punctuation">(</span>H1<span class="token punctuation">,</span> W1<span class="token punctuation">)</span><span class="token punctuation">)</span>
+        <span class="token keyword">for</span> s <span class="token keyword">in</span> <span class="token builtin">range</span><span class="token punctuation">(</span>H1<span class="token punctuation">)</span><span class="token punctuation">:</span>
+            <span class="token keyword">for</span> t <span class="token keyword">in</span> <span class="token builtin">range</span><span class="token punctuation">(</span>W1<span class="token punctuation">)</span><span class="token punctuation">:</span>
+                res<span class="token punctuation">[</span>s<span class="token punctuation">]</span><span class="token punctuation">[</span>t<span class="token punctuation">]</span> <span class="token operator">=</span> np<span class="token punctuation">.</span><span class="token builtin">max</span><span class="token punctuation">(</span>x1<span class="token punctuation">[</span>s<span class="token operator">*</span>stride<span class="token punctuation">:</span> s<span class="token operator">*</span>stride<span class="token operator">+</span>pool_height<span class="token punctuation">,</span> t<span class="token operator">*</span>stride<span class="token punctuation">:</span> t<span class="token operator">*</span>stride<span class="token operator">+</span>pool_width<span class="token punctuation">]</span><span class="token punctuation">)</span>
+        out<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">[</span>j<span class="token punctuation">]</span> <span class="token operator">=</span> res<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h5 id="Max-pooling-Naive-backward"><a href="#Max-pooling-Naive-backward" class="headerlink" title="Max pooling: Naive backward"></a>Max pooling: Naive backward</h5><p>由于最大池化的特性，只要将最大元素所在位置对应的dout累加即可，代码和反向传播类似：</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python">x<span class="token punctuation">,</span> pool_param <span class="token operator">=</span> cache
+pool_height <span class="token operator">=</span> pool_param<span class="token punctuation">[</span><span class="token string">"pool_height"</span><span class="token punctuation">]</span>
+pool_width <span class="token operator">=</span> pool_param<span class="token punctuation">[</span><span class="token string">"pool_width"</span><span class="token punctuation">]</span>
+stride <span class="token operator">=</span> pool_param<span class="token punctuation">[</span><span class="token string">"stride"</span><span class="token punctuation">]</span>
+<span class="token comment">#输入维度</span>
+N<span class="token punctuation">,</span> C<span class="token punctuation">,</span> H<span class="token punctuation">,</span> W <span class="token operator">=</span> x<span class="token punctuation">.</span>shape
+<span class="token comment">#输出维度</span>
+H1 <span class="token operator">=</span> <span class="token number">1</span> <span class="token operator">+</span> <span class="token punctuation">(</span>H <span class="token operator">-</span> pool_height<span class="token punctuation">)</span> <span class="token operator">//</span> stride
+W1 <span class="token operator">=</span> <span class="token number">1</span> <span class="token operator">+</span> <span class="token punctuation">(</span>W <span class="token operator">-</span> pool_width<span class="token punctuation">)</span> <span class="token operator">//</span> stride
+
+dx <span class="token operator">=</span> np<span class="token punctuation">.</span>zeros_like<span class="token punctuation">(</span>x<span class="token punctuation">)</span>
+<span class="token keyword">for</span> i <span class="token keyword">in</span> <span class="token builtin">range</span><span class="token punctuation">(</span>N<span class="token punctuation">)</span><span class="token punctuation">:</span>
+	<span class="token keyword">for</span> j <span class="token keyword">in</span> <span class="token builtin">range</span><span class="token punctuation">(</span>C<span class="token punctuation">)</span><span class="token punctuation">:</span>
+		<span class="token comment">#当前维度的dout</span>
+		dout1 <span class="token operator">=</span> dout<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">[</span>j<span class="token punctuation">]</span>
+		x1 <span class="token operator">=</span> x<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">[</span>j<span class="token punctuation">]</span>
+		dx1 <span class="token operator">=</span> np<span class="token punctuation">.</span>zeros<span class="token punctuation">(</span><span class="token punctuation">(</span>H<span class="token punctuation">,</span> W<span class="token punctuation">)</span><span class="token punctuation">)</span>
+		<span class="token keyword">for</span> s <span class="token keyword">in</span> <span class="token builtin">range</span><span class="token punctuation">(</span>H1<span class="token punctuation">)</span><span class="token punctuation">:</span>
+			<span class="token keyword">for</span> t <span class="token keyword">in</span> <span class="token builtin">range</span><span class="token punctuation">(</span>W1<span class="token punctuation">)</span><span class="token punctuation">:</span>
+				<span class="token comment">#拉直</span>
+				temp <span class="token operator">=</span> x1<span class="token punctuation">[</span>s<span class="token operator">*</span>stride<span class="token punctuation">:</span> s<span class="token operator">*</span>stride<span class="token operator">+</span>pool_height<span class="token punctuation">,</span> t<span class="token operator">*</span>stride<span class="token punctuation">:</span> t<span class="token operator">*</span>stride<span class="token operator">+</span>pool_width<span class="token punctuation">]</span><span class="token punctuation">.</span>flatten<span class="token punctuation">(</span><span class="token punctuation">)</span>
+				<span class="token comment">#找到最大元素对应的索引</span>
+				index <span class="token operator">=</span> np<span class="token punctuation">.</span>argmax<span class="token punctuation">(</span>temp<span class="token punctuation">)</span>
+				<span class="token comment">#还原矩阵中的位置</span>
+				m<span class="token punctuation">,</span> n <span class="token operator">=</span> index <span class="token operator">//</span> pool_width<span class="token punctuation">,</span> index <span class="token operator">%</span> pool_width
+				dx1<span class="token punctuation">[</span>s<span class="token operator">*</span>stride <span class="token operator">+</span> m<span class="token punctuation">]</span><span class="token punctuation">[</span>t<span class="token operator">*</span>stride <span class="token operator">+</span> n<span class="token punctuation">]</span> <span class="token operator">+=</span> dout1<span class="token punctuation">[</span>s<span class="token punctuation">]</span><span class="token punctuation">[</span>t<span class="token punctuation">]</span>
+		dx<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">[</span>j<span class="token punctuation">]</span> <span class="token operator">=</span> dx1<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>这里我没找到计算矩阵最大元素对应的行列的方法，只能手工计算：</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token comment">#拉直</span>
+temp <span class="token operator">=</span> x1<span class="token punctuation">[</span>s<span class="token operator">*</span>stride<span class="token punctuation">:</span> s<span class="token operator">*</span>stride<span class="token operator">+</span>pool_height<span class="token punctuation">,</span> t<span class="token operator">*</span>stride<span class="token punctuation">:</span> t<span class="token operator">*</span>stride<span class="token operator">+</span>pool_width<span class="token punctuation">]</span><span class="token punctuation">.</span>flatten<span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token comment">#找到最大元素对应的索引</span>
+index <span class="token operator">=</span> np<span class="token punctuation">.</span>argmax<span class="token punctuation">(</span>temp<span class="token punctuation">)</span>
+<span class="token comment">#还原矩阵中的位置</span>
+m<span class="token punctuation">,</span> n <span class="token operator">=</span> index <span class="token operator">//</span> pool_width<span class="token punctuation">,</span> index <span class="token operator">%</span> pool_width<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>然后累加对应位置的dout</p>
+<pre class="line-numbers language-none"><code class="language-none">dx1[s*stride + m][t*stride + n] +&#x3D; dout1[s][t]<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<h5 id="Fast-layers"><a href="#Fast-layers" class="headerlink" title="Fast layers"></a>Fast layers</h5><p>这部分使用Cython，我一开始产生如下报错</p>
+<pre class="line-numbers language-none"><code class="language-none">error: Unable to find vcvarsall.bat<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>最后是参考这篇<a target="_blank" rel="noopener" href="https://keithnull.top/unable-to-find-vcvarsall-bat/">博客</a>解决的，实际上只要下载一个安装包即可（<a target="_blank" rel="noopener" href="http://go.microsoft.com/fwlink/?LinkId=691126">传送门</a>）。</p>
+<h5 id="Three-layer-ConvNet"><a href="#Three-layer-ConvNet" class="headerlink" title="Three-layer ConvNet"></a>Three-layer ConvNet</h5><p>这部分感觉题目没有讲清楚，也有可能是我理解的问题，网络架构为：</p>
+<pre class="line-numbers language-none"><code class="language-none">conv - relu - 2x2 max pool - affine - relu - affine - softmax<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>权重是用于relu层以及affine层，一开始对于维度不清楚，后来发现有如下代码：</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token comment"># pass conv_param to the forward pass for the convolutional layer</span>
+filter_size <span class="token operator">=</span> W1<span class="token punctuation">.</span>shape<span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">]</span>
+conv_param <span class="token operator">=</span> <span class="token punctuation">&#123;</span><span class="token string">'stride'</span><span class="token punctuation">:</span> <span class="token number">1</span><span class="token punctuation">,</span> <span class="token string">'pad'</span><span class="token punctuation">:</span> <span class="token punctuation">(</span>filter_size <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">)</span> <span class="token operator">//</span> <span class="token number">2</span><span class="token punctuation">&#125;</span>
+
+<span class="token comment"># pass pool_param to the forward pass for the max-pooling layer</span>
+pool_param <span class="token operator">=</span> <span class="token punctuation">&#123;</span><span class="token string">'pool_height'</span><span class="token punctuation">:</span> <span class="token number">2</span><span class="token punctuation">,</span> <span class="token string">'pool_width'</span><span class="token punctuation">:</span> <span class="token number">2</span><span class="token punctuation">,</span> <span class="token string">'stride'</span><span class="token punctuation">:</span> <span class="token number">2</span><span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>上述代码说明经过卷积之后数据的维度和输入维度相同，所以初始化步骤如下：</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python">C<span class="token punctuation">,</span> H<span class="token punctuation">,</span> W <span class="token operator">=</span> input_dim
+F<span class="token punctuation">,</span> HH<span class="token punctuation">,</span> WW <span class="token operator">=</span> num_filters<span class="token punctuation">,</span> filter_size<span class="token punctuation">,</span> filter_size
+W1 <span class="token operator">=</span> np<span class="token punctuation">.</span>random<span class="token punctuation">.</span>randn<span class="token punctuation">(</span>F<span class="token punctuation">,</span> C<span class="token punctuation">,</span> HH<span class="token punctuation">,</span> WW<span class="token punctuation">)</span> <span class="token operator">*</span> weight_scale
+b1 <span class="token operator">=</span> np<span class="token punctuation">.</span>zeros<span class="token punctuation">(</span>F<span class="token punctuation">)</span>
+<span class="token comment">#根据后面算法推断，第一层卷积之后图像数据最后两个维度不变，总数据维度为</span>
+n <span class="token operator">=</span> F <span class="token operator">*</span> H <span class="token operator">*</span> W
+<span class="token comment">#W2是在2x2 max pool后使用的权重，所以第一个维度为n // 4</span>
+W2 <span class="token operator">=</span> np<span class="token punctuation">.</span>random<span class="token punctuation">.</span>randn<span class="token punctuation">(</span>n <span class="token operator">//</span> <span class="token number">4</span><span class="token punctuation">,</span> hidden_dim<span class="token punctuation">)</span> <span class="token operator">*</span> weight_scale
+b2 <span class="token operator">=</span> np<span class="token punctuation">.</span>zeros<span class="token punctuation">(</span>hidden_dim<span class="token punctuation">)</span>
+W3 <span class="token operator">=</span> np<span class="token punctuation">.</span>random<span class="token punctuation">.</span>randn<span class="token punctuation">(</span>hidden_dim<span class="token punctuation">,</span> num_classes<span class="token punctuation">)</span> <span class="token operator">*</span> weight_scale
+b3 <span class="token operator">=</span> np<span class="token punctuation">.</span>zeros<span class="token punctuation">(</span>num_classes<span class="token punctuation">)</span>
+self<span class="token punctuation">.</span>params<span class="token punctuation">[</span><span class="token string">"W1"</span><span class="token punctuation">]</span> <span class="token operator">=</span> W1
+self<span class="token punctuation">.</span>params<span class="token punctuation">[</span><span class="token string">"b1"</span><span class="token punctuation">]</span> <span class="token operator">=</span> b1
+self<span class="token punctuation">.</span>params<span class="token punctuation">[</span><span class="token string">"W2"</span><span class="token punctuation">]</span> <span class="token operator">=</span> W2
+self<span class="token punctuation">.</span>params<span class="token punctuation">[</span><span class="token string">"b2"</span><span class="token punctuation">]</span> <span class="token operator">=</span> b2
+self<span class="token punctuation">.</span>params<span class="token punctuation">[</span><span class="token string">"W3"</span><span class="token punctuation">]</span> <span class="token operator">=</span> W3
+self<span class="token punctuation">.</span>params<span class="token punctuation">[</span><span class="token string">"b3"</span><span class="token punctuation">]</span> <span class="token operator">=</span> b3<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>前向传播：</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python">X1<span class="token punctuation">,</span> cache1 <span class="token operator">=</span> conv_forward_fast<span class="token punctuation">(</span>X<span class="token punctuation">,</span> W1<span class="token punctuation">,</span> b1<span class="token punctuation">,</span> conv_param<span class="token punctuation">)</span>
+X2<span class="token punctuation">,</span> cache2 <span class="token operator">=</span> relu_forward<span class="token punctuation">(</span>X1<span class="token punctuation">)</span>
+X3<span class="token punctuation">,</span> cache3 <span class="token operator">=</span> max_pool_forward_fast<span class="token punctuation">(</span>X2<span class="token punctuation">,</span> pool_param<span class="token punctuation">)</span>
+X4<span class="token punctuation">,</span> cache4 <span class="token operator">=</span> affine_forward<span class="token punctuation">(</span>X3<span class="token punctuation">,</span> W2<span class="token punctuation">,</span> b2<span class="token punctuation">)</span>
+X5<span class="token punctuation">,</span> cache5 <span class="token operator">=</span> relu_forward<span class="token punctuation">(</span>X4<span class="token punctuation">)</span>
+X6<span class="token punctuation">,</span> cache6 <span class="token operator">=</span> affine_forward<span class="token punctuation">(</span>X5<span class="token punctuation">,</span> W3<span class="token punctuation">,</span> b3<span class="token punctuation">)</span>
+scores <span class="token operator">=</span> X6<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>反向传播：</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python">loss<span class="token punctuation">,</span> dz6 <span class="token operator">=</span> softmax_loss<span class="token punctuation">(</span>scores<span class="token punctuation">,</span> y<span class="token punctuation">)</span>
+loss <span class="token operator">+=</span> self<span class="token punctuation">.</span>reg <span class="token operator">*</span> <span class="token punctuation">(</span>np<span class="token punctuation">.</span><span class="token builtin">sum</span><span class="token punctuation">(</span>W1 <span class="token operator">**</span> <span class="token number">2</span><span class="token punctuation">)</span> <span class="token operator">+</span> np<span class="token punctuation">.</span><span class="token builtin">sum</span><span class="token punctuation">(</span>W2 <span class="token operator">**</span> <span class="token number">2</span><span class="token punctuation">)</span> <span class="token operator">+</span> np<span class="token punctuation">.</span><span class="token builtin">sum</span><span class="token punctuation">(</span>W2 <span class="token operator">**</span> <span class="token number">3</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token operator">/</span> <span class="token number">2</span>
+
+dz5<span class="token punctuation">,</span> dW3<span class="token punctuation">,</span> db3 <span class="token operator">=</span> affine_backward<span class="token punctuation">(</span>dz6<span class="token punctuation">,</span> cache6<span class="token punctuation">)</span>
+dz4 <span class="token operator">=</span> relu_backward<span class="token punctuation">(</span>dz5<span class="token punctuation">,</span> cache5<span class="token punctuation">)</span>
+dz3<span class="token punctuation">,</span> dW2<span class="token punctuation">,</span> db2 <span class="token operator">=</span> affine_backward<span class="token punctuation">(</span>dz4<span class="token punctuation">,</span> cache4<span class="token punctuation">)</span>
+dz2 <span class="token operator">=</span> max_pool_backward_fast<span class="token punctuation">(</span>dz3<span class="token punctuation">,</span> cache3<span class="token punctuation">)</span>
+dz1 <span class="token operator">=</span> relu_backward<span class="token punctuation">(</span>dz2<span class="token punctuation">,</span> cache2<span class="token punctuation">)</span>
+dz<span class="token punctuation">,</span> dW1<span class="token punctuation">,</span> db1 <span class="token operator">=</span> conv_backward_fast<span class="token punctuation">(</span>dz1<span class="token punctuation">,</span> cache1<span class="token punctuation">)</span>
+
+grads<span class="token punctuation">[</span><span class="token string">"W3"</span><span class="token punctuation">]</span> <span class="token operator">=</span> dW3
+grads<span class="token punctuation">[</span><span class="token string">"b3"</span><span class="token punctuation">]</span> <span class="token operator">=</span> db3
+grads<span class="token punctuation">[</span><span class="token string">"W2"</span><span class="token punctuation">]</span> <span class="token operator">=</span> dW2
+grads<span class="token punctuation">[</span><span class="token string">"b2"</span><span class="token punctuation">]</span> <span class="token operator">=</span> db2
+grads<span class="token punctuation">[</span><span class="token string">"W1"</span><span class="token punctuation">]</span> <span class="token operator">=</span> dW1
+grads<span class="token punctuation">[</span><span class="token string">"b1"</span><span class="token punctuation">]</span> <span class="token operator">=</span> db1<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h5 id="Spatial-batch-normalization-forward"><a href="#Spatial-batch-normalization-forward" class="headerlink" title="Spatial batch normalization: forward"></a>Spatial batch normalization: forward</h5><p>这部分是对每个Channel上使用batch normalization，所以代码为：</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python">N<span class="token punctuation">,</span> C<span class="token punctuation">,</span> H<span class="token punctuation">,</span> W <span class="token operator">=</span> x<span class="token punctuation">.</span>shape
+out <span class="token operator">=</span> np<span class="token punctuation">.</span>zeros_like<span class="token punctuation">(</span>x<span class="token punctuation">)</span>
+cache <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>
+
+x1 <span class="token operator">=</span> np<span class="token punctuation">.</span>copy<span class="token punctuation">(</span>x<span class="token punctuation">)</span>
+x1 <span class="token operator">=</span> x<span class="token punctuation">.</span>reshape<span class="token punctuation">(</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">,</span> C<span class="token punctuation">)</span>
+out<span class="token punctuation">,</span> cache <span class="token operator">=</span> batchnorm_forward<span class="token punctuation">(</span>x1<span class="token punctuation">,</span> gamma<span class="token punctuation">,</span> beta<span class="token punctuation">,</span> bn_param<span class="token punctuation">)</span>
+out <span class="token operator">=</span> out<span class="token punctuation">.</span>reshape<span class="token punctuation">(</span>x<span class="token punctuation">.</span>shape<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h5 id="Spatial-batch-normalization-backward"><a href="#Spatial-batch-normalization-backward" class="headerlink" title="Spatial batch normalization: backward"></a>Spatial batch normalization: backward</h5><p>反向传播也同理：</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python">N<span class="token punctuation">,</span> C<span class="token punctuation">,</span> H<span class="token punctuation">,</span> W <span class="token operator">=</span> dout<span class="token punctuation">.</span>shape
+dout1 <span class="token operator">=</span> np<span class="token punctuation">.</span>copy<span class="token punctuation">(</span>dout<span class="token punctuation">)</span>
+dout1 <span class="token operator">=</span> dout1<span class="token punctuation">.</span>reshape<span class="token punctuation">(</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">,</span> C<span class="token punctuation">)</span>
+dx<span class="token punctuation">,</span> dgamma<span class="token punctuation">,</span> dbeta <span class="token operator">=</span> batchnorm_backward<span class="token punctuation">(</span>dout1<span class="token punctuation">,</span> cache<span class="token punctuation">)</span>
+dx <span class="token operator">=</span> dx<span class="token punctuation">.</span>reshape<span class="token punctuation">(</span>dout<span class="token punctuation">.</span>shape<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h4 id="5-TensorFlow"><a href="#5-TensorFlow" class="headerlink" title="5.TensorFlow"></a>5.TensorFlow</h4><p>如果读取数据的时候报错，则修改如下路径为自己存放数据的路径即可：</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python">cifar10_dir <span class="token operator">=</span> <span class="token string">'cs231n/datasets/cifar-10-batches-py'</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<h5 id="TensorFlow-Details"><a href="#TensorFlow-Details" class="headerlink" title="TensorFlow Details"></a>TensorFlow Details</h5><p>这部分的难点是5408这个数据是怎么来的，因为使用的参数为’VALID’，官方文档给出的计算公式为：</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python">out_height <span class="token operator">=</span> ceil<span class="token punctuation">(</span><span class="token builtin">float</span><span class="token punctuation">(</span>in_height <span class="token operator">-</span> filter_height <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">)</span> <span class="token operator">/</span> <span class="token builtin">float</span><span class="token punctuation">(</span>strides<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+out_width  <span class="token operator">=</span> ceil<span class="token punctuation">(</span><span class="token builtin">float</span><span class="token punctuation">(</span>in_width <span class="token operator">-</span> filter_width <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">)</span> <span class="token operator">/</span> <span class="token builtin">float</span><span class="token punctuation">(</span>strides<span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<p>这里根据公式计算得到的结果是</p>
+<script type="math/tex; mode=display">
+(32-7+0)/2 +1 = 13.5</script><p>向下取整为</p>
+<script type="math/tex; mode=display">
+13</script><p>所以输出维度为</p>
+<script type="math/tex; mode=display">
+5408 = 32 \times  13  \times  13</script><p>参考资料：<a target="_blank" rel="noopener" href="https://www.reddit.com/r/cs231n/comments/6zogu0/why_5408_for_the_linear_layer_parameter/">传送门</a>。</p>
+<h5 id="Training-a-specific-model"><a href="#Training-a-specific-model" class="headerlink" title="Training a specific model"></a>Training a specific model</h5><p>因为我对Tensorflow不是很熟，所以这部分主要参考了别人的作业，代码如下：</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token comment"># define model</span>
+<span class="token keyword">def</span> <span class="token function">complex_model</span><span class="token punctuation">(</span>X<span class="token punctuation">,</span>y<span class="token punctuation">,</span>is_training<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token comment">#conv1</span>
+    Wconv1 <span class="token operator">=</span> tf<span class="token punctuation">.</span>get_variable<span class="token punctuation">(</span><span class="token string">"Wconv1"</span><span class="token punctuation">,</span> shape<span class="token operator">=</span><span class="token punctuation">[</span><span class="token number">7</span><span class="token punctuation">,</span> <span class="token number">7</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">,</span> <span class="token number">32</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+    bconv1 <span class="token operator">=</span> tf<span class="token punctuation">.</span>get_variable<span class="token punctuation">(</span><span class="token string">"bconv1"</span><span class="token punctuation">,</span> shape<span class="token operator">=</span><span class="token punctuation">[</span><span class="token number">32</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+    <span class="token comment">#Affine layer</span>
+    W1 <span class="token operator">=</span> tf<span class="token punctuation">.</span>get_variable<span class="token punctuation">(</span><span class="token string">"W1"</span><span class="token punctuation">,</span> shape<span class="token operator">=</span><span class="token punctuation">[</span><span class="token number">5408</span><span class="token punctuation">,</span> <span class="token number">1024</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+    b1 <span class="token operator">=</span> tf<span class="token punctuation">.</span>get_variable<span class="token punctuation">(</span><span class="token string">"b1"</span><span class="token punctuation">,</span> shape<span class="token operator">=</span><span class="token punctuation">[</span><span class="token number">1024</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+    <span class="token comment">#Affine layer</span>
+    W2 <span class="token operator">=</span> tf<span class="token punctuation">.</span>get_variable<span class="token punctuation">(</span><span class="token string">"W2"</span><span class="token punctuation">,</span> shape<span class="token operator">=</span><span class="token punctuation">[</span><span class="token number">1024</span><span class="token punctuation">,</span> <span class="token number">10</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+    b2 <span class="token operator">=</span> tf<span class="token punctuation">.</span>get_variable<span class="token punctuation">(</span><span class="token string">"b2"</span><span class="token punctuation">,</span> shape<span class="token operator">=</span><span class="token punctuation">[</span><span class="token number">10</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+
+    <span class="token comment">#conv</span>
+    a1 <span class="token operator">=</span> tf<span class="token punctuation">.</span>nn<span class="token punctuation">.</span>conv2d<span class="token punctuation">(</span>X<span class="token punctuation">,</span> Wconv1<span class="token punctuation">,</span> strides<span class="token operator">=</span><span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">,</span> padding<span class="token operator">=</span><span class="token string">'VALID'</span><span class="token punctuation">)</span> <span class="token operator">+</span> bconv1
+    <span class="token comment">#relu</span>
+    h1 <span class="token operator">=</span> tf<span class="token punctuation">.</span>nn<span class="token punctuation">.</span>relu<span class="token punctuation">(</span>a1<span class="token punctuation">)</span>
+    <span class="token comment">#Spatial Batch Normalization Layer</span>
+    axis <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">]</span>
+    mean<span class="token punctuation">,</span> variance <span class="token operator">=</span> tf<span class="token punctuation">.</span>nn<span class="token punctuation">.</span>moments<span class="token punctuation">(</span>h1<span class="token punctuation">,</span> axis<span class="token punctuation">)</span>
+    offset <span class="token operator">=</span> tf<span class="token punctuation">.</span>Variable<span class="token punctuation">(</span>tf<span class="token punctuation">.</span>zeros<span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token number">32</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+    scala <span class="token operator">=</span> tf<span class="token punctuation">.</span>Variable<span class="token punctuation">(</span>tf<span class="token punctuation">.</span>ones<span class="token punctuation">(</span><span class="token punctuation">[</span><span class="token number">32</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+    bn1 <span class="token operator">=</span> tf<span class="token punctuation">.</span>nn<span class="token punctuation">.</span>batch_normalization<span class="token punctuation">(</span>h1<span class="token punctuation">,</span> mean<span class="token punctuation">,</span> variance<span class="token punctuation">,</span> offset<span class="token punctuation">,</span> scala<span class="token punctuation">,</span> <span class="token number">0.001</span><span class="token punctuation">)</span>
+    <span class="token comment">#Max Pooling</span>
+    p1 <span class="token operator">=</span> tf<span class="token punctuation">.</span>nn<span class="token punctuation">.</span>max_pool<span class="token punctuation">(</span>bn1<span class="token punctuation">,</span> ksize<span class="token operator">=</span><span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">,</span> strides<span class="token operator">=</span><span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">,</span> padding<span class="token operator">=</span><span class="token string">"SAME"</span><span class="token punctuation">)</span>
+    <span class="token comment">#Affine layers</span>
+    p1_flat <span class="token operator">=</span> tf<span class="token punctuation">.</span>reshape<span class="token punctuation">(</span>p1<span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">5408</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+    a2 <span class="token operator">=</span> tf<span class="token punctuation">.</span>matmul<span class="token punctuation">(</span>p1_flat<span class="token punctuation">,</span> W1<span class="token punctuation">)</span> <span class="token operator">+</span> b1
+    <span class="token comment">#relu</span>
+    h2 <span class="token operator">=</span> tf<span class="token punctuation">.</span>nn<span class="token punctuation">.</span>relu<span class="token punctuation">(</span>a2<span class="token punctuation">)</span>
+    h2_flat <span class="token operator">=</span> tf<span class="token punctuation">.</span>reshape<span class="token punctuation">(</span>h2<span class="token punctuation">,</span> <span class="token punctuation">[</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">1024</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+    <span class="token comment">#Affine layer </span>
+    y_out <span class="token operator">=</span> tf<span class="token punctuation">.</span>matmul<span class="token punctuation">(</span>h2_flat<span class="token punctuation">,</span> W2<span class="token punctuation">)</span> <span class="token operator">+</span> b2
+
+    <span class="token keyword">return</span> y_out<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>Spatial Batch Normalization Layer相对复杂一些，别的部分照葫芦画瓢就可以了。</p>
+<h4 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h4><p>这次作业真的非常难，需要反复体会，后续应该会把卷积部分的代码优化一下。</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">Doraemonzzz</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="http://doraemonzzz.com/2019/03/24/CS231%20%E4%BD%9C%E4%B8%9A2/">http://doraemonzzz.com/2019/03/24/CS231%20%E4%BD%9C%E4%B8%9A2/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://doraemonzzz.com" target="_blank">Doraemonzzz</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/CS231/">CS231</a></div><div class="post_share"><div class="social-share" data-image="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2019/03/25/CS205A%20HW1/"><img class="prev-cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">CS205A HW1</div></div></a></div><div class="next-post pull-right"><a href="/2019/03/24/CS205A%20HW0/"><img class="next-cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">CS205A HW0</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span> 相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2019/01/23/CS231 第一讲 课程简介/" title="CS231 第一讲 课程简介"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2019-01-23</div><div class="title">CS231 第一讲 课程简介</div></div></a></div><div><a href="/2019/02/10/CS231 第七讲 训练神经网络（下）/" title="CS231 第七讲 训练神经网络（下）"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2019-02-10</div><div class="title">CS231 第七讲 训练神经网络（下）</div></div></a></div><div><a href="/2019/01/27/CS231 第三讲 损失函数和优化/" title="CS231 第三讲 损失函数和优化"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2019-01-27</div><div class="title">CS231 第三讲 损失函数和优化</div></div></a></div><div><a href="/2019/02/10/CS231 第九讲 CNN架构/" title="CS231 第九讲 CNN架构"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2019-02-10</div><div class="title">CS231 第九讲 CNN架构</div></div></a></div><div><a href="/2019/01/24/CS231 第二讲 图像分类/" title="CS231 第二讲 图像分类"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2019-01-24</div><div class="title">CS231 第二讲 图像分类</div></div></a></div><div><a href="/2019/01/31/CS231 第五讲 卷积神经网络/" title="CS231 第五讲 卷积神经网络"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2019-01-31</div><div class="title">CS231 第五讲 卷积神经网络</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="card-info-avatar is-center"><img class="avatar-img" src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/><div class="author-info__name">Doraemonzzz</div><div class="author-info__description">个人博客，主要记录有关机器学习，数学以及计算机科学的笔记</div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">610</div></a></div><div class="card-info-data-item is-center"><a href="/tags/"><div class="headline">标签</div><div class="length-num">59</div></a></div><div class="card-info-data-item is-center"><a href="/categories/"><div class="headline">分类</div><div class="length-num">23</div></a></div></div><a class="button--animated" id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/Doraemonzzz" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="/doraemon_zzz@163.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn card-announcement-animation"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%87%86%E5%A4%87%E5%B7%A5%E4%BD%9C"><span class="toc-number">1.</span> <span class="toc-text">准备工作</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-%E5%85%A8%E8%BF%9E%E6%8E%A5%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C"><span class="toc-number">2.</span> <span class="toc-text">1.全连接神经网络</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#Affine-layer-foward"><span class="toc-number">2.1.</span> <span class="toc-text">Affine layer: foward</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#Affine-layer-backward"><span class="toc-number">2.2.</span> <span class="toc-text">Affine layer: backward</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#ReLU-layer-forward"><span class="toc-number">2.3.</span> <span class="toc-text">ReLU layer: forward</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#ReLU-layer-backward"><span class="toc-number">2.4.</span> <span class="toc-text">ReLU layer: backward</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#Two-layer-network"><span class="toc-number">2.5.</span> <span class="toc-text">Two-layer network</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#Multilayer-network"><span class="toc-number">2.6.</span> <span class="toc-text">Multilayer network</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#SGD-Momentum"><span class="toc-number">2.7.</span> <span class="toc-text">SGD+Momentum</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#RMSProp"><span class="toc-number">2.8.</span> <span class="toc-text">RMSProp</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#Adam"><span class="toc-number">2.9.</span> <span class="toc-text">Adam</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-%E6%89%B9%E9%87%8F%E6%A0%87%E5%87%86%E5%8C%96"><span class="toc-number">3.</span> <span class="toc-text">2.批量标准化</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#Batch-normalization-Forward"><span class="toc-number">3.1.</span> <span class="toc-text">Batch normalization: Forward</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#Batch-Normalization-backward"><span class="toc-number">3.2.</span> <span class="toc-text">Batch Normalization: backward</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#Fully-Connected-Nets-with-Batch-Normalization"><span class="toc-number">3.3.</span> <span class="toc-text">Fully Connected Nets with Batch Normalization</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-%E9%9A%8F%E6%9C%BA%E5%A4%B1%E6%B4%BB%EF%BC%88Dropout%EF%BC%89"><span class="toc-number">4.</span> <span class="toc-text">3.随机失活（Dropout）</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#Dropout-forward-pass"><span class="toc-number">4.1.</span> <span class="toc-text">Dropout forward pass</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#Dropout-backward-pass"><span class="toc-number">4.2.</span> <span class="toc-text">Dropout backward pass</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#Fully-connected-nets-with-Dropout"><span class="toc-number">4.3.</span> <span class="toc-text">Fully-connected nets with Dropout</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-%E5%9C%A8CIFAR-10%E4%B8%8A%E8%BF%90%E8%A1%8C%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C"><span class="toc-number">5.</span> <span class="toc-text">4.在CIFAR-10上运行卷积神经网络</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#Convolution-Naive-forward-pass"><span class="toc-number">5.1.</span> <span class="toc-text">Convolution: Naive forward pass</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#Aside-Image-processing-via-convolutions"><span class="toc-number">5.2.</span> <span class="toc-text">Aside: Image processing via convolutions</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#Convolution-Naive-backward-pass"><span class="toc-number">5.3.</span> <span class="toc-text">Convolution: Naive backward pass</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#Max-pooling-Naive-forward"><span class="toc-number">5.4.</span> <span class="toc-text">Max pooling: Naive forward</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#Max-pooling-Naive-backward"><span class="toc-number">5.5.</span> <span class="toc-text">Max pooling: Naive backward</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#Fast-layers"><span class="toc-number">5.6.</span> <span class="toc-text">Fast layers</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#Three-layer-ConvNet"><span class="toc-number">5.7.</span> <span class="toc-text">Three-layer ConvNet</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#Spatial-batch-normalization-forward"><span class="toc-number">5.8.</span> <span class="toc-text">Spatial batch normalization: forward</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#Spatial-batch-normalization-backward"><span class="toc-number">5.9.</span> <span class="toc-text">Spatial batch normalization: backward</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#5-TensorFlow"><span class="toc-number">6.</span> <span class="toc-text">5.TensorFlow</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#TensorFlow-Details"><span class="toc-number">6.1.</span> <span class="toc-text">TensorFlow Details</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#Training-a-specific-model"><span class="toc-number">6.2.</span> <span class="toc-text">Training a specific model</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-number">7.</span> <span class="toc-text">总结</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2021/06/06/2021-6-6-%E7%AE%97%E6%B3%95%E6%A6%82%E8%AE%BA(DPV)%E4%B9%A0%E9%A2%98%E8%A7%A3%E7%AD%94%E2%80%94%E2%80%94%E7%AC%AC3%E7%AB%A0-%E5%9B%BE%E7%9A%84%E5%88%86%E8%A7%A3/" title="算法概论(DPV)习题解答——第3章 图的分解"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="算法概论(DPV)习题解答——第3章 图的分解"/></a><div class="content"><a class="title" href="/2021/06/06/2021-6-6-%E7%AE%97%E6%B3%95%E6%A6%82%E8%AE%BA(DPV)%E4%B9%A0%E9%A2%98%E8%A7%A3%E7%AD%94%E2%80%94%E2%80%94%E7%AC%AC3%E7%AB%A0-%E5%9B%BE%E7%9A%84%E5%88%86%E8%A7%A3/" title="算法概论(DPV)习题解答——第3章 图的分解">算法概论(DPV)习题解答——第3章 图的分解</a><time datetime="2021-06-06T14:35:00.000Z" title="发表于 2021-06-06 22:35:00">2021-06-06</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/06/06/2021-6-6-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E7%AC%AC5%E7%AB%A0-%E4%B9%A0%E9%A2%98%E8%A7%A3%E6%9E%90/" title="深入理解计算机系统 第5章 习题解析"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="深入理解计算机系统 第5章 习题解析"/></a><div class="content"><a class="title" href="/2021/06/06/2021-6-6-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E7%AC%AC5%E7%AB%A0-%E4%B9%A0%E9%A2%98%E8%A7%A3%E6%9E%90/" title="深入理解计算机系统 第5章 习题解析">深入理解计算机系统 第5章 习题解析</a><time datetime="2021-06-06T07:23:00.000Z" title="发表于 2021-06-06 15:23:00">2021-06-06</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/06/05/2021-6-5-Stanford-Compiler-PA5%E7%BF%BB%E8%AF%91/" title="Stanford Compiler PA5翻译"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Stanford Compiler PA5翻译"/></a><div class="content"><a class="title" href="/2021/06/05/2021-6-5-Stanford-Compiler-PA5%E7%BF%BB%E8%AF%91/" title="Stanford Compiler PA5翻译">Stanford Compiler PA5翻译</a><time datetime="2021-06-05T06:12:00.000Z" title="发表于 2021-06-05 14:12:00">2021-06-05</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/06/04/2021-6-4-Stanford-Compiler-PA4%E7%BF%BB%E8%AF%91/" title="Stanford Compiler PA4翻译"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Stanford Compiler PA4翻译"/></a><div class="content"><a class="title" href="/2021/06/04/2021-6-4-Stanford-Compiler-PA4%E7%BF%BB%E8%AF%91/" title="Stanford Compiler PA4翻译">Stanford Compiler PA4翻译</a><time datetime="2021-06-03T16:17:00.000Z" title="发表于 2021-06-04 00:17:00">2021-06-04</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/06/03/2021-6-3-%E5%B7%A7%E5%A6%99%E7%9A%84Y%E8%BF%90%E7%AE%97%E7%AC%A6/" title="巧妙的Y运算符"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="巧妙的Y运算符"/></a><div class="content"><a class="title" href="/2021/06/03/2021-6-3-%E5%B7%A7%E5%A6%99%E7%9A%84Y%E8%BF%90%E7%AE%97%E7%AC%A6/" title="巧妙的Y运算符">巧妙的Y运算符</a><time datetime="2021-06-03T00:54:00.000Z" title="发表于 2021-06-03 08:54:00">2021-06-03</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2021 By Doraemonzzz</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><div class="js-pjax"><script>if (!window.MathJax) {
+  window.MathJax = {
+    loader: {
+      source: {
+        '[tex]/amsCd': '[tex]/amscd'
+      }
+    },
+    tex: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]],
+      tags: 'ams'
+    },
+    options: {
+      renderActions: {
+        findScript: [10, doc => {
+          for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+            const display = !!node.type.match(/; *mode=display/)
+            const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+            const text = document.createTextNode('')
+            node.parentNode.replaceChild(text, node)
+            math.start = {node: text, delim: '', n: 0}
+            math.end = {node: text, delim: '', n: 0}
+            doc.math.push(math)
+          }
+        }, ''],
+        addClass: [200,() => {
+          document.querySelectorAll('mjx-container:not([display=\'true\']').forEach( node => {
+            const target = node.parentNode
+            if (!target.classList.contains('has-jax')) {
+              target.classList.add('mathjax-overflow')
+            }
+          })
+        }, '', false]
+      }
+    }
+  }
+  
+  const script = document.createElement('script')
+  script.src = 'https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js'
+  script.id = 'MathJax-script'
+  script.async = true
+  document.head.appendChild(script)
+} else {
+  MathJax.startup.document.state(0)
+  MathJax.texReset()
+  MathJax.typeset()
+}</script></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

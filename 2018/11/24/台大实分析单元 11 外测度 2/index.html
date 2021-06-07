@@ -1,0 +1,400 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>台大实分析单元 11 外测度 2 | Doraemonzzz</title><meta name="keywords" content="实分析"><meta name="author" content="Doraemonzzz"><meta name="copyright" content="Doraemonzzz"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="这一部分继续介绍外测度。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="台大实分析单元 11 外测度 2">
+<meta property="og:url" content="http://doraemonzzz.com/2018/11/24/%E5%8F%B0%E5%A4%A7%E5%AE%9E%E5%88%86%E6%9E%90%E5%8D%95%E5%85%83%2011%20%E5%A4%96%E6%B5%8B%E5%BA%A6%202/index.html">
+<meta property="og:site_name" content="Doraemonzzz">
+<meta property="og:description" content="这一部分继续介绍外测度。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg">
+<meta property="article:published_time" content="2018-11-24T12:23:00.000Z">
+<meta property="article:modified_time" content="2019-05-31T05:37:29.778Z">
+<meta property="article:author" content="Doraemonzzz">
+<meta property="article:tag" content="实分析">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="http://doraemonzzz.com/2018/11/24/%E5%8F%B0%E5%A4%A7%E5%AE%9E%E5%88%86%E6%9E%90%E5%8D%95%E5%85%83%2011%20%E5%A4%96%E6%B5%8B%E5%BA%A6%202/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"prismjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    jQuery: 'https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js',
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+    },
+    fancybox: {
+      js: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isanchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '台大实分析单元 11 外测度 2',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2019-05-31 13:37:29'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    })(window)</script><meta name="generator" content="Hexo 5.4.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="author-avatar"><img class="avatar-img" src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">文章</div><div class="length-num">610</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">标签</div><div class="length-num">59</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/categories/"><div class="headline">分类</div><div class="length-num">23</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">Doraemonzzz</a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">台大实分析单元 11 外测度 2</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2018-11-24T12:23:00.000Z" title="发表于 2018-11-24 20:23:00">2018-11-24</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2019-05-31T05:37:29.778Z" title="更新于 2019-05-31 13:37:29">2019-05-31</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E6%95%B0%E5%AD%A6/">数学</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="台大实分析单元 11 外测度 2"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p>这一部分继续介绍外测度。</p>
+<span id="more"></span>
+<p>回顾外测度的定义：</p>
+<p>映射$\mu:2^{\Omega} \to [0,\infty]$被称为外测度如果满足如下三个条件：</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+(i)&\mu(\varnothing) = 0 \\
+(ii)&\mu(A) \le \mu(B)，如果A\subset B \subset \Omega \\
+(iii)&\mu(\bigcup_{n=1}^{\infty} A_n) \le  \sum_{n=1}^{\infty} \mu(A_n) 
+对于\{A_n\} \subset 2^\Omega
+\end{aligned}</script><p>回顾$\mu​$可测的概念：</p>
+<script type="math/tex; mode=display">
+给定\Omega上外测度\mu，定义\Omega的子集A为\mu可测，如果 \\
+\mu(B) = \mu(B\bigcap A) +\mu(B\bigcap A^C)，对于任意B\subset \Omega \\
+或者\mu(C\bigcup D) = \mu(C) + \mu(D)对于任意C\subset A以及D\subset A^C</script><p>注意到由外测度的定义可得：</p>
+<script type="math/tex; mode=display">
+\mu(B) = \mu \left((B\bigcap A)\bigcup B\bigcap A^C \right)\le \mu(B\bigcap A) +\mu(B\bigcap A^C)</script><p>所以为了证明$A$为$\mu$可测，只要证明</p>
+<script type="math/tex; mode=display">
+\mu(B) \ge \mu(A\bigcap B) +\mu(B\bigcap A^C)</script><p>由定义不难看出有如下结论：</p>
+<h4 id="Remark"><a href="#Remark" class="headerlink" title="Remark"></a>Remark</h4><script type="math/tex; mode=display">
+如果A 为\mu可测，那么A^C为\mu可测</script><h5 id="例-1"><a href="#例-1" class="headerlink" title="例 1"></a>例 1</h5><p>$\Omega$上计数测度是一个外测度，$\Omega$的任意子集关于计数测度(外)可测。</p>
+<p>下面考虑在$\mathbb R$上定义的勒贝格外测度</p>
+<h4 id="Lebesgue-outer-measure-on-mathbb-R"><a href="#Lebesgue-outer-measure-on-mathbb-R" class="headerlink" title="Lebesgue(outer measure) on $\mathbb R$"></a>Lebesgue(outer measure) on $\mathbb R$</h4><script type="math/tex; mode=display">
+A\subset \Omega，\Lambda (A) = \left \{\sum_{n} I_n :A\subset \bigcup_n I_n ,每个I_n是有限开区间\right\}，\\令\lambda(A) = \inf \Lambda(A)，那么\lambda是\mathbb R上外侧度，\\
+\lambda被称为\mathbb R上的(勒贝格)测度，\mathbb R上\lambda可测集合被称为(勒贝格)可测集</script><p>为了方便后续讨论，我们对每个开区间的长度加以限制，有如下定义：</p>
+<script type="math/tex; mode=display">
+对于\epsilon>0, A\subset \mathbb R，
+令\Lambda_{\epsilon}(A) =\{\sum_n I_n:A\subset \bigcup_n I_n,每个I_n是有限开区间并且|I_n|<\epsilon 
+\}</script><p>关于上述集合有如下重要引理：</p>
+<h4 id="Lemma-1"><a href="#Lemma-1" class="headerlink" title="Lemma 1"></a>Lemma 1</h4><script type="math/tex; mode=display">
+\lambda(A) = \inf \Lambda_{\epsilon}(A) 对任意\epsilon >0</script><p>证明：</p>
+<p>由定义显然有</p>
+<script type="math/tex; mode=display">
+\Lambda_{\epsilon}(A) \subset \Lambda(A)</script><p>那么</p>
+<script type="math/tex; mode=display">
+\lambda(A) \le \Lambda_{\epsilon}(A)</script><p>接着考虑如下[Claim]：</p>
+<script type="math/tex; mode=display">
+I是一个有限开区间，\delta>0，那么存在有限开区间I^{(1)},...,I^{(k)}，使得I\subset I^{(1)}\bigcup ...\bigcup I^{(k)}，\\
+其中|I^{(j)}| <\epsilon ，j=1,...,k\\
+并且\sum_{j=1}^k |I^{(j)}| <|I| +\delta</script><p>这个结论的证明通过画图即可说明，这里叙述下思路，首先将$I$等分为$k$个开区间，每个区间长度为$\frac {|I|}k$，然后每个开区间左右两侧分别扩张$\frac  \delta {2k}$，则区间的总长度小于$|I|+\delta$，取$\epsilon = \frac {|I|+\delta}k$即可满足条件。</p>
+<p>现在给定$\delta &gt;0$，$\{I_n\}$是一列开区间，使得$A\subset \bigcup_n I_n$，对每个$n$，根据[Claim]，存在开区间$I_n^{(1)},…,I_n^{(k_n)}$，使得</p>
+<script type="math/tex; mode=display">
+I_n\subset I^{(1)}_n\bigcup ...\bigcup I^{(k_n)}_n\\|I_n^{(j)}|<\epsilon ,
+\sum_{j=1}^{k_n} |I^{(j)}_n| <|I_n| +\frac \delta{2^n}</script><p>那么显然有</p>
+<script type="math/tex; mode=display">
+A\subset \bigcup _{n=1}^{\infty} \bigcup_{j=1}^{k_n}I_n^{(j)}</script><p>因此</p>
+<script type="math/tex; mode=display">
+\sum _{n=1}^{\infty} \sum_{j=1}^{k_n}|I_n^{(j)}| \in \Lambda_{\epsilon}(A)\\
+\sum _{n=1}^{\infty}\sum_{j=1}^{k_n} |I^{(j)}_n| <\sum _{n=1}^{\infty}(|I_n| +\frac \delta{2^n})
+=\sum_{n}|I_n| + \delta</script><p>注意到$\sum_{n}|I_n|\in \Lambda(A)$，所以上述事实说明，对于$\delta&gt;0$以及$\alpha \in \Lambda(A)$，存在$\beta \in \Lambda_{\epsilon}(A)$使得$\beta&lt;\alpha+\delta$，这说明对于任意$\alpha \in \Lambda(A)$</p>
+<script type="math/tex; mode=display">
+\Lambda_{\epsilon}(A)<\alpha+\delta</script><p>因此</p>
+<script type="math/tex; mode=display">
+\Lambda_{\epsilon}(A)<\lambda(A)+\delta</script><p>令$\delta \to 0$，那么</p>
+<script type="math/tex; mode=display">
+\Lambda_{\epsilon}(A)\le \lambda(A)</script><p>结合两个方向的不等式可知</p>
+<script type="math/tex; mode=display">
+\Lambda_{\epsilon}(A)=\lambda(A)</script><p>我们自然希望开区间的长度与其外测度相等，事实上，有如下结论：</p>
+<h4 id="Proposition-1"><a href="#Proposition-1" class="headerlink" title="Proposition 1"></a>Proposition 1</h4><script type="math/tex; mode=display">
+任意有限开区间I是\lambda 可测的，并且\lambda(I)=|I|</script><p>证明：</p>
+<p>首先证明可测性。</p>
+<p>令$I=(a,b)$，对于$0&lt;\epsilon&lt;\frac 1 2(b-a)$，令$J=(a+\epsilon,b-\epsilon)$</p>
+<p>对于$A\subset \mathbb R$，考虑开区间列$\{I_n\}$，满足$|I_n| &lt; \epsilon$，并且$A\subset \bigcup_n I_n$</p>
+<p>定义如下集合</p>
+<script type="math/tex; mode=display">
+\vartheta_1=\{n:I_n \bigcap J \neq \varnothing \}\\
+\vartheta_2=\{n:I_n \bigcap (A\bigcap I^C) \neq \varnothing \}</script><p>显然$\vartheta_1 \bigcap \vartheta_1=\varnothing$（画图即可说明），因此</p>
+<script type="math/tex; mode=display">
+\sum_{n=1}^{\infty}|I_n| \ge \sum_{n\in \vartheta_1} |I_n|+\sum_{n\in \vartheta_2} |I_n|</script><p>因为$A\subset \bigcup_n I_n,A\subset (\bigcup_n I_n)\bigcap A​$，所以</p>
+<script type="math/tex; mode=display">
+A\bigcap J \subset (\bigcup_n I_n)\bigcap J = \bigcup_n (I_n\bigcap J) 
+=\bigcup_{n\in  \vartheta_1} (I_n\bigcap J)\subset \bigcup_{n\in  \vartheta_1} I_n\\
+A\bigcap I^C \subset (\bigcup_n I_n)\bigcap A\bigcap  I^C = \bigcup_n (I_n\bigcap A\bigcap  I^C) 
+=\bigcup_{n\in  \vartheta_2} (I_n\bigcap A\bigcap  I^C)\subset \bigcup_{n\in  \vartheta_2} I_n</script><p>那么由$\lambda ​$的定义可知</p>
+<script type="math/tex; mode=display">
+\sum_{n\in \vartheta_1} |I_n|+\sum_{n\in \vartheta_2} |I_n|
+\ge \lambda(A\bigcap J) + \lambda(A\bigcap I^C)</script><p>从而</p>
+<script type="math/tex; mode=display">
+\sum_{n=1}^{\infty}|I_n| \ge \sum_{n\in \vartheta_1} |I_n|+\sum_{n\in \vartheta_2} |I_n| \ge \lambda(A\bigcap J) + \lambda(A\bigcap I^C)</script><p>注意到$\sum_{n=1}^{\infty}|I_n|  \in \Lambda_{\epsilon}(A)$，那么</p>
+<script type="math/tex; mode=display">
+\inf \Lambda_{\epsilon}(A)\ge \lambda(A\bigcap J) + \lambda(A\bigcap I^C)</script><p>即</p>
+<script type="math/tex; mode=display">
+\lambda(A)=\inf \Lambda_{\epsilon}(A)\ge \lambda(A\bigcap J) + \lambda(A\bigcap I^C)</script><p>注意到</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+\lambda(A\bigcap I) 
+&= \lambda((A\bigcap J)\bigcup(A\bigcap (I\setminus J))\\
+&\le  \lambda(A\bigcap J) +\lambda(A\bigcap (I\setminus J))\\
+&\le  \lambda(A\bigcap J) +\lambda( I\setminus J)\\
+&\le \lambda(A\bigcap J)+2\epsilon
+\end{aligned}</script><p>从而</p>
+<script type="math/tex; mode=display">
+\lambda(A\bigcap J) \ge \lambda(A\bigcap I) - 2\epsilon</script><p>那么</p>
+<script type="math/tex; mode=display">
+\lambda(A)=\inf \Lambda_{\epsilon}(A)\ge \lambda(A\bigcap J) + \lambda(A\bigcap I^C)
+\ge  \lambda(A\bigcap I)-2\epsilon + \lambda(A\bigcap I^C)</script><p>令$\epsilon\to 0​$可得</p>
+<script type="math/tex; mode=display">
+\lambda(A)
+\ge  \lambda(A\bigcap I) + \lambda(A\bigcap I^C)</script><p>因为另一个方向的不等式自然成立，从而</p>
+<script type="math/tex; mode=display">
+\lambda(A)
+= \lambda(A\bigcap I) + \lambda(A\bigcap I^C)</script><p>从而开区间$|I|$为$\lambda​$可测。</p>
+<p>接下来只要证$\lambda (I)=|I|$即可，显然有</p>
+<script type="math/tex; mode=display">
+\lambda(I) \le |I| \in \Lambda(I)</script><p>我们需要证明如下结论</p>
+<script type="math/tex; mode=display">
+\lambda(I)\ge |I|</script><p>注意到如果$J\subset \bigcup_{n=1}^k I_n$，其中$I_n$是一个有限开区间，$J$是一个闭区间，那么</p>
+<script type="math/tex; mode=display">
+|J|\le \sum_{n=1}^k |I_n|</script><p>其次有如下结论：</p>
+<script type="math/tex; mode=display">
+令\{I _n\}是一列有限开区间，使得I\subset \bigcup_n I_n，令J是I中任意闭区间，使得J\subset \bigcup_n I_n，那么存在n_0，使得J\subset \bigcup_{n=1}^{n_0} I_n</script><p>反证法，如果上述结论不成立，对于每个$k$，存在$x_k\in J$使得$x_k \notin  \bigcup_{n=1}^k I_n$，将这样的$x_k$记为$\{x_k\}\subset J$，那么存在$\{x_k\}$的子列$\{x_{n_k}\}$收敛到$x_0$，由收敛的定义可知，存在$k_0$，使得$n_k &gt; k_0$时，$x_{n_k} \in I_{k_0}$。</p>
+<p>由定义可知$x_{n_k} \notin  \bigcup_{n=1}^{n_k} I_n$，当$n_k &gt; k_0$时，</p>
+<script type="math/tex; mode=display">
+x_{n_k}\in I_{k_0} \subset  \bigcup_{n=1}^{k_0} I_n \subset \bigcup_{n=1}^{n_k} I_n \\
+x_{n_k} \notin  \bigcup_{n=1}^{n_k} I_n (其中n_k > k_0)</script><p>这就引起了矛盾，所以原结论成立。</p>
+<p>结合之前论述可知</p>
+<script type="math/tex; mode=display">
+|J| \le \sum_{n=1}^{n_0}|I_n|\\
+即|J| \le \sum_{n}|I_n| \in \Lambda(I)</script><p>从而</p>
+<script type="math/tex; mode=display">
+|J| \le \lambda(I)</script><p>我们选择$J_n$为闭区间列，且$|J_n| \to |I| $可得</p>
+<script type="math/tex; mode=display">
+|I| \le \lambda(I)</script><p>最后证明$\mu$可测的子集族全体构成$\sigma$代数</p>
+<h4 id="Theorem-2"><a href="#Theorem-2" class="headerlink" title="Theorem 2"></a>Theorem 2</h4><script type="math/tex; mode=display">
+令\mu是全集\Omega上的测度(外测度)，那么\Sigma上全体\mu可测的子集构成的子集族{\Sigma}^{\mu}为\sigma代数,
+\mu在{\Sigma}^{\mu}上\sigma可加\\
+i.e. \mu是{\Sigma}^{\mu}上的测度</script><p>证明：</p>
+<p>这里使用$\lambda -\pi$系方法证明，先验证几条有用的性质：</p>
+<script type="math/tex; mode=display">
+(i) \Omega \in {\Sigma}^\mu</script><p>这是显然的，根据定义即可验证。</p>
+<script type="math/tex; mode=display">
+(ii)如果A\in {\Sigma}^\mu，那么A^C \in {\Sigma}^\mu</script><p>这个事实依旧显然。</p>
+<script type="math/tex; mode=display">
+(iii)如果A_1,A_2\in {\Sigma}^\mu，那么A_1 \bigcup A_2 \in {\Sigma}^\mu</script><p>令$B\in \Omega$，那么</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+\mu(B) 
+&= \mu(B\bigcap A_1) +\mu(B\bigcap A_1^C)\\
+&=\mu(B\bigcap A_1) +\mu((B\bigcap A_1^C)\bigcap A_2) +\mu((B\bigcap A_1^C)\bigcap A_2^C)\\
+&\ge \mu(B\bigcap(A_1 \bigcup A_2) ) +  \mu(B\bigcap(A_1\bigcup A_2)^C)
+\end{aligned}</script><p>这里解释下最后一个不等号，注意</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+B\bigcap(A_1 \bigcup A_2) 
+&=(B\bigcap A_1) \bigcup (B\bigcap A_2) \\
+&=(B\bigcap A_1) \bigcup (B\bigcap A_2 \bigcap A_1^C)
+\end{aligned}</script><p>所以</p>
+<script type="math/tex; mode=display">
+\mu(B\bigcap(A_1 \bigcup A_2) ) \le \mu(B\bigcap A_1) +\mu (B\bigcap A_2 \bigcap A_1^C)</script><p>因此</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+\mu(B\bigcap(A_1 \bigcup A_2) ) +  \mu(B\bigcap(A_1\bigcup A_2)^C)
+&\le  \mu(B\bigcap A_1) +\mu (B\bigcap A_2 \bigcap A_1^C)+ \mu(B\bigcap(A_1\bigcup A_2)^C)\\
+&=\mu(B)
+\end{aligned}</script><p>利用数学归纳法和结论(iii)可得</p>
+<script type="math/tex; mode=display">
+如果A_1,...,A_n \in {\Sigma}^{\mu}，那么A_1\bigcup ...\bigcup A_n \in {\Sigma}^{\mu}</script><p>利用结论(ii)和(iii)可得</p>
+<script type="math/tex; mode=display">
+如果A_1,...,A_n \in {\Sigma}^{\mu}，那么A_1\bigcap ...\bigcap A_n \in {\Sigma}^{\mu}</script><p>上述结论说明，</p>
+<script type="math/tex; mode=display">
+{\Sigma}^{\mu}是一个\pi系</script><p>由$\lambda -\pi$系方法可知，我们只要验证${\Sigma}^{\mu}$是一个$\lambda$系即可，显然$\lambda$系的前两个性质满足，只要验证最后一个性质即可。</p>
+<p>首先证明如下事实</p>
+<script type="math/tex; mode=display">
+(iv)如果\{A_j\}_{j=1}^{\infty}是{\Sigma}^{\mu}中一个不相交的序列并且B\subset \Omega，\\
+那么\mu(B\bigcap (\bigcup_{j=1}^{\infty}A_j ))=\sum_{j=1}^{\infty} \mu(B\bigcap A_j )</script><p>证：</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+\mu(B\bigcap (\bigcup_{j=1}^{n}A_j ))
+&=\mu(B\bigcap (\bigcup_{j=1}^{n}A_j )\bigcap (\bigcup_{j=1}^{n-1}A_j )) +
+\mu(B\bigcap (\bigcup_{j=1}^{n}A_j )\bigcap (\bigcup_{j=1}^{n-1}A_j )^C)\\
+&=\mu(B\bigcap (\bigcup_{j=1}^{n-1}A_j )) +\mu(B\bigcap A_n)\\
+&=\mu(B\bigcap (\bigcup_{j=1}^{n-2}A_j ))+\mu(B\bigcap A_{n-1}) +\mu(B\bigcap A_n)\\
+&=...\\
+&=\sum_{j=1}^n \mu(B\bigcap A_j)
+\end{aligned}</script><p>注意到</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+\mu(B\bigcap (\bigcup_{j=1}^{\infty}A_j ))
+&\ge \mu(B\bigcap (\bigcup_{j=1}^{n}A_j ))\\
+&=\sum_{j=1}^n \mu(B\bigcap A_j)
+\end{aligned}</script><p>令$n\to \infty$可得</p>
+<script type="math/tex; mode=display">
+\mu(B\bigcap (\bigcup_{j=1}^{\infty}A_j ))
+\ge \sum_{j=1}^\infty \mu(B\bigcap A_j)</script><p>由(外)测度的性质可知</p>
+<script type="math/tex; mode=display">
+\mu(B\bigcap (\bigcup_{j=1}^{\infty}A_j ))
+\le \sum_{j=1}^\infty \mu(B\bigcap A_j)</script><p>那么</p>
+<script type="math/tex; mode=display">
+\mu(B\bigcap (\bigcup_{j=1}^{\infty}A_j ))
+= \sum_{j=1}^\infty \mu(B\bigcap A_j)</script><p>利用上述结论验证$\lambda$系定义的最后一点</p>
+<script type="math/tex; mode=display">
+(v)如果\{A_j\}_{j=1}^{\infty}\subset {\Sigma}^{\mu}中一个不相交的序列，\\
+那么\bigcup_{j=1}^{\infty}A_j  \in {\Sigma}^{\mu}</script><p>取$B\subset \Omega​$，那么</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+\mu(B\bigcap (\bigcup_{j=1}^{\infty}A_j ))+\mu(B\bigcap (\bigcup_{j=1}^{\infty}A_j )^C)
+
+&=\sum_{j=1}^n \mu(B\bigcap A_j)+\sum_{j=n+1}^\infty \mu(B\bigcap A_j)+\mu(B\bigcap (\bigcup_{j=1}^{\infty}A_j )^C)\\
+&\le \sum_{j=1}^n \mu(B\bigcap A_j)+\sum_{j=n+1}^\infty \mu(B\bigcap A_j)+\mu(B\bigcap (\bigcup_{j=1}^{n}A_j )^C) \\
+&=\mu(B\bigcap (\bigcup_{j=1}^{n}A_j ))+\mu(B\bigcap (\bigcup_{j=1}^{n}A_j )^C)+\sum_{j=n+1}^\infty \mu(B\bigcap A_j)\\
+&=\mu(B)+\sum_{j=n+1}^\infty \mu(B\bigcap A_j)
+\end{aligned}</script><p>如果$\sum_{j=1}^\infty \mu(B\bigcap A_j)&lt;\infty$，那么令$n\to \infty$可得</p>
+<script type="math/tex; mode=display">
+\mu(B) \ge \mu(B\bigcap (\bigcup_{j=1}^{\infty}A_j ))+\mu(B\bigcap (\bigcup_{j=1}^{\infty}A_j )^C)</script><p>如果$\sum_{j=1}^\infty \mu(B\bigcap A_j)=\infty​$，那么</p>
+<script type="math/tex; mode=display">
+\mu(B) \ge \mu(B\bigcap (\bigcup_{j=1}^{\infty}A_j ))= \sum_{j=1}^\infty \mu(B\bigcap A_j)=\infty</script><p>从而</p>
+<script type="math/tex; mode=display">
+\mu(B) \ge \mu(B\bigcap (\bigcup_{j=1}^{\infty}A_j ))+\mu(B\bigcap (\bigcup_{j=1}^{\infty}A_j )^C)</script><p>结合以上几点可得</p>
+<script type="math/tex; mode=display">
+\bigcup_{j=1}^{\infty} A_j \in {\Sigma}^{\mu}</script><p>结论(i),(ii),(v)推出${\Sigma}^{\mu}​$是$\lambda​$系，从而</p>
+<script type="math/tex; mode=display">
+{\Sigma}^{\mu}是一个\sigma代数</script><p>结论(iv)推出$\mu$在${\Sigma}^{\mu}$上$\sigma​$可加。</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">Doraemonzzz</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="http://doraemonzzz.com/2018/11/24/%E5%8F%B0%E5%A4%A7%E5%AE%9E%E5%88%86%E6%9E%90%E5%8D%95%E5%85%83%2011%20%E5%A4%96%E6%B5%8B%E5%BA%A6%202/">http://doraemonzzz.com/2018/11/24/%E5%8F%B0%E5%A4%A7%E5%AE%9E%E5%88%86%E6%9E%90%E5%8D%95%E5%85%83%2011%20%E5%A4%96%E6%B5%8B%E5%BA%A6%202/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://doraemonzzz.com" target="_blank">Doraemonzzz</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E5%AE%9E%E5%88%86%E6%9E%90/">实分析</a></div><div class="post_share"><div class="social-share" data-image="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2018/11/24/%E5%8F%B0%E5%A4%A7%E5%AE%9E%E5%88%86%E6%9E%90%E5%8D%95%E5%85%83%2012%20%E5%A4%96%E6%B5%8B%E5%BA%A6%203/"><img class="prev-cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">台大实分析单元 12 外测度 3</div></div></a></div><div class="next-post pull-right"><a href="/2018/11/20/%E5%8F%B0%E5%A4%A7%E5%AE%9E%E5%88%86%E6%9E%90%E5%8D%95%E5%85%83%2010%20%E5%A4%96%E6%B5%8B%E5%BA%A6%201/"><img class="next-cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">台大实分析单元 10 外测度 1</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span> 相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2018/11/19/台大实分析Unit 1习题解析/" title="台大实分析Unit 1习题解析"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2018-11-19</div><div class="title">台大实分析Unit 1习题解析</div></div></a></div><div><a href="/2018/11/19/台大实分析Unit 2习题解析/" title="台大实分析Unit 2习题解析"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2018-11-19</div><div class="title">台大实分析Unit 2习题解析</div></div></a></div><div><a href="/2018/10/02/台大实分析单元 1 Introduction/" title="台大实分析单元 1 Introduction"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2018-10-02</div><div class="title">台大实分析单元 1 Introduction</div></div></a></div><div><a href="/2018/11/20/台大实分析单元 10 外测度 1/" title="台大实分析单元 10 外测度 1"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2018-11-20</div><div class="title">台大实分析单元 10 外测度 1</div></div></a></div><div><a href="/2018/11/24/台大实分析单元 12 外测度 3/" title="台大实分析单元 12 外测度 3"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2018-11-24</div><div class="title">台大实分析单元 12 外测度 3</div></div></a></div><div><a href="/2018/12/02/台大实分析单元 13 外测度 4/" title="台大实分析单元 13 外测度 4"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2018-12-02</div><div class="title">台大实分析单元 13 外测度 4</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="card-info-avatar is-center"><img class="avatar-img" src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/><div class="author-info__name">Doraemonzzz</div><div class="author-info__description">个人博客，主要记录有关机器学习，数学以及计算机科学的笔记</div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">610</div></a></div><div class="card-info-data-item is-center"><a href="/tags/"><div class="headline">标签</div><div class="length-num">59</div></a></div><div class="card-info-data-item is-center"><a href="/categories/"><div class="headline">分类</div><div class="length-num">23</div></a></div></div><a class="button--animated" id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/Doraemonzzz" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="/doraemon_zzz@163.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn card-announcement-animation"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#Remark"><span class="toc-number">1.</span> <span class="toc-text">Remark</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E4%BE%8B-1"><span class="toc-number">1.1.</span> <span class="toc-text">例 1</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Lebesgue-outer-measure-on-mathbb-R"><span class="toc-number">2.</span> <span class="toc-text">Lebesgue(outer measure) on $\mathbb R$</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Lemma-1"><span class="toc-number">3.</span> <span class="toc-text">Lemma 1</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Proposition-1"><span class="toc-number">4.</span> <span class="toc-text">Proposition 1</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Theorem-2"><span class="toc-number">5.</span> <span class="toc-text">Theorem 2</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2021/06/06/2021-6-6-%E7%AE%97%E6%B3%95%E6%A6%82%E8%AE%BA(DPV)%E4%B9%A0%E9%A2%98%E8%A7%A3%E7%AD%94%E2%80%94%E2%80%94%E7%AC%AC3%E7%AB%A0-%E5%9B%BE%E7%9A%84%E5%88%86%E8%A7%A3/" title="算法概论(DPV)习题解答——第3章 图的分解"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="算法概论(DPV)习题解答——第3章 图的分解"/></a><div class="content"><a class="title" href="/2021/06/06/2021-6-6-%E7%AE%97%E6%B3%95%E6%A6%82%E8%AE%BA(DPV)%E4%B9%A0%E9%A2%98%E8%A7%A3%E7%AD%94%E2%80%94%E2%80%94%E7%AC%AC3%E7%AB%A0-%E5%9B%BE%E7%9A%84%E5%88%86%E8%A7%A3/" title="算法概论(DPV)习题解答——第3章 图的分解">算法概论(DPV)习题解答——第3章 图的分解</a><time datetime="2021-06-06T14:35:00.000Z" title="发表于 2021-06-06 22:35:00">2021-06-06</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/06/06/2021-6-6-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E7%AC%AC5%E7%AB%A0-%E4%B9%A0%E9%A2%98%E8%A7%A3%E6%9E%90/" title="深入理解计算机系统 第5章 习题解析"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="深入理解计算机系统 第5章 习题解析"/></a><div class="content"><a class="title" href="/2021/06/06/2021-6-6-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E7%AC%AC5%E7%AB%A0-%E4%B9%A0%E9%A2%98%E8%A7%A3%E6%9E%90/" title="深入理解计算机系统 第5章 习题解析">深入理解计算机系统 第5章 习题解析</a><time datetime="2021-06-06T07:23:00.000Z" title="发表于 2021-06-06 15:23:00">2021-06-06</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/06/05/2021-6-5-Stanford-Compiler-PA5%E7%BF%BB%E8%AF%91/" title="Stanford Compiler PA5翻译"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Stanford Compiler PA5翻译"/></a><div class="content"><a class="title" href="/2021/06/05/2021-6-5-Stanford-Compiler-PA5%E7%BF%BB%E8%AF%91/" title="Stanford Compiler PA5翻译">Stanford Compiler PA5翻译</a><time datetime="2021-06-05T06:12:00.000Z" title="发表于 2021-06-05 14:12:00">2021-06-05</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/06/04/2021-6-4-Stanford-Compiler-PA4%E7%BF%BB%E8%AF%91/" title="Stanford Compiler PA4翻译"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Stanford Compiler PA4翻译"/></a><div class="content"><a class="title" href="/2021/06/04/2021-6-4-Stanford-Compiler-PA4%E7%BF%BB%E8%AF%91/" title="Stanford Compiler PA4翻译">Stanford Compiler PA4翻译</a><time datetime="2021-06-03T16:17:00.000Z" title="发表于 2021-06-04 00:17:00">2021-06-04</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/06/03/2021-6-3-%E5%B7%A7%E5%A6%99%E7%9A%84Y%E8%BF%90%E7%AE%97%E7%AC%A6/" title="巧妙的Y运算符"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="巧妙的Y运算符"/></a><div class="content"><a class="title" href="/2021/06/03/2021-6-3-%E5%B7%A7%E5%A6%99%E7%9A%84Y%E8%BF%90%E7%AE%97%E7%AC%A6/" title="巧妙的Y运算符">巧妙的Y运算符</a><time datetime="2021-06-03T00:54:00.000Z" title="发表于 2021-06-03 08:54:00">2021-06-03</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2021 By Doraemonzzz</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><div class="js-pjax"><script>if (!window.MathJax) {
+  window.MathJax = {
+    loader: {
+      source: {
+        '[tex]/amsCd': '[tex]/amscd'
+      }
+    },
+    tex: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]],
+      tags: 'ams'
+    },
+    options: {
+      renderActions: {
+        findScript: [10, doc => {
+          for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+            const display = !!node.type.match(/; *mode=display/)
+            const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+            const text = document.createTextNode('')
+            node.parentNode.replaceChild(text, node)
+            math.start = {node: text, delim: '', n: 0}
+            math.end = {node: text, delim: '', n: 0}
+            doc.math.push(math)
+          }
+        }, ''],
+        addClass: [200,() => {
+          document.querySelectorAll('mjx-container:not([display=\'true\']').forEach( node => {
+            const target = node.parentNode
+            if (!target.classList.contains('has-jax')) {
+              target.classList.add('mathjax-overflow')
+            }
+          })
+        }, '', false]
+      }
+    }
+  }
+  
+  const script = document.createElement('script')
+  script.src = 'https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js'
+  script.id = 'MathJax-script'
+  script.async = true
+  document.head.appendChild(script)
+} else {
+  MathJax.startup.document.state(0)
+  MathJax.texReset()
+  MathJax.typeset()
+}</script></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

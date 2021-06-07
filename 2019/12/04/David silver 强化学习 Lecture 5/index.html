@@ -1,0 +1,385 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>David silver 强化学习 Lecture 5 | Doraemonzzz</title><meta name="keywords" content="David silver Reinforcement Learning"><meta name="author" content="Doraemonzzz"><meta name="copyright" content="Doraemonzzz"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="课程主页：https:&#x2F;&#x2F;www.davidsilver.uk&#x2F;teaching&#x2F; 这里回顾David silver 强化学习 Lecture 5的课程内容，这一讲简单介绍了不基于模型的控制。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="David silver 强化学习 Lecture 5">
+<meta property="og:url" content="http://doraemonzzz.com/2019/12/04/David%20silver%20%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%20Lecture%205/index.html">
+<meta property="og:site_name" content="Doraemonzzz">
+<meta property="og:description" content="课程主页：https:&#x2F;&#x2F;www.davidsilver.uk&#x2F;teaching&#x2F; 这里回顾David silver 强化学习 Lecture 5的课程内容，这一讲简单介绍了不基于模型的控制。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg">
+<meta property="article:published_time" content="2019-12-04T06:45:00.000Z">
+<meta property="article:modified_time" content="2021-01-26T19:10:15.219Z">
+<meta property="article:author" content="Doraemonzzz">
+<meta property="article:tag" content="David silver Reinforcement Learning">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="http://doraemonzzz.com/2019/12/04/David%20silver%20%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%20Lecture%205/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"prismjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    jQuery: 'https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js',
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+    },
+    fancybox: {
+      js: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isanchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'David silver 强化学习 Lecture 5',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2021-01-27 03:10:15'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    })(window)</script><meta name="generator" content="Hexo 5.4.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="author-avatar"><img class="avatar-img" src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">文章</div><div class="length-num">610</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">标签</div><div class="length-num">59</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/categories/"><div class="headline">分类</div><div class="length-num">23</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">Doraemonzzz</a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">David silver 强化学习 Lecture 5</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2019-12-04T06:45:00.000Z" title="发表于 2019-12-04 14:45:00">2019-12-04</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2021-01-26T19:10:15.219Z" title="更新于 2021-01-27 03:10:15">2021-01-27</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/Reinforcement-Learning/">Reinforcement Learning</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="David silver 强化学习 Lecture 5"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p>课程主页：<a target="_blank" rel="noopener" href="https://www.davidsilver.uk/teaching/">https://www.davidsilver.uk/teaching/</a></p>
+<p>这里回顾David silver 强化学习 Lecture 5的课程内容，这一讲简单介绍了不基于模型的控制。</p>
+<span id="more"></span>
+<h4 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h4><p>上一讲介绍不基于模型的预测，即对未知的MDP预测其价值函数；这一讲介绍不基于模型的控制，即对于未知的MDP优化其价值函数。</p>
+<h4 id="On-Policy-Monte-Carlo-Control"><a href="#On-Policy-Monte-Carlo-Control" class="headerlink" title="On-Policy Monte-Carlo Control"></a>On-Policy Monte-Carlo Control</h4><ul>
+<li><p>关于$V(s)$做策略提升需要MDP模型：</p>
+<script type="math/tex; mode=display">
+\pi^{\prime}(s)=\underset{a \in \mathcal{A}}{\operatorname{argmax}} \mathcal{R}_{s}^{a}+\mathcal{P}_{s s^{\prime}}^{a} V\left(s^{\prime}\right)</script></li>
+<li><p>关于$Q(s,a)$做策略提升不需要模型</p>
+<script type="math/tex; mode=display">
+\pi^{\prime}(s)=\underset{a \in \mathcal{A}}{\operatorname{argmax}} Q(s, a)</script></li>
+</ul>
+<h5 id="epsilon-贪婪搜索"><a href="#epsilon-贪婪搜索" class="headerlink" title="$\epsilon-$贪婪搜索"></a>$\epsilon-$贪婪搜索</h5><p>这里老师举了一个例子：</p>
+<ul>
+<li>有两扇门在我们面前</li>
+<li>打开左门得到$0$奖励，$V(\text{left})=0$</li>
+<li>打开右门得到$+1$奖励，$V(\text{right})=+1$</li>
+<li>打开右门得到$+3$奖励，$V(\text{right})=+2$</li>
+<li>打开右门得到$+2$奖励，$V(\text{right})=+2$</li>
+<li>我们是否选择了最好的门呢?</li>
+</ul>
+<p>上述问题的答案显然是否定的，但是如果按照通常的方法则会一直选右门，为了解决这个问题，可以使用$\epsilon-$贪婪搜索：</p>
+<ul>
+<li>$\epsilon-$贪婪搜索是确保连续搜索的最简单方法</li>
+<li>思路是以非零概率尝试所有$m$个动作</li>
+<li>以$1-\epsilon$的概率选择贪婪动作</li>
+<li>有$\epsilon$的概率随机选择一个动作</li>
+</ul>
+<script type="math/tex; mode=display">
+\pi(a | s)=\left\{\begin{array}{ll}{\epsilon / m+1-\epsilon} & {\text { if } a^{*}=\underset{a \in \mathcal{A}}{\operatorname{argmax}} Q(s, a)} \\ {\epsilon / m} & {\text { otherwise }}\end{array}\right.</script><h5 id="epsilon-贪婪策略提升"><a href="#epsilon-贪婪策略提升" class="headerlink" title="$\epsilon-$贪婪策略提升"></a>$\epsilon-$贪婪策略提升</h5><p>关于$\epsilon-$贪婪搜索有如下定理：</p>
+<p><strong>定理</strong></p>
+<p>对于任意$\epsilon-$贪婪策略$\pi$，关于$q_\pi$的$\epsilon-$贪婪策略$\pi ‘$是一个提升，$v_{\pi^{\prime}}(s) \geq v_{\pi}(s)$</p>
+<p>证明：</p>
+<script type="math/tex; mode=display">
+\begin{aligned} q_{\pi}\left(s, \pi^{\prime}(s)\right) &=\sum_{a \in \mathcal{A}} \pi^{\prime}(a | s) q_{\pi}(s, a) \\ &=\epsilon / m \sum_{a \in \mathcal{A}} q_{\pi}(s, a)+(1-\epsilon) \max _{a \in \mathcal{A}} q_{\pi}(s, a) \\ & \geq \epsilon / m \sum_{a \in \mathcal{A}} q_{\pi}(s, a)+(1-\epsilon) \sum_{a \in \mathcal{A}} \frac{\pi(a | s)-\epsilon / m}{1-\epsilon} q_{\pi}(s, a) \\ &=\sum_{a \in \mathcal{A}} \pi(a | s) q_{\pi}(s, a)=v_{\pi}(s) \end{aligned}</script><p>其中不等号是因为最大值大于等于所有值的加权和。</p>
+<p>由上式可得</p>
+<script type="math/tex; mode=display">
+v_{\pi^{\prime}}(s) \geq v_{\pi}(s)</script><h5 id="GLIE"><a href="#GLIE" class="headerlink" title="GLIE"></a>GLIE</h5><p>GLIE的全称为Greedy in the Limit with Infinite Exploration</p>
+<ul>
+<li><p>所有状态-动作对都经过了无数次探索，</p>
+<script type="math/tex; mode=display">
+\lim _{k \rightarrow \infty} N_{k}(s, a)=\infty</script></li>
+<li><p>策略收敛到贪婪策略</p>
+<script type="math/tex; mode=display">
+\lim _{k \rightarrow \infty} \pi_{k}(a | s)=1\left(a=\underset{a^{\prime} \in \mathcal{A}}{\operatorname{argmax}} Q_{k}\left(s, a^{\prime}\right)\right)</script></li>
+</ul>
+<p>例如，$\epsilon-$贪婪是GLIE如果$\epsilon_k =\frac 1 k$</p>
+<h5 id="GLIE-MC控制"><a href="#GLIE-MC控制" class="headerlink" title="GLIE MC控制"></a>GLIE MC控制</h5><ul>
+<li><p>利用$\pi:\left\{S_{1}, A_{1}, R_{2}, \ldots, S_{T}\right\} \sim \pi$采样$k$幕</p>
+</li>
+<li><p>在每一幕中，对每个状态$S_t$和动作$A_t$，</p>
+<script type="math/tex; mode=display">
+\begin{array}{l}{N\left(S_{t}, A_{t}\right) \leftarrow N\left(S_{t}, A_{t}\right)+1} \\ {Q\left(S_{t}, A_{t}\right) \leftarrow Q\left(S_{t}, A_{t}\right)+\frac{1}{N\left(S_{t}, A_{t}\right)}\left(G_{t}-Q\left(S_{t}, A_{t}\right)\right)}\end{array}</script></li>
+<li><p>基于新的动作价值函数改进策略</p>
+<script type="math/tex; mode=display">
+\begin{array}{l}{\epsilon \leftarrow 1 / k} \\ {\pi \leftarrow \epsilon-g \operatorname{reed} y(Q)}\end{array}</script></li>
+</ul>
+<p>上述方法的有效性由如下定理保证：</p>
+<p><strong>定理</strong></p>
+<p>GLIE MC收敛到最优动作价值函数，$Q(s, a) \rightarrow q_{*}(s, a)$</p>
+<h4 id="On-Policy-Temporal-Difference-Learning"><a href="#On-Policy-Temporal-Difference-Learning" class="headerlink" title="On-Policy Temporal-Difference Learning"></a>On-Policy Temporal-Difference Learning</h4><ul>
+<li>自然的想法：在我们的循环中使用TD而不是MC<ul>
+<li>将TD应用于$Q(S, A)$</li>
+<li>使用$\epsilon-$贪婪策略提升</li>
+<li>实时更新</li>
+</ul>
+</li>
+</ul>
+<h5 id="text-Sarsa-lambda"><a href="#text-Sarsa-lambda" class="headerlink" title="$\text{Sarsa}(\lambda)$"></a>$\text{Sarsa}(\lambda)$</h5><p>一个具体例子是$\text{Sarsa}(\lambda)$，思路如下：</p>
+<p><img src="https://github.com/Doraemonzzz/md-photo/blob/master/David%20Silver/Lecture%205/2019120401.jpg?raw=true" alt=""></p>
+<script type="math/tex; mode=display">
+Q(S, A) \leftarrow Q(S, A)+\alpha\left(R+\gamma Q\left(S^{\prime}, A^{\prime}\right)-Q(S, A)\right)</script><p>伪代码为：</p>
+<p><img src="https://github.com/Doraemonzzz/md-photo/blob/master/David%20Silver/Lecture%205/2019120402.jpg?raw=true" alt=""></p>
+<h5 id="Sarsa的收敛性"><a href="#Sarsa的收敛性" class="headerlink" title="Sarsa的收敛性"></a>Sarsa的收敛性</h5><p>Sarsa的收敛性由如下定理保证：</p>
+<p><strong>定理</strong></p>
+<p>Sarsa在如下条件下收敛到最优动作价值函数$Q(s, a) \rightarrow q_{*}(s, a)$</p>
+<ul>
+<li><p>策略$\pi_t(a|s)$是GLIE序列</p>
+</li>
+<li><p>步长大小$\alpha_t$满足：</p>
+<script type="math/tex; mode=display">
+\begin{array}{l}{\sum_{t=1}^{\infty} \alpha_{t}=\infty} \\ {\sum_{t=1}^{\infty} \alpha_{t}^{2}<\infty}\end{array}</script></li>
+</ul>
+<h5 id="n-步Sarsa"><a href="#n-步Sarsa" class="headerlink" title="$n$步Sarsa"></a>$n$步Sarsa</h5><ul>
+<li><p>考虑如下$n$步回报：</p>
+<script type="math/tex; mode=display">
+\begin{aligned}{n=1}  &&(\text{Sarsa})  &&G_{t}^{(1)}=R_{t+1}+\gamma Q\left(S_{t+1}\right) \\ {n=2} &&  &&{G_{t}^{(2)}=R_{t+1}+\gamma R_{t+2}+\gamma^{2} Q\left(S_{t+2}\right)} \\{\vdots}  && &&{\vdots} \\ {n=\infty} && (\text{MC})  && G_{t}^{(\infty)}=R_{t+1}+\gamma R_{t+2}+\ldots+\gamma^{T-1} R_{T}\end{aligned}</script></li>
+<li><p>定义$n$步回报</p>
+<script type="math/tex; mode=display">
+G_{t}^{(n)}=R_{t+1}+\gamma R_{t+2}+\ldots+\gamma^{n-1} R_{t+n}+\gamma^{n} Q\left(S_{t+n}\right)</script></li>
+<li><p>$n$步Sarsa根据$n$步Q回报更新$Q(s,a)$</p>
+<script type="math/tex; mode=display">
+Q\left(S_{t}, A_{t}\right) \leftarrow Q\left(S_{t}, A_{t}\right)+\alpha\left(q_{t}^{(n)}-Q\left(S_{t}, A_{t}\right)\right)</script></li>
+</ul>
+<h5 id="text-Sarsa-lambda-的前向视角"><a href="#text-Sarsa-lambda-的前向视角" class="headerlink" title="$\text{Sarsa}(\lambda)$的前向视角"></a>$\text{Sarsa}(\lambda)$的前向视角</h5><p>$\text{Sarsa}(\lambda)$和$\text{TD}(\lambda)$的思路一致，可以用下图表示：</p>
+<p><img src="https://github.com/Doraemonzzz/md-photo/blob/master/David%20Silver/Lecture%205/2019120403.jpg?raw=true" alt=""></p>
+<ul>
+<li><p>$q^{\lambda}$回报结合了所有$n$步$Q$回报$q_t^{(n)}$</p>
+</li>
+<li><p>使用权重$(1-\lambda) \lambda^{n-1}$</p>
+<script type="math/tex; mode=display">
+q_{t}^{\lambda}=(1-\lambda) \sum_{n=1}^{\infty} \lambda^{n-1} q_{t}^{(n)}</script></li>
+<li><p>$\text{Sarsa}(\lambda)$的前向视角（Forward-view）</p>
+<script type="math/tex; mode=display">
+Q\left(S_{t}, A_{t}\right) \leftarrow Q\left(S_{t}, A_{t}\right)+\alpha\left(q_{t}^{\lambda}-Q\left(S_{t}, A_{t}\right)\right)</script></li>
+</ul>
+<h5 id="text-Sarsa-lambda-的反向视角"><a href="#text-Sarsa-lambda-的反向视角" class="headerlink" title="$\text{Sarsa}(\lambda)$的反向视角"></a>$\text{Sarsa}(\lambda)$的反向视角</h5><ul>
+<li>类似$\text{TD}(\lambda)$，首先定义合格轨迹：</li>
+</ul>
+<script type="math/tex; mode=display">
+\begin{array}{l}{E_{0}(s)=0} \\ {E_{t}(s)=\gamma \lambda E_{t-1}(s)+\mathbf{1}\left(S_{t}=s,A_t=a\right)}\end{array}</script><ul>
+<li><p>对于每个状态$s$和动作$a$更新$Q(s,a)$</p>
+</li>
+<li><p>更新项正比于TD-误差$\delta_t$和合格轨迹$E_t(s,a)$</p>
+<script type="math/tex; mode=display">
+\begin{aligned} \delta_{t} &=R_{t+1}+\gamma Q\left(S_{t+1}, A_{t+1}\right)-Q\left(S_{t}, A_{t}\right) \\ Q(s, a) & \leftarrow Q(s, a)+\alpha \delta_{t} E_{t}(s, a) \end{aligned}</script></li>
+</ul>
+<h5 id="text-Sarsa-lambda-算法"><a href="#text-Sarsa-lambda-算法" class="headerlink" title="$\text{Sarsa}(\lambda)$算法"></a>$\text{Sarsa}(\lambda)$算法</h5><p><img src="https://github.com/Doraemonzzz/md-photo/blob/master/David%20Silver/Lecture%205/2019120404.jpg?raw=true" alt=""></p>
+<h4 id="Off-Policy-Learning"><a href="#Off-Policy-Learning" class="headerlink" title="Off-Policy Learning"></a>Off-Policy Learning</h4><ul>
+<li><p>在遵循策略$\mu(a|s)$</p>
+<script type="math/tex; mode=display">
+\left\{S_{1}, A_{1}, R_{2}, \ldots, S_{T}\right\} \sim \mu</script><p>的条件下，通过评估目标策略$\pi(a|s)$以计算$v_\pi(s)$或$q_\pi(s,a)$</p>
+</li>
+<li><p>为什么这很重要？</p>
+<ul>
+<li>通过观察人类或其他智能体学习</li>
+<li>重用旧策略$\pi_{1}, \pi_{2}, \ldots, \pi_{t-1}$带来的经验</li>
+<li>在遵循探索性策略的同时学习最佳策略</li>
+<li>遵循一项策略时了解多种策略</li>
+</ul>
+</li>
+</ul>
+<h5 id="重要性抽样"><a href="#重要性抽样" class="headerlink" title="重要性抽样"></a>重要性抽样</h5><script type="math/tex; mode=display">
+\begin{aligned} \mathbb{E}_{X \sim P}[f(X)] &=\sum P(X) f(X) \\ &=\sum Q(X) \frac{P(X)}{Q(X)} f(X) \\ &=\mathbb{E}_{X \sim Q}\left[\frac{P(X)}{Q(X)} f(X)\right] \end{aligned}</script><h5 id="Off-Policy-MC的重要性抽样"><a href="#Off-Policy-MC的重要性抽样" class="headerlink" title="Off-Policy MC的重要性抽样"></a>Off-Policy MC的重要性抽样</h5><ul>
+<li><p>通过$\mu$的回报评估$\pi$</p>
+</li>
+<li><p>根据策略之间的相似性得出权重回报$G_t$</p>
+</li>
+<li><p>在整个幕中乘以重要性抽样校正</p>
+<script type="math/tex; mode=display">
+G_{t}^{\pi / \mu}=\frac{\pi\left(A_{t} | S_{t}\right)}{\mu\left(A_{t} | S_{t}\right)} \frac{\pi\left(A_{t+1} | S_{t+1}\right)}{\mu\left(A_{t+1} | S_{t+1}\right)} \cdots \frac{\pi\left(A_{T} | S_{T}\right)}{\mu\left(A_{T} | S_{T}\right)} G_{t}</script></li>
+<li><p>根据校正回报更新价值</p>
+<script type="math/tex; mode=display">
+V\left(S_{t}\right) \leftarrow V\left(S_{t}\right)+\alpha\left(G_{t}^{\pi / \mu}-V\left(S_{t}\right)\right)</script></li>
+<li><p>当$\pi$是非零但$\mu$是零时无法使用</p>
+</li>
+<li><p>重要性抽样可以大幅减少方差</p>
+</li>
+</ul>
+<h5 id="Off-Policy-TD的重要性抽样"><a href="#Off-Policy-TD的重要性抽样" class="headerlink" title="Off-Policy TD的重要性抽样"></a>Off-Policy TD的重要性抽样</h5><ul>
+<li><p>使用$\mu$生成的TD目标来评估$\pi$</p>
+</li>
+<li><p>通过重要性抽样加权TD目标$R+\gamma V\left(S^{\prime}\right)$</p>
+</li>
+<li><p>只需要一次重要性抽样校正</p>
+<script type="math/tex; mode=display">
+\begin{aligned} V\left(S_{t}\right) & \leftarrow V\left(S_{t}\right)+ \alpha\left(\frac{\pi\left(A_{t} | S_{t}\right)}{\mu\left(A_{t} | S_{t}\right)}\left(R_{t+1}+\gamma V\left(S_{t+1}\right)\right)-V\left(S_{t}\right)\right) \end{aligned}</script></li>
+<li><p>比MC重要性抽样的方差小很多</p>
+</li>
+<li><p>策略只需要在一步中相似</p>
+</li>
+</ul>
+<h5 id="Q-Learning"><a href="#Q-Learning" class="headerlink" title="Q-Learning"></a>Q-Learning</h5><ul>
+<li><p>现在我们考行Off-Policy的动作价值$Q(s,a)$的学习</p>
+</li>
+<li><p>不需要重要性抽样</p>
+</li>
+<li><p>下一个动作根据行为策略选择$A_{t+1} \sim \mu\left(\cdot | S_{t}\right)$</p>
+</li>
+<li><p>但是我们考虑替代性的后续动作$A^{\prime} \sim \pi\left(\cdot | S_{t}\right)$</p>
+</li>
+<li><p>并将$Q\left(S_{t}, A_{t}\right)$更新为替代动作的价值</p>
+<script type="math/tex; mode=display">
+Q\left(S_{t}, A_{t}\right) \leftarrow Q\left(S_{t}, A_{t}\right)+\alpha\left(R_{t+1}+\gamma Q\left(S_{t+1}, A^{\prime}\right)-Q\left(S_{t}, A_{t}\right)\right)</script></li>
+</ul>
+<h5 id="使用Q-Learning进行Off-Policy控制"><a href="#使用Q-Learning进行Off-Policy控制" class="headerlink" title="使用Q-Learning进行Off-Policy控制"></a>使用Q-Learning进行Off-Policy控制</h5><ul>
+<li><p>现在，我们允许动作和目标策略都得到提升</p>
+</li>
+<li><p>目标策略关于$Q(s,a)$贪心</p>
+<script type="math/tex; mode=display">
+\pi\left(S_{t+1}\right)=\underset{a^{\prime}}{\operatorname{argmax}} Q\left(S_{t+1}, a^{\prime}\right)</script></li>
+<li><p>行为策略$\mu$关于$Q(s,a)$是$\epsilon -$贪心</p>
+</li>
+<li><p>那么Q-Learning的目标得到化简：</p>
+<script type="math/tex; mode=display">
+\begin{aligned} & R_{t+1}+\gamma Q\left(S_{t+1}, A^{\prime}\right) \\=& R_{t+1}+\gamma Q\left(S_{t+1}, \underset{a}{\arg \max } Q\left(S_{t+1}, a^{\prime}\right)\right) \\=& R_{t+1}+\max _{a^{\prime}} \gamma Q\left(S_{t+1}, a^{\prime}\right) \end{aligned}</script></li>
+</ul>
+<h5 id="Q-Learning控制算法"><a href="#Q-Learning控制算法" class="headerlink" title="Q-Learning控制算法"></a>Q-Learning控制算法</h5><p>根据之前讨论得到如下算法：</p>
+<p><img src="https://github.com/Doraemonzzz/md-photo/blob/master/David%20Silver/Lecture%205/2019120405.jpg?raw=true" alt=""></p>
+<script type="math/tex; mode=display">
+Q(S, A) \leftarrow Q(S, A)+\alpha\left(R+\gamma \max _{a^{\prime}} Q\left(S^{\prime}, a^{\prime}\right)-Q(S, A)\right)</script><p>上述算法的有效性由如下定理保证：</p>
+<p><strong>定理</strong></p>
+<p>Q-learning控制收敛到最优动作价值函数：$Q(s, a) \rightarrow q_{*}(s, a)$</p>
+<p>完整算法的伪代码如下：</p>
+<p><img src="https://github.com/Doraemonzzz/md-photo/blob/master/David%20Silver/Lecture%205/2019120406.jpg?raw=true" alt=""></p>
+<h4 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h4><h5 id="DP和TD的关系"><a href="#DP和TD的关系" class="headerlink" title="DP和TD的关系"></a>DP和TD的关系</h5><p><img src="https://github.com/Doraemonzzz/md-photo/blob/master/David%20Silver/Lecture%205/2019120407.jpg?raw=true" alt=""></p>
+<p><img src="https://github.com/Doraemonzzz/md-photo/blob/master/David%20Silver/Lecture%205/2019120408.jpg?raw=true" alt=""></p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">Doraemonzzz</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="http://doraemonzzz.com/2019/12/04/David%20silver%20%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%20Lecture%205/">http://doraemonzzz.com/2019/12/04/David%20silver%20%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%20Lecture%205/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://doraemonzzz.com" target="_blank">Doraemonzzz</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/David-silver-Reinforcement-Learning/">David silver Reinforcement Learning</a></div><div class="post_share"><div class="social-share" data-image="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2020/01/14/CS236%20Deep%20Generative%20Models%20Lecture%201/"><img class="prev-cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">CS236 Deep Generative Models Lecture 1</div></div></a></div><div class="next-post pull-right"><a href="/2019/12/03/David%20silver%20%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%20Lecture%204/"><img class="next-cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">David silver 强化学习 Lecture 4</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span> 相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2020/05/24/David silver 强化学习 Easy21/" title="David silver 强化学习 Easy21"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-05-24</div><div class="title">David silver 强化学习 Easy21</div></div></a></div><div><a href="/2020/05/06/David silver 强化学习 Lecture 10/" title="David silver 强化学习 Lecture 10"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-05-06</div><div class="title">David silver 强化学习 Lecture 10</div></div></a></div><div><a href="/2019/11/19/David silver 强化学习 Lecture 1/" title="David silver 强化学习 Lecture 1"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2019-11-19</div><div class="title">David silver 强化学习 Lecture 1</div></div></a></div><div><a href="/2019/11/20/David silver 强化学习 Lecture 2/" title="David silver 强化学习 Lecture 2"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2019-11-20</div><div class="title">David silver 强化学习 Lecture 2</div></div></a></div><div><a href="/2019/12/03/David silver 强化学习 Lecture 4/" title="David silver 强化学习 Lecture 4"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2019-12-03</div><div class="title">David silver 强化学习 Lecture 4</div></div></a></div><div><a href="/2019/12/03/David silver 强化学习 Lecture 3/" title="David silver 强化学习 Lecture 3"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2019-12-03</div><div class="title">David silver 强化学习 Lecture 3</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="card-info-avatar is-center"><img class="avatar-img" src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/><div class="author-info__name">Doraemonzzz</div><div class="author-info__description">个人博客，主要记录有关机器学习，数学以及计算机科学的笔记</div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">610</div></a></div><div class="card-info-data-item is-center"><a href="/tags/"><div class="headline">标签</div><div class="length-num">59</div></a></div><div class="card-info-data-item is-center"><a href="/categories/"><div class="headline">分类</div><div class="length-num">23</div></a></div></div><a class="button--animated" id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/Doraemonzzz" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="/doraemon_zzz@163.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn card-announcement-animation"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BB%8B%E7%BB%8D"><span class="toc-number">1.</span> <span class="toc-text">介绍</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#On-Policy-Monte-Carlo-Control"><span class="toc-number">2.</span> <span class="toc-text">On-Policy Monte-Carlo Control</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#epsilon-%E8%B4%AA%E5%A9%AA%E6%90%9C%E7%B4%A2"><span class="toc-number">2.1.</span> <span class="toc-text">$\epsilon-$贪婪搜索</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#epsilon-%E8%B4%AA%E5%A9%AA%E7%AD%96%E7%95%A5%E6%8F%90%E5%8D%87"><span class="toc-number">2.2.</span> <span class="toc-text">$\epsilon-$贪婪策略提升</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#GLIE"><span class="toc-number">2.3.</span> <span class="toc-text">GLIE</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#GLIE-MC%E6%8E%A7%E5%88%B6"><span class="toc-number">2.4.</span> <span class="toc-text">GLIE MC控制</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#On-Policy-Temporal-Difference-Learning"><span class="toc-number">3.</span> <span class="toc-text">On-Policy Temporal-Difference Learning</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#text-Sarsa-lambda"><span class="toc-number">3.1.</span> <span class="toc-text">$\text{Sarsa}(\lambda)$</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#Sarsa%E7%9A%84%E6%94%B6%E6%95%9B%E6%80%A7"><span class="toc-number">3.2.</span> <span class="toc-text">Sarsa的收敛性</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#n-%E6%AD%A5Sarsa"><span class="toc-number">3.3.</span> <span class="toc-text">$n$步Sarsa</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#text-Sarsa-lambda-%E7%9A%84%E5%89%8D%E5%90%91%E8%A7%86%E8%A7%92"><span class="toc-number">3.4.</span> <span class="toc-text">$\text{Sarsa}(\lambda)$的前向视角</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#text-Sarsa-lambda-%E7%9A%84%E5%8F%8D%E5%90%91%E8%A7%86%E8%A7%92"><span class="toc-number">3.5.</span> <span class="toc-text">$\text{Sarsa}(\lambda)$的反向视角</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#text-Sarsa-lambda-%E7%AE%97%E6%B3%95"><span class="toc-number">3.6.</span> <span class="toc-text">$\text{Sarsa}(\lambda)$算法</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Off-Policy-Learning"><span class="toc-number">4.</span> <span class="toc-text">Off-Policy Learning</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E9%87%8D%E8%A6%81%E6%80%A7%E6%8A%BD%E6%A0%B7"><span class="toc-number">4.1.</span> <span class="toc-text">重要性抽样</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#Off-Policy-MC%E7%9A%84%E9%87%8D%E8%A6%81%E6%80%A7%E6%8A%BD%E6%A0%B7"><span class="toc-number">4.2.</span> <span class="toc-text">Off-Policy MC的重要性抽样</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#Off-Policy-TD%E7%9A%84%E9%87%8D%E8%A6%81%E6%80%A7%E6%8A%BD%E6%A0%B7"><span class="toc-number">4.3.</span> <span class="toc-text">Off-Policy TD的重要性抽样</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#Q-Learning"><span class="toc-number">4.4.</span> <span class="toc-text">Q-Learning</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8Q-Learning%E8%BF%9B%E8%A1%8COff-Policy%E6%8E%A7%E5%88%B6"><span class="toc-number">4.5.</span> <span class="toc-text">使用Q-Learning进行Off-Policy控制</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#Q-Learning%E6%8E%A7%E5%88%B6%E7%AE%97%E6%B3%95"><span class="toc-number">4.6.</span> <span class="toc-text">Q-Learning控制算法</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-number">5.</span> <span class="toc-text">总结</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#DP%E5%92%8CTD%E7%9A%84%E5%85%B3%E7%B3%BB"><span class="toc-number">5.1.</span> <span class="toc-text">DP和TD的关系</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2021/06/06/2021-6-6-%E7%AE%97%E6%B3%95%E6%A6%82%E8%AE%BA(DPV)%E4%B9%A0%E9%A2%98%E8%A7%A3%E7%AD%94%E2%80%94%E2%80%94%E7%AC%AC3%E7%AB%A0-%E5%9B%BE%E7%9A%84%E5%88%86%E8%A7%A3/" title="算法概论(DPV)习题解答——第3章 图的分解"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="算法概论(DPV)习题解答——第3章 图的分解"/></a><div class="content"><a class="title" href="/2021/06/06/2021-6-6-%E7%AE%97%E6%B3%95%E6%A6%82%E8%AE%BA(DPV)%E4%B9%A0%E9%A2%98%E8%A7%A3%E7%AD%94%E2%80%94%E2%80%94%E7%AC%AC3%E7%AB%A0-%E5%9B%BE%E7%9A%84%E5%88%86%E8%A7%A3/" title="算法概论(DPV)习题解答——第3章 图的分解">算法概论(DPV)习题解答——第3章 图的分解</a><time datetime="2021-06-06T14:35:00.000Z" title="发表于 2021-06-06 22:35:00">2021-06-06</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/06/06/2021-6-6-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E7%AC%AC5%E7%AB%A0-%E4%B9%A0%E9%A2%98%E8%A7%A3%E6%9E%90/" title="深入理解计算机系统 第5章 习题解析"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="深入理解计算机系统 第5章 习题解析"/></a><div class="content"><a class="title" href="/2021/06/06/2021-6-6-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E7%AC%AC5%E7%AB%A0-%E4%B9%A0%E9%A2%98%E8%A7%A3%E6%9E%90/" title="深入理解计算机系统 第5章 习题解析">深入理解计算机系统 第5章 习题解析</a><time datetime="2021-06-06T07:23:00.000Z" title="发表于 2021-06-06 15:23:00">2021-06-06</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/06/05/2021-6-5-Stanford-Compiler-PA5%E7%BF%BB%E8%AF%91/" title="Stanford Compiler PA5翻译"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Stanford Compiler PA5翻译"/></a><div class="content"><a class="title" href="/2021/06/05/2021-6-5-Stanford-Compiler-PA5%E7%BF%BB%E8%AF%91/" title="Stanford Compiler PA5翻译">Stanford Compiler PA5翻译</a><time datetime="2021-06-05T06:12:00.000Z" title="发表于 2021-06-05 14:12:00">2021-06-05</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/06/04/2021-6-4-Stanford-Compiler-PA4%E7%BF%BB%E8%AF%91/" title="Stanford Compiler PA4翻译"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Stanford Compiler PA4翻译"/></a><div class="content"><a class="title" href="/2021/06/04/2021-6-4-Stanford-Compiler-PA4%E7%BF%BB%E8%AF%91/" title="Stanford Compiler PA4翻译">Stanford Compiler PA4翻译</a><time datetime="2021-06-03T16:17:00.000Z" title="发表于 2021-06-04 00:17:00">2021-06-04</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/06/03/2021-6-3-%E5%B7%A7%E5%A6%99%E7%9A%84Y%E8%BF%90%E7%AE%97%E7%AC%A6/" title="巧妙的Y运算符"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="巧妙的Y运算符"/></a><div class="content"><a class="title" href="/2021/06/03/2021-6-3-%E5%B7%A7%E5%A6%99%E7%9A%84Y%E8%BF%90%E7%AE%97%E7%AC%A6/" title="巧妙的Y运算符">巧妙的Y运算符</a><time datetime="2021-06-03T00:54:00.000Z" title="发表于 2021-06-03 08:54:00">2021-06-03</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2021 By Doraemonzzz</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><div class="js-pjax"><script>if (!window.MathJax) {
+  window.MathJax = {
+    loader: {
+      source: {
+        '[tex]/amsCd': '[tex]/amscd'
+      }
+    },
+    tex: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]],
+      tags: 'ams'
+    },
+    options: {
+      renderActions: {
+        findScript: [10, doc => {
+          for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+            const display = !!node.type.match(/; *mode=display/)
+            const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+            const text = document.createTextNode('')
+            node.parentNode.replaceChild(text, node)
+            math.start = {node: text, delim: '', n: 0}
+            math.end = {node: text, delim: '', n: 0}
+            doc.math.push(math)
+          }
+        }, ''],
+        addClass: [200,() => {
+          document.querySelectorAll('mjx-container:not([display=\'true\']').forEach( node => {
+            const target = node.parentNode
+            if (!target.classList.contains('has-jax')) {
+              target.classList.add('mathjax-overflow')
+            }
+          })
+        }, '', false]
+      }
+    }
+  }
+  
+  const script = document.createElement('script')
+  script.src = 'https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js'
+  script.id = 'MathJax-script'
+  script.async = true
+  document.head.appendChild(script)
+} else {
+  MathJax.startup.document.state(0)
+  MathJax.texReset()
+  MathJax.typeset()
+}</script></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

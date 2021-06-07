@@ -1,0 +1,524 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>台交大信息论 Lecture 4 | Doraemonzzz</title><meta name="keywords" content="信息论"><meta name="author" content="Doraemonzzz"><meta name="copyright" content="Doraemonzzz"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="课程主页：https:&#x2F;&#x2F;ocw.nctu.edu.tw&#x2F;course_detail-c.php?bgid&#x3D;8&amp;gid&#x3D;0&amp;nid&#x3D;612&amp;pid&#x3D;973 http:&#x2F;&#x2F;shannon.cm.nctu.edu.tw&#x2F;it18.htm 老师主页：http:&#x2F;&#x2F;shannon.cm.nctu.edu.tw&#x2F; 课程视频：https:&#x2F;&#x2F;www.youtube.com&#x2F;playli">
+<meta property="og:type" content="article">
+<meta property="og:title" content="台交大信息论 Lecture 4">
+<meta property="og:url" content="http://doraemonzzz.com/2020/07/04/%E5%8F%B0%E4%BA%A4%E5%A4%A7%E4%BF%A1%E6%81%AF%E8%AE%BA%20Lecture%204/index.html">
+<meta property="og:site_name" content="Doraemonzzz">
+<meta property="og:description" content="课程主页：https:&#x2F;&#x2F;ocw.nctu.edu.tw&#x2F;course_detail-c.php?bgid&#x3D;8&amp;gid&#x3D;0&amp;nid&#x3D;612&amp;pid&#x3D;973 http:&#x2F;&#x2F;shannon.cm.nctu.edu.tw&#x2F;it18.htm 老师主页：http:&#x2F;&#x2F;shannon.cm.nctu.edu.tw&#x2F; 课程视频：https:&#x2F;&#x2F;www.youtube.com&#x2F;playli">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg">
+<meta property="article:published_time" content="2020-07-04T08:08:00.000Z">
+<meta property="article:modified_time" content="2020-07-20T10:07:18.415Z">
+<meta property="article:author" content="Doraemonzzz">
+<meta property="article:tag" content="信息论">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="http://doraemonzzz.com/2020/07/04/%E5%8F%B0%E4%BA%A4%E5%A4%A7%E4%BF%A1%E6%81%AF%E8%AE%BA%20Lecture%204/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"prismjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    jQuery: 'https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js',
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+    },
+    fancybox: {
+      js: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isanchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '台交大信息论 Lecture 4',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2020-07-20 18:07:18'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    })(window)</script><meta name="generator" content="Hexo 5.4.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="author-avatar"><img class="avatar-img" src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">文章</div><div class="length-num">610</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">标签</div><div class="length-num">59</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/categories/"><div class="headline">分类</div><div class="length-num">23</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">Doraemonzzz</a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">台交大信息论 Lecture 4</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2020-07-04T08:08:00.000Z" title="发表于 2020-07-04 16:08:00">2020-07-04</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2020-07-20T10:07:18.415Z" title="更新于 2020-07-20 18:07:18">2020-07-20</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E6%95%B0%E5%AD%A6/">数学</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="台交大信息论 Lecture 4"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p>课程主页：<a target="_blank" rel="noopener" href="https://ocw.nctu.edu.tw/course_detail-c.php?bgid=8&amp;gid=0&amp;nid=612&amp;pid=973">https://ocw.nctu.edu.tw/course_detail-c.php?bgid=8&amp;gid=0&amp;nid=612&amp;pid=973</a></p>
+<p><a target="_blank" rel="noopener" href="http://shannon.cm.nctu.edu.tw/it18.htm">http://shannon.cm.nctu.edu.tw/it18.htm</a></p>
+<p>老师主页：<a target="_blank" rel="noopener" href="http://shannon.cm.nctu.edu.tw/">http://shannon.cm.nctu.edu.tw/</a></p>
+<p>课程视频：<a target="_blank" rel="noopener" href="https://www.youtube.com/playlist?list=PLj6E8qlqmkFsWS54o6gNWeDGXeI7c3eUd">https://www.youtube.com/playlist?list=PLj6E8qlqmkFsWS54o6gNWeDGXeI7c3eUd</a></p>
+<p>这次回顾第四讲，这一讲主要介绍了各种和熵相关的概念，对应视频8-9。</p>
+<span id="more"></span>
+<h3 id="自信息"><a href="#自信息" class="headerlink" title="自信息"></a>自信息</h3><ul>
+<li>自信息，用$\mathcal I(E)$表示，是学习事件$E$所获得的信息</li>
+<li>自信息满足三个公理<ol>
+<li>$\mathcal I(E)$是关于概率$p_E$的递减函数，即$\mathcal{I}(E)=I\left(p_{E}\right), I$在$[0,1]$递减</li>
+<li>$I(p_E)$连续</li>
+<li>如果$E_{1} \perp  E 2$，其中$\perp$表示独立，那么$\mathcal{I}\left(E_{1} \cap E_{2}\right)=\mathcal{I}\left(E_{1}\right)+\mathcal{I}\left(E_{2}\right)$，即$I\left(p_{E_{1}} \times p_{E_{2}}\right)=I\left(p_{E_{1}}\right)+I\left(p_{E_{2}}\right)$</li>
+</ol>
+</li>
+<li>可以证明，满足上述条件的函数一定为$I(p)=-c \cdot \log _{b}(p)$，可以总结为如下定理。<ul>
+<li>一般我们取$c=1,b=2$，通常省略下标$b$。</li>
+</ul>
+</li>
+</ul>
+<h4 id="定理"><a href="#定理" class="headerlink" title="定理"></a>定理</h4><p>定义在$p \in(0,1]$上，并且满足如下$3$个条件的唯一函数为$I(p)=-c \cdot \log _{b}(p)$，其中$c&gt;0, b&gt;1$</p>
+<ol>
+<li>$I(p)$递减</li>
+<li>$I(p)$在$(0, 1]$连续</li>
+<li>$I\left(p_{1} \times p_{2}\right)=I\left(p_{1}\right)+I\left(p_{2}\right)$</li>
+</ol>
+<p>证明分为以下三个步骤：</p>
+<p>步骤1：证明$I(p)=-c \cdot \log _{b}(p)$对于$p=1/n$成立。</p>
+<p>步骤2：证明$I(p)=-c \cdot \log _{b}(p)$对于$p$为有理数成立。</p>
+<p>步骤3：证明$I(p)= -c \cdot \log _{b}(p)$对于实数$p$成立。</p>
+<h5 id="步骤1"><a href="#步骤1" class="headerlink" title="步骤1"></a>步骤1</h5><p>命题：对于$n\in \mathbb Z^+$，</p>
+<script type="math/tex; mode=display">
+I\left(\frac{1}{n}\right)=-c \cdot \log _{b}\left(\frac{1}{n}\right)</script><p>证明：</p>
+<p>$(n=1)$利用条件3可得</p>
+<script type="math/tex; mode=display">
+I(1)= I(1) + I(1)\Rightarrow I(1) = 0=-c. \log_b (1)</script><p>($n&gt;1$)对于任意正整数$r$，$\exists $非负整数$k$，使得</p>
+<script type="math/tex; mode=display">
+n^{k} \leq 2^{r}<n^{k+1}  \tag 1</script><p>由条件1可得</p>
+<script type="math/tex; mode=display">
+I\left(\frac{1}{n^{k}}\right) \leq I\left(\frac{1}{2^{r}}\right)<I\left(\frac{1}{n^{k+1}}\right)</script><p>由条件3可以将上式化为</p>
+<script type="math/tex; mode=display">
+k \cdot I\left(\frac{1}{n}\right) \leq r \cdot I\left(\frac{1}{2}\right)<(k+1) \cdot I\left(\frac{1}{n}\right)</script><p>利用$I(1 / n)&gt;I(1)=0$</p>
+<script type="math/tex; mode=display">
+\frac{k}{r} \leq \frac{I(1 / 2)}{I(1 / n)} \leq \frac{k+1}{r}</script><p>另一方面，对$(1)$取对数可得，$b&gt;1$</p>
+<script type="math/tex; mode=display">
+\log _{b} n^{k} \leq \log _{b} 2^{r} \leq \log _{b} n^{k+1} \Leftrightarrow \frac{k}{r} \leq \frac{\log _{b}(2)}{\log _{b}(n)} \leq \frac{k+1}{r}</script><p>因此</p>
+<script type="math/tex; mode=display">
+\left|\frac{\log _{b}(2)}{\log _{b}(n)}-\frac{I(1 / 2)}{I(1 / n)}\right|<\frac{1}{r}</script><p>令$r\to \infty$得到</p>
+<script type="math/tex; mode=display">
+I\left(\frac{1}{n}\right)=\frac{I(1 / 2)}{\log _{b}(2)} \cdot \log _{b}(n)=-c \cdot \log _{b}\left(\frac{1}{n}\right)</script><p>其中</p>
+<script type="math/tex; mode=display">
+c=I(1 / 2) / \log _{b}(2)>0</script><h5 id="步骤2"><a href="#步骤2" class="headerlink" title="步骤2"></a>步骤2</h5><p>命题：对于正有理数$p$，</p>
+<script type="math/tex; mode=display">
+I(p)=-c \cdot \log _{b}(p)</script><p>证明：</p>
+<p>正有理数$p\in (0, 1]$可以表达为$p=r/s$，其中$r\le s, r,s \in \mathbb Z^{+}$，注意有恒等式：</p>
+<script type="math/tex; mode=display">
+\frac 1 s =\frac r s  \frac 1 r</script><p>利用性质3可得</p>
+<script type="math/tex; mode=display">
+I\left(\frac{1}{s}\right)=I\left(\frac{r }{s} 
+\frac 1 r
+\right)=I\left(\frac{r}{s}\right)+I\left(\frac{1}{r}\right)</script><p>所以</p>
+<script type="math/tex; mode=display">
+I(p)=I\left(\frac{r}{s}\right)=I\left(\frac{1}{s}\right)-I\left(\frac{1}{r}\right)=c \cdot \log _{b} s-c \cdot \log _{b} r=-c \cdot \log _{b} p</script><h5 id="步骤3"><a href="#步骤3" class="headerlink" title="步骤3"></a>步骤3</h5><p>对于任意$p\in (0, 1]$，可以利用有理数序列$\{p_n\}$逼近$p$，利用性质2可得</p>
+<script type="math/tex; mode=display">
+I(p) =\lim_{n\to \infty} I(p_n) = \lim_{n\to \infty}-c.\log_b (p_n)
+=-c.\log_b p</script><h3 id="熵"><a href="#熵" class="headerlink" title="熵"></a>熵</h3><h4 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h4><h5 id="熵-1"><a href="#熵-1" class="headerlink" title="熵"></a>熵</h5><p>离散随机变量$X$的概率分布为$P_X(.)$，熵用$H(X)$或$H\left(P_{X}\right)$表示，定义为</p>
+<script type="math/tex; mode=display">
+H(X):=-\sum_{x \in \mathcal{X}} P_{X}(x) \cdot \log _{2} P_{X}(x)</script><h5 id="联合熵"><a href="#联合熵" class="headerlink" title="联合熵"></a>联合熵</h5><p>随机变量$(X, Y)$的联合熵$H(X,Y)$定义为</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+H(X, Y) &:=-\sum_{(x, y) \in \mathcal{X} \times \mathcal{Y}} P_{X, Y}(x, y) \cdot \log _{2} P_{X, Y}(x, y) \\
+&=E\left[-\log _{2} P_{X, Y}(X, Y)\right]
+\end{aligned}</script><h5 id="条件熵"><a href="#条件熵" class="headerlink" title="条件熵"></a>条件熵</h5><p>已知随机变量$X,Y$，给定$X$，$Y$的条件熵定义为</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+H(Y | X)
+&:=\sum_{x \in \mathcal{X}} P_{X}(x)\left(-\sum_{y \in \mathcal{Y}} P_{Y | X}(y | x) \cdot \log _{2} P_{Y |X}(y | x)\right)\\
+&=-\sum_{(x, y) \in \mathcal{X} \times \mathcal{Y}} P_{X, Y}(x, y) \cdot \log _{2} P_{Y|X}(y|x)\\
+&= E\left[-\log _{2} P_{Y|X}(y|x)\right]
+\end{aligned}</script><h4 id="常用不等式"><a href="#常用不等式" class="headerlink" title="常用不等式"></a>常用不等式</h4><p>后续有关熵的内容经常使用如下不等式。</p>
+<h5 id="基本不等式-FI"><a href="#基本不等式-FI" class="headerlink" title="基本不等式(FI)"></a>基本不等式(FI)</h5><p>对于任意$x&gt;0, D&gt;1$，我们有</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+\log _{D}(e)\left(1-\frac 1 x\right) &\le \log _{D}(x) \leq \log _{D}(e) \cdot(x-1) \Leftrightarrow \\
+ 1-\frac 1 x &\le \ln x \le x - 1 
+\end{aligned}</script><p>证明：</p>
+<p>令</p>
+<script type="math/tex; mode=display">
+f(x)=\ln x - x+1</script><p>然后求导即可证明$f(x)\le 0$，等号成立当且仅当$x=1$。</p>
+<p>假设已知</p>
+<script type="math/tex; mode=display">
+\ln x \le x - 1</script><p>令$x=\frac 1 x$得到</p>
+<script type="math/tex; mode=display">
+\ln \left(\frac 1 x \right)  \le \frac 1 x - 1</script><p>即</p>
+<script type="math/tex; mode=display">
+ 1-\frac 1 x \le \ln x</script><p>另一个常用不等式为对数-求和不等式(Log-sum inequality)</p>
+<h5 id="对数-求和不等式-Log-sum-inequality"><a href="#对数-求和不等式-Log-sum-inequality" class="headerlink" title="对数-求和不等式(Log-sum inequality)"></a>对数-求和不等式(Log-sum inequality)</h5><p>对于非负数$a_{1}, a_{2}, \dots, a_{n}$以及$b_{1}, b_{2}, \ldots, b_{n}$，</p>
+<script type="math/tex; mode=display">
+\sum_{i=1}^{n}\left(a_{i} \log _{D} \frac{a_{i}}{b_{i}}\right) \geq\left(\sum_{i=1}^{n} a_{i}\right) \log _{D} \frac{\sum_{i=1}^{n} a_{i}}{\sum_{i=1}^{n} b_{i}}</script><p>等号成立当且仅当$(\forall 1 \leq i \leq n)\left(a_{i} / b_{i}\right)=\left(a_{1} / b_{1}\right)$。备注：$D&gt;1$</p>
+<p>证明：</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+\sum_{i=1}^{n}\left(a_{i} \log _{D} \frac{a_{i}}{b_{i}}\right) - \left(\sum_{i=1}^{n} a_{i}\right) \log _{D} \frac{\sum_{i=1}^{n} a_{i}}{\sum_{i=1}^{n} b_{i}}
+&= \sum_{i=1}^{n} a_{i} \left(\log _{D} \frac{a_{i}}{b_{i}} - 
+\log _{D}\frac{\sum_{j=1}^{n} a_{j}}{\sum_{j=1}^{n} b_{j}}\right)\\
+&= \sum_{i=1}^{n} a_{i} \left(\log _{D} \frac{a_{i} \sum_{j=1}^{n} b_{j}}{b_{i}\sum_{j=1}^{n} a_{j}}\right)\\
+&\ge \log_D (e)  \sum_{i=1}^{n} a_{i}  \left(1- \frac{b_{i}\sum_{j=1}^{n} a_{j}}{a_{i} \sum_{j=1}^{n} b_{j}}\right)\\
+&=  \log_D (e) \left( \sum_{i=1}^{n} a_{i}  -\frac{\sum_{j=1}^{n} a_{j}}{ \sum_{j=1}^{n} b_{j}} \sum_{i=1}^{n} b_i  \right) \\
+&= 0
+\end{aligned}</script><p>等号成立当且仅当$\forall 1 \leq i \leq n$，</p>
+<script type="math/tex; mode=display">
+\frac{a_{i} \sum_{j=1}^{n} b_{j}}{b_{i}\sum_{j=1}^{n} a_{j}} =1\Leftrightarrow 
+\frac {a_i}{b_i} =\frac{\sum_{j=1}^{n} a_{j}}{\sum_{j=1}^{n} b_{j}}</script><h4 id="性质"><a href="#性质" class="headerlink" title="性质"></a>性质</h4><h5 id="链式法则"><a href="#链式法则" class="headerlink" title="链式法则"></a>链式法则</h5><script type="math/tex; mode=display">
+\begin{aligned}
+H(X, Y)&=H(X)+H(Y | X)\\
+H(X, Y |Z)&=H(X |Z)+H(Y |X, Z)
+\end{aligned}</script><p>证明：</p>
+<p>利用</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+P_{X, Y}(x, y)&=P_{X}(x) P_{Y | X}(y | x)\\
+P_{X, Y |Z}(x, y|z)&= P_{X|Z}(x|z)P_{Y|X,Z}(y|x,z)
+\end{aligned}</script><p>可得</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+H(X, Y) &=E\left[-\log _{2} P_{X, Y}(X, Y)\right] \\
+&=E\left[-\log _{2} P_{X}(X)\right]+E\left[-\log _{2} P_{Y |X}(Y | X)\right] \\
+&=H(X)+H(Y | X)\\
+
+H(X, Y|Z) &=E\left[-\log _{2} P_{X, Y|Z}(X, Y|Z)\right] \\
+&=E\left[-\log _{2} P_{X|Z}(X|Z)\right]+E\left[-\log _{2} P_{Y |X,Z}(Y | X,Z)\right] \\
+&=H(X |Z)+H(Y |X, Z)
+\end{aligned}</script><h5 id="链式法则（推广）"><a href="#链式法则（推广）" class="headerlink" title="链式法则（推广）"></a>链式法则（推广）</h5><script type="math/tex; mode=display">
+H\left(X_{1}, X_{2}, \ldots, X_{n}\right)=\sum_{i=1}^{n} H\left(X_{i}| X_{i-1}, \ldots, X_{1}\right)</script><p>如果记$X^{n}:=\left(X_{1}, \ldots, X_{n}\right)$，那么上式可以记为</p>
+<script type="math/tex; mode=display">
+H\left(X^{n}\right)=\sum_{i=1}^{n} H\left(X_{i} | X^{i-1}\right)</script><p>证明：</p>
+<p>利用联合概率的链式分解即可。</p>
+<h5 id="条件熵的链式法则"><a href="#条件熵的链式法则" class="headerlink" title="条件熵的链式法则"></a>条件熵的链式法则</h5><script type="math/tex; mode=display">
+H\left(X_{1}, X_{2}, \ldots, X_{n} | Y\right)=\sum_{i=1}^{n} H\left(X_{i} | X_{i-1}, \ldots, X_{1}, Y\right)</script><p>证明：</p>
+<p>利用条件概率的链式法则即可。</p>
+<h5 id="熵的非负性"><a href="#熵的非负性" class="headerlink" title="熵的非负性"></a>熵的非负性</h5><p>证明：</p>
+<script type="math/tex; mode=display">
+0 \leq P_{X}(x) \leq 1 \Rightarrow \log _{2}\left[1 / P_{X}(x)\right] \geq 0</script><p>所以</p>
+<script type="math/tex; mode=display">
+H(X)=\sum_{x \in \mathcal{X}} P_{X}(x) \log _{2} \frac{1}{P_{X}(x)} \geq 0</script><p>等号成立当且仅当对于某个$x\in \mathcal X$，$P_X(x)=1$。</p>
+<h5 id="熵的上界"><a href="#熵的上界" class="headerlink" title="熵的上界"></a>熵的上界</h5><p>如果随机变量$X$取值于有限集$\mathcal X$，那么</p>
+<script type="math/tex; mode=display">
+H(X) \leq \log _{2}|\mathcal{X}|</script><p>等号成立当且仅当</p>
+<script type="math/tex; mode=display">
+P_{X}(x)=\frac{1}{|\mathcal{X}|} , x\in \mathcal X</script><p>说明：均匀分布给出最大熵。</p>
+<p>证明：</p>
+<p>利用基本不等式即可：</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+\log _{2}|\mathcal{X}|-H(X) &=\log _{2}|\mathcal{X}| \times\left(\sum_{x \in \mathcal{X}} P_{X}(x)\right)-\left(-\sum_{x \in \mathcal{X}} P_{X}(x) \log _{2} P_{X}(x)\right) \\
+&=\sum_{x \in \mathcal{X}} P_{X}(x) \times \log _{2}|\mathcal{X}|+\sum_{x \in \mathcal{X}} P_{X}(x) \log _{2} P_{X}(x) \\
+&=\sum_{x \in \mathcal{X}} P_{X}(x) \log _{2}\left(|\mathcal{X}| \times P_{X}(x)\right) \\
+& \geq \sum_{x \in \mathcal{X}} P_{X}(x) \cdot \log _{2}(e)\left(1-\frac{1}{|\mathcal{X}| \times P_{X}(x)}\right) \\
+&=\log _{2}(e) \sum_{x \in \mathcal{X}}\left(P_{X}(x)-\frac{1}{|\mathcal{X}|}\right) \\
+&=\log _{2}(e) \cdot(1-1)\\
+&=0
+\end{aligned}</script><p>等号成立当且仅当$\forall x\in \mathcal X,|\mathcal{X}| \times P_{X}(x)=1$，即$P_X(.)$在$X$上服从均匀分布。</p>
+<h5 id="条件永远不增加熵"><a href="#条件永远不增加熵" class="headerlink" title="条件永远不增加熵"></a>条件永远不增加熵</h5><script type="math/tex; mode=display">
+H(X|Y) \leq H(X)</script><p>等号成立当且仅当$X,Y$独立。</p>
+<p>证明：</p>
+<p>利用Log-sum不等式即可：</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+H(X)-H(X | Y) &=\sum_{(x, y) \in \mathcal{X} \times \mathcal{Y}} P_{X, Y}(x, y) \cdot \log _{2} \frac{P_{X | Y}(x | y)}{P_{X}(x)} \\
+&=\sum_{(x, y) \in \mathcal{X} \times \mathcal{Y}} P_{X, Y}(x, y) \cdot \log _{2} \frac{P_{X | Y}(x | y) P_{Y}(y)}{P_{X}(x) P_{Y}(y)} \\
+&=\sum_{(x, y) \in \mathcal{X} \times \mathcal{Y}} P_{X, Y}(x, y) \cdot \log _{2} \frac{P_{X, Y}(x, y)}{P_{X}(x) P_{Y}(y)} \\
+& \geq\left(\sum_{(x, y) \in \mathcal{X} \times \mathcal{Y}} P_{X, Y}(x, y)\right) \log _{2} \frac{\sum_{(x, y) \in \mathcal{X} \times \mathcal{Y}} P_{X, Y}(x, y)}{\sum_{(x, y) \in \mathcal{X} \times \mathcal{Y}} P_{X}(x) P_{Y}(y)} \\
+&=0
+\end{aligned}</script><p>等号成立当且仅当</p>
+<script type="math/tex; mode=display">
+\frac{P_{X, Y}(x, y)}{P_{X}(x) P_{Y}(y)}=\text { constant } \quad \forall(x, y) \in \mathcal{X} \times \mathcal{Y}</script><p>不难推出该条件等价于$X,Y$独立。</p>
+<h5 id="联合熵的上界"><a href="#联合熵的上界" class="headerlink" title="联合熵的上界"></a>联合熵的上界</h5><script type="math/tex; mode=display">
+H\left(X_{1}, X_{2}, \ldots, X_{n}\right) \leq \sum_{i=1}^{n} H\left(X_{i}\right.)</script><p>等会成立当且仅当$X_i$相互独立。</p>
+<p>证明：</p>
+<p>利用恒等式</p>
+<script type="math/tex; mode=display">
+H\left(X_{1}, X_{2}, \ldots, X_{n}\right)=\sum_{i=1}^{n} H\left(X_{i}| X_{i-1}, \ldots, X_{1}\right)</script><p>以及</p>
+<script type="math/tex; mode=display">
+H\left(X_{i}| X_{i-1}, \ldots, X_{1}\right) \le H(X_i)</script><p>等会成立当且仅当$X_i$相互独立。</p>
+<h5 id="独立随机变量的联合熵"><a href="#独立随机变量的联合熵" class="headerlink" title="独立随机变量的联合熵"></a>独立随机变量的联合熵</h5><p>如果$X,Y$独立，那么</p>
+<script type="math/tex; mode=display">
+H(X, Y)=H(X)+H(Y)</script><p>证明：</p>
+<p>利用恒等式</p>
+<script type="math/tex; mode=display">
+H(X, Y)=H(X)+H(Y | X)</script><p>以及前一个结论等号成立条件即可。</p>
+<p>一般的，我们有</p>
+<script type="math/tex; mode=display">
+H(X, Y)=H(X)+H(Y | X) \le H(X)+H(Y)</script><h5 id="条件熵的次可加性"><a href="#条件熵的次可加性" class="headerlink" title="条件熵的次可加性"></a>条件熵的次可加性</h5><script type="math/tex; mode=display">
+H\left(X_{1}, X_{2} |Y_{1}, Y_{2}\right) \leq H\left(X_{1} |Y_{1}\right)+H\left(X_{2} | Y_{2}\right)</script><p>等号成立当且仅当</p>
+<script type="math/tex; mode=display">
+P_{X_{1}, X_{2} | Y_{1}, Y_{2}}\left(x_{1}, x_{2} | y_{1}, y_{2}\right)=P_{X_{1} | Y_{1}}\left(x_{1} |y_{1}\right) P_{X_{2}| Y_{2}}\left(x_{2}| y_{2}\right)</script><p>证明：</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+ H\left(X_{1} |Y_{1}\right)+H\left(X_{2} | Y_{2}\right)
+ -H\left(X_{1}, X_{2} |Y_{1}, Y_{2}\right) 
+ &= \sum_{(x_1, y_1) \in 
+ \mathcal{X_1} \times \mathcal{Y_1}} P_{X_1, Y_1}(x_1, y_1) \cdot \log _{2} \frac{1}{P_{X_1|Y_1}(x_1|y_1)}\\ 
+ &+\sum_{(x_2, y_2) \in 
+ \mathcal{X_2} \times \mathcal{Y_2}} P_{X_2, Y_2}(x_2, y_2) \cdot \log _{2} \frac{1}{P_{X_2|Y_2}(x_2|y_2)}\\
+ &+\sum_{(x_1, x_2,y_1,y_2) \in \mathcal{X_1} \times  \mathcal{X_2} \times \mathcal{Y_1}\times \mathcal{Y_2}}P_{X_1,X_2, Y_1, Y_2} (x_1,x_2,y_1,y_2)\cdot  \log _{2} {P_{X_1,X_2|Y_1,Y_2}(x_1,x_2|y_1,y_2)}\\
+&= \sum_{(x_1, x_2,y_1,y_2) \in \mathcal{X_1} \times  \mathcal{X_2} \times \mathcal{Y_1}\times \mathcal{Y_2}}P_{X_1,X_2, Y_1, Y_2} (x_1,x_2,y_1,y_2) \cdot \log _{2} \frac{1}{P_{X_1|Y_1}(x_1|y_1)}\\ 
+ &+\sum_{(x_1, x_2,y_1,y_2) \in \mathcal{X_1} \times  \mathcal{X_2} \times \mathcal{Y_1}\times \mathcal{Y_2}} P_{X_1,X_2, Y_1, Y_2} (x_1,x_2,y_1,y_2) \cdot \log _{2} \frac{1}{P_{X_2|Y_2}(x_2|y_2)}\\
+ &+\sum_{(x_1, x_2,y_1,y_2) \in \mathcal{X_1} \times  \mathcal{X_2} \times \mathcal{Y_1}\times \mathcal{Y_2}}P_{X_1,X_2, Y_1, Y_2} (x_1,x_2,y_1,y_2)\cdot  \log _{2} {P_{X_1,X_2|Y_1,Y_2}(x_1,x_2|y_1,y_2)}\\
+ &= \sum_{(x_1, x_2,y_1,y_2) \in \mathcal{X_1} \times  \mathcal{X_2} \times \mathcal{Y_1}\times \mathcal{Y_2}}P_{X_1,X_2, Y_1, Y_2} (x_1,x_2,y_1,y_2)\cdot 
+ \log _{2} \frac {P_{X_1,X_2|Y_1,Y_2}(x_1,x_2|y_1,y_2)}{P_{X_1|Y_1}(x_1|y_1)P_{X_2|Y_2}(x_2|y_2)}\\
+ &=\sum_{(x_1, x_2,y_1,y_2) \in \mathcal{X_1} \times  \mathcal{X_2} \times \mathcal{Y_1}\times \mathcal{Y_2}}P_{X_1,X_2, Y_1, Y_2} (x_1,x_2,y_1,y_2)\cdot 
+ \log _{2} \frac {P_{X_1,X_2,Y_1,Y_2}(x_1,x_2,y_1,y_2)}{P_{X_1|Y_1}(x_1|y_1)P_{X_2|Y_2}(x_2|y_2)P_{Y_1,Y_2}(y_1,y_2)}\\
+ &\ge \left(\sum_{(x_1, x_2,y_1,y_2) \in \mathcal{X_1} \times  \mathcal{X_2} \times \mathcal{Y_1}\times \mathcal{Y_2}}P_{X_1,X_2, Y_1, Y_2} (x_1,x_2,y_1,y_2)\right) \\
+
+ &\times \log_2\frac {\sum_{(x_1, x_2,y_1,y_2) \in \mathcal{X_1} \times  \mathcal{X_2} \times \mathcal{Y_1}\times \mathcal{Y_2}}P_{X_1,X_2,Y_1,Y_2}(x_1,x_2,y_1,y_2)}{\sum_{(x_1, x_2,y_1,y_2) \in \mathcal{X_1} \times  \mathcal{X_2} \times \mathcal{Y_1}\times \mathcal{Y_2}}P_{X_1|Y_1}(x_1|y_1)P_{X_2|Y_2}(x_2|y_2)P_{Y_1,Y_2}(y_1,y_2)}\\
+ &=0
+\end{aligned}</script><p>等号成立当且仅当</p>
+<script type="math/tex; mode=display">
+\frac {P_{X_1,X_2,Y_1,Y_2}(x_1,x_2,y_1,y_2)}{P_{X_1|Y_1}(x_1|y_1)P_{X_2|Y_2}(x_2|y_2)P_{Y_1,Y_2}(y_1,y_2)} =\text { constant } \quad \forall(x_1, x_2,y_1,y_2) \in \mathcal{X_1} \times\mathcal{X_2} \times \mathcal{Y_1}\times \mathcal{Y_2}</script><p>即</p>
+<script type="math/tex; mode=display">
+P_{X_{1}, X_{2} | Y_{1}, Y_{2}}\left(x_{1}, x_{2} | y_{1}, y_{2}\right)=P_{X_{1} | Y_{1}}\left(x_{1} |y_{1}\right) P_{X_{2}| Y_{2}}\left(x_{2}| y_{2}\right)</script><h3 id="互信息"><a href="#互信息" class="headerlink" title="互信息"></a>互信息</h3><h4 id="定义-1"><a href="#定义-1" class="headerlink" title="定义"></a>定义</h4><h5 id="互信息-1"><a href="#互信息-1" class="headerlink" title="互信息"></a>互信息</h5><p>互信息的定义如下：</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+I(X ; Y) &:=H(X)+H(Y)-H(X, Y) \\
+&=H(Y)-H(Y|X) \\
+&=H(X)-H(X| Y)
+\end{aligned}</script><p>图示如下：</p>
+<p><img src="https://github.com/Doraemonzzz/md-photo/blob/master/%E4%BF%A1%E6%81%AF%E8%AE%BA%E2%80%94%E2%80%94%E9%99%88%E4%BC%AF%E5%AE%81/Lecture%204/2020070401.jpg?raw=true" alt=""></p>
+<h5 id="条件互信息"><a href="#条件互信息" class="headerlink" title="条件互信息"></a>条件互信息</h5><script type="math/tex; mode=display">
+\begin{aligned}
+I(X ; Y|Z) &:=H(X|Z)+H(Y|Z)-H(X, Y|Z) \\
+&=H(Y|Z)-H(Y|X,Z) \\
+&=H(X|Z)-H(X| Y,Z)
+\end{aligned}</script><h4 id="性质-1"><a href="#性质-1" class="headerlink" title="性质"></a>性质</h4><h5 id="基本性质"><a href="#基本性质" class="headerlink" title="基本性质"></a>基本性质</h5><ol>
+<li><script type="math/tex; mode=display">
+I(X ; Y)=\sum_{x \in \mathcal{X}} \sum_{y \in \mathcal{Y}} P_{X, Y}(x, y) \log _{2} \frac{P_{X, Y}(x, y)}{P_{X}(x) P_{Y}(y)}</script></li>
+<li><script type="math/tex; mode=display">
+I(X ; Y)=I(Y ; X)</script></li>
+<li><script type="math/tex; mode=display">
+I(X ; Y)=H(X)+H(Y)-H(X, Y)</script></li>
+<li><script type="math/tex; mode=display">
+I(X ; Y) \leq H(X)</script><p>等号成立当且仅当$X=f(Y)$</p>
+</li>
+<li><script type="math/tex; mode=display">
+I(X ; Y) \geq 0</script></li>
+<li><script type="math/tex; mode=display">
+I(X ; Y) \leq \min \left\{\log _{2}|\mathcal{X}|, \log _{2}|\mathcal{Y}|\right\}</script></li>
+</ol>
+<p>证明都是平凡的，这里从略。</p>
+<h5 id="链式法则-1"><a href="#链式法则-1" class="headerlink" title="链式法则"></a>链式法则</h5><script type="math/tex; mode=display">
+I(X ; Y, Z)=I(X ; Y)+I(X ; Z | Y)=I(X ; Z)+I(X ; Y | Z)</script><p>图示如下：</p>
+<p><img src="https://github.com/Doraemonzzz/md-photo/blob/master/%E4%BF%A1%E6%81%AF%E8%AE%BA%E2%80%94%E2%80%94%E9%99%88%E4%BC%AF%E5%AE%81/Lecture%204/2020070402.jpg?raw=true" alt=""></p>
+<p>证明：</p>
+<p>只证明第二项，第一项同理可得。</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+I(X ; Y, Z) &=H(X)-H(X | Y, Z) \\
+&=H(X)-H(X | Z)+H(X | Z)-H(X | Y, Z) \\
+&=I(X ; Z)+I(X ; Y | Z)
+\end{aligned}</script><h5 id="链式法则（推广）-1"><a href="#链式法则（推广）-1" class="headerlink" title="链式法则（推广）"></a>链式法则（推广）</h5><script type="math/tex; mode=display">
+I\left(X_{1}, X_{2}, \ldots, X_{n} ; Y\right)=\sum_{i=1}^{n} I\left(X_{i} ; Y | X_{i-1}, \ldots, X_{1}\right)</script><p>其中当$i=1$时</p>
+<script type="math/tex; mode=display">
+I\left(X_{i} ; Y| X_{i-1}, \ldots, X_{1}\right):=I\left(X_{1} ; Y\right)</script><p>证明：</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+I\left(X_{1}, X_{2}, \ldots, X_{n} ; Y\right)
+&= H(X_{1}, X_{2}, \ldots, X_{n})-H(X_{1}, X_{2}, \ldots, X_{n}| Y)\\
+&=\sum_{i=1}^{n} H\left(X_{i}| X_{i-1}, \ldots, X_{1}\right)- 
+\sum_{i=1}^{n} H\left(X_{i} | X_{i-1}, \ldots, X_{1}, Y\right)\\
+&= \sum_{i=1}^{n} 
+\left(H\left(X_{i}| X_{i-1}, \ldots, X_{1}\right)- H\left(X_{i} | X_{i-1}, \ldots, X_{1}, Y\right) \right)\\
+&= \sum_{i=1}^{n} I\left(X_{i} ; Y | X_{i-1}, \ldots, X_{1}\right)
+\end{aligned}</script><h5 id="互信息的上界"><a href="#互信息的上界" class="headerlink" title="互信息的上界"></a>互信息的上界</h5><p>如果$\left\{\left(X_{i}, Y_{i}\right)\right\}_{i=1}^{n}$满足条件独立假设</p>
+<script type="math/tex; mode=display">
+P_{Y^{n} \mid X^{n}}=\prod_{i=1}^{n} P_{Y_{i} \mid X_{i}}</script><p>那么</p>
+<script type="math/tex; mode=display">
+I\left(X_{1}, \ldots, X_{n} ; Y_{1}, \ldots, Y_{n}\right) \leq \sum_{i=1}^{n} I\left(X_{i} ; Y_{i}\right)</script><p>等号成立当且仅当$\left\{X_{i}\right\}_{i=1}^{n}$独立。</p>
+<p>证明：</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+I\left(X_{1}, \ldots, X_{n} ; Y_{1}, \ldots, Y_{n}\right) 
+&= H(X_{1}, \ldots, X_{n})-H(X_{1}, \ldots, X_{n}| Y_{1}, \ldots, Y_{n})\\
+&=\sum_{i=1}^{n}  H\left(X_{i}| X_{i-1}, \ldots, X_{1}\right) -\sum_{i=1}^n H(X_i |Y_i)\\
+&= \sum_{i=1}^{n} 
+\left(H\left(X_{i}| X_{i-1}, \ldots, X_{1}\right)-
+H(X_i |Y_i)\right)\\
+&\le \sum_{i=1}^{n} 
+\left(H\left(X_{i}\right)-
+H(X_i |Y_i)\right)\\
+&=  \sum_{i=1}^{n}  I(X_i;Y_i)
+\end{aligned}</script><p>等会成立当且仅当$\left\{X_{i}\right\}_{i=1}^{n}$独立。</p>
+<h5 id="数据压缩定理"><a href="#数据压缩定理" class="headerlink" title="数据压缩定理"></a>数据压缩定理</h5><p>如果$X \rightarrow Y \rightarrow Z$（马氏链），那么$I(X ; Y) \geq I(X ; Z)$。</p>
+<p>证明：马氏链性质表明给定$Y$，$X,Z$条件独立，即</p>
+<script type="math/tex; mode=display">
+I(X ; Z | Y)=0</script><p>由链式法则可得</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+I(X ; Z)+I(X ; Y | Z) &=I(X ; Y, Z) \\
+&=I(X ; Y)+I(X ; Z | Y) \\
+&=I(X ; Y)
+\end{aligned}</script><p>注意到</p>
+<script type="math/tex; mode=display">
+I(X ; Y|Z) \ge 0</script><p>我们得到</p>
+<script type="math/tex; mode=display">
+I(X ; Y) \geq I(X ; Z)</script><p>等号成立当且仅当</p>
+<script type="math/tex; mode=display">
+I(X ; Y| Z)=0</script><p>定理含义：</p>
+<p><img src="https://github.com/Doraemonzzz/md-photo/blob/master/%E4%BF%A1%E6%81%AF%E8%AE%BA%E2%80%94%E2%80%94%E9%99%88%E4%BC%AF%E5%AE%81/Lecture%204/2020070403.jpg?raw=true" alt=""></p>
+<p>压缩只会减少信息。</p>
+<h6 id="推论1"><a href="#推论1" class="headerlink" title="推论1"></a>推论1</h6><p>对于随机变量$X,Y$以及任意函数$g(Y)$，我们有$X \rightarrow Y \rightarrow g(Y)$，所以</p>
+<script type="math/tex; mode=display">
+I(X ; Y) \geq I(X ; g(Y))</script><h6 id="推论2"><a href="#推论2" class="headerlink" title="推论2"></a>推论2</h6><p>如果$X \rightarrow Y \rightarrow Z$，那么</p>
+<script type="math/tex; mode=display">
+I(X ; Y |Z) \leq I(X ; Y)</script><p>证明：</p>
+<p>利用恒等式</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+I(X ; Z)+I(X ; Y | Z) &=I(X ; Y, Z) \\
+&=I(X ; Y)+I(X ; Z | Y) \\
+&=I(X ; Y)
+\end{aligned}</script><p>所以</p>
+<script type="math/tex; mode=display">
+I(X ; Y |Z) \leq I(X ; Y)</script><h6 id="推论3"><a href="#推论3" class="headerlink" title="推论3"></a>推论3</h6><p>如果$X_{1} \rightarrow X_{2} \rightarrow \cdots \rightarrow X_{n}$，那么对于满足$1 \leq i \leq j \leq k \leq l \leq n$的任意$i,j,k,l$，我们有</p>
+<script type="math/tex; mode=display">
+I\left(X_{i} ; X_{l}\right) \leq I\left(X_{j} ; X_{k}\right)</script><p>证明：</p>
+<p>已知</p>
+<script type="math/tex; mode=display">
+X_i \to X_j \to X_k \to X_l</script><p>考虑</p>
+<script type="math/tex; mode=display">
+X_i  \to X_j \to X_l</script><p>我们有</p>
+<script type="math/tex; mode=display">
+I\left(X_{i} ; X_{l}\right) \leq I\left(X_{j} ; X_{l}\right)</script><p>接着考虑</p>
+<script type="math/tex; mode=display">
+X_j \to X_k \to X_l</script><p>我们有</p>
+<script type="math/tex; mode=display">
+I\left(X_{j} ; X_{l}\right) \leq I\left(X_{j} ; X_{k}\right)</script><p>所以</p>
+<script type="math/tex; mode=display">
+I\left(X_{i} ; X_{l}\right) \leq I\left(X_{j} ; X_{l}\right) \le I\left(X_{j} ; X_{k}\right)</script></article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">Doraemonzzz</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="http://doraemonzzz.com/2020/07/04/%E5%8F%B0%E4%BA%A4%E5%A4%A7%E4%BF%A1%E6%81%AF%E8%AE%BA%20Lecture%204/">http://doraemonzzz.com/2020/07/04/%E5%8F%B0%E4%BA%A4%E5%A4%A7%E4%BF%A1%E6%81%AF%E8%AE%BA%20Lecture%204/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://doraemonzzz.com" target="_blank">Doraemonzzz</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E4%BF%A1%E6%81%AF%E8%AE%BA/">信息论</a></div><div class="post_share"><div class="social-share" data-image="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2020/07/11/%E5%8F%B0%E4%BA%A4%E5%A4%A7%E9%9A%8F%E6%9C%BA%E8%BF%87%E7%A8%8B%20Lecture%204/"><img class="prev-cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">台交大随机过程 Lecture 4</div></div></a></div><div class="next-post pull-right"><a href="/2020/07/03/CMU%2015-213%20Intro%20to%20Computer%20Systems%20Lecture%2016/"><img class="next-cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">CMU 15-213 Intro to Computer Systems Lecture 16</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span> 相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2020/05/25/Information Theory, Inference and Learning Algorithms Lecture 1/" title="Information Theory, Inference and Learning Algorithms Lecture 1"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-05-25</div><div class="title">Information Theory, Inference and Learning Algorithms Lecture 1</div></div></a></div><div><a href="/2020/05/26/Information Theory, Inference and Learning Algorithms Lecture 2/" title="Information Theory, Inference and Learning Algorithms Lecture 2"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-05-26</div><div class="title">Information Theory, Inference and Learning Algorithms Lecture 2</div></div></a></div><div><a href="/2020/06/04/Information Theory, Inference and Learning Algorithms Lecture 3/" title="Information Theory, Inference and Learning Algorithms Lecture 3"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-06-04</div><div class="title">Information Theory, Inference and Learning Algorithms Lecture 3</div></div></a></div><div><a href="/2020/06/05/Information Theory, Inference and Learning Algorithms Lecture 4/" title="Information Theory, Inference and Learning Algorithms Lecture 4"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-06-05</div><div class="title">Information Theory, Inference and Learning Algorithms Lecture 4</div></div></a></div><div><a href="/2020/06/08/Information Theory, Inference and Learning Algorithms Lecture 5/" title="Information Theory, Inference and Learning Algorithms Lecture 5"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-06-08</div><div class="title">Information Theory, Inference and Learning Algorithms Lecture 5</div></div></a></div><div><a href="/2020/06/09/Information Theory, Inference and Learning Algorithms Lecture 6/" title="Information Theory, Inference and Learning Algorithms Lecture 6"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-06-09</div><div class="title">Information Theory, Inference and Learning Algorithms Lecture 6</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="card-info-avatar is-center"><img class="avatar-img" src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/><div class="author-info__name">Doraemonzzz</div><div class="author-info__description">个人博客，主要记录有关机器学习，数学以及计算机科学的笔记</div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">610</div></a></div><div class="card-info-data-item is-center"><a href="/tags/"><div class="headline">标签</div><div class="length-num">59</div></a></div><div class="card-info-data-item is-center"><a href="/categories/"><div class="headline">分类</div><div class="length-num">23</div></a></div></div><a class="button--animated" id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/Doraemonzzz" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="/doraemon_zzz@163.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn card-announcement-animation"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%87%AA%E4%BF%A1%E6%81%AF"><span class="toc-number">1.</span> <span class="toc-text">自信息</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AE%9A%E7%90%86"><span class="toc-number">1.1.</span> <span class="toc-text">定理</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%AD%A5%E9%AA%A41"><span class="toc-number">1.1.1.</span> <span class="toc-text">步骤1</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%AD%A5%E9%AA%A42"><span class="toc-number">1.1.2.</span> <span class="toc-text">步骤2</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%AD%A5%E9%AA%A43"><span class="toc-number">1.1.3.</span> <span class="toc-text">步骤3</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%86%B5"><span class="toc-number">2.</span> <span class="toc-text">熵</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AE%9A%E4%B9%89"><span class="toc-number">2.1.</span> <span class="toc-text">定义</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E7%86%B5-1"><span class="toc-number">2.1.1.</span> <span class="toc-text">熵</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E8%81%94%E5%90%88%E7%86%B5"><span class="toc-number">2.1.2.</span> <span class="toc-text">联合熵</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%9D%A1%E4%BB%B6%E7%86%B5"><span class="toc-number">2.1.3.</span> <span class="toc-text">条件熵</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%B8%B8%E7%94%A8%E4%B8%8D%E7%AD%89%E5%BC%8F"><span class="toc-number">2.2.</span> <span class="toc-text">常用不等式</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%9F%BA%E6%9C%AC%E4%B8%8D%E7%AD%89%E5%BC%8F-FI"><span class="toc-number">2.2.1.</span> <span class="toc-text">基本不等式(FI)</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%AF%B9%E6%95%B0-%E6%B1%82%E5%92%8C%E4%B8%8D%E7%AD%89%E5%BC%8F-Log-sum-inequality"><span class="toc-number">2.2.2.</span> <span class="toc-text">对数-求和不等式(Log-sum inequality)</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%80%A7%E8%B4%A8"><span class="toc-number">2.3.</span> <span class="toc-text">性质</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E9%93%BE%E5%BC%8F%E6%B3%95%E5%88%99"><span class="toc-number">2.3.1.</span> <span class="toc-text">链式法则</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E9%93%BE%E5%BC%8F%E6%B3%95%E5%88%99%EF%BC%88%E6%8E%A8%E5%B9%BF%EF%BC%89"><span class="toc-number">2.3.2.</span> <span class="toc-text">链式法则（推广）</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%9D%A1%E4%BB%B6%E7%86%B5%E7%9A%84%E9%93%BE%E5%BC%8F%E6%B3%95%E5%88%99"><span class="toc-number">2.3.3.</span> <span class="toc-text">条件熵的链式法则</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E7%86%B5%E7%9A%84%E9%9D%9E%E8%B4%9F%E6%80%A7"><span class="toc-number">2.3.4.</span> <span class="toc-text">熵的非负性</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E7%86%B5%E7%9A%84%E4%B8%8A%E7%95%8C"><span class="toc-number">2.3.5.</span> <span class="toc-text">熵的上界</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%9D%A1%E4%BB%B6%E6%B0%B8%E8%BF%9C%E4%B8%8D%E5%A2%9E%E5%8A%A0%E7%86%B5"><span class="toc-number">2.3.6.</span> <span class="toc-text">条件永远不增加熵</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E8%81%94%E5%90%88%E7%86%B5%E7%9A%84%E4%B8%8A%E7%95%8C"><span class="toc-number">2.3.7.</span> <span class="toc-text">联合熵的上界</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E7%8B%AC%E7%AB%8B%E9%9A%8F%E6%9C%BA%E5%8F%98%E9%87%8F%E7%9A%84%E8%81%94%E5%90%88%E7%86%B5"><span class="toc-number">2.3.8.</span> <span class="toc-text">独立随机变量的联合熵</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%9D%A1%E4%BB%B6%E7%86%B5%E7%9A%84%E6%AC%A1%E5%8F%AF%E5%8A%A0%E6%80%A7"><span class="toc-number">2.3.9.</span> <span class="toc-text">条件熵的次可加性</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BA%92%E4%BF%A1%E6%81%AF"><span class="toc-number">3.</span> <span class="toc-text">互信息</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AE%9A%E4%B9%89-1"><span class="toc-number">3.1.</span> <span class="toc-text">定义</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E4%BA%92%E4%BF%A1%E6%81%AF-1"><span class="toc-number">3.1.1.</span> <span class="toc-text">互信息</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%9D%A1%E4%BB%B6%E4%BA%92%E4%BF%A1%E6%81%AF"><span class="toc-number">3.1.2.</span> <span class="toc-text">条件互信息</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%80%A7%E8%B4%A8-1"><span class="toc-number">3.2.</span> <span class="toc-text">性质</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%9F%BA%E6%9C%AC%E6%80%A7%E8%B4%A8"><span class="toc-number">3.2.1.</span> <span class="toc-text">基本性质</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E9%93%BE%E5%BC%8F%E6%B3%95%E5%88%99-1"><span class="toc-number">3.2.2.</span> <span class="toc-text">链式法则</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E9%93%BE%E5%BC%8F%E6%B3%95%E5%88%99%EF%BC%88%E6%8E%A8%E5%B9%BF%EF%BC%89-1"><span class="toc-number">3.2.3.</span> <span class="toc-text">链式法则（推广）</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E4%BA%92%E4%BF%A1%E6%81%AF%E7%9A%84%E4%B8%8A%E7%95%8C"><span class="toc-number">3.2.4.</span> <span class="toc-text">互信息的上界</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E5%8E%8B%E7%BC%A9%E5%AE%9A%E7%90%86"><span class="toc-number">3.2.5.</span> <span class="toc-text">数据压缩定理</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#%E6%8E%A8%E8%AE%BA1"><span class="toc-number">3.2.5.1.</span> <span class="toc-text">推论1</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#%E6%8E%A8%E8%AE%BA2"><span class="toc-number">3.2.5.2.</span> <span class="toc-text">推论2</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#%E6%8E%A8%E8%AE%BA3"><span class="toc-number">3.2.5.3.</span> <span class="toc-text">推论3</span></a></li></ol></li></ol></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2021/06/06/2021-6-6-%E7%AE%97%E6%B3%95%E6%A6%82%E8%AE%BA(DPV)%E4%B9%A0%E9%A2%98%E8%A7%A3%E7%AD%94%E2%80%94%E2%80%94%E7%AC%AC3%E7%AB%A0-%E5%9B%BE%E7%9A%84%E5%88%86%E8%A7%A3/" title="算法概论(DPV)习题解答——第3章 图的分解"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="算法概论(DPV)习题解答——第3章 图的分解"/></a><div class="content"><a class="title" href="/2021/06/06/2021-6-6-%E7%AE%97%E6%B3%95%E6%A6%82%E8%AE%BA(DPV)%E4%B9%A0%E9%A2%98%E8%A7%A3%E7%AD%94%E2%80%94%E2%80%94%E7%AC%AC3%E7%AB%A0-%E5%9B%BE%E7%9A%84%E5%88%86%E8%A7%A3/" title="算法概论(DPV)习题解答——第3章 图的分解">算法概论(DPV)习题解答——第3章 图的分解</a><time datetime="2021-06-06T14:35:00.000Z" title="发表于 2021-06-06 22:35:00">2021-06-06</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/06/06/2021-6-6-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E7%AC%AC5%E7%AB%A0-%E4%B9%A0%E9%A2%98%E8%A7%A3%E6%9E%90/" title="深入理解计算机系统 第5章 习题解析"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="深入理解计算机系统 第5章 习题解析"/></a><div class="content"><a class="title" href="/2021/06/06/2021-6-6-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E7%AC%AC5%E7%AB%A0-%E4%B9%A0%E9%A2%98%E8%A7%A3%E6%9E%90/" title="深入理解计算机系统 第5章 习题解析">深入理解计算机系统 第5章 习题解析</a><time datetime="2021-06-06T07:23:00.000Z" title="发表于 2021-06-06 15:23:00">2021-06-06</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/06/05/2021-6-5-Stanford-Compiler-PA5%E7%BF%BB%E8%AF%91/" title="Stanford Compiler PA5翻译"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Stanford Compiler PA5翻译"/></a><div class="content"><a class="title" href="/2021/06/05/2021-6-5-Stanford-Compiler-PA5%E7%BF%BB%E8%AF%91/" title="Stanford Compiler PA5翻译">Stanford Compiler PA5翻译</a><time datetime="2021-06-05T06:12:00.000Z" title="发表于 2021-06-05 14:12:00">2021-06-05</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/06/04/2021-6-4-Stanford-Compiler-PA4%E7%BF%BB%E8%AF%91/" title="Stanford Compiler PA4翻译"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Stanford Compiler PA4翻译"/></a><div class="content"><a class="title" href="/2021/06/04/2021-6-4-Stanford-Compiler-PA4%E7%BF%BB%E8%AF%91/" title="Stanford Compiler PA4翻译">Stanford Compiler PA4翻译</a><time datetime="2021-06-03T16:17:00.000Z" title="发表于 2021-06-04 00:17:00">2021-06-04</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/06/03/2021-6-3-%E5%B7%A7%E5%A6%99%E7%9A%84Y%E8%BF%90%E7%AE%97%E7%AC%A6/" title="巧妙的Y运算符"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="巧妙的Y运算符"/></a><div class="content"><a class="title" href="/2021/06/03/2021-6-3-%E5%B7%A7%E5%A6%99%E7%9A%84Y%E8%BF%90%E7%AE%97%E7%AC%A6/" title="巧妙的Y运算符">巧妙的Y运算符</a><time datetime="2021-06-03T00:54:00.000Z" title="发表于 2021-06-03 08:54:00">2021-06-03</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2021 By Doraemonzzz</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><div class="js-pjax"><script>if (!window.MathJax) {
+  window.MathJax = {
+    loader: {
+      source: {
+        '[tex]/amsCd': '[tex]/amscd'
+      }
+    },
+    tex: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]],
+      tags: 'ams'
+    },
+    options: {
+      renderActions: {
+        findScript: [10, doc => {
+          for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+            const display = !!node.type.match(/; *mode=display/)
+            const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+            const text = document.createTextNode('')
+            node.parentNode.replaceChild(text, node)
+            math.start = {node: text, delim: '', n: 0}
+            math.end = {node: text, delim: '', n: 0}
+            doc.math.push(math)
+          }
+        }, ''],
+        addClass: [200,() => {
+          document.querySelectorAll('mjx-container:not([display=\'true\']').forEach( node => {
+            const target = node.parentNode
+            if (!target.classList.contains('has-jax')) {
+              target.classList.add('mathjax-overflow')
+            }
+          })
+        }, '', false]
+      }
+    }
+  }
+  
+  const script = document.createElement('script')
+  script.src = 'https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js'
+  script.id = 'MathJax-script'
+  script.async = true
+  document.head.appendChild(script)
+} else {
+  MathJax.startup.document.state(0)
+  MathJax.texReset()
+  MathJax.typeset()
+}</script></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

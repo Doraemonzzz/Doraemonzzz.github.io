@@ -1,0 +1,275 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>CS229 Lesson 10 特征选择 | Doraemonzzz</title><meta name="keywords" content="CS229"><meta name="author" content="Doraemonzzz"><meta name="copyright" content="Doraemonzzz"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="课程视频地址：http:&#x2F;&#x2F;open.163.com&#x2F;special&#x2F;opencourse&#x2F;machinelearning.html 课程主页：http:&#x2F;&#x2F;cs229.stanford.edu&#x2F; 更具体的资料链接：https:&#x2F;&#x2F;www.jianshu.com&#x2F;p&#x2F;0a6ef31ff77a 笔记参考自中文翻译版：https:&#x2F;&#x2F;github.com&#x2F;Kivy-CN&#x2F;Stanford-CS-229">
+<meta property="og:type" content="article">
+<meta property="og:title" content="CS229 Lesson 10 特征选择">
+<meta property="og:url" content="http://doraemonzzz.com/2018/12/16/CS229%20Lesson%2010%20%E7%89%B9%E5%BE%81%E9%80%89%E6%8B%A9/index.html">
+<meta property="og:site_name" content="Doraemonzzz">
+<meta property="og:description" content="课程视频地址：http:&#x2F;&#x2F;open.163.com&#x2F;special&#x2F;opencourse&#x2F;machinelearning.html 课程主页：http:&#x2F;&#x2F;cs229.stanford.edu&#x2F; 更具体的资料链接：https:&#x2F;&#x2F;www.jianshu.com&#x2F;p&#x2F;0a6ef31ff77a 笔记参考自中文翻译版：https:&#x2F;&#x2F;github.com&#x2F;Kivy-CN&#x2F;Stanford-CS-229">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg">
+<meta property="article:published_time" content="2018-12-16T09:58:00.000Z">
+<meta property="article:modified_time" content="2019-03-01T06:23:01.724Z">
+<meta property="article:author" content="Doraemonzzz">
+<meta property="article:tag" content="CS229">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="http://doraemonzzz.com/2018/12/16/CS229%20Lesson%2010%20%E7%89%B9%E5%BE%81%E9%80%89%E6%8B%A9/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"prismjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    jQuery: 'https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js',
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+    },
+    fancybox: {
+      js: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isanchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'CS229 Lesson 10 特征选择',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2019-03-01 14:23:01'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    })(window)</script><meta name="generator" content="Hexo 5.4.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="author-avatar"><img class="avatar-img" src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">文章</div><div class="length-num">610</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">标签</div><div class="length-num">59</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/categories/"><div class="headline">分类</div><div class="length-num">23</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">Doraemonzzz</a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">CS229 Lesson 10 特征选择</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2018-12-16T09:58:00.000Z" title="发表于 2018-12-16 17:58:00">2018-12-16</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2019-03-01T06:23:01.724Z" title="更新于 2019-03-01 14:23:01">2019-03-01</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/">机器学习</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="CS229 Lesson 10 特征选择"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p>课程视频地址：<a target="_blank" rel="noopener" href="http://open.163.com/special/opencourse/machinelearning.html">http://open.163.com/special/opencourse/machinelearning.html</a></p>
+<p>课程主页：<a target="_blank" rel="noopener" href="http://cs229.stanford.edu/">http://cs229.stanford.edu/</a></p>
+<p>更具体的资料链接：<a target="_blank" rel="noopener" href="https://www.jianshu.com/p/0a6ef31ff77a">https://www.jianshu.com/p/0a6ef31ff77a</a></p>
+<p>笔记参考自中文翻译版：<a target="_blank" rel="noopener" href="https://github.com/Kivy-CN/Stanford-CS-229-CN">https://github.com/Kivy-CN/Stanford-CS-229-CN</a></p>
+<p>这一讲介绍了VC维以及特征选择。</p>
+<span id="more"></span>
+<h3 id="4-无限个假设（infinite-mathcal-H-）的情况"><a href="#4-无限个假设（infinite-mathcal-H-）的情况" class="headerlink" title="4 无限个假设（infinite $\mathcal H$）的情况"></a>4 无限个假设（infinite $\mathcal H$）的情况</h3><p>介绍之前给出一些定义。</p>
+<p>给定集合$S =\{x^{(1)} ,…,x^{(d)}\}$，其中$x^{(i)} \in \mathcal X$，我们称$\mathcal H$打散（shatter）$S$如果$\mathcal H$能实现$S$上任意一种标签。即对任意标签集$\{y^{(1)} ,…,y^{(d)}\}$，存在$h\in \mathcal H$，使得$h(x^{(i)}) = y^{(i)}$。给定集合$\mathcal H$，定义其VC维（VapnikChervonenkis dimension）为$\mathcal H$能打散的最大的集合数量，用$\text{VC}(\mathcal H)$表示，如果$\mathcal H$能打散任意数量的集合，那么$\text{VC}(\mathcal H) =\infty$。</p>
+<p>例如，考虑如下三个点的集合：</p>
+<p><img src="https://github.com/Doraemonzzz/md-photo/blob/master/CS229/lecture%2010/2018121601.png?raw=true" alt=""></p>
+<p>二维线性分类器$(h(x) = 1\{\theta_0 + \theta_1 x_1 + \theta_2 x_2 \ge 0\})$的假设类$\mathcal H $能否将上述情形打散呢？回答是肯定的，如下图所示：</p>
+<p><img src="https://github.com/Doraemonzzz/md-photo/blob/master/CS229/lecture%2010/2018121602.png?raw=true" alt=""></p>
+<p>此外，不难看出$\mathcal H$无法打散$4$个点的情形，所以$\text{VC}(\mathcal H) =3$。</p>
+<p>需要注意的是，尽管$\text{VC}(\mathcal H) =3$，但仍然有$3$个点的情形无法被打散，如下图所示：</p>
+<p><img src="https://github.com/Doraemonzzz/md-photo/blob/master/CS229/lecture%2010/2018121603.png?raw=true" alt=""></p>
+<p>换句话说，在VC维的定义下，为了证明$\text{VC}(\mathcal H) $至少为$d$，只要证明至少有一个规模为$d$的集合能被打散即可。</p>
+<p>接下来给出学习理论中的重要定理：</p>
+<h4 id="定理"><a href="#定理" class="headerlink" title="定理"></a>定理</h4><p>给定$\mathcal H$，令$d = \text{VC}(\mathcal H) $，那么有至少$1-\delta$的概率，对于任意$h \in \mathcal H$，</p>
+<script type="math/tex; mode=display">
+|\epsilon (h)-\hat \epsilon (h)| \le 
+O\Big(\sqrt{\frac d m \log \frac{m}{d}+\frac 1 m \log \frac 1 \delta} \Big)</script><p>因为，至少有$1-\delta$的概率，我们有：</p>
+<script type="math/tex; mode=display">
+\epsilon (\hat h) \le  \epsilon(h^*)+
+O\Big(\sqrt{\frac d m \log \frac{m}{d}+\frac 1 m \log \frac 1 \delta} \Big)</script><p>换句话说，如果假设类的VC维有限，那么当$m$比较大的时候一致收敛就会成立，和之前一样，这就能让我们用$\epsilon(h^*)$的形式给出$\epsilon(h)$的上界。我们还有如下推论：</p>
+<h4 id="推论"><a href="#推论" class="headerlink" title="推论"></a>推论</h4><p>为了让$|\epsilon(h) -\hat \epsilon (h)|\le \gamma$对于任意$h \in \mathcal H$有至少$1-\delta$的概率成立（从而可以推出$\epsilon (\hat h) \le  \epsilon(h^*) +2\gamma$，只要满足$m=O_{\gamma,\delta}(d)$</p>
+<p>换句话说，要使得假设类$\mathcal H$的表现比较好，我们需要和其VC维线性关系的数据，实际中，VC维往往和参数数量呈线性关系，所以一般情况下训练样本数要和参数数量呈线性关系。</p>
+<p>备注：有关VC维的部分这里比较简略，可以参考林轩田老师的课程以及Learning From Data第二章的内容。</p>
+<h2 id="Part-VII-正则化（Regularization-）与模型选择（model-selection-）"><a href="#Part-VII-正则化（Regularization-）与模型选择（model-selection-）" class="headerlink" title="Part VII 正则化（Regularization ）与模型选择（model selection ）"></a>Part VII 正则化（Regularization ）与模型选择（model selection ）</h2><p>这一讲主要介绍如何权衡偏差与方差，选择适合的模型以及参数。</p>
+<h3 id="1-交叉验证（Cross-validation）"><a href="#1-交叉验证（Cross-validation）" class="headerlink" title="1 交叉验证（Cross validation）"></a>1 交叉验证（Cross validation）</h3><p>假设给定训练集$S$，我们已经了解经验风险最小化，来看下面一个使用经验风险最小化推导的算法：</p>
+<ul>
+<li>1.在$S$上训练每个模型$M_i$，得到假设$h_i$。</li>
+<li>2.选择具有最小训练误差的假设。</li>
+</ul>
+<p>这个算法是没有用的。考虑选择多项式的次数，多项式次数越高，那么模型在训练集上的表现就越好，因此就有较小的训练误差。所以这个模型会选择一个有高方差，高次数的多项式模型，这通常是一个糟糕的选择。</p>
+<p>现在有一个效果更好的算法，叫做保留交叉验证（hold-out cross validation），也叫做简单交叉验证（simple cross validation） ，步骤如下： </p>
+<ul>
+<li>1.将$S​$随机分为$S_{\text{train}}​$（一般为$70\%​$）和$S_{\text{cv}}​$（剩余的$30\%​$）。这里$S_{\text{cv}}​$被称为保留交叉验证集。</li>
+<li>在$S_{\text{train} }$训练每个模型$M_i$获得$h_i$。</li>
+<li>选择在交叉验证集上误差$\hat \epsilon_{S_{\text {cv}}}(h_i)​$最小的假设$h_i​$。（回顾，$\hat \epsilon_{S_{\text cv}}(h)​$表示$h​$在$S_{\text{cv}}​$上的经验风险）。</li>
+</ul>
+<p>通过在我们没有训练过的样本$S_{\text{cv}}​$上做测试，我们得到了对$h_i​$的真实泛化误差的更好估计，而且可以选择具有最小泛化估计误差的假设。通常，交叉验证集合的比例选在$\frac 1 4 -\frac 1 3​$直接，$30\%​$是一个经典的选择。</p>
+<p>另一种选择是，将步骤$3$替换为根据$\arg \min _i \hat \epsilon_{S_{\text cv}}(h_i)$选择模型$M_i$，然后在全体数据$S$上重新训练$M_i$。（这通常是一个好方法，除了学习算法对初始条件和数据的扰动非常敏感的情形，这时候，在$S_{\text{train}}$上表现很好的模型未必能在$S_{\text{cv}}​$表现很好，这时候最好取消重新训练的步骤。）</p>
+<p>保留交叉验证的劣势在于保留交叉验浪费了$30\%$的数据，即使我们选择在全体数据上重新训练模型，我们仍然只是在$0.7m$的数据上找到表现最好的模型，因为我们每次只是在$0.7m$的数据上训练模型。当数据充足或者很廉价的时候这种方法没有问题，而当数据很少的时候，我们希望有更好的方法。</p>
+<p>下面是一个方法，被称为$k$-折叠交叉验证（$k$-fold cross validation），每次保留的数据更少的数据：</p>
+<ul>
+<li>1.将$S$随机分为$k$个不相交的子集，每个子集有$m/k$个训练样本，称每个子集为$S_1,…,S_k$</li>
+<li>2.对每个模型$M_i$，我们按如下方式进行评估：<ul>
+<li>对$j=1,…,k$<ul>
+<li>在$S_1\bigcup…\bigcup S_{j-1}\bigcup S_{j+1}\bigcup …S_k$（即除了$S_j$以外的数据）训练$M_i$获得假设$h_{ij}$。在$S_j$上测试$h_{ij}$，得到$\hat \epsilon_{S_j}(h_{ij})$</li>
+</ul>
+</li>
+<li>计算$\hat \epsilon_{S_j}(h_{ij})$的平均值来估计模型$M_i$的泛化误差</li>
+</ul>
+</li>
+<li>3.选择具有最小泛化误差估计值的模型$M_i$，在$S$上重新训练模型，这样产生的假设是最终结果</li>
+</ul>
+<p>$k$的经典选择是$10$。尽管每次验证的数据只有$1/k$（比之前少很多），但这个过程需要更多的计算成本，因为我们要对每个模型训练$k$次。</p>
+<p>尽管$k=10$是一个常用的选择，在数据量非常少的时候，有时我们会选择$k=m$的极端情形，为了每次尽可能少的排除数据。在这种情况下，每次会在除了$S$中一个训练样本的数据上训练，在保留样本上测试，然后计算$m=k$个误差的平均值来估计模型的泛化误差。这种方法有自己的名字，因为我们每次保留一个训练数据，这种方法被称为<strong>弃一法交叉验证</strong> （leave-one-out cross validation） 。</p>
+<p>最后总结一下，尽管我们介绍了用于选择模型的不同版本的交叉验证方法，这些方法也可以用于评估单一模型或算法。例如，如果你实现了一个学习算法并且想估计该算法在你的应用上表现的有多好，交叉验证法是一个合理的方法。</p>
+<h3 id="2-特征选择（Feature-Selection-）"><a href="#2-特征选择（Feature-Selection-）" class="headerlink" title="2 特征选择（Feature Selection ）"></a>2 特征选择（Feature Selection ）</h3><p>一种特殊的模型选择方法被称为特征选择。想象一下有一个监督学习问题，其特征数$n$非常大（也许$n\gg m$），但是你怀疑只有一部分特征和学习任务“相关”。</p>
+<p>在这样的背景下，你就可以使用特征选择算法来减少特征的数量。给定$n$个特征，有$2^n$中可能的特征子集，那么特征选择问题看成一个在$2^n$个可能模型上的模型选择问题。当$n$很大的时候，遍历比较全部$2^n$个模型成本太大，所以典型的启发式搜索算法是找到一个比较好的特征子集。下面一个搜索算法被称为<strong>前向搜索</strong>：</p>
+<ul>
+<li><p>1.初始化$\mathcal F= \varnothing$</p>
+</li>
+<li><p>2.重复{</p>
+<ul>
+<li>(a)对于$i=1,…,n$，如果$i\notin \mathcal F$，令$\mathcal F_i= \mathcal F \bigcup \{i\}$，然后使用某个版本的交叉验证来评估特征$\mathcal F_i$（即仅使用$\mathcal F_i$中的特征来训练学习算法，然后估计泛化误差）</li>
+<li>(b)令$\mathcal F$为步骤(a)中得到的最好特征子集</li>
+</ul>
+<p>}</p>
+</li>
+<li><p>3.选择并输出整个训练过程中得最好的特征子集</p>
+</li>
+</ul>
+<p>外层循环可以在或者$\mathcal F= \{1,..,n\}$，或者$|\mathcal F|$达到预先设定的阈值时停止。</p>
+<p>上述算法是一种<strong>包装器特征选择 </strong>（wrapper model feature selection ）的实例，因为该算法本身就是将学习算法进行“打包”的过程，然后重复调用学习算法来评估不同特征子集的效果。除了前向搜索算法，还有其他搜索算法可以使用。例如反向搜索算法，该算法从$\mathcal F= \{1,..,n\}$开始，每次删除一个特征（利用类似前向搜索中评估增加单一特征的方法来评估单一特征删除），重复该操作直到$\mathcal F =\varnothing$</p>
+<p>包装器特征选择通常效果很好，但是计算成本很大，因为要对学习算法多次调用。事实上，完成前向搜索（终止直至$\mathcal F= \{1,..,n\}$）将需要大约调用$O(n^2)$次算法。</p>
+<p><strong>过滤器特征选择</strong>（Filter feature selection methods） 给出一个启发性，但是计算成本更小的选择特征子集的方式。这里的想法是计算某些简单的分值$S(i)$，该分值可以衡量每个特征$x_i$对分类标签$y$提供了多少信息。然后，我们选择$k$个分值$S(i)$最大的特征。</p>
+<p>一种可能定义分值$S(i)$的方法是$x_i$和$y$的相关系数，可以由训练样本计算出。这会导致我们选择和分类标签相关性最强的特征。实际中，我们更多地（尤其是特征$x_i$离散的情形）选择$S(i)$为$x_i$和$y$的互信息（mutual information ）$\text{MI}(x_i,y)$：</p>
+<script type="math/tex; mode=display">
+\text{MI}(x_i,y) = \sum_{x_i\in \{0,1\}}
+\sum_{y\in \{0,1\}} p(x_i,y)\log 
+\frac{ p(x_i,y)}{p(x_i)p(y)}</script><p>（上述等式假设$x_i,y$为二值变量；更一般的，求和会遍历$x_i,y$的取值。）$p(x_i,y),p(x_i),p(y)$可以从训练集中的经验分布中估计出来。</p>
+<p>为了获得该分值作用的直观印象，注意互信息可以表达为$\text{KL}-$散度：</p>
+<script type="math/tex; mode=display">
+\text{MI}(x_i,y) =  \text{KL}(p(x_i,y)||p(x_i)p(y))</script><p>$\text{KL}-$散度度量了两个概率分布$p(x_i,y)$和$p(x_i)p(y)$的不同，如果$x_i,y$为独立随机变量，那么这两个分布的$\text{KL}-$散度为$0$。这也符合直观印象：如果$x_i,y$独立，那么$x_i$对$y$没有提供信息。相反，如果$x_i$对$y$提供很多信息，那么$\text{MI}(x_i,y) $应该很大。</p>
+<p>最后一个细节：现在根据分值$S(i)$对特征进行排序，你将如何选择特征数量$k$？一个标准的方法是使用交叉验证从可能的不同$k$中进行选择。例如，当应用朴素贝叶斯方法进行文本分类，词汇量$n$通常很大，使用该方法选择特征子集通常可以提高分类精度。</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">Doraemonzzz</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="http://doraemonzzz.com/2018/12/16/CS229%20Lesson%2010%20%E7%89%B9%E5%BE%81%E9%80%89%E6%8B%A9/">http://doraemonzzz.com/2018/12/16/CS229%20Lesson%2010%20%E7%89%B9%E5%BE%81%E9%80%89%E6%8B%A9/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://doraemonzzz.com" target="_blank">Doraemonzzz</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/CS229/">CS229</a></div><div class="post_share"><div class="social-share" data-image="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2018/12/18/%E5%8F%B0%E5%A4%A7%E5%AE%9E%E5%88%86%E6%9E%90%E5%8D%95%E5%85%83%2017%20Caratheodory%20Measure%203/"><img class="prev-cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">台大实分析单元 17 Caratheodory Measure 3</div></div></a></div><div class="next-post pull-right"><a href="/2018/12/14/%E6%B5%99%E5%A4%A7%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E8%A1%A5%E5%85%85%E5%86%85%E5%AE%B9/"><img class="next-cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">浙大数据结构补充内容</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span> 相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2019/03/01/CS229 2017版作业0/" title="CS229 2017版作业0"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2019-03-01</div><div class="title">CS229 2017版作业0</div></div></a></div><div><a href="/2019/04/02/CS229 2017版作业4/" title="CS229 2017版作业4"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2019-04-02</div><div class="title">CS229 2017版作业4</div></div></a></div><div><a href="/2018/12/12/CS229 Hoeffding不等式补充资料/" title="CS229 Hoeffding不等式补充资料"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2018-12-12</div><div class="title">CS229 Hoeffding不等式补充资料</div></div></a></div><div><a href="/2019/02/01/CS229 Lesson 1 机器学习的动机与应用/" title="CS229 Lesson 1 机器学习的动机与应用"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2019-02-01</div><div class="title">CS229 Lesson 1 机器学习的动机与应用</div></div></a></div><div><a href="/2018/12/25/CS229 Lesson 11 贝叶斯统计正则化/" title="CS229 Lesson 11 贝叶斯统计正则化"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2018-12-25</div><div class="title">CS229 Lesson 11 贝叶斯统计正则化</div></div></a></div><div><a href="/2018/12/31/CS229 Lesson 12 K-means算法/" title="CS229 Lesson 12 K-means算法"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2018-12-31</div><div class="title">CS229 Lesson 12 K-means算法</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="card-info-avatar is-center"><img class="avatar-img" src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/><div class="author-info__name">Doraemonzzz</div><div class="author-info__description">个人博客，主要记录有关机器学习，数学以及计算机科学的笔记</div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">610</div></a></div><div class="card-info-data-item is-center"><a href="/tags/"><div class="headline">标签</div><div class="length-num">59</div></a></div><div class="card-info-data-item is-center"><a href="/categories/"><div class="headline">分类</div><div class="length-num">23</div></a></div></div><a class="button--animated" id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/Doraemonzzz" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="/doraemon_zzz@163.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn card-announcement-animation"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#4-%E6%97%A0%E9%99%90%E4%B8%AA%E5%81%87%E8%AE%BE%EF%BC%88infinite-mathcal-H-%EF%BC%89%E7%9A%84%E6%83%85%E5%86%B5"><span class="toc-number">1.</span> <span class="toc-text">4 无限个假设（infinite $\mathcal H$）的情况</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AE%9A%E7%90%86"><span class="toc-number">1.1.</span> <span class="toc-text">定理</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%8E%A8%E8%AE%BA"><span class="toc-number">1.2.</span> <span class="toc-text">推论</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Part-VII-%E6%AD%A3%E5%88%99%E5%8C%96%EF%BC%88Regularization-%EF%BC%89%E4%B8%8E%E6%A8%A1%E5%9E%8B%E9%80%89%E6%8B%A9%EF%BC%88model-selection-%EF%BC%89"><span class="toc-number"></span> <span class="toc-text">Part VII 正则化（Regularization ）与模型选择（model selection ）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E4%BA%A4%E5%8F%89%E9%AA%8C%E8%AF%81%EF%BC%88Cross-validation%EF%BC%89"><span class="toc-number">1.</span> <span class="toc-text">1 交叉验证（Cross validation）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E7%89%B9%E5%BE%81%E9%80%89%E6%8B%A9%EF%BC%88Feature-Selection-%EF%BC%89"><span class="toc-number">2.</span> <span class="toc-text">2 特征选择（Feature Selection ）</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2021/06/06/2021-6-6-%E7%AE%97%E6%B3%95%E6%A6%82%E8%AE%BA(DPV)%E4%B9%A0%E9%A2%98%E8%A7%A3%E7%AD%94%E2%80%94%E2%80%94%E7%AC%AC3%E7%AB%A0-%E5%9B%BE%E7%9A%84%E5%88%86%E8%A7%A3/" title="算法概论(DPV)习题解答——第3章 图的分解"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="算法概论(DPV)习题解答——第3章 图的分解"/></a><div class="content"><a class="title" href="/2021/06/06/2021-6-6-%E7%AE%97%E6%B3%95%E6%A6%82%E8%AE%BA(DPV)%E4%B9%A0%E9%A2%98%E8%A7%A3%E7%AD%94%E2%80%94%E2%80%94%E7%AC%AC3%E7%AB%A0-%E5%9B%BE%E7%9A%84%E5%88%86%E8%A7%A3/" title="算法概论(DPV)习题解答——第3章 图的分解">算法概论(DPV)习题解答——第3章 图的分解</a><time datetime="2021-06-06T14:35:00.000Z" title="发表于 2021-06-06 22:35:00">2021-06-06</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/06/06/2021-6-6-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E7%AC%AC5%E7%AB%A0-%E4%B9%A0%E9%A2%98%E8%A7%A3%E6%9E%90/" title="深入理解计算机系统 第5章 习题解析"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="深入理解计算机系统 第5章 习题解析"/></a><div class="content"><a class="title" href="/2021/06/06/2021-6-6-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E7%AC%AC5%E7%AB%A0-%E4%B9%A0%E9%A2%98%E8%A7%A3%E6%9E%90/" title="深入理解计算机系统 第5章 习题解析">深入理解计算机系统 第5章 习题解析</a><time datetime="2021-06-06T07:23:00.000Z" title="发表于 2021-06-06 15:23:00">2021-06-06</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/06/05/2021-6-5-Stanford-Compiler-PA5%E7%BF%BB%E8%AF%91/" title="Stanford Compiler PA5翻译"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Stanford Compiler PA5翻译"/></a><div class="content"><a class="title" href="/2021/06/05/2021-6-5-Stanford-Compiler-PA5%E7%BF%BB%E8%AF%91/" title="Stanford Compiler PA5翻译">Stanford Compiler PA5翻译</a><time datetime="2021-06-05T06:12:00.000Z" title="发表于 2021-06-05 14:12:00">2021-06-05</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/06/04/2021-6-4-Stanford-Compiler-PA4%E7%BF%BB%E8%AF%91/" title="Stanford Compiler PA4翻译"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Stanford Compiler PA4翻译"/></a><div class="content"><a class="title" href="/2021/06/04/2021-6-4-Stanford-Compiler-PA4%E7%BF%BB%E8%AF%91/" title="Stanford Compiler PA4翻译">Stanford Compiler PA4翻译</a><time datetime="2021-06-03T16:17:00.000Z" title="发表于 2021-06-04 00:17:00">2021-06-04</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/06/03/2021-6-3-%E5%B7%A7%E5%A6%99%E7%9A%84Y%E8%BF%90%E7%AE%97%E7%AC%A6/" title="巧妙的Y运算符"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="巧妙的Y运算符"/></a><div class="content"><a class="title" href="/2021/06/03/2021-6-3-%E5%B7%A7%E5%A6%99%E7%9A%84Y%E8%BF%90%E7%AE%97%E7%AC%A6/" title="巧妙的Y运算符">巧妙的Y运算符</a><time datetime="2021-06-03T00:54:00.000Z" title="发表于 2021-06-03 08:54:00">2021-06-03</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2021 By Doraemonzzz</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><div class="js-pjax"><script>if (!window.MathJax) {
+  window.MathJax = {
+    loader: {
+      source: {
+        '[tex]/amsCd': '[tex]/amscd'
+      }
+    },
+    tex: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]],
+      tags: 'ams'
+    },
+    options: {
+      renderActions: {
+        findScript: [10, doc => {
+          for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+            const display = !!node.type.match(/; *mode=display/)
+            const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+            const text = document.createTextNode('')
+            node.parentNode.replaceChild(text, node)
+            math.start = {node: text, delim: '', n: 0}
+            math.end = {node: text, delim: '', n: 0}
+            doc.math.push(math)
+          }
+        }, ''],
+        addClass: [200,() => {
+          document.querySelectorAll('mjx-container:not([display=\'true\']').forEach( node => {
+            const target = node.parentNode
+            if (!target.classList.contains('has-jax')) {
+              target.classList.add('mathjax-overflow')
+            }
+          })
+        }, '', false]
+      }
+    }
+  }
+  
+  const script = document.createElement('script')
+  script.src = 'https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js'
+  script.id = 'MathJax-script'
+  script.async = true
+  document.head.appendChild(script)
+} else {
+  MathJax.startup.document.state(0)
+  MathJax.texReset()
+  MathJax.typeset()
+}</script></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

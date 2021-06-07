@@ -1,0 +1,333 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>台交大信息论 Lecture 8 | Doraemonzzz</title><meta name="keywords" content="信息论"><meta name="author" content="Doraemonzzz"><meta name="copyright" content="Doraemonzzz"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="课程主页：https:&#x2F;&#x2F;ocw.nctu.edu.tw&#x2F;course_detail-c.php?bgid&#x3D;8&amp;gid&#x3D;0&amp;nid&#x3D;612&amp;pid&#x3D;973 http:&#x2F;&#x2F;shannon.cm.nctu.edu.tw&#x2F;it18.htm 老师主页：http:&#x2F;&#x2F;shannon.cm.nctu.edu.tw&#x2F; 课程视频：https:&#x2F;&#x2F;www.youtube.com&#x2F;playli">
+<meta property="og:type" content="article">
+<meta property="og:title" content="台交大信息论 Lecture 8">
+<meta property="og:url" content="http://doraemonzzz.com/2020/08/09/%E5%8F%B0%E4%BA%A4%E5%A4%A7%E4%BF%A1%E6%81%AF%E8%AE%BA%20Lecture%208/index.html">
+<meta property="og:site_name" content="Doraemonzzz">
+<meta property="og:description" content="课程主页：https:&#x2F;&#x2F;ocw.nctu.edu.tw&#x2F;course_detail-c.php?bgid&#x3D;8&amp;gid&#x3D;0&amp;nid&#x3D;612&amp;pid&#x3D;973 http:&#x2F;&#x2F;shannon.cm.nctu.edu.tw&#x2F;it18.htm 老师主页：http:&#x2F;&#x2F;shannon.cm.nctu.edu.tw&#x2F; 课程视频：https:&#x2F;&#x2F;www.youtube.com&#x2F;playli">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg">
+<meta property="article:published_time" content="2020-08-09T03:33:00.000Z">
+<meta property="article:modified_time" content="2020-08-15T04:18:35.629Z">
+<meta property="article:author" content="Doraemonzzz">
+<meta property="article:tag" content="信息论">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="http://doraemonzzz.com/2020/08/09/%E5%8F%B0%E4%BA%A4%E5%A4%A7%E4%BF%A1%E6%81%AF%E8%AE%BA%20Lecture%208/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"prismjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    jQuery: 'https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js',
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+    },
+    fancybox: {
+      js: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isanchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '台交大信息论 Lecture 8',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2020-08-15 12:18:35'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    })(window)</script><meta name="generator" content="Hexo 5.4.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="author-avatar"><img class="avatar-img" src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">文章</div><div class="length-num">610</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">标签</div><div class="length-num">59</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/categories/"><div class="headline">分类</div><div class="length-num">23</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">Doraemonzzz</a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">台交大信息论 Lecture 8</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2020-08-09T03:33:00.000Z" title="发表于 2020-08-09 11:33:00">2020-08-09</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2020-08-15T04:18:35.629Z" title="更新于 2020-08-15 12:18:35">2020-08-15</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E6%95%B0%E5%AD%A6/">数学</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="台交大信息论 Lecture 8"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p>课程主页：<a target="_blank" rel="noopener" href="https://ocw.nctu.edu.tw/course_detail-c.php?bgid=8&amp;gid=0&amp;nid=612&amp;pid=973">https://ocw.nctu.edu.tw/course_detail-c.php?bgid=8&amp;gid=0&amp;nid=612&amp;pid=973</a></p>
+<p><a target="_blank" rel="noopener" href="http://shannon.cm.nctu.edu.tw/it18.htm">http://shannon.cm.nctu.edu.tw/it18.htm</a></p>
+<p>老师主页：<a target="_blank" rel="noopener" href="http://shannon.cm.nctu.edu.tw/">http://shannon.cm.nctu.edu.tw/</a></p>
+<p>课程视频：<a target="_blank" rel="noopener" href="https://www.youtube.com/playlist?list=PLj6E8qlqmkFsWS54o6gNWeDGXeI7c3eUd">https://www.youtube.com/playlist?list=PLj6E8qlqmkFsWS54o6gNWeDGXeI7c3eUd</a></p>
+<p>这次回顾第八讲，这一讲主要介绍了用于无损压缩的变长码，对应视频13。</p>
+<span id="more"></span>
+<h3 id="前缀码的例子"><a href="#前缀码的例子" class="headerlink" title="前缀码的例子"></a>前缀码的例子</h3><h4 id="霍夫曼编码：最优变长码"><a href="#霍夫曼编码：最优变长码" class="headerlink" title="霍夫曼编码：最优变长码"></a>霍夫曼编码：最优变长码</h4><h5 id="引理1"><a href="#引理1" class="headerlink" title="引理1"></a>引理1</h5><p>令$\mathcal C$是最优二元前缀码，码长为$\ell_i,i=1,\ldots,M$，其信源为$\mathcal{X}=\left\{a_{1}, \ldots, a_{M}\right\}$，符号概率为$p_{1}, \ldots, p_{M}$。不失一般性，假设</p>
+<script type="math/tex; mode=display">
+p_{1} \geq p_{2} \geq p_{3} \geq \cdots \geq p_{M}</script><p>并且概率相同的符号按照码长递减顺序排列，即如果</p>
+<script type="math/tex; mode=display">
+p_{i}=p_{i+1}=\cdots=p_{i+s}</script><p>我们有</p>
+<script type="math/tex; mode=display">
+\ell_{i} \leq \ell_{i+1} \leq \cdots \leq \ell_{i+s}</script><p>那么如下性质成立。</p>
+<ol>
+<li>概率高的信源符号有更短的码长，即$p_{i}&gt;p_{j} \Rightarrow \ell_i\le \ell_j$，$i,j=1,\ldots,M$。</li>
+<li>概率最小的两个信源有相同的码长：$\ell_{M-1}=\ell_{M}$。</li>
+<li>对于长度为$\ell_{M}$的码字，除了最后一个字符不同，其余均相同。</li>
+</ol>
+<p>证明：</p>
+<p>1.</p>
+<p>如果$p_{i}&gt;p_{j},\ell_i &gt;\ell_j$，那么交换符号$i,j$的编码，得到$\mathcal{C}^{\prime}$，注意到</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+\bar{\ell}\left(\mathcal{C}^{\prime}\right)-\bar{\ell}(\mathcal{C}) &=p_{i} \ell_{j}+p_{j} \ell_{i}-\left(p_{i} \ell_{i}+p_{j} \ell_{j}\right) \\
+&=\left(p_{i}-p_{j}\right)\left(\ell_{j}-\ell_{i}\right) \\
+&<0
+\end{aligned}</script><p>这就与$\mathcal C$的定义相矛盾。</p>
+<p>2.</p>
+<p>如果$p_{M-1} &gt; p_M$，那么由1可得</p>
+<script type="math/tex; mode=display">
+\ell_{M-1} \leq \ell_{M}</script><p>如果$p_{M-1}=p_M$，那么根据编码的规则可得</p>
+<script type="math/tex; mode=display">
+\ell_{M-1} \leq \ell_{M}</script><p>如果$\ell_{M-1}&lt;\ell_{M}$，那么可以删掉码字$M$的最后一个字符得到新的编码$\mathcal C’$，由前缀码的定义可得$\mathcal  C’$也是前缀码，但是平均码长小于$\mathcal C$，这就与$\mathcal C$矛盾。</p>
+<p>3.</p>
+<p>对于长度为$\ell_{M}$的码字，如果不存在只有最后一个字符的不同的两个码字，那么可以删掉所有长度为$\ell_M$的码字的最后一个字符，得到新的前缀码$\mathcal C’$，该前缀码的平均码长小于$C$的平均码长，这就产生了矛盾。</p>
+<h5 id="引理-霍夫曼"><a href="#引理-霍夫曼" class="headerlink" title="引理(霍夫曼)"></a>引理(霍夫曼)</h5><p>考虑符号为$\mathcal{X}=\left\{a_{1}, \ldots, a_{M}\right\}$的信源，符号概率$p_{1}, \ldots, p_{M}$满足</p>
+<script type="math/tex; mode=display">
+p_{1} \geq p_{2} \geq \cdots \geq p_{M}</script><p>考虑构造简化源符号$\mathcal Y$，方法如下：将两个概率最小的源符号$ a_ {M-1} $和$ a_ {M} $合并为符号$a_{M-1,M}$，其概率为$p_{M-1}+p_{M}$。假设$C’$为由$f^{\prime}: \mathcal{Y} \rightarrow\{0,1\}^{\star}$生成的最优编码（信源为$\mathcal Y$）。现在构造信源$\mathcal X$的编码$\mathcal{C}, f: \mathcal{X} \rightarrow\{0,1\}^{\star}$：</p>
+<ul>
+<li><p>$a_{1}, a_{2}, \cdots, a_{M-2}$的码字不变：</p>
+<script type="math/tex; mode=display">
+f\left(a_{1}\right)=f^{\prime}\left(a_{1}\right), f\left(a_{2}\right)=f^{\prime}\left(a_{2}\right), \cdots, f\left(a_{M-2}\right)=f^{\prime}\left(a_{M-2}\right)</script></li>
+<li><p>$a_{M-1},a_M$的码字如下：</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+f\left(a_{M-1}\right)&=\left[f^{\prime}\left(a_{M-1, M}\right) 0\right]\\
+f\left(a_{M}\right)&=\left[f^{\prime}\left(a_{M-1, M}\right) 1\right]
+\end{aligned}</script></li>
+</ul>
+<p>那么编码$\mathcal C$是信源$\mathcal X$的最优编码。</p>
+<h5 id="霍夫曼编码算法"><a href="#霍夫曼编码算法" class="headerlink" title="霍夫曼编码算法"></a>霍夫曼编码算法</h5><ol>
+<li>重复应用以上引理，直到剩下带有两个符号的简化源。 此源的最佳二进制前缀码由码字$0$和$1$组成。</li>
+<li>然后向后进行，为每个简化源构建（如上述引理所述）最佳代码，直到到达原始源为止。</li>
+</ol>
+<h4 id="Shannon-Fano-Elias编码"><a href="#Shannon-Fano-Elias编码" class="headerlink" title="Shannon-Fano-Elias编码"></a>Shannon-Fano-Elias编码</h4><p>假设$\mathcal{X}=\{1, \ldots, M\}$，并且对所有$x \in \mathcal{X}$，都有$P_{X}(x)&gt;0$。</p>
+<p>定义</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+F(x)&:=\sum_{a \leq x} P_{X}(a) \\
+\bar{F}(x)&:=\sum_{a<x} P_{X}(a)+\frac{1}{2} P_{X}(x)
+\end{aligned}</script><p>编码器：对于任意$x \in \mathcal{X}$，将$\bar{F}(x)$用二进制表示，即</p>
+<script type="math/tex; mode=display">
+\bar{F}(x)=. c_{1} c_{2} \ldots c_{k} \ldots</script><p>然后选择小数部分的前$k$个元素作为编码，即</p>
+<script type="math/tex; mode=display">
+\left(c_{1}, c_{2}, \ldots, c_{k}\right)</script><p>其中</p>
+<script type="math/tex; mode=display">
+k:=\left\lceil\log _{2}\left(1 / P_{X}(x)\right)\right\rceil+1</script><p>解码器：给定码字$\left(c_{1}, \ldots, c_{k}\right)$，按照$\{1,2, \ldots, M\}$的顺序计算$F(.)$，直到满足</p>
+<script type="math/tex; mode=display">
+F(x) \geq . c_{1} \ldots c_{k}</script><p>那么$x$是原始符号。</p>
+<p>下面证明解码的正确性。</p>
+<p>证明：</p>
+<p>对于任意$a \in[0,1]$，令$[a]_k$表示删除$a$第$k$位之后的全部比特所产生的数。那么</p>
+<script type="math/tex; mode=display">
+\bar{F}(x)-[\bar{F}(x)]_{k}<\frac{1}{2^{k} }</script><p>因为</p>
+<script type="math/tex; mode=display">
+k=\left\lceil\log _{2}\left(1 / P_{X}(x)\right)\right\rceil+1 \geq \log _{2}\left(1 / P_{X}(x)\right)+1</script><p>那么对$x \in\{1,2, \ldots, M\}$，我们都有</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+\frac{1}{2^{k} } & \leq \frac{1}{2} P_{X}(x) \\
+&=\left[\sum_{a<x} P_{X}(a)+\frac{P_{X}(x)}{2}\right]-\sum_{a \leq x-1} P_{X}(a) \\
+&=\bar{F}(x)-F(x-1)
+\end{aligned}</script><p>因此</p>
+<script type="math/tex; mode=display">
+F(x-1)=\left[F(x-1)+\frac{1}{2^{k} }\right]-\frac{1}{2^{k} } \leq \bar{F}(x)-\frac{1}{2^{k} }<[\bar{F}(x)]_{k}</script><p>此外</p>
+<script type="math/tex; mode=display">
+F(x)>\bar{F}(x) \geq[\bar{F}(x)]_{k}</script><p>这说明$x$是满足如下条件的第一个元素</p>
+<script type="math/tex; mode=display">
+F(x) \geq[\bar{F}(x)]_{k}=. c_{1} c_{2} \ldots c_{k}</script><p>平均码长：</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+\bar{\ell} &=\sum_{x \in \mathcal{X} } P_{X}(x)\left\lceil\log _{2} \frac{1}{P_{X}(x)}\right\rceil+1 \\
+&<\sum_{x \in \mathcal{X} } P_{X}(x) \log _{2} \frac{1}{P_{X}(x)}+2 \\
+&=(H(X)+2) \text { bits. }
+\end{aligned}</script><h4 id="Fano编码"><a href="#Fano编码" class="headerlink" title="Fano编码"></a>Fano编码</h4><p>Fano编码：Fano编码是根据以下算法生成的：</p>
+<ol>
+<li>以不增概率的顺序排列符号。</li>
+<li>将有序符号列表分为两部分，左部分的总概率尽可能接近右部分的总概率。</li>
+<li>将$0$分配给列表的左侧，将$1$分配给列表的右侧。</li>
+<li>将步骤2和步骤3递归应用到两个部分中的每个部分，细分为更多部分，并将位添加到码字中，直到每个符号都是该部分的单个成员。</li>
+</ol>
+<p>例子：</p>
+<p><img src="https://github.com/Doraemonzzz/md-photo/blob/master/%E4%BF%A1%E6%81%AF%E8%AE%BA%E2%80%94%E2%80%94%E9%99%88%E4%BC%AF%E5%AE%81/Lecture%208/2020080901.jpg?raw=true" alt=""></p>
+<h4 id="Shannon编码"><a href="#Shannon编码" class="headerlink" title="Shannon编码"></a>Shannon编码</h4><p>和Shannon-Fano-Elias编码类似，不过将概率按照非增的顺序排列，然后取</p>
+<script type="math/tex; mode=display">
+k:=\left\lceil\log _{2}\left(1 / P_{X}(x)\right)\right\rceil</script><p>注意Kraft不等式在此时同样满足：</p>
+<script type="math/tex; mode=display">
+\sum_{x \in \mathcal{X} } 2^{-\left\lceil\log _{2} \frac{1}{P_{X}(x)}\right\rceil} \leq \sum_{x \in \mathcal{X} } 2^{-\log _{2} \frac{1}{P_{X}(x)} }=\sum_{i=1}^{M} P_{X}(x)=1</script><p>之前的编码均假设概率已知，后续将介绍概率未知的编码方法。</p>
+<h4 id="自适应Huffman编码"><a href="#自适应Huffman编码" class="headerlink" title="自适应Huffman编码"></a>自适应Huffman编码</h4><p>令信源符号为$\mathcal{X}:=\left\{a_{1}, \ldots, a_{M}\right\}$，定义</p>
+<script type="math/tex; mode=display">
+N\left(a_{i} | x^{n}\right):=a_i出现在x_{1}, x_{2}, \ldots, x_{n}的次数</script><p>$a_i$当且频率为</p>
+<script type="math/tex; mode=display">
+\frac{N\left(a_{i} | x^{n}\right)}{n}</script><p>令$c_{n}\left(a_{i}\right)$为关于如下分布的Huffman码字</p>
+<script type="math/tex; mode=display">
+\left[\frac{N\left(a_{1} | x^{n}\right)}{n}, \frac{N\left(a_{2} | x^{n}\right)}{n}, \cdots, \frac{N\left(a_{J} | x^{n}\right)}{n}\right]</script><p>概率的更新方法如下，假设$x_{n+1}=a_{j}$，那么</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+\frac{N\left(a_{j} \mid x^{n+1}\right)}{n+1}&=\frac{n \times\left[N\left(a_{j} \mid x^{n}\right) / n\right]+1}{n+1} \\
+\frac{N\left(a_{i} \mid x^{n+1}\right)}{n+1}&=\frac{n \times\left[N\left(a_{i} \mid x^{n}\right) / n\right]}{n+1} \text { for } i \neq j
+\end{aligned}</script><h5 id="定义3-37（同级属性）"><a href="#定义3-37（同级属性）" class="headerlink" title="定义3.37（同级属性）"></a>定义3.37（同级属性）</h5><p>如果前缀码的编码树满足以下条件，则称该前缀代码具有同级属性：</p>
+<ol>
+<li>编码树中的每个节点（根节点除外）都有一个同级(sibling)（即编码树已饱和），并且</li>
+<li>可以按概率的降序列出节点，每个节点与其同级相邻。</li>
+</ol>
+<p>观测：前缀码是Huffman码当且仅当其满足同级属性。</p>
+<p>来看一个具体例子：</p>
+<p><img src="https://github.com/Doraemonzzz/md-photo/blob/master/%E4%BF%A1%E6%81%AF%E8%AE%BA%E2%80%94%E2%80%94%E9%99%88%E4%BC%AF%E5%AE%81/Lecture%208/2020080902.jpg?raw=true" alt=""></p>
+<h4 id="Lempel-Ziv编码"><a href="#Lempel-Ziv编码" class="headerlink" title="Lempel-Ziv编码"></a>Lempel-Ziv编码</h4><p>编码器：</p>
+<ol>
+<li>将输入序列解析为以前从未出现过的字符串。</li>
+<li>令$ L $为已解析源的不同字符串数。然后，我们需要$ \log _ {2} L $比特来索引这些字符串（从$1$开始）。每个字符串的码字由其前缀的索引与源字符串中的最后一位连接在一起。（注意用全$0$表示空字符串）</li>
+</ol>
+<p>例子：</p>
+<p>假设输入序列为$1011010100010$。</p>
+<p>步骤1：</p>
+<p>将其解析为</p>
+<script type="math/tex; mode=display">
+1,0,11,01,010,00,10</script><p>步骤2：</p>
+<p>我们需要$\left\lfloor\log _{2}(L)\right\rfloor+1=3$比特来索引这些字符，结果如下：</p>
+<script type="math/tex; mode=display">
+\begin{array}{ccccccc}
+\text{parsed source }:&1 & 0 & 11 & 01 & 010 & 00 & 10 \\
+\text{index }:&001 & 010 & 011 & 100 & 101 & 110 & 111
+\end{array}</script><p>所以码字为：</p>
+<script type="math/tex; mode=display">
+(000,1)(000,0)(001,1)(010,1)(100,0)(010,0)(001,0)</script><h5 id="定理"><a href="#定理" class="headerlink" title="定理"></a>定理</h5><p>Lempel-Ziv算法渐近地达到了任何平稳的遍历源（统计量未知）的熵率。</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">Doraemonzzz</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="http://doraemonzzz.com/2020/08/09/%E5%8F%B0%E4%BA%A4%E5%A4%A7%E4%BF%A1%E6%81%AF%E8%AE%BA%20Lecture%208/">http://doraemonzzz.com/2020/08/09/%E5%8F%B0%E4%BA%A4%E5%A4%A7%E4%BF%A1%E6%81%AF%E8%AE%BA%20Lecture%208/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://doraemonzzz.com" target="_blank">Doraemonzzz</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E4%BF%A1%E6%81%AF%E8%AE%BA/">信息论</a></div><div class="post_share"><div class="social-share" data-image="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2020/08/09/The%20Hardware%20Software%20Interface%20Lab%200/"><img class="prev-cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">The Hardware Software Interface Lab 0</div></div></a></div><div class="next-post pull-right"><a href="/2020/08/01/%E5%8F%B0%E4%BA%A4%E5%A4%A7%E9%9A%8F%E6%9C%BA%E8%BF%87%E7%A8%8B%20Lecture%207/"><img class="next-cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">台交大随机过程 Lecture 7</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span> 相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2020/05/25/Information Theory, Inference and Learning Algorithms Lecture 1/" title="Information Theory, Inference and Learning Algorithms Lecture 1"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-05-25</div><div class="title">Information Theory, Inference and Learning Algorithms Lecture 1</div></div></a></div><div><a href="/2020/05/26/Information Theory, Inference and Learning Algorithms Lecture 2/" title="Information Theory, Inference and Learning Algorithms Lecture 2"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-05-26</div><div class="title">Information Theory, Inference and Learning Algorithms Lecture 2</div></div></a></div><div><a href="/2020/06/04/Information Theory, Inference and Learning Algorithms Lecture 3/" title="Information Theory, Inference and Learning Algorithms Lecture 3"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-06-04</div><div class="title">Information Theory, Inference and Learning Algorithms Lecture 3</div></div></a></div><div><a href="/2020/06/05/Information Theory, Inference and Learning Algorithms Lecture 4/" title="Information Theory, Inference and Learning Algorithms Lecture 4"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-06-05</div><div class="title">Information Theory, Inference and Learning Algorithms Lecture 4</div></div></a></div><div><a href="/2020/06/08/Information Theory, Inference and Learning Algorithms Lecture 5/" title="Information Theory, Inference and Learning Algorithms Lecture 5"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-06-08</div><div class="title">Information Theory, Inference and Learning Algorithms Lecture 5</div></div></a></div><div><a href="/2020/06/09/Information Theory, Inference and Learning Algorithms Lecture 6/" title="Information Theory, Inference and Learning Algorithms Lecture 6"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-06-09</div><div class="title">Information Theory, Inference and Learning Algorithms Lecture 6</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="card-info-avatar is-center"><img class="avatar-img" src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/><div class="author-info__name">Doraemonzzz</div><div class="author-info__description">个人博客，主要记录有关机器学习，数学以及计算机科学的笔记</div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">610</div></a></div><div class="card-info-data-item is-center"><a href="/tags/"><div class="headline">标签</div><div class="length-num">59</div></a></div><div class="card-info-data-item is-center"><a href="/categories/"><div class="headline">分类</div><div class="length-num">23</div></a></div></div><a class="button--animated" id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/Doraemonzzz" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="/doraemon_zzz@163.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn card-announcement-animation"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%89%8D%E7%BC%80%E7%A0%81%E7%9A%84%E4%BE%8B%E5%AD%90"><span class="toc-number">1.</span> <span class="toc-text">前缀码的例子</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%9C%8D%E5%A4%AB%E6%9B%BC%E7%BC%96%E7%A0%81%EF%BC%9A%E6%9C%80%E4%BC%98%E5%8F%98%E9%95%BF%E7%A0%81"><span class="toc-number">1.1.</span> <span class="toc-text">霍夫曼编码：最优变长码</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%BC%95%E7%90%861"><span class="toc-number">1.1.1.</span> <span class="toc-text">引理1</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%BC%95%E7%90%86-%E9%9C%8D%E5%A4%AB%E6%9B%BC"><span class="toc-number">1.1.2.</span> <span class="toc-text">引理(霍夫曼)</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E9%9C%8D%E5%A4%AB%E6%9B%BC%E7%BC%96%E7%A0%81%E7%AE%97%E6%B3%95"><span class="toc-number">1.1.3.</span> <span class="toc-text">霍夫曼编码算法</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Shannon-Fano-Elias%E7%BC%96%E7%A0%81"><span class="toc-number">1.2.</span> <span class="toc-text">Shannon-Fano-Elias编码</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Fano%E7%BC%96%E7%A0%81"><span class="toc-number">1.3.</span> <span class="toc-text">Fano编码</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Shannon%E7%BC%96%E7%A0%81"><span class="toc-number">1.4.</span> <span class="toc-text">Shannon编码</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%87%AA%E9%80%82%E5%BA%94Huffman%E7%BC%96%E7%A0%81"><span class="toc-number">1.5.</span> <span class="toc-text">自适应Huffman编码</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%AE%9A%E4%B9%893-37%EF%BC%88%E5%90%8C%E7%BA%A7%E5%B1%9E%E6%80%A7%EF%BC%89"><span class="toc-number">1.5.1.</span> <span class="toc-text">定义3.37（同级属性）</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Lempel-Ziv%E7%BC%96%E7%A0%81"><span class="toc-number">1.6.</span> <span class="toc-text">Lempel-Ziv编码</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%AE%9A%E7%90%86"><span class="toc-number">1.6.1.</span> <span class="toc-text">定理</span></a></li></ol></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2021/06/06/2021-6-6-%E7%AE%97%E6%B3%95%E6%A6%82%E8%AE%BA(DPV)%E4%B9%A0%E9%A2%98%E8%A7%A3%E7%AD%94%E2%80%94%E2%80%94%E7%AC%AC3%E7%AB%A0-%E5%9B%BE%E7%9A%84%E5%88%86%E8%A7%A3/" title="算法概论(DPV)习题解答——第3章 图的分解"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="算法概论(DPV)习题解答——第3章 图的分解"/></a><div class="content"><a class="title" href="/2021/06/06/2021-6-6-%E7%AE%97%E6%B3%95%E6%A6%82%E8%AE%BA(DPV)%E4%B9%A0%E9%A2%98%E8%A7%A3%E7%AD%94%E2%80%94%E2%80%94%E7%AC%AC3%E7%AB%A0-%E5%9B%BE%E7%9A%84%E5%88%86%E8%A7%A3/" title="算法概论(DPV)习题解答——第3章 图的分解">算法概论(DPV)习题解答——第3章 图的分解</a><time datetime="2021-06-06T14:35:00.000Z" title="发表于 2021-06-06 22:35:00">2021-06-06</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/06/06/2021-6-6-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E7%AC%AC5%E7%AB%A0-%E4%B9%A0%E9%A2%98%E8%A7%A3%E6%9E%90/" title="深入理解计算机系统 第5章 习题解析"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="深入理解计算机系统 第5章 习题解析"/></a><div class="content"><a class="title" href="/2021/06/06/2021-6-6-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E7%AC%AC5%E7%AB%A0-%E4%B9%A0%E9%A2%98%E8%A7%A3%E6%9E%90/" title="深入理解计算机系统 第5章 习题解析">深入理解计算机系统 第5章 习题解析</a><time datetime="2021-06-06T07:23:00.000Z" title="发表于 2021-06-06 15:23:00">2021-06-06</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/06/05/2021-6-5-Stanford-Compiler-PA5%E7%BF%BB%E8%AF%91/" title="Stanford Compiler PA5翻译"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Stanford Compiler PA5翻译"/></a><div class="content"><a class="title" href="/2021/06/05/2021-6-5-Stanford-Compiler-PA5%E7%BF%BB%E8%AF%91/" title="Stanford Compiler PA5翻译">Stanford Compiler PA5翻译</a><time datetime="2021-06-05T06:12:00.000Z" title="发表于 2021-06-05 14:12:00">2021-06-05</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/06/04/2021-6-4-Stanford-Compiler-PA4%E7%BF%BB%E8%AF%91/" title="Stanford Compiler PA4翻译"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Stanford Compiler PA4翻译"/></a><div class="content"><a class="title" href="/2021/06/04/2021-6-4-Stanford-Compiler-PA4%E7%BF%BB%E8%AF%91/" title="Stanford Compiler PA4翻译">Stanford Compiler PA4翻译</a><time datetime="2021-06-03T16:17:00.000Z" title="发表于 2021-06-04 00:17:00">2021-06-04</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/06/03/2021-6-3-%E5%B7%A7%E5%A6%99%E7%9A%84Y%E8%BF%90%E7%AE%97%E7%AC%A6/" title="巧妙的Y运算符"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="巧妙的Y运算符"/></a><div class="content"><a class="title" href="/2021/06/03/2021-6-3-%E5%B7%A7%E5%A6%99%E7%9A%84Y%E8%BF%90%E7%AE%97%E7%AC%A6/" title="巧妙的Y运算符">巧妙的Y运算符</a><time datetime="2021-06-03T00:54:00.000Z" title="发表于 2021-06-03 08:54:00">2021-06-03</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2021 By Doraemonzzz</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><div class="js-pjax"><script>if (!window.MathJax) {
+  window.MathJax = {
+    loader: {
+      source: {
+        '[tex]/amsCd': '[tex]/amscd'
+      }
+    },
+    tex: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]],
+      tags: 'ams'
+    },
+    options: {
+      renderActions: {
+        findScript: [10, doc => {
+          for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+            const display = !!node.type.match(/; *mode=display/)
+            const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+            const text = document.createTextNode('')
+            node.parentNode.replaceChild(text, node)
+            math.start = {node: text, delim: '', n: 0}
+            math.end = {node: text, delim: '', n: 0}
+            doc.math.push(math)
+          }
+        }, ''],
+        addClass: [200,() => {
+          document.querySelectorAll('mjx-container:not([display=\'true\']').forEach( node => {
+            const target = node.parentNode
+            if (!target.classList.contains('has-jax')) {
+              target.classList.add('mathjax-overflow')
+            }
+          })
+        }, '', false]
+      }
+    }
+  }
+  
+  const script = document.createElement('script')
+  script.src = 'https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js'
+  script.id = 'MathJax-script'
+  script.async = true
+  document.head.appendChild(script)
+} else {
+  MathJax.startup.document.state(0)
+  MathJax.texReset()
+  MathJax.typeset()
+}</script></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

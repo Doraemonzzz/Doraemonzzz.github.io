@@ -1,0 +1,559 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>The Hardware Software Interface Section 6 Arrays and Structs | Doraemonzzz</title><meta name="keywords" content="CSE 351"><meta name="author" content="Doraemonzzz"><meta name="copyright" content="Doraemonzzz"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="课程主页：https:&#x2F;&#x2F;courses.cs.washington.edu&#x2F;courses&#x2F;cse351&#x2F;16sp&#x2F; 课程资料： 实验部分：https:&#x2F;&#x2F;github.com&#x2F;vuquangtrong&#x2F;HW-SW_Interface_Course 实验说明：https:&#x2F;&#x2F;courses.cs.washington.edu&#x2F;courses&#x2F;cse351&#x2F;13sp&#x2F;lab-0.html 课件：h">
+<meta property="og:type" content="article">
+<meta property="og:title" content="The Hardware Software Interface Section 6 Arrays and Structs">
+<meta property="og:url" content="http://doraemonzzz.com/2020/08/23/The%20Hardware%20Software%20Interface%20Section%206%20Arrays%20and%20Structs/index.html">
+<meta property="og:site_name" content="Doraemonzzz">
+<meta property="og:description" content="课程主页：https:&#x2F;&#x2F;courses.cs.washington.edu&#x2F;courses&#x2F;cse351&#x2F;16sp&#x2F; 课程资料： 实验部分：https:&#x2F;&#x2F;github.com&#x2F;vuquangtrong&#x2F;HW-SW_Interface_Course 实验说明：https:&#x2F;&#x2F;courses.cs.washington.edu&#x2F;courses&#x2F;cse351&#x2F;13sp&#x2F;lab-0.html 课件：h">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg">
+<meta property="article:published_time" content="2020-08-23T04:06:00.000Z">
+<meta property="article:modified_time" content="2020-08-23T10:23:38.394Z">
+<meta property="article:author" content="Doraemonzzz">
+<meta property="article:tag" content="CSE 351">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="http://doraemonzzz.com/2020/08/23/The%20Hardware%20Software%20Interface%20Section%206%20Arrays%20and%20Structs/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"prismjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    jQuery: 'https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js',
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+    },
+    fancybox: {
+      js: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isanchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'The Hardware Software Interface Section 6 Arrays and Structs',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2020-08-23 18:23:38'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    })(window)</script><meta name="generator" content="Hexo 5.4.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="author-avatar"><img class="avatar-img" src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">文章</div><div class="length-num">610</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">标签</div><div class="length-num">59</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/categories/"><div class="headline">分类</div><div class="length-num">23</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">Doraemonzzz</a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">The Hardware Software Interface Section 6 Arrays and Structs</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2020-08-23T04:06:00.000Z" title="发表于 2020-08-23 12:06:00">2020-08-23</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2020-08-23T10:23:38.394Z" title="更新于 2020-08-23 18:23:38">2020-08-23</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%8E%9F%E7%90%86/">计算机原理</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="The Hardware Software Interface Section 6 Arrays and Structs"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p>课程主页：<a target="_blank" rel="noopener" href="https://courses.cs.washington.edu/courses/cse351/16sp/">https://courses.cs.washington.edu/courses/cse351/16sp/</a></p>
+<p>课程资料：</p>
+<p>实验部分：<a target="_blank" rel="noopener" href="https://github.com/vuquangtrong/HW-SW_Interface_Course">https://github.com/vuquangtrong/HW-SW_Interface_Course</a></p>
+<p>实验说明：<a target="_blank" rel="noopener" href="https://courses.cs.washington.edu/courses/cse351/13sp/lab-0.html">https://courses.cs.washington.edu/courses/cse351/13sp/lab-0.html</a></p>
+<p>课件：<a target="_blank" rel="noopener" href="http://academictorrents.com/details/b63a566df824b39740eb9754e4fe4c0140306f4b">http://academictorrents.com/details/b63a566df824b39740eb9754e4fe4c0140306f4b</a></p>
+<p>课程视频：<a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1Zt411s7Gg?from=search&amp;seid=8781593976070799647">https://www.bilibili.com/video/BV1Zt411s7Gg?from=search&amp;seid=8781593976070799647</a></p>
+<p>这次回顾第六部分，这部分介绍了数组和结构。</p>
+<span id="more"></span>
+<h3 id="第6节：数组和结构"><a href="#第6节：数组和结构" class="headerlink" title="第6节：数组和结构"></a>第6节：数组和结构</h3><h4 id="数组分配和内存访问"><a href="#数组分配和内存访问" class="headerlink" title="数组分配和内存访问"></a>数组分配和内存访问</h4><h5 id="数组分配"><a href="#数组分配" class="headerlink" title="数组分配"></a>数组分配</h5><p>基本原则</p>
+<ul>
+<li>T A [L];</li>
+<li>上述声明表示数据类型为T，长度为L的数组</li>
+<li>内存中是L*sizeof(T)个字节的连续分配区域</li>
+</ul>
+<p><img src="https://github.com/Doraemonzzz/md-photo/blob/master/Hardware%20Software%20Interface/Section6/2020082301.jpg?raw=true" alt=""></p>
+<h5 id="数组存取"><a href="#数组存取" class="headerlink" title="数组存取"></a>数组存取</h5><p>基本原则</p>
+<ul>
+<li>T A [L];</li>
+<li>上述声明表示数据类型为T，长度为L的数组</li>
+<li>A可以被视为指向数组第一个元素的指针，类型为$\text{T}^{\star}$</li>
+</ul>
+<h4 id="多维或嵌套数组"><a href="#多维或嵌套数组" class="headerlink" title="多维或嵌套数组"></a>多维或嵌套数组</h4><h5 id="多维（嵌套）数组"><a href="#多维（嵌套）数组" class="headerlink" title="多维（嵌套）数组"></a>多维（嵌套）数组</h5><ul>
+<li>声明<ul>
+<li>T A [R] [C];</li>
+<li>数据类型为T的2D数组</li>
+<li>R行，C列</li>
+<li>类型T元素需要K个字节</li>
+</ul>
+</li>
+<li>数组大小<ul>
+<li>$\text{R} \times \text{C} \times \text{K}$字节</li>
+</ul>
+</li>
+<li>内存安排<ul>
+<li>按行排列</li>
+</ul>
+</li>
+</ul>
+<p><img src="https://github.com/Doraemonzzz/md-photo/blob/master/CMU%2015-213%20Intro%20to%20Computer%20Systems/Lecture8/2020052602.jpg?raw=true" alt=""></p>
+<p><img src="https://github.com/Doraemonzzz/md-photo/blob/master/CMU%2015-213%20Intro%20to%20Computer%20Systems/Lecture8/2020052603.jpg?raw=true" alt=""></p>
+<h5 id="嵌套数组例子"><a href="#嵌套数组例子" class="headerlink" title="嵌套数组例子"></a>嵌套数组例子</h5><pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">define</span> <span class="token macro-name">PCOUNT</span> <span class="token expression"><span class="token number">4</span></span></span>
+zip_dig pgh<span class="token punctuation">[</span>PCOUNT<span class="token punctuation">]</span> <span class="token operator">=</span> 
+  <span class="token punctuation">&#123;</span><span class="token punctuation">&#123;</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">5</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">6</span><span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+   <span class="token punctuation">&#123;</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">5</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">3</span> <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+   <span class="token punctuation">&#123;</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">5</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">7</span> <span class="token punctuation">&#125;</span><span class="token punctuation">,</span>
+   <span class="token punctuation">&#123;</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">5</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">1</span> <span class="token punctuation">&#125;</span><span class="token punctuation">&#125;</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>内存中的结果</p>
+<p><img src="https://github.com/Doraemonzzz/md-photo/blob/master/CMU%2015-213%20Intro%20to%20Computer%20Systems/Lecture8/2020052604.jpg?raw=true" alt=""></p>
+<ul>
+<li>“zip_dig pgh [4]”等价于“int pgh [4] [5]”<ul>
+<li>变量pgh：4个元素的数组，内存中连续分配</li>
+<li>每个元素都是5个int的数组，内存中连续分配</li>
+</ul>
+</li>
+<li>内存中所有元素都是按行排列</li>
+</ul>
+<h5 id="嵌套数组读取"><a href="#嵌套数组读取" class="headerlink" title="嵌套数组读取"></a>嵌套数组读取</h5><h6 id="嵌套数组行的读取"><a href="#嵌套数组行的读取" class="headerlink" title="嵌套数组行的读取"></a>嵌套数组行的读取</h6><ul>
+<li>行向量<ul>
+<li>A[i]是C个元素的数组</li>
+<li>类型T的每个元素需要K个字节</li>
+<li>起始地址为$\text{A} + \text{i} \times(\text{C} \times \text{K})$</li>
+</ul>
+</li>
+</ul>
+<p>例如$\text{int A[R][C]}$</p>
+<p><img src="https://github.com/Doraemonzzz/md-photo/blob/master/CMU%2015-213%20Intro%20to%20Computer%20Systems/Lecture8/2020052605.jpg?raw=true" alt=""></p>
+<p>考虑如下代码</p>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">int</span> <span class="token operator">*</span><span class="token function">get_pgh_zip</span><span class="token punctuation">(</span><span class="token keyword">int</span> index<span class="token punctuation">)</span>
+<span class="token punctuation">&#123;</span>
+  <span class="token keyword">return</span> pgh<span class="token punctuation">[</span>index<span class="token punctuation">]</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+<pre class="line-numbers language-assembly" data-language="assembly"><code class="language-assembly"># %rdi &#x3D; index
+leaq (%rdi,%rdi,4),%rax	# 5 * index
+leaq pgh(,%rax,4),%rax	# pgh + (20 * index)<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+<ul>
+<li>行向量<ul>
+<li>pgh[index]是5个整数的数组</li>
+<li>起始地址$\text{pgh + 20} \times \text{index}$</li>
+</ul>
+</li>
+<li>机器码<ul>
+<li>计算并返回地址</li>
+<li>计算方式为$\text{pgh} + 4 \times (\text{index} + 4 \times \text{index})$</li>
+</ul>
+</li>
+</ul>
+<h5 id="嵌套数组元素访问"><a href="#嵌套数组元素访问" class="headerlink" title="嵌套数组元素访问"></a>嵌套数组元素访问</h5><ul>
+<li>数组元素<ul>
+<li>A[i][j]是类型T的元素，需要K个字节</li>
+<li>地址为$\text{A + i} \times \text{(C} \times \text{K)} +  \text{j} \times \text{K} = \text{A} + (\text{i} \times \text{C} +  \text{j})\times \text{K}$</li>
+</ul>
+</li>
+</ul>
+<p>例如$\text{int A[R][C]}$</p>
+<p><img src="https://github.com/Doraemonzzz/md-photo/blob/master/CMU%2015-213%20Intro%20to%20Computer%20Systems/Lecture8/2020052606.jpg?raw=true" alt=""></p>
+<p>考虑如下代码</p>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">int</span> <span class="token function">get_pgh_digit</span>
+  <span class="token punctuation">(</span><span class="token keyword">int</span> index<span class="token punctuation">,</span> <span class="token keyword">int</span> dig<span class="token punctuation">)</span>
+<span class="token punctuation">&#123;</span>
+  <span class="token keyword">return</span> pgh<span class="token punctuation">[</span>index<span class="token punctuation">]</span><span class="token punctuation">[</span>dig<span class="token punctuation">]</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<pre class="line-numbers language-assembly" data-language="assembly"><code class="language-assembly">leaq	(%rdi,%rdi,4), %rax	# 5*index
+addl	%rax, %rsi	# 5*index+dig
+movl	pgh(,%rsi,4), %eax	# M[pgh + 4*(5*index+dig)]<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+<ul>
+<li>数组元素<ul>
+<li>pgh[index] [dig]是int</li>
+<li>地址：$\text{pgh + 20} \times \text{index + 4} \times \text{dig = pgh + 4} \times \text{(5} \times\text{index + dig)}$</li>
+</ul>
+</li>
+</ul>
+<h4 id="多级数组"><a href="#多级数组" class="headerlink" title="多级数组"></a>多级数组</h4><h5 id="多级数组例子"><a href="#多级数组例子" class="headerlink" title="多级数组例子"></a>多级数组例子</h5><pre class="line-numbers language-c" data-language="c"><code class="language-c">zip_dig cmu <span class="token operator">=</span> <span class="token punctuation">&#123;</span> <span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">5</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">3</span> <span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
+zip_dig mit <span class="token operator">=</span> <span class="token punctuation">&#123;</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">,</span> <span class="token number">9</span> <span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
+zip_dig ucb <span class="token operator">=</span> <span class="token punctuation">&#123;</span> <span class="token number">9</span><span class="token punctuation">,</span> <span class="token number">4</span><span class="token punctuation">,</span> <span class="token number">7</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">0</span> <span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
+
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">define</span> <span class="token macro-name">UCOUNT</span> <span class="token expression"><span class="token number">3</span></span></span>
+<span class="token keyword">int</span> <span class="token operator">*</span>univ<span class="token punctuation">[</span>UCOUNT<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token punctuation">&#123;</span>mit<span class="token punctuation">,</span> cmu<span class="token punctuation">,</span> ucb<span class="token punctuation">&#125;</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<ul>
+<li>变量univ表示由3个元素组成的数组</li>
+<li>每个元素都是一个指针<ul>
+<li>8字节</li>
+</ul>
+</li>
+<li>每个指针都指向int数组</li>
+</ul>
+<p><img src="https://github.com/Doraemonzzz/md-photo/blob/master/CMU%2015-213%20Intro%20to%20Computer%20Systems/Lecture8/2020052607.jpg?raw=true" alt=""></p>
+<h5 id="多级数组读取"><a href="#多级数组读取" class="headerlink" title="多级数组读取"></a>多级数组读取</h5><pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">int</span> <span class="token function">get_univ_digit</span>
+  <span class="token punctuation">(</span><span class="token class-name">size_t</span> index<span class="token punctuation">,</span> <span class="token class-name">size_t</span> digit<span class="token punctuation">)</span>
+<span class="token punctuation">&#123;</span>
+  <span class="token keyword">return</span> univ<span class="token punctuation">[</span>index<span class="token punctuation">]</span><span class="token punctuation">[</span>digit<span class="token punctuation">]</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<pre class="line-numbers language-assembly" data-language="assembly"><code class="language-assembly">salq    $2, %rsi            # 4*digit
+addq    univ(,%rdi,8), %rsi # p &#x3D; univ[index] + 4*digit
+movl    (%rsi), %eax        # return *p
+ret<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+<ul>
+<li>计算方式<ul>
+<li>元素访问$\text{Mem[Mem[univ + 8} \times \text{index] + 4} \times \text{digit]}$</li>
+<li>必须做两次内存读取<ul>
+<li>首先获取指向行数组的指针</li>
+<li>然后访问数组中的元素</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h4 id="内存中的结构"><a href="#内存中的结构" class="headerlink" title="内存中的结构"></a>内存中的结构</h4><h5 id="结构表示"><a href="#结构表示" class="headerlink" title="结构表示"></a>结构表示</h5><pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">struct</span> <span class="token class-name">rec</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">int</span> a<span class="token punctuation">[</span><span class="token number">4</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+    <span class="token class-name">size_t</span> i<span class="token punctuation">;</span>
+    <span class="token keyword">struct</span> <span class="token class-name">rec</span> <span class="token operator">*</span>next<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p><img src="https://github.com/Doraemonzzz/md-photo/blob/master/CMU%2015-213%20Intro%20to%20Computer%20Systems/Lecture8/2020052608.jpg?raw=true" alt=""></p>
+<ul>
+<li>结构表示为内存块<ul>
+<li>足够容纳所有的字段</li>
+</ul>
+</li>
+<li>根据声明的顺序安排字段<ul>
+<li>即使另一个排序可以产生更紧凑的表示</li>
+</ul>
+</li>
+<li>编译器确定整体大小+字段位置<ul>
+<li>机器级程序不了解源代码中的结构</li>
+</ul>
+</li>
+</ul>
+<h4 id="结构与对齐"><a href="#结构与对齐" class="headerlink" title="结构与对齐"></a>结构与对齐</h4><pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">struct</span> <span class="token class-name">S1</span> <span class="token punctuation">&#123;</span>
+  <span class="token keyword">char</span> c<span class="token punctuation">;</span>
+  <span class="token keyword">int</span> i<span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+  <span class="token keyword">double</span> v<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span> <span class="token operator">*</span>p<span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<ul>
+<li>没有对齐的数据</li>
+</ul>
+<p><img src="https://github.com/Doraemonzzz/md-photo/blob/master/CMU%2015-213%20Intro%20to%20Computer%20Systems/Lecture8/2020052609.jpg?raw=true" alt=""></p>
+<ul>
+<li>对齐的数据<ul>
+<li>原始数据类型需要K个字节</li>
+<li>地址必须是K的倍数</li>
+</ul>
+</li>
+</ul>
+<p><img src="https://github.com/Doraemonzzz/md-photo/blob/master/CMU%2015-213%20Intro%20to%20Computer%20Systems/Lecture8/2020052610.jpg?raw=true" alt=""></p>
+<h5 id="对齐原则"><a href="#对齐原则" class="headerlink" title="对齐原则"></a>对齐原则</h5><ul>
+<li>对齐数据<ul>
+<li>原始数据类型需要K个字节</li>
+<li>地址必须是K的倍数</li>
+<li>在某些机器上是必需的； x86-64上被建议使用</li>
+</ul>
+</li>
+<li>对齐数据的动机<ul>
+<li>通过（对齐的）4或8个字节的块访问内存（取决于系统）</li>
+<li>加载或存储跨越四字边界的数据效率低下</li>
+<li>当数据跨越2页时，虚拟内存会更复杂</li>
+</ul>
+</li>
+<li>编译器<ul>
+<li>在结构中插入间隙以确保正确对齐字段</li>
+</ul>
+</li>
+</ul>
+<h5 id="对齐的特定情况（x86-64）"><a href="#对齐的特定情况（x86-64）" class="headerlink" title="对齐的特定情况（x86-64）"></a>对齐的特定情况（x86-64）</h5><ul>
+<li>1个字节：char，…<ul>
+<li>地址无限制</li>
+</ul>
+</li>
+<li>2个字节：short，…<ul>
+<li>地址的最低1位必须为$0_2$</li>
+</ul>
+</li>
+<li>4个字节：int，float等<ul>
+<li>地址的最低2位必须为$00_2$</li>
+</ul>
+</li>
+<li>8个字节：double，long，char *，…<ul>
+<li>地址的最低3位必须为$000_2$</li>
+</ul>
+</li>
+<li>16个字节：long double（Linux上的GCC）<ul>
+<li>地址的最低4位必须为$0000_2$</li>
+</ul>
+</li>
+</ul>
+<h5 id="节省空间"><a href="#节省空间" class="headerlink" title="节省空间"></a>节省空间</h5><ul>
+<li><p>将较大的数据放在前面</p>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">struct</span> <span class="token class-name">S4</span> <span class="token punctuation">&#123;</span>
+  <span class="token keyword">char</span> c<span class="token punctuation">;</span>
+  <span class="token keyword">int</span> i<span class="token punctuation">;</span>
+  <span class="token keyword">char</span> d<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span> <span class="token operator">*</span>p<span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">struct</span> <span class="token class-name">S5</span> <span class="token punctuation">&#123;</span>
+  <span class="token keyword">int</span> i<span class="token punctuation">;</span>
+  <span class="token keyword">char</span> c<span class="token punctuation">;</span>
+  <span class="token keyword">char</span> d<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span> <span class="token operator">*</span>p<span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+</li>
+<li><p>有效位数($K=4$)</p>
+<p><img src="https://github.com/Doraemonzzz/md-photo/blob/master/CMU%2015-213%20Intro%20to%20Computer%20Systems/Lecture8/2020052611.jpg?raw=true" alt=""></p>
+</li>
+</ul>
+<h3 id="补充：缓冲溢出"><a href="#补充：缓冲溢出" class="headerlink" title="补充：缓冲溢出"></a>补充：缓冲溢出</h3><h4 id="内存布局"><a href="#内存布局" class="headerlink" title="内存布局"></a>内存布局</h4><h5 id="x86-64-Linux内存布局"><a href="#x86-64-Linux内存布局" class="headerlink" title="x86-64 Linux内存布局"></a>x86-64 Linux内存布局</h5><ul>
+<li>堆栈<ul>
+<li>运行时的堆栈（限制为8MB）</li>
+<li>例如，局部变量</li>
+</ul>
+</li>
+<li>堆<ul>
+<li>根据需要动态分配</li>
+<li>调用malloc(), calloc(), new()时使用</li>
+</ul>
+</li>
+<li>数据<ul>
+<li>静态分配的数据</li>
+<li>例如，全局变量，静态变量，字符串常量</li>
+</ul>
+</li>
+<li>文本/共享库<ul>
+<li>可执行机器指令</li>
+<li>只读</li>
+</ul>
+</li>
+</ul>
+<p><img src="https://github.com/Doraemonzzz/md-photo/blob/master/CMU%2015-213%20Intro%20to%20Computer%20Systems/Lecture9/2020060301.jpg?raw=true" alt=""></p>
+<h4 id="例子"><a href="#例子" class="headerlink" title="例子"></a>例子</h4><pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token comment">/* Echo Line */</span>
+<span class="token keyword">void</span> <span class="token function">echo</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">&#123;</span>
+    <span class="token keyword">char</span> buf<span class="token punctuation">[</span><span class="token number">4</span><span class="token punctuation">]</span><span class="token punctuation">;</span> <span class="token comment">/* Way too small! */</span>
+    <span class="token function">gets</span><span class="token punctuation">(</span>buf<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">puts</span><span class="token punctuation">(</span>buf<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token keyword">void</span> <span class="token function">call_echo</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+	<span class="token function">echo</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">unix<span class="token operator">></span>./bufdemo-nsp
+Type a string:012345678901234567890123
+012345678901234567890123<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+<pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">unix<span class="token operator">></span>./bufdemo-nsp
+Type a string:0123456789012345678901234
+Segmentation Fault<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+<p>反汇编的结果为如下：</p>
+<p>echo:</p>
+<pre class="line-numbers language-assembly" data-language="assembly"><code class="language-assembly">00000000004006cf &lt;echo&gt;:
+    4006cf: 48 83 ec 18 		sub $0x18,%rsp
+    4006d3: 48 89 e7 			mov %rsp,%rdi
+    4006d6: e8 a5 ff ff ff 		callq 400680 &lt;gets&gt;
+    4006db: 48 89 e7 			mov %rsp,%rdi
+    4006de: e8 3d fe ff ff 		callq 400520 &lt;puts@plt&gt;
+    4006e3: 48 83 c4 18 		add $0x18,%rsp
+    4006e7: c3 				    retq<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>call_echo:</p>
+<pre class="line-numbers language-assembly" data-language="assembly"><code class="language-assembly">4006e8: 48 83 ec 08 			sub $0x8,%rsp
+    4006ec: b8 00 00 00 00 		 mov $0x0,%eax
+    4006f1: e8 d9 ff ff ff 		 callq 4006cf &lt;echo&gt;
+    4006f6: 48 83 c4 08 		 add $0x8,%rsp
+    4006fa: c3 				    retq<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>在调用gets函数之前，栈的布局如下：</p>
+<p><img src="https://github.com/Doraemonzzz/md-photo/blob/master/CMU%2015-213%20Intro%20to%20Computer%20Systems/Lecture9/2020060303.jpg?raw=true" alt=""></p>
+<p><img src="https://github.com/Doraemonzzz/md-photo/blob/master/CMU%2015-213%20Intro%20to%20Computer%20Systems/Lecture9/2020060304.jpg?raw=true" alt=""></p>
+<p>如果运行如下命令：</p>
+<pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">unix<span class="token operator">></span>./bufdemo-nsp
+Type a string:012345678901234567890123
+012345678901234567890123<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+<p>那么布局如下：</p>
+<p><img src="https://github.com/Doraemonzzz/md-photo/blob/master/CMU%2015-213%20Intro%20to%20Computer%20Systems/Lecture9/2020060305.jpg?raw=true" alt=""></p>
+<p>如果运行如下命令：</p>
+<pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">unix<span class="token operator">></span>./bufdemo-nsp
+Type a string:0123456789012345678901234
+Segmentation Fault<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+<p>那么布局如下：</p>
+<p><img src="https://github.com/Doraemonzzz/md-photo/blob/master/CMU%2015-213%20Intro%20to%20Computer%20Systems/Lecture9/2020060306.jpg?raw=true" alt=""></p>
+<p>如果运行如下命令：</p>
+<pre class="line-numbers language-shell" data-language="shell"><code class="language-shell">unix<span class="token operator">></span>./bufdemo-nsp
+Type a string:012345678901234567890123
+012345678901234567890123<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+<p>那么布局如下：</p>
+<p><img src="https://github.com/Doraemonzzz/md-photo/blob/master/CMU%2015-213%20Intro%20to%20Computer%20Systems/Lecture9/2020060307.jpg?raw=true" alt=""></p>
+<p>此时会返回到其他的位置，例如：</p>
+<pre class="line-numbers language-shell" data-language="shell"><code class="language-shell"><span class="token builtin class-name">.</span> <span class="token builtin class-name">.</span> <span class="token builtin class-name">.</span>
+<span class="token number">400600</span>:	mov    %rsp,%rbp
+<span class="token number">400603</span>:	mov    %rax,%rdx
+<span class="token number">400606</span>:	shr    <span class="token variable">$0x3f</span>,%rdx
+40060a:	<span class="token function">add</span>    %rdx,%rax
+40060d:	sar    %rax
+<span class="token number">400610</span>:	jne    <span class="token number">400614</span>
+<span class="token number">400612</span>:	pop    %rbp
+<span class="token number">400613</span>:	retq <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>这样就会产生安全问题，例如<strong>代码注入攻击</strong>，缓冲区溢出错误可使远程计算机在受害计算机上执行任意代码。</p>
+<h4 id="如何处理缓存区溢出攻击"><a href="#如何处理缓存区溢出攻击" class="headerlink" title="如何处理缓存区溢出攻击"></a>如何处理缓存区溢出攻击</h4><ul>
+<li>避免溢出漏洞</li>
+<li>采用系统级保护</li>
+</ul>
+<p>更详细的部分见：</p>
+<p><a href="https://doraemonzzz.com/2020/06/03/CMU 15-213 Intro to Computer Systems Lecture 9/">https://doraemonzzz.com/2020/06/03/CMU%2015-213%20Intro%20to%20Computer%20Systems%20Lecture%209/</a></p>
+<h5 id="避免溢出漏洞"><a href="#避免溢出漏洞" class="headerlink" title="避免溢出漏洞"></a>避免溢出漏洞</h5><pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token comment">/* Echo Line */</span>
+<span class="token keyword">void</span> <span class="token function">echo</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">&#123;</span>
+    <span class="token keyword">char</span> buf<span class="token punctuation">[</span><span class="token number">4</span><span class="token punctuation">]</span><span class="token punctuation">;</span> <span class="token comment">/* Way too small! */</span>
+    <span class="token function">fgets</span><span class="token punctuation">(</span>buf<span class="token punctuation">,</span> <span class="token number">4</span><span class="token punctuation">,</span> <span class="token constant">stdin</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">puts</span><span class="token punctuation">(</span>buf<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>例如在之前代码中限制输入字符的数量。</p>
+<h5 id="系统级保护"><a href="#系统级保护" class="headerlink" title="系统级保护"></a>系统级保护</h5><ul>
+<li><p>堆栈随机偏移</p>
+<ul>
+<li><p>在程序开始时，在堆栈上分配随机数量的空间</p>
+</li>
+<li><p>移位整个程序的堆栈地址</p>
+</li>
+<li><p>使黑客很难预测插入代码的开始</p>
+</li>
+<li><p>例如5次执行内存分配代码的结果</p>
+<pre class="line-numbers language-none"><code class="language-none">local 0x7ffe4d3be87c 0x7fff75a4f9fc 0x7ffeadb7c80c 0x7ffeaea2fdac 0x7ffcd452017c<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+</li>
+<li><p>程序每次执行时都会重新定位堆栈</p>
+</li>
+</ul>
+</li>
+</ul>
+<p><img src="https://github.com/Doraemonzzz/md-photo/blob/master/CMU%2015-213%20Intro%20to%20Computer%20Systems/Lecture9/2020060308.jpg?raw=true" alt=""></p>
+<ul>
+<li>不可执行的代码段<ul>
+<li>在传统的x86中，可以将内存区域标记为“只读”或“可写”<ul>
+<li>可以执行任何可读的</li>
+</ul>
+</li>
+<li>X86-64添加了明确的“执行”权限</li>
+<li>堆栈标记为不可执行</li>
+</ul>
+</li>
+</ul>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">Doraemonzzz</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="http://doraemonzzz.com/2020/08/23/The%20Hardware%20Software%20Interface%20Section%206%20Arrays%20and%20Structs/">http://doraemonzzz.com/2020/08/23/The%20Hardware%20Software%20Interface%20Section%206%20Arrays%20and%20Structs/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://doraemonzzz.com" target="_blank">Doraemonzzz</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/CSE-351/">CSE 351</a></div><div class="post_share"><div class="social-share" data-image="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2020/08/24/%E7%AC%AC2%E7%AB%A0%20%E9%80%BB%E8%BE%91%E7%94%B5%E8%B7%AF%E5%85%A5%E9%97%A8/"><img class="prev-cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">第2章 逻辑电路入门</div></div></a></div><div class="next-post pull-right"><a href="/2020/08/19/Digital%20VLSI%20Design%20Lecture%202%20Verilog/"><img class="next-cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">Digital VLSI Design Lecture 2 Verilog</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span> 相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2020/08/09/The Hardware Software Interface Lab 0/" title="The Hardware Software Interface Lab 0"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-08-09</div><div class="title">The Hardware Software Interface Lab 0</div></div></a></div><div><a href="/2020/08/09/The Hardware Software Interface Lab 1/" title="The Hardware Software Interface Lab 1"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-08-09</div><div class="title">The Hardware Software Interface Lab 1</div></div></a></div><div><a href="/2020/08/16/The Hardware Software Interface Lab 2/" title="The Hardware Software Interface Lab 2"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-08-16</div><div class="title">The Hardware Software Interface Lab 2</div></div></a></div><div><a href="/2020/09/06/The Hardware Software Interface Lab 3/" title="The Hardware Software Interface Lab 3"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-09-06</div><div class="title">The Hardware Software Interface Lab 3</div></div></a></div><div><a href="/2020/09/06/The Hardware Software Interface Lab 4/" title="The Hardware Software Interface Lab 4"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-09-06</div><div class="title">The Hardware Software Interface Lab 4</div></div></a></div><div><a href="/2020/07/26/The Hardware Software Interface Section 1 Memory Data and Addressing/" title="The Hardware Software Interface Section 1 Memory Data and Addressing"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-07-26</div><div class="title">The Hardware Software Interface Section 1 Memory Data and Addressing</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="card-info-avatar is-center"><img class="avatar-img" src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/><div class="author-info__name">Doraemonzzz</div><div class="author-info__description">个人博客，主要记录有关机器学习，数学以及计算机科学的笔记</div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">610</div></a></div><div class="card-info-data-item is-center"><a href="/tags/"><div class="headline">标签</div><div class="length-num">59</div></a></div><div class="card-info-data-item is-center"><a href="/categories/"><div class="headline">分类</div><div class="length-num">23</div></a></div></div><a class="button--animated" id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/Doraemonzzz" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="/doraemon_zzz@163.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn card-announcement-animation"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC6%E8%8A%82%EF%BC%9A%E6%95%B0%E7%BB%84%E5%92%8C%E7%BB%93%E6%9E%84"><span class="toc-number">1.</span> <span class="toc-text">第6节：数组和结构</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%95%B0%E7%BB%84%E5%88%86%E9%85%8D%E5%92%8C%E5%86%85%E5%AD%98%E8%AE%BF%E9%97%AE"><span class="toc-number">1.1.</span> <span class="toc-text">数组分配和内存访问</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%95%B0%E7%BB%84%E5%88%86%E9%85%8D"><span class="toc-number">1.1.1.</span> <span class="toc-text">数组分配</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%95%B0%E7%BB%84%E5%AD%98%E5%8F%96"><span class="toc-number">1.1.2.</span> <span class="toc-text">数组存取</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%A4%9A%E7%BB%B4%E6%88%96%E5%B5%8C%E5%A5%97%E6%95%B0%E7%BB%84"><span class="toc-number">1.2.</span> <span class="toc-text">多维或嵌套数组</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%A4%9A%E7%BB%B4%EF%BC%88%E5%B5%8C%E5%A5%97%EF%BC%89%E6%95%B0%E7%BB%84"><span class="toc-number">1.2.1.</span> <span class="toc-text">多维（嵌套）数组</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%B5%8C%E5%A5%97%E6%95%B0%E7%BB%84%E4%BE%8B%E5%AD%90"><span class="toc-number">1.2.2.</span> <span class="toc-text">嵌套数组例子</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%B5%8C%E5%A5%97%E6%95%B0%E7%BB%84%E8%AF%BB%E5%8F%96"><span class="toc-number">1.2.3.</span> <span class="toc-text">嵌套数组读取</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#%E5%B5%8C%E5%A5%97%E6%95%B0%E7%BB%84%E8%A1%8C%E7%9A%84%E8%AF%BB%E5%8F%96"><span class="toc-number">1.2.3.1.</span> <span class="toc-text">嵌套数组行的读取</span></a></li></ol></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%B5%8C%E5%A5%97%E6%95%B0%E7%BB%84%E5%85%83%E7%B4%A0%E8%AE%BF%E9%97%AE"><span class="toc-number">1.2.4.</span> <span class="toc-text">嵌套数组元素访问</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%A4%9A%E7%BA%A7%E6%95%B0%E7%BB%84"><span class="toc-number">1.3.</span> <span class="toc-text">多级数组</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%A4%9A%E7%BA%A7%E6%95%B0%E7%BB%84%E4%BE%8B%E5%AD%90"><span class="toc-number">1.3.1.</span> <span class="toc-text">多级数组例子</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%A4%9A%E7%BA%A7%E6%95%B0%E7%BB%84%E8%AF%BB%E5%8F%96"><span class="toc-number">1.3.2.</span> <span class="toc-text">多级数组读取</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%86%85%E5%AD%98%E4%B8%AD%E7%9A%84%E7%BB%93%E6%9E%84"><span class="toc-number">1.4.</span> <span class="toc-text">内存中的结构</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E7%BB%93%E6%9E%84%E8%A1%A8%E7%A4%BA"><span class="toc-number">1.4.1.</span> <span class="toc-text">结构表示</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%BB%93%E6%9E%84%E4%B8%8E%E5%AF%B9%E9%BD%90"><span class="toc-number">1.5.</span> <span class="toc-text">结构与对齐</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%AF%B9%E9%BD%90%E5%8E%9F%E5%88%99"><span class="toc-number">1.5.1.</span> <span class="toc-text">对齐原则</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%AF%B9%E9%BD%90%E7%9A%84%E7%89%B9%E5%AE%9A%E6%83%85%E5%86%B5%EF%BC%88x86-64%EF%BC%89"><span class="toc-number">1.5.2.</span> <span class="toc-text">对齐的特定情况（x86-64）</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E8%8A%82%E7%9C%81%E7%A9%BA%E9%97%B4"><span class="toc-number">1.5.3.</span> <span class="toc-text">节省空间</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A1%A5%E5%85%85%EF%BC%9A%E7%BC%93%E5%86%B2%E6%BA%A2%E5%87%BA"><span class="toc-number">2.</span> <span class="toc-text">补充：缓冲溢出</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%86%85%E5%AD%98%E5%B8%83%E5%B1%80"><span class="toc-number">2.1.</span> <span class="toc-text">内存布局</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#x86-64-Linux%E5%86%85%E5%AD%98%E5%B8%83%E5%B1%80"><span class="toc-number">2.1.1.</span> <span class="toc-text">x86-64 Linux内存布局</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BE%8B%E5%AD%90"><span class="toc-number">2.2.</span> <span class="toc-text">例子</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%A6%82%E4%BD%95%E5%A4%84%E7%90%86%E7%BC%93%E5%AD%98%E5%8C%BA%E6%BA%A2%E5%87%BA%E6%94%BB%E5%87%BB"><span class="toc-number">2.3.</span> <span class="toc-text">如何处理缓存区溢出攻击</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E9%81%BF%E5%85%8D%E6%BA%A2%E5%87%BA%E6%BC%8F%E6%B4%9E"><span class="toc-number">2.3.1.</span> <span class="toc-text">避免溢出漏洞</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E7%B3%BB%E7%BB%9F%E7%BA%A7%E4%BF%9D%E6%8A%A4"><span class="toc-number">2.3.2.</span> <span class="toc-text">系统级保护</span></a></li></ol></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2021/06/06/2021-6-6-%E7%AE%97%E6%B3%95%E6%A6%82%E8%AE%BA(DPV)%E4%B9%A0%E9%A2%98%E8%A7%A3%E7%AD%94%E2%80%94%E2%80%94%E7%AC%AC3%E7%AB%A0-%E5%9B%BE%E7%9A%84%E5%88%86%E8%A7%A3/" title="算法概论(DPV)习题解答——第3章 图的分解"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="算法概论(DPV)习题解答——第3章 图的分解"/></a><div class="content"><a class="title" href="/2021/06/06/2021-6-6-%E7%AE%97%E6%B3%95%E6%A6%82%E8%AE%BA(DPV)%E4%B9%A0%E9%A2%98%E8%A7%A3%E7%AD%94%E2%80%94%E2%80%94%E7%AC%AC3%E7%AB%A0-%E5%9B%BE%E7%9A%84%E5%88%86%E8%A7%A3/" title="算法概论(DPV)习题解答——第3章 图的分解">算法概论(DPV)习题解答——第3章 图的分解</a><time datetime="2021-06-06T14:35:00.000Z" title="发表于 2021-06-06 22:35:00">2021-06-06</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/06/06/2021-6-6-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E7%AC%AC5%E7%AB%A0-%E4%B9%A0%E9%A2%98%E8%A7%A3%E6%9E%90/" title="深入理解计算机系统 第5章 习题解析"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="深入理解计算机系统 第5章 习题解析"/></a><div class="content"><a class="title" href="/2021/06/06/2021-6-6-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E7%AC%AC5%E7%AB%A0-%E4%B9%A0%E9%A2%98%E8%A7%A3%E6%9E%90/" title="深入理解计算机系统 第5章 习题解析">深入理解计算机系统 第5章 习题解析</a><time datetime="2021-06-06T07:23:00.000Z" title="发表于 2021-06-06 15:23:00">2021-06-06</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/06/05/2021-6-5-Stanford-Compiler-PA5%E7%BF%BB%E8%AF%91/" title="Stanford Compiler PA5翻译"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Stanford Compiler PA5翻译"/></a><div class="content"><a class="title" href="/2021/06/05/2021-6-5-Stanford-Compiler-PA5%E7%BF%BB%E8%AF%91/" title="Stanford Compiler PA5翻译">Stanford Compiler PA5翻译</a><time datetime="2021-06-05T06:12:00.000Z" title="发表于 2021-06-05 14:12:00">2021-06-05</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/06/04/2021-6-4-Stanford-Compiler-PA4%E7%BF%BB%E8%AF%91/" title="Stanford Compiler PA4翻译"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Stanford Compiler PA4翻译"/></a><div class="content"><a class="title" href="/2021/06/04/2021-6-4-Stanford-Compiler-PA4%E7%BF%BB%E8%AF%91/" title="Stanford Compiler PA4翻译">Stanford Compiler PA4翻译</a><time datetime="2021-06-03T16:17:00.000Z" title="发表于 2021-06-04 00:17:00">2021-06-04</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/06/03/2021-6-3-%E5%B7%A7%E5%A6%99%E7%9A%84Y%E8%BF%90%E7%AE%97%E7%AC%A6/" title="巧妙的Y运算符"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="巧妙的Y运算符"/></a><div class="content"><a class="title" href="/2021/06/03/2021-6-3-%E5%B7%A7%E5%A6%99%E7%9A%84Y%E8%BF%90%E7%AE%97%E7%AC%A6/" title="巧妙的Y运算符">巧妙的Y运算符</a><time datetime="2021-06-03T00:54:00.000Z" title="发表于 2021-06-03 08:54:00">2021-06-03</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2021 By Doraemonzzz</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><div class="js-pjax"><script>if (!window.MathJax) {
+  window.MathJax = {
+    loader: {
+      source: {
+        '[tex]/amsCd': '[tex]/amscd'
+      }
+    },
+    tex: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]],
+      tags: 'ams'
+    },
+    options: {
+      renderActions: {
+        findScript: [10, doc => {
+          for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+            const display = !!node.type.match(/; *mode=display/)
+            const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+            const text = document.createTextNode('')
+            node.parentNode.replaceChild(text, node)
+            math.start = {node: text, delim: '', n: 0}
+            math.end = {node: text, delim: '', n: 0}
+            doc.math.push(math)
+          }
+        }, ''],
+        addClass: [200,() => {
+          document.querySelectorAll('mjx-container:not([display=\'true\']').forEach( node => {
+            const target = node.parentNode
+            if (!target.classList.contains('has-jax')) {
+              target.classList.add('mathjax-overflow')
+            }
+          })
+        }, '', false]
+      }
+    }
+  }
+  
+  const script = document.createElement('script')
+  script.src = 'https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js'
+  script.id = 'MathJax-script'
+  script.async = true
+  document.head.appendChild(script)
+} else {
+  MathJax.startup.document.state(0)
+  MathJax.texReset()
+  MathJax.typeset()
+}</script></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

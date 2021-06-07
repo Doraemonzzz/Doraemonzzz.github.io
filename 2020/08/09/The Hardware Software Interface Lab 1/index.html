@@ -1,0 +1,608 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>The Hardware Software Interface Lab 1 | Doraemonzzz</title><meta name="keywords" content="CSE 351"><meta name="author" content="Doraemonzzz"><meta name="copyright" content="Doraemonzzz"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="课程主页：https:&#x2F;&#x2F;courses.cs.washington.edu&#x2F;courses&#x2F;cse351&#x2F;16sp&#x2F; 课程资料： 实验部分：https:&#x2F;&#x2F;github.com&#x2F;vuquangtrong&#x2F;HW-SW_Interface_Course 实验说明：https:&#x2F;&#x2F;courses.cs.washington.edu&#x2F;courses&#x2F;cse351&#x2F;13sp&#x2F;lab-0.html 课件：h">
+<meta property="og:type" content="article">
+<meta property="og:title" content="The Hardware Software Interface Lab 1">
+<meta property="og:url" content="http://doraemonzzz.com/2020/08/09/The%20Hardware%20Software%20Interface%20Lab%201/index.html">
+<meta property="og:site_name" content="Doraemonzzz">
+<meta property="og:description" content="课程主页：https:&#x2F;&#x2F;courses.cs.washington.edu&#x2F;courses&#x2F;cse351&#x2F;16sp&#x2F; 课程资料： 实验部分：https:&#x2F;&#x2F;github.com&#x2F;vuquangtrong&#x2F;HW-SW_Interface_Course 实验说明：https:&#x2F;&#x2F;courses.cs.washington.edu&#x2F;courses&#x2F;cse351&#x2F;13sp&#x2F;lab-0.html 课件：h">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg">
+<meta property="article:published_time" content="2020-08-09T13:09:00.000Z">
+<meta property="article:modified_time" content="2020-08-16T06:14:57.336Z">
+<meta property="article:author" content="Doraemonzzz">
+<meta property="article:tag" content="CSE 351">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="http://doraemonzzz.com/2020/08/09/The%20Hardware%20Software%20Interface%20Lab%201/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"prismjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    jQuery: 'https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js',
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+    },
+    fancybox: {
+      js: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isanchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'The Hardware Software Interface Lab 1',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2020-08-16 14:14:57'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    })(window)</script><meta name="generator" content="Hexo 5.4.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="author-avatar"><img class="avatar-img" src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">文章</div><div class="length-num">610</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">标签</div><div class="length-num">59</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/categories/"><div class="headline">分类</div><div class="length-num">23</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">Doraemonzzz</a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">The Hardware Software Interface Lab 1</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2020-08-09T13:09:00.000Z" title="发表于 2020-08-09 21:09:00">2020-08-09</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2020-08-16T06:14:57.336Z" title="更新于 2020-08-16 14:14:57">2020-08-16</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%8E%9F%E7%90%86/">计算机原理</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="The Hardware Software Interface Lab 1"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p>课程主页：<a target="_blank" rel="noopener" href="https://courses.cs.washington.edu/courses/cse351/16sp/">https://courses.cs.washington.edu/courses/cse351/16sp/</a></p>
+<p>课程资料：</p>
+<p>实验部分：<a target="_blank" rel="noopener" href="https://github.com/vuquangtrong/HW-SW_Interface_Course">https://github.com/vuquangtrong/HW-SW_Interface_Course</a></p>
+<p>实验说明：<a target="_blank" rel="noopener" href="https://courses.cs.washington.edu/courses/cse351/13sp/lab-0.html">https://courses.cs.washington.edu/courses/cse351/13sp/lab-0.html</a></p>
+<p>课件：<a target="_blank" rel="noopener" href="http://academictorrents.com/details/b63a566df824b39740eb9754e4fe4c0140306f4b">http://academictorrents.com/details/b63a566df824b39740eb9754e4fe4c0140306f4b</a></p>
+<p>课程视频：<a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1Zt411s7Gg?from=search&amp;seid=8781593976070799647">https://www.bilibili.com/video/BV1Zt411s7Gg?from=search&amp;seid=8781593976070799647</a></p>
+<p>这次完成Lab1，主要是进行比特操作。</p>
+<span id="more"></span>
+<h3 id="bits-c"><a href="#bits-c" class="headerlink" title="bits.c"></a>bits.c</h3><p>编译以及测试结果</p>
+<pre class="line-numbers language-shell" data-language="shell"><code class="language-shell"><span class="token function">make</span>
+./btest
+Score	Rating	Errors	Function
+ <span class="token number">1</span>	<span class="token number">1</span>	<span class="token number">0</span>	bitAnd
+ <span class="token number">1</span>	<span class="token number">1</span>	<span class="token number">0</span>	bitXor
+ <span class="token number">1</span>	<span class="token number">1</span>	<span class="token number">0</span>	thirdBits
+ <span class="token number">2</span>	<span class="token number">2</span>	<span class="token number">0</span>	fitsBits
+ <span class="token number">2</span>	<span class="token number">2</span>	<span class="token number">0</span>	sign
+ <span class="token number">2</span>	<span class="token number">2</span>	<span class="token number">0</span>	getByte
+ <span class="token number">3</span>	<span class="token number">3</span>	<span class="token number">0</span>	logicalShift
+ <span class="token number">3</span>	<span class="token number">3</span>	<span class="token number">0</span>	addOK
+ <span class="token number">4</span>	<span class="token number">4</span>	<span class="token number">0</span>	bang
+ <span class="token number">3</span>	<span class="token number">3</span>	<span class="token number">0</span>	conditional
+ <span class="token number">4</span>	<span class="token number">4</span>	<span class="token number">0</span>	isPower2
+Total points: <span class="token number">26</span>/26
+
+./dlc -e bits.c
+dlc:bits.c:126:bitAnd: <span class="token number">4</span> operators
+dlc:bits.c:138:bitXor: <span class="token number">8</span> operators
+dlc:bits.c:160:thirdBits: <span class="token number">6</span> operators
+dlc:bits.c:181:fitsBits: <span class="token number">7</span> operators
+dlc:bits.c:209:sign: <span class="token number">9</span> operators
+dlc:bits.c:227:getByte: <span class="token number">3</span> operators
+dlc:bits.c:272:logicalShift: <span class="token number">20</span> operators
+dlc:bits.c:296:addOK: <span class="token number">16</span> operators
+dlc:bits.c:319:bang: <span class="token number">9</span> operators
+dlc:bits.c:342:conditional: <span class="token number">12</span> operators
+dlc:bits.c:370:isPower2: <span class="token number">11</span> operators<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h4 id="bitAnd"><a href="#bitAnd" class="headerlink" title="bitAnd"></a>bitAnd</h4><p>利用如下恒等式即可</p>
+<script type="math/tex; mode=display">
+x \land y = \overline{(\overline x\lor \overline y)}</script><p>代码如下</p>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">int</span> <span class="token function">bitAnd</span><span class="token punctuation">(</span><span class="token keyword">int</span> x<span class="token punctuation">,</span> <span class="token keyword">int</span> y<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+  <span class="token keyword">int</span> z<span class="token punctuation">;</span>
+  z <span class="token operator">=</span> <span class="token operator">~</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token operator">~</span>x<span class="token punctuation">)</span> <span class="token operator">|</span> <span class="token punctuation">(</span><span class="token operator">~</span>y<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token keyword">return</span> z<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h4 id="bitXor"><a href="#bitXor" class="headerlink" title="bitXor"></a>bitXor</h4><p>异或的运算规则如下：</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>$x$</th>
+<th>$y$</th>
+<th>$x\text{^}y$</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>1</td>
+<td>0</td>
+</tr>
+<tr>
+<td>1</td>
+<td>0</td>
+<td>1</td>
+</tr>
+<tr>
+<td>0</td>
+<td>1</td>
+<td>1</td>
+</tr>
+<tr>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>不难看出</p>
+<script type="math/tex; mode=display">
+x\text{^}y = (\bar x  \land y)\lor (x \land \bar y) =\overline{\overline {(\bar x  \land y)}
+\land \overline {(\bar y  \land x)} }</script><p>代码如下</p>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">int</span> <span class="token function">bitXor</span><span class="token punctuation">(</span><span class="token keyword">int</span> x<span class="token punctuation">,</span> <span class="token keyword">int</span> y<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+  <span class="token keyword">return</span> <span class="token operator">~</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token operator">~</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token operator">~</span>x<span class="token punctuation">)</span> <span class="token operator">&amp;</span> y<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token operator">&amp;</span> <span class="token punctuation">(</span><span class="token operator">~</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token operator">~</span>y<span class="token punctuation">)</span> <span class="token operator">&amp;</span> x<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+<h4 id="thirdBits"><a href="#thirdBits" class="headerlink" title="thirdBits"></a>thirdBits</h4><p>题目意思是从最低位开始，第一位为$1$，然后每隔$3$位为$1$，所以结果为</p>
+<pre class="line-numbers language-none"><code class="language-none">0x49249249<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>代码如下</p>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">int</span> <span class="token function">thirdBits</span><span class="token punctuation">(</span><span class="token keyword">void</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+  <span class="token keyword">int</span> x<span class="token punctuation">,</span> y<span class="token punctuation">,</span> z<span class="token punctuation">;</span>
+  <span class="token comment">//0x49</span>
+  x <span class="token operator">=</span> <span class="token number">73</span><span class="token punctuation">;</span>
+  <span class="token comment">//0x2</span>
+  y <span class="token operator">=</span> <span class="token number">2</span><span class="token punctuation">;</span>
+  <span class="token comment">//0x492</span>
+  z <span class="token operator">=</span> <span class="token punctuation">(</span>x <span class="token operator">&lt;&lt;</span> <span class="token number">4</span><span class="token punctuation">)</span> <span class="token operator">|</span> y<span class="token punctuation">;</span>
+  <span class="token comment">//0x492492</span>
+  z <span class="token operator">=</span> <span class="token punctuation">(</span>z <span class="token operator">&lt;&lt;</span> <span class="token number">12</span><span class="token punctuation">)</span> <span class="token operator">|</span> z<span class="token punctuation">;</span>
+  <span class="token comment">//0x49249249</span>
+  z <span class="token operator">=</span> <span class="token punctuation">(</span>z <span class="token operator">&lt;&lt;</span> <span class="token number">8</span><span class="token punctuation">)</span> <span class="token operator">|</span> x<span class="token punctuation">;</span>
+
+  <span class="token keyword">return</span> z<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h4 id="fitsBits"><a href="#fitsBits" class="headerlink" title="fitsBits"></a>fitsBits</h4><p>思路是利用扩展的规则，假设输入为$x$，首先左移$32-n$位，然后右移$32-n$位得到$y$，最后判断两者是否相同即可。</p>
+<p>首先回顾拓展以及求反的方法：</p>
+<h5 id="拓展"><a href="#拓展" class="headerlink" title="拓展"></a>拓展</h5><p>有符号拓展的方式：</p>
+<ul>
+<li>任务：<ul>
+<li>给定$w$比特位的有符号整型$x$</li>
+<li>将其转换为$w+k$比特位有符号整型，并且值相同</li>
+</ul>
+</li>
+<li>规则：<ul>
+<li>将符号位复制$k$份</li>
+<li>$X^{\prime}=X_{w-1}, \dots, X_{w-1}, X_{w-1}, X_{w-2}, \dots, X_{0}$</li>
+</ul>
+</li>
+</ul>
+<p><img src="https://github.com/Doraemonzzz/md-photo/blob/master/CMU%2015-213%20Intro%20to%20Computer%20Systems/Lecture2/2020050112.jpg?raw=true" alt=""></p>
+<h5 id="求反"><a href="#求反" class="headerlink" title="求反"></a>求反</h5><ul>
+<li>假设输入为$x$，我们希望得到$-x$</li>
+<li>方式为对比特向量取反然后加$1$</li>
+</ul>
+<p>证明如下：</p>
+<script type="math/tex; mode=display">
+B 2 T_w(X)=-x_{w-1} \cdot 2^{w-1}+\sum_{i=0}^{w-2} x_{i} \cdot 2^{i}</script><p>取反</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+-(1-x_{w-1}) \cdot 2^{w-1}+\sum_{i=0}^{w-2} (1-x_{i}) \cdot 2^{i}
+&= -2^{w-1} + \sum_{i=0}^{w-2} 2^{i} +x_{w-1} \cdot 2^{w-1}-\sum_{i=0}^{w-2} x_{i} \cdot 2^{i}\\
+&=-1+x_{w-1} \cdot 2^{w-1}-\sum_{i=0}^{w-2} x_{i} \cdot 2^{i}
+\end{aligned}</script><p>加$1$得到</p>
+<script type="math/tex; mode=display">
+x_{w-1} \cdot 2^{w-1}-\sum_{i=0}^{w-2} x_{i} \cdot 2^{i} =-B2T_w(X)</script><p>现在的过程相当于上述过程的逆过程，只要判断$x$是否为如下形式即可</p>
+<script type="math/tex; mode=display">
+\underbrace{a_0\ldots a_0}_{32-n个a_0} a_0a_1\ldots a_{n-1}</script><p>所以可以通过先左移$32-n$位，再右移$32-n$位的方法完成判断，代码如下</p>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">int</span> <span class="token function">fitsBits</span><span class="token punctuation">(</span><span class="token keyword">int</span> x<span class="token punctuation">,</span> <span class="token keyword">int</span> n<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+  <span class="token keyword">int</span> y<span class="token punctuation">,</span> m<span class="token punctuation">,</span> res<span class="token punctuation">;</span>
+  <span class="token comment">//m=32-n</span>
+  m <span class="token operator">=</span> <span class="token number">32</span> <span class="token operator">+</span> <span class="token punctuation">(</span><span class="token operator">~</span>n<span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">;</span>
+  <span class="token comment">//带符号扩展</span>
+  y <span class="token operator">=</span> <span class="token punctuation">(</span>x <span class="token operator">&lt;&lt;</span> m<span class="token punctuation">)</span> <span class="token operator">>></span> m<span class="token punctuation">;</span>
+  <span class="token comment">//判断是否相同</span>
+  res <span class="token operator">=</span> <span class="token operator">!</span><span class="token punctuation">(</span>x <span class="token operator">^</span> y<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+  <span class="token keyword">return</span> res<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>备注：本题原来的测试程序个人感觉有点问题，原始的测试程序如下</p>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">int</span> <span class="token function">test_fitsBits</span><span class="token punctuation">(</span><span class="token keyword">int</span> x<span class="token punctuation">,</span> <span class="token keyword">int</span> n<span class="token punctuation">)</span>
+<span class="token punctuation">&#123;</span>
+  <span class="token keyword">int</span> TMin_n <span class="token operator">=</span> <span class="token operator">-</span><span class="token punctuation">(</span><span class="token number">1</span> <span class="token operator">&lt;&lt;</span> <span class="token punctuation">(</span>n<span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token keyword">int</span> TMax_n <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token number">1</span> <span class="token operator">&lt;&lt;</span> <span class="token punctuation">(</span>n<span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">;</span>
+  <span class="token keyword">return</span> x <span class="token operator">>=</span> TMin_n <span class="token operator">&amp;&amp;</span> x <span class="token operator">&lt;=</span> TMax_n<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>但是$n=32$时$\text{TMin_n}$的计算是有问题的，正确的代码如下</p>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">int</span> <span class="token function">test_fitsBits</span><span class="token punctuation">(</span><span class="token keyword">int</span> x<span class="token punctuation">,</span> <span class="token keyword">int</span> n<span class="token punctuation">)</span>
+<span class="token punctuation">&#123;</span>
+  <span class="token keyword">int</span> TMin_n<span class="token punctuation">,</span> TMax_n<span class="token punctuation">;</span>
+  <span class="token keyword">if</span> <span class="token punctuation">(</span>n <span class="token operator">&lt;</span> <span class="token number">32</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+    TMin_n <span class="token operator">=</span> <span class="token operator">-</span><span class="token punctuation">(</span><span class="token number">1</span> <span class="token operator">&lt;&lt;</span> <span class="token punctuation">(</span>n<span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    TMax_n <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token number">1</span> <span class="token operator">&lt;&lt;</span> <span class="token punctuation">(</span>n<span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">;</span>
+  <span class="token punctuation">&#125;</span><span class="token keyword">else</span><span class="token punctuation">&#123;</span>
+    TMin_n <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token number">1</span> <span class="token operator">&lt;&lt;</span> <span class="token punctuation">(</span>n<span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    TMax_n <span class="token operator">=</span> <span class="token operator">~</span><span class="token punctuation">(</span><span class="token number">1</span> <span class="token operator">&lt;&lt;</span> <span class="token punctuation">(</span>n<span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">&#125;</span>
+  <span class="token keyword">return</span> x <span class="token operator">>=</span> TMin_n <span class="token operator">&amp;&amp;</span> x <span class="token operator">&lt;=</span> TMax_n<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h4 id="sign"><a href="#sign" class="headerlink" title="sign"></a>sign</h4><p>注释中写的比较清楚，代码如下：</p>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">int</span> <span class="token function">sign</span><span class="token punctuation">(</span><span class="token keyword">int</span> x<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+  <span class="token keyword">int</span> mask1<span class="token punctuation">,</span> mask2<span class="token punctuation">,</span> r1<span class="token punctuation">,</span> r2<span class="token punctuation">,</span> res<span class="token punctuation">;</span>
+  <span class="token comment">//将x转换为0或1，x为0的时候转换为1，其余情形为0</span>
+  mask1 <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token operator">!</span>x<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token comment">//取反转换为1110,1111，x为0的时候转换为1110，其余情形为1111</span>
+  mask1 <span class="token operator">=</span> <span class="token operator">~</span>mask1<span class="token punctuation">;</span>
+  <span class="token comment">//加1转换为1111,0000，x为0的时候转换为1111，其余情形为0000</span>
+  mask1 <span class="token operator">=</span> mask1 <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">;</span>
+  <span class="token comment">//x为0的时候转换为0000，其余情形为1111</span>
+  mask1 <span class="token operator">=</span> <span class="token operator">~</span>mask1<span class="token punctuation">;</span>
+  <span class="token comment">//x>0转换为0000，x&lt;0转换为1111</span>
+  mask2 <span class="token operator">=</span> <span class="token punctuation">(</span>x <span class="token operator">>></span> <span class="token number">31</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token comment">//x>0的情形</span>
+  r1 <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token operator">~</span>mask2<span class="token punctuation">)</span> <span class="token operator">&amp;</span> <span class="token number">1</span><span class="token punctuation">;</span>
+  <span class="token comment">//x&lt;0的情形</span>
+  r2 <span class="token operator">=</span> mask2<span class="token punctuation">;</span>
+  res <span class="token operator">=</span> mask1 <span class="token operator">&amp;</span> <span class="token punctuation">(</span>r1 <span class="token operator">|</span> r2<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+  <span class="token keyword">return</span> res<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h4 id="getByte"><a href="#getByte" class="headerlink" title="getByte"></a>getByte</h4><p>这个比较简单，只要进行移位以及使用mask即可：</p>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">int</span> <span class="token function">getByte</span><span class="token punctuation">(</span><span class="token keyword">int</span> x<span class="token punctuation">,</span> <span class="token keyword">int</span> n<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+  <span class="token keyword">int</span> mask<span class="token punctuation">,</span> d<span class="token punctuation">,</span> res<span class="token punctuation">;</span>
+  mask <span class="token operator">=</span> <span class="token number">0xFF</span><span class="token punctuation">;</span>
+  <span class="token comment">//d = n * 8</span>
+  d <span class="token operator">=</span> n <span class="token operator">&lt;&lt;</span> <span class="token number">3</span><span class="token punctuation">;</span>
+  res <span class="token operator">=</span> x <span class="token operator">>></span> d<span class="token punctuation">;</span>
+  res <span class="token operator">=</span> res <span class="token operator">&amp;</span> mask<span class="token punctuation">;</span>
+
+  <span class="token keyword">return</span> res<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h4 id="logicalShift"><a href="#logicalShift" class="headerlink" title="logicalShift"></a>logicalShift</h4><p>注意此题需要考虑$n=0$的特殊情形，否则会报错，方法依然是生成多个mask，具体内容在代码中</p>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">int</span> <span class="token function">logicalShift</span><span class="token punctuation">(</span><span class="token keyword">int</span> x<span class="token punctuation">,</span> <span class="token keyword">int</span> n<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+  <span class="token keyword">int</span> r1<span class="token punctuation">,</span> r2<span class="token punctuation">,</span> r3<span class="token punctuation">,</span> res<span class="token punctuation">,</span> mask1<span class="token punctuation">,</span> mask2<span class="token punctuation">,</span> mask3<span class="token punctuation">;</span>
+  <span class="token comment">//n != 0</span>
+  <span class="token comment">//x >= 0时为全0，x &lt; 0时为全1</span>
+  mask1 <span class="token operator">=</span> x <span class="token operator">>></span> <span class="token number">31</span><span class="token punctuation">;</span>
+
+  <span class="token comment">//将n转换为0或1，n为0的时候转换为1，其余情形为0</span>
+  mask2 <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token operator">!</span>n<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token comment">//取反转换为1110,1111，n为0的时候转换为1110，其余情形为1111</span>
+  mask2 <span class="token operator">=</span> <span class="token operator">~</span>mask2<span class="token punctuation">;</span>
+  <span class="token comment">//加1转换为1111,0000，n为0的时候转换为1111，其余情形为0000</span>
+  mask2 <span class="token operator">=</span> mask2 <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">;</span>
+
+  <span class="token comment">//前n个为1，其余的为0</span>
+  <span class="token comment">//(~n) + 1 = -n</span>
+  mask3 <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token operator">~</span><span class="token number">0</span><span class="token punctuation">)</span> <span class="token operator">&lt;&lt;</span> <span class="token punctuation">(</span><span class="token number">32</span> <span class="token operator">+</span> <span class="token punctuation">(</span><span class="token operator">~</span>n<span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token comment">//前n位为0，其余的为1</span>
+  mask3 <span class="token operator">=</span> <span class="token operator">~</span>mask3<span class="token punctuation">;</span>
+
+  <span class="token comment">//x >= 0</span>
+  r1 <span class="token operator">=</span> x <span class="token operator">>></span> n<span class="token punctuation">;</span>
+
+  <span class="token comment">//x &lt; 0的结果</span>
+  <span class="token comment">//将前n位变为0</span>
+  r2 <span class="token operator">=</span> r1 <span class="token operator">&amp;</span> mask3<span class="token punctuation">;</span>
+  <span class="token comment">//生成中间结果</span>
+  res <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token punctuation">(</span>r1 <span class="token operator">&amp;</span> <span class="token punctuation">(</span><span class="token operator">~</span>mask1<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token operator">|</span> <span class="token punctuation">(</span>r2 <span class="token operator">&amp;</span> mask1<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  res <span class="token operator">=</span> res <span class="token operator">&amp;</span> <span class="token punctuation">(</span><span class="token operator">~</span>mask2<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+  <span class="token comment">//n = 0特殊处理</span>
+  r3 <span class="token operator">=</span> x <span class="token operator">&amp;</span> mask2<span class="token punctuation">;</span>
+  <span class="token comment">//生成结果</span>
+  res <span class="token operator">=</span> res <span class="token operator">|</span> r3<span class="token punctuation">;</span>
+
+  <span class="token keyword">return</span> res<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h4 id="addOK"><a href="#addOK" class="headerlink" title="addOK"></a>addOK</h4><p>溢出只会发生在两个正数相加为负或者两个负数相加为正的情形，据此判断即可：</p>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">int</span> <span class="token function">addOK</span><span class="token punctuation">(</span><span class="token keyword">int</span> x<span class="token punctuation">,</span> <span class="token keyword">int</span> y<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+  <span class="token keyword">int</span> f1<span class="token punctuation">,</span> f2<span class="token punctuation">,</span> f3<span class="token punctuation">,</span> f4<span class="token punctuation">,</span> f5<span class="token punctuation">,</span> z<span class="token punctuation">,</span> res<span class="token punctuation">;</span>
+  z <span class="token operator">=</span> x <span class="token operator">+</span> y<span class="token punctuation">;</span>
+  <span class="token comment">//正负号，如果小于0则为0，否则为1</span>
+  f1 <span class="token operator">=</span> <span class="token operator">!</span><span class="token punctuation">(</span>x <span class="token operator">>></span> <span class="token number">31</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  f2 <span class="token operator">=</span> <span class="token operator">!</span><span class="token punctuation">(</span>y <span class="token operator">>></span> <span class="token number">31</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  f3 <span class="token operator">=</span> <span class="token operator">!</span><span class="token punctuation">(</span>z <span class="token operator">>></span> <span class="token number">31</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token comment">//错误1，两个负数相加为正，出现此情形则为1</span>
+  f4 <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token operator">~</span>f1<span class="token punctuation">)</span> <span class="token operator">&amp;</span> <span class="token punctuation">(</span><span class="token operator">~</span>f2<span class="token punctuation">)</span> <span class="token operator">&amp;</span> f3<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token comment">//错误2，两个正数相加为负，出现此情形则为1</span>
+  f5 <span class="token operator">=</span> <span class="token punctuation">(</span>f1 <span class="token operator">&amp;</span> f2 <span class="token operator">&amp;</span> <span class="token punctuation">(</span><span class="token operator">~</span>f3<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token comment">//生成结果</span>
+  res <span class="token operator">=</span> <span class="token operator">!</span><span class="token punctuation">(</span>f4 <span class="token operator">|</span> f5<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+  <span class="token keyword">return</span> res<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h4 id="bang"><a href="#bang" class="headerlink" title="bang"></a>bang</h4><p>具体方法是将正数转换成负数，然后对负数和零进行处理：</p>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">int</span> <span class="token function">bang</span><span class="token punctuation">(</span><span class="token keyword">int</span> x<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+  <span class="token keyword">int</span> mask<span class="token punctuation">,</span> r1<span class="token punctuation">,</span> r2<span class="token punctuation">,</span> res<span class="token punctuation">;</span>
+  <span class="token comment">//x >= 0时为全0，否则为全1</span>
+  mask <span class="token operator">=</span> x <span class="token operator">>></span> <span class="token number">31</span><span class="token punctuation">;</span>
+  <span class="token comment">//-x</span>
+  r1 <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token operator">~</span>x<span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">;</span>
+  <span class="token comment">//将x >= 0的情形变成x &lt;= 0</span>
+  r2 <span class="token operator">=</span> <span class="token punctuation">(</span>x <span class="token operator">&amp;</span> mask<span class="token punctuation">)</span> <span class="token operator">|</span> <span class="token punctuation">(</span>r1 <span class="token operator">&amp;</span> <span class="token punctuation">(</span><span class="token operator">~</span>mask<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token comment">//r2 = 0时为全0，否则为全1</span>
+  res <span class="token operator">=</span> r2 <span class="token operator">>></span> <span class="token number">31</span><span class="token punctuation">;</span>
+  <span class="token comment">//x = 0时为1，否则为0</span>
+  res <span class="token operator">=</span> res <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">;</span>
+
+  <span class="token keyword">return</span> res<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h4 id="conditional"><a href="#conditional" class="headerlink" title="conditional"></a>conditional</h4><p>和上题类似，将正数转换成负数，然后生成mask：</p>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">int</span> <span class="token function">conditional</span><span class="token punctuation">(</span><span class="token keyword">int</span> x<span class="token punctuation">,</span> <span class="token keyword">int</span> y<span class="token punctuation">,</span> <span class="token keyword">int</span> z<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+  <span class="token keyword">int</span> mask<span class="token punctuation">,</span> mask1<span class="token punctuation">,</span> r1<span class="token punctuation">,</span> r2<span class="token punctuation">,</span> res<span class="token punctuation">;</span>
+  <span class="token comment">//x >= 0时为全0，否则为全1</span>
+  mask <span class="token operator">=</span> x <span class="token operator">>></span> <span class="token number">31</span><span class="token punctuation">;</span>
+  <span class="token comment">//-x</span>
+  r1 <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token operator">~</span>x<span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">;</span>
+  <span class="token comment">//将x >= 0的情形变成x &lt;= 0</span>
+  r2 <span class="token operator">=</span> <span class="token punctuation">(</span>x <span class="token operator">&amp;</span> mask<span class="token punctuation">)</span> <span class="token operator">|</span> <span class="token punctuation">(</span>r1 <span class="token operator">&amp;</span> <span class="token punctuation">(</span><span class="token operator">~</span>mask<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token comment">//r2 = 0时为全0，否则为全1</span>
+  mask1 <span class="token operator">=</span> r2 <span class="token operator">>></span> <span class="token number">31</span><span class="token punctuation">;</span>
+
+  res <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token punctuation">(</span>mask1 <span class="token operator">&amp;</span> y<span class="token punctuation">)</span> <span class="token operator">|</span> <span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token operator">~</span>mask1<span class="token punctuation">)</span> <span class="token operator">&amp;</span> z<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  
+  <span class="token keyword">return</span> res<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h4 id="isPower2"><a href="#isPower2" class="headerlink" title="isPower2"></a>isPower2</h4><p>此题比较难，参考了如下资料：</p>
+<p><a target="_blank" rel="noopener" href="http://read.pudn.com/downloads136/sourcecode/book/580317/Lab1/bits.c__.htm">http://read.pudn.com/downloads136/sourcecode/book/580317/Lab1/bits.c__.htm</a></p>
+<p>首先对于满足条件的数，形式必然如下</p>
+<script type="math/tex; mode=display">
+a=\underbrace{0\ldots0}_{n个0}1
+\underbrace{0\ldots0}_{m个0}</script><p>所以</p>
+<script type="math/tex; mode=display">
+-a=\underbrace{1\ldots1}_{n个0}1
+\underbrace{0\ldots0}_{m个0}</script><p>因此</p>
+<script type="math/tex; mode=display">
+(-a)\text{^}a=a</script><p>容易验证，对于不满足条件的数，上述等式必然不成立，我们称上述性质为性质a。</p>
+<p>所以对于满足条件的数，必然有如下性质：</p>
+<ol>
+<li>非负</li>
+<li>大于0</li>
+<li>满足性质a</li>
+</ol>
+<p>因此得到如下代码</p>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">int</span> <span class="token function">isPower2</span><span class="token punctuation">(</span><span class="token keyword">int</span> x<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+  <span class="token keyword">int</span> minus_x<span class="token punctuation">;</span>
+  <span class="token keyword">int</span> f1<span class="token punctuation">,</span> f2<span class="token punctuation">,</span> f3<span class="token punctuation">,</span> res<span class="token punctuation">;</span>
+  <span class="token comment">//判断正负， x &lt; 0时为全1，否则为全0</span>
+  f1 <span class="token operator">=</span> x <span class="token operator">>></span> <span class="token number">31</span><span class="token punctuation">;</span>
+
+  <span class="token comment">//判断是否为0</span>
+  f2 <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token operator">!</span>x<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+  <span class="token comment">//从形式上判断</span>
+  minus_x <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token operator">~</span>x<span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">;</span>
+  <span class="token comment">//x = 2 ^ k时f2为1，否则为0</span>
+  f3 <span class="token operator">=</span> <span class="token operator">!</span><span class="token punctuation">(</span><span class="token punctuation">(</span>minus_x <span class="token operator">&amp;</span> x<span class="token punctuation">)</span> <span class="token operator">^</span> x<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+  <span class="token comment">//生成结果</span>
+  res <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token operator">~</span>f1<span class="token punctuation">)</span> <span class="token operator">&amp;</span> <span class="token punctuation">(</span><span class="token operator">~</span>f2<span class="token punctuation">)</span> <span class="token operator">&amp;</span> f3<span class="token punctuation">;</span>
+
+  <span class="token keyword">return</span> res<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h3 id="pointer-c"><a href="#pointer-c" class="headerlink" title="pointer.c"></a>pointer.c</h3><p>编译以及测试结果</p>
+<pre class="line-numbers language-shell" data-language="shell"><code class="language-shell"><span class="token function">make</span>
+./ptest
+intSize<span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=</span> <span class="token number">4</span>	<span class="token punctuation">[</span> OK <span class="token punctuation">]</span>
+doubleSize<span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=</span> <span class="token number">8</span>	<span class="token punctuation">[</span> OK <span class="token punctuation">]</span>
+pointerSize<span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=</span> <span class="token number">8</span>	<span class="token punctuation">[</span> OK <span class="token punctuation">]</span>
+changeValue<span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=</span> <span class="token number">351</span>	<span class="token punctuation">[</span> OK <span class="token punctuation">]</span>
+withinSameBlock<span class="token punctuation">(</span>0x1, 0x48<span class="token punctuation">)</span> <span class="token operator">=</span> <span class="token number">0</span>	<span class="token punctuation">[</span> OK <span class="token punctuation">]</span>
+withinSameBlock<span class="token punctuation">(</span>0x1, 0x4<span class="token punctuation">)</span> <span class="token operator">=</span> <span class="token number">1</span>	<span class="token punctuation">[</span> OK <span class="token punctuation">]</span>
+withinSameBlock<span class="token punctuation">(</span>0x12345678, 0x1<span class="token punctuation">)</span> <span class="token operator">=</span> <span class="token number">0</span>	<span class="token punctuation">[</span> OK <span class="token punctuation">]</span>
+withinSameBlock<span class="token punctuation">(</span>0x12345678, 0x12345658<span class="token punctuation">)</span> <span class="token operator">=</span> <span class="token number">1</span>	<span class="token punctuation">[</span> OK <span class="token punctuation">]</span>
+withinSameBlock<span class="token punctuation">(</span>0x12345678, 0x12345686<span class="token punctuation">)</span> <span class="token operator">=</span> <span class="token number">0</span>	<span class="token punctuation">[</span> OK <span class="token punctuation">]</span>
+withinArray<span class="token punctuation">(</span>0x1, <span class="token number">4</span>, 0xd<span class="token punctuation">)</span> <span class="token operator">=</span> <span class="token number">1</span>	<span class="token punctuation">[</span> OK <span class="token punctuation">]</span>
+withinArray<span class="token punctuation">(</span>0x1, <span class="token number">4</span>, 0x11<span class="token punctuation">)</span> <span class="token operator">=</span> <span class="token number">0</span>	<span class="token punctuation">[</span> OK <span class="token punctuation">]</span>
+withinArray<span class="token punctuation">(</span>0x14, <span class="token number">4</span>, 0xd<span class="token punctuation">)</span> <span class="token operator">=</span> <span class="token number">0</span>	<span class="token punctuation">[</span> OK <span class="token punctuation">]</span>
+invert<span class="token punctuation">(</span><span class="token number">142</span>, <span class="token number">3</span>, <span class="token number">3</span><span class="token punctuation">)</span> <span class="token operator">=</span> <span class="token number">182</span>	<span class="token punctuation">[</span> OK <span class="token punctuation">]</span>
+invert<span class="token punctuation">(</span><span class="token number">1645</span>, <span class="token number">2</span>, <span class="token number">4</span><span class="token punctuation">)</span> <span class="token operator">=</span> <span class="token number">1617</span>	<span class="token punctuation">[</span> OK <span class="token punctuation">]</span>
+invert<span class="token punctuation">(</span><span class="token number">123456</span>, <span class="token number">12</span>, <span class="token number">1</span><span class="token punctuation">)</span> <span class="token operator">=</span> <span class="token number">127552</span>	<span class="token punctuation">[</span> OK <span class="token punctuation">]</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h4 id="intSize"><a href="#intSize" class="headerlink" title="intSize"></a>intSize</h4><pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">int</span> <span class="token function">intSize</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+  <span class="token keyword">int</span> intArray<span class="token punctuation">[</span><span class="token number">10</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+  <span class="token keyword">int</span> <span class="token operator">*</span> intPtr1<span class="token punctuation">;</span>
+  <span class="token keyword">int</span> <span class="token operator">*</span> intPtr2<span class="token punctuation">;</span>
+  <span class="token comment">// TODO: Write code to compute size of an integer.</span>
+  <span class="token keyword">int</span> size<span class="token punctuation">;</span>
+  <span class="token keyword">void</span> <span class="token operator">*</span> p1 <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token keyword">void</span> <span class="token operator">*</span><span class="token punctuation">)</span>intArray<span class="token punctuation">;</span>
+  <span class="token keyword">void</span> <span class="token operator">*</span> p2 <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token keyword">void</span> <span class="token operator">*</span><span class="token punctuation">)</span><span class="token punctuation">(</span>intArray <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  size <span class="token operator">=</span> p2 <span class="token operator">-</span> p1<span class="token punctuation">;</span>
+    
+  <span class="token keyword">return</span> size<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h4 id="doubleSize"><a href="#doubleSize" class="headerlink" title="doubleSize"></a>doubleSize</h4><pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">int</span> <span class="token function">doubleSize</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+  <span class="token keyword">double</span> doubArray<span class="token punctuation">[</span><span class="token number">10</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+  <span class="token keyword">double</span> <span class="token operator">*</span> doubPtr1<span class="token punctuation">;</span>
+  <span class="token keyword">double</span> <span class="token operator">*</span> doubPtr2<span class="token punctuation">;</span>
+  <span class="token comment">// TODO: Write code to compute size of a double.</span>
+  <span class="token keyword">int</span> size<span class="token punctuation">;</span>
+  <span class="token keyword">void</span> <span class="token operator">*</span> p1 <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token keyword">void</span> <span class="token operator">*</span><span class="token punctuation">)</span>doubArray<span class="token punctuation">;</span>
+  <span class="token keyword">void</span> <span class="token operator">*</span> p2 <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token keyword">void</span> <span class="token operator">*</span><span class="token punctuation">)</span><span class="token punctuation">(</span>doubArray <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  size <span class="token operator">=</span> p2 <span class="token operator">-</span> p1<span class="token punctuation">;</span>
+
+  <span class="token keyword">return</span> size<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h4 id="pointerSize"><a href="#pointerSize" class="headerlink" title="pointerSize"></a>pointerSize</h4><pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">int</span> <span class="token function">pointerSize</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+  <span class="token keyword">double</span> <span class="token operator">*</span> ptrArray<span class="token punctuation">[</span><span class="token number">10</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+  <span class="token keyword">double</span> <span class="token operator">*</span><span class="token operator">*</span> ptrPtr1<span class="token punctuation">;</span>
+  <span class="token keyword">double</span> <span class="token operator">*</span><span class="token operator">*</span> ptrPtr2<span class="token punctuation">;</span>
+  <span class="token comment">// TODO: Write code to compute size of a pointer.</span>
+  <span class="token keyword">int</span> size<span class="token punctuation">;</span>
+  <span class="token keyword">void</span> <span class="token operator">*</span> p1 <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token keyword">void</span> <span class="token operator">*</span><span class="token punctuation">)</span>ptrArray<span class="token punctuation">;</span>
+  <span class="token keyword">void</span> <span class="token operator">*</span> p2 <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token keyword">void</span> <span class="token operator">*</span><span class="token punctuation">)</span><span class="token punctuation">(</span>ptrArray <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  size <span class="token operator">=</span> p2 <span class="token operator">-</span> p1<span class="token punctuation">;</span>
+
+  <span class="token keyword">return</span> size<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h4 id="changeValue"><a href="#changeValue" class="headerlink" title="changeValue"></a>changeValue</h4><pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">int</span> <span class="token function">changeValue</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+  <span class="token keyword">int</span> intArray<span class="token punctuation">[</span><span class="token number">10</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+  <span class="token keyword">int</span> <span class="token operator">*</span> intPtr1 <span class="token operator">=</span> intArray<span class="token punctuation">;</span>
+  <span class="token keyword">int</span> <span class="token operator">*</span> intPtr2<span class="token punctuation">;</span>
+  <span class="token comment">// TODO: Write code to change value of intArray[5] to 351 using only</span>
+  <span class="token comment">//       intPtr1 and the + operator.</span>
+  <span class="token operator">*</span><span class="token punctuation">(</span>intPtr1 <span class="token operator">+</span> <span class="token number">5</span><span class="token punctuation">)</span> <span class="token operator">=</span> <span class="token number">351</span><span class="token punctuation">;</span>
+
+  <span class="token keyword">return</span> intArray<span class="token punctuation">[</span><span class="token number">5</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h4 id="withinSameBlock"><a href="#withinSameBlock" class="headerlink" title="withinSameBlock"></a>withinSameBlock</h4><p>只有地址除以64的结果是否相同即可：</p>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">int</span> <span class="token function">withinSameBlock</span><span class="token punctuation">(</span><span class="token keyword">int</span> <span class="token operator">*</span> ptr1<span class="token punctuation">,</span> <span class="token keyword">int</span> <span class="token operator">*</span> ptr2<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+  <span class="token comment">// TODO</span>
+  <span class="token keyword">int</span> d<span class="token punctuation">,</span> res<span class="token punctuation">,</span> g1<span class="token punctuation">,</span> g2<span class="token punctuation">;</span>
+  <span class="token keyword">int</span> d1<span class="token punctuation">,</span> d2<span class="token punctuation">;</span>
+  <span class="token comment">//判断是否在同一组</span>
+  g1 <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token keyword">unsigned</span><span class="token punctuation">)</span>ptr2<span class="token punctuation">)</span> <span class="token operator">>></span> <span class="token number">6</span><span class="token punctuation">;</span>
+  g2 <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token keyword">unsigned</span><span class="token punctuation">)</span>ptr1<span class="token punctuation">)</span> <span class="token operator">>></span> <span class="token number">6</span><span class="token punctuation">;</span>
+  res <span class="token operator">=</span> <span class="token punctuation">(</span>g1 <span class="token operator">==</span> g2<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+  <span class="token keyword">return</span> res<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<pre class="line-numbers language-none"><code class="language-none">int withinArray(int * intArray, int size, int * ptr) &#123;
+  &#x2F;&#x2F; TODO
+  int res;
+  res &#x3D; (ptr &gt;&#x3D; intArray) &amp;&amp; (ptr &lt; (intArray + size));
+
+  return res;
+&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h4 id="invert"><a href="#invert" class="headerlink" title="invert"></a>invert</h4><p>编码规则</p>
+<script type="math/tex; mode=display">
+a_{n-1}a_{n-2}\ldots a_1 a_0</script><p>所以代码如下</p>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">int</span> <span class="token function">invert</span><span class="token punctuation">(</span><span class="token keyword">int</span> x<span class="token punctuation">,</span> <span class="token keyword">int</span> p<span class="token punctuation">,</span> <span class="token keyword">int</span> n<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+  <span class="token comment">// TODO</span>
+  <span class="token keyword">unsigned</span> mask<span class="token punctuation">;</span>
+  <span class="token keyword">int</span> res<span class="token punctuation">;</span>
+  mask <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token operator">~</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  mask <span class="token operator">=</span> mask <span class="token operator">>></span> <span class="token punctuation">(</span><span class="token number">32</span> <span class="token operator">-</span> n<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  mask <span class="token operator">=</span> mask <span class="token operator">&lt;&lt;</span> p<span class="token punctuation">;</span>
+  res <span class="token operator">=</span> <span class="token punctuation">(</span>x <span class="token operator">^</span> mask<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+  <span class="token keyword">return</span> res<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">Doraemonzzz</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="http://doraemonzzz.com/2020/08/09/The%20Hardware%20Software%20Interface%20Lab%201/">http://doraemonzzz.com/2020/08/09/The%20Hardware%20Software%20Interface%20Lab%201/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://doraemonzzz.com" target="_blank">Doraemonzzz</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/CSE-351/">CSE 351</a></div><div class="post_share"><div class="social-share" data-image="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2020/08/09/The%20Hardware%20Software%20Interface%20Section%203%20Basics%20of%20Architecture%20Machine%20Code/"><img class="prev-cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">The Hardware Software Interface Section 3 Basics of Architecture Machine Code</div></div></a></div><div class="next-post pull-right"><a href="/2020/08/09/The%20Hardware%20Software%20Interface%20Lab%200/"><img class="next-cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">The Hardware Software Interface Lab 0</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span> 相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2020/08/09/The Hardware Software Interface Lab 0/" title="The Hardware Software Interface Lab 0"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-08-09</div><div class="title">The Hardware Software Interface Lab 0</div></div></a></div><div><a href="/2020/08/16/The Hardware Software Interface Lab 2/" title="The Hardware Software Interface Lab 2"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-08-16</div><div class="title">The Hardware Software Interface Lab 2</div></div></a></div><div><a href="/2020/09/06/The Hardware Software Interface Lab 3/" title="The Hardware Software Interface Lab 3"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-09-06</div><div class="title">The Hardware Software Interface Lab 3</div></div></a></div><div><a href="/2020/09/06/The Hardware Software Interface Lab 4/" title="The Hardware Software Interface Lab 4"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-09-06</div><div class="title">The Hardware Software Interface Lab 4</div></div></a></div><div><a href="/2020/07/26/The Hardware Software Interface Section 1 Memory Data and Addressing/" title="The Hardware Software Interface Section 1 Memory Data and Addressing"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-07-26</div><div class="title">The Hardware Software Interface Section 1 Memory Data and Addressing</div></div></a></div><div><a href="/2020/09/20/The Hardware Software Interface Section 11 Java vs C/" title="The Hardware Software Interface Section 11 Java vs C"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-09-20</div><div class="title">The Hardware Software Interface Section 11 Java vs C</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="card-info-avatar is-center"><img class="avatar-img" src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/><div class="author-info__name">Doraemonzzz</div><div class="author-info__description">个人博客，主要记录有关机器学习，数学以及计算机科学的笔记</div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">610</div></a></div><div class="card-info-data-item is-center"><a href="/tags/"><div class="headline">标签</div><div class="length-num">59</div></a></div><div class="card-info-data-item is-center"><a href="/categories/"><div class="headline">分类</div><div class="length-num">23</div></a></div></div><a class="button--animated" id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/Doraemonzzz" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="/doraemon_zzz@163.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn card-announcement-animation"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#bits-c"><span class="toc-number">1.</span> <span class="toc-text">bits.c</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#bitAnd"><span class="toc-number">1.1.</span> <span class="toc-text">bitAnd</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#bitXor"><span class="toc-number">1.2.</span> <span class="toc-text">bitXor</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#thirdBits"><span class="toc-number">1.3.</span> <span class="toc-text">thirdBits</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#fitsBits"><span class="toc-number">1.4.</span> <span class="toc-text">fitsBits</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%8B%93%E5%B1%95"><span class="toc-number">1.4.1.</span> <span class="toc-text">拓展</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%B1%82%E5%8F%8D"><span class="toc-number">1.4.2.</span> <span class="toc-text">求反</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#sign"><span class="toc-number">1.5.</span> <span class="toc-text">sign</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#getByte"><span class="toc-number">1.6.</span> <span class="toc-text">getByte</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#logicalShift"><span class="toc-number">1.7.</span> <span class="toc-text">logicalShift</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#addOK"><span class="toc-number">1.8.</span> <span class="toc-text">addOK</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#bang"><span class="toc-number">1.9.</span> <span class="toc-text">bang</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#conditional"><span class="toc-number">1.10.</span> <span class="toc-text">conditional</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#isPower2"><span class="toc-number">1.11.</span> <span class="toc-text">isPower2</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#pointer-c"><span class="toc-number">2.</span> <span class="toc-text">pointer.c</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#intSize"><span class="toc-number">2.1.</span> <span class="toc-text">intSize</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#doubleSize"><span class="toc-number">2.2.</span> <span class="toc-text">doubleSize</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#pointerSize"><span class="toc-number">2.3.</span> <span class="toc-text">pointerSize</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#changeValue"><span class="toc-number">2.4.</span> <span class="toc-text">changeValue</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#withinSameBlock"><span class="toc-number">2.5.</span> <span class="toc-text">withinSameBlock</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#invert"><span class="toc-number">2.6.</span> <span class="toc-text">invert</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2021/06/06/2021-6-6-%E7%AE%97%E6%B3%95%E6%A6%82%E8%AE%BA(DPV)%E4%B9%A0%E9%A2%98%E8%A7%A3%E7%AD%94%E2%80%94%E2%80%94%E7%AC%AC3%E7%AB%A0-%E5%9B%BE%E7%9A%84%E5%88%86%E8%A7%A3/" title="算法概论(DPV)习题解答——第3章 图的分解"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="算法概论(DPV)习题解答——第3章 图的分解"/></a><div class="content"><a class="title" href="/2021/06/06/2021-6-6-%E7%AE%97%E6%B3%95%E6%A6%82%E8%AE%BA(DPV)%E4%B9%A0%E9%A2%98%E8%A7%A3%E7%AD%94%E2%80%94%E2%80%94%E7%AC%AC3%E7%AB%A0-%E5%9B%BE%E7%9A%84%E5%88%86%E8%A7%A3/" title="算法概论(DPV)习题解答——第3章 图的分解">算法概论(DPV)习题解答——第3章 图的分解</a><time datetime="2021-06-06T14:35:00.000Z" title="发表于 2021-06-06 22:35:00">2021-06-06</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/06/06/2021-6-6-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E7%AC%AC5%E7%AB%A0-%E4%B9%A0%E9%A2%98%E8%A7%A3%E6%9E%90/" title="深入理解计算机系统 第5章 习题解析"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="深入理解计算机系统 第5章 习题解析"/></a><div class="content"><a class="title" href="/2021/06/06/2021-6-6-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E7%AC%AC5%E7%AB%A0-%E4%B9%A0%E9%A2%98%E8%A7%A3%E6%9E%90/" title="深入理解计算机系统 第5章 习题解析">深入理解计算机系统 第5章 习题解析</a><time datetime="2021-06-06T07:23:00.000Z" title="发表于 2021-06-06 15:23:00">2021-06-06</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/06/05/2021-6-5-Stanford-Compiler-PA5%E7%BF%BB%E8%AF%91/" title="Stanford Compiler PA5翻译"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Stanford Compiler PA5翻译"/></a><div class="content"><a class="title" href="/2021/06/05/2021-6-5-Stanford-Compiler-PA5%E7%BF%BB%E8%AF%91/" title="Stanford Compiler PA5翻译">Stanford Compiler PA5翻译</a><time datetime="2021-06-05T06:12:00.000Z" title="发表于 2021-06-05 14:12:00">2021-06-05</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/06/04/2021-6-4-Stanford-Compiler-PA4%E7%BF%BB%E8%AF%91/" title="Stanford Compiler PA4翻译"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Stanford Compiler PA4翻译"/></a><div class="content"><a class="title" href="/2021/06/04/2021-6-4-Stanford-Compiler-PA4%E7%BF%BB%E8%AF%91/" title="Stanford Compiler PA4翻译">Stanford Compiler PA4翻译</a><time datetime="2021-06-03T16:17:00.000Z" title="发表于 2021-06-04 00:17:00">2021-06-04</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/06/03/2021-6-3-%E5%B7%A7%E5%A6%99%E7%9A%84Y%E8%BF%90%E7%AE%97%E7%AC%A6/" title="巧妙的Y运算符"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="巧妙的Y运算符"/></a><div class="content"><a class="title" href="/2021/06/03/2021-6-3-%E5%B7%A7%E5%A6%99%E7%9A%84Y%E8%BF%90%E7%AE%97%E7%AC%A6/" title="巧妙的Y运算符">巧妙的Y运算符</a><time datetime="2021-06-03T00:54:00.000Z" title="发表于 2021-06-03 08:54:00">2021-06-03</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2021 By Doraemonzzz</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><div class="js-pjax"><script>if (!window.MathJax) {
+  window.MathJax = {
+    loader: {
+      source: {
+        '[tex]/amsCd': '[tex]/amscd'
+      }
+    },
+    tex: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]],
+      tags: 'ams'
+    },
+    options: {
+      renderActions: {
+        findScript: [10, doc => {
+          for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+            const display = !!node.type.match(/; *mode=display/)
+            const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+            const text = document.createTextNode('')
+            node.parentNode.replaceChild(text, node)
+            math.start = {node: text, delim: '', n: 0}
+            math.end = {node: text, delim: '', n: 0}
+            doc.math.push(math)
+          }
+        }, ''],
+        addClass: [200,() => {
+          document.querySelectorAll('mjx-container:not([display=\'true\']').forEach( node => {
+            const target = node.parentNode
+            if (!target.classList.contains('has-jax')) {
+              target.classList.add('mathjax-overflow')
+            }
+          })
+        }, '', false]
+      }
+    }
+  }
+  
+  const script = document.createElement('script')
+  script.src = 'https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js'
+  script.id = 'MathJax-script'
+  script.async = true
+  document.head.appendChild(script)
+} else {
+  MathJax.startup.document.state(0)
+  MathJax.texReset()
+  MathJax.typeset()
+}</script></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

@@ -1,0 +1,683 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>CS224N Natural Language Processing with Deep Learning Assignment 4 | Doraemonzzz</title><meta name="keywords" content="CS224N"><meta name="author" content="Doraemonzzz"><meta name="copyright" content="Doraemonzzz"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="课程主页：https:&#x2F;&#x2F;web.stanford.edu&#x2F;class&#x2F;archive&#x2F;cs&#x2F;cs224n&#x2F;cs224n.1194&#x2F; 视频地址：https:&#x2F;&#x2F;www.bilibili.com&#x2F;video&#x2F;av46216519?from&#x3D;search&amp;seid&#x3D;13229282510647565239">
+<meta property="og:type" content="article">
+<meta property="og:title" content="CS224N Natural Language Processing with Deep Learning Assignment 4">
+<meta property="og:url" content="http://doraemonzzz.com/2020/06/15/CS224N%20Natural%20Language%20Processing%20with%20Deep%20Learning%20Assignment%204/index.html">
+<meta property="og:site_name" content="Doraemonzzz">
+<meta property="og:description" content="课程主页：https:&#x2F;&#x2F;web.stanford.edu&#x2F;class&#x2F;archive&#x2F;cs&#x2F;cs224n&#x2F;cs224n.1194&#x2F; 视频地址：https:&#x2F;&#x2F;www.bilibili.com&#x2F;video&#x2F;av46216519?from&#x3D;search&amp;seid&#x3D;13229282510647565239">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg">
+<meta property="article:published_time" content="2020-06-15T14:13:00.000Z">
+<meta property="article:modified_time" content="2020-06-20T04:36:03.339Z">
+<meta property="article:author" content="Doraemonzzz">
+<meta property="article:tag" content="CS224N">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="http://doraemonzzz.com/2020/06/15/CS224N%20Natural%20Language%20Processing%20with%20Deep%20Learning%20Assignment%204/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"prismjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    jQuery: 'https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js',
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+    },
+    fancybox: {
+      js: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isanchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'CS224N Natural Language Processing with Deep Learning Assignment 4',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2020-06-20 12:36:03'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    })(window)</script><meta name="generator" content="Hexo 5.4.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="author-avatar"><img class="avatar-img" src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">文章</div><div class="length-num">610</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">标签</div><div class="length-num">59</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/categories/"><div class="headline">分类</div><div class="length-num">23</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">Doraemonzzz</a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">CS224N Natural Language Processing with Deep Learning Assignment 4</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2020-06-15T14:13:00.000Z" title="发表于 2020-06-15 22:13:00">2020-06-15</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2020-06-20T04:36:03.339Z" title="更新于 2020-06-20 12:36:03">2020-06-20</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/NLP/">NLP</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="CS224N Natural Language Processing with Deep Learning Assignment 4"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p>课程主页：<a target="_blank" rel="noopener" href="https://web.stanford.edu/class/archive/cs/cs224n/cs224n.1194/">https://web.stanford.edu/class/archive/cs/cs224n/cs224n.1194/</a></p>
+<p>视频地址：<a target="_blank" rel="noopener" href="https://www.bilibili.com/video/av46216519?from=search&amp;seid=13229282510647565239">https://www.bilibili.com/video/av46216519?from=search&amp;seid=13229282510647565239</a></p>
+<span id="more"></span>
+<h3 id="1-Neural-Machine-Translation-with-RNNs"><a href="#1-Neural-Machine-Translation-with-RNNs" class="headerlink" title="1. Neural Machine Translation with RNNs"></a>1. Neural Machine Translation with RNNs</h3><h4 id="a"><a href="#a" class="headerlink" title="(a)"></a>(a)</h4><pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">def</span> <span class="token function">pad_sents</span><span class="token punctuation">(</span>sents<span class="token punctuation">,</span> pad_token<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token triple-quoted-string string">""" Pad list of sentences according to the longest sentence in the batch.
+    @param sents (list[list[str] ]): list of sentences, where each sentence
+                                    is represented as a list of words
+    @param pad_token (str): padding token
+    @returns sents_padded (list[list[str] ]): list of sentences where sentences shorter
+        than the max length sentence are padded out with the pad_token, such that
+        each sentences in the batch now has equal length.
+    """</span>
+    sents_padded <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>
+
+    <span class="token comment">### YOUR CODE HERE (~6 Lines)</span>
+    max_l <span class="token operator">=</span> <span class="token number">0</span>
+    <span class="token keyword">for</span> sent <span class="token keyword">in</span> sents<span class="token punctuation">:</span>
+        max_l <span class="token operator">=</span> <span class="token builtin">max</span><span class="token punctuation">(</span>max_l<span class="token punctuation">,</span> <span class="token builtin">len</span><span class="token punctuation">(</span>sent<span class="token punctuation">)</span><span class="token punctuation">)</span>
+    <span class="token keyword">for</span> sent <span class="token keyword">in</span> sents<span class="token punctuation">:</span>
+        new_sent <span class="token operator">=</span> copy<span class="token punctuation">.</span>deepcopy<span class="token punctuation">(</span>sent<span class="token punctuation">)</span>
+        l <span class="token operator">=</span> <span class="token builtin">len</span><span class="token punctuation">(</span>sent<span class="token punctuation">)</span>
+        <span class="token keyword">while</span> l <span class="token operator">&lt;</span> max_l<span class="token punctuation">:</span>
+            new_sent<span class="token punctuation">.</span>append<span class="token punctuation">(</span>pad_token<span class="token punctuation">)</span>
+            l <span class="token operator">+=</span> <span class="token number">1</span>
+        sents_padded<span class="token punctuation">.</span>append<span class="token punctuation">(</span>new_sent<span class="token punctuation">)</span>
+
+    <span class="token comment">### END YOUR CODE</span>
+
+    <span class="token keyword">return</span> sents_padded<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h4 id="b"><a href="#b" class="headerlink" title="(b)"></a>(b)</h4><pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">def</span> <span class="token function">__init__</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span> embed_size<span class="token punctuation">,</span> vocab<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token triple-quoted-string string">"""
+    Init the Embedding layers.
+
+    @param embed_size (int): Embedding size (dimensionality)
+    @param vocab (Vocab): Vocabulary object containing src and tgt languages
+                          See vocab.py for documentation.
+    """</span>
+    <span class="token builtin">super</span><span class="token punctuation">(</span>ModelEmbeddings<span class="token punctuation">,</span> self<span class="token punctuation">)</span><span class="token punctuation">.</span>__init__<span class="token punctuation">(</span><span class="token punctuation">)</span>
+    self<span class="token punctuation">.</span>embed_size <span class="token operator">=</span> embed_size
+
+    <span class="token comment"># default values</span>
+    self<span class="token punctuation">.</span>source <span class="token operator">=</span> <span class="token boolean">None</span>
+    self<span class="token punctuation">.</span>target <span class="token operator">=</span> <span class="token boolean">None</span>
+
+    src_pad_token_idx <span class="token operator">=</span> vocab<span class="token punctuation">.</span>src<span class="token punctuation">[</span><span class="token string">'&lt;pad>'</span><span class="token punctuation">]</span>
+    tgt_pad_token_idx <span class="token operator">=</span> vocab<span class="token punctuation">.</span>tgt<span class="token punctuation">[</span><span class="token string">'&lt;pad>'</span><span class="token punctuation">]</span>
+
+    <span class="token comment">### YOUR CODE HERE (~2 Lines)</span>
+    <span class="token comment">### TODO - Initialize the following variables:</span>
+    <span class="token comment">###     self.source (Embedding Layer for source language)</span>
+    <span class="token comment">###     self.target (Embedding Layer for target langauge)</span>
+    <span class="token comment">###</span>
+    <span class="token comment">### Note:</span>
+    <span class="token comment">###     1. `vocab` object contains two vocabularies:</span>
+    <span class="token comment">###            `vocab.src` for source</span>
+    <span class="token comment">###            `vocab.tgt` for target</span>
+    <span class="token comment">###     2. You can get the length of a specific vocabulary by running:</span>
+    <span class="token comment">###             `len(vocab.&lt;specific_vocabulary>)`</span>
+    <span class="token comment">###     3. Remember to include the padding token for the specific vocabulary</span>
+    <span class="token comment">###        when creating your Embedding.</span>
+    <span class="token comment">###</span>
+    <span class="token comment">### Use the following docs to properly initialize these variables:</span>
+    <span class="token comment">###     Embedding Layer:</span>
+    <span class="token comment">###         https://pytorch.org/docs/stable/nn.html#torch.nn.Embedding</span>
+    self<span class="token punctuation">.</span>source <span class="token operator">=</span> nn<span class="token punctuation">.</span>Embedding<span class="token punctuation">(</span><span class="token builtin">len</span><span class="token punctuation">(</span>vocab<span class="token punctuation">.</span>src<span class="token punctuation">)</span><span class="token punctuation">,</span> self<span class="token punctuation">.</span>embed_size<span class="token punctuation">,</span> src_pad_token_idx<span class="token punctuation">)</span>
+    self<span class="token punctuation">.</span>target <span class="token operator">=</span> nn<span class="token punctuation">.</span>Embedding<span class="token punctuation">(</span><span class="token builtin">len</span><span class="token punctuation">(</span>vocab<span class="token punctuation">.</span>tgt<span class="token punctuation">)</span><span class="token punctuation">,</span> self<span class="token punctuation">.</span>embed_size<span class="token punctuation">,</span> tgt_pad_token_idx<span class="token punctuation">)</span>
+
+    <span class="token comment">### END YOUR CODE</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h4 id="c"><a href="#c" class="headerlink" title="(c)"></a>(c)</h4><pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">def</span> <span class="token function">__init__</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span> embed_size<span class="token punctuation">,</span> hidden_size<span class="token punctuation">,</span> vocab<span class="token punctuation">,</span> dropout_rate<span class="token operator">=</span><span class="token number">0.2</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token triple-quoted-string string">""" Init NMT Model.
+
+    @param embed_size (int): Embedding size (dimensionality)
+    @param hidden_size (int): Hidden Size (dimensionality)
+    @param vocab (Vocab): Vocabulary object containing src and tgt languages
+                          See vocab.py for documentation.
+    @param dropout_rate (float): Dropout probability, for attention
+    """</span>
+    <span class="token builtin">super</span><span class="token punctuation">(</span>NMT<span class="token punctuation">,</span> self<span class="token punctuation">)</span><span class="token punctuation">.</span>__init__<span class="token punctuation">(</span><span class="token punctuation">)</span>
+    self<span class="token punctuation">.</span>model_embeddings <span class="token operator">=</span> ModelEmbeddings<span class="token punctuation">(</span>embed_size<span class="token punctuation">,</span> vocab<span class="token punctuation">)</span>
+    self<span class="token punctuation">.</span>hidden_size <span class="token operator">=</span> hidden_size
+    self<span class="token punctuation">.</span>dropout_rate <span class="token operator">=</span> dropout_rate
+    self<span class="token punctuation">.</span>vocab <span class="token operator">=</span> vocab
+
+    <span class="token comment"># default values</span>
+    self<span class="token punctuation">.</span>encoder <span class="token operator">=</span> <span class="token boolean">None</span> 
+    self<span class="token punctuation">.</span>decoder <span class="token operator">=</span> <span class="token boolean">None</span>
+    self<span class="token punctuation">.</span>h_projection <span class="token operator">=</span> <span class="token boolean">None</span>
+    self<span class="token punctuation">.</span>c_projection <span class="token operator">=</span> <span class="token boolean">None</span>
+    self<span class="token punctuation">.</span>att_projection <span class="token operator">=</span> <span class="token boolean">None</span>
+    self<span class="token punctuation">.</span>combined_output_projection <span class="token operator">=</span> <span class="token boolean">None</span>
+    self<span class="token punctuation">.</span>target_vocab_projection <span class="token operator">=</span> <span class="token boolean">None</span>
+    self<span class="token punctuation">.</span>dropout <span class="token operator">=</span> <span class="token boolean">None</span>
+
+
+    <span class="token comment">### YOUR CODE HERE (~8 Lines)</span>
+    <span class="token comment">### TODO - Initialize the following variables:</span>
+    <span class="token comment">###     self.encoder (Bidirectional LSTM with bias)</span>
+    <span class="token comment">###     self.decoder (LSTM Cell with bias)</span>
+    <span class="token comment">###     self.h_projection (Linear Layer with no bias), called W_&#123;h&#125; in the PDF.</span>
+    <span class="token comment">###     self.c_projection (Linear Layer with no bias), called W_&#123;c&#125; in the PDF.</span>
+    <span class="token comment">###     self.att_projection (Linear Layer with no bias), called W_&#123;attProj&#125; in the PDF.</span>
+    <span class="token comment">###     self.combined_output_projection (Linear Layer with no bias), called W_&#123;u&#125; in the PDF.</span>
+    <span class="token comment">###     self.target_vocab_projection (Linear Layer with no bias), called W_&#123;vocab&#125; in the PDF.</span>
+    <span class="token comment">###     self.dropout (Dropout Layer)</span>
+    <span class="token comment">###</span>
+    <span class="token comment">### Use the following docs to properly initialize these variables:</span>
+    <span class="token comment">###     LSTM:</span>
+    <span class="token comment">###         https://pytorch.org/docs/stable/nn.html#torch.nn.LSTM</span>
+    <span class="token comment">###     LSTM Cell:</span>
+    <span class="token comment">###         https://pytorch.org/docs/stable/nn.html#torch.nn.LSTMCell</span>
+    <span class="token comment">###     Linear Layer:</span>
+    <span class="token comment">###         https://pytorch.org/docs/stable/nn.html#torch.nn.Linear</span>
+    <span class="token comment">###     Dropout Layer:</span>
+    <span class="token comment">###         https://pytorch.org/docs/stable/nn.html#torch.nn.Dropout</span>
+    self<span class="token punctuation">.</span>encoder <span class="token operator">=</span> nn<span class="token punctuation">.</span>LSTM<span class="token punctuation">(</span>embed_size<span class="token punctuation">,</span> hidden_size<span class="token punctuation">,</span> bias<span class="token operator">=</span><span class="token boolean">True</span><span class="token punctuation">,</span> bidirectional<span class="token operator">=</span><span class="token boolean">True</span><span class="token punctuation">)</span>
+    self<span class="token punctuation">.</span>decoder <span class="token operator">=</span> nn<span class="token punctuation">.</span>LSTMCell<span class="token punctuation">(</span><span class="token punctuation">(</span>embed_size <span class="token operator">+</span> hidden_size<span class="token punctuation">)</span><span class="token punctuation">,</span> hidden_size<span class="token punctuation">,</span> bias<span class="token operator">=</span><span class="token boolean">True</span><span class="token punctuation">)</span>
+    self<span class="token punctuation">.</span>h_projection <span class="token operator">=</span> nn<span class="token punctuation">.</span>Linear<span class="token punctuation">(</span><span class="token number">2</span> <span class="token operator">*</span> hidden_size<span class="token punctuation">,</span> hidden_size<span class="token punctuation">,</span> bias<span class="token operator">=</span><span class="token boolean">False</span><span class="token punctuation">)</span>
+    self<span class="token punctuation">.</span>c_projection <span class="token operator">=</span> nn<span class="token punctuation">.</span>Linear<span class="token punctuation">(</span><span class="token number">2</span> <span class="token operator">*</span> hidden_size<span class="token punctuation">,</span> hidden_size<span class="token punctuation">,</span> bias<span class="token operator">=</span><span class="token boolean">False</span><span class="token punctuation">)</span>
+    self<span class="token punctuation">.</span>att_projection <span class="token operator">=</span> nn<span class="token punctuation">.</span>Linear<span class="token punctuation">(</span><span class="token number">2</span> <span class="token operator">*</span> hidden_size<span class="token punctuation">,</span> hidden_size<span class="token punctuation">,</span> bias<span class="token operator">=</span><span class="token boolean">False</span><span class="token punctuation">)</span>
+    self<span class="token punctuation">.</span>combined_output_projection <span class="token operator">=</span> nn<span class="token punctuation">.</span>Linear<span class="token punctuation">(</span><span class="token number">3</span> <span class="token operator">*</span> hidden_size<span class="token punctuation">,</span> hidden_size<span class="token punctuation">,</span> bias<span class="token operator">=</span><span class="token boolean">False</span><span class="token punctuation">)</span>
+    self<span class="token punctuation">.</span>target_vocab_projection <span class="token operator">=</span> nn<span class="token punctuation">.</span>Linear<span class="token punctuation">(</span>hidden_size<span class="token punctuation">,</span> <span class="token builtin">len</span><span class="token punctuation">(</span>self<span class="token punctuation">.</span>vocab<span class="token punctuation">.</span>tgt<span class="token punctuation">)</span><span class="token punctuation">)</span>
+    self<span class="token punctuation">.</span>dropout <span class="token operator">=</span> nn<span class="token punctuation">.</span>Dropout<span class="token punctuation">(</span>self<span class="token punctuation">.</span>dropout_rate<span class="token punctuation">)</span>
+
+    <span class="token comment">### END YOUR CODE</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>这里注意</p>
+<script type="math/tex; mode=display">
+\overline{\mathbf{y}_{t} } \in \mathbb{R}^{(e+h) \times 1}</script><p>所以decoder的input_size为embed_size + hidden_size。</p>
+<h4 id="d"><a href="#d" class="headerlink" title="(d)"></a>(d)</h4><pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">def</span> <span class="token function">encode</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span> source_padded<span class="token punctuation">:</span> torch<span class="token punctuation">.</span>Tensor<span class="token punctuation">,</span> source_lengths<span class="token punctuation">:</span> List<span class="token punctuation">[</span><span class="token builtin">int</span><span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token operator">-</span><span class="token operator">></span> Tuple<span class="token punctuation">[</span>torch<span class="token punctuation">.</span>Tensor<span class="token punctuation">,</span> Tuple<span class="token punctuation">[</span>torch<span class="token punctuation">.</span>Tensor<span class="token punctuation">,</span> torch<span class="token punctuation">.</span>Tensor<span class="token punctuation">]</span> <span class="token punctuation">]</span><span class="token punctuation">:</span>
+    <span class="token triple-quoted-string string">""" Apply the encoder to source sentences to obtain encoder hidden states.
+        Additionally, take the final states of the encoder and project them to obtain initial states for decoder.
+
+    @param source_padded (Tensor): Tensor of padded source sentences with shape (src_len, b), where
+                                    b = batch_size, src_len = maximum source sentence length. Note that 
+                                   these have already been sorted in order of longest to shortest sentence.
+    @param source_lengths (List[int]): List of actual lengths for each of the source sentences in the batch
+    @returns enc_hiddens (Tensor): Tensor of hidden units with shape (b, src_len, h*2), where
+                                    b = batch size, src_len = maximum source sentence length, h = hidden size.
+    @returns dec_init_state (tuple(Tensor, Tensor)): Tuple of tensors representing the decoder's initial
+                                            hidden state and cell.
+    """</span>
+    enc_hiddens<span class="token punctuation">,</span> dec_init_state <span class="token operator">=</span> <span class="token boolean">None</span><span class="token punctuation">,</span> <span class="token boolean">None</span>
+
+    <span class="token comment">### YOUR CODE HERE (~ 8 Lines)</span>
+    <span class="token comment">### TODO:</span>
+    <span class="token comment">###     1. Construct Tensor `X` of source sentences with shape (src_len, b, e) using the source model embeddings.</span>
+    <span class="token comment">###         src_len = maximum source sentence length, b = batch size, e = embedding size. Note</span>
+    <span class="token comment">###         that there is no initial hidden state or cell for the decoder.</span>
+    <span class="token comment">###     2. Compute `enc_hiddens`, `last_hidden`, `last_cell` by applying the encoder to `X`.</span>
+    <span class="token comment">###         - Before you can apply the encoder, you need to apply the `pack_padded_sequence` function to X.</span>
+    <span class="token comment">###         - After you apply the encoder, you need to apply the `pad_packed_sequence` function to enc_hiddens.</span>
+    <span class="token comment">###         - Note that the shape of the tensor returned by the encoder is (src_len b, h*2) and we want to</span>
+    <span class="token comment">###           return a tensor of shape (b, src_len, h*2) as `enc_hiddens`.</span>
+    <span class="token comment">###     3. Compute `dec_init_state` = (init_decoder_hidden, init_decoder_cell):</span>
+    <span class="token comment">###         - `init_decoder_hidden`:</span>
+    <span class="token comment">###             `last_hidden` is a tensor shape (2, b, h). The first dimension corresponds to forwards and backwards.</span>
+    <span class="token comment">###             Concatenate the forwards and backwards tensors to obtain a tensor shape (b, 2*h).</span>
+    <span class="token comment">###             Apply the h_projection layer to this in order to compute init_decoder_hidden.</span>
+    <span class="token comment">###             This is h_0^&#123;dec&#125; in the PDF. Here b = batch size, h = hidden size</span>
+    <span class="token comment">###         - `init_decoder_cell`:</span>
+    <span class="token comment">###             `last_cell` is a tensor shape (2, b, h). The first dimension corresponds to forwards and backwards.</span>
+    <span class="token comment">###             Concatenate the forwards and backwards tensors to obtain a tensor shape (b, 2*h).</span>
+    <span class="token comment">###             Apply the c_projection layer to this in order to compute init_decoder_cell.</span>
+    <span class="token comment">###             This is c_0^&#123;dec&#125; in the PDF. Here b = batch size, h = hidden size</span>
+    <span class="token comment">###</span>
+    <span class="token comment">### See the following docs, as you may need to use some of the following functions in your implementation:</span>
+    <span class="token comment">###     Pack the padded sequence X before passing to the encoder:</span>
+    <span class="token comment">###         https://pytorch.org/docs/stable/nn.html#torch.nn.utils.rnn.pack_padded_sequence</span>
+    <span class="token comment">###     Pad the packed sequence, enc_hiddens, returned by the encoder:</span>
+    <span class="token comment">###         https://pytorch.org/docs/stable/nn.html#torch.nn.utils.rnn.pad_packed_sequence</span>
+    <span class="token comment">###     Tensor Concatenation:</span>
+    <span class="token comment">###         https://pytorch.org/docs/stable/torch.html#torch.cat</span>
+    <span class="token comment">###     Tensor Permute:</span>
+    <span class="token comment">###         https://pytorch.org/docs/stable/tensors.html#torch.Tensor.permute</span>
+    X <span class="token operator">=</span> self<span class="token punctuation">.</span>model_embeddings<span class="token punctuation">.</span>source<span class="token punctuation">(</span>source_padded<span class="token punctuation">)</span>
+    X_pack <span class="token operator">=</span> nn<span class="token punctuation">.</span>utils<span class="token punctuation">.</span>rnn<span class="token punctuation">.</span>pack_padded_sequence<span class="token punctuation">(</span>X<span class="token punctuation">,</span> source_lengths<span class="token punctuation">)</span>
+    enc_hiddens<span class="token punctuation">,</span> <span class="token punctuation">(</span>last_hidden<span class="token punctuation">,</span> last_cell<span class="token punctuation">)</span> <span class="token operator">=</span> self<span class="token punctuation">.</span>encoder<span class="token punctuation">(</span>X_pack<span class="token punctuation">)</span>
+    enc_hiddens <span class="token operator">=</span> nn<span class="token punctuation">.</span>utils<span class="token punctuation">.</span>rnn<span class="token punctuation">.</span>pad_packed_sequence<span class="token punctuation">(</span>enc_hiddens<span class="token punctuation">,</span> batch_first<span class="token operator">=</span><span class="token boolean">True</span><span class="token punctuation">)</span><span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span>
+    hdec <span class="token operator">=</span> self<span class="token punctuation">.</span>h_projection<span class="token punctuation">(</span>torch<span class="token punctuation">.</span>cat<span class="token punctuation">(</span><span class="token punctuation">(</span>last_hidden<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">,</span> last_hidden<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+    cdec <span class="token operator">=</span> self<span class="token punctuation">.</span>c_projection<span class="token punctuation">(</span>torch<span class="token punctuation">.</span>cat<span class="token punctuation">(</span><span class="token punctuation">(</span>last_cell<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">,</span> last_cell<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+    dec_init_state <span class="token operator">=</span> <span class="token punctuation">(</span>hdec<span class="token punctuation">,</span> cdec<span class="token punctuation">)</span>
+
+    <span class="token comment">### END YOUR CODE</span>
+
+    <span class="token keyword">return</span> enc_hiddens<span class="token punctuation">,</span> dec_init_state<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>对应公式如下：</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+\mathbf{h}_{0}^{\mathrm{dec} } &=\mathbf{W}_{h}\left[\overleftarrow{\mathbf{h}_{1}^{\mathrm{enc} }} ; \overrightarrow{\mathbf{h}_{m}^{\mathrm{enc} }}\right] \\
+\mathbf{c}_{0}^{\mathrm{dec} } &=\mathbf{W}_{c}\left[\overleftarrow{\mathrm{c}_{1}^{\mathrm{enc} }} ; \overrightarrow{ {\mathrm{c} }_{m}^{\mathrm{ent} }}\right]
+\end{aligned}</script><p>使用如下命令测试：</p>
+<pre class="line-numbers language-none"><code class="language-none">python sanity_check.py 1d<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>得到如下结果：</p>
+<pre class="line-numbers language-none"><code class="language-none">Running Sanity Check for Question 1d: Encode
+--------------------------------------------------------------------------------
+torch.Size([5, 20, 6]) torch.Size([5, 20, 6])
+enc_hiddens Sanity Checks Passed!
+dec_init_state[0] Sanity Checks Passed!
+dec_init_state[1] Sanity Checks Passed!
+--------------------------------------------------------------------------------
+All Sanity Checks Passed for Question 1d: Encode!
+--------------------------------------------------------------------------------<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h4 id="e"><a href="#e" class="headerlink" title="(e)"></a>(e)</h4><p>注意$\overline{\mathbf{y}_{t} }$由$\mathbf{y}_{t}$和$\mathbf{o}_{t-1}$拼接而成，以及</p>
+<script type="math/tex; mode=display">
+\mathbf{h}_{t}^{\mathrm{dec} }, \mathbf{c}_{t}^{\mathrm{dec} }=\operatorname{Decoder}\left(\overline{\mathbf{y}_{t} }, \mathbf{h}_{t-1}^{\mathrm{dec} }, \mathbf{c}_{t-1}^{\mathrm{dec} }\right)</script><p>所以代码如下：</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">def</span> <span class="token function">decode</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span> enc_hiddens<span class="token punctuation">:</span> torch<span class="token punctuation">.</span>Tensor<span class="token punctuation">,</span> enc_masks<span class="token punctuation">:</span> torch<span class="token punctuation">.</span>Tensor<span class="token punctuation">,</span>
+            dec_init_state<span class="token punctuation">:</span> Tuple<span class="token punctuation">[</span>torch<span class="token punctuation">.</span>Tensor<span class="token punctuation">,</span> torch<span class="token punctuation">.</span>Tensor<span class="token punctuation">]</span><span class="token punctuation">,</span> target_padded<span class="token punctuation">:</span> torch<span class="token punctuation">.</span>Tensor<span class="token punctuation">)</span> <span class="token operator">-</span><span class="token operator">></span> torch<span class="token punctuation">.</span>Tensor<span class="token punctuation">:</span>
+    <span class="token triple-quoted-string string">"""Compute combined output vectors for a batch.
+
+    @param enc_hiddens (Tensor): Hidden states (b, src_len, h*2), where
+                                 b = batch size, src_len = maximum source sentence length, h = hidden size.
+    @param enc_masks (Tensor): Tensor of sentence masks (b, src_len), where
+                                 b = batch size, src_len = maximum source sentence length.
+    @param dec_init_state (tuple(Tensor, Tensor)): Initial state and cell for decoder
+    @param target_padded (Tensor): Gold-standard padded target sentences (tgt_len, b), where
+                                   tgt_len = maximum target sentence length, b = batch size. 
+
+    @returns combined_outputs (Tensor): combined output tensor  (tgt_len, b,  h), where
+                                    tgt_len = maximum target sentence length, b = batch_size,  h = hidden size
+    """</span>
+    <span class="token comment"># Chop of the &lt;END> token for max length sentences.</span>
+    target_padded <span class="token operator">=</span> target_padded<span class="token punctuation">[</span><span class="token punctuation">:</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">]</span>
+
+    <span class="token comment"># Initialize the decoder state (hidden and cell)</span>
+    dec_state <span class="token operator">=</span> dec_init_state
+
+    <span class="token comment"># Initialize previous combined output vector o_&#123;t-1&#125; as zero</span>
+    batch_size <span class="token operator">=</span> enc_hiddens<span class="token punctuation">.</span>size<span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span>
+    o_prev <span class="token operator">=</span> torch<span class="token punctuation">.</span>zeros<span class="token punctuation">(</span>batch_size<span class="token punctuation">,</span> self<span class="token punctuation">.</span>hidden_size<span class="token punctuation">,</span> device<span class="token operator">=</span>self<span class="token punctuation">.</span>device<span class="token punctuation">)</span>
+
+    <span class="token comment"># Initialize a list we will use to collect the combined output o_t on each step</span>
+    combined_outputs <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>
+
+    <span class="token comment">### YOUR CODE HERE (~9 Lines)</span>
+    <span class="token comment">### TODO:</span>
+    <span class="token comment">###     1. Apply the attention projection layer to `enc_hiddens` to obtain `enc_hiddens_proj`,</span>
+    <span class="token comment">###         which should be shape (b, src_len, h),</span>
+    <span class="token comment">###         where b = batch size, src_len = maximum source length, h = hidden size.</span>
+    <span class="token comment">###         This is applying W_&#123;attProj&#125; to h^enc, as described in the PDF.</span>
+    <span class="token comment">###     2. Construct tensor `Y` of target sentences with shape (tgt_len, b, e) using the target model embeddings.</span>
+    <span class="token comment">###         where tgt_len = maximum target sentence length, b = batch size, e = embedding size.</span>
+    <span class="token comment">###     3. Use the torch.split function to iterate over the time dimension of Y.</span>
+    <span class="token comment">###         Within the loop, this will give you Y_t of shape (1, b, e) where b = batch size, e = embedding size.</span>
+    <span class="token comment">###             - Squeeze Y_t into a tensor of dimension (b, e). </span>
+    <span class="token comment">###             - Construct Ybar_t by concatenating Y_t with o_prev.</span>
+    <span class="token comment">###             - Use the step function to compute the the Decoder's next (cell, state) values</span>
+    <span class="token comment">###               as well as the new combined output o_t.</span>
+    <span class="token comment">###             - Append o_t to combined_outputs</span>
+    <span class="token comment">###             - Update o_prev to the new o_t.</span>
+    <span class="token comment">###     4. Use torch.stack to convert combined_outputs from a list length tgt_len of</span>
+    <span class="token comment">###         tensors shape (b, h), to a single tensor shape (tgt_len, b, h)</span>
+    <span class="token comment">###         where tgt_len = maximum target sentence length, b = batch size, h = hidden size.</span>
+    <span class="token comment">###</span>
+    <span class="token comment">### Note:</span>
+    <span class="token comment">###    - When using the squeeze() function make sure to specify the dimension you want to squeeze</span>
+    <span class="token comment">###      over. Otherwise, you will remove the batch dimension accidentally, if batch_size = 1.</span>
+    <span class="token comment">###   </span>
+    <span class="token comment">### Use the following docs to implement this functionality:</span>
+    <span class="token comment">###     Zeros Tensor:</span>
+    <span class="token comment">###         https://pytorch.org/docs/stable/torch.html#torch.zeros</span>
+    <span class="token comment">###     Tensor Splitting (iteration):</span>
+    <span class="token comment">###         https://pytorch.org/docs/stable/torch.html#torch.split</span>
+    <span class="token comment">###     Tensor Dimension Squeezing:</span>
+    <span class="token comment">###         https://pytorch.org/docs/stable/torch.html#torch.squeeze</span>
+    <span class="token comment">###     Tensor Concatenation:</span>
+    <span class="token comment">###         https://pytorch.org/docs/stable/torch.html#torch.cat</span>
+    <span class="token comment">###     Tensor Stacking:</span>
+    <span class="token comment">###         https://pytorch.org/docs/stable/torch.html#torch.stack</span>
+    enc_hiddens_proj <span class="token operator">=</span> self<span class="token punctuation">.</span>att_projection<span class="token punctuation">(</span>enc_hiddens<span class="token punctuation">)</span>
+    Y <span class="token operator">=</span> self<span class="token punctuation">.</span>model_embeddings<span class="token punctuation">.</span>target<span class="token punctuation">(</span>target_padded<span class="token punctuation">)</span>
+    Y_split <span class="token operator">=</span> torch<span class="token punctuation">.</span>split<span class="token punctuation">(</span>Y<span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">)</span>
+    <span class="token keyword">for</span> Y_t <span class="token keyword">in</span> Y_split<span class="token punctuation">:</span>
+        y_t <span class="token operator">=</span> torch<span class="token punctuation">.</span>squeeze<span class="token punctuation">(</span>Y_t<span class="token punctuation">)</span>
+        Ybar_t <span class="token operator">=</span> torch<span class="token punctuation">.</span>cat<span class="token punctuation">(</span><span class="token punctuation">(</span>y_t<span class="token punctuation">,</span> o_prev<span class="token punctuation">)</span><span class="token punctuation">,</span> dim<span class="token operator">=</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span>
+        dec_state<span class="token punctuation">,</span> combined_output<span class="token punctuation">,</span> e_t <span class="token operator">=</span> self<span class="token punctuation">.</span>step<span class="token punctuation">(</span>Ybar_t<span class="token punctuation">,</span> dec_state<span class="token punctuation">,</span> enc_hiddens<span class="token punctuation">,</span> enc_hiddens_proj<span class="token punctuation">,</span> enc_masks<span class="token punctuation">)</span>
+        combined_outputs<span class="token punctuation">.</span>append<span class="token punctuation">(</span>combined_output<span class="token punctuation">)</span>
+        o_prev <span class="token operator">=</span> combined_output
+    
+    combined_outputs <span class="token operator">=</span> torch<span class="token punctuation">.</span>stack<span class="token punctuation">(</span>combined_outputs<span class="token punctuation">)</span>
+
+    <span class="token comment">### END YOUR CODE</span>
+
+    <span class="token keyword">return</span> combined_outputs<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>使用如下命令测试：</p>
+<pre class="line-numbers language-none"><code class="language-none">python sanity_check.py 1d<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>得到如下结果：</p>
+<pre class="line-numbers language-none"><code class="language-none">--------------------------------------------------------------------------------
+Running Sanity Check for Question 1e: Decode
+--------------------------------------------------------------------------------
+combined_outputs Sanity Checks Passed!
+--------------------------------------------------------------------------------
+All Sanity Checks Passed for Question 1e: Decode!
+--------------------------------------------------------------------------------<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h4 id="f"><a href="#f" class="headerlink" title="(f)"></a>(f)</h4><p>这部分的公式如下：</p>
+<p>第一部分：</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+\mathbf{e}_{t, i}&=\left(\mathbf{h}_{t}^{\mathrm{dec} }\right)^{T} \mathbf{W}_{\mathrm{att} } \mathrm{Proj} \mathbf{h}_{i}^{\mathrm{enc} } \\
+\alpha_{t}&=\operatorname{Softmax}\left(\mathbf{e}_{t}\right) \\
+\mathbf{a}_{t}&=\sum_{i}^{m} \alpha_{t, i} \mathbf{h}_{i}^{\mathrm{enc} }
+\end{aligned}</script><p>第二部分：</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+\mathbf{u}_{t}&=\left[\mathbf{a}_{t} ; \mathbf{h}_{t}^{\mathrm{dec} }\right] \\
+\mathrm{v}_{t}&=\mathbf{W}_{u} \mathbf{u}_{t} \\
+\mathbf{o}_{t}&=\text { Dropout }\left(\tanh \left(\mathbf{v}_{t}\right)\right)\\
+\mathbf{P}_{t}&=\operatorname{Softmax}\left(\mathbf{W}_{\mathrm{vocab} } \mathbf{o}_{t}\right)
+\end{aligned}</script><p>所以代码如下：</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">def</span> <span class="token function">step</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span> Ybar_t<span class="token punctuation">:</span> torch<span class="token punctuation">.</span>Tensor<span class="token punctuation">,</span>
+        dec_state<span class="token punctuation">:</span> Tuple<span class="token punctuation">[</span>torch<span class="token punctuation">.</span>Tensor<span class="token punctuation">,</span> torch<span class="token punctuation">.</span>Tensor<span class="token punctuation">]</span><span class="token punctuation">,</span>
+        enc_hiddens<span class="token punctuation">:</span> torch<span class="token punctuation">.</span>Tensor<span class="token punctuation">,</span>
+        enc_hiddens_proj<span class="token punctuation">:</span> torch<span class="token punctuation">.</span>Tensor<span class="token punctuation">,</span>
+        enc_masks<span class="token punctuation">:</span> torch<span class="token punctuation">.</span>Tensor<span class="token punctuation">)</span> <span class="token operator">-</span><span class="token operator">></span> Tuple<span class="token punctuation">[</span>Tuple<span class="token punctuation">,</span> torch<span class="token punctuation">.</span>Tensor<span class="token punctuation">,</span> torch<span class="token punctuation">.</span>Tensor<span class="token punctuation">]</span><span class="token punctuation">:</span>
+    <span class="token triple-quoted-string string">""" Compute one forward step of the LSTM decoder, including the attention computation.
+
+    @param Ybar_t (Tensor): Concatenated Tensor of [Y_t o_prev], with shape (b, e + h). The input for the decoder,
+                            where b = batch size, e = embedding size, h = hidden size.
+    @param dec_state (tuple(Tensor, Tensor)): Tuple of tensors both with shape (b, h), where b = batch size, h = hidden size.
+            First tensor is decoder's prev hidden state, second tensor is decoder's prev cell.
+    @param enc_hiddens (Tensor): Encoder hidden states Tensor, with shape (b, src_len, h * 2), where b = batch size,
+                                src_len = maximum source length, h = hidden size.
+    @param enc_hiddens_proj (Tensor): Encoder hidden states Tensor, projected from (h * 2) to h. Tensor is with shape (b, src_len, h),
+                                where b = batch size, src_len = maximum source length, h = hidden size.
+    @param enc_masks (Tensor): Tensor of sentence masks shape (b, src_len),
+                                where b = batch size, src_len is maximum source length. 
+
+    @returns dec_state (tuple (Tensor, Tensor)): Tuple of tensors both shape (b, h), where b = batch size, h = hidden size.
+            First tensor is decoder's new hidden state, second tensor is decoder's new cell.
+    @returns combined_output (Tensor): Combined output Tensor at timestep t, shape (b, h), where b = batch size, h = hidden size.
+    @returns e_t (Tensor): Tensor of shape (b, src_len). It is attention scores distribution.
+                            Note: You will not use this outside of this function.
+                                  We are simply returning this value so that we can sanity check
+                                  your implementation.
+    """</span>
+
+    combined_output <span class="token operator">=</span> <span class="token boolean">None</span>
+
+    <span class="token comment">### YOUR CODE HERE (~3 Lines)</span>
+    <span class="token comment">### TODO:</span>
+    <span class="token comment">###     1. Apply the decoder to `Ybar_t` and `dec_state`to obtain the new dec_state.</span>
+    <span class="token comment">###     2. Split dec_state into its two parts (dec_hidden, dec_cell)</span>
+    <span class="token comment">###     3. Compute the attention scores e_t, a Tensor shape (b, src_len). </span>
+    <span class="token comment">###        Note: b = batch_size, src_len = maximum source length, h = hidden size.</span>
+    <span class="token comment">###</span>
+    <span class="token comment">###       Hints:</span>
+    <span class="token comment">###         - dec_hidden is shape (b, h) and corresponds to h^dec_t in the PDF (batched)</span>
+    <span class="token comment">###         - enc_hiddens_proj is shape (b, src_len, h) and corresponds to W_&#123;attProj&#125; h^enc (batched).</span>
+    <span class="token comment">###         - Use batched matrix multiplication (torch.bmm) to compute e_t.</span>
+    <span class="token comment">###         - To get the tensors into the right shapes for bmm, you will need to do some squeezing and unsqueezing.</span>
+    <span class="token comment">###         - When using the squeeze() function make sure to specify the dimension you want to squeeze</span>
+    <span class="token comment">###             over. Otherwise, you will remove the batch dimension accidentally, if batch_size = 1.</span>
+    <span class="token comment">###</span>
+    <span class="token comment">### Use the following docs to implement this functionality:</span>
+    <span class="token comment">###     Batch Multiplication:</span>
+    <span class="token comment">###        https://pytorch.org/docs/stable/torch.html#torch.bmm</span>
+    <span class="token comment">###     Tensor Unsqueeze:</span>
+    <span class="token comment">###         https://pytorch.org/docs/stable/torch.html#torch.unsqueeze</span>
+    <span class="token comment">###     Tensor Squeeze:</span>
+    <span class="token comment">###         https://pytorch.org/docs/stable/torch.html#torch.squeeze</span>
+    dec_state <span class="token operator">=</span> self<span class="token punctuation">.</span>decoder<span class="token punctuation">(</span>Ybar_t<span class="token punctuation">,</span> dec_state<span class="token punctuation">)</span>
+    dec_hidden<span class="token punctuation">,</span> dec_cell <span class="token operator">=</span> dec_state
+    e_t <span class="token operator">=</span> torch<span class="token punctuation">.</span>bmm<span class="token punctuation">(</span>enc_hiddens_proj<span class="token punctuation">,</span> dec_hidden<span class="token punctuation">.</span>unsqueeze<span class="token punctuation">(</span>dim<span class="token operator">=</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">.</span>squeeze<span class="token punctuation">(</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span>
+
+    <span class="token comment">### END YOUR CODE</span>
+
+    <span class="token comment"># Set e_t to -inf where enc_masks has 1</span>
+    <span class="token keyword">if</span> enc_masks <span class="token keyword">is</span> <span class="token keyword">not</span> <span class="token boolean">None</span><span class="token punctuation">:</span>
+        <span class="token comment">#e_t.data.masked_fill_(enc_masks.byte(), -float('inf'))</span>
+        e_t<span class="token punctuation">.</span>data<span class="token punctuation">.</span>masked_fill_<span class="token punctuation">(</span>enc_masks<span class="token punctuation">.</span><span class="token builtin">bool</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token operator">-</span><span class="token builtin">float</span><span class="token punctuation">(</span><span class="token string">'inf'</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+
+    <span class="token comment">### YOUR CODE HERE (~6 Lines)</span>
+    <span class="token comment">### TODO:</span>
+    <span class="token comment">###     1. Apply softmax to e_t to yield alpha_t</span>
+    <span class="token comment">###     2. Use batched matrix multiplication between alpha_t and enc_hiddens to obtain the</span>
+    <span class="token comment">###         attention output vector, a_t.</span>
+    <span class="token comment">#$$     Hints:</span>
+    <span class="token comment">###           - alpha_t is shape (b, src_len)</span>
+    <span class="token comment">###           - enc_hiddens is shape (b, src_len, 2h)</span>
+    <span class="token comment">###           - a_t should be shape (b, 2h)</span>
+    <span class="token comment">###           - You will need to do some squeezing and unsqueezing.</span>
+    <span class="token comment">###     Note: b = batch size, src_len = maximum source length, h = hidden size.</span>
+    <span class="token comment">###</span>
+    <span class="token comment">###     3. Concatenate dec_hidden with a_t to compute tensor U_t</span>
+    <span class="token comment">###     4. Apply the combined output projection layer to U_t to compute tensor V_t</span>
+    <span class="token comment">###     5. Compute tensor O_t by first applying the Tanh function and then the dropout layer.</span>
+    <span class="token comment">###</span>
+    <span class="token comment">### Use the following docs to implement this functionality:</span>
+    <span class="token comment">###     Softmax:</span>
+    <span class="token comment">###         https://pytorch.org/docs/stable/nn.html#torch.nn.functional.softmax</span>
+    <span class="token comment">###     Batch Multiplication:</span>
+    <span class="token comment">###        https://pytorch.org/docs/stable/torch.html#torch.bmm</span>
+    <span class="token comment">###     Tensor View:</span>
+    <span class="token comment">###         https://pytorch.org/docs/stable/tensors.html#torch.Tensor.view</span>
+    <span class="token comment">###     Tensor Concatenation:</span>
+    <span class="token comment">###         https://pytorch.org/docs/stable/torch.html#torch.cat</span>
+    <span class="token comment">###     Tanh:</span>
+    <span class="token comment">###         https://pytorch.org/docs/stable/torch.html#torch.tanh</span>
+    alpha_t <span class="token operator">=</span> F<span class="token punctuation">.</span>softmax<span class="token punctuation">(</span>e_t<span class="token punctuation">,</span> dim<span class="token operator">=</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span>
+    a_t <span class="token operator">=</span> torch<span class="token punctuation">.</span>bmm<span class="token punctuation">(</span>alpha_t<span class="token punctuation">.</span>unsqueeze<span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">,</span> enc_hiddens<span class="token punctuation">)</span><span class="token punctuation">.</span>squeeze<span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span>
+    U_t <span class="token operator">=</span> torch<span class="token punctuation">.</span>cat<span class="token punctuation">(</span><span class="token punctuation">(</span>a_t<span class="token punctuation">,</span> dec_hidden<span class="token punctuation">)</span><span class="token punctuation">,</span> dim<span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">)</span>
+    V_t <span class="token operator">=</span> self<span class="token punctuation">.</span>combined_output_projection<span class="token punctuation">(</span>U_t<span class="token punctuation">)</span>
+    O_t <span class="token operator">=</span> self<span class="token punctuation">.</span>dropout<span class="token punctuation">(</span>torch<span class="token punctuation">.</span>tanh<span class="token punctuation">(</span>V_t<span class="token punctuation">)</span><span class="token punctuation">)</span>
+
+    <span class="token comment">### END YOUR CODE</span>
+
+    combined_output <span class="token operator">=</span> O_t
+    <span class="token keyword">return</span> dec_state<span class="token punctuation">,</span> combined_output<span class="token punctuation">,</span> e_t<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>使用如下命令测试：</p>
+<pre class="line-numbers language-none"><code class="language-none">python sanity_check.py 1f<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>得到如下结果：</p>
+<pre class="line-numbers language-none"><code class="language-none">--------------------------------------------------------------------------------
+Running Sanity Check for Question 1f: Step
+--------------------------------------------------------------------------------
+dec_state[0] Sanity Checks Passed!
+dec_state[1] Sanity Checks Passed!
+combined_output  Sanity Checks Passed!
+e_t Sanity Checks Passed!
+--------------------------------------------------------------------------------
+All Sanity Checks Passed for Question 1f: Step!
+--------------------------------------------------------------------------------<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h4 id="g"><a href="#g" class="headerlink" title="(g)"></a>(g)</h4><p>mask是为了记录哪些位置是pad，可以将单词和pad的$\alpha$设置为很小的值，以此忽略pad的影响，将原始句子长度之后的位置都置为$1$即可：</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">def</span> <span class="token function">generate_sent_masks</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span> enc_hiddens<span class="token punctuation">:</span> torch<span class="token punctuation">.</span>Tensor<span class="token punctuation">,</span> source_lengths<span class="token punctuation">:</span> List<span class="token punctuation">[</span><span class="token builtin">int</span><span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token operator">-</span><span class="token operator">></span> torch<span class="token punctuation">.</span>Tensor<span class="token punctuation">:</span>
+    <span class="token triple-quoted-string string">""" Generate sentence masks for encoder hidden states.
+
+    @param enc_hiddens (Tensor): encodings of shape (b, src_len, 2*h), where b = batch size,
+                                 src_len = max source length, h = hidden size. 
+    @param source_lengths (List[int]): List of actual lengths for each of the sentences in the batch.
+    
+    @returns enc_masks (Tensor): Tensor of sentence masks of shape (b, src_len),
+                                where src_len = max source length, h = hidden size.
+    """</span>
+    enc_masks <span class="token operator">=</span> torch<span class="token punctuation">.</span>zeros<span class="token punctuation">(</span>enc_hiddens<span class="token punctuation">.</span>size<span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">,</span> enc_hiddens<span class="token punctuation">.</span>size<span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">,</span> dtype<span class="token operator">=</span>torch<span class="token punctuation">.</span><span class="token builtin">float</span><span class="token punctuation">)</span>
+    <span class="token keyword">for</span> e_id<span class="token punctuation">,</span> src_len <span class="token keyword">in</span> <span class="token builtin">enumerate</span><span class="token punctuation">(</span>source_lengths<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        enc_masks<span class="token punctuation">[</span>e_id<span class="token punctuation">,</span> src_len<span class="token punctuation">:</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token number">1</span>
+    <span class="token keyword">return</span> enc_masks<span class="token punctuation">.</span>to<span class="token punctuation">(</span>self<span class="token punctuation">.</span>device<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h4 id="h"><a href="#h" class="headerlink" title="(h)"></a>(h)</h4><p>windows上好像无法使用sh命令，所以使用如下方法训练：</p>
+<pre class="line-numbers language-none"><code class="language-none">python run.py train --train-src&#x3D;.&#x2F;en_es_data&#x2F;train.es --train-tgt&#x3D;.&#x2F;en_es_data&#x2F;train.en --dev-src&#x3D;.&#x2F;en_es_data&#x2F;dev.es --dev-tgt&#x3D;.&#x2F;en_es_data&#x2F;dev.en --vocab&#x3D;vocab.json
+python run.py train --train-src&#x3D;.&#x2F;en_es_data&#x2F;train.es --train-tgt&#x3D;.&#x2F;en_es_data&#x2F;train.en --dev-src&#x3D;.&#x2F;en_es_data&#x2F;dev.es --dev-tgt&#x3D;.&#x2F;en_es_data&#x2F;dev.en --vocab&#x3D;vocab.json<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<h4 id="i"><a href="#i" class="headerlink" title="(i)"></a>(i)</h4><p>使用如下方式测试：</p>
+<pre class="line-numbers language-none"><code class="language-none">python run.py decode model.bin .&#x2F;en_es_data&#x2F;test.es .&#x2F;en_es_data&#x2F;test.en outputs&#x2F;test_outputs.txt --cuda
+run.py decode model.bin .&#x2F;en_es_data&#x2F;test.es .&#x2F;en_es_data&#x2F;test.en outputs&#x2F;test_outputs.txt<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<p>得到如下结果：</p>
+<pre class="line-numbers language-none"><code class="language-none">Corpus BLEU: 22.732161209949027<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<h4 id="j"><a href="#j" class="headerlink" title="(j)"></a>(j)</h4><p>dot product attention计算快，但是可能不够准确，其他两种attention因为使用了权重参数，所以会更准确些。</p>
+<h3 id="2-Analyzing-NMT-Systems"><a href="#2-Analyzing-NMT-Systems" class="headerlink" title="2. Analyzing NMT Systems"></a>2. Analyzing NMT Systems</h3><h4 id="a-1"><a href="#a-1" class="headerlink" title="(a)"></a>(a)</h4><p>(i)one of翻译成another，原因是语言限制，解决方法为增加类似的训练样本。</p>
+<p>(ii)断句不对，原因是语言限制，解决方法为增加逗号较多的训练样本。</p>
+<p>(iii)没有处理稀有词，原因是模型限制，应该增加处理稀有词的部分。</p>
+<p>(iv)an翻译成a，原因是模型限制，应该增加处理a,an的部分。</p>
+<p>(v)老师翻译成teacher，原因是模型限制，应该减少模型对性别的偏差。</p>
+<p>(vi)数量翻译错误，原因是模型限制，应该增加计量单位的转换。</p>
+<h4 id="b-1"><a href="#b-1" class="headerlink" title="(b)"></a>(b)</h4><p>这部分从略。</p>
+<h4 id="c-1"><a href="#c-1" class="headerlink" title="(c)"></a>(c)</h4><h5 id="i-1"><a href="#i-1" class="headerlink" title="(i)"></a>(i)</h5><p>对于$c_1$：</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+p_1 &= \frac{0 + 1 + 1 + 1+0}{5}\\
+&=\frac 3 5\\
+p_2 &= \frac{0 + 1+ 1+0}{4}\\
+&=\frac  1 2\\
+r^\star &=5\\
+c&=5\\
+BLEU&=  \exp \left(\frac 1 2 \times \log \frac 3 5 + \frac 1 2 \times \log \frac 1 2 \right)\\
+&=0.5477225575051662
+\end{aligned}</script><p>对于$c_2$：</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+p_1 &= \frac{1 + 1 + 0 + 1+1}{5}\\
+&=\frac 4 5\\
+p_2 &= \frac{1+ 0+ 0+1}{4}\\
+&=\frac  1 2\\
+r^\star &= 4\\
+c&=5 \\
+BLEU&= \exp \left(\frac 1 2 \times \log \frac 4 5 + \frac 1 2 \times \log \frac 1 2 \right)\\
+&=0.6324555320336759
+\end{aligned}</script><p>根据BLEU，$c_2$比$c_1$好，我同意这点。</p>
+<h5 id="ii"><a href="#ii" class="headerlink" title="(ii)"></a>(ii)</h5><p>对于$c_1$：</p>
+<script type="math/tex; mode=display">
+\begin{aligned}p_1 &= \frac{0 + 1 + 1 + 1+0}{5}\\
+&=\frac 3 5\\p_2 &= \frac{0 + 1+ 1+0}{4}\\
+&=\frac  1 2\\
+r^\star &= 5\\
+c&=5\\
+BLEU&=  \exp \left(\frac 1 2 \times \log \frac 3 5 + \frac 1 2 \times \log \frac 1 2 \right)\\&=0.5477225575051662\end{aligned}</script><p>对于$c_2$：</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+p_1 &= \frac{1 + 1 + 0 + 0+0}{5}\\
+&=\frac2 5\\
+p_2 &= \frac{1+ 0+ 0+0}{4}\\
+&=\frac  1 4\\
+r^\star &= 5\\
+c&=5 \\
+BLEU&= \exp \left(\frac 1 2 \times \log \frac 2 5 + \frac 1 2 \times \log \frac 1 4 \right)\\
+&=0.316227766016838
+\end{aligned}</script><p>根据BLEU，$c_1$比$c_2$好，我不同意这点。</p>
+<h4 id="iii"><a href="#iii" class="headerlink" title="(iii)"></a>(iii)</h4><p>一个翻译可能不够准确，参考多个翻译的结果更加好。</p>
+<h4 id="iv"><a href="#iv" class="headerlink" title="(iv)"></a>(iv)</h4><p>优势：可以较为准确的评估翻译结果，定量化。</p>
+<p>劣势：计算速度慢，需要人为提供多个翻译。</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">Doraemonzzz</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="http://doraemonzzz.com/2020/06/15/CS224N%20Natural%20Language%20Processing%20with%20Deep%20Learning%20Assignment%204/">http://doraemonzzz.com/2020/06/15/CS224N%20Natural%20Language%20Processing%20with%20Deep%20Learning%20Assignment%204/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://doraemonzzz.com" target="_blank">Doraemonzzz</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/CS224N/">CS224N</a></div><div class="post_share"><div class="social-share" data-image="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2020/06/15/CS224N%20Natural%20Language%20Processing%20with%20Deep%20Learning%20Assignment%205/"><img class="prev-cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">CS224N Natural Language Processing with Deep Learning Assignment 5</div></div></a></div><div class="next-post pull-right"><a href="/2020/06/15/CMU%2015-213%20Lab3%20Attack%20Lab/"><img class="next-cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">CMU 15-213 Lab3 Attack Lab</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span> 相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2020/03/17/CS224N Natural Language Processing with Deep Learning Assignment 2/" title="CS224N Natural Language Processing with Deep Learning Assignment 2"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-03-17</div><div class="title">CS224N Natural Language Processing with Deep Learning Assignment 2</div></div></a></div><div><a href="/2020/01/14/CS224N Natural Language Processing with Deep Learning Lecture 1/" title="CS224N Natural Language Processing with Deep Learning Lecture 1"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-01-14</div><div class="title">CS224N Natural Language Processing with Deep Learning Lecture 1</div></div></a></div><div><a href="/2020/03/29/CS224N Natural Language Processing with Deep Learning Assignment 3/" title="CS224N Natural Language Processing with Deep Learning Assignment 3"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-03-29</div><div class="title">CS224N Natural Language Processing with Deep Learning Assignment 3</div></div></a></div><div><a href="/2020/04/21/CS224N Natural Language Processing with Deep Learning Lecture 10/" title="CS224N Natural Language Processing with Deep Learning Lecture 10"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-04-21</div><div class="title">CS224N Natural Language Processing with Deep Learning Lecture 10</div></div></a></div><div><a href="/2020/04/27/CS224N Natural Language Processing with Deep Learning Lecture 12/" title="CS224N Natural Language Processing with Deep Learning Lecture 12"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-04-27</div><div class="title">CS224N Natural Language Processing with Deep Learning Lecture 12</div></div></a></div><div><a href="/2020/04/22/CS224N Natural Language Processing with Deep Learning Lecture 11/" title="CS224N Natural Language Processing with Deep Learning Lecture 11"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-04-22</div><div class="title">CS224N Natural Language Processing with Deep Learning Lecture 11</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="card-info-avatar is-center"><img class="avatar-img" src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/><div class="author-info__name">Doraemonzzz</div><div class="author-info__description">个人博客，主要记录有关机器学习，数学以及计算机科学的笔记</div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">610</div></a></div><div class="card-info-data-item is-center"><a href="/tags/"><div class="headline">标签</div><div class="length-num">59</div></a></div><div class="card-info-data-item is-center"><a href="/categories/"><div class="headline">分类</div><div class="length-num">23</div></a></div></div><a class="button--animated" id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/Doraemonzzz" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="/doraemon_zzz@163.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn card-announcement-animation"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-Neural-Machine-Translation-with-RNNs"><span class="toc-number">1.</span> <span class="toc-text">1. Neural Machine Translation with RNNs</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#a"><span class="toc-number">1.1.</span> <span class="toc-text">(a)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#b"><span class="toc-number">1.2.</span> <span class="toc-text">(b)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#c"><span class="toc-number">1.3.</span> <span class="toc-text">(c)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#d"><span class="toc-number">1.4.</span> <span class="toc-text">(d)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#e"><span class="toc-number">1.5.</span> <span class="toc-text">(e)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#f"><span class="toc-number">1.6.</span> <span class="toc-text">(f)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#g"><span class="toc-number">1.7.</span> <span class="toc-text">(g)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#h"><span class="toc-number">1.8.</span> <span class="toc-text">(h)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#i"><span class="toc-number">1.9.</span> <span class="toc-text">(i)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#j"><span class="toc-number">1.10.</span> <span class="toc-text">(j)</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-Analyzing-NMT-Systems"><span class="toc-number">2.</span> <span class="toc-text">2. Analyzing NMT Systems</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#a-1"><span class="toc-number">2.1.</span> <span class="toc-text">(a)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#b-1"><span class="toc-number">2.2.</span> <span class="toc-text">(b)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#c-1"><span class="toc-number">2.3.</span> <span class="toc-text">(c)</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#i-1"><span class="toc-number">2.3.1.</span> <span class="toc-text">(i)</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#ii"><span class="toc-number">2.3.2.</span> <span class="toc-text">(ii)</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#iii"><span class="toc-number">2.4.</span> <span class="toc-text">(iii)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#iv"><span class="toc-number">2.5.</span> <span class="toc-text">(iv)</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2021/06/06/2021-6-6-%E7%AE%97%E6%B3%95%E6%A6%82%E8%AE%BA(DPV)%E4%B9%A0%E9%A2%98%E8%A7%A3%E7%AD%94%E2%80%94%E2%80%94%E7%AC%AC3%E7%AB%A0-%E5%9B%BE%E7%9A%84%E5%88%86%E8%A7%A3/" title="算法概论(DPV)习题解答——第3章 图的分解"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="算法概论(DPV)习题解答——第3章 图的分解"/></a><div class="content"><a class="title" href="/2021/06/06/2021-6-6-%E7%AE%97%E6%B3%95%E6%A6%82%E8%AE%BA(DPV)%E4%B9%A0%E9%A2%98%E8%A7%A3%E7%AD%94%E2%80%94%E2%80%94%E7%AC%AC3%E7%AB%A0-%E5%9B%BE%E7%9A%84%E5%88%86%E8%A7%A3/" title="算法概论(DPV)习题解答——第3章 图的分解">算法概论(DPV)习题解答——第3章 图的分解</a><time datetime="2021-06-06T14:35:00.000Z" title="发表于 2021-06-06 22:35:00">2021-06-06</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/06/06/2021-6-6-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E7%AC%AC5%E7%AB%A0-%E4%B9%A0%E9%A2%98%E8%A7%A3%E6%9E%90/" title="深入理解计算机系统 第5章 习题解析"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="深入理解计算机系统 第5章 习题解析"/></a><div class="content"><a class="title" href="/2021/06/06/2021-6-6-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E7%AC%AC5%E7%AB%A0-%E4%B9%A0%E9%A2%98%E8%A7%A3%E6%9E%90/" title="深入理解计算机系统 第5章 习题解析">深入理解计算机系统 第5章 习题解析</a><time datetime="2021-06-06T07:23:00.000Z" title="发表于 2021-06-06 15:23:00">2021-06-06</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/06/05/2021-6-5-Stanford-Compiler-PA5%E7%BF%BB%E8%AF%91/" title="Stanford Compiler PA5翻译"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Stanford Compiler PA5翻译"/></a><div class="content"><a class="title" href="/2021/06/05/2021-6-5-Stanford-Compiler-PA5%E7%BF%BB%E8%AF%91/" title="Stanford Compiler PA5翻译">Stanford Compiler PA5翻译</a><time datetime="2021-06-05T06:12:00.000Z" title="发表于 2021-06-05 14:12:00">2021-06-05</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/06/04/2021-6-4-Stanford-Compiler-PA4%E7%BF%BB%E8%AF%91/" title="Stanford Compiler PA4翻译"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Stanford Compiler PA4翻译"/></a><div class="content"><a class="title" href="/2021/06/04/2021-6-4-Stanford-Compiler-PA4%E7%BF%BB%E8%AF%91/" title="Stanford Compiler PA4翻译">Stanford Compiler PA4翻译</a><time datetime="2021-06-03T16:17:00.000Z" title="发表于 2021-06-04 00:17:00">2021-06-04</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/06/03/2021-6-3-%E5%B7%A7%E5%A6%99%E7%9A%84Y%E8%BF%90%E7%AE%97%E7%AC%A6/" title="巧妙的Y运算符"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="巧妙的Y运算符"/></a><div class="content"><a class="title" href="/2021/06/03/2021-6-3-%E5%B7%A7%E5%A6%99%E7%9A%84Y%E8%BF%90%E7%AE%97%E7%AC%A6/" title="巧妙的Y运算符">巧妙的Y运算符</a><time datetime="2021-06-03T00:54:00.000Z" title="发表于 2021-06-03 08:54:00">2021-06-03</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2021 By Doraemonzzz</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><div class="js-pjax"><script>if (!window.MathJax) {
+  window.MathJax = {
+    loader: {
+      source: {
+        '[tex]/amsCd': '[tex]/amscd'
+      }
+    },
+    tex: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]],
+      tags: 'ams'
+    },
+    options: {
+      renderActions: {
+        findScript: [10, doc => {
+          for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+            const display = !!node.type.match(/; *mode=display/)
+            const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+            const text = document.createTextNode('')
+            node.parentNode.replaceChild(text, node)
+            math.start = {node: text, delim: '', n: 0}
+            math.end = {node: text, delim: '', n: 0}
+            doc.math.push(math)
+          }
+        }, ''],
+        addClass: [200,() => {
+          document.querySelectorAll('mjx-container:not([display=\'true\']').forEach( node => {
+            const target = node.parentNode
+            if (!target.classList.contains('has-jax')) {
+              target.classList.add('mathjax-overflow')
+            }
+          })
+        }, '', false]
+      }
+    }
+  }
+  
+  const script = document.createElement('script')
+  script.src = 'https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js'
+  script.id = 'MathJax-script'
+  script.async = true
+  document.head.appendChild(script)
+} else {
+  MathJax.startup.document.state(0)
+  MathJax.texReset()
+  MathJax.typeset()
+}</script></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

@@ -1,0 +1,672 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>From Nand to Tetris week 1 | Doraemonzzz</title><meta name="keywords" content="From Nand to Tetris"><meta name="author" content="Doraemonzzz"><meta name="copyright" content="Doraemonzzz"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="这周开始学习From Nand to Tetris，中文名为“依据基本原理构建现代计算机：从与非门到俄罗斯方块”，课程介绍了计算机的工作原理，每周有一个项目，完成课程之后，可以真正构建出一个可以运行的计算机，课程也没有太多的先修课程，只要学过任何一门编程语言即可。 课程官网： https:&#x2F;&#x2F;www.nand2tetris.org&#x2F; 视频地址： https:&#x2F;&#x2F;www.coursera.org&#x2F;l">
+<meta property="og:type" content="article">
+<meta property="og:title" content="From Nand to Tetris week 1">
+<meta property="og:url" content="http://doraemonzzz.com/2019/04/24/From%20Nand%20to%20Tetris%20week%201/index.html">
+<meta property="og:site_name" content="Doraemonzzz">
+<meta property="og:description" content="这周开始学习From Nand to Tetris，中文名为“依据基本原理构建现代计算机：从与非门到俄罗斯方块”，课程介绍了计算机的工作原理，每周有一个项目，完成课程之后，可以真正构建出一个可以运行的计算机，课程也没有太多的先修课程，只要学过任何一门编程语言即可。 课程官网： https:&#x2F;&#x2F;www.nand2tetris.org&#x2F; 视频地址： https:&#x2F;&#x2F;www.coursera.org&#x2F;l">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg">
+<meta property="article:published_time" content="2019-04-24T08:03:00.000Z">
+<meta property="article:modified_time" content="2020-09-20T14:21:42.448Z">
+<meta property="article:author" content="Doraemonzzz">
+<meta property="article:tag" content="From Nand to Tetris">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="http://doraemonzzz.com/2019/04/24/From%20Nand%20to%20Tetris%20week%201/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"prismjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    jQuery: 'https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js',
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+    },
+    fancybox: {
+      js: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isanchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'From Nand to Tetris week 1',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2020-09-20 22:21:42'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    })(window)</script><meta name="generator" content="Hexo 5.4.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="author-avatar"><img class="avatar-img" src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">文章</div><div class="length-num">610</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">标签</div><div class="length-num">59</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/categories/"><div class="headline">分类</div><div class="length-num">23</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">Doraemonzzz</a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">From Nand to Tetris week 1</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2019-04-24T08:03:00.000Z" title="发表于 2019-04-24 16:03:00">2019-04-24</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2020-09-20T14:21:42.448Z" title="更新于 2020-09-20 22:21:42">2020-09-20</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%8E%9F%E7%90%86/">计算机原理</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="From Nand to Tetris week 1"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p>这周开始学习From Nand to Tetris，中文名为“依据基本原理构建现代计算机：从与非门到俄罗斯方块”，课程介绍了计算机的工作原理，每周有一个项目，完成课程之后，可以真正构建出一个可以运行的计算机，课程也没有太多的先修课程，只要学过任何一门编程语言即可。</p>
+<p>课程官网：</p>
+<p><a target="_blank" rel="noopener" href="https://www.nand2tetris.org/">https://www.nand2tetris.org/</a></p>
+<p>视频地址：</p>
+<p><a target="_blank" rel="noopener" href="https://www.coursera.org/learn/build-a-computer">https://www.coursera.org/learn/build-a-computer</a></p>
+<span id="more"></span>
+<h2 id="Chapter-1-布尔逻辑"><a href="#Chapter-1-布尔逻辑" class="headerlink" title="Chapter 1 布尔逻辑"></a>Chapter 1 布尔逻辑</h2><h3 id="Part-1：课程回顾"><a href="#Part-1：课程回顾" class="headerlink" title="Part 1：课程回顾"></a>Part 1：课程回顾</h3><p>第一讲的内容比较基础，下面回顾几个重点部分：</p>
+<h4 id="Bool逻辑与Bool函数"><a href="#Bool逻辑与Bool函数" class="headerlink" title="Bool逻辑与Bool函数"></a>Bool逻辑与Bool函数</h4><p>课程首先介绍Bool逻辑的常用性质，这里假设我们只使用$\text{And,Not,Or}$操作。比较关键的一点是Bool表达式对应了真值表，例如</p>
+<script type="math/tex; mode=display">
+f(x, y, z) = (x\text{ And }y)\text{ Or }(\text{Not}(x)\text{ And }z)</script><p>对应了</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>$x$</th>
+<th>$y$</th>
+<th>$z$</th>
+<th>$f$</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>1</td>
+</tr>
+<tr>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<td>0</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+</tr>
+<tr>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<td>1</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+</tr>
+<tr>
+<td>1</td>
+<td>1</td>
+<td>0</td>
+<td>1</td>
+</tr>
+<tr>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>这部分表示<strong>Bool表达式$\Rightarrow$真值表</strong>，一个比较自然的问题是如何从真值表推出Bool表达式？</p>
+<p>考虑如下例子：</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>$x$</th>
+<th>$y$</th>
+<th>$z$</th>
+<th>$f$</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+</tr>
+<tr>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+</tr>
+<tr>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+<td>1</td>
+</tr>
+<tr>
+<td>0</td>
+<td>1</td>
+<td>1</td>
+<td>0</td>
+</tr>
+<tr>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+</tr>
+<tr>
+<td>1</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+</tr>
+<tr>
+<td>1</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<td>1</td>
+<td>1</td>
+<td>1</td>
+<td>0</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>构造方法很简单，首先考虑只在$f$取$1$的点处取$1$的表达式，例如此处为</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+&\text{Not}(x)\text{ And Not}(y)\text{ And Not}(z) \\
+&\text{Not}(x)\text{ And }y\text{ And Not}(z)\\
+&x\text{ And Not}(y)\text{ And Not}(z)
+\end{aligned}</script><p>然后将上述三个表达式取$\text{Or}$即得到目标表达式：</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+&(\text{Not}(x)\text{ And Not}(y)\text{ And Not}(z))\text{ Or} \\
+&(\text{Not}(x)\text{ And }y\text{ And Not}(z))\text{ Or}\\
+&(x\text{ And Not}(y)\text{ And Not}(z))
+\end{aligned}</script><p>不难将上述方法推广到任意Bool表达式的构造，注意每个Bool函数可以用真值表表示，所以我们得到如下引理：</p>
+<h5 id="引理1"><a href="#引理1" class="headerlink" title="引理1"></a>引理1</h5><script type="math/tex; mode=display">
+任何\text{Bool}函数都可以只使用\text{And,Not,Or}表达</script><p>因为</p>
+<script type="math/tex; mode=display">
+(x\text{ Or }y) = \text{Not}(\text{Not}(x)\text{ And Not}(y))</script><p>所以实际上我们有更强的结论：</p>
+<h5 id="引理2"><a href="#引理2" class="headerlink" title="引理2"></a>引理2</h5><script type="math/tex; mode=display">
+任何\text{Bool}函数都可以只使用\text{And,Not}表达</script><p>我们能否做的更好呢？不难看出在使用$\text{And,Not,Or}$的要求下，我们已经达到最优情形，因为$\text{Not}$无法表达$\text{And}$，反过来也是如此。但是如果可以使用别的逻辑操作，那么可以减少基础逻辑操作符的数量，考虑如下逻辑操作符$\text{Nand}$。</p>
+<p>Nand门输入输出关系如下</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>$x$</th>
+<th>$y$</th>
+<th>$\text{Nand}(x,y)$</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>$0$</td>
+<td>$0$</td>
+<td>$1$</td>
+</tr>
+<tr>
+<td>$0$</td>
+<td>$1$</td>
+<td>$1$</td>
+</tr>
+<tr>
+<td>$1$</td>
+<td>$0$</td>
+<td>$1$</td>
+</tr>
+<tr>
+<td>$1$</td>
+<td>$1$</td>
+<td>$0$</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>即</p>
+<script type="math/tex; mode=display">
+\text{Nand}(a,b)=\text{Not}(x\text{ And }y)</script><p>不难验证</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+&\text{Not}(x) =\text{Nand}(x,x)\\
+&\text{And}(x, y) =\text{Not}(\text{Nand}(x,y))
+\end{aligned}</script><p>所以有如下定理：</p>
+<h5 id="定理"><a href="#定理" class="headerlink" title="定理"></a>定理</h5><script type="math/tex; mode=display">
+任何\text{Bool}函数都可以只使用\text{Nand}表达</script><p>本课程中使用的基础逻辑操作为$\text{Nand}$。</p>
+<h4 id="HDL-Hardware-description-language"><a href="#HDL-Hardware-description-language" class="headerlink" title="HDL(Hardware description language)"></a>HDL(Hardware description language)</h4><p>本课程使用HDL编程语言来设计逻辑电路，具体的形式如下：</p>
+<pre class="line-numbers language-vhdl" data-language="vhdl"><code class="language-vhdl"><span class="token operator">/</span><span class="token operator">*</span><span class="token operator">*</span> <span class="token operator">Xor</span> gate<span class="token punctuation">:</span> <span class="token keyword">out</span> <span class="token operator">=</span> <span class="token punctuation">(</span>a <span class="token operator">And</span> <span class="token function">Not</span><span class="token punctuation">(</span>b<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token operator">Or</span> <span class="token punctuation">(</span><span class="token function">Not</span><span class="token punctuation">(</span>a<span class="token punctuation">)</span> <span class="token operator">And</span> b<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token operator">*</span><span class="token operator">/</span>
+CHIP <span class="token operator">Xor</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">IN</span> a<span class="token punctuation">,</span> b<span class="token punctuation">;</span>
+    <span class="token keyword">OUT</span> <span class="token keyword">out</span><span class="token punctuation">;</span>
+    PARTS<span class="token punctuation">:</span>
+    <span class="token operator">/</span><span class="token operator">/</span> Implementation missing
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>具体的使用方法可以参考课本附录以及官网，注意HDL无法编译运行，但是可以使用老师提供的模拟器查看输入输出，这部分在视频中有详细介绍。</p>
+<h3 id="Part-2：项目"><a href="#Part-2：项目" class="headerlink" title="Part 2：项目"></a>Part 2：项目</h3><p>第一次项目使用Nand门构造常用的逻辑单元，推荐开发环境为VSCODE+<a target="_blank" rel="noopener" href="https://marketplace.visualstudio.com/items?itemName=roblourens.vscode-nand2tetris-hdl">Nand2Tetris插件</a>。</p>
+<p>芯片接口：</p>
+<p><img src="https://github.com/Doraemonzzz/md-photo/blob/master/From%20Nand%20to%20Tetris/Chapter%202/2020092001.jpg?raw=true" alt=""></p>
+<h4 id="Nand"><a href="#Nand" class="headerlink" title="Nand"></a>Nand</h4><p>Nand门输入输出关系如下</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>$a$</th>
+<th>$b$</th>
+<th>$\text{Nand}(a,b)$</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>$0$</td>
+<td>$0$</td>
+<td>$1$</td>
+</tr>
+<tr>
+<td>$0$</td>
+<td>$1$</td>
+<td>$1$</td>
+</tr>
+<tr>
+<td>$1$</td>
+<td>$0$</td>
+<td>$1$</td>
+</tr>
+<tr>
+<td>$1$</td>
+<td>$1$</td>
+<td>$0$</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h4 id="Not"><a href="#Not" class="headerlink" title="Not"></a>Not</h4><p>考虑$\text{Nand}(a,a)$</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>$a$</th>
+<th>$a$</th>
+<th>$\text{Nand}(a,a)$</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>$0$</td>
+<td>$0$</td>
+<td>$1$</td>
+</tr>
+<tr>
+<td>$0$</td>
+<td>$0$</td>
+<td>$1$</td>
+</tr>
+<tr>
+<td>$1$</td>
+<td>$1$</td>
+<td>$0$</td>
+</tr>
+<tr>
+<td>$1$</td>
+<td>$1$</td>
+<td>$0$</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>说明</p>
+<script type="math/tex; mode=display">
+\text{Not}(a) =\text{Nand}(a,a)</script><h4 id="And"><a href="#And" class="headerlink" title="And"></a>And</h4><p>$\text{Nand}(a,b)$的特点，不难发现有</p>
+<script type="math/tex; mode=display">
+\text{And}(a, b) =\text{Not}(\text{Nand}(a,b))</script><h4 id="Or"><a href="#Or" class="headerlink" title="Or"></a>Or</h4><script type="math/tex; mode=display">
+\text{Or}(a, b) = \text{Not}(\text{And}(\text{Not}(a),\text{Not}(b)))</script><h4 id="XOR"><a href="#XOR" class="headerlink" title="XOR"></a>XOR</h4><p>XOR门输入输出关系如下</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>$a$</th>
+<th>$b$</th>
+<th>$\text{XOR}(a,b)$</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>$0$</td>
+<td>$0$</td>
+<td>$0$</td>
+</tr>
+<tr>
+<td>$0$</td>
+<td>$1$</td>
+<td>$1$</td>
+</tr>
+<tr>
+<td>$1$</td>
+<td>$0$</td>
+<td>$1$</td>
+</tr>
+<tr>
+<td>$1$</td>
+<td>$1$</td>
+<td>$0$</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>所以有如下逻辑关系</p>
+<script type="math/tex; mode=display">
+\text{Or}(\text{And}(a, \text{Not}(b)), \text{And}(b, \text{Not}(a)))</script><h4 id="Mux"><a href="#Mux" class="headerlink" title="Mux"></a>Mux</h4><p>Mux是选择器，输入为$a,b,\text{sel}$</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>$\text{sel}$</th>
+<th>$\text{out}$</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>$0$</td>
+<td>$a$</td>
+</tr>
+<tr>
+<td>$1$</td>
+<td>$b$</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>第一行相当于</p>
+<script type="math/tex; mode=display">
+\text{And}(\text{Not}(\text{sel}), a)</script><p>第二行相当于</p>
+<script type="math/tex; mode=display">
+\text{And}(\text{sel}, b)</script><p>合并起来即为</p>
+<script type="math/tex; mode=display">
+\text{Mux}(a,b,\text{sel})=
+\text{Or}(\text{And}(\text{Not}(\text{sel}), a),\text{And}(\text{sel}, b))</script><h4 id="DMux"><a href="#DMux" class="headerlink" title="DMux"></a>DMux</h4><p>DMux的作用如下：</p>
+<ul>
+<li>if (sel==0)<ul>
+<li>{a,b}={in,0}</li>
+</ul>
+</li>
+<li>else<ul>
+<li>{a,b}={0,in}</li>
+</ul>
+</li>
+</ul>
+<p>真值表为</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>$\text{in}$</th>
+<th>$\text{sel}$</th>
+<th>$\text{Not}(\text{sel})$</th>
+<th>$a$</th>
+<th>$b$</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>$0$</td>
+<td>$0$</td>
+<td>$1$</td>
+<td>$0$</td>
+<td>$0$</td>
+</tr>
+<tr>
+<td>$0$</td>
+<td>$1$</td>
+<td>$0$</td>
+<td>$0$</td>
+<td>$0$</td>
+</tr>
+<tr>
+<td>$1$</td>
+<td>$0$</td>
+<td>$1$</td>
+<td>$1$</td>
+<td>$0$</td>
+</tr>
+<tr>
+<td>$1$</td>
+<td>$1$</td>
+<td>$0$</td>
+<td>$0$</td>
+<td>$1$</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>从真值表中，不难看出我们有</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+a&=\text{Mux}(\text{in},\text{false},\text{sel})\\
+b&=\text{Mux}(\text{in},\text{false},\text{Not}(\text{sel}))
+\end{aligned}</script><p>2020/9/20二刷更新：</p>
+<p>逻辑关系其实很简单：</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+a&=\overline{\text{sel}} .\text{in}\\
+b&=\text{sel}.\text{in}
+\end{aligned}</script><h4 id="Not16"><a href="#Not16" class="headerlink" title="Not16"></a>Not16</h4><p>这个比较简单，只要对每一位取$\text{Not}$即可，注意这里没有循环。</p>
+<h4 id="And16"><a href="#And16" class="headerlink" title="And16"></a>And16</h4><p>对$a[16]$与$b[16]$每一位取$\text{And}$即可。</p>
+<h4 id="OR16"><a href="#OR16" class="headerlink" title="OR16"></a>OR16</h4><p>利用</p>
+<script type="math/tex; mode=display">
+\text{Or16}(a, b) = \text{Not16}(\text{And16}(\text{Not16}(a),\text{Not16}(b)))</script><h4 id="Mux16"><a href="#Mux16" class="headerlink" title="Mux16"></a>Mux16</h4><p>根据$\text{sel}$对$a[16]$与$b[16]$每一位取$\text{Mux}$即可。</p>
+<h4 id="Or8Way"><a href="#Or8Way" class="headerlink" title="Or8Way"></a>Or8Way</h4><p>逐步计算下式即可</p>
+<script type="math/tex; mode=display">
+\text{(in[0] Or in[1] Or ... Or in[7])}</script><h4 id="Mux4Way16"><a href="#Mux4Way16" class="headerlink" title="Mux4Way16"></a>Mux4Way16</h4><p>Mux4Way16的作用如下</p>
+<ul>
+<li>out = a if sel == 00<ul>
+<li>b if sel == 01</li>
+<li>c if sel == 10</li>
+<li>d if sel == 11</li>
+</ul>
+</li>
+</ul>
+<p>所以可以根据$\text{sel}[0]$在$a,b$之间以及$c,d$之间做选择，然后根据$\text{sel}[1]$在第一步的结果之间做选择。</p>
+<p>（备注，$\text{sel}[0]$为最右边的数字）</p>
+<h4 id="Mux8Way16"><a href="#Mux8Way16" class="headerlink" title="Mux8Way16"></a>Mux8Way16</h4><p>Mux8Way16和Mux4Way16作用类似，是对$8$个输入做选择，先根据$\text{sel}[0..1]$对前四个以及后四个做选择，然后根据$\text{sel}[2]$在第一步的结果之间做选择。</p>
+<h4 id="DMux4Way"><a href="#DMux4Way" class="headerlink" title="DMux4Way"></a>DMux4Way</h4><ul>
+<li>4-way demultiplexor:</li>
+<li>{a, b, c, d} =<ul>
+<li>{in, 0, 0, 0} if sel == 00</li>
+<li>{0, in, 0, 0} if sel == 01</li>
+<li>{0, 0, in, 0} if sel == 10</li>
+<li>{0, 0, 0, in} if sel == 11</li>
+</ul>
+</li>
+</ul>
+<p>第一步只考虑$\text{sel}[0]$，使用DMux产生如下效果</p>
+<p>{a1, b1, c1, d1} =</p>
+<ul>
+<li>{in, 0, in, 0} if sel == 00</li>
+<li>{0, in, 0, in} if sel == 01</li>
+<li>{in, 0, in, 0} if sel == 10</li>
+<li>{0, in, 0, in} if sel == 11</li>
+</ul>
+<p>对应代码如下</p>
+<pre class="line-numbers language-vhdl" data-language="vhdl"><code class="language-vhdl">DMux <span class="token punctuation">(</span><span class="token keyword">in</span><span class="token operator">=</span><span class="token keyword">in</span><span class="token punctuation">,</span> sel<span class="token operator">=</span>sel<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">,</span> a<span class="token operator">=</span>a1<span class="token punctuation">,</span> b<span class="token operator">=</span>b1<span class="token punctuation">)</span><span class="token punctuation">;</span>
+DMux <span class="token punctuation">(</span><span class="token keyword">in</span><span class="token operator">=</span><span class="token keyword">in</span><span class="token punctuation">,</span> sel<span class="token operator">=</span>sel<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">,</span> a<span class="token operator">=</span>c1<span class="token punctuation">,</span> b<span class="token operator">=</span>d1<span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<p>第二步考虑$\text{sel}[1]$，使用Mux产生如下效果</p>
+<p>{a, b, c, d} =</p>
+<ul>
+<li>{in, 0, 0, 0} if sel == 00</li>
+<li>{0, in, 0, 0} if sel == 01</li>
+<li>{0, 0, in, 0} if sel == 10</li>
+<li>{0, 0, 0, in} if sel == 11</li>
+</ul>
+<p>对应代码如下：</p>
+<pre class="line-numbers language-vhdl" data-language="vhdl"><code class="language-vhdl"><span class="token operator">Not</span> <span class="token punctuation">(</span><span class="token keyword">in</span><span class="token operator">=</span>sel<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token keyword">out</span><span class="token operator">=</span>notsel1<span class="token punctuation">)</span><span class="token punctuation">;</span>
+Mux <span class="token punctuation">(</span>a<span class="token operator">=</span>a1<span class="token punctuation">,</span> b<span class="token operator">=</span>notsel1<span class="token punctuation">,</span> sel<span class="token operator">=</span>sel<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token keyword">out</span><span class="token operator">=</span>a<span class="token punctuation">)</span><span class="token punctuation">;</span>
+Mux <span class="token punctuation">(</span>a<span class="token operator">=</span>b1<span class="token punctuation">,</span> b<span class="token operator">=</span>notsel1<span class="token punctuation">,</span> sel<span class="token operator">=</span>sel<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token keyword">out</span><span class="token operator">=</span>b<span class="token punctuation">)</span><span class="token punctuation">;</span>
+Mux <span class="token punctuation">(</span>a<span class="token operator">=</span>sel<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">,</span> b<span class="token operator">=</span>c1<span class="token punctuation">,</span> sel<span class="token operator">=</span>sel<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token keyword">out</span><span class="token operator">=</span>c<span class="token punctuation">)</span><span class="token punctuation">;</span>
+Mux <span class="token punctuation">(</span>a<span class="token operator">=</span>sel<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">,</span> b<span class="token operator">=</span>d1<span class="token punctuation">,</span> sel<span class="token operator">=</span>sel<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token keyword">out</span><span class="token operator">=</span>d<span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>注意如下代码也可以：</p>
+<pre class="line-numbers language-vhdl" data-language="vhdl"><code class="language-vhdl"><span class="token function">Mux</span><span class="token punctuation">(</span>a<span class="token operator">=</span>a1<span class="token punctuation">,</span> b<span class="token operator">=</span><span class="token boolean">false</span><span class="token punctuation">,</span> sel<span class="token operator">=</span>sel<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token keyword">out</span><span class="token operator">=</span>a<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token function">Mux</span><span class="token punctuation">(</span>a<span class="token operator">=</span>b1<span class="token punctuation">,</span> b<span class="token operator">=</span><span class="token boolean">false</span><span class="token punctuation">,</span> sel<span class="token operator">=</span>sel<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token keyword">out</span><span class="token operator">=</span>b<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token function">Mux</span><span class="token punctuation">(</span>a<span class="token operator">=</span><span class="token boolean">false</span><span class="token punctuation">,</span> b<span class="token operator">=</span>c1<span class="token punctuation">,</span> sel<span class="token operator">=</span>sel<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token keyword">out</span><span class="token operator">=</span>c<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token function">Mux</span><span class="token punctuation">(</span>a<span class="token operator">=</span><span class="token boolean">false</span><span class="token punctuation">,</span> b<span class="token operator">=</span>d1<span class="token punctuation">,</span> sel<span class="token operator">=</span>sel<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token keyword">out</span><span class="token operator">=</span>d<span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+<h4 id="DMux8Way"><a href="#DMux8Way" class="headerlink" title="DMux8Way"></a>DMux8Way</h4><p>和DMux4Way一样的思路，分两步操作，根据$\text{sel}[0..1]$对$a,b,c,d$以及$e,f,g,h$用DMux4Way分别处理，然后利用根据$\text{sel}[2]$使用Mux处理。</p>
+<pre class="line-numbers language-vhdl" data-language="vhdl"><code class="language-vhdl"><span class="token function">DMux4Way</span><span class="token punctuation">(</span><span class="token keyword">in</span><span class="token operator">=</span><span class="token keyword">in</span><span class="token punctuation">,</span> sel<span class="token operator">=</span>sel<span class="token punctuation">[</span><span class="token number">0..1</span><span class="token punctuation">]</span><span class="token punctuation">,</span> a<span class="token operator">=</span>a1<span class="token punctuation">,</span> b<span class="token operator">=</span>b1<span class="token punctuation">,</span> c<span class="token operator">=</span>c1<span class="token punctuation">,</span> d<span class="token operator">=</span>d1<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token function">DMux4Way</span><span class="token punctuation">(</span><span class="token keyword">in</span><span class="token operator">=</span><span class="token keyword">in</span><span class="token punctuation">,</span> sel<span class="token operator">=</span>sel<span class="token punctuation">[</span><span class="token number">0..1</span><span class="token punctuation">]</span><span class="token punctuation">,</span> a<span class="token operator">=</span>e1<span class="token punctuation">,</span> b<span class="token operator">=</span>f1<span class="token punctuation">,</span> c<span class="token operator">=</span>g1<span class="token punctuation">,</span> d<span class="token operator">=</span>h1<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token function">Mux</span><span class="token punctuation">(</span>a<span class="token operator">=</span>a1<span class="token punctuation">,</span> b<span class="token operator">=</span><span class="token boolean">false</span><span class="token punctuation">,</span> sel<span class="token operator">=</span>sel<span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token keyword">out</span><span class="token operator">=</span>a<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token function">Mux</span><span class="token punctuation">(</span>a<span class="token operator">=</span>b1<span class="token punctuation">,</span> b<span class="token operator">=</span><span class="token boolean">false</span><span class="token punctuation">,</span> sel<span class="token operator">=</span>sel<span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token keyword">out</span><span class="token operator">=</span>b<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token function">Mux</span><span class="token punctuation">(</span>a<span class="token operator">=</span>c1<span class="token punctuation">,</span> b<span class="token operator">=</span><span class="token boolean">false</span><span class="token punctuation">,</span> sel<span class="token operator">=</span>sel<span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token keyword">out</span><span class="token operator">=</span>c<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token function">Mux</span><span class="token punctuation">(</span>a<span class="token operator">=</span>d1<span class="token punctuation">,</span> b<span class="token operator">=</span><span class="token boolean">false</span><span class="token punctuation">,</span> sel<span class="token operator">=</span>sel<span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token keyword">out</span><span class="token operator">=</span>d<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token function">Mux</span><span class="token punctuation">(</span>a<span class="token operator">=</span><span class="token boolean">false</span><span class="token punctuation">,</span> b<span class="token operator">=</span>e1<span class="token punctuation">,</span> sel<span class="token operator">=</span>sel<span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token keyword">out</span><span class="token operator">=</span>e<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token function">Mux</span><span class="token punctuation">(</span>a<span class="token operator">=</span><span class="token boolean">false</span><span class="token punctuation">,</span> b<span class="token operator">=</span>f1<span class="token punctuation">,</span> sel<span class="token operator">=</span>sel<span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token keyword">out</span><span class="token operator">=</span>f<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token function">Mux</span><span class="token punctuation">(</span>a<span class="token operator">=</span><span class="token boolean">false</span><span class="token punctuation">,</span> b<span class="token operator">=</span>g1<span class="token punctuation">,</span> sel<span class="token operator">=</span>sel<span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token keyword">out</span><span class="token operator">=</span>g<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token function">Mux</span><span class="token punctuation">(</span>a<span class="token operator">=</span><span class="token boolean">false</span><span class="token punctuation">,</span> b<span class="token operator">=</span>h1<span class="token punctuation">,</span> sel<span class="token operator">=</span>sel<span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token keyword">out</span><span class="token operator">=</span>h<span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">Doraemonzzz</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="http://doraemonzzz.com/2019/04/24/From%20Nand%20to%20Tetris%20week%201/">http://doraemonzzz.com/2019/04/24/From%20Nand%20to%20Tetris%20week%201/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://doraemonzzz.com" target="_blank">Doraemonzzz</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/From-Nand-to-Tetris/">From Nand to Tetris</a></div><div class="post_share"><div class="social-share" data-image="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2019/04/30/From%20Nand%20to%20Tetris%20week%202/"><img class="prev-cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">From Nand to Tetris week 2</div></div></a></div><div class="next-post pull-right"><a href="/2019/04/24/CS205A%20HW5/"><img class="next-cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">CS205A HW5</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span> 相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2019/05/02/From Nand to Tetris week 3/" title="From Nand to Tetris week 3"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2019-05-02</div><div class="title">From Nand to Tetris week 3</div></div></a></div><div><a href="/2019/04/30/From Nand to Tetris week 2/" title="From Nand to Tetris week 2"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2019-04-30</div><div class="title">From Nand to Tetris week 2</div></div></a></div><div><a href="/2019/05/19/From Nand to Tetris week 4/" title="From Nand to Tetris week 4"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2019-05-19</div><div class="title">From Nand to Tetris week 4</div></div></a></div><div><a href="/2019/05/19/From Nand to Tetris week 5/" title="From Nand to Tetris week 5"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2019-05-19</div><div class="title">From Nand to Tetris week 5</div></div></a></div><div><a href="/2019/05/23/From Nand to Tetris week 6/" title="From Nand to Tetris week 6"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2019-05-23</div><div class="title">From Nand to Tetris week 6</div></div></a></div><div><a href="/2019/06/12/From Nand to Tetris week 7/" title="From Nand to Tetris week 7"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2019-06-12</div><div class="title">From Nand to Tetris week 7</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="card-info-avatar is-center"><img class="avatar-img" src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/><div class="author-info__name">Doraemonzzz</div><div class="author-info__description">个人博客，主要记录有关机器学习，数学以及计算机科学的笔记</div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">610</div></a></div><div class="card-info-data-item is-center"><a href="/tags/"><div class="headline">标签</div><div class="length-num">59</div></a></div><div class="card-info-data-item is-center"><a href="/categories/"><div class="headline">分类</div><div class="length-num">23</div></a></div></div><a class="button--animated" id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/Doraemonzzz" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="/doraemon_zzz@163.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn card-announcement-animation"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Chapter-1-%E5%B8%83%E5%B0%94%E9%80%BB%E8%BE%91"><span class="toc-number">1.</span> <span class="toc-text">Chapter 1 布尔逻辑</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Part-1%EF%BC%9A%E8%AF%BE%E7%A8%8B%E5%9B%9E%E9%A1%BE"><span class="toc-number">1.1.</span> <span class="toc-text">Part 1：课程回顾</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Bool%E9%80%BB%E8%BE%91%E4%B8%8EBool%E5%87%BD%E6%95%B0"><span class="toc-number">1.1.1.</span> <span class="toc-text">Bool逻辑与Bool函数</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%BC%95%E7%90%861"><span class="toc-number">1.1.1.1.</span> <span class="toc-text">引理1</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%BC%95%E7%90%862"><span class="toc-number">1.1.1.2.</span> <span class="toc-text">引理2</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%AE%9A%E7%90%86"><span class="toc-number">1.1.1.3.</span> <span class="toc-text">定理</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#HDL-Hardware-description-language"><span class="toc-number">1.1.2.</span> <span class="toc-text">HDL(Hardware description language)</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Part-2%EF%BC%9A%E9%A1%B9%E7%9B%AE"><span class="toc-number">1.2.</span> <span class="toc-text">Part 2：项目</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Nand"><span class="toc-number">1.2.1.</span> <span class="toc-text">Nand</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Not"><span class="toc-number">1.2.2.</span> <span class="toc-text">Not</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#And"><span class="toc-number">1.2.3.</span> <span class="toc-text">And</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Or"><span class="toc-number">1.2.4.</span> <span class="toc-text">Or</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#XOR"><span class="toc-number">1.2.5.</span> <span class="toc-text">XOR</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Mux"><span class="toc-number">1.2.6.</span> <span class="toc-text">Mux</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#DMux"><span class="toc-number">1.2.7.</span> <span class="toc-text">DMux</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Not16"><span class="toc-number">1.2.8.</span> <span class="toc-text">Not16</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#And16"><span class="toc-number">1.2.9.</span> <span class="toc-text">And16</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#OR16"><span class="toc-number">1.2.10.</span> <span class="toc-text">OR16</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Mux16"><span class="toc-number">1.2.11.</span> <span class="toc-text">Mux16</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Or8Way"><span class="toc-number">1.2.12.</span> <span class="toc-text">Or8Way</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Mux4Way16"><span class="toc-number">1.2.13.</span> <span class="toc-text">Mux4Way16</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Mux8Way16"><span class="toc-number">1.2.14.</span> <span class="toc-text">Mux8Way16</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#DMux4Way"><span class="toc-number">1.2.15.</span> <span class="toc-text">DMux4Way</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#DMux8Way"><span class="toc-number">1.2.16.</span> <span class="toc-text">DMux8Way</span></a></li></ol></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2021/06/06/2021-6-6-%E7%AE%97%E6%B3%95%E6%A6%82%E8%AE%BA(DPV)%E4%B9%A0%E9%A2%98%E8%A7%A3%E7%AD%94%E2%80%94%E2%80%94%E7%AC%AC3%E7%AB%A0-%E5%9B%BE%E7%9A%84%E5%88%86%E8%A7%A3/" title="算法概论(DPV)习题解答——第3章 图的分解"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="算法概论(DPV)习题解答——第3章 图的分解"/></a><div class="content"><a class="title" href="/2021/06/06/2021-6-6-%E7%AE%97%E6%B3%95%E6%A6%82%E8%AE%BA(DPV)%E4%B9%A0%E9%A2%98%E8%A7%A3%E7%AD%94%E2%80%94%E2%80%94%E7%AC%AC3%E7%AB%A0-%E5%9B%BE%E7%9A%84%E5%88%86%E8%A7%A3/" title="算法概论(DPV)习题解答——第3章 图的分解">算法概论(DPV)习题解答——第3章 图的分解</a><time datetime="2021-06-06T14:35:00.000Z" title="发表于 2021-06-06 22:35:00">2021-06-06</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/06/06/2021-6-6-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E7%AC%AC5%E7%AB%A0-%E4%B9%A0%E9%A2%98%E8%A7%A3%E6%9E%90/" title="深入理解计算机系统 第5章 习题解析"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="深入理解计算机系统 第5章 习题解析"/></a><div class="content"><a class="title" href="/2021/06/06/2021-6-6-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E7%AC%AC5%E7%AB%A0-%E4%B9%A0%E9%A2%98%E8%A7%A3%E6%9E%90/" title="深入理解计算机系统 第5章 习题解析">深入理解计算机系统 第5章 习题解析</a><time datetime="2021-06-06T07:23:00.000Z" title="发表于 2021-06-06 15:23:00">2021-06-06</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/06/05/2021-6-5-Stanford-Compiler-PA5%E7%BF%BB%E8%AF%91/" title="Stanford Compiler PA5翻译"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Stanford Compiler PA5翻译"/></a><div class="content"><a class="title" href="/2021/06/05/2021-6-5-Stanford-Compiler-PA5%E7%BF%BB%E8%AF%91/" title="Stanford Compiler PA5翻译">Stanford Compiler PA5翻译</a><time datetime="2021-06-05T06:12:00.000Z" title="发表于 2021-06-05 14:12:00">2021-06-05</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/06/04/2021-6-4-Stanford-Compiler-PA4%E7%BF%BB%E8%AF%91/" title="Stanford Compiler PA4翻译"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Stanford Compiler PA4翻译"/></a><div class="content"><a class="title" href="/2021/06/04/2021-6-4-Stanford-Compiler-PA4%E7%BF%BB%E8%AF%91/" title="Stanford Compiler PA4翻译">Stanford Compiler PA4翻译</a><time datetime="2021-06-03T16:17:00.000Z" title="发表于 2021-06-04 00:17:00">2021-06-04</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/06/03/2021-6-3-%E5%B7%A7%E5%A6%99%E7%9A%84Y%E8%BF%90%E7%AE%97%E7%AC%A6/" title="巧妙的Y运算符"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="巧妙的Y运算符"/></a><div class="content"><a class="title" href="/2021/06/03/2021-6-3-%E5%B7%A7%E5%A6%99%E7%9A%84Y%E8%BF%90%E7%AE%97%E7%AC%A6/" title="巧妙的Y运算符">巧妙的Y运算符</a><time datetime="2021-06-03T00:54:00.000Z" title="发表于 2021-06-03 08:54:00">2021-06-03</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2021 By Doraemonzzz</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><div class="js-pjax"><script>if (!window.MathJax) {
+  window.MathJax = {
+    loader: {
+      source: {
+        '[tex]/amsCd': '[tex]/amscd'
+      }
+    },
+    tex: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]],
+      tags: 'ams'
+    },
+    options: {
+      renderActions: {
+        findScript: [10, doc => {
+          for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+            const display = !!node.type.match(/; *mode=display/)
+            const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+            const text = document.createTextNode('')
+            node.parentNode.replaceChild(text, node)
+            math.start = {node: text, delim: '', n: 0}
+            math.end = {node: text, delim: '', n: 0}
+            doc.math.push(math)
+          }
+        }, ''],
+        addClass: [200,() => {
+          document.querySelectorAll('mjx-container:not([display=\'true\']').forEach( node => {
+            const target = node.parentNode
+            if (!target.classList.contains('has-jax')) {
+              target.classList.add('mathjax-overflow')
+            }
+          })
+        }, '', false]
+      }
+    }
+  }
+  
+  const script = document.createElement('script')
+  script.src = 'https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js'
+  script.id = 'MathJax-script'
+  script.async = true
+  document.head.appendChild(script)
+} else {
+  MathJax.startup.document.state(0)
+  MathJax.texReset()
+  MathJax.typeset()
+}</script></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

@@ -1,0 +1,450 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>CS50 Introduction to Artificial Intelligence with Python Lecture 3 | Doraemonzzz</title><meta name="keywords" content="CS50"><meta name="author" content="Doraemonzzz"><meta name="copyright" content="Doraemonzzz"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="第三讲的主题是Uncertainty，这里总结第三讲以及第三次作业。 课程地址：https:&#x2F;&#x2F;cs50.harvard.edu&#x2F;ai&#x2F; 备注：图片均来自课程课件。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="CS50 Introduction to Artificial Intelligence with Python Lecture 3">
+<meta property="og:url" content="http://doraemonzzz.com/2020/04/24/CS50%20Introduction%20to%20Artificial%20Intelligence%20with%20Python%20Lecture%203/index.html">
+<meta property="og:site_name" content="Doraemonzzz">
+<meta property="og:description" content="第三讲的主题是Uncertainty，这里总结第三讲以及第三次作业。 课程地址：https:&#x2F;&#x2F;cs50.harvard.edu&#x2F;ai&#x2F; 备注：图片均来自课程课件。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg">
+<meta property="article:published_time" content="2020-04-24T00:50:28.000Z">
+<meta property="article:modified_time" content="2020-04-30T06:34:03.976Z">
+<meta property="article:author" content="Doraemonzzz">
+<meta property="article:tag" content="CS50">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="http://doraemonzzz.com/2020/04/24/CS50%20Introduction%20to%20Artificial%20Intelligence%20with%20Python%20Lecture%203/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"prismjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    jQuery: 'https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js',
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+    },
+    fancybox: {
+      js: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isanchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'CS50 Introduction to Artificial Intelligence with Python Lecture 3',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2020-04-30 14:34:03'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    })(window)</script><meta name="generator" content="Hexo 5.4.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="author-avatar"><img class="avatar-img" src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">文章</div><div class="length-num">610</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">标签</div><div class="length-num">59</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/categories/"><div class="headline">分类</div><div class="length-num">23</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">Doraemonzzz</a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">CS50 Introduction to Artificial Intelligence with Python Lecture 3</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2020-04-24T00:50:28.000Z" title="发表于 2020-04-24 08:50:28">2020-04-24</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2020-04-30T06:34:03.976Z" title="更新于 2020-04-30 14:34:03">2020-04-30</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/AI/">AI</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="CS50 Introduction to Artificial Intelligence with Python Lecture 3"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p>第三讲的主题是Uncertainty，这里总结第三讲以及第三次作业。</p>
+<p>课程地址：<a target="_blank" rel="noopener" href="https://cs50.harvard.edu/ai/">https://cs50.harvard.edu/ai/</a></p>
+<p>备注：图片均来自课程课件。</p>
+<span id="more"></span>
+<p>这节课前面大部分内容是概率论的基本内容，这里略过，从贝叶斯网络开始回顾。</p>
+<h4 id="Bayesian-Networks"><a href="#Bayesian-Networks" class="headerlink" title="Bayesian Networks"></a>Bayesian Networks</h4><p>贝叶斯网络是表示随机变量之间依赖性的数据结构，几个特点如下：</p>
+<ul>
+<li>有向图</li>
+<li>每个节点代表一个随机变量</li>
+<li>从$X$到$Y$的箭头表示$X$是$Y$的父节点</li>
+<li>每个节点$X$都有概率分布$\mathbf{P}(X | \text { Parents }(X))$</li>
+</ul>
+<p>来看一个具体例子：</p>
+<p><img src="https://github.com/Doraemonzzz/md-photo/blob/master/CS50AI/Uncertainty/2020042401.jpg?raw=true" alt=""></p>
+<p>然后对上图分别指定条件分布即可构成贝叶斯网络。</p>
+<h4 id="Inference"><a href="#Inference" class="headerlink" title="Inference"></a>Inference</h4><ul>
+<li>查询$\mathrm X$：要为其计算分布的变量</li>
+<li>证据变量$\mathrm E$：事件$\mathrm e$的观察变量</li>
+<li>隐藏变量$\mathrm Y$：无证据，没有被查询的变量。</li>
+<li>目标：计算$\mathbf{P}(\mathrm{X} | \mathbf{e})$</li>
+</ul>
+<p>具体方式如下</p>
+<script type="math/tex; mode=display">
+\mathbf{P}(\mathrm{X} | \mathbf{e})=\alpha \mathbf{P}(\mathrm{X}, \mathbf{e})=\alpha \sum_{\mathbf{y}} \mathbf{P}(\mathrm{X}, \mathbf{e}, \mathbf{y})</script><h4 id="Approximate-Inference-Sampling"><a href="#Approximate-Inference-Sampling" class="headerlink" title="Approximate Inference: Sampling"></a>Approximate Inference: Sampling</h4><p>之前的方法是计算准确概率，下面介绍近似推断的方法——采样。采样的思路是根据条件概率分布进行采样，然后利用样本均值估计概率。</p>
+<h4 id="Hidden-Markov-Model"><a href="#Hidden-Markov-Model" class="headerlink" title="Hidden Markov Model"></a>Hidden Markov Model</h4><p>在HMM中有隐藏状态$\mathrm X_t$和观测值$\mathrm O_t$，两者有依赖关系，一个常见例子如下：</p>
+<p><img src="https://github.com/Doraemonzzz/md-photo/blob/master/CS50AI/Uncertainty/2020042402.jpg?raw=true" alt=""></p>
+<p>其中隐藏状态有马尔可夫性，但我们只能观测到观测状态：</p>
+<p><img src="https://github.com/Doraemonzzz/md-photo/blob/master/CS50AI/Uncertainty/2020042403.jpg?raw=true" alt=""></p>
+<p>HMM中的常见任务如下：</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>任务</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>过滤</td>
+<td>给定从开始到现在的观测值，计算当前状态的分布</td>
+</tr>
+<tr>
+<td>预测</td>
+<td>给定从开始到现在的观测值，计算未来状态的分布</td>
+</tr>
+<tr>
+<td>平滑</td>
+<td>给定从开始到现在的观测值，计算过去状态的分布</td>
+</tr>
+<tr>
+<td>最可能的解释</td>
+<td>给定从开始到现在的观测值，计算最可能的状态序列</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h3 id="Project"><a href="#Project" class="headerlink" title="Project"></a>Project</h3><h4 id="PageRank"><a href="#PageRank" class="headerlink" title="PageRank"></a>PageRank</h4><p>此题注意问题介绍中有如下一段话即可</p>
+<pre class="line-numbers language-none"><code class="language-none">If page has no outgoing links, then transition_model should return a probability distribution that chooses randomly among all pages with equal probability. (In other words, if a page has no links, we can pretend it has links to all pages in the corpus, including itself.)<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>transition_model</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">def</span> <span class="token function">transition_model</span><span class="token punctuation">(</span>corpus<span class="token punctuation">,</span> page<span class="token punctuation">,</span> damping_factor<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token triple-quoted-string string">"""
+    Return a probability distribution over which page to visit next,
+    given a current page.
+
+    With probability `damping_factor`, choose a link at random
+    linked to by `page`. With probability `1 - damping_factor`, choose
+    a link at random chosen from all pages in the corpus.
+    """</span>
+    n <span class="token operator">=</span> <span class="token builtin">len</span><span class="token punctuation">(</span>corpus<span class="token punctuation">)</span>
+    <span class="token comment">#计算概率</span>
+    res <span class="token operator">=</span> <span class="token builtin">dict</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    m <span class="token operator">=</span> <span class="token builtin">len</span><span class="token punctuation">(</span>corpus<span class="token punctuation">[</span>page<span class="token punctuation">]</span><span class="token punctuation">)</span>
+    <span class="token keyword">for</span> i <span class="token keyword">in</span> corpus<span class="token punctuation">:</span>
+        <span class="token keyword">if</span> <span class="token builtin">len</span><span class="token punctuation">(</span>corpus<span class="token punctuation">[</span>page<span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token operator">!=</span> <span class="token number">0</span><span class="token punctuation">:</span>
+            <span class="token keyword">if</span> i <span class="token keyword">in</span> corpus<span class="token punctuation">[</span>page<span class="token punctuation">]</span><span class="token punctuation">:</span>
+                res<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token number">1</span> <span class="token operator">-</span> damping_factor<span class="token punctuation">)</span> <span class="token operator">/</span> n <span class="token operator">+</span> damping_factor <span class="token operator">/</span> m
+            <span class="token keyword">else</span><span class="token punctuation">:</span>
+                res<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token number">1</span> <span class="token operator">-</span> damping_factor<span class="token punctuation">)</span> <span class="token operator">/</span> n
+        <span class="token keyword">else</span><span class="token punctuation">:</span>
+            res<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token number">1</span> <span class="token operator">/</span> n
+            
+    <span class="token keyword">return</span> res<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>sample_pagerank</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">def</span> <span class="token function">sample_pagerank</span><span class="token punctuation">(</span>corpus<span class="token punctuation">,</span> damping_factor<span class="token punctuation">,</span> n<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token triple-quoted-string string">"""
+    Return PageRank values for each page by sampling `n` pages
+    according to transition model, starting with a page at random.
+
+    Return a dictionary where keys are page names, and values are
+    their estimated PageRank value (a value between 0 and 1). All
+    PageRank values should sum to 1.
+    """</span>
+    <span class="token comment">#初始化</span>
+    res <span class="token operator">=</span> <span class="token builtin">dict</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token keyword">for</span> i <span class="token keyword">in</span> corpus<span class="token punctuation">:</span>
+        res<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token number">0</span>
+    page <span class="token operator">=</span> np<span class="token punctuation">.</span>random<span class="token punctuation">.</span>choice<span class="token punctuation">(</span><span class="token builtin">list</span><span class="token punctuation">(</span>corpus<span class="token punctuation">.</span>keys<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+    <span class="token keyword">for</span> i <span class="token keyword">in</span> <span class="token builtin">range</span><span class="token punctuation">(</span>n<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        res<span class="token punctuation">[</span>page<span class="token punctuation">]</span> <span class="token operator">+=</span> <span class="token number">1</span>
+        prob <span class="token operator">=</span> transition_model<span class="token punctuation">(</span>corpus<span class="token punctuation">,</span> page<span class="token punctuation">,</span> damping_factor<span class="token punctuation">)</span>
+        key <span class="token operator">=</span> <span class="token builtin">list</span><span class="token punctuation">(</span>prob<span class="token punctuation">.</span>keys<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+        value <span class="token operator">=</span> <span class="token builtin">list</span><span class="token punctuation">(</span>prob<span class="token punctuation">.</span>values<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+        page <span class="token operator">=</span> np<span class="token punctuation">.</span>random<span class="token punctuation">.</span>choice<span class="token punctuation">(</span>key<span class="token punctuation">,</span> p<span class="token operator">=</span>value<span class="token punctuation">)</span>
+    
+    <span class="token keyword">for</span> i <span class="token keyword">in</span> corpus<span class="token punctuation">:</span>
+        res<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">/=</span> n
+        
+    <span class="token keyword">return</span> res<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>iterate_pagerank</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">def</span> <span class="token function">iterate_pagerank</span><span class="token punctuation">(</span>corpus<span class="token punctuation">,</span> damping_factor<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token triple-quoted-string string">"""
+    Return PageRank values for each page by iteratively updating
+    PageRank values until convergence.
+
+    Return a dictionary where keys are page names, and values are
+    their estimated PageRank value (a value between 0 and 1). All
+    PageRank values should sum to 1.
+    """</span>
+    <span class="token comment">#计算网页个数</span>
+    numlinks <span class="token operator">=</span> <span class="token builtin">dict</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token comment">#反向边</span>
+    corpus_reverse <span class="token operator">=</span> <span class="token builtin">dict</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token keyword">for</span> i <span class="token keyword">in</span> corpus<span class="token punctuation">:</span>
+        corpus_reverse<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token builtin">set</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+        <span class="token comment">#根据题目的解释</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token builtin">len</span><span class="token punctuation">(</span>corpus<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+            corpus<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token builtin">set</span><span class="token punctuation">(</span>corpus<span class="token punctuation">.</span>keys<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+        
+    <span class="token keyword">for</span> i <span class="token keyword">in</span> corpus<span class="token punctuation">:</span>
+        <span class="token keyword">for</span> j <span class="token keyword">in</span> corpus<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">:</span>
+            corpus_reverse<span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token punctuation">.</span>add<span class="token punctuation">(</span>i<span class="token punctuation">)</span>
+        numlinks<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token builtin">len</span><span class="token punctuation">(</span>corpus<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">)</span>
+                
+    n <span class="token operator">=</span> <span class="token builtin">len</span><span class="token punctuation">(</span>corpus<span class="token punctuation">)</span>
+    <span class="token comment">#初始化</span>
+    page <span class="token operator">=</span> <span class="token builtin">dict</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token keyword">for</span> i <span class="token keyword">in</span> corpus<span class="token punctuation">:</span>
+        page<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token number">1</span> <span class="token operator">/</span> n
+    <span class="token keyword">while</span> <span class="token boolean">True</span><span class="token punctuation">:</span>
+        newpage <span class="token operator">=</span> <span class="token builtin">dict</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+        <span class="token keyword">for</span> i <span class="token keyword">in</span> corpus<span class="token punctuation">:</span>
+            newpage<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token number">1</span> <span class="token operator">-</span> damping_factor<span class="token punctuation">)</span> <span class="token operator">/</span> n
+            <span class="token keyword">for</span> j <span class="token keyword">in</span> corpus_reverse<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">:</span>
+                newpage<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">+=</span> damping_factor <span class="token operator">*</span> page<span class="token punctuation">[</span>j<span class="token punctuation">]</span> <span class="token operator">/</span> numlinks<span class="token punctuation">[</span>j<span class="token punctuation">]</span>
+        s <span class="token operator">=</span> <span class="token number">0</span>      
+        flag <span class="token operator">=</span> <span class="token boolean">True</span>
+        <span class="token keyword">for</span> i <span class="token keyword">in</span> corpus<span class="token punctuation">:</span>
+            diff <span class="token operator">=</span> <span class="token builtin">abs</span><span class="token punctuation">(</span>newpage<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">-</span> page<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">)</span>
+            <span class="token keyword">if</span> diff <span class="token operator">></span> <span class="token number">0.001</span><span class="token punctuation">:</span>
+                flag <span class="token operator">=</span> <span class="token boolean">False</span>
+            page<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">=</span> newpage<span class="token punctuation">[</span>i<span class="token punctuation">]</span>
+            s <span class="token operator">+=</span> page<span class="token punctuation">[</span>i<span class="token punctuation">]</span>
+        
+        <span class="token keyword">if</span> flag<span class="token punctuation">:</span>
+            <span class="token keyword">break</span>
+    
+    <span class="token keyword">return</span> page<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h4 id="Heredity"><a href="#Heredity" class="headerlink" title="Heredity"></a>Heredity</h4><p>对于没有复节点的节点，计算概率的方式较为简单，对于其他节点则要复杂一下，这里设计了两个辅助函数：</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token comment">#原本为i个gene，生成j个gene的概率</span>
+<span class="token comment">#i=0,1,2, j=0,1</span>
+<span class="token keyword">def</span> <span class="token function">get_prob</span><span class="token punctuation">(</span>i<span class="token punctuation">,</span> j<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token keyword">if</span> j <span class="token operator">!=</span> <span class="token number">0</span> <span class="token keyword">and</span> j <span class="token operator">!=</span> <span class="token number">1</span><span class="token punctuation">:</span>
+        <span class="token keyword">return</span> <span class="token number">0</span>
+    p <span class="token operator">=</span> PROBS<span class="token punctuation">[</span><span class="token string">"mutation"</span><span class="token punctuation">]</span>
+    <span class="token keyword">if</span> i <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">:</span>
+        p1 <span class="token operator">=</span> <span class="token number">1</span> <span class="token operator">-</span> p
+        <span class="token keyword">if</span> j <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">:</span>
+            <span class="token keyword">return</span> p1
+        <span class="token keyword">else</span><span class="token punctuation">:</span>
+            <span class="token keyword">return</span> <span class="token number">1</span> <span class="token operator">-</span> p1
+    <span class="token keyword">elif</span> i <span class="token operator">==</span> <span class="token number">1</span><span class="token punctuation">:</span>
+        p1 <span class="token operator">=</span> <span class="token number">0.5</span> <span class="token operator">*</span> <span class="token punctuation">(</span><span class="token number">1</span> <span class="token operator">-</span> p<span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token number">0.5</span> <span class="token operator">*</span> p
+        <span class="token keyword">if</span> j <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">:</span>
+            <span class="token keyword">return</span> p1
+        <span class="token keyword">else</span><span class="token punctuation">:</span>
+            <span class="token keyword">return</span> <span class="token number">1</span> <span class="token operator">-</span> p1
+    <span class="token keyword">else</span><span class="token punctuation">:</span>
+        p1 <span class="token operator">=</span> p
+        <span class="token keyword">if</span> j <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">:</span>
+            <span class="token keyword">return</span> p1
+        <span class="token keyword">else</span><span class="token punctuation">:</span>
+            <span class="token keyword">return</span> <span class="token number">1</span><span class="token operator">-</span> p1
+        
+<span class="token keyword">def</span> <span class="token function">get_num</span><span class="token punctuation">(</span>people<span class="token punctuation">,</span> one_gene<span class="token punctuation">,</span> two_genes<span class="token punctuation">,</span> person<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    zero_gene <span class="token operator">=</span> <span class="token builtin">set</span><span class="token punctuation">(</span>people<span class="token punctuation">.</span>keys<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token operator">-</span> one_gene <span class="token operator">-</span> two_genes
+    <span class="token keyword">if</span> person <span class="token keyword">in</span> zero_gene<span class="token punctuation">:</span>
+        <span class="token keyword">return</span> <span class="token number">0</span>
+    <span class="token keyword">elif</span> person <span class="token keyword">in</span> one_gene<span class="token punctuation">:</span>
+        <span class="token keyword">return</span> <span class="token number">1</span>
+    <span class="token keyword">else</span><span class="token punctuation">:</span>
+        <span class="token keyword">return</span> <span class="token number">2</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>其余部分实现如下</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">def</span> <span class="token function">joint_probability</span><span class="token punctuation">(</span>people<span class="token punctuation">,</span> one_gene<span class="token punctuation">,</span> two_genes<span class="token punctuation">,</span> have_trait<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token triple-quoted-string string">"""
+    Compute and return a joint probability.
+
+    The probability returned should be the probability that
+        * everyone in set `one_gene` has one copy of the gene, and
+        * everyone in set `two_genes` has two copies of the gene, and
+        * everyone not in `one_gene` or `two_gene` does not have the gene, and
+        * everyone in set `have_trait` has the trait, and
+        * everyone not in set` have_trait` does not have the trait.
+    """</span>
+    prob <span class="token operator">=</span> <span class="token number">1</span>
+    
+    <span class="token keyword">for</span> person <span class="token keyword">in</span> people<span class="token punctuation">:</span>
+        <span class="token comment">#计算数量</span>
+        n1 <span class="token operator">=</span> get_num<span class="token punctuation">(</span>people<span class="token punctuation">,</span> one_gene<span class="token punctuation">,</span> two_genes<span class="token punctuation">,</span> person<span class="token punctuation">)</span>
+        <span class="token comment">#trait</span>
+        p <span class="token operator">=</span> PROBS<span class="token punctuation">[</span><span class="token string">"trait"</span><span class="token punctuation">]</span><span class="token punctuation">[</span>n1<span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token boolean">True</span><span class="token punctuation">]</span>
+        <span class="token keyword">if</span> person <span class="token keyword">not</span> <span class="token keyword">in</span> have_trait<span class="token punctuation">:</span>
+            p <span class="token operator">=</span> <span class="token number">1</span> <span class="token operator">-</span> p
+        prob <span class="token operator">*=</span> p
+        <span class="token comment">#没有父节点</span>
+        <span class="token keyword">if</span> people<span class="token punctuation">[</span>person<span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token string">'mother'</span><span class="token punctuation">]</span> <span class="token operator">==</span> <span class="token boolean">None</span><span class="token punctuation">:</span>
+            prob <span class="token operator">*=</span> PROBS<span class="token punctuation">[</span><span class="token string">"gene"</span><span class="token punctuation">]</span><span class="token punctuation">[</span>n1<span class="token punctuation">]</span>
+        <span class="token keyword">else</span><span class="token punctuation">:</span>
+            father <span class="token operator">=</span> people<span class="token punctuation">[</span>person<span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token string">'father'</span><span class="token punctuation">]</span>
+            mother <span class="token operator">=</span> people<span class="token punctuation">[</span>person<span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token string">'mother'</span><span class="token punctuation">]</span>
+            n2 <span class="token operator">=</span> get_num<span class="token punctuation">(</span>people<span class="token punctuation">,</span> one_gene<span class="token punctuation">,</span> two_genes<span class="token punctuation">,</span> father<span class="token punctuation">)</span>
+            n3 <span class="token operator">=</span> get_num<span class="token punctuation">(</span>people<span class="token punctuation">,</span> one_gene<span class="token punctuation">,</span> two_genes<span class="token punctuation">,</span> mother<span class="token punctuation">)</span>
+            p1 <span class="token operator">=</span> <span class="token number">0</span>
+            <span class="token comment">#穷举所有情况</span>
+            <span class="token keyword">for</span> i <span class="token keyword">in</span> <span class="token builtin">range</span><span class="token punctuation">(</span>n1 <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+                j <span class="token operator">=</span> n1 <span class="token operator">-</span> i
+                p1 <span class="token operator">+=</span> get_prob<span class="token punctuation">(</span>n2<span class="token punctuation">,</span> i<span class="token punctuation">)</span> <span class="token operator">*</span> get_prob<span class="token punctuation">(</span>n3<span class="token punctuation">,</span> j<span class="token punctuation">)</span>
+            prob <span class="token operator">*=</span> p1
+        
+    <span class="token keyword">return</span> prob
+            
+
+<span class="token keyword">def</span> <span class="token function">update</span><span class="token punctuation">(</span>probabilities<span class="token punctuation">,</span> one_gene<span class="token punctuation">,</span> two_genes<span class="token punctuation">,</span> have_trait<span class="token punctuation">,</span> p<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token triple-quoted-string string">"""
+    Add to `probabilities` a new joint probability `p`.
+    Each person should have their "gene" and "trait" distributions updated.
+    Which value for each distribution is updated depends on whether
+    the person is in `have_gene` and `have_trait`, respectively.
+    """</span>
+    <span class="token keyword">for</span> person <span class="token keyword">in</span> probabilities<span class="token punctuation">:</span>
+        n <span class="token operator">=</span> get_num<span class="token punctuation">(</span>probabilities<span class="token punctuation">,</span> one_gene<span class="token punctuation">,</span> two_genes<span class="token punctuation">,</span> person<span class="token punctuation">)</span>
+        probabilities<span class="token punctuation">[</span>person<span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token string">"gene"</span><span class="token punctuation">]</span><span class="token punctuation">[</span>n<span class="token punctuation">]</span> <span class="token operator">+=</span> p
+        probabilities<span class="token punctuation">[</span>person<span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token string">"trait"</span><span class="token punctuation">]</span><span class="token punctuation">[</span>person <span class="token keyword">in</span> have_trait<span class="token punctuation">]</span> <span class="token operator">+=</span> p
+
+
+<span class="token keyword">def</span> <span class="token function">normalize</span><span class="token punctuation">(</span>probabilities<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token triple-quoted-string string">"""
+    Update `probabilities` such that each probability distribution
+    is normalized (i.e., sums to 1, with relative proportions the same).
+    """</span>
+    <span class="token keyword">for</span> person <span class="token keyword">in</span> probabilities<span class="token punctuation">:</span>
+        s <span class="token operator">=</span> <span class="token number">0</span>
+        <span class="token keyword">for</span> i <span class="token keyword">in</span> probabilities<span class="token punctuation">[</span>person<span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token string">"gene"</span><span class="token punctuation">]</span><span class="token punctuation">:</span>
+            s <span class="token operator">+=</span> probabilities<span class="token punctuation">[</span>person<span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token string">"gene"</span><span class="token punctuation">]</span><span class="token punctuation">[</span>i<span class="token punctuation">]</span>
+        <span class="token keyword">for</span> i <span class="token keyword">in</span> probabilities<span class="token punctuation">[</span>person<span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token string">"gene"</span><span class="token punctuation">]</span><span class="token punctuation">:</span>
+            probabilities<span class="token punctuation">[</span>person<span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token string">"gene"</span><span class="token punctuation">]</span><span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">/=</span> s
+        
+        s <span class="token operator">=</span> <span class="token number">0</span>
+        <span class="token keyword">for</span> i <span class="token keyword">in</span> probabilities<span class="token punctuation">[</span>person<span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token string">"trait"</span><span class="token punctuation">]</span><span class="token punctuation">:</span>
+            s <span class="token operator">+=</span> probabilities<span class="token punctuation">[</span>person<span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token string">"trait"</span><span class="token punctuation">]</span><span class="token punctuation">[</span>i<span class="token punctuation">]</span>
+        <span class="token keyword">for</span> i <span class="token keyword">in</span> probabilities<span class="token punctuation">[</span>person<span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token string">"trait"</span><span class="token punctuation">]</span><span class="token punctuation">:</span>
+            probabilities<span class="token punctuation">[</span>person<span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token string">"trait"</span><span class="token punctuation">]</span><span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">/=</span> s<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">Doraemonzzz</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="http://doraemonzzz.com/2020/04/24/CS50%20Introduction%20to%20Artificial%20Intelligence%20with%20Python%20Lecture%203/">http://doraemonzzz.com/2020/04/24/CS50%20Introduction%20to%20Artificial%20Intelligence%20with%20Python%20Lecture%203/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://doraemonzzz.com" target="_blank">Doraemonzzz</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/CS50/">CS50</a></div><div class="post_share"><div class="social-share" data-image="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2020/04/24/CS50%20Introduction%20to%20Artificial%20Intelligence%20with%20Python%20Lecture%204/"><img class="prev-cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">CS50 Introduction to Artificial Intelligence with Python Lecture 4</div></div></a></div><div class="next-post pull-right"><a href="/2020/04/22/CS224N%20Natural%20Language%20Processing%20with%20Deep%20Learning%20Lecture%2011/"><img class="next-cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">CS224N Natural Language Processing with Deep Learning Lecture 11</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span> 相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2020/04/10/CS50 Introduction to Artificial Intelligence with Python Lecture 1/" title="CS50 Introduction to Artificial Intelligence with Python Lecture 1"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-04-10</div><div class="title">CS50 Introduction to Artificial Intelligence with Python Lecture 1</div></div></a></div><div><a href="/2020/04/18/CS50 Introduction to Artificial Intelligence with Python Lecture 2/" title="CS50 Introduction to Artificial Intelligence with Python Lecture 2"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-04-18</div><div class="title">CS50 Introduction to Artificial Intelligence with Python Lecture 2</div></div></a></div><div><a href="/2020/04/24/CS50 Introduction to Artificial Intelligence with Python Lecture 4/" title="CS50 Introduction to Artificial Intelligence with Python Lecture 4"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-04-24</div><div class="title">CS50 Introduction to Artificial Intelligence with Python Lecture 4</div></div></a></div><div><a href="/2020/04/29/CS50 Introduction to Artificial Intelligence with Python Lecture 5/" title="CS50 Introduction to Artificial Intelligence with Python Lecture 5"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-04-29</div><div class="title">CS50 Introduction to Artificial Intelligence with Python Lecture 5</div></div></a></div><div><a href="/2020/05/06/CS50 Introduction to Artificial Intelligence with Python Lecture 6/" title="CS50 Introduction to Artificial Intelligence with Python Lecture 6"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-05-06</div><div class="title">CS50 Introduction to Artificial Intelligence with Python Lecture 6</div></div></a></div><div><a href="/2020/05/06/CS50 Introduction to Artificial Intelligence with Python Lecture 7/" title="CS50 Introduction to Artificial Intelligence with Python Lecture 7"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-05-06</div><div class="title">CS50 Introduction to Artificial Intelligence with Python Lecture 7</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="card-info-avatar is-center"><img class="avatar-img" src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/><div class="author-info__name">Doraemonzzz</div><div class="author-info__description">个人博客，主要记录有关机器学习，数学以及计算机科学的笔记</div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">610</div></a></div><div class="card-info-data-item is-center"><a href="/tags/"><div class="headline">标签</div><div class="length-num">59</div></a></div><div class="card-info-data-item is-center"><a href="/categories/"><div class="headline">分类</div><div class="length-num">23</div></a></div></div><a class="button--animated" id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/Doraemonzzz" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="/doraemon_zzz@163.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn card-announcement-animation"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#Bayesian-Networks"><span class="toc-number">1.</span> <span class="toc-text">Bayesian Networks</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Inference"><span class="toc-number">2.</span> <span class="toc-text">Inference</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Approximate-Inference-Sampling"><span class="toc-number">3.</span> <span class="toc-text">Approximate Inference: Sampling</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Hidden-Markov-Model"><span class="toc-number">4.</span> <span class="toc-text">Hidden Markov Model</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Project"><span class="toc-number"></span> <span class="toc-text">Project</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#PageRank"><span class="toc-number">1.</span> <span class="toc-text">PageRank</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Heredity"><span class="toc-number">2.</span> <span class="toc-text">Heredity</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2021/06/06/2021-6-6-%E7%AE%97%E6%B3%95%E6%A6%82%E8%AE%BA(DPV)%E4%B9%A0%E9%A2%98%E8%A7%A3%E7%AD%94%E2%80%94%E2%80%94%E7%AC%AC3%E7%AB%A0-%E5%9B%BE%E7%9A%84%E5%88%86%E8%A7%A3/" title="算法概论(DPV)习题解答——第3章 图的分解"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="算法概论(DPV)习题解答——第3章 图的分解"/></a><div class="content"><a class="title" href="/2021/06/06/2021-6-6-%E7%AE%97%E6%B3%95%E6%A6%82%E8%AE%BA(DPV)%E4%B9%A0%E9%A2%98%E8%A7%A3%E7%AD%94%E2%80%94%E2%80%94%E7%AC%AC3%E7%AB%A0-%E5%9B%BE%E7%9A%84%E5%88%86%E8%A7%A3/" title="算法概论(DPV)习题解答——第3章 图的分解">算法概论(DPV)习题解答——第3章 图的分解</a><time datetime="2021-06-06T14:35:00.000Z" title="发表于 2021-06-06 22:35:00">2021-06-06</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/06/06/2021-6-6-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E7%AC%AC5%E7%AB%A0-%E4%B9%A0%E9%A2%98%E8%A7%A3%E6%9E%90/" title="深入理解计算机系统 第5章 习题解析"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="深入理解计算机系统 第5章 习题解析"/></a><div class="content"><a class="title" href="/2021/06/06/2021-6-6-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E7%AC%AC5%E7%AB%A0-%E4%B9%A0%E9%A2%98%E8%A7%A3%E6%9E%90/" title="深入理解计算机系统 第5章 习题解析">深入理解计算机系统 第5章 习题解析</a><time datetime="2021-06-06T07:23:00.000Z" title="发表于 2021-06-06 15:23:00">2021-06-06</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/06/05/2021-6-5-Stanford-Compiler-PA5%E7%BF%BB%E8%AF%91/" title="Stanford Compiler PA5翻译"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Stanford Compiler PA5翻译"/></a><div class="content"><a class="title" href="/2021/06/05/2021-6-5-Stanford-Compiler-PA5%E7%BF%BB%E8%AF%91/" title="Stanford Compiler PA5翻译">Stanford Compiler PA5翻译</a><time datetime="2021-06-05T06:12:00.000Z" title="发表于 2021-06-05 14:12:00">2021-06-05</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/06/04/2021-6-4-Stanford-Compiler-PA4%E7%BF%BB%E8%AF%91/" title="Stanford Compiler PA4翻译"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Stanford Compiler PA4翻译"/></a><div class="content"><a class="title" href="/2021/06/04/2021-6-4-Stanford-Compiler-PA4%E7%BF%BB%E8%AF%91/" title="Stanford Compiler PA4翻译">Stanford Compiler PA4翻译</a><time datetime="2021-06-03T16:17:00.000Z" title="发表于 2021-06-04 00:17:00">2021-06-04</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/06/03/2021-6-3-%E5%B7%A7%E5%A6%99%E7%9A%84Y%E8%BF%90%E7%AE%97%E7%AC%A6/" title="巧妙的Y运算符"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="巧妙的Y运算符"/></a><div class="content"><a class="title" href="/2021/06/03/2021-6-3-%E5%B7%A7%E5%A6%99%E7%9A%84Y%E8%BF%90%E7%AE%97%E7%AC%A6/" title="巧妙的Y运算符">巧妙的Y运算符</a><time datetime="2021-06-03T00:54:00.000Z" title="发表于 2021-06-03 08:54:00">2021-06-03</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2021 By Doraemonzzz</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><div class="js-pjax"><script>if (!window.MathJax) {
+  window.MathJax = {
+    loader: {
+      source: {
+        '[tex]/amsCd': '[tex]/amscd'
+      }
+    },
+    tex: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]],
+      tags: 'ams'
+    },
+    options: {
+      renderActions: {
+        findScript: [10, doc => {
+          for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+            const display = !!node.type.match(/; *mode=display/)
+            const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+            const text = document.createTextNode('')
+            node.parentNode.replaceChild(text, node)
+            math.start = {node: text, delim: '', n: 0}
+            math.end = {node: text, delim: '', n: 0}
+            doc.math.push(math)
+          }
+        }, ''],
+        addClass: [200,() => {
+          document.querySelectorAll('mjx-container:not([display=\'true\']').forEach( node => {
+            const target = node.parentNode
+            if (!target.classList.contains('has-jax')) {
+              target.classList.add('mathjax-overflow')
+            }
+          })
+        }, '', false]
+      }
+    }
+  }
+  
+  const script = document.createElement('script')
+  script.src = 'https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js'
+  script.id = 'MathJax-script'
+  script.async = true
+  document.head.appendChild(script)
+} else {
+  MathJax.startup.document.state(0)
+  MathJax.texReset()
+  MathJax.typeset()
+}</script></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

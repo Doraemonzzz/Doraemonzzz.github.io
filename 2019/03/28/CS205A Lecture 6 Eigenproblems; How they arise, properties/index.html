@@ -1,0 +1,386 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>CS205A Lecture 6 Eigenproblems, How they arise, properties | Doraemonzzz</title><meta name="keywords" content="CS205A"><meta name="author" content="Doraemonzzz"><meta name="copyright" content="Doraemonzzz"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="课程主页：https:&#x2F;&#x2F;graphics.stanford.edu&#x2F;courses&#x2F;cs205a-13-fall&#x2F;schedule.html 这次回顾第六讲，这一讲主要介绍了特征向量的应用及其性质。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="CS205A Lecture 6 Eigenproblems, How they arise, properties">
+<meta property="og:url" content="http://doraemonzzz.com/2019/03/28/CS205A%20Lecture%206%20Eigenproblems;%20How%20they%20arise,%20properties/index.html">
+<meta property="og:site_name" content="Doraemonzzz">
+<meta property="og:description" content="课程主页：https:&#x2F;&#x2F;graphics.stanford.edu&#x2F;courses&#x2F;cs205a-13-fall&#x2F;schedule.html 这次回顾第六讲，这一讲主要介绍了特征向量的应用及其性质。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg">
+<meta property="article:published_time" content="2019-03-27T17:30:00.000Z">
+<meta property="article:modified_time" content="2019-03-27T18:27:27.799Z">
+<meta property="article:author" content="Doraemonzzz">
+<meta property="article:tag" content="CS205A">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="http://doraemonzzz.com/2019/03/28/CS205A%20Lecture%206%20Eigenproblems;%20How%20they%20arise,%20properties/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"prismjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    jQuery: 'https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js',
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+    },
+    fancybox: {
+      js: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isanchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'CS205A Lecture 6 Eigenproblems, How they arise, properties',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2019-03-28 02:27:27'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    })(window)</script><meta name="generator" content="Hexo 5.4.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="author-avatar"><img class="avatar-img" src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">文章</div><div class="length-num">610</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">标签</div><div class="length-num">59</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/categories/"><div class="headline">分类</div><div class="length-num">23</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">Doraemonzzz</a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">CS205A Lecture 6 Eigenproblems, How they arise, properties</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2019-03-27T17:30:00.000Z" title="发表于 2019-03-28 01:30:00">2019-03-28</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2019-03-27T18:27:27.799Z" title="更新于 2019-03-28 02:27:27">2019-03-28</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E6%95%B0%E5%80%BC%E5%88%86%E6%9E%90/">数值分析</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="CS205A Lecture 6 Eigenproblems, How they arise, properties"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p>课程主页：<a target="_blank" rel="noopener" href="https://graphics.stanford.edu/courses/cs205a-13-fall/schedule.html">https://graphics.stanford.edu/courses/cs205a-13-fall/schedule.html</a></p>
+<p>这次回顾第六讲，这一讲主要介绍了特征向量的应用及其性质。</p>
+<span id="more"></span>
+<h2 id="Chapter-5-特征向量"><a href="#Chapter-5-特征向量" class="headerlink" title="Chapter 5 特征向量"></a>Chapter 5 特征向量</h2><h3 id="定义以及性质"><a href="#定义以及性质" class="headerlink" title="定义以及性质"></a>定义以及性质</h3><p>首先给出如下定义：</p>
+<h4 id="定义5-1-特征值和特征向量"><a href="#定义5-1-特征值和特征向量" class="headerlink" title="定义5.1(特征值和特征向量)"></a>定义5.1(特征值和特征向量)</h4><p>$\vec x \neq \vec 0$是矩阵$A \in \mathbb C^{n\times n}$的<strong>特征向量</strong>，如果存在某个复数$\lambda$，使得$A\vec x = \lambda \vec x $，$\lambda $被称为<strong>特征值</strong>。</p>
+<h4 id="定义5-2-谱和谱半径"><a href="#定义5-2-谱和谱半径" class="headerlink" title="定义5.2(谱和谱半径)"></a>定义5.2(谱和谱半径)</h4><p>矩阵$A$的<strong>谱</strong>是指$A$的特征值，<strong>谱半径</strong>$\rho(A)$是使得最大化$|\lambda |$的特征值$\lambda $。</p>
+<p>如果$\vec x$是特征向量，其特征值为$\lambda $，那么显然有</p>
+<script type="math/tex; mode=display">
+A(c\vec x) = cA\vec x =c\lambda \vec x =\lambda(c\vec x)</script><p>所以不失一般性，我们可以假设特征向量都满足</p>
+<script type="math/tex; mode=display">
+||\vec x || =1</script><p>我们之前都默认特征向量存在，但是这个事实不是那么显然，需要简单说明：</p>
+<h4 id="引理5-1"><a href="#引理5-1" class="headerlink" title="引理5.1"></a>引理5.1</h4><script type="math/tex; mode=display">
+每个矩阵A\in \mathbb R^{n\times n}都至少存在一个特征向量</script><p>课本上有一个证明，这里我给出自己的证明。</p>
+<p>证明：首先对之前的等式移项：</p>
+<script type="math/tex; mode=display">
+(A-\lambda I) \vec x  = 0</script><p>如果存在非零向量$\vec x$使得上述方程成立，那么显然有</p>
+<script type="math/tex; mode=display">
+|A-\lambda I|=0</script><p>所以我们先求解上述方程，由代数基本定理，至少存在一个复根$\lambda _1 $，那么我们求解方程</p>
+<script type="math/tex; mode=display">
+(A-\lambda_1 I)\vec x =0</script><p>注意由定义$|A-\lambda_1 I|=0$，所以上述方程必然有非零解，即存在特征向量。</p>
+<h4 id="引理5-2"><a href="#引理5-2" class="headerlink" title="引理5.2"></a>引理5.2</h4><script type="math/tex; mode=display">
+属于不同特征值的特征向量必然线性无关</script><p>证明：设特征向量为$\vec x_1 ,…,\vec x_k$，对应的特征值为$\lambda_1,…,\lambda_k$，并且$\lambda_i \neq \lambda_j ,i\neq j​$。</p>
+<p>然后使用反证法，如果上述结论不成立，那么上述特征向量线性相关，所以存在不全为$0$的$c_1,…,c_k​$，使得</p>
+<script type="math/tex; mode=display">
+\vec 0 =c_1\vec x_1 +...+c_k \vec x_k</script><p>不妨设$c_1\neq 0$，然后我们左乘矩阵</p>
+<script type="math/tex; mode=display">
+\prod_{i=2}^k(A-\lambda_i I)</script><p>可得</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+\vec 0 &=
+\Big(\prod_{i=2}^k(A-\lambda_i I)\Big)(c_1\vec x_1 +...+c_k \vec x_k)\\
+&=\sum_{j=1}^k \Big(\prod_{i=2}^k(A-\lambda_i I)\Big) c_j \vec x_j \\
+&=c_1 \Big(\prod_{i=2}^k(A-\lambda_i I)\Big) \vec x_1\\
+&=c_1 \prod_{i=2}^k(\lambda_1 -\lambda_k) \vec x_1\\
+&\neq \vec 0
+\end{aligned}</script><p>这就产生了矛盾。</p>
+<p>备注：第二个等号是由定义，第三个等号是由如下事实，</p>
+<script type="math/tex; mode=display">
+(A-\lambda_i I)\vec x_i =\vec 0</script><p>以及</p>
+<script type="math/tex; mode=display">
+(A-\lambda_i I)(A-\lambda_j I)=
+(A-\lambda_j I)(A-\lambda_i I)</script><p>最后一个等号利用到了</p>
+<script type="math/tex; mode=display">
+(A-\lambda_i I)\vec x_1 =(\lambda_1-\lambda_i)\vec x_1</script><h4 id="定义5-3-非退化"><a href="#定义5-3-非退化" class="headerlink" title="定义5.3 (非退化)"></a>定义5.3 (非退化)</h4><script type="math/tex; mode=display">
+如果矩阵A\in \mathbb R^{n\times n}的特征向量可以张成整个\mathbb R^n，那么该矩阵被称为非退化或可对角化</script><h4 id="定义5-4-相似矩阵"><a href="#定义5-4-相似矩阵" class="headerlink" title="定义5.4 (相似矩阵)"></a>定义5.4 (相似矩阵)</h4><script type="math/tex; mode=display">
+矩阵A,B相似当且仅当存在可逆矩阵T使得B= TAT^{-1}</script><h4 id="定义5-5-共轭转置"><a href="#定义5-5-共轭转置" class="headerlink" title="定义5.5 (共轭转置)"></a>定义5.5 (共轭转置)</h4><script type="math/tex; mode=display">
+矩阵A\in \mathbb C^{m\times n}的共轭转置定义
+A^H \triangleq  \bar A^T</script><h4 id="定义5-6-厄米特矩阵"><a href="#定义5-6-厄米特矩阵" class="headerlink" title="定义5.6 (厄米特矩阵)"></a>定义5.6 (厄米特矩阵)</h4><script type="math/tex; mode=display">
+如果A=A^H，那么称矩阵A\in \mathbb C^{n\times n}是厄米特矩阵</script><p>关于厄米特矩阵有如下重要性质：</p>
+<h4 id="引理5-3"><a href="#引理5-3" class="headerlink" title="引理5.3"></a>引理5.3</h4><script type="math/tex; mode=display">
+厄米特矩阵的特征值都是实数</script><p>为了方便证明，这里定义一些记号：对于向量$\vec x ,\vec y \in \mathbb C^n$，定义内积</p>
+<script type="math/tex; mode=display">
+\langle \vec x, \vec y \rangle
+=\sum_{i=1}^n  x_i \bar y_i</script><p>由定义，不难得到</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+\langle \vec x, \vec y \rangle 
+&= \overline {\langle \vec y, \vec x \rangle } \\
+\langle \lambda \vec x, \vec y \rangle 
+&=\lambda\langle \vec x, \vec y \rangle 
+\end{aligned}</script><p>证明：假设$A\in \mathbb C^{n\times n}$是厄米特矩阵，并且有</p>
+<script type="math/tex; mode=display">
+A\vec x =\lambda \vec x</script><p>不失一般性，这里假设</p>
+<script type="math/tex; mode=display">
+||\vec x || ^2=\langle \vec x ,\vec x  \rangle =1</script><p>那么</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+\lambda 
+& =\lambda  \langle  \vec x ,\vec x  \rangle \\
+&=\langle \lambda\vec x, \vec x \rangle\\
+&=\langle A\vec x, \vec x \rangle\\
+&=(A\vec x )^T {\vec{\bar x}} \\
+&=\vec x ^T A^T {\vec{\bar x}} \\
+&= \vec x ^T  \overline {\bar A^T {\vec{x}}} \\
+&=\vec x ^T  \overline { A^H {\vec{ x}}} \\
+&=\langle  \vec x,A^H {\vec{ x}} \rangle  \\
+&=\langle  \vec x,A {\vec{ x}} \rangle \\
+&=\langle  \vec x,\lambda  {\vec{ x}} \rangle \\
+&=\bar \lambda  \langle \vec x,{\vec{ x}} \rangle \\
+&=\bar \lambda
+\end{aligned}</script><h4 id="引理5-4"><a href="#引理5-4" class="headerlink" title="引理5.4"></a>引理5.4</h4><script type="math/tex; mode=display">
+厄米特矩阵不同特征值对应的特征向量正交</script><p>证明：设$A\in \mathbb C^{n\times n}​$是厄米特矩阵，并且对$\lambda \neq \mu​$，我们有</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+A\vec x &=\lambda \vec x \\
+A\vec y &=\mu\vec y
+\end{aligned}</script><p>首先我们显然有</p>
+<script type="math/tex; mode=display">
+\langle  A\vec x , \vec y \rangle 
+=\lambda \langle  \vec x , \vec y \rangle</script><p>此外，同之前的讨论，我们还有</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+\langle  A\vec x,\vec y \rangle 
+&=(A\vec x)^T\vec {\bar y}\\
+&=\vec x^T A^T \vec {\bar y}\\ 
+&=\vec x^T \overline { A^H {\vec{ y}}}\\
+&=\langle  \vec x,A\vec y \rangle \\
+&=\mu  \langle  \vec x , \vec y \rangle 
+\end{aligned}</script><p>所以</p>
+<script type="math/tex; mode=display">
+\lambda \langle  \vec x , \vec y \rangle = \mu  \langle  \vec x , \vec y \rangle</script><p>因为</p>
+<script type="math/tex; mode=display">
+\lambda \neq \mu</script><p>所以</p>
+<script type="math/tex; mode=display">
+\langle  \vec x , \vec y \rangle  = 0</script><h4 id="定理5-1-谱定理"><a href="#定理5-1-谱定理" class="headerlink" title="定理5.1 (谱定理)"></a>定理5.1 (谱定理)</h4><script type="math/tex; mode=display">
+任意厄米特矩阵A正交相似于对角阵，\\
+即存在对角阵D和正交矩阵X，使得\\
+D=X^T AX</script><p>这个定理的证明省略。</p>
+<h4 id="引理5-5"><a href="#引理5-5" class="headerlink" title="引理5.5"></a>引理5.5</h4><script type="math/tex; mode=display">
+半正定矩阵的特征值非负</script><p>证明：设$A\in \mathbb R^{n\times n}$是半正定矩阵，假设</p>
+<script type="math/tex; mode=display">
+A\vec x =\lambda \vec x</script><p>那么</p>
+<script type="math/tex; mode=display">
+\vec x^T A\vec x = \lambda \vec x ^T\vec x =\lambda ||\vec x ||^2 \ge 0 \\
+\lambda \ge 0</script><h3 id="应用"><a href="#应用" class="headerlink" title="应用"></a>应用</h3><h4 id="统计学"><a href="#统计学" class="headerlink" title="统计学"></a>统计学</h4><p>假设我们对$100$个病人收集了年龄，体重，血压和心率的数据，第$i$个病人的数据用$\vec x_i \in \mathbb R^4$表示。由医学知识可知，血压高的病人很可能有较大的体重，因此我们希望用低维的数据表示之前的信息，这里假设用一维数据表示。所以，我们希望数据平行于某个向量$\vec v $，从而$\vec x_i \approx c_i \vec v$，由上一讲的内容可得平行于$\vec v $方向关于$\vec x_i$的最佳近似为投影</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+\text{proj}_{\vec v} \vec x_i 
+&=\frac{\vec x_i .\vec v}{\vec v.\vec v} \vec v \\
+&= (\vec x_i . {\hat v}){\hat v} & 其中{\hat v}=\frac { \vec v }{||\vec v||}
+\end{aligned}</script><p>类似最小二乘法，我们有如下最小化问题：</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+\min &\ \sum_{i}||\vec x_i -\text{proj}_{\vec v} \vec x_i ||^2 \\
+\text{s.t}& \ ||\hat v || =1
+\end{aligned}</script><p>简化上式得到</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+\sum_{i}||\vec x_i -\text{proj}_{\vec v} \vec x_i ||^2
+&=\sum_{i}||\vec x_i -(\vec x_i . {\hat v}){\hat v}||^2 \\
+&=\sum_{i} (||\vec x_i||^2 -(\vec x_i . {\hat v})^2)\\
+&=\text{const} - \sum_i (\vec x_i . {\hat v})^2\\
+&=\text{const} -  ||X^T \hat v ||^2\\
+&=\text{const} - \hat v^T XX^T\hat  v
+\end{aligned}</script><p>所以上述问题等价于如下问题</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+\max &\ \hat v^T XX^T \hat v \\
+\text{s.t}& \ ||\hat v || =1
+\end{aligned}</script><p>利用拉格朗日乘子法，可以将上述问题化为</p>
+<script type="math/tex; mode=display">
+XX^T \hat v =\lambda \hat v</script><p>这里就利用到了特征向量。</p>
+<h4 id="谱嵌入"><a href="#谱嵌入" class="headerlink" title="谱嵌入"></a>谱嵌入</h4><p>考虑相似性度量问题，模型如下</p>
+<script type="math/tex; mode=display">
+E(\vec x ) =\sum_{i,j}w_{ij}(x_i -x_j)^2 \\
+w_{ij}=w_{ji}</script><p>我们的目标是最小化上述式子，注意如果对$x$不加限制，那么最小值显然为$0$，所以增加限制：</p>
+<script type="math/tex; mode=display">
+||\vec x || ^2=1</script><p>但是只有一个限制依然不够，考虑</p>
+<script type="math/tex; mode=display">
+\vec x =(\frac 1 {\sqrt n},...,\frac 1 {\sqrt n})</script><p>最小值依然为$0$，所以这里再添加一个限制：</p>
+<script type="math/tex; mode=display">
+\vec 1^T \vec x = 0</script><p>所以最终的问题如下：</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+\min &\ E(\vec x ) \\
+\text{s.t}& \ ||\vec x ||^2=\vec x^T \vec x =1 \\
+& \ \vec 1^T \vec x=0
+\end{aligned}</script><p>对$E(\vec x)$进行化简：</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+E(\vec x)
+&=\sum_{ij}w_{ij}(x_i-x_j)^2 \\
+&=\sum_{ij}w_{ij}(x_i^2-2x_ix_j+x_j^2)  \\
+&=\sum_{ij}w_{ij}x_i^2-2\sum_{ij}w_{ij}x_ix_j
++\sum_{ij}w_{ij}x_j^2 \\
+&=\sum_{i}a_ix_i^2-2\sum_{ij}w_{ij}x_ix_j
++\sum_{j}b_j x_j^2 \\
+&a_i \triangleq \sum_{j}w_{ij},b_j \triangleq \sum_{i}w_{ij}，
+\text{diag}(A)= \vec a , \text{diag}(B)= \vec b,由对称性可得A=B\\
+
+&=\vec x^T(A-2W+B)\vec x &  \\
+&=\vec x^T (2A-2W)\vec x\\
+&\triangleq x^T M\vec x
+\end{aligned}</script><p>注意我们有</p>
+<script type="math/tex; mode=display">
+M\vec 1 = (2A-2W) \vec 1 =2(\vec a -\vec a )=\vec 0</script><p>所以$0$是$M$的特征值，且对应的特征向量为$\vec 1 $。</p>
+<p>对之前的问题可以构造拉格朗日乘子：</p>
+<script type="math/tex; mode=display">
+L = \vec x^T M\vec x -\lambda (\vec x^T \vec x-1)-\mu \vec 1^T \vec x</script><p>关于$\vec x$求梯度，令其为$\vec 0$</p>
+<script type="math/tex; mode=display">
+\nabla_{\vec x} L =2M\vec x -2\lambda \vec x -\mu \vec 1 =\vec 0 \tag 1</script><p>关于$\vec 1$做内积可得</p>
+<script type="math/tex; mode=display">
+2M\vec 1^T\vec x -2\lambda\vec 1^T \vec x -\mu\vec 1^T \vec 1 = 0</script><p>由条件，我们有</p>
+<script type="math/tex; mode=display">
+\vec 1^T \vec x = 0</script><p>所以</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+-n\mu &= 0  \\
+\mu &= 0
+\end{aligned}</script><p>那么(1)变成</p>
+<script type="math/tex; mode=display">
+M\vec x =\lambda \vec x \tag 2</script><p>并且</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+E(\vec x )&=\vec x^T M\vec x \\
+&=\lambda \vec x^T\vec x \\
+&=\lambda
+\end{aligned}</script><p>所以原问题等价于求解(2)，即求解$M$对应的特征值。</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">Doraemonzzz</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="http://doraemonzzz.com/2019/03/28/CS205A%20Lecture%206%20Eigenproblems;%20How%20they%20arise,%20properties/">http://doraemonzzz.com/2019/03/28/CS205A%20Lecture%206%20Eigenproblems;%20How%20they%20arise,%20properties/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://doraemonzzz.com" target="_blank">Doraemonzzz</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/CS205A/">CS205A</a></div><div class="post_share"><div class="social-share" data-image="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2019/03/29/CS229%20%E8%80%81%E7%89%88%E4%BD%9C%E4%B8%9A4/"><img class="prev-cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">CS229 老版作业4</div></div></a></div><div class="next-post pull-right"><a href="/2019/03/27/CS205A%20Lecture%205%20Column%20spaces%20and%20QR/"><img class="next-cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">CS205A Lecture 5 Column spaces and QR</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span> 相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2019/03/24/CS205A HW0/" title="CS205A HW0"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2019-03-24</div><div class="title">CS205A HW0</div></div></a></div><div><a href="/2019/03/25/CS205A HW1/" title="CS205A HW1"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2019-03-25</div><div class="title">CS205A HW1</div></div></a></div><div><a href="/2019/03/31/CS205A HW2/" title="CS205A HW2"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2019-03-31</div><div class="title">CS205A HW2</div></div></a></div><div><a href="/2019/04/10/CS205A HW4/" title="CS205A HW4"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2019-04-10</div><div class="title">CS205A HW4</div></div></a></div><div><a href="/2019/03/31/CS205A HW3/" title="CS205A HW3"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2019-03-31</div><div class="title">CS205A HW3</div></div></a></div><div><a href="/2019/04/24/CS205A HW5/" title="CS205A HW5"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2019-04-24</div><div class="title">CS205A HW5</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="card-info-avatar is-center"><img class="avatar-img" src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/><div class="author-info__name">Doraemonzzz</div><div class="author-info__description">个人博客，主要记录有关机器学习，数学以及计算机科学的笔记</div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">610</div></a></div><div class="card-info-data-item is-center"><a href="/tags/"><div class="headline">标签</div><div class="length-num">59</div></a></div><div class="card-info-data-item is-center"><a href="/categories/"><div class="headline">分类</div><div class="length-num">23</div></a></div></div><a class="button--animated" id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/Doraemonzzz" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="/doraemon_zzz@163.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn card-announcement-animation"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Chapter-5-%E7%89%B9%E5%BE%81%E5%90%91%E9%87%8F"><span class="toc-number">1.</span> <span class="toc-text">Chapter 5 特征向量</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%9A%E4%B9%89%E4%BB%A5%E5%8F%8A%E6%80%A7%E8%B4%A8"><span class="toc-number">1.1.</span> <span class="toc-text">定义以及性质</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AE%9A%E4%B9%895-1-%E7%89%B9%E5%BE%81%E5%80%BC%E5%92%8C%E7%89%B9%E5%BE%81%E5%90%91%E9%87%8F"><span class="toc-number">1.1.1.</span> <span class="toc-text">定义5.1(特征值和特征向量)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AE%9A%E4%B9%895-2-%E8%B0%B1%E5%92%8C%E8%B0%B1%E5%8D%8A%E5%BE%84"><span class="toc-number">1.1.2.</span> <span class="toc-text">定义5.2(谱和谱半径)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%BC%95%E7%90%865-1"><span class="toc-number">1.1.3.</span> <span class="toc-text">引理5.1</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%BC%95%E7%90%865-2"><span class="toc-number">1.1.4.</span> <span class="toc-text">引理5.2</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AE%9A%E4%B9%895-3-%E9%9D%9E%E9%80%80%E5%8C%96"><span class="toc-number">1.1.5.</span> <span class="toc-text">定义5.3 (非退化)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AE%9A%E4%B9%895-4-%E7%9B%B8%E4%BC%BC%E7%9F%A9%E9%98%B5"><span class="toc-number">1.1.6.</span> <span class="toc-text">定义5.4 (相似矩阵)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AE%9A%E4%B9%895-5-%E5%85%B1%E8%BD%AD%E8%BD%AC%E7%BD%AE"><span class="toc-number">1.1.7.</span> <span class="toc-text">定义5.5 (共轭转置)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AE%9A%E4%B9%895-6-%E5%8E%84%E7%B1%B3%E7%89%B9%E7%9F%A9%E9%98%B5"><span class="toc-number">1.1.8.</span> <span class="toc-text">定义5.6 (厄米特矩阵)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%BC%95%E7%90%865-3"><span class="toc-number">1.1.9.</span> <span class="toc-text">引理5.3</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%BC%95%E7%90%865-4"><span class="toc-number">1.1.10.</span> <span class="toc-text">引理5.4</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AE%9A%E7%90%865-1-%E8%B0%B1%E5%AE%9A%E7%90%86"><span class="toc-number">1.1.11.</span> <span class="toc-text">定理5.1 (谱定理)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%BC%95%E7%90%865-5"><span class="toc-number">1.1.12.</span> <span class="toc-text">引理5.5</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BA%94%E7%94%A8"><span class="toc-number">1.2.</span> <span class="toc-text">应用</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%BB%9F%E8%AE%A1%E5%AD%A6"><span class="toc-number">1.2.1.</span> <span class="toc-text">统计学</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%B0%B1%E5%B5%8C%E5%85%A5"><span class="toc-number">1.2.2.</span> <span class="toc-text">谱嵌入</span></a></li></ol></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2021/06/06/2021-6-6-%E7%AE%97%E6%B3%95%E6%A6%82%E8%AE%BA(DPV)%E4%B9%A0%E9%A2%98%E8%A7%A3%E7%AD%94%E2%80%94%E2%80%94%E7%AC%AC3%E7%AB%A0-%E5%9B%BE%E7%9A%84%E5%88%86%E8%A7%A3/" title="算法概论(DPV)习题解答——第3章 图的分解"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="算法概论(DPV)习题解答——第3章 图的分解"/></a><div class="content"><a class="title" href="/2021/06/06/2021-6-6-%E7%AE%97%E6%B3%95%E6%A6%82%E8%AE%BA(DPV)%E4%B9%A0%E9%A2%98%E8%A7%A3%E7%AD%94%E2%80%94%E2%80%94%E7%AC%AC3%E7%AB%A0-%E5%9B%BE%E7%9A%84%E5%88%86%E8%A7%A3/" title="算法概论(DPV)习题解答——第3章 图的分解">算法概论(DPV)习题解答——第3章 图的分解</a><time datetime="2021-06-06T14:35:00.000Z" title="发表于 2021-06-06 22:35:00">2021-06-06</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/06/06/2021-6-6-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E7%AC%AC5%E7%AB%A0-%E4%B9%A0%E9%A2%98%E8%A7%A3%E6%9E%90/" title="深入理解计算机系统 第5章 习题解析"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="深入理解计算机系统 第5章 习题解析"/></a><div class="content"><a class="title" href="/2021/06/06/2021-6-6-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E7%AC%AC5%E7%AB%A0-%E4%B9%A0%E9%A2%98%E8%A7%A3%E6%9E%90/" title="深入理解计算机系统 第5章 习题解析">深入理解计算机系统 第5章 习题解析</a><time datetime="2021-06-06T07:23:00.000Z" title="发表于 2021-06-06 15:23:00">2021-06-06</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/06/05/2021-6-5-Stanford-Compiler-PA5%E7%BF%BB%E8%AF%91/" title="Stanford Compiler PA5翻译"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Stanford Compiler PA5翻译"/></a><div class="content"><a class="title" href="/2021/06/05/2021-6-5-Stanford-Compiler-PA5%E7%BF%BB%E8%AF%91/" title="Stanford Compiler PA5翻译">Stanford Compiler PA5翻译</a><time datetime="2021-06-05T06:12:00.000Z" title="发表于 2021-06-05 14:12:00">2021-06-05</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/06/04/2021-6-4-Stanford-Compiler-PA4%E7%BF%BB%E8%AF%91/" title="Stanford Compiler PA4翻译"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Stanford Compiler PA4翻译"/></a><div class="content"><a class="title" href="/2021/06/04/2021-6-4-Stanford-Compiler-PA4%E7%BF%BB%E8%AF%91/" title="Stanford Compiler PA4翻译">Stanford Compiler PA4翻译</a><time datetime="2021-06-03T16:17:00.000Z" title="发表于 2021-06-04 00:17:00">2021-06-04</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/06/03/2021-6-3-%E5%B7%A7%E5%A6%99%E7%9A%84Y%E8%BF%90%E7%AE%97%E7%AC%A6/" title="巧妙的Y运算符"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="巧妙的Y运算符"/></a><div class="content"><a class="title" href="/2021/06/03/2021-6-3-%E5%B7%A7%E5%A6%99%E7%9A%84Y%E8%BF%90%E7%AE%97%E7%AC%A6/" title="巧妙的Y运算符">巧妙的Y运算符</a><time datetime="2021-06-03T00:54:00.000Z" title="发表于 2021-06-03 08:54:00">2021-06-03</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2021 By Doraemonzzz</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><div class="js-pjax"><script>if (!window.MathJax) {
+  window.MathJax = {
+    loader: {
+      source: {
+        '[tex]/amsCd': '[tex]/amscd'
+      }
+    },
+    tex: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]],
+      tags: 'ams'
+    },
+    options: {
+      renderActions: {
+        findScript: [10, doc => {
+          for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+            const display = !!node.type.match(/; *mode=display/)
+            const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+            const text = document.createTextNode('')
+            node.parentNode.replaceChild(text, node)
+            math.start = {node: text, delim: '', n: 0}
+            math.end = {node: text, delim: '', n: 0}
+            doc.math.push(math)
+          }
+        }, ''],
+        addClass: [200,() => {
+          document.querySelectorAll('mjx-container:not([display=\'true\']').forEach( node => {
+            const target = node.parentNode
+            if (!target.classList.contains('has-jax')) {
+              target.classList.add('mathjax-overflow')
+            }
+          })
+        }, '', false]
+      }
+    }
+  }
+  
+  const script = document.createElement('script')
+  script.src = 'https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js'
+  script.id = 'MathJax-script'
+  script.async = true
+  document.head.appendChild(script)
+} else {
+  MathJax.startup.document.state(0)
+  MathJax.texReset()
+  MathJax.typeset()
+}</script></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

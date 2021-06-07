@@ -1,0 +1,977 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>北理Python爬虫Week3 | Doraemonzzz</title><meta name="keywords" content="北理Python爬虫mooc"><meta name="author" content="Doraemonzzz"><meta name="copyright" content="Doraemonzzz"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="课程地址:https:&#x2F;&#x2F;www.icourse163.org&#x2F;course&#x2F;BIT-1001870001笔记内容结合课件整理。 这里对北理爬虫课程第三周内容回顾,本周主要介绍了正则表达式">
+<meta property="og:type" content="article">
+<meta property="og:title" content="北理Python爬虫Week3">
+<meta property="og:url" content="http://doraemonzzz.com/2018/05/27/%E5%8C%97%E7%90%86python%E7%88%AC%E8%99%ABWeek3/index.html">
+<meta property="og:site_name" content="Doraemonzzz">
+<meta property="og:description" content="课程地址:https:&#x2F;&#x2F;www.icourse163.org&#x2F;course&#x2F;BIT-1001870001笔记内容结合课件整理。 这里对北理爬虫课程第三周内容回顾,本周主要介绍了正则表达式">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg">
+<meta property="article:published_time" content="2018-05-27T13:24:00.000Z">
+<meta property="article:modified_time" content="2018-05-27T13:28:24.000Z">
+<meta property="article:author" content="Doraemonzzz">
+<meta property="article:tag" content="北理Python爬虫mooc">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="http://doraemonzzz.com/2018/05/27/%E5%8C%97%E7%90%86python%E7%88%AC%E8%99%ABWeek3/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"prismjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    jQuery: 'https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js',
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+    },
+    fancybox: {
+      js: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isanchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '北理Python爬虫Week3',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2018-05-27 21:28:24'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    })(window)</script><meta name="generator" content="Hexo 5.4.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="author-avatar"><img class="avatar-img" src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">文章</div><div class="length-num">610</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">标签</div><div class="length-num">59</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/categories/"><div class="headline">分类</div><div class="length-num">23</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">Doraemonzzz</a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">北理Python爬虫Week3</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2018-05-27T13:24:00.000Z" title="发表于 2018-05-27 21:24:00">2018-05-27</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2018-05-27T13:28:24.000Z" title="更新于 2018-05-27 21:28:24">2018-05-27</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/Python%E7%88%AC%E8%99%AB/">Python爬虫</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="北理Python爬虫Week3"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p>课程地址:<a target="_blank" rel="noopener" href="https://www.icourse163.org/course/BIT-1001870001">https://www.icourse163.org/course/BIT-1001870001</a><br>笔记内容结合课件整理。</p>
+<p>这里对北理爬虫课程第三周内容回顾,本周主要介绍了正则表达式<br><span id="more"></span></p>
+<h3 id="1-正则表达式的概念"><a href="#1-正则表达式的概念" class="headerlink" title="1.正则表达式的概念"></a>1.正则表达式的概念</h3><p>正则表达式是用来简洁表达一组字符串的表达式<br>正则表达式是一种通用的字符串表达框架<br>进一步<br>正则表达式是一种针对字符串表达“简洁” 和“特征” 思想的工具<br>正则表达式可以用来判断某字符串的特征归属</p>
+<h4 id="正则表达式的常用操作符"><a href="#正则表达式的常用操作符" class="headerlink" title="正则表达式的常用操作符"></a>正则表达式的常用操作符</h4><div class="table-container">
+<table>
+<thead>
+<tr>
+<th>操作符</th>
+<th>说明</th>
+<th>实例</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>.</td>
+<td>表示任何单个字符</td>
+<td></td>
+</tr>
+<tr>
+<td>[ ]</td>
+<td>字符集，对单个字符给出取值范围</td>
+<td>[abc]表示a、 b、 c，[a‐z]表示a到z单个字符</td>
+</tr>
+<tr>
+<td><sup><a href="#fn_ " id="reffn_ "> </a></sup></td>
+<td>非字符集，对单个字符给出排除范围</td>
+<td><sup><a href="#fn_abc" id="reffn_abc">abc</a></sup>表示非a或b或c的单个字符</td>
+</tr>
+<tr>
+<td>*</td>
+<td>前一个字符0次或无限次扩展</td>
+<td>abc* 表示 ab、 abc、 abcc、 abccc等</td>
+</tr>
+<tr>
+<td>+</td>
+<td>前一个字符1次或无限次扩展</td>
+<td>abc+ 表示 abc、 abcc、 abccc等</td>
+</tr>
+<tr>
+<td>?</td>
+<td>前一个字符0次或1次扩展</td>
+<td>abc? 表示 ab、 abc</td>
+</tr>
+<tr>
+<td>&#124;</td>
+<td>左右表达式任意一个</td>
+<td>abc&#124;def 表示 abc、 def</td>
+</tr>
+<tr>
+<td>{m}</td>
+<td>扩展前一个字符m次</td>
+<td>ab{2}c表示abbc</td>
+</tr>
+<tr>
+<td>{m,n}</td>
+<td>扩展前一个字符m至n次（含n）</td>
+<td>ab{1,2}c表示abc、 abbc</td>
+</tr>
+<tr>
+<td>^</td>
+<td>匹配字符串开头</td>
+<td>^abc表示abc且在一个字符串的开头</td>
+</tr>
+<tr>
+<td>$</td>
+<td>匹配字符串结尾</td>
+<td>abc$表示abc且在一个字符串的结尾</td>
+</tr>
+<tr>
+<td>( )</td>
+<td>分组标记，内部只能使用 &#124; 操作符</td>
+<td>(abc)表示abc，(abc&#124;def)表示abc、 def</td>
+</tr>
+<tr>
+<td>\d</td>
+<td>数字，等价于[0‐9]</td>
+<td></td>
+</tr>
+<tr>
+<td>\w</td>
+<td>单词字符，等价于[A‐Za‐z0‐9_]</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>来看几个具体例子</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>正则表达式</th>
+<th>对应字符串</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>P(Y&#124;YT&#124;YTH&#124;YTHO)?N</td>
+<td>‘PN’、 ‘PYN’、 ‘PYTN’、 ‘PYTHN’、 ‘PYTHON’</td>
+</tr>
+<tr>
+<td>PYTHON+</td>
+<td>‘PYTHON’、 ‘PYTHONN’、 ‘PYTHONNN’ …</td>
+</tr>
+<tr>
+<td>PY[TH]ON</td>
+<td>‘PYTON’、 ‘PYHON’</td>
+</tr>
+<tr>
+<td>PY<sup><a href="#fn_TH" id="reffn_TH">TH</a></sup>?ON</td>
+<td>‘PYON’、 ‘PYaON’、 ‘PYbON’、 ‘PYcON’…</td>
+</tr>
+<tr>
+<td>PY{:3}N</td>
+<td>‘PN’、 ‘PYN’、 ‘PYYN’、 ‘PYYYN’</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>再来看几个经典正则表达式的例子</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>正则表达式</th>
+<th>对应字符串</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>^[A‐Za‐z]+$</td>
+<td>由26个字母组成的字符串</td>
+</tr>
+<tr>
+<td>^[A‐Za‐z0‐9]+$</td>
+<td>由26个字母和数字组成的字符串</td>
+</tr>
+<tr>
+<td>^‐?\d+$</td>
+<td>整数形式的字符串</td>
+</tr>
+<tr>
+<td>^[0‐9]*[1‐9][0‐9]*$</td>
+<td>正整数形式的字符串</td>
+</tr>
+<tr>
+<td>[1‐9]\d{5}</td>
+<td>中国境内邮政编码，6位</td>
+</tr>
+<tr>
+<td>[\u4e00‐\u9fa5]</td>
+<td>匹配中文字符</td>
+</tr>
+<tr>
+<td>\d{3}‐\d{8}&#124;\d{4}‐\d{7}</td>
+<td>国内电话号码，010‐68913536</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h3 id="2-Re库的基本使用"><a href="#2-Re库的基本使用" class="headerlink" title="2.Re库的基本使用"></a>2.Re库的基本使用</h3><p>Re库是Python的标准库，主要用于字符串匹配</p>
+<h4 id="Re库主要功能函数"><a href="#Re库主要功能函数" class="headerlink" title="Re库主要功能函数"></a>Re库主要功能函数</h4><div class="table-container">
+<table>
+<thead>
+<tr>
+<th>函数</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>re.search()</td>
+<td>在一个字符串中搜索匹配正则表达式的第一个位置，返回match对象</td>
+</tr>
+<tr>
+<td>re.match()</td>
+<td>从一个字符串的开始位置起匹配正则表达式，返回match对象</td>
+</tr>
+<tr>
+<td>re.findall()</td>
+<td>搜索字符串，以列表类型返回全部能匹配的子串</td>
+</tr>
+<tr>
+<td>re.split()</td>
+<td>将一个字符串按照正则表达式匹配结果进行分割，返回列表类型</td>
+</tr>
+<tr>
+<td>re.finditer()</td>
+<td>搜索字符串，返回一个匹配结果的迭代类型，每个迭代元素是match对象</td>
+</tr>
+<tr>
+<td>re.sub()</td>
+<td>在一个字符串中替换所有匹配正则表达式的子串，返回替换后的字符串</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>下面分别介绍下</p>
+<ul>
+<li>1.re.search(pattern, string, flags=0)<br>在一个字符串中搜索匹配正则表达式的第一个位置返回match对象<br>∙ pattern : 正则表达式的字符串或原生字符串表示<br>∙ string : 待匹配字符串<br>∙ flags : 正则表达式使用时的控制标记<br>这里再详细介绍下flags参数  </li>
+</ul>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>常用标记</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>re.I</td>
+<td>re.IGNORECASE 忽略正则表达式的大小写，[A‐Z]能够匹配小写字符</td>
+</tr>
+<tr>
+<td>re.M</td>
+<td>re.MULTILINE 正则表达式中的^操作符能够将给定字符串的每行当作匹配开始</td>
+</tr>
+<tr>
+<td>re.S</td>
+<td>re.DOTALL 正则表达式中的.操作符能够匹配所有字符，默认匹配除换行外的所有字符</td>
+</tr>
+</tbody>
+</table>
+</div>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">import</span> re
+match<span class="token operator">=</span>re<span class="token punctuation">.</span>search<span class="token punctuation">(</span><span class="token string">r'[1-9]\d&#123;5&#125;'</span><span class="token punctuation">,</span><span class="token string">'BIT 100081'</span><span class="token punctuation">)</span>
+
+<span class="token keyword">if</span> match<span class="token punctuation">:</span>
+    <span class="token keyword">print</span><span class="token punctuation">(</span>match<span class="token punctuation">.</span>group<span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<pre><code>100081
+</code></pre><ul>
+<li>2.re.match(pattern, string, flags=0)<br>从一个字符串的开始位置起匹配正则表达式返回match对象<br>∙ pattern : 正则表达式的字符串或原生字符串表示<br>∙ string : 待匹配字符串<br>∙ flags : 正则表达式使用时的控制标记  </li>
+</ul>
+<p>re.match和re.search最大的不同在于match从开始位置起匹配</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">import</span> re
+match<span class="token operator">=</span>re<span class="token punctuation">.</span>match<span class="token punctuation">(</span><span class="token string">r'[1-9]\d&#123;5&#125;'</span><span class="token punctuation">,</span><span class="token string">'BIT 100081'</span><span class="token punctuation">)</span>
+
+<span class="token keyword">if</span> match<span class="token punctuation">:</span>
+    <span class="token keyword">print</span><span class="token punctuation">(</span>match<span class="token punctuation">.</span>group<span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+    
+match<span class="token punctuation">.</span>group<span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<pre><code>---------------------------------------------------------------------------
+
+AttributeError                            Traceback (most recent call last)
+
+&lt;ipython-input-5-fecc6e9f4c70&gt; in &lt;module&gt;()
+      5     print(match.group(0))
+      6 
+----&gt; 7 match.group(0)
+
+
+AttributeError: &#39;NoneType&#39; object has no attribute &#39;group&#39;
+</code></pre><pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">import</span> re
+match<span class="token operator">=</span>re<span class="token punctuation">.</span>match<span class="token punctuation">(</span><span class="token string">r'[1-9]\d&#123;5&#125;'</span><span class="token punctuation">,</span><span class="token string">'100081 BIT'</span><span class="token punctuation">)</span>
+
+<span class="token keyword">if</span> match<span class="token punctuation">:</span>
+    <span class="token keyword">print</span><span class="token punctuation">(</span>match<span class="token punctuation">.</span>group<span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<pre><code>100081
+</code></pre><ul>
+<li>3.re.findall(pattern, string, flags=0)<br>搜索字符串，以列表类型返回全部能匹配的子串<br>∙ pattern : 正则表达式的字符串或原生字符串表示<br>∙ string : 待匹配字符串<br>∙ flags : 正则表达式使用时的控制标记  </li>
+</ul>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">import</span> re
+ls<span class="token operator">=</span>re<span class="token punctuation">.</span>findall<span class="token punctuation">(</span><span class="token string">r'[1-9]\d&#123;5&#125;'</span><span class="token punctuation">,</span><span class="token string">'BIT100081 TSU100084'</span><span class="token punctuation">)</span>
+
+ls<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+<pre><code>[&#39;100081&#39;, &#39;100084&#39;]
+</code></pre><ul>
+<li>4.re.split(pattern, string, maxsplit=0, flags=0)<br>将一个字符串按照正则表达式匹配结果进行分割返回列表类型<br>∙ pattern : 正则表达式的字符串或原生字符串表示<br>∙ string : 待匹配字符串<br>∙ maxsplit: 最大分割数，剩余部分作为最后一个元素输出<br>∙ flags : 正则表达式使用时的控制标记</li>
+</ul>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">import</span> re
+re<span class="token punctuation">.</span>split<span class="token punctuation">(</span><span class="token string">r'[1-9]\d&#123;5&#125;'</span><span class="token punctuation">,</span><span class="token string">'BIT100081 TSU100084'</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<pre><code>[&#39;BIT&#39;, &#39; TSU&#39;, &#39;&#39;]
+</code></pre><pre class="line-numbers language-python" data-language="python"><code class="language-python">re<span class="token punctuation">.</span>split<span class="token punctuation">(</span><span class="token string">r'[1-9]\d&#123;5&#125;'</span><span class="token punctuation">,</span><span class="token string">'BIT100081 TSU100084'</span><span class="token punctuation">,</span>maxsplit<span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<pre><code>[&#39;BIT&#39;, &#39; TSU100084&#39;]
+</code></pre><ul>
+<li>5.re.finditer(pattern, string, flags=0)<br>搜索字符串，返回一个匹配结果的迭代类型，每个迭代元素是match对象<br>∙ pattern : 正则表达式的字符串或原生字符串表示<br>∙ string : 待匹配字符串<br>∙ flags : 正则表达式使用时的控制标记</li>
+</ul>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">import</span> re
+<span class="token keyword">for</span> m <span class="token keyword">in</span> re<span class="token punctuation">.</span>finditer<span class="token punctuation">(</span><span class="token string">r'[1-9]\d&#123;5&#125;'</span><span class="token punctuation">,</span><span class="token string">'BIT100081 TSU100084'</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token keyword">if</span> m<span class="token punctuation">:</span>
+        <span class="token keyword">print</span><span class="token punctuation">(</span>m<span class="token punctuation">.</span>group<span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+<pre><code>100081
+100084
+</code></pre><ul>
+<li>6.re.sub(pattern, repl, string, count=0, flags=0)<br>在一个字符串中替换所有匹配正则表达式的子串返回替换后的字符串<br>∙ pattern : 正则表达式的字符串或原生字符串表示<br>∙ repl : 替换匹配字符串的字符串<br>∙ string : 待匹配字符串<br>∙ count : 匹配的最大替换次数<br>∙ flags : 正则表达式使用时的控制标记  </li>
+</ul>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">import</span> re
+re<span class="token punctuation">.</span>sub<span class="token punctuation">(</span><span class="token string">r'[1-9]\d&#123;5&#125;'</span><span class="token punctuation">,</span><span class="token string">':zipcode'</span><span class="token punctuation">,</span><span class="token string">'BIT100081 TSU100084'</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<pre><code>&#39;BIT:zipcode TSU:zipcode&#39;
+</code></pre><h4 id="Re库的另一种等价用法"><a href="#Re库的另一种等价用法" class="headerlink" title="Re库的另一种等价用法"></a>Re库的另一种等价用法</h4><p>函数式用法：一次性操作<br>rst = re.search(r’[1‐9]\d{5}’, ‘BIT 100081’)</p>
+<p>面向对象用法：编译后的多次操作<br>pat = re.compile(r’[1‐9]\d{5}’)<br>rst = pat.search(‘BIT 100081’)</p>
+<p>regex = re.compile(pattern, flags=0)<br>将正则表达式的字符串形式编译成正则表达式对象<br>∙ pattern : 正则表达式的字符串或原生字符串表示<br>∙ flags : 正则表达式使用时的控制标记</p>
+<h4 id="Re库的Match对象"><a href="#Re库的Match对象" class="headerlink" title="Re库的Match对象"></a>Re库的Match对象</h4><p>Match对象是一次匹配的结果，包含匹配的很多信息</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">import</span> re
+match<span class="token operator">=</span>re<span class="token punctuation">.</span>search<span class="token punctuation">(</span><span class="token string">r'[1-9]\d&#123;5&#125;'</span><span class="token punctuation">,</span><span class="token string">'BIT 100081'</span><span class="token punctuation">)</span>
+
+<span class="token keyword">if</span> match<span class="token punctuation">:</span>
+    <span class="token keyword">print</span><span class="token punctuation">(</span>match<span class="token punctuation">.</span>group<span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+    
+<span class="token builtin">type</span><span class="token punctuation">(</span>match<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<pre><code>100081
+
+
+
+
+
+_sre.SRE_Match
+</code></pre><p>Match对象的属性</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>属性</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>.string</td>
+<td>待匹配的文本</td>
+</tr>
+<tr>
+<td>.re</td>
+<td>匹配时使用的patter对象（正则表达式）</td>
+</tr>
+<tr>
+<td>.pos</td>
+<td>正则表达式搜索文本的开始位置</td>
+</tr>
+<tr>
+<td>.endpos</td>
+<td>正则表达式搜索文本的结束位置</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Match对象的方法</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>方法</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>.group(0)</td>
+<td>获得匹配后的字符串</td>
+</tr>
+<tr>
+<td>.start()</td>
+<td>匹配字符串在原始字符串的开始位置</td>
+</tr>
+<tr>
+<td>.end()</td>
+<td>匹配字符串在原始字符串的结束位置</td>
+</tr>
+<tr>
+<td>.span()</td>
+<td>返回(.start(), .end())</td>
+</tr>
+</tbody>
+</table>
+</div>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">import</span> re
+m<span class="token operator">=</span>re<span class="token punctuation">.</span>search<span class="token punctuation">(</span><span class="token string">r'[1-9]\d&#123;5&#125;'</span><span class="token punctuation">,</span><span class="token string">'BIT 100081'</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python">m<span class="token punctuation">.</span>string<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<pre><code>&#39;BIT 100081&#39;
+</code></pre><pre class="line-numbers language-python" data-language="python"><code class="language-python">m<span class="token punctuation">.</span>re<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<pre><code>re.compile(r&#39;[1-9]\d&#123;5&#125;&#39;, re.UNICODE)
+</code></pre><pre class="line-numbers language-python" data-language="python"><code class="language-python">m<span class="token punctuation">.</span>pos<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<pre><code>0
+</code></pre><pre class="line-numbers language-python" data-language="python"><code class="language-python">m<span class="token punctuation">.</span>endpos<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<pre><code>10
+</code></pre><pre class="line-numbers language-python" data-language="python"><code class="language-python">m<span class="token punctuation">.</span>group<span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<pre><code>&#39;100081&#39;
+</code></pre><pre class="line-numbers language-python" data-language="python"><code class="language-python">m<span class="token punctuation">.</span>start<span class="token punctuation">(</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<pre><code>4
+</code></pre><pre class="line-numbers language-python" data-language="python"><code class="language-python">m<span class="token punctuation">.</span>end<span class="token punctuation">(</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<pre><code>10
+</code></pre><pre class="line-numbers language-python" data-language="python"><code class="language-python">m<span class="token punctuation">.</span>span<span class="token punctuation">(</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<pre><code>(4, 10)
+</code></pre><h4 id="Re库的贪婪匹配和最小匹配"><a href="#Re库的贪婪匹配和最小匹配" class="headerlink" title="Re库的贪婪匹配和最小匹配"></a>Re库的贪婪匹配和最小匹配</h4><p>实例<br><pre class="line-numbers language-python" data-language="python"><code class="language-python">match <span class="token operator">=</span> re<span class="token punctuation">.</span>search<span class="token punctuation">(</span><span class="token string">r'PY.*N'</span><span class="token punctuation">,</span> <span class="token string">'PYANBNCNDN'</span><span class="token punctuation">)</span>
+match<span class="token punctuation">.</span>group<span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre><br>同时匹配长短不同的多项，返回哪一个呢？</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">import</span> re
+match <span class="token operator">=</span> re<span class="token punctuation">.</span>search<span class="token punctuation">(</span><span class="token string">r'PY.*N'</span><span class="token punctuation">,</span> <span class="token string">'PYANBNCNDN'</span><span class="token punctuation">)</span>
+match<span class="token punctuation">.</span>group<span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+<pre><code>&#39;PYANBNCNDN&#39;
+</code></pre><p>Re库默认采用贪婪匹配，即输出匹配最长的子串。那么如何输出最短的子串呢？这里就要用到最小匹配操作符了。</p>
+<p>最小匹配操作符</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>操作符</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>*?</td>
+<td>前一个字符0次或无限次扩展，最小匹配</td>
+</tr>
+<tr>
+<td>+?</td>
+<td>前一个字符1次或无限次扩展，最小匹配</td>
+</tr>
+<tr>
+<td>??</td>
+<td>前一个字符0次或1次扩展，最小匹配</td>
+</tr>
+<tr>
+<td>{m,n}?</td>
+<td>扩展前一个字符m至n次（含n），最小匹配</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>只要长度输出可能不同的，都可以通过在操作符后增加?变成最小匹配</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">import</span> re
+
+match <span class="token operator">=</span> re<span class="token punctuation">.</span>search<span class="token punctuation">(</span><span class="token string">r'PY.*?N'</span><span class="token punctuation">,</span> <span class="token string">'PYANBNCNDN'</span><span class="token punctuation">)</span>
+match<span class="token punctuation">.</span>group<span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+<pre><code>&#39;PYAN&#39;
+</code></pre><h3 id="3-“淘宝商品比价定向爬虫”"><a href="#3-“淘宝商品比价定向爬虫”" class="headerlink" title="3.“淘宝商品比价定向爬虫”"></a>3.“淘宝商品比价定向爬虫”</h3><p>程序的结构设计<br>步骤1：提交商品搜索请求，循环获取页面<br>步骤2：对于每个页面，提取商品名称和价格信息<br>步骤3：将信息输出到屏幕上</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">import</span> requests
+<span class="token keyword">import</span> re
+
+<span class="token comment">#获取页面信息</span>
+<span class="token keyword">def</span> <span class="token function">getHTMLText</span><span class="token punctuation">(</span>url<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token keyword">try</span><span class="token punctuation">:</span>
+        r<span class="token operator">=</span>requests<span class="token punctuation">.</span>get<span class="token punctuation">(</span>url<span class="token punctuation">,</span>timeout<span class="token operator">=</span><span class="token number">200</span><span class="token punctuation">)</span>
+        r<span class="token punctuation">.</span>raise_for_status<span class="token punctuation">(</span><span class="token punctuation">)</span>
+        r<span class="token punctuation">.</span>encoding<span class="token operator">=</span>r<span class="token punctuation">.</span>apparent_encoding
+        <span class="token keyword">return</span> r<span class="token punctuation">.</span>text
+    <span class="token keyword">except</span><span class="token punctuation">:</span>
+        <span class="token keyword">return</span> <span class="token string">""</span>
+
+<span class="token comment">#解析页面</span>
+<span class="token keyword">def</span> <span class="token function">parsePage</span><span class="token punctuation">(</span>ilt<span class="token punctuation">,</span>html<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token keyword">try</span><span class="token punctuation">:</span>
+        tlt<span class="token operator">=</span>re<span class="token punctuation">.</span>findall<span class="token punctuation">(</span><span class="token string">r'\"raw_title\"\:\".*?\"'</span><span class="token punctuation">,</span>html<span class="token punctuation">)</span>
+        plt<span class="token operator">=</span>re<span class="token punctuation">.</span>findall<span class="token punctuation">(</span><span class="token string">r'\"view_price\"\:\"[\d\.]*\"'</span><span class="token punctuation">,</span>html<span class="token punctuation">)</span>
+        <span class="token keyword">for</span> i <span class="token keyword">in</span> <span class="token builtin">range</span><span class="token punctuation">(</span><span class="token builtin">len</span><span class="token punctuation">(</span>plt<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+            price<span class="token operator">=</span><span class="token builtin">eval</span><span class="token punctuation">(</span>plt<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">.</span>split<span class="token punctuation">(</span><span class="token string">":"</span><span class="token punctuation">)</span><span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+            title<span class="token operator">=</span><span class="token builtin">eval</span><span class="token punctuation">(</span>tlt<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">.</span>split<span class="token punctuation">(</span><span class="token string">":"</span><span class="token punctuation">)</span><span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+            ilt<span class="token punctuation">.</span>append<span class="token punctuation">(</span><span class="token punctuation">[</span>price<span class="token punctuation">,</span>title<span class="token punctuation">]</span><span class="token punctuation">)</span>
+    <span class="token keyword">except</span><span class="token punctuation">:</span>
+        <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">""</span><span class="token punctuation">)</span>
+
+<span class="token comment">#打印信息</span>
+<span class="token keyword">def</span> <span class="token function">printGoodsList</span><span class="token punctuation">(</span>ilt<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    tplt<span class="token operator">=</span><span class="token string">"&#123;:4&#125;\t&#123;:8&#125;\t&#123;:16&#125;"</span>
+    <span class="token keyword">print</span><span class="token punctuation">(</span>tplt<span class="token punctuation">.</span><span class="token builtin">format</span><span class="token punctuation">(</span><span class="token string">"序号"</span><span class="token punctuation">,</span><span class="token string">"价格"</span><span class="token punctuation">,</span><span class="token string">"商品名称"</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+    count<span class="token operator">=</span><span class="token number">0</span>
+    <span class="token keyword">for</span> g <span class="token keyword">in</span> ilt<span class="token punctuation">:</span>
+        count<span class="token operator">=</span>count<span class="token operator">+</span><span class="token number">1</span>
+        <span class="token keyword">print</span><span class="token punctuation">(</span>tplt<span class="token punctuation">.</span><span class="token builtin">format</span><span class="token punctuation">(</span>count<span class="token punctuation">,</span>g<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">,</span>g<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+
+<span class="token keyword">def</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+    goods<span class="token operator">=</span><span class="token string">"书包"</span>
+    depth<span class="token operator">=</span><span class="token number">2</span>
+    start_url<span class="token operator">=</span><span class="token string">"https://s.taobao.com/search?q="</span><span class="token operator">+</span>goods
+    infoList<span class="token operator">=</span><span class="token punctuation">[</span><span class="token punctuation">]</span>
+    <span class="token keyword">for</span> i <span class="token keyword">in</span> <span class="token builtin">range</span><span class="token punctuation">(</span>depth<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token keyword">try</span><span class="token punctuation">:</span>
+            url<span class="token operator">=</span>start_url<span class="token operator">+</span><span class="token string">"&amp;s="</span><span class="token operator">+</span><span class="token builtin">str</span><span class="token punctuation">(</span>i<span class="token operator">*</span><span class="token number">44</span><span class="token punctuation">)</span>
+            html<span class="token operator">=</span>getHTMLText<span class="token punctuation">(</span>url<span class="token punctuation">)</span>
+            parsePage<span class="token punctuation">(</span>infoList<span class="token punctuation">,</span>html<span class="token punctuation">)</span>
+        <span class="token keyword">except</span><span class="token punctuation">:</span>
+            <span class="token keyword">continue</span>
+    printGoodsList<span class="token punctuation">(</span>infoList<span class="token punctuation">)</span>
+    
+main<span class="token punctuation">(</span><span class="token punctuation">)</span>       <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<pre><code>序号      价格          商品名称            
+   1    49.00       背包男双肩包高中初中学生韩版书包男时尚潮流青年电脑旅游旅行包
+   2    139.00      双肩包男时尚潮流个性电脑背包简约大学生高中书包休闲韩版旅行包
+   3    109.00      卡帝乐鳄鱼商务双肩包男 中学生女电脑包 旅行男士背包大容量书包
+   4    225.00      日本anello双肩包女妈咪防盗乐天学生背包书包离家出走包alleno男
+   5    225.00      日本anello双肩包女牛津布防盗书包乐天旅行背包电脑包alleno男士
+   6    203.00      日本anello双肩包女帆布防盗书包乐天旅行背包小电脑包alleno男潮
+   7    129.00      七匹狼双肩包男 新款商务男士旅行背包女休闲大容量电脑学生书包
+   8    79.00       书包小学生男1-3-4-6年级儿童减负护脊女6-12周岁初中学生双肩包
+   9    139.00      瑞戈瑞士军刀旅行包旅游双肩包瑞士中学生书包女大容量电脑背包男
+  10    29.80       2017新款双肩包女牛津布韩版潮百搭背包时尚休闲书包学生包2018
+  11    59.00       背包男韩版时尚潮流双肩包休闲商务电脑旅行大容量高中大学生书包
+  12    59.00       书包男中学生初中生高中生小学男生背包青少年校园双肩包时尚潮流
+  13    55.00       双肩包女包包2018新款韩版潮时尚个性百搭2017牛津帆布小书包背包
+  14    148.00      双肩包男士时尚潮流15.6寸电脑包大学生书包男运动休闲学院风背包
+  15    65.00       2018新款牛津布双肩包女包包韩版潮百搭时尚女背包尼龙布休闲书包
+  16    99.00       米熙休闲运动背包双肩包女书包中学生男时尚潮流大容量旅游旅行包
+  17    59.00       牛津布双肩包女2018新款潮韩版时尚百搭书包旅行帆布小背包女包包
+  18    139.00      pinkland儿童书包男小学生1-3-4-6年级女孩6-12周岁背包护脊书包
+  19    99.00       双肩包男帆布背包电脑包休闲防水运动后背包男旅行包青年学生书包
+  20    119.00      双肩背包男休闲多功能男士商务15.6寸电脑包 大容量 简约出差
+  21    69.00       双肩包女2018新款包包韩版百搭时尚背包女双肩软皮旅行包书包女包
+  22    249.00      小米 米兔儿童书包 6-12岁男女小学生潮双肩背包幼儿园可爱背包
+  23    59.00       双肩包女2018新款韩版潮时尚百搭2017牛津布帆布女包包小背包书包
+  24    69.90       2018新款包包牛津布双肩包女韩版潮百搭时尚背包ulzzang学生书包
+  25    125.00      瑞士军刀瑞戈双肩包男士背包瑞士旅行包初中学生书包旅游包电脑包
+  26    45.00       小学生书包龙人1-3-6年级女孩超轻防水减负双肩包6-12岁儿童背包
+  27    299.00      BOPAI博牌电脑背包男户外旅行休闲双肩包商务防盗充电多功能男包
+  28    69.00       背包男士双肩包韩版青年电脑旅行校园初中高中学生书包男时尚潮流
+  29    119.00      韩国kk树书包小学生男1-3-4-6年级儿童书包女6-12周岁双肩包护脊
+  30    29.00       韩版双肩包男时尚潮流书包男士电脑包旅行初中高中大学生休闲背包
+  31    69.00       双肩包女2018新款潮韩版时尚百搭个性休闲包包pu软皮书包旅行背包
+  32    179.00      双肩包男大容量17寸旅行包时尚潮流电脑包商务书包多功能防盗背包
+  33    119.00      美洲野牛正品商务双肩包男中学生女电脑包旅行男士背包大容量书包
+  34    148.00      裂狼双肩包男士时尚潮流背包男pu皮休闲男包旅行包青年学生书包潮
+  35    118.00      瑞士军刀双肩包男士背包大容量休闲商务电脑包韩版高中书包旅行包
+  36    25.90       书包小学生1-2-3-6年级男女生 护脊耐磨轻防水儿童双肩包6-12周岁
+  37    118.00      布言新款双肩包男皮包时尚潮流背包韩版百搭旅行包英伦大学生书包
+  38    59.00       双肩包男士旅游户外休闲书包时尚潮流大容量轻便旅行包登山背包男
+  39    49.00       背包男时尚潮流高中书包大学生旅行男士双肩包休闲韩版校园旅游包
+  40    169.00      英伦学院风男士双肩包休闲时尚潮流大容量背包大学生青年韩版书包
+  41    499.00      国家地理背包女运动户外时尚双肩包男牛津布防水包潮学生情侣书包
+  42    129.00      七匹狼男士背包双肩包男休闲时尚潮流大容量旅行电脑包大学生书包
+  43    158.00      双肩包女牛津布2018新款百搭韩版大容量防水尼龙帆布包迷你小背包
+  44    158.00      双肩包男商务防盗笔记本电脑包15.6寸书包男士大容量背包时尚潮流
+</code></pre><p>这里再增加两个字段，店名，地区</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">import</span> requests
+<span class="token keyword">import</span> re
+
+<span class="token comment">#获取页面信息</span>
+<span class="token keyword">def</span> <span class="token function">getHTMLText</span><span class="token punctuation">(</span>url<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token keyword">try</span><span class="token punctuation">:</span>
+        r<span class="token operator">=</span>requests<span class="token punctuation">.</span>get<span class="token punctuation">(</span>url<span class="token punctuation">,</span>timeout<span class="token operator">=</span><span class="token number">200</span><span class="token punctuation">)</span>
+        r<span class="token punctuation">.</span>raise_for_status<span class="token punctuation">(</span><span class="token punctuation">)</span>
+        r<span class="token punctuation">.</span>encoding<span class="token operator">=</span>r<span class="token punctuation">.</span>apparent_encoding
+        <span class="token keyword">return</span> r<span class="token punctuation">.</span>text
+    <span class="token keyword">except</span><span class="token punctuation">:</span>
+        <span class="token keyword">return</span> <span class="token string">""</span>
+
+<span class="token comment">#解析页面</span>
+<span class="token keyword">def</span> <span class="token function">parsePage</span><span class="token punctuation">(</span>ilt<span class="token punctuation">,</span>html<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token keyword">try</span><span class="token punctuation">:</span>
+        tlt<span class="token operator">=</span>re<span class="token punctuation">.</span>findall<span class="token punctuation">(</span><span class="token string">r'\"raw_title\"\:\".*?\"'</span><span class="token punctuation">,</span>html<span class="token punctuation">)</span>
+        plt<span class="token operator">=</span>re<span class="token punctuation">.</span>findall<span class="token punctuation">(</span><span class="token string">r'\"view_price\"\:\"[\d\.]*\"'</span><span class="token punctuation">,</span>html<span class="token punctuation">)</span>
+        nlt<span class="token operator">=</span>re<span class="token punctuation">.</span>findall<span class="token punctuation">(</span><span class="token string">r'"nick":".*?"'</span><span class="token punctuation">,</span>html<span class="token punctuation">)</span>
+        llt<span class="token operator">=</span>re<span class="token punctuation">.</span>findall<span class="token punctuation">(</span><span class="token string">r'"item_loc":".*?"'</span><span class="token punctuation">,</span>html<span class="token punctuation">)</span>
+        <span class="token keyword">for</span> i <span class="token keyword">in</span> <span class="token builtin">range</span><span class="token punctuation">(</span><span class="token builtin">len</span><span class="token punctuation">(</span>plt<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+            price<span class="token operator">=</span><span class="token builtin">eval</span><span class="token punctuation">(</span>plt<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">.</span>split<span class="token punctuation">(</span><span class="token string">":"</span><span class="token punctuation">)</span><span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+            title<span class="token operator">=</span><span class="token builtin">eval</span><span class="token punctuation">(</span>tlt<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">.</span>split<span class="token punctuation">(</span><span class="token string">":"</span><span class="token punctuation">)</span><span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+            name<span class="token operator">=</span><span class="token builtin">eval</span><span class="token punctuation">(</span>nlt<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">.</span>split<span class="token punctuation">(</span><span class="token string">":"</span><span class="token punctuation">)</span><span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">.</span>strip<span class="token punctuation">(</span><span class="token punctuation">)</span>
+            loc<span class="token operator">=</span><span class="token builtin">eval</span><span class="token punctuation">(</span>llt<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">.</span>split<span class="token punctuation">(</span><span class="token string">":"</span><span class="token punctuation">)</span><span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">.</span>strip<span class="token punctuation">(</span><span class="token punctuation">)</span>
+            ilt<span class="token punctuation">.</span>append<span class="token punctuation">(</span><span class="token punctuation">[</span>price<span class="token punctuation">,</span>title<span class="token punctuation">,</span>name<span class="token punctuation">,</span>loc<span class="token punctuation">]</span><span class="token punctuation">)</span>
+    <span class="token keyword">except</span><span class="token punctuation">:</span>
+        <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">""</span><span class="token punctuation">)</span>
+
+<span class="token comment">#打印信息</span>
+<span class="token keyword">def</span> <span class="token function">printGoodsList</span><span class="token punctuation">(</span>ilt<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    tplt<span class="token operator">=</span><span class="token string">"&#123;:4&#125;\t&#123;:8&#125;\t&#123;:20&#125;\t&#123;:18&#125;\t&#123;:16&#125;"</span>
+    <span class="token keyword">print</span><span class="token punctuation">(</span>tplt<span class="token punctuation">.</span><span class="token builtin">format</span><span class="token punctuation">(</span><span class="token string">"序号"</span><span class="token punctuation">,</span><span class="token string">"价格"</span><span class="token punctuation">,</span><span class="token string">"店名"</span><span class="token punctuation">,</span><span class="token string">"地区"</span><span class="token punctuation">,</span><span class="token string">"商品名称"</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+    count<span class="token operator">=</span><span class="token number">0</span>
+    <span class="token keyword">for</span> g <span class="token keyword">in</span> ilt<span class="token punctuation">:</span>
+        count<span class="token operator">=</span>count<span class="token operator">+</span><span class="token number">1</span>
+        <span class="token keyword">print</span><span class="token punctuation">(</span>tplt<span class="token punctuation">.</span><span class="token builtin">format</span><span class="token punctuation">(</span>count<span class="token punctuation">,</span>g<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">,</span>g<span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">]</span><span class="token punctuation">,</span>g<span class="token punctuation">[</span><span class="token number">3</span><span class="token punctuation">]</span><span class="token punctuation">,</span>g<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+
+<span class="token keyword">def</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+    goods<span class="token operator">=</span><span class="token string">"书包"</span>
+    depth<span class="token operator">=</span><span class="token number">2</span>
+    start_url<span class="token operator">=</span><span class="token string">"https://s.taobao.com/search?q="</span><span class="token operator">+</span>goods
+    infoList<span class="token operator">=</span><span class="token punctuation">[</span><span class="token punctuation">]</span>
+    <span class="token keyword">for</span> i <span class="token keyword">in</span> <span class="token builtin">range</span><span class="token punctuation">(</span>depth<span class="token punctuation">)</span><span class="token punctuation">:</span>
+        <span class="token keyword">try</span><span class="token punctuation">:</span>
+            url<span class="token operator">=</span>start_url<span class="token operator">+</span><span class="token string">"&amp;s="</span><span class="token operator">+</span><span class="token builtin">str</span><span class="token punctuation">(</span>i<span class="token operator">*</span><span class="token number">44</span><span class="token punctuation">)</span>
+            html<span class="token operator">=</span>getHTMLText<span class="token punctuation">(</span>url<span class="token punctuation">)</span>
+            parsePage<span class="token punctuation">(</span>infoList<span class="token punctuation">,</span>html<span class="token punctuation">)</span>
+        <span class="token keyword">except</span><span class="token punctuation">:</span>
+            <span class="token keyword">continue</span>
+    printGoodsList<span class="token punctuation">(</span>infoList<span class="token punctuation">)</span>
+    
+main<span class="token punctuation">(</span><span class="token punctuation">)</span>       <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<pre><code>序号      价格          店名                      地区                    商品名称            
+   1    219.00      卡拉羊维德邦尼专卖店              广东 惠州                 卡拉羊小学生书包减负护脊男女孩2-3-5年级
+   2    39.90       迪卡侬旗舰店                  江苏 苏州                 迪卡侬双肩包男女学生书包健身包运动新款校园20升休闲 KIPSTA
+   3    139.00      施维茨十字广州专卖店              广东 广州                 施维茨男士双肩包大容量背包女商务电脑旅行包休闲潮高中学生书包
+   4    59.80       wolfhorse箱包旗舰店          广东 广州                 商务背包男士双肩包韩版潮流旅行包休闲女学生书包简约时尚电脑包
+   5    79.00       妙心母婴专营店                 上海                    迪士尼小学生书包1-3-4年级男童女童6-12岁减负护脊儿童双肩背包
+   6    179.00      莱夫箱包旗舰店                 广东 广州                 莱夫女士双肩包韩版潮2018新款帆布简约时尚个性牛津布迷你小背包
+   7    249.00      莱夫箱包旗舰店                 广东 广州                 莱夫帆布小背包女韩版潮2018新款个性百搭双肩包女士旅行时尚胸包
+   8    129.00      septwolves七匹狼旗舰店        浙江 杭州                 七匹狼双肩包男 韩版女休闲潮包 学生书包电脑包旅行包双肩背包男
+   9    129.00      septwolves七匹狼旗舰店        浙江 杭州                 七匹狼商务双肩包男书包中学生女电脑包旅行包休闲男士背包大容量
+  10    49.00       dr米其学生书包店               湖南 邵阳                 书包小学生 1-2-3-6年级男女生减负双肩儿童书包男孩防水护脊背包
+  11    559.00      fjallraven旗舰店           江苏 扬州                 Fjallraven/北极狐双肩包kanken书包运动包女户外包旅行背包23510
+  12    158.00      名鞋城                     上海                    专柜正品JanSport杰斯伯经典双肩背包男女同款学生书包T501纯色
+  13    119.00      巴朗旗舰店                   广东 广州                 巴朗新款商务双肩包休闲时尚潮流大学生书包15.6寸电脑包男士背包
+  14    69.00       aspensport旗舰店           福建 泉州                 双肩包男背包男士旅行包电脑休闲旅游女时尚潮流高中初中学生书包
+  15    139.00      赫登尔旗舰店                  广东 广州                 赫登尔双肩包男士潮流背包男韩版旅行包时尚休闲学生书包电脑包潮
+  16    208.00      豪迈足来足往                  香港 九龙                 anello双肩包女香港代购防盗旅行包书包大容量防水背包离家出走包
+  17    208.00      fengcai678              香港 九龙                 【香港直邮】anello双肩包男女离家出走包学生书包旅行包休闲背包
+  18    79.00       石头村的小伙                  广东 广州                 书包女韩版原宿ulzzang 高中学生2018新款初中生校园甜甜圈双肩包
+  19    149.00      唐酷旗舰店                   广东 广州                 双肩包男士时尚潮流背包韩版个性书包男大学生运动休闲电脑旅行包
+  20    29.90       a455157529              湖南 邵阳                 书包小学生1-2-3-6年级男女生 护脊耐磨轻防水儿童双肩包6-12周岁
+  21    149.00      小米官方旗舰店                 北京                    小米双肩包简约休闲多功能书包男女笔记本电脑包时尚潮流旅行背包
+  22    69.00       仕墨梵旗舰店                  浙江 金华                 背包男士双肩包时尚潮流初中高中学生书包大学生女商务旅行电脑包
+  23    59.00       迅步母婴专营店                 湖北 武汉                 迪士尼书包小学生男女1-3-4-6年级米奇减负背包儿童书包8-10-12岁
+  24    69.00       爱潮鸟旗舰店                  浙江 杭州                 双肩包女包包2018新款韩版潮个性百搭时尚迷你小2017书包女士背包
+  25    208.00      时尚爱购潮店                  上海                    anello双肩包女日本乐天背包ins超火书包妈妈包 alleno离家出走包
+  26    139.00      瑞戈日进专卖店                 广东 广州                 瑞士军刀双肩包男瑞士电脑旅行背包女大容量高中大学初中学生书包
+  27    59.00       沃曼威斯旗舰店                 广东 广州                 男背包旅游休闲商务电脑韩版时尚潮流大高中学生书包旅行双肩包男
+  28    189.00      尼格尔旗舰店                  广东 广州                 商务双肩包男大容量青年短途出差旅行包17寸电脑包多功能防盗背包
+  29    138.00      鑫运箱包专营店                 广东 广州                 瑞戈瑞士军刀双肩包瑞士中学生书包女休闲男士旅行大容量电脑背包
+  30    138.00      zoger旗舰店                广东 广州                 双肩包女背包2018新款韩版潮牛津布帆布百搭防盗女士旅行休闲包包
+  31    149.00      凡语者旗舰店                  湖南 长沙                 双肩包男个性休闲17寸男士背包电脑旅行包学生书包男运动时尚潮流
+  32    69.00       依璐梦妮旗舰店                 广东 广州                 2018新款双肩包女牛津布韩版潮百搭背包时尚休闲书包女包包旅行包
+  33    139.00      七匹狼楚雅专卖店                上海                    七匹狼背包男商务双肩包男士旅行休闲时尚潮流电脑青年书包大容量
+  34    169.00      hautton旗舰店              广东 广州                 背包男士双肩包休闲旅行时尚潮流青年简约韩版高中学生书包大容量
+  35    68.00       控强旗舰店                   广东 广州                 背包男双肩包大容量休闲电脑包韩版高中学生书包男时尚潮流旅行包
+  36    129.00      chuli初丽旗舰店              广东 广州                 男士双肩包男韩版时尚背包男大学生书包潮流旅行包电脑包男包皮包
+  37    139.00      希卡旗舰店                   上海                    双肩包男时尚潮流个性电脑背包简约大学生高中书包休闲韩版旅行包
+  38    109.00      卡帝乐鳄鱼佰赞诚专卖店             浙江 温州                 卡帝乐鳄鱼商务双肩包男 中学生女电脑包 旅行男士背包大容量书包
+  39    225.00      童花头布布                   上海                    日本anello双肩包女妈咪防盗乐天学生背包书包离家出走包alleno男
+  40    225.00      洺涛服饰                    上海                    日本anello双肩包女牛津布防盗书包乐天旅行背包电脑包alleno男士
+  41    203.00      潮鞋商城                    上海                    日本anello双肩包女帆布防盗书包乐天旅行背包小电脑包alleno男潮
+  42    129.00      七匹狼开地专卖店                上海                    七匹狼双肩包男 新款商务男士旅行背包女休闲大容量电脑学生书包
+  43    79.00       顺时母婴专营店                 广东 广州                 书包小学生男1-3-4-6年级儿童减负护脊女6-12周岁初中学生双肩包
+  44    139.00      瑞戈箱包旗舰店                 广东 广州                 瑞戈瑞士军刀旅行包旅游双肩包瑞士中学生书包女大容量电脑背包男
+  45    29.80       爱洛唯旗舰店                  北京                    2017新款双肩包女牛津布韩版潮百搭背包时尚休闲书包学生包2018
+  46    59.00       骆佰斯旗舰店                  广东 广州                 背包男韩版时尚潮流双肩包休闲商务电脑旅行大容量高中大学生书包
+  47    59.00       风动旗舰店                   广东 广州                 书包男中学生初中生高中生小学男生背包青少年校园双肩包时尚潮流
+  48    55.00       爱潮鸟旗舰店                  浙江 杭州                 双肩包女包包2018新款韩版潮时尚个性百搭2017牛津帆布小书包背包
+  49    148.00      梵瑞恩箱包旗舰店                广东 广州                 双肩包男士时尚潮流15.6寸电脑包大学生书包男运动休闲学院风背包
+  50    65.00       依璐梦妮旗舰店                 广东 广州                 2018新款牛津布双肩包女包包韩版潮百搭时尚女背包尼龙布休闲书包
+  51    99.00       米熙箱包旗舰店                 广东 广州                 米熙休闲运动背包双肩包女书包中学生男时尚潮流大容量旅游旅行包
+  52    59.00       粹鸟旗舰店                   浙江 台州                 牛津布双肩包女2018新款潮韩版时尚百搭书包旅行帆布小背包女包包
+  53    139.00      pinkland旗舰店             广东 广州                 pinkland儿童书包男小学生1-3-4-6年级女孩6-12周岁背包护脊书包
+  54    99.00       摩尔卡登旗舰店                 广东 广州                 双肩包男帆布背包电脑包休闲防水运动后背包男旅行包青年学生书包
+  55    119.00      doorqu旗舰店               上海                    双肩背包男休闲多功能男士商务15.6寸电脑包 大容量 简约出差
+  56    69.00       七扣旗舰店                   河北 保定                 双肩包女2018新款包包韩版百搭时尚背包女双肩软皮旅行包书包女包
+  57    249.00      小米官方旗舰店                 北京                    小米 米兔儿童书包 6-12岁男女小学生潮双肩背包幼儿园可爱背包
+  58    59.00       爱潮鸟旗舰店                  浙江 杭州                 双肩包女2018新款韩版潮时尚百搭2017牛津布帆布女包包小背包书包
+  59    69.90       大脸兔旗舰店                  广东 广州                 2018新款包包牛津布双肩包女韩版潮百搭时尚背包ulzzang学生书包
+  60    125.00      瑞戈灵渊专卖店                 广东 广州                 瑞士军刀瑞戈双肩包男士背包瑞士旅行包初中学生书包旅游包电脑包
+  61    45.00       wxkt888                 湖南 长沙                 小学生书包龙人1-3-6年级女孩超轻防水减负双肩包6-12岁儿童背包
+  62    299.00      博牌旗舰店                   广东 广州                 BOPAI博牌电脑背包男户外旅行休闲双肩包商务防盗充电多功能男包
+  63    69.00       木村耀司旗舰店                 上海                    背包男士双肩包韩版青年电脑旅行校园初中高中学生书包男时尚潮流
+  64    119.00      kocotree旗舰店             浙江 湖州                 韩国kk树书包小学生男1-3-4-6年级儿童书包女6-12周岁双肩包护脊
+  65    29.00       朗斐旗舰店                   河北 石家庄                韩版双肩包男时尚潮流书包男士电脑包旅行初中高中大学生休闲背包
+  66    69.00       韩雅伊人旗舰店                 浙江 台州                 双肩包女2018新款潮韩版时尚百搭个性休闲包包pu软皮书包旅行背包
+  67    179.00      reeyee旗舰店               广东 广州                 双肩包男大容量17寸旅行包时尚潮流电脑包商务书包多功能防盗背包
+  68    119.00      美洲野牛旗舰店                 广东 广州                 美洲野牛正品商务双肩包男中学生女电脑包旅行男士背包大容量书包
+  69    148.00      裂狼旗舰店                   广东 广州                 裂狼双肩包男士时尚潮流背包男pu皮休闲男包旅行包青年学生书包潮
+  70    118.00      施维茨十字裳酷专卖店              上海                    瑞士军刀双肩包男士背包大容量休闲商务电脑包韩版高中书包旅行包
+  71    25.90       zhou2613223             湖南 邵阳                 书包小学生1-2-3-6年级男女生 护脊耐磨轻防水儿童双肩包6-12周岁
+  72    118.00      布言旗舰店                   北京                    布言新款双肩包男皮包时尚潮流背包韩版百搭旅行包英伦大学生书包
+  73    59.00       沃曼威斯丰傲专卖店               广东 广州                 双肩包男士旅游户外休闲书包时尚潮流大容量轻便旅行包登山背包男
+  74    49.00       upza旗舰店                 广东 广州                 背包男时尚潮流高中书包大学生旅行男士双肩包休闲韩版校园旅游包
+  75    169.00      bodachel旗舰店             广东 深圳                 英伦学院风男士双肩包休闲时尚潮流大容量背包大学生青年韩版书包
+  76    499.00      nationalgeographic旗舰店    广东 广州                 国家地理背包女运动户外时尚双肩包男牛津布防水包潮学生情侣书包
+  77    129.00      septwolves诚信达专卖店        上海                    七匹狼男士背包双肩包男休闲时尚潮流大容量旅行电脑包大学生书包
+  78    158.00      yoya旗舰店                 广东 广州                 双肩包女牛津布2018新款百搭韩版大容量防水尼龙帆布包迷你小背包
+  79    158.00      马可莱登旗舰店                 广东 广州                 双肩包男商务防盗笔记本电脑包15.6寸书包男士大容量背包时尚潮流
+  80    59.00       文博士旗舰店                  湖南 邵阳                 小学生书包男童1-3-4年级双肩男孩6-12周岁轻便防水男生儿童书包
+</code></pre><h3 id="4-股票数据定向爬虫"><a href="#4-股票数据定向爬虫" class="headerlink" title="4.股票数据定向爬虫"></a>4.股票数据定向爬虫</h3><p>程序的结构设计<br>步骤1：从东方财富网获取股票列表<br>步骤2：根据股票列表逐个到百度股票获取个股信息<br>步骤3：将结果存储到文件</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">import</span> requests
+<span class="token keyword">from</span> bs4 <span class="token keyword">import</span> BeautifulSoup
+<span class="token keyword">import</span> traceback
+<span class="token keyword">import</span> re
+
+<span class="token comment">#获取页面信息</span>
+<span class="token keyword">def</span> <span class="token function">getHTMLText</span><span class="token punctuation">(</span>url<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token keyword">try</span><span class="token punctuation">:</span>
+        r<span class="token operator">=</span>requests<span class="token punctuation">.</span>get<span class="token punctuation">(</span>url<span class="token punctuation">,</span>timeout<span class="token operator">=</span><span class="token number">200</span><span class="token punctuation">)</span>
+        r<span class="token punctuation">.</span>raise_for_status<span class="token punctuation">(</span><span class="token punctuation">)</span>
+        r<span class="token punctuation">.</span>encoding<span class="token operator">=</span>r<span class="token punctuation">.</span>apparent_encoding
+        <span class="token keyword">return</span> r<span class="token punctuation">.</span>text
+    <span class="token keyword">except</span><span class="token punctuation">:</span>
+        <span class="token keyword">return</span> <span class="token string">""</span>
+
+<span class="token comment">#获取股票列表</span>
+<span class="token keyword">def</span> <span class="token function">getStockList</span><span class="token punctuation">(</span>lst<span class="token punctuation">,</span>stockURL<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    html<span class="token operator">=</span>getHTMLText<span class="token punctuation">(</span>stockURL<span class="token punctuation">)</span>
+    soup<span class="token operator">=</span>BeautifulSoup<span class="token punctuation">(</span>html<span class="token punctuation">,</span><span class="token string">'html.parser'</span><span class="token punctuation">)</span>
+    a<span class="token operator">=</span>soup<span class="token punctuation">.</span>find_all<span class="token punctuation">(</span><span class="token string">'a'</span><span class="token punctuation">)</span>
+    <span class="token keyword">for</span> i <span class="token keyword">in</span> a<span class="token punctuation">:</span>
+        <span class="token keyword">try</span><span class="token punctuation">:</span>
+            href<span class="token operator">=</span>i<span class="token punctuation">.</span>attrs<span class="token punctuation">[</span><span class="token string">'href'</span><span class="token punctuation">]</span>
+            lst<span class="token punctuation">.</span>append<span class="token punctuation">(</span>re<span class="token punctuation">.</span>findall<span class="token punctuation">(</span><span class="token string">r"[s][hz]\d&#123;6&#125;"</span><span class="token punctuation">,</span>href<span class="token punctuation">)</span><span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+        <span class="token keyword">except</span><span class="token punctuation">:</span>
+            <span class="token keyword">continue</span>
+
+<span class="token comment">#获取股票信息</span>
+<span class="token keyword">def</span> <span class="token function">getStockInfo</span><span class="token punctuation">(</span>lst<span class="token punctuation">,</span>stockURL<span class="token punctuation">,</span>fpath<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token keyword">print</span><span class="token punctuation">(</span>lst<span class="token punctuation">)</span>
+    <span class="token keyword">for</span> stock <span class="token keyword">in</span> lst<span class="token punctuation">:</span>
+        url<span class="token operator">=</span>stockURL<span class="token operator">+</span>stock<span class="token operator">+</span><span class="token string">".html"</span>
+        html<span class="token operator">=</span>getHTMLText<span class="token punctuation">(</span>url<span class="token punctuation">)</span>
+        <span class="token keyword">try</span><span class="token punctuation">:</span>
+            <span class="token keyword">if</span> html<span class="token operator">==</span><span class="token string">""</span><span class="token punctuation">:</span>
+                <span class="token keyword">continue</span>
+            infoDict<span class="token operator">=</span><span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span>
+            soup<span class="token operator">=</span>BeautifulSoup<span class="token punctuation">(</span>html<span class="token punctuation">,</span><span class="token string">'html.parser'</span><span class="token punctuation">)</span>
+            stockInfo<span class="token operator">=</span>soup<span class="token punctuation">.</span>find<span class="token punctuation">(</span><span class="token string">"div"</span><span class="token punctuation">,</span>attrs<span class="token operator">=</span><span class="token punctuation">&#123;</span><span class="token string">'class'</span><span class="token punctuation">:</span><span class="token string">'stock-bets'</span><span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
+            
+            name<span class="token operator">=</span>stockInfo<span class="token punctuation">.</span>find_all<span class="token punctuation">(</span>attrs<span class="token operator">=</span><span class="token punctuation">&#123;</span><span class="token string">'class'</span><span class="token punctuation">:</span><span class="token string">'bets-name'</span><span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span>
+            infoDict<span class="token punctuation">.</span>update<span class="token punctuation">(</span><span class="token punctuation">&#123;</span><span class="token string">'股票名称'</span><span class="token punctuation">:</span>name<span class="token punctuation">.</span>text<span class="token punctuation">.</span>split<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
+            
+            keyList<span class="token operator">=</span>stockInfo<span class="token punctuation">.</span>find_all<span class="token punctuation">(</span><span class="token string">'dt'</span><span class="token punctuation">)</span>
+            valueList<span class="token operator">=</span>stockInfo<span class="token punctuation">.</span>find_all<span class="token punctuation">(</span><span class="token string">'dd'</span><span class="token punctuation">)</span>
+            <span class="token keyword">for</span> i <span class="token keyword">in</span> <span class="token builtin">range</span><span class="token punctuation">(</span><span class="token builtin">len</span><span class="token punctuation">(</span>keyList<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+                key<span class="token operator">=</span>keyList<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">.</span>text
+                val<span class="token operator">=</span>valueList<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">.</span>text
+                infoDict<span class="token punctuation">[</span>key<span class="token punctuation">]</span><span class="token operator">=</span>val
+            
+            <span class="token keyword">with</span> <span class="token builtin">open</span><span class="token punctuation">(</span>fpath<span class="token punctuation">,</span><span class="token string">'a'</span><span class="token punctuation">,</span>encoding<span class="token operator">=</span><span class="token string">'utf-8'</span><span class="token punctuation">)</span> <span class="token keyword">as</span> f<span class="token punctuation">:</span>
+                f<span class="token punctuation">.</span>write<span class="token punctuation">(</span><span class="token builtin">str</span><span class="token punctuation">(</span>infoDict<span class="token punctuation">)</span><span class="token operator">+</span><span class="token string">'\n'</span><span class="token punctuation">)</span>
+        
+        <span class="token keyword">except</span><span class="token punctuation">:</span>
+            traceback<span class="token punctuation">.</span>print_exc<span class="token punctuation">(</span><span class="token punctuation">)</span>
+            <span class="token keyword">continue</span>
+
+<span class="token keyword">def</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+    stock_list_url <span class="token operator">=</span> <span class="token string">'http://quote.eastmoney.com/stocklist.html'</span>
+    stock_info_url <span class="token operator">=</span> <span class="token string">'https://gupiao.baidu.com/stock/'</span>
+    output_file <span class="token operator">=</span> <span class="token string">'D:/BaiduStockInfo.txt'</span>
+    slist<span class="token operator">=</span><span class="token punctuation">[</span><span class="token punctuation">]</span>
+    getStockList<span class="token punctuation">(</span>slist<span class="token punctuation">,</span>stock_list_url<span class="token punctuation">)</span>
+    getStockInfo<span class="token punctuation">(</span>slist<span class="token punctuation">,</span>stock_info_url<span class="token punctuation">,</span>output_file<span class="token punctuation">)</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>再对代码做些优化处理</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token keyword">import</span> requests
+<span class="token keyword">from</span> bs4 <span class="token keyword">import</span> BeautifulSoup
+<span class="token keyword">import</span> traceback
+<span class="token keyword">import</span> re
+ 
+<span class="token keyword">def</span> <span class="token function">getHTMLText</span><span class="token punctuation">(</span>url<span class="token punctuation">,</span> code<span class="token operator">=</span><span class="token string">"utf-8"</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+    <span class="token keyword">try</span><span class="token punctuation">:</span>
+        r <span class="token operator">=</span> requests<span class="token punctuation">.</span>get<span class="token punctuation">(</span>url<span class="token punctuation">)</span>
+        r<span class="token punctuation">.</span>raise_for_status<span class="token punctuation">(</span><span class="token punctuation">)</span>
+        r<span class="token punctuation">.</span>encoding <span class="token operator">=</span> code
+        <span class="token keyword">return</span> r<span class="token punctuation">.</span>text
+    <span class="token keyword">except</span><span class="token punctuation">:</span>
+        <span class="token keyword">return</span> <span class="token string">""</span>
+
+<span class="token keyword">def</span> <span class="token function">getStockList</span><span class="token punctuation">(</span>lst<span class="token punctuation">,</span> stockURL<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    html <span class="token operator">=</span> getHTMLText<span class="token punctuation">(</span>stockURL<span class="token punctuation">,</span> <span class="token string">"GB2312"</span><span class="token punctuation">)</span>
+    soup <span class="token operator">=</span> BeautifulSoup<span class="token punctuation">(</span>html<span class="token punctuation">,</span> <span class="token string">'html.parser'</span><span class="token punctuation">)</span> 
+    a <span class="token operator">=</span> soup<span class="token punctuation">.</span>find_all<span class="token punctuation">(</span><span class="token string">'a'</span><span class="token punctuation">)</span>
+    <span class="token keyword">for</span> i <span class="token keyword">in</span> a<span class="token punctuation">:</span>
+        <span class="token keyword">try</span><span class="token punctuation">:</span>
+            href <span class="token operator">=</span> i<span class="token punctuation">.</span>attrs<span class="token punctuation">[</span><span class="token string">'href'</span><span class="token punctuation">]</span>
+            lst<span class="token punctuation">.</span>append<span class="token punctuation">(</span>re<span class="token punctuation">.</span>findall<span class="token punctuation">(</span><span class="token string">r"[s][hz]\d&#123;6&#125;"</span><span class="token punctuation">,</span> href<span class="token punctuation">)</span><span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+        <span class="token keyword">except</span><span class="token punctuation">:</span>
+            <span class="token keyword">continue</span>
+
+<span class="token keyword">def</span> <span class="token function">getStockInfo</span><span class="token punctuation">(</span>lst<span class="token punctuation">,</span> stockURL<span class="token punctuation">,</span> fpath<span class="token punctuation">)</span><span class="token punctuation">:</span>
+    count <span class="token operator">=</span> <span class="token number">0</span>
+    <span class="token keyword">for</span> stock <span class="token keyword">in</span> lst<span class="token punctuation">:</span>
+        url <span class="token operator">=</span> stockURL <span class="token operator">+</span> stock <span class="token operator">+</span> <span class="token string">".html"</span>
+        html <span class="token operator">=</span> getHTMLText<span class="token punctuation">(</span>url<span class="token punctuation">)</span>
+        <span class="token keyword">try</span><span class="token punctuation">:</span>
+            <span class="token keyword">if</span> html<span class="token operator">==</span><span class="token string">""</span><span class="token punctuation">:</span>
+                <span class="token keyword">continue</span>
+            infoDict <span class="token operator">=</span> <span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span>
+            soup <span class="token operator">=</span> BeautifulSoup<span class="token punctuation">(</span>html<span class="token punctuation">,</span> <span class="token string">'html.parser'</span><span class="token punctuation">)</span>
+            stockInfo <span class="token operator">=</span> soup<span class="token punctuation">.</span>find<span class="token punctuation">(</span><span class="token string">'div'</span><span class="token punctuation">,</span>attrs<span class="token operator">=</span><span class="token punctuation">&#123;</span><span class="token string">'class'</span><span class="token punctuation">:</span><span class="token string">'stock-bets'</span><span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
+ 
+            name <span class="token operator">=</span> stockInfo<span class="token punctuation">.</span>find_all<span class="token punctuation">(</span>attrs<span class="token operator">=</span><span class="token punctuation">&#123;</span><span class="token string">'class'</span><span class="token punctuation">:</span><span class="token string">'bets-name'</span><span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span>
+            infoDict<span class="token punctuation">.</span>update<span class="token punctuation">(</span><span class="token punctuation">&#123;</span><span class="token string">'股票名称'</span><span class="token punctuation">:</span> name<span class="token punctuation">.</span>text<span class="token punctuation">.</span>split<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
+             
+            keyList <span class="token operator">=</span> stockInfo<span class="token punctuation">.</span>find_all<span class="token punctuation">(</span><span class="token string">'dt'</span><span class="token punctuation">)</span>
+            valueList <span class="token operator">=</span> stockInfo<span class="token punctuation">.</span>find_all<span class="token punctuation">(</span><span class="token string">'dd'</span><span class="token punctuation">)</span>
+            <span class="token keyword">for</span> i <span class="token keyword">in</span> <span class="token builtin">range</span><span class="token punctuation">(</span><span class="token builtin">len</span><span class="token punctuation">(</span>keyList<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+                key <span class="token operator">=</span> keyList<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">.</span>text
+                val <span class="token operator">=</span> valueList<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">.</span>text
+                infoDict<span class="token punctuation">[</span>key<span class="token punctuation">]</span> <span class="token operator">=</span> val
+             
+            <span class="token keyword">with</span> <span class="token builtin">open</span><span class="token punctuation">(</span>fpath<span class="token punctuation">,</span> <span class="token string">'a'</span><span class="token punctuation">,</span> encoding<span class="token operator">=</span><span class="token string">'utf-8'</span><span class="token punctuation">)</span> <span class="token keyword">as</span> f<span class="token punctuation">:</span>
+                f<span class="token punctuation">.</span>write<span class="token punctuation">(</span> <span class="token builtin">str</span><span class="token punctuation">(</span>infoDict<span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token string">'\n'</span> <span class="token punctuation">)</span>
+                count <span class="token operator">=</span> count <span class="token operator">+</span> <span class="token number">1</span>
+                <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">"\r当前进度: &#123;:.2f&#125;%"</span><span class="token punctuation">.</span><span class="token builtin">format</span><span class="token punctuation">(</span>count<span class="token operator">*</span><span class="token number">100</span><span class="token operator">/</span><span class="token builtin">len</span><span class="token punctuation">(</span>lst<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">,</span>end<span class="token operator">=</span><span class="token string">""</span><span class="token punctuation">)</span>
+        <span class="token keyword">except</span><span class="token punctuation">:</span>
+            count <span class="token operator">=</span> count <span class="token operator">+</span> <span class="token number">1</span>
+            <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">"\r当前进度: &#123;:.2f&#125;%"</span><span class="token punctuation">.</span><span class="token builtin">format</span><span class="token punctuation">(</span>count<span class="token operator">*</span><span class="token number">100</span><span class="token operator">/</span><span class="token builtin">len</span><span class="token punctuation">(</span>lst<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">,</span>end<span class="token operator">=</span><span class="token string">""</span><span class="token punctuation">)</span>
+            <span class="token keyword">continue</span>
+
+<span class="token keyword">def</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+    stock_list_url <span class="token operator">=</span> <span class="token string">'http://quote.eastmoney.com/stocklist.html'</span>
+    stock_info_url <span class="token operator">=</span> <span class="token string">'https://gupiao.baidu.com/stock/'</span>
+    output_file <span class="token operator">=</span> <span class="token string">'D:/BaiduStockInfo.txt'</span>
+    slist<span class="token operator">=</span><span class="token punctuation">[</span><span class="token punctuation">]</span>
+    getStockList<span class="token punctuation">(</span>slist<span class="token punctuation">,</span> stock_list_url<span class="token punctuation">)</span>
+    getStockInfo<span class="token punctuation">(</span>slist<span class="token punctuation">,</span> stock_info_url<span class="token punctuation">,</span> output_file<span class="token punctuation">)</span>
+
+main<span class="token punctuation">(</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<pre><code>当前进度: 1.95%
+</code></pre></article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">Doraemonzzz</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="http://doraemonzzz.com/2018/05/27/%E5%8C%97%E7%90%86python%E7%88%AC%E8%99%ABWeek3/">http://doraemonzzz.com/2018/05/27/%E5%8C%97%E7%90%86python%E7%88%AC%E8%99%ABWeek3/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://doraemonzzz.com" target="_blank">Doraemonzzz</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E5%8C%97%E7%90%86Python%E7%88%AC%E8%99%ABmooc/">北理Python爬虫mooc</a></div><div class="post_share"><div class="social-share" data-image="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2018/05/28/%E6%B5%99%E5%A4%A7%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84Week10/"><img class="prev-cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">浙大数据结构Week10</div></div></a></div><div class="next-post pull-right"><a href="/2018/05/25/%E6%96%AF%E5%9D%A6%E7%A6%8FCS106A%E4%BD%9C%E4%B8%9A3/"><img class="next-cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">斯坦福CS106A作业3</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span> 相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2018/06/18/北理Python爬虫Week4/" title="北理Python爬虫Week4"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2018-06-18</div><div class="title">北理Python爬虫Week4</div></div></a></div><div><a href="/2018/07/01/北理Python爬虫课程总结/" title="北理Python爬虫课程总结"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2018-07-01</div><div class="title">北理Python爬虫课程总结</div></div></a></div><div><a href="/2018/05/13/北理Python爬虫Week1/" title="北理Python爬虫Week1"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2018-05-13</div><div class="title">北理Python爬虫Week1</div></div></a></div><div><a href="/2018/05/20/北理python爬虫Week2/" title="北理Python爬虫Week2"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2018-05-20</div><div class="title">北理Python爬虫Week2</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="card-info-avatar is-center"><img class="avatar-img" src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/><div class="author-info__name">Doraemonzzz</div><div class="author-info__description">个人博客，主要记录有关机器学习，数学以及计算机科学的笔记</div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">610</div></a></div><div class="card-info-data-item is-center"><a href="/tags/"><div class="headline">标签</div><div class="length-num">59</div></a></div><div class="card-info-data-item is-center"><a href="/categories/"><div class="headline">分类</div><div class="length-num">23</div></a></div></div><a class="button--animated" id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/Doraemonzzz" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="/doraemon_zzz@163.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn card-announcement-animation"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F%E7%9A%84%E6%A6%82%E5%BF%B5"><span class="toc-number">1.</span> <span class="toc-text">1.正则表达式的概念</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F%E7%9A%84%E5%B8%B8%E7%94%A8%E6%93%8D%E4%BD%9C%E7%AC%A6"><span class="toc-number">1.1.</span> <span class="toc-text">正则表达式的常用操作符</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-Re%E5%BA%93%E7%9A%84%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8"><span class="toc-number">2.</span> <span class="toc-text">2.Re库的基本使用</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Re%E5%BA%93%E4%B8%BB%E8%A6%81%E5%8A%9F%E8%83%BD%E5%87%BD%E6%95%B0"><span class="toc-number">2.1.</span> <span class="toc-text">Re库主要功能函数</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Re%E5%BA%93%E7%9A%84%E5%8F%A6%E4%B8%80%E7%A7%8D%E7%AD%89%E4%BB%B7%E7%94%A8%E6%B3%95"><span class="toc-number">2.2.</span> <span class="toc-text">Re库的另一种等价用法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Re%E5%BA%93%E7%9A%84Match%E5%AF%B9%E8%B1%A1"><span class="toc-number">2.3.</span> <span class="toc-text">Re库的Match对象</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Re%E5%BA%93%E7%9A%84%E8%B4%AA%E5%A9%AA%E5%8C%B9%E9%85%8D%E5%92%8C%E6%9C%80%E5%B0%8F%E5%8C%B9%E9%85%8D"><span class="toc-number">2.4.</span> <span class="toc-text">Re库的贪婪匹配和最小匹配</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E2%80%9C%E6%B7%98%E5%AE%9D%E5%95%86%E5%93%81%E6%AF%94%E4%BB%B7%E5%AE%9A%E5%90%91%E7%88%AC%E8%99%AB%E2%80%9D"><span class="toc-number">3.</span> <span class="toc-text">3.“淘宝商品比价定向爬虫”</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-%E8%82%A1%E7%A5%A8%E6%95%B0%E6%8D%AE%E5%AE%9A%E5%90%91%E7%88%AC%E8%99%AB"><span class="toc-number">4.</span> <span class="toc-text">4.股票数据定向爬虫</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2021/06/06/2021-6-6-%E7%AE%97%E6%B3%95%E6%A6%82%E8%AE%BA(DPV)%E4%B9%A0%E9%A2%98%E8%A7%A3%E7%AD%94%E2%80%94%E2%80%94%E7%AC%AC3%E7%AB%A0-%E5%9B%BE%E7%9A%84%E5%88%86%E8%A7%A3/" title="算法概论(DPV)习题解答——第3章 图的分解"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="算法概论(DPV)习题解答——第3章 图的分解"/></a><div class="content"><a class="title" href="/2021/06/06/2021-6-6-%E7%AE%97%E6%B3%95%E6%A6%82%E8%AE%BA(DPV)%E4%B9%A0%E9%A2%98%E8%A7%A3%E7%AD%94%E2%80%94%E2%80%94%E7%AC%AC3%E7%AB%A0-%E5%9B%BE%E7%9A%84%E5%88%86%E8%A7%A3/" title="算法概论(DPV)习题解答——第3章 图的分解">算法概论(DPV)习题解答——第3章 图的分解</a><time datetime="2021-06-06T14:35:00.000Z" title="发表于 2021-06-06 22:35:00">2021-06-06</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/06/06/2021-6-6-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E7%AC%AC5%E7%AB%A0-%E4%B9%A0%E9%A2%98%E8%A7%A3%E6%9E%90/" title="深入理解计算机系统 第5章 习题解析"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="深入理解计算机系统 第5章 习题解析"/></a><div class="content"><a class="title" href="/2021/06/06/2021-6-6-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E7%AC%AC5%E7%AB%A0-%E4%B9%A0%E9%A2%98%E8%A7%A3%E6%9E%90/" title="深入理解计算机系统 第5章 习题解析">深入理解计算机系统 第5章 习题解析</a><time datetime="2021-06-06T07:23:00.000Z" title="发表于 2021-06-06 15:23:00">2021-06-06</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/06/05/2021-6-5-Stanford-Compiler-PA5%E7%BF%BB%E8%AF%91/" title="Stanford Compiler PA5翻译"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Stanford Compiler PA5翻译"/></a><div class="content"><a class="title" href="/2021/06/05/2021-6-5-Stanford-Compiler-PA5%E7%BF%BB%E8%AF%91/" title="Stanford Compiler PA5翻译">Stanford Compiler PA5翻译</a><time datetime="2021-06-05T06:12:00.000Z" title="发表于 2021-06-05 14:12:00">2021-06-05</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/06/04/2021-6-4-Stanford-Compiler-PA4%E7%BF%BB%E8%AF%91/" title="Stanford Compiler PA4翻译"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Stanford Compiler PA4翻译"/></a><div class="content"><a class="title" href="/2021/06/04/2021-6-4-Stanford-Compiler-PA4%E7%BF%BB%E8%AF%91/" title="Stanford Compiler PA4翻译">Stanford Compiler PA4翻译</a><time datetime="2021-06-03T16:17:00.000Z" title="发表于 2021-06-04 00:17:00">2021-06-04</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/06/03/2021-6-3-%E5%B7%A7%E5%A6%99%E7%9A%84Y%E8%BF%90%E7%AE%97%E7%AC%A6/" title="巧妙的Y运算符"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="巧妙的Y运算符"/></a><div class="content"><a class="title" href="/2021/06/03/2021-6-3-%E5%B7%A7%E5%A6%99%E7%9A%84Y%E8%BF%90%E7%AE%97%E7%AC%A6/" title="巧妙的Y运算符">巧妙的Y运算符</a><time datetime="2021-06-03T00:54:00.000Z" title="发表于 2021-06-03 08:54:00">2021-06-03</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2021 By Doraemonzzz</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><div class="js-pjax"><script>if (!window.MathJax) {
+  window.MathJax = {
+    loader: {
+      source: {
+        '[tex]/amsCd': '[tex]/amscd'
+      }
+    },
+    tex: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]],
+      tags: 'ams'
+    },
+    options: {
+      renderActions: {
+        findScript: [10, doc => {
+          for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+            const display = !!node.type.match(/; *mode=display/)
+            const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+            const text = document.createTextNode('')
+            node.parentNode.replaceChild(text, node)
+            math.start = {node: text, delim: '', n: 0}
+            math.end = {node: text, delim: '', n: 0}
+            doc.math.push(math)
+          }
+        }, ''],
+        addClass: [200,() => {
+          document.querySelectorAll('mjx-container:not([display=\'true\']').forEach( node => {
+            const target = node.parentNode
+            if (!target.classList.contains('has-jax')) {
+              target.classList.add('mathjax-overflow')
+            }
+          })
+        }, '', false]
+      }
+    }
+  }
+  
+  const script = document.createElement('script')
+  script.src = 'https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js'
+  script.id = 'MathJax-script'
+  script.async = true
+  document.head.appendChild(script)
+} else {
+  MathJax.startup.document.state(0)
+  MathJax.texReset()
+  MathJax.typeset()
+}</script></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

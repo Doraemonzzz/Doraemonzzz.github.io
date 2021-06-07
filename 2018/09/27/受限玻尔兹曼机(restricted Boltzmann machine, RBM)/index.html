@@ -1,0 +1,363 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>受限玻尔兹曼机(Restricted Boltzmann Machines, RBM) | Doraemonzzz</title><meta name="keywords" content="Restricted Boltzmann Machines"><meta name="author" content="Doraemonzzz"><meta name="copyright" content="Doraemonzzz"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="Coursera上Hinton课程第12周内容为受限玻尔兹曼机，这一讲可以说是完全没听懂，网上中文的资料不够详尽，所以决定自己整理一份，主要是根据Youtube上一个视频及其课件整理。 参考资料如下： 视频地址： https:&#x2F;&#x2F;www.youtube.com&#x2F;watch?v&#x3D;FJ0z3Ubagt4 课件地址： https:&#x2F;&#x2F;uwaterloo.ca&#x2F;data-analytics&#x2F;sites&#x2F;c">
+<meta property="og:type" content="article">
+<meta property="og:title" content="受限玻尔兹曼机(Restricted Boltzmann Machines, RBM)">
+<meta property="og:url" content="http://doraemonzzz.com/2018/09/27/%E5%8F%97%E9%99%90%E7%8E%BB%E5%B0%94%E5%85%B9%E6%9B%BC%E6%9C%BA(restricted%20Boltzmann%20machine,%20RBM)/index.html">
+<meta property="og:site_name" content="Doraemonzzz">
+<meta property="og:description" content="Coursera上Hinton课程第12周内容为受限玻尔兹曼机，这一讲可以说是完全没听懂，网上中文的资料不够详尽，所以决定自己整理一份，主要是根据Youtube上一个视频及其课件整理。 参考资料如下： 视频地址： https:&#x2F;&#x2F;www.youtube.com&#x2F;watch?v&#x3D;FJ0z3Ubagt4 课件地址： https:&#x2F;&#x2F;uwaterloo.ca&#x2F;data-analytics&#x2F;sites&#x2F;c">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg">
+<meta property="article:published_time" content="2018-09-27T14:39:00.000Z">
+<meta property="article:modified_time" content="2018-09-28T09:19:04.000Z">
+<meta property="article:author" content="Doraemonzzz">
+<meta property="article:tag" content="Restricted Boltzmann Machines">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="http://doraemonzzz.com/2018/09/27/%E5%8F%97%E9%99%90%E7%8E%BB%E5%B0%94%E5%85%B9%E6%9B%BC%E6%9C%BA(restricted%20Boltzmann%20machine,%20RBM)/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"prismjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    jQuery: 'https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js',
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+    },
+    fancybox: {
+      js: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isanchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '受限玻尔兹曼机(Restricted Boltzmann Machines, RBM)',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2018-09-28 17:19:04'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    })(window)</script><meta name="generator" content="Hexo 5.4.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="author-avatar"><img class="avatar-img" src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">文章</div><div class="length-num">610</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">标签</div><div class="length-num">59</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/categories/"><div class="headline">分类</div><div class="length-num">23</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">Doraemonzzz</a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">受限玻尔兹曼机(Restricted Boltzmann Machines, RBM)</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2018-09-27T14:39:00.000Z" title="发表于 2018-09-27 22:39:00">2018-09-27</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2018-09-28T09:19:04.000Z" title="更新于 2018-09-28 17:19:04">2018-09-28</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/">机器学习</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="受限玻尔兹曼机(Restricted Boltzmann Machines, RBM)"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p>Coursera上Hinton课程第12周内容为受限玻尔兹曼机，这一讲可以说是完全没听懂，网上中文的资料不够详尽，所以决定自己整理一份，主要是根据Youtube上一个视频及其课件整理。</p>
+<p>参考资料如下：</p>
+<p>视频地址：</p>
+<p><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=FJ0z3Ubagt4">https://www.youtube.com/watch?v=FJ0z3Ubagt4</a></p>
+<p>课件地址：</p>
+<p><a target="_blank" rel="noopener" href="https://uwaterloo.ca/data-analytics/sites/ca.data-analytics/files/uploads/files/dbn2.pdf">https://uwaterloo.ca/data-analytics/sites/ca.data-analytics/files/uploads/files/dbn2.pdf</a></p>
+<p>课程主页：</p>
+<p><a target="_blank" rel="noopener" href="https://uwaterloo.ca/data-analytics/deep-learning">https://uwaterloo.ca/data-analytics/deep-learning</a></p>
+<span id="more"></span>
+<h4 id="受限玻尔兹曼机介绍"><a href="#受限玻尔兹曼机介绍" class="headerlink" title="受限玻尔兹曼机介绍"></a>受限玻尔兹曼机介绍</h4><p>受限玻尔兹曼机是非监督学习算法，它是最常见的一些深度概率模型的构建块，包含一层可观察变量以及一层潜在变量的无向的的概率图形模型，可以用下图表示：</p>
+<p><img src="https://github.com/Doraemonzzz/md-photo/blob/master/Deep%20Learning/Restricted%20Boltzmann%20Machines/2018092701.png?raw=true" alt=""></p>
+<p>上图$v$为可见层（输入层），$h$为隐藏层，输入层一般是二进制数，我们后面只讨论二进制的输入，而之所以叫它“受限”玻尔兹曼机，是因为可见层内部以及隐藏层内部之间的节点没有连接。</p>
+<h4 id="受限玻尔兹曼机模型"><a href="#受限玻尔兹曼机模型" class="headerlink" title="受限玻尔兹曼机模型"></a>受限玻尔兹曼机模型</h4><p>接下来我们来看具体模型：</p>
+<script type="math/tex; mode=display">
+p(v,h) =  \frac 1 Z  \exp\Big(-E (v,h)\Big)</script><p>其中$E (v,h)$是能量函数，定义如下:</p>
+<script type="math/tex; mode=display">
+E (v,h) = -b^Tv - c^Th -v^TWh</script><p>$Z$为正规化函数(使得概率和为$1$)，定义如下：</p>
+<script type="math/tex; mode=display">
+Z = \sum_v  \sum_h  \exp\Big(-E (v,h)\Big)</script><p>我们先来从直观上理解下这部分的内容，我们的目的肯定是极大化概率似然函数$\prod p(v,h)$，而概率有如下定义：</p>
+<script type="math/tex; mode=display">
+p(v,h) =  \frac 1 Z  \exp\Big(-E (v,h)\Big)</script><p>所以我们希望$-E (v,h)$尽可能地大，换句话说，我们希望能量$E (v,h)$尽可能地小，将能量中的点积写成求和式：</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+E (v,h)& = -b^Tv - c^Th -v^TWh\\
+&= -\sum_k b_kv_k - \sum_j c_jh_j -\sum_j \sum_k W_{jk}h_jv_k
+\end{aligned}</script><p>如果$b_k&gt;0$，因为$v_k \in \{0,1\}$，那么要使得能量最小，我们更希望$v_k=1$；反之如果$b_k&lt;0$，我们更希望$v_k=0$。用同样的方式对$b_j,W_{jk}$进行分析，总结如下：</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>系数的情形</th>
+<th>我们倾向的选择</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>$b_k&gt;0$</td>
+<td>$v_k=1$</td>
+</tr>
+<tr>
+<td>$b_k&lt;0$</td>
+<td>$v_k=0$</td>
+</tr>
+<tr>
+<td>$c_j&gt;0$</td>
+<td>$h_j =1$</td>
+</tr>
+<tr>
+<td>$c_j&lt;0$</td>
+<td>$h_j =0$</td>
+</tr>
+<tr>
+<td>$W_{jk} &gt; 0$</td>
+<td>$h_jv_k =1$</td>
+</tr>
+<tr>
+<td>$W_{jk} &lt; 0$</td>
+<td>$h_jv_k =0$</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h4 id="算法"><a href="#算法" class="headerlink" title="算法"></a>算法</h4><h5 id="条件独立性"><a href="#条件独立性" class="headerlink" title="条件独立性"></a>条件独立性</h5><p>接着考虑如何最大化$\prod p(v,h)$，这个式子中有$Z$，而$Z$是指数的求和，不大好处理，所以我们不优化这个式子，考虑条件概率$p(h|v)$</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+p(h|v)
+&=\frac{p(h,v)}{p(v)}\\
+&= \frac{ \frac 1 Z  \exp\Big(-E (v,h)\Big)}{ \sum_h \frac 1 Z  \exp\Big(-E (v,h)\Big)}\\
+&=\frac{  \exp\Big(-E (v,h)\Big)}{ \sum_h   \exp\Big(-E (v,h)\Big)}\\
+&=\frac{  \exp\Big( b^Tv + c^Th +v^TWh \Big)}{ \sum_h   \exp\Big( b^Tv + c^Th +v^TWh \Big)} \\
+&= \frac{\exp \Big( b^Tv \Big)\exp\Big(  c^Th +v^TWh \Big)}{\exp \Big( b^Tv \Big) \sum_h   \exp\Big(  c^Th +v^TWh \Big)}\\
+&= \frac{\exp\Big(  c^Th +v^TWh \Big)}{\sum_h   \exp\Big(  c^Th +v^TWh \Big)}\\
+&= \frac{\exp\Big( \sum_j c_jh_j +\sum_j  v^T W_{:j}h_j \Big)}{Z^{'}}\\
+&= \frac{1}{Z^{'}} \prod_{j=1}^n  \exp \Big( c_jh_j +v^T W_{:j}h_j \Big)
+\end{aligned}\\
+这里Z^{'}=\sum_h   \exp\Big(  c^Th +v^TWh \Big),W_{:j}是W的第j列</script><p>注意$Z^{‘}$是常数，上式将概率分解为有关$h_1,…,h_n$项的乘积，所以这个式子告诉我们$p(h_1|v),…,p(h_n|v)$条件独立：</p>
+<script type="math/tex; mode=display">
+p(h|v) =\prod _{j=1}^n p(h_j|v)</script><p>并且</p>
+<script type="math/tex; mode=display">
+p(h_j|v) \propto \exp \Big( c_jh_j +v^T W_{:j}h_j \Big)</script><p>我们利用上式计算$p(h_j=1|v),p(h_j=0|v)$</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+p(h_j=1|v)
+&= \frac{p(h_j=1,v)}{p(v)}\\
+&= \frac{p(h_j=1,v)}{p(h_j=0,v)+p(h_j=1,v)}\\
+&= \frac{ \exp \Big( c_j +v^T W_{:j} \Big)}{\exp(0)+\exp \Big( c_j +v^T W_{:j} \Big) }\\
+&= \text{sigmoid} (c_j +v^TW_{:j})
+\end{aligned}</script><script type="math/tex; mode=display">
+\begin{aligned}
+p(h_j=0|v)
+&= 1-p(h_j=1|v) \\ 
+&= 1 -  \text{sigmoid} (c_j +v^TW_{:j})
+\end{aligned}</script><p>其中</p>
+<script type="math/tex; mode=display">
+ \text{sigmoid}(z) = \frac{1}{1+e^{-z}}</script><p>由$v,h$的对称性，同理可得</p>
+<script type="math/tex; mode=display">
+p(v|h) = \prod _{i=1}^n p(v_i|h)\\
+p(v_i=1|h) = \text{sigmoid} (b_i +W_{i:}h) \\
+p(v_i=0|h) =1- \text{sigmoid} (b_i +W_{i:}h)\\
+其中W_{i:}表示W的第i行</script><h5 id="RBM-Gibbs-Sampling"><a href="#RBM-Gibbs-Sampling" class="headerlink" title="RBM Gibbs Sampling"></a>RBM Gibbs Sampling</h5><p>根据条件独立性，可以得到如下取样的方法：</p>
+<p>Step 1:取样$h^{(l)} ∼ P(h|v^{(l)} )$</p>
+<p>由条件独立性，我们可以在给定$v^{(l)}$的条件下同时并且独立的对$h^{(l)}$中的每个元素取样。</p>
+<p>Step 2:取样$v^{(l+1)} ∼ P(v|h^{(l)} )$</p>
+<p>由条件独立性，我们可以在给定$h^{(l)}$的条件下同时并且独立的对$v^{(l+1)}$中的每个元素取样。</p>
+<p>这种取样方法叫做Gibbs Sampling</p>
+<h5 id="训练受限玻尔兹曼机"><a href="#训练受限玻尔兹曼机" class="headerlink" title="训练受限玻尔兹曼机"></a>训练受限玻尔兹曼机</h5><p>这里考虑如何训练受限玻尔兹曼机，我们的目标肯定是极大化概率似然函数，或者等价地，极大化对数概率似然函数，我们进行如下处理：</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+\ell (W,b,c) 
+&= \sum_{t=1}^n \log P(v^{(t)})\\
+&= \sum_{t=1}^n  \log  \sum _h P(v^{(t)},h)\\
+&=   \sum_{t=1}^n  \log  \sum _h  \frac 1 Z  \exp\Big(-E (v^{(t)},h)\Big)\\
+&=  \sum_{t=1}^n  \log   \frac 1 Z  \sum _h  \exp\Big(-E (v^{(t)},h)\Big)\\
+&=  \sum_{t=1}^n  \log  \sum _h  \exp\Big(-E (v^{(t)},h)\Big) -  \sum_{t=1}^n  \log  Z\\
+&=  \sum_{t=1}^n  \log  \sum _h  \exp\Big(-E (v^{(t)},h)\Big) - n  \log  Z\\
+&=  \sum_{t=1}^n  \log  \sum _h  \exp\Big(-E (v^{(t)},h)\Big) - n  \log   \sum _{v,h}  \exp\Big(-E (v,h)\Big)\\
+\end{aligned}</script><p>令$\theta =\{b,c,W\}$，我们来对上式关于$\theta $求梯度</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+\nabla_\theta \ell (W,b,c) 
+&=\nabla_\theta\sum_{t=1}^n  \log  \sum _h  \exp\Big(-E (v^{(t)},h)\Big) - n  \nabla_\theta\log   \sum _{v,h}  \exp\Big(-E (v,h)\Big)\\
+&=\sum_{t=1}^n \frac{\nabla_\theta  \sum _h \exp\Big(-E (v^{(t)},h)\Big)}{ \sum _h  \exp\Big(-E (v^{(t)},h)\Big)} - n\frac{\nabla_\theta \sum _{v,h} \exp\Big(-E (v,h)\Big)}{ \sum _{v,h} \exp\Big(-E (v,h)\Big)}\\
+&=\sum_{t=1}^n \frac{ \sum _h \exp\Big(-E (v^{(t)},h)\Big) \nabla_\theta \Big( -E (v^{(t)},h)\Big)}{ \sum _h  \exp\Big(-E (v^{(t)},h)\Big)}
+- n\frac{  \sum _{v,h}\exp\Big(-E (v,h)\Big)\nabla_\theta \Big( -E (v,h)\Big)}{ \sum _{v,h}\exp\Big(-E (v,h)\Big)}\
+\end{aligned}</script><p>注意$ P(h|v^{(t)})=\frac{ \ \exp\Big(-E (v^{(t)},h)\Big) }{ \sum _h  \exp\Big(-E (v^{(t)},h)\Big)},P(h,v) = \frac{  \exp\Big(-E (v,h)\Big)}{ \sum _{v,h}\exp\Big(-E (v,h)\Big)}$，所以上述两项都可以看成随机变量的期望，所以可以写成如下形式：</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+\nabla_\theta \ell (W,b,c) 
+&= \sum_{t=1}^n \mathbb E_{P(h|v^{(t)})}\Big[ \nabla_\theta \Big( -E (v^{(t)},h)\Big)\Big] - n \mathbb E_{P(h,v)}\Big[ \nabla_\theta \Big( -E (v,h)\Big)\Big]
+\end{aligned}</script><p>第一项可以理解关于data的，第二项可以理解为关于model的。</p>
+<p>我们利用能量的定义分别对上式再进行处理</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+\nabla_W \Big( -E (v,h)\Big) 
+&= \frac{\partial}{\partial W} \Big(b^Tv + c^Th +v^TWh\Big)\\
+&= hv^T
+\end{aligned}\\
+\begin{aligned}
+\nabla_b \Big( -E (v,h)\Big) 
+&= \frac{\partial}{\partial b} \Big(b^Tv + c^Th +v^TWh\Big)\\
+&= v
+\end{aligned}\\
+\begin{aligned}
+\nabla_c \Big( -E (v,h)\Big) 
+&= \frac{\partial}{\partial c} \Big(b^Tv + c^Th +v^TWh\Big)\\
+&=h
+\end{aligned}</script><p>记</p>
+<script type="math/tex; mode=display">
+\hat  h^{(t)} = \mathbb E_{P(h|v^{(t)})}[h] =P(h=1|v^{(t)})= \text{sigmoid}(c+{v^{(t)}}^TW)</script><p>带入上式可得</p>
+<script type="math/tex; mode=display">
+\nabla_W \ell (W,b,c) = \sum_{t=1}^n \hat h^{(t)}{v^{(t)}}^T - n \mathbb E_{P(h,v)}[ hv^T] \\
+\nabla_b \ell (W,b,c) = \sum_{t=1}^n {v^{(t)}}^T - n \mathbb E_{P(h,v)}[ v] \\
+\nabla_c \ell (W,b,c) = \sum_{t=1}^n  \hat h^{(t)} - n \mathbb E_{P(h,v)}[ h]</script><p>但是注意$\mathbb E_{P(h,v)}\Big[ \nabla_\theta \Big( -E (v,h)\Big)\Big]$依旧涉及到$Z = \sum_v  \sum_h  \exp\Big(-E (v,h)\Big)$，非常难计算，所以实际上我们会用如下近似：</p>
+<script type="math/tex; mode=display">
+\mathbb E_{P(h,v)}\Big[ \nabla_\theta \Big( -E (v,h)\Big)\Big] \approx \nabla_\theta \Big( -E (v,h)\Big) \Big| _{v=\hat v ,h=\hat h}</script><p>对上述式子运用此近似可得</p>
+<script type="math/tex; mode=display">
+\nabla_W \ell (W,b,c) \approx \sum_{t=1}^n h(v^{(t)}){v^{(t)}}^T - n  h(\tilde v ) \tilde v ^T \\
+\nabla_b \ell (W,b,c) \approx \sum_{t=1}^n {v^{(t)}}^T - n \tilde v \\
+\nabla_c \ell (W,b,c) \approx \sum_{t=1}^n  h(v^{(t)}) - n h(\tilde v )</script><p>实际中我们会使用随机梯度，所以更新式如下</p>
+<script type="math/tex; mode=display">
+W = W+  \alpha \Big( h(v^{(t)}){v^{(t)}}^T -   h(\tilde v ) \tilde v ^T\Big) \\
+b= b+  \alpha \Big(   h(v^{(t)})  - h(\tilde v )\Big) \\
+c = c+ \alpha \Big(   v^{(t)}  -\tilde v\Big)</script><p>注意这里之所以使用加号是因为这里要最大化目标和函数，所以使用梯度上升。</p>
+<h5 id="算法总结"><a href="#算法总结" class="headerlink" title="算法总结"></a>算法总结</h5><p>把上述内容总结起来，就可以得到如下算法：</p>
+<ol>
+<li><p>对每个训练数据$v^{(t)}$</p>
+<p>i.从$v^{(t)}$开始使用$k$步Gibbs Sampling生成样本$\tilde v$</p>
+<p>ii.更新参数</p>
+<script type="math/tex; mode=display">
+W = W+  \alpha \Big( h(v^{(t)}){v^{(t)}}^T -   h(\tilde v ) \tilde v ^T\Big) \\
+b= b+  \alpha \Big(   h(v^{(t)})  - h(\tilde v )\Big) \\
+c = c+ \alpha \Big(   v^{(t)}  -\tilde v\Big)</script></li>
+<li><p>返回至1直至停止条件满足</p>
+</li>
+</ol>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">Doraemonzzz</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="http://doraemonzzz.com/2018/09/27/%E5%8F%97%E9%99%90%E7%8E%BB%E5%B0%94%E5%85%B9%E6%9B%BC%E6%9C%BA(restricted%20Boltzmann%20machine,%20RBM)/">http://doraemonzzz.com/2018/09/27/%E5%8F%97%E9%99%90%E7%8E%BB%E5%B0%94%E5%85%B9%E6%9B%BC%E6%9C%BA(restricted%20Boltzmann%20machine,%20RBM)/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://doraemonzzz.com" target="_blank">Doraemonzzz</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/Restricted-Boltzmann-Machines/">Restricted Boltzmann Machines</a></div><div class="post_share"><div class="social-share" data-image="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2018/09/28/Neural%20Networks%20for%20Machine%20Learning%20Lecture%2012/"><img class="prev-cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">Neural Networks for Machine Learning Lecture 12</div></div></a></div><div class="next-post pull-right"><a href="/2018/09/27/%E6%96%AF%E5%9D%A6%E7%A6%8F%E7%AE%97%E6%B3%95%E4%B8%93%E9%A1%B9%E8%AF%BE%E7%A8%8BCourse1%20week3%E4%B9%A0%E9%A2%98%E8%A7%A3%E6%9E%90/"><img class="next-cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">斯坦福算法专项课程Course1 week3习题解析</div></div></a></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="card-info-avatar is-center"><img class="avatar-img" src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/><div class="author-info__name">Doraemonzzz</div><div class="author-info__description">个人博客，主要记录有关机器学习，数学以及计算机科学的笔记</div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">610</div></a></div><div class="card-info-data-item is-center"><a href="/tags/"><div class="headline">标签</div><div class="length-num">59</div></a></div><div class="card-info-data-item is-center"><a href="/categories/"><div class="headline">分类</div><div class="length-num">23</div></a></div></div><a class="button--animated" id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/Doraemonzzz" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="/doraemon_zzz@163.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn card-announcement-animation"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8F%97%E9%99%90%E7%8E%BB%E5%B0%94%E5%85%B9%E6%9B%BC%E6%9C%BA%E4%BB%8B%E7%BB%8D"><span class="toc-number">1.</span> <span class="toc-text">受限玻尔兹曼机介绍</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8F%97%E9%99%90%E7%8E%BB%E5%B0%94%E5%85%B9%E6%9B%BC%E6%9C%BA%E6%A8%A1%E5%9E%8B"><span class="toc-number">2.</span> <span class="toc-text">受限玻尔兹曼机模型</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%AE%97%E6%B3%95"><span class="toc-number">3.</span> <span class="toc-text">算法</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%9D%A1%E4%BB%B6%E7%8B%AC%E7%AB%8B%E6%80%A7"><span class="toc-number">3.1.</span> <span class="toc-text">条件独立性</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#RBM-Gibbs-Sampling"><span class="toc-number">3.2.</span> <span class="toc-text">RBM Gibbs Sampling</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E8%AE%AD%E7%BB%83%E5%8F%97%E9%99%90%E7%8E%BB%E5%B0%94%E5%85%B9%E6%9B%BC%E6%9C%BA"><span class="toc-number">3.3.</span> <span class="toc-text">训练受限玻尔兹曼机</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E7%AE%97%E6%B3%95%E6%80%BB%E7%BB%93"><span class="toc-number">3.4.</span> <span class="toc-text">算法总结</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2021/06/06/2021-6-6-%E7%AE%97%E6%B3%95%E6%A6%82%E8%AE%BA(DPV)%E4%B9%A0%E9%A2%98%E8%A7%A3%E7%AD%94%E2%80%94%E2%80%94%E7%AC%AC3%E7%AB%A0-%E5%9B%BE%E7%9A%84%E5%88%86%E8%A7%A3/" title="算法概论(DPV)习题解答——第3章 图的分解"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="算法概论(DPV)习题解答——第3章 图的分解"/></a><div class="content"><a class="title" href="/2021/06/06/2021-6-6-%E7%AE%97%E6%B3%95%E6%A6%82%E8%AE%BA(DPV)%E4%B9%A0%E9%A2%98%E8%A7%A3%E7%AD%94%E2%80%94%E2%80%94%E7%AC%AC3%E7%AB%A0-%E5%9B%BE%E7%9A%84%E5%88%86%E8%A7%A3/" title="算法概论(DPV)习题解答——第3章 图的分解">算法概论(DPV)习题解答——第3章 图的分解</a><time datetime="2021-06-06T14:35:00.000Z" title="发表于 2021-06-06 22:35:00">2021-06-06</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/06/06/2021-6-6-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E7%AC%AC5%E7%AB%A0-%E4%B9%A0%E9%A2%98%E8%A7%A3%E6%9E%90/" title="深入理解计算机系统 第5章 习题解析"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="深入理解计算机系统 第5章 习题解析"/></a><div class="content"><a class="title" href="/2021/06/06/2021-6-6-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E7%AC%AC5%E7%AB%A0-%E4%B9%A0%E9%A2%98%E8%A7%A3%E6%9E%90/" title="深入理解计算机系统 第5章 习题解析">深入理解计算机系统 第5章 习题解析</a><time datetime="2021-06-06T07:23:00.000Z" title="发表于 2021-06-06 15:23:00">2021-06-06</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/06/05/2021-6-5-Stanford-Compiler-PA5%E7%BF%BB%E8%AF%91/" title="Stanford Compiler PA5翻译"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Stanford Compiler PA5翻译"/></a><div class="content"><a class="title" href="/2021/06/05/2021-6-5-Stanford-Compiler-PA5%E7%BF%BB%E8%AF%91/" title="Stanford Compiler PA5翻译">Stanford Compiler PA5翻译</a><time datetime="2021-06-05T06:12:00.000Z" title="发表于 2021-06-05 14:12:00">2021-06-05</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/06/04/2021-6-4-Stanford-Compiler-PA4%E7%BF%BB%E8%AF%91/" title="Stanford Compiler PA4翻译"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Stanford Compiler PA4翻译"/></a><div class="content"><a class="title" href="/2021/06/04/2021-6-4-Stanford-Compiler-PA4%E7%BF%BB%E8%AF%91/" title="Stanford Compiler PA4翻译">Stanford Compiler PA4翻译</a><time datetime="2021-06-03T16:17:00.000Z" title="发表于 2021-06-04 00:17:00">2021-06-04</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/06/03/2021-6-3-%E5%B7%A7%E5%A6%99%E7%9A%84Y%E8%BF%90%E7%AE%97%E7%AC%A6/" title="巧妙的Y运算符"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="巧妙的Y运算符"/></a><div class="content"><a class="title" href="/2021/06/03/2021-6-3-%E5%B7%A7%E5%A6%99%E7%9A%84Y%E8%BF%90%E7%AE%97%E7%AC%A6/" title="巧妙的Y运算符">巧妙的Y运算符</a><time datetime="2021-06-03T00:54:00.000Z" title="发表于 2021-06-03 08:54:00">2021-06-03</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2021 By Doraemonzzz</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><div class="js-pjax"><script>if (!window.MathJax) {
+  window.MathJax = {
+    loader: {
+      source: {
+        '[tex]/amsCd': '[tex]/amscd'
+      }
+    },
+    tex: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]],
+      tags: 'ams'
+    },
+    options: {
+      renderActions: {
+        findScript: [10, doc => {
+          for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+            const display = !!node.type.match(/; *mode=display/)
+            const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+            const text = document.createTextNode('')
+            node.parentNode.replaceChild(text, node)
+            math.start = {node: text, delim: '', n: 0}
+            math.end = {node: text, delim: '', n: 0}
+            doc.math.push(math)
+          }
+        }, ''],
+        addClass: [200,() => {
+          document.querySelectorAll('mjx-container:not([display=\'true\']').forEach( node => {
+            const target = node.parentNode
+            if (!target.classList.contains('has-jax')) {
+              target.classList.add('mathjax-overflow')
+            }
+          })
+        }, '', false]
+      }
+    }
+  }
+  
+  const script = document.createElement('script')
+  script.src = 'https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js'
+  script.id = 'MathJax-script'
+  script.async = true
+  document.head.appendChild(script)
+} else {
+  MathJax.startup.document.state(0)
+  MathJax.texReset()
+  MathJax.typeset()
+}</script></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

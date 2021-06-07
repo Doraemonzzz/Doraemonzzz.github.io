@@ -1,0 +1,645 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Stanford Compiler Week 9 Garbage Collection | Doraemonzzz</title><meta name="keywords" content="斯坦福大学编译原理"><meta name="author" content="Doraemonzzz"><meta name="copyright" content="Doraemonzzz"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="课程主页： https:&#x2F;&#x2F;www.edx.org&#x2F;course&#x2F;compilers 课程视频： https:&#x2F;&#x2F;www.bilibili.com&#x2F;video&#x2F;BV1NE411376V?p&#x3D;20&amp;t&#x3D;6 备注： 图片均来自于课件。 这次回顾垃圾回收。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Stanford Compiler Week 9 Garbage Collection">
+<meta property="og:url" content="http://doraemonzzz.com/2021/05/26/2021-5-26-Stanford-Compiler-Week-9-Garbage-Collection/index.html">
+<meta property="og:site_name" content="Doraemonzzz">
+<meta property="og:description" content="课程主页： https:&#x2F;&#x2F;www.edx.org&#x2F;course&#x2F;compilers 课程视频： https:&#x2F;&#x2F;www.bilibili.com&#x2F;video&#x2F;BV1NE411376V?p&#x3D;20&amp;t&#x3D;6 备注： 图片均来自于课件。 这次回顾垃圾回收。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg">
+<meta property="article:published_time" content="2021-05-26T15:45:00.000Z">
+<meta property="article:modified_time" content="2021-05-26T17:02:05.236Z">
+<meta property="article:author" content="Doraemonzzz">
+<meta property="article:tag" content="斯坦福大学编译原理">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="http://doraemonzzz.com/2021/05/26/2021-5-26-Stanford-Compiler-Week-9-Garbage-Collection/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"prismjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    jQuery: 'https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js',
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+    },
+    fancybox: {
+      js: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isanchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'Stanford Compiler Week 9 Garbage Collection',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2021-05-27 01:02:05'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    })(window)</script><meta name="generator" content="Hexo 5.4.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="author-avatar"><img class="avatar-img" src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">文章</div><div class="length-num">610</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">标签</div><div class="length-num">59</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/categories/"><div class="headline">分类</div><div class="length-num">23</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">Doraemonzzz</a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">Stanford Compiler Week 9 Garbage Collection</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2021-05-26T15:45:00.000Z" title="发表于 2021-05-26 23:45:00">2021-05-26</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2021-05-26T17:02:05.236Z" title="更新于 2021-05-27 01:02:05">2021-05-27</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/">编译原理</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="Stanford Compiler Week 9 Garbage Collection"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p>课程主页：</p>
+<p><a target="_blank" rel="noopener" href="https://www.edx.org/course/compilers">https://www.edx.org/course/compilers</a></p>
+<p>课程视频：</p>
+<p><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1NE411376V?p=20&amp;t=6">https://www.bilibili.com/video/BV1NE411376V?p=20&amp;t=6</a></p>
+<p>备注：</p>
+<p>图片均来自于课件。</p>
+<p>这次回顾垃圾回收。</p>
+<span id="more"></span>
+<h3 id="自动内存管理"><a href="#自动内存管理" class="headerlink" title="自动内存管理"></a>自动内存管理</h3><ul>
+<li>在现代编程中，存储管理仍然是一个难题</li>
+<li>C和C++程序有很多存储错误<ul>
+<li>忘记释放未使用的内存</li>
+<li>取消引用悬空指针（dereferencing a dangling pointer）</li>
+<li>意外覆盖部分数据结构</li>
+<li>等等…</li>
+</ul>
+</li>
+<li>很难找到存储错误<ul>
+<li>但错误可能会导致明显的影响。</li>
+</ul>
+</li>
+</ul>
+<h4 id="历史"><a href="#历史" class="headerlink" title="历史"></a>历史</h4><ul>
+<li>这是一个老问题：<ul>
+<li>自1950年代开始对LISP进行研究。</li>
+</ul>
+</li>
+<li>有众所周知的全自动内存管理技术；</li>
+<li>随着Java的流行而成为主流。</li>
+</ul>
+<h4 id="内存管理动机"><a href="#内存管理动机" class="headerlink" title="内存管理动机"></a>内存管理动机</h4><ul>
+<li><p>创建对象时，将自动分配未使用的空间。</p>
+<ul>
+<li>在Cool中，新的对象由new创建。</li>
+</ul>
+</li>
+<li><p>一段时间后，不再有未使用的空间。</p>
+</li>
+<li><p>一些空间将被不再使用的对象占据。</p>
+<ul>
+<li>此空间可以释放以供以后重用。</li>
+</ul>
+</li>
+<li><p>我们如何知道某个对象将“不再使用”？</p>
+</li>
+<li><p>观察：程序只能使用可以找到的对象：</p>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java">let x <span class="token operator">:</span> <span class="token class-name">A</span> <span class="token operator">&lt;</span><span class="token operator">-</span> <span class="token keyword">new</span> <span class="token class-name">A</span> in <span class="token punctuation">&#123;</span> x <span class="token operator">&lt;</span><span class="token operator">-</span> y<span class="token punctuation">;</span> <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span> <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>赋值后，y无法被找到。</p>
+</li>
+<li><p>当且仅当满足以下条件时，对象x才可达：</p>
+<ul>
+<li>一个寄存器包含指向x的指针；</li>
+<li>另一个可达对象y包含一个指向x的指针。</li>
+</ul>
+</li>
+<li><p>您可以通过从寄存器开始并跟随所有指针来找到所有可访问的对象。</p>
+</li>
+<li><p>无法到达的对象永远不会被使用</p>
+<ul>
+<li>这样的对象是垃圾（garbage）</li>
+</ul>
+</li>
+</ul>
+<h4 id="例子"><a href="#例子" class="headerlink" title="例子"></a>例子</h4><ul>
+<li><p>考虑程序</p>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java">x <span class="token operator">&lt;</span><span class="token operator">-</span> <span class="token keyword">new</span> <span class="token class-name">A</span><span class="token punctuation">;</span>
+y <span class="token operator">&lt;</span><span class="token operator">-</span> <span class="token keyword">new</span> <span class="token class-name">B</span><span class="token punctuation">;</span>
+x <span class="token operator">&lt;</span><span class="token operator">-</span> y<span class="token punctuation">;</span>
+<span class="token keyword">if</span> <span class="token function">alwaysTrue</span><span class="token punctuation">(</span><span class="token punctuation">)</span> then x <span class="token operator">&lt;</span><span class="token operator">-</span> <span class="token keyword">new</span> <span class="token class-name">A</span> <span class="token keyword">else</span> x<span class="token punctuation">.</span><span class="token function">foo</span><span class="token punctuation">(</span><span class="token punctuation">)</span> fi<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+<p>y是dead。</p>
+</li>
+<li><p>在x &lt;- y之后（假设y在此处死亡）</p>
+<ul>
+<li>第一个对象A不可到达；</li>
+<li>对象B可到达（通过x）；</li>
+<li>因此，B不是垃圾也不会被回收<ul>
+<li>但永远不会使用对象B，根据判断分支</li>
+</ul>
+</li>
+<li>可达是一种近似。</li>
+</ul>
+</li>
+</ul>
+<h4 id="Cool中的内存管理"><a href="#Cool中的内存管理" class="headerlink" title="Cool中的内存管理"></a>Cool中的内存管理</h4><p>Coolc使用</p>
+<ul>
+<li>累加器<ul>
+<li>它指向一个对象；</li>
+<li>并且此对象可能指向其他对象，等等。</li>
+</ul>
+</li>
+<li><p>和堆栈指针</p>
+<ul>
+<li><p>每个堆栈帧都包含指针</p>
+<ul>
+<li>例如方法参数</li>
+</ul>
+</li>
+<li><p>每个堆栈帧还包含非指针</p>
+<ul>
+<li>例如返回地址</li>
+</ul>
+</li>
+<li><p>如果我们知道栈帧的布局，则可以在其中找到指针</p>
+<p><img src="https://github.com/Doraemonzzz/md-photo/blob/master/Compiler/Week9%20P1/2021052701.jpg?raw=true" alt=""></p>
+</li>
+</ul>
+</li>
+</ul>
+<h4 id="acc和SP"><a href="#acc和SP" class="headerlink" title="acc和SP"></a>acc和SP</h4><p><img src="https://github.com/Doraemonzzz/md-photo/blob/master/Compiler/Week9%20P1/2021052702.jpg?raw=true" alt=""></p>
+<ul>
+<li>在coolc中，我们开始从acc和堆栈进行跟踪<ul>
+<li>这些是roots</li>
+</ul>
+</li>
+<li>注释B和D无法通过acc和堆栈访问<ul>
+<li>因此，我们可以复用它们的存储</li>
+</ul>
+</li>
+</ul>
+<h4 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h4><ul>
+<li>每个垃圾回收方案都有以下步骤<ul>
+<li>1.根据需要为新对象分配空间</li>
+<li>2.当空间用完时：<ul>
+<li>a）计算可能再次使用的对象（通常是通过跟踪一组“root”寄存器可访问的对象）；</li>
+<li>b）释放（a）中找不到的对象使用的空间。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>一些策略会在空间实际用完之前执行垃圾回收</li>
+</ul>
+<h3 id="标记和清除"><a href="#标记和清除" class="headerlink" title="标记和清除"></a>标记和清除</h3><ul>
+<li>当内存用完时，GC执行两个阶段<ul>
+<li>标记阶段：跟踪可到达的对象；</li>
+<li>清除阶段：收集垃圾对象。</li>
+</ul>
+</li>
+<li>每个对象都有一个额外的位：标记位<ul>
+<li>保留用于内存管理；</li>
+<li>最初的标记位为0；</li>
+<li>在标记阶段将可达对象的标记为设置为1。</li>
+</ul>
+</li>
+</ul>
+<h4 id="标记阶段伪代码"><a href="#标记阶段伪代码" class="headerlink" title="标记阶段伪代码"></a>标记阶段伪代码</h4><ul>
+<li>$\mathrm{//\text{mark phase}}$</li>
+<li>$\text{let todo = {all roots}}$</li>
+<li>$\mathrm{while\ todo\neq \varnothing\ do}$<ul>
+<li>$\mathrm{pick\ v \in todo}$</li>
+<li>$\mathrm{todo \to todo - \{ v \} }$</li>
+<li>$\text{if mark(v) = 0 then}\quad \text{// v is unmarked yet}$<ul>
+<li>$\mathrm{mark(v)\leftarrow 1}$</li>
+<li>$\mathrm{let\ v_1,…,v_n\ be\ the\ pointers\ contained\ in\ v}$</li>
+<li>$\mathrm{todo \leftarrow todo \cup \{v_1,…,v_n\}} $</li>
+</ul>
+</li>
+<li>$\mathrm{fi}$</li>
+</ul>
+</li>
+<li>$\mathrm{od}$</li>
+</ul>
+<h4 id="扫描阶段"><a href="#扫描阶段" class="headerlink" title="扫描阶段"></a>扫描阶段</h4><ul>
+<li>扫描阶段扫描堆以查找标记位为0的对象<ul>
+<li>在标记阶段未访问这些对象；</li>
+<li>所以他们是垃圾。</li>
+</ul>
+</li>
+<li>任何此类对象均已添加到free列表中；</li>
+<li>标记位为1的对象将其标记位重置为0。</li>
+</ul>
+<p>伪代码</p>
+<ul>
+<li>$\text{// sweep phase}$</li>
+<li>$\text{// sizeof(p) is the size of block starting at p}$</li>
+<li>$\mathrm{p\leftarrow bottom\ of\ heap}$</li>
+<li>$\text{while p &lt; top of heap do}$<ul>
+<li>$\text{if mark(p) = 1 then}$<ul>
+<li>$\mathrm{mark(p) \leftarrow 0}$</li>
+</ul>
+</li>
+<li>$\text{else}$<ul>
+<li>$\text{add block p…(p+sizeof(p)-1) to freelist}$</li>
+</ul>
+</li>
+<li>$ \text{fi}$</li>
+<li>$\mathrm {p\leftarrow p + sizeof(p)}$</li>
+</ul>
+</li>
+<li>$\text{od}$</li>
+</ul>
+<h4 id="例子-1"><a href="#例子-1" class="headerlink" title="例子"></a>例子</h4><p><img src="https://github.com/Doraemonzzz/md-photo/blob/master/Compiler/Week9%20P1/2021052703.jpg?raw=true" alt=""></p>
+<h4 id="习题"><a href="#习题" class="headerlink" title="习题"></a>习题</h4><p><img src="https://github.com/Doraemonzzz/md-photo/blob/master/Compiler/Week9%20P1/2021052704.jpg?raw=true" alt=""></p>
+<p>选择第三项。</p>
+<h4 id="小结-1"><a href="#小结-1" class="headerlink" title="小结"></a>小结</h4><ul>
+<li><p>虽然从概念上讲很简单，但是该算法具有许多棘手的细节</p>
+<ul>
+<li>这是GC算法的典型特点。</li>
+</ul>
+</li>
+<li><p>标记阶段存在严重问题</p>
+<ul>
+<li>当我们空间不足时调用该函数；</li>
+<li>但是它需要空间来构造todo list；</li>
+<li>todo list的大小不受限制，因此我们无法为它预留空间。</li>
+</ul>
+</li>
+<li><p>todo list用作辅助数据结构以执行可达性分析</p>
+</li>
+<li><p>有一个技巧可以将辅助数据存储在对象本身中</p>
+<ul>
+<li>指针反转：反转指针以指向其父对象</li>
+</ul>
+</li>
+<li><p>类似的，free列表存储在空闲对象本身中</p>
+<p><img src="https://github.com/Doraemonzzz/md-photo/blob/master/Compiler/Week9%20P1/2021052705.jpg?raw=true" alt=""></p>
+</li>
+<li><p>从free列表中分配了新对象的空间</p>
+<ul>
+<li>选择一个足够大的块</li>
+<li>从中分配了必要大小的区域</li>
+<li>剩下的被放回free列表中</li>
+</ul>
+</li>
+<li><p>标记和清除会碎片化内存</p>
+<ul>
+<li>合并可能的空闲块</li>
+</ul>
+</li>
+<li><p>优点：GC期间不移动对象</p>
+<ul>
+<li>无需更新指向对象的指针</li>
+<li>适用于C和C ++等语言</li>
+</ul>
+</li>
+</ul>
+<h3 id="停止和复制"><a href="#停止和复制" class="headerlink" title="停止和复制"></a>停止和复制</h3><ul>
+<li><p>内存分为两个区域</p>
+<ul>
+<li><p>旧空间：用于分配</p>
+</li>
+<li><p>新空间：用作GC的保留空间</p>
+<p><img src="https://github.com/Doraemonzzz/md-photo/blob/master/Compiler/Week9%20P1/2021052706.jpg?raw=true" alt=""></p>
+</li>
+</ul>
+</li>
+<li><p>堆指针指向旧空间中的下一个空闲字</p>
+</li>
+<li><p>分配只会使堆指针前进</p>
+</li>
+</ul>
+<h4 id="流程"><a href="#流程" class="headerlink" title="流程"></a>流程</h4><ul>
+<li>CG在旧空间已满时开始</li>
+<li>将所有可到达的对象从旧空间复制到新空间<ul>
+<li>留下垃圾</li>
+<li>复制阶段之后，新空间使用的空间比垃圾收集之前的旧空间要少</li>
+</ul>
+</li>
+<li>复制后，旧空间和新空间的作用相反，程序恢复</li>
+</ul>
+<h4 id="例子-2"><a href="#例子-2" class="headerlink" title="例子"></a>例子</h4><p><img src="https://github.com/Doraemonzzz/md-photo/blob/master/Compiler/Week9%20P1/2021052707.jpg?raw=true" alt=""></p>
+<h4 id="操作细节"><a href="#操作细节" class="headerlink" title="操作细节"></a>操作细节</h4><ul>
+<li>我们需要找到所有到达的对象，就像标记和清除</li>
+<li>找到可到达的对象后，将其复制到新空间中<ul>
+<li>而且我们必须修复所有指向它的指针！</li>
+</ul>
+</li>
+<li>当我们复制一个对象时，我们在旧副本中存储一个指向新副本的前向指针<ul>
+<li>当我们稍后到达一个带有前向指针的对象时，我们知道它已经被复制了</li>
+</ul>
+</li>
+</ul>
+<h4 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h4><ul>
+<li>我们仍然存在如何在不使用额外空间的情况下实现遍历的问题</li>
+<li>以下技巧解决了该问题：<ul>
+<li>将新空间划分为三个连续的区域</li>
+</ul>
+</li>
+</ul>
+<p><img src="https://github.com/Doraemonzzz/md-photo/blob/master/Compiler/Week9%20P1/2021052708.jpg?raw=true" alt=""></p>
+<ul>
+<li>第一部分为指针字段已跟踪的被复制对象</li>
+<li>第二部分指针字段尚未跟踪的被复制对象</li>
+</ul>
+<h4 id="例子-3"><a href="#例子-3" class="headerlink" title="例子"></a>例子</h4><p><img src="https://github.com/Doraemonzzz/md-photo/blob/master/Compiler/Week9%20P1/2021052709.jpg?raw=true" alt=""></p>
+<ul>
+<li>步骤1：复制由根指向的对象并设置前向指针</li>
+</ul>
+<p><img src="https://github.com/Doraemonzzz/md-photo/blob/master/Compiler/Week9%20P1/2021052710.jpg?raw=true" alt=""></p>
+<ul>
+<li>步骤2：跟随下一个未扫描对象（A）中的指针<ul>
+<li>复制指向的对象（本例中为C）</li>
+<li>修正A中指针</li>
+<li>设置前向指针</li>
+</ul>
+</li>
+</ul>
+<p><img src="https://github.com/Doraemonzzz/md-photo/blob/master/Compiler/Week9%20P1/2021052711.jpg?raw=true" alt=""></p>
+<ul>
+<li>跟随下一个未扫描对象中的指针（C）<ul>
+<li>复制指向的对象（在这种情况下为F）</li>
+</ul>
+</li>
+</ul>
+<p><img src="https://github.com/Doraemonzzz/md-photo/blob/master/Compiler/Week9%20P1/2021052712.jpg?raw=true" alt=""></p>
+<ul>
+<li>跟随下一个未扫描对象（OF）中的指针<ul>
+<li>被指向的对象（A）已被复制。 将指针设置为与前向指针相同</li>
+</ul>
+</li>
+</ul>
+<p><img src="https://github.com/Doraemonzzz/md-photo/blob/master/Compiler/Week9%20P1/2021052713.jpg?raw=true" alt=""></p>
+<ul>
+<li>既然扫描赶上了alloc，我们就完成了</li>
+<li>交换空间的角色并恢复程序</li>
+</ul>
+<p><img src="https://github.com/Doraemonzzz/md-photo/blob/master/Compiler/Week9%20P1/2021052714.jpg?raw=true" alt=""></p>
+<h5 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h5><ul>
+<li>$\text{while scan &lt;&gt; alloc do}$<ul>
+<li>$\text{let O be the object at scan pointer}$</li>
+<li>$\text{for each pointer p contained in O do}$<ul>
+<li>$\text{find O’ that p points to}$</li>
+<li>$\text{if O’ is without a forwarding pointer}$<ul>
+<li>$\text{copy O’ to new space (update alloc pointer)}$</li>
+<li>$\text{set 1st word of old O’ to point to the new copy}$</li>
+<li>$\text{change p to point to the new copy of O’}$</li>
+</ul>
+</li>
+<li>$\text{else}$<ul>
+<li>$\text{set p in O equal to the forwarding pointer}$</li>
+</ul>
+</li>
+<li>$\text{f}$i</li>
+</ul>
+</li>
+<li>$\text{end for}$</li>
+<li>$\text{increment scan pointer to the next object}$</li>
+</ul>
+</li>
+<li>$\text{od}$</li>
+</ul>
+<h4 id="习题-1"><a href="#习题-1" class="headerlink" title="习题"></a>习题</h4><p><img src="https://github.com/Doraemonzzz/md-photo/blob/master/Compiler/Week9%20P1/2021052715.jpg?raw=true" alt=""></p>
+<p>选择第三项。</p>
+<h4 id="问题-1"><a href="#问题-1" class="headerlink" title="问题"></a>问题</h4><ul>
+<li>与标记和清除一样，当我们扫描对象时，我们必须能够分辨出对象的大小<ul>
+<li>并且我们还必须知道指针在对象内部的位置</li>
+</ul>
+</li>
+<li>我们还必须复制堆栈指向的所有对象并更新堆栈中的指针<ul>
+<li>这可能是一个昂贵的操作</li>
+</ul>
+</li>
+</ul>
+<h4 id="小结-2"><a href="#小结-2" class="headerlink" title="小结"></a>小结</h4><ul>
+<li>通常认为停止和复制是最快的GC技术</li>
+<li>分配代价很低<ul>
+<li>只需增加堆指针</li>
+<li>时间复杂度为$\text{O(|live objects|)}$</li>
+</ul>
+</li>
+<li>回收代价相当低<ul>
+<li>特别是在有很多垃圾的情况下</li>
+<li>仅触摸可到达的对象</li>
+<li>不接触垃圾</li>
+</ul>
+</li>
+<li>但是某些语言不允许复制<ul>
+<li>C，C++</li>
+</ul>
+</li>
+</ul>
+<h3 id="保守回收"><a href="#保守回收" class="headerlink" title="保守回收"></a>保守回收</h3><ul>
+<li>垃圾收集依赖于能够找到所有可到达的物体<ul>
+<li>它需要找到一个对象中的所有指针</li>
+</ul>
+</li>
+<li>在C或C++中，无法识别内存中对象的内容<ul>
+<li>例如，两个内存字的序列可能是<ul>
+<li>列表（包含数据和下一个字段）</li>
+<li>二叉树节点（具有左右字段）</li>
+</ul>
+</li>
+<li>因此，我们无法判断所有指针在哪里</li>
+</ul>
+</li>
+<li>但是可以保守一点：<ul>
+<li>如果一段内存字看起来像一个指针，则它被认为是一个指针<ul>
+<li>必须对齐</li>
+<li>它必须指向数据段中的有效地址</li>
+</ul>
+</li>
+<li>跟踪所有此类指针，我们高估了可到达对象的集合</li>
+</ul>
+</li>
+<li>但是我们仍然无法移动对象，因为我们无法更新指向它们的指针<ul>
+<li>如果我们认为的指针实际上是一个帐号怎么办？</li>
+</ul>
+</li>
+</ul>
+<h3 id="引用计数"><a href="#引用计数" class="headerlink" title="引用计数"></a>引用计数</h3><ul>
+<li>另一个方法不是等待内存耗尽，在没有指针指向该对象时尝试收集该对象</li>
+<li>在每个对象中存储指向该对象的指针数<ul>
+<li>这是引用计数</li>
+</ul>
+</li>
+<li>每个分配操作都会操纵引用计数</li>
+</ul>
+<h4 id="细节"><a href="#细节" class="headerlink" title="细节"></a>细节</h4><ul>
+<li><p>new返回引用计数为1的对象</p>
+</li>
+<li><p>令rc(x)为x的引用计数</p>
+</li>
+<li><p>假设x，y指向对象o，p</p>
+</li>
+<li><p>每个赋值$\mathrm{x\leftarrow y}$变成：</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+&\mathrm{rc(p) \leftarrow r c(p)+1}\\
+&\mathrm{rc(o) \leftarrow rc(o)-1}\\
+&\mathrm{if\ (rc(0)==0)\ then\ free\  0}\\
+&\mathrm{x \leftarrow y}
+\end{aligned}</script></li>
+</ul>
+<h4 id="优缺点"><a href="#优缺点" class="headerlink" title="优缺点"></a>优缺点</h4><ul>
+<li>优点：<ul>
+<li>易于实现</li>
+<li>增量收集垃圾，而不会在执行过程中出现大量的停顿</li>
+</ul>
+</li>
+<li>缺点：<ul>
+<li>无法收集循环结构</li>
+<li>在每次分配时处理引用计数非常慢</li>
+</ul>
+</li>
+</ul>
+<h4 id="习题-2"><a href="#习题-2" class="headerlink" title="习题"></a>习题</h4><p><img src="https://github.com/Doraemonzzz/md-photo/blob/master/Compiler/Week9%20P1/2021052716.jpg?raw=true" alt=""></p>
+<p>$B$的引用计数变为$0$，所以free，从而$C$的引用计数也变为$0$，因此选择第三项。</p>
+<h4 id="小结-3"><a href="#小结-3" class="headerlink" title="小结"></a>小结</h4><ul>
+<li>自动内存管理可防止严重的存储错误</li>
+<li>但是减少了程序员的控制<ul>
+<li>例如，内存中的数据布局</li>
+<li>例如，何时重新分配内存</li>
+</ul>
+</li>
+<li>问题<ul>
+<li>实时应用程序中有问题的暂停</li>
+<li>内存可能泄漏</li>
+</ul>
+</li>
+<li>总体来说，垃圾依然收集很重要</li>
+<li>有更多高级垃圾收集算法：<ul>
+<li>并发：在收集发生时允许程序运行</li>
+<li>generational：不要在每个集合中扫描寿命长的对象</li>
+<li>实时：限制停顿的时间</li>
+<li>并行：几个收集器同时工作</li>
+</ul>
+</li>
+</ul>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">Doraemonzzz</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="http://doraemonzzz.com/2021/05/26/2021-5-26-Stanford-Compiler-Week-9-Garbage-Collection/">http://doraemonzzz.com/2021/05/26/2021-5-26-Stanford-Compiler-Week-9-Garbage-Collection/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://doraemonzzz.com" target="_blank">Doraemonzzz</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E6%96%AF%E5%9D%A6%E7%A6%8F%E5%A4%A7%E5%AD%A6%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/">斯坦福大学编译原理</a></div><div class="post_share"><div class="social-share" data-image="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2021/05/27/2021-5-27-Stanford-Compiler-Week-9-Java/"><img class="prev-cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">Stanford Compiler Week 9 Java</div></div></a></div><div class="next-post pull-right"><a href="/2021/05/26/2021-5-26-CS170-Efficient-Algorithms-and-Intractable-Problems-HW11/"><img class="next-cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">CS170 Efficient Algorithms and Intractable Problems HW11</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span> 相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2021/04/15/2021-4-15-Stanford-Compiler-Week-5-Cool-Type-Checking/" title="Stanford Compiler Week 5 Cool Type Checking"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-04-15</div><div class="title">Stanford Compiler Week 5 Cool Type Checking</div></div></a></div><div><a href="/2021/04/20/2021-4-20-Stanford-Compiler-实验环境配置（续）/" title="Stanford Compiler 实验环境配置（续）"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-04-20</div><div class="title">Stanford Compiler 实验环境配置（续）</div></div></a></div><div><a href="/2021/04/24/2021-4-24-Stanford-Compiler-PA3翻译/" title="Stanford Compiler PA3翻译"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-04-24</div><div class="title">Stanford Compiler PA3翻译</div></div></a></div><div><a href="/2021/04/24/2021-4-24-Stanford-Compiler-Week-6-Code-Generation-Part-1/" title="Stanford Compiler Week 6 Code Generation Part 1"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-04-24</div><div class="title">Stanford Compiler Week 6 Code Generation Part 1</div></div></a></div><div><a href="/2021/04/24/2021-4-24-Stanford-Compiler-Week-6-Runtime-Organization/" title="Stanford Compiler Week 6 Runtime Organization"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-04-24</div><div class="title">Stanford Compiler Week 6 Runtime Organization</div></div></a></div><div><a href="/2021/04/26/2021-4-26-Stanford-Compiler-Week-6-Code-Generation-Part-2/" title="Stanford Compiler Week 6 Code Generation Part 2"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-04-26</div><div class="title">Stanford Compiler Week 6 Code Generation Part 2</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="card-info-avatar is-center"><img class="avatar-img" src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/><div class="author-info__name">Doraemonzzz</div><div class="author-info__description">个人博客，主要记录有关机器学习，数学以及计算机科学的笔记</div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">610</div></a></div><div class="card-info-data-item is-center"><a href="/tags/"><div class="headline">标签</div><div class="length-num">59</div></a></div><div class="card-info-data-item is-center"><a href="/categories/"><div class="headline">分类</div><div class="length-num">23</div></a></div></div><a class="button--animated" id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/Doraemonzzz" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="/doraemon_zzz@163.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn card-announcement-animation"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%87%AA%E5%8A%A8%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86"><span class="toc-number">1.</span> <span class="toc-text">自动内存管理</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8E%86%E5%8F%B2"><span class="toc-number">1.1.</span> <span class="toc-text">历史</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86%E5%8A%A8%E6%9C%BA"><span class="toc-number">1.2.</span> <span class="toc-text">内存管理动机</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BE%8B%E5%AD%90"><span class="toc-number">1.3.</span> <span class="toc-text">例子</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Cool%E4%B8%AD%E7%9A%84%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86"><span class="toc-number">1.4.</span> <span class="toc-text">Cool中的内存管理</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#acc%E5%92%8CSP"><span class="toc-number">1.5.</span> <span class="toc-text">acc和SP</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%B0%8F%E7%BB%93"><span class="toc-number">1.6.</span> <span class="toc-text">小结</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A0%87%E8%AE%B0%E5%92%8C%E6%B8%85%E9%99%A4"><span class="toc-number">2.</span> <span class="toc-text">标记和清除</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%A0%87%E8%AE%B0%E9%98%B6%E6%AE%B5%E4%BC%AA%E4%BB%A3%E7%A0%81"><span class="toc-number">2.1.</span> <span class="toc-text">标记阶段伪代码</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%89%AB%E6%8F%8F%E9%98%B6%E6%AE%B5"><span class="toc-number">2.2.</span> <span class="toc-text">扫描阶段</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BE%8B%E5%AD%90-1"><span class="toc-number">2.3.</span> <span class="toc-text">例子</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%B9%A0%E9%A2%98"><span class="toc-number">2.4.</span> <span class="toc-text">习题</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%B0%8F%E7%BB%93-1"><span class="toc-number">2.5.</span> <span class="toc-text">小结</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%81%9C%E6%AD%A2%E5%92%8C%E5%A4%8D%E5%88%B6"><span class="toc-number">3.</span> <span class="toc-text">停止和复制</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%B5%81%E7%A8%8B"><span class="toc-number">3.1.</span> <span class="toc-text">流程</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BE%8B%E5%AD%90-2"><span class="toc-number">3.2.</span> <span class="toc-text">例子</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%93%8D%E4%BD%9C%E7%BB%86%E8%8A%82"><span class="toc-number">3.3.</span> <span class="toc-text">操作细节</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%97%AE%E9%A2%98"><span class="toc-number">3.4.</span> <span class="toc-text">问题</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BE%8B%E5%AD%90-3"><span class="toc-number">3.5.</span> <span class="toc-text">例子</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E4%BB%A3%E7%A0%81"><span class="toc-number">3.5.1.</span> <span class="toc-text">代码</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%B9%A0%E9%A2%98-1"><span class="toc-number">3.6.</span> <span class="toc-text">习题</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%97%AE%E9%A2%98-1"><span class="toc-number">3.7.</span> <span class="toc-text">问题</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%B0%8F%E7%BB%93-2"><span class="toc-number">3.8.</span> <span class="toc-text">小结</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BF%9D%E5%AE%88%E5%9B%9E%E6%94%B6"><span class="toc-number">4.</span> <span class="toc-text">保守回收</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BC%95%E7%94%A8%E8%AE%A1%E6%95%B0"><span class="toc-number">5.</span> <span class="toc-text">引用计数</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%BB%86%E8%8A%82"><span class="toc-number">5.1.</span> <span class="toc-text">细节</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BC%98%E7%BC%BA%E7%82%B9"><span class="toc-number">5.2.</span> <span class="toc-text">优缺点</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%B9%A0%E9%A2%98-2"><span class="toc-number">5.3.</span> <span class="toc-text">习题</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%B0%8F%E7%BB%93-3"><span class="toc-number">5.4.</span> <span class="toc-text">小结</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2021/06/06/2021-6-6-%E7%AE%97%E6%B3%95%E6%A6%82%E8%AE%BA(DPV)%E4%B9%A0%E9%A2%98%E8%A7%A3%E7%AD%94%E2%80%94%E2%80%94%E7%AC%AC3%E7%AB%A0-%E5%9B%BE%E7%9A%84%E5%88%86%E8%A7%A3/" title="算法概论(DPV)习题解答——第3章 图的分解"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="算法概论(DPV)习题解答——第3章 图的分解"/></a><div class="content"><a class="title" href="/2021/06/06/2021-6-6-%E7%AE%97%E6%B3%95%E6%A6%82%E8%AE%BA(DPV)%E4%B9%A0%E9%A2%98%E8%A7%A3%E7%AD%94%E2%80%94%E2%80%94%E7%AC%AC3%E7%AB%A0-%E5%9B%BE%E7%9A%84%E5%88%86%E8%A7%A3/" title="算法概论(DPV)习题解答——第3章 图的分解">算法概论(DPV)习题解答——第3章 图的分解</a><time datetime="2021-06-06T14:35:00.000Z" title="发表于 2021-06-06 22:35:00">2021-06-06</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/06/06/2021-6-6-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E7%AC%AC5%E7%AB%A0-%E4%B9%A0%E9%A2%98%E8%A7%A3%E6%9E%90/" title="深入理解计算机系统 第5章 习题解析"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="深入理解计算机系统 第5章 习题解析"/></a><div class="content"><a class="title" href="/2021/06/06/2021-6-6-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E7%AC%AC5%E7%AB%A0-%E4%B9%A0%E9%A2%98%E8%A7%A3%E6%9E%90/" title="深入理解计算机系统 第5章 习题解析">深入理解计算机系统 第5章 习题解析</a><time datetime="2021-06-06T07:23:00.000Z" title="发表于 2021-06-06 15:23:00">2021-06-06</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/06/05/2021-6-5-Stanford-Compiler-PA5%E7%BF%BB%E8%AF%91/" title="Stanford Compiler PA5翻译"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Stanford Compiler PA5翻译"/></a><div class="content"><a class="title" href="/2021/06/05/2021-6-5-Stanford-Compiler-PA5%E7%BF%BB%E8%AF%91/" title="Stanford Compiler PA5翻译">Stanford Compiler PA5翻译</a><time datetime="2021-06-05T06:12:00.000Z" title="发表于 2021-06-05 14:12:00">2021-06-05</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/06/04/2021-6-4-Stanford-Compiler-PA4%E7%BF%BB%E8%AF%91/" title="Stanford Compiler PA4翻译"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Stanford Compiler PA4翻译"/></a><div class="content"><a class="title" href="/2021/06/04/2021-6-4-Stanford-Compiler-PA4%E7%BF%BB%E8%AF%91/" title="Stanford Compiler PA4翻译">Stanford Compiler PA4翻译</a><time datetime="2021-06-03T16:17:00.000Z" title="发表于 2021-06-04 00:17:00">2021-06-04</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/06/03/2021-6-3-%E5%B7%A7%E5%A6%99%E7%9A%84Y%E8%BF%90%E7%AE%97%E7%AC%A6/" title="巧妙的Y运算符"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="巧妙的Y运算符"/></a><div class="content"><a class="title" href="/2021/06/03/2021-6-3-%E5%B7%A7%E5%A6%99%E7%9A%84Y%E8%BF%90%E7%AE%97%E7%AC%A6/" title="巧妙的Y运算符">巧妙的Y运算符</a><time datetime="2021-06-03T00:54:00.000Z" title="发表于 2021-06-03 08:54:00">2021-06-03</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2021 By Doraemonzzz</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><div class="js-pjax"><script>if (!window.MathJax) {
+  window.MathJax = {
+    loader: {
+      source: {
+        '[tex]/amsCd': '[tex]/amscd'
+      }
+    },
+    tex: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]],
+      tags: 'ams'
+    },
+    options: {
+      renderActions: {
+        findScript: [10, doc => {
+          for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+            const display = !!node.type.match(/; *mode=display/)
+            const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+            const text = document.createTextNode('')
+            node.parentNode.replaceChild(text, node)
+            math.start = {node: text, delim: '', n: 0}
+            math.end = {node: text, delim: '', n: 0}
+            doc.math.push(math)
+          }
+        }, ''],
+        addClass: [200,() => {
+          document.querySelectorAll('mjx-container:not([display=\'true\']').forEach( node => {
+            const target = node.parentNode
+            if (!target.classList.contains('has-jax')) {
+              target.classList.add('mathjax-overflow')
+            }
+          })
+        }, '', false]
+      }
+    }
+  }
+  
+  const script = document.createElement('script')
+  script.src = 'https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js'
+  script.id = 'MathJax-script'
+  script.async = true
+  document.head.appendChild(script)
+} else {
+  MathJax.startup.document.state(0)
+  MathJax.texReset()
+  MathJax.typeset()
+}</script></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

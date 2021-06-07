@@ -1,0 +1,688 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>算法概论(DPV)习题解答——第2章 分治算法 | Doraemonzzz</title><meta name="keywords" content="算法概论"><meta name="author" content="Doraemonzzz"><meta name="copyright" content="Doraemonzzz"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="书籍介绍： https:&#x2F;&#x2F;book.douban.com&#x2F;subject&#x2F;3155710&#x2F; 配套课程： CS170（伯克利），CS161（斯坦福） github仓库： https:&#x2F;&#x2F;github.com&#x2F;Doraemonzzz&#x2F;Algorithm-DPV 参考资料： https:&#x2F;&#x2F;www.cnblogs.com&#x2F;atyuwen&#x2F;archive&#x2F;2009&#x2F;11&#x2F;10&#x2F;algorithmsexe">
+<meta property="og:type" content="article">
+<meta property="og:title" content="算法概论(DPV)习题解答——第2章 分治算法">
+<meta property="og:url" content="http://doraemonzzz.com/2021/01/24/%E7%AE%97%E6%B3%95%E6%A6%82%E8%AE%BA(DPV)%E4%B9%A0%E9%A2%98%E8%A7%A3%E7%AD%94%E2%80%94%E2%80%94%E7%AC%AC2%E7%AB%A0%20%E5%88%86%E6%B2%BB%E7%AE%97%E6%B3%95/index.html">
+<meta property="og:site_name" content="Doraemonzzz">
+<meta property="og:description" content="书籍介绍： https:&#x2F;&#x2F;book.douban.com&#x2F;subject&#x2F;3155710&#x2F; 配套课程： CS170（伯克利），CS161（斯坦福） github仓库： https:&#x2F;&#x2F;github.com&#x2F;Doraemonzzz&#x2F;Algorithm-DPV 参考资料： https:&#x2F;&#x2F;www.cnblogs.com&#x2F;atyuwen&#x2F;archive&#x2F;2009&#x2F;11&#x2F;10&#x2F;algorithmsexe">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg">
+<meta property="article:published_time" content="2021-01-24T04:21:00.000Z">
+<meta property="article:modified_time" content="2021-06-06T14:34:09.923Z">
+<meta property="article:author" content="Doraemonzzz">
+<meta property="article:tag" content="算法概论">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="http://doraemonzzz.com/2021/01/24/%E7%AE%97%E6%B3%95%E6%A6%82%E8%AE%BA(DPV)%E4%B9%A0%E9%A2%98%E8%A7%A3%E7%AD%94%E2%80%94%E2%80%94%E7%AC%AC2%E7%AB%A0%20%E5%88%86%E6%B2%BB%E7%AE%97%E6%B3%95/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"prismjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    jQuery: 'https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js',
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+    },
+    fancybox: {
+      js: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isanchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '算法概论(DPV)习题解答——第2章 分治算法',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2021-06-06 22:34:09'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    })(window)</script><meta name="generator" content="Hexo 5.4.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="author-avatar"><img class="avatar-img" src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">文章</div><div class="length-num">610</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">标签</div><div class="length-num">59</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/categories/"><div class="headline">分类</div><div class="length-num">23</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">Doraemonzzz</a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">算法概论(DPV)习题解答——第2章 分治算法</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2021-01-24T04:21:00.000Z" title="发表于 2021-01-24 12:21:00">2021-01-24</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2021-06-06T14:34:09.923Z" title="更新于 2021-06-06 22:34:09">2021-06-06</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E7%AE%97%E6%B3%95/">算法</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="算法概论(DPV)习题解答——第2章 分治算法"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p>书籍介绍：</p>
+<p><a target="_blank" rel="noopener" href="https://book.douban.com/subject/3155710/">https://book.douban.com/subject/3155710/</a></p>
+<p>配套课程：</p>
+<p>CS170（伯克利），CS161（斯坦福）</p>
+<p>github仓库：</p>
+<p><a target="_blank" rel="noopener" href="https://github.com/Doraemonzzz/Algorithm-DPV">https://github.com/Doraemonzzz/Algorithm-DPV</a></p>
+<p>参考资料：</p>
+<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/atyuwen/archive/2009/11/10/algorithmsexercisessolution.html">https://www.cnblogs.com/atyuwen/archive/2009/11/10/algorithmsexercisessolution.html</a></p>
+<p><a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/36316109/what-is-the-complexity-of-long-division">https://stackoverflow.com/questions/36316109/what-is-the-complexity-of-long-division</a></p>
+<p><a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/2884172/algorithm-for-dividing-very-large-numbers">https://stackoverflow.com/questions/2884172/algorithm-for-dividing-very-large-numbers</a></p>
+<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/62088196">https://zhuanlan.zhihu.com/p/62088196</a></p>
+<p><a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/10213929/linear-3sat-a-version-of-3sat-in-linear-time">https://stackoverflow.com/questions/10213929/linear-3sat-a-version-of-3sat-in-linear-time</a></p>
+<p>这次回顾第2章，分治算法。</p>
+<span id="more"></span>
+<h3 id="第2章"><a href="#第2章" class="headerlink" title="第2章"></a>第2章</h3><h4 id="2-2"><a href="#2-2" class="headerlink" title="2.2"></a>2.2</h4><p>数列$\{b^{k}\}_{k=0}^{\infty}$将$[1,\infty)$划分为区间：</p>
+<script type="math/tex; mode=display">
+\{[b^{i},b^{i+1})\}_{i=0}^{\infty}</script><p>那么必然存在$i$，使得</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+ b^{i} &\le n  < b^{i+1}\\
+  b^{i+1}&\le nb < b^{i+2}\\
+\end{aligned}</script><p>从而</p>
+<script type="math/tex; mode=display">
+b^{i+1}\in (n, nb] \subset [n,nb]</script><h4 id="2-13"><a href="#2-13" class="headerlink" title="2.13"></a>2.13</h4><h5 id="b"><a href="#b" class="headerlink" title="(b)"></a>(b)</h5><p>利用数学归纳法可证</p>
+<script type="math/tex; mode=display">
+B_{2k}= 0</script><p>对于$B_{2k+1}$，利用递归的性质可得：</p>
+<script type="math/tex; mode=display">
+B_{2k+1}=\sum_{i=0}^{k-1} B_{2i+1}B_{2(k-i) -1}</script><h5 id="c"><a href="#c" class="headerlink" title="(c)"></a>(c)</h5><p>结论：</p>
+<script type="math/tex; mode=display">
+B_{n} \ge 2^{cn} , n=2k+1 , k\ge 2^c, c= 1/5</script><p>利用数学归纳法证明即可：</p>
+<p>基本情形：</p>
+<p>当$n=5$，即$k=2$时，</p>
+<script type="math/tex; mode=display">
+B_n = 2 \ge 2^{5c}  =2</script><p>基本情形结论成立。</p>
+<p>假设对于$n\le m -1$结论成立，那么对于$n = m$，我们有</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+B_{2k+1}
+&=\sum_{i=0}^{k-1} B_{2i+1}B_{2(k-i) -1}\\
+&\ge \sum_{i=0}^{k-1} 2^{c\left(2i+1+ 2(k-i) -1 \right)}\\
+&\ge k 2^{c(2k)} \\
+&\ge 2^{c(2k +1)} 
+\end{aligned}</script><p>所以$n=m$时结论亦成立。</p>
+<h4 id="2-16"><a href="#2-16" class="headerlink" title="2.16"></a>2.16</h4><p>如果$A$中每个数都是非负正整数，那么位置为$i$的数必然大于等于$i$，所以可以设置二分法的上界和下界为$0, x$；</p>
+<p>否则将$A$中每个数和$x$都减去$A[0]$，那么可以转化为之前的情形。</p>
+<p>备注：这里数组下标假设从$0$开始。</p>
+<h4 id="2-17"><a href="#2-17" class="headerlink" title="2.17"></a>2.17</h4><ul>
+<li>初始化$l=1, r= n$</li>
+<li>while $l&lt;r$:<ul>
+<li>$m=\left[\frac{l+r} 2\right]$</li>
+<li>如果$A[m] = m$，返回$m$</li>
+<li>如果$A[m] &lt; m$，令$ l= m - 1$</li>
+<li>否则，令$l=m +1$</li>
+</ul>
+</li>
+</ul>
+<p>正确性说明：</p>
+<p>如果$A[m] &lt; m$，那么对于$i\ge 0$，都有</p>
+<script type="math/tex; mode=display">
+A[m+i] < A[m] + i < m + i</script><p>$A[m]&gt;m$时同理。</p>
+<h4 id="2-18"><a href="#2-18" class="headerlink" title="2.18"></a>2.18</h4><p>利用类似课本61页的方法。</p>
+<p>二分搜索算法可以用决策树来描述，该决策树的每个节点形式为$A[i]\le z$，那么该决策树一共有$n$个叶节点，决策树对应的高度（对应操作次数）</p>
+<script type="math/tex; mode=display">
+\ge \log n</script><p>所以结论成立。</p>
+<h4 id="2-19"><a href="#2-19" class="headerlink" title="2.19"></a>2.19</h4><h5 id="a"><a href="#a" class="headerlink" title="(a)"></a>(a)</h5><p>假设merge输入的两个数组长度分别为$n,m$，那么merge的时间复杂度为$\Theta(n + m)$，从而总时间复杂度为</p>
+<script type="math/tex; mode=display">
+\Theta \left(\sum_{i=1}^k in\right)=\Theta(k^2 n)</script><h5 id="b-1"><a href="#b-1" class="headerlink" title="(b)"></a>(b)</h5><p>算法的输入为$k$个长度为$n$的有序数组，记为$[A_1,\ldots ,A_k]$，函数接口为</p>
+<script type="math/tex; mode=display">
+\text{mergekn}(k, n, [A_1,\ldots ,A_k])</script><p>对应的时间复杂度为$T(k, n)$。</p>
+<p>现在构造如下算法：</p>
+<ul>
+<li>$l = \text{mergekn}([k/2], n, [A_1,\ldots ,A_{[k/2]}])$</li>
+<li>$r = \text{mergekn}(k-[k/2], n, [A_{[k/2] +1},\ldots ,A_{k}])$</li>
+<li>return $\text{merge}(l, r)$</li>
+</ul>
+<p>时间复杂度递推关系</p>
+<script type="math/tex; mode=display">
+T(k, n) = 2T(k/2, n) + \Theta( kn)</script><p>所以总时间复杂度为</p>
+<script type="math/tex; mode=display">
+\Theta(kn\log k)</script><h4 id="2-20"><a href="#2-20" class="headerlink" title="2.20"></a>2.20</h4><ul>
+<li>遍历数组，找到最大值和最小值$\max_i x_i , \min_i x_i$，记$M=\max_i x_i- \min_i x_i$，构造$M+1$个桶，第$k$个桶中记录值$\min_i x_i + k, k=0,\ldots, M$对应的索引。</li>
+<li>再次遍历数组，将$i$放在第$x_i -\min_i x_i $个桶中。</li>
+</ul>
+<p>时间复杂度：</p>
+<p>第一步遍历$n$个元素，构造$M$个桶，时间复杂度为$\Theta(n+m)$；第二步遍历$n$个元素，时间复杂度为$\Theta(n)$。</p>
+<p>所以总时间复杂度为$\Theta(n+m)$。</p>
+<h4 id="2-21"><a href="#2-21" class="headerlink" title="2.21"></a>2.21</h4><h5 id="a-1"><a href="#a-1" class="headerlink" title="(a)"></a>(a)</h5><p>考虑一般的问题，$x\sim p(x)$，那么</p>
+<script type="math/tex; mode=display">
+\mu_{\text{median}} = \arg\min \mathbb E[|x-\mu|]</script><p>证明：</p>
+<p>记</p>
+<script type="math/tex; mode=display">
+f(\mu)=\mathbb E[|x-\mu|]</script><p>化简可得</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+f(\mu)&=\mathbb E[|x-\mu|]\\
+&= \int_{x< \mu } (\mu -x) p(x) dx +\int_{x\ge  \mu } (x-\mu) p(x) dx\\
+&= \mu \int_{x< \mu } p(x) dx-\mu\int_{x\ge  \mu }  p(x) dx - \int_{x< \mu } xp(x) dx + \int_{x\ge  \mu } xp(x) dx 
+\end{aligned}</script><p>求导得</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+f'(\mu)
+&= \int_{x< \mu } p(x) dx+\mu p(\mu) -\int_{x\ge  \mu }  p(x) dx  + \mu p\mu
+-\mu p(\mu) - \mu p(\mu)\\
+&= \int_{x< \mu } p(x) dx-\int_{x\ge  \mu }  p(x) dx\\
+f''(\mu) &= 2p(\mu) \\
+&\ge 0
+\end{aligned}</script><p>令$f’(\mu) =0$可得</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+\int_{x< \mu } p(x) dx&= \int_{x\ge  \mu }  p(x) dx  \\
+\mu&= \mu_{\text{median}}
+\end{aligned}</script><p>从而$f(\mu)$在$\mu =\mu_{\text{median}} $处取极小值。</p>
+<p>对于此特殊情形，构造特殊的概率分布：</p>
+<script type="math/tex; mode=display">
+p(x=x_i) =\frac 1 n , i=1,\ldots, n</script><p>此时</p>
+<script type="math/tex; mode=display">
+\mu_{\text{median}} = \mu_1</script><h5 id="b-2"><a href="#b-2" class="headerlink" title="(b)"></a>(b)</h5><p>略。</p>
+<h5 id="c-1"><a href="#c-1" class="headerlink" title="(c)"></a>(c)</h5><p>记</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+x_{(1)}&= \min_i x_i\\
+x_{(n)}&= \max_i x_i
+
+\end{aligned}</script><p>如果$\mu &lt; x_{(1)}$，那么</p>
+<script type="math/tex; mode=display">
+\max _{i}\left|x_{i}-\mu\right| > |x_{(n)} - x_{(1)}|</script><p>如果$\mu &gt; x_{(n)}$，那么</p>
+<script type="math/tex; mode=display">
+\max _{i}\left|x_{i}-\mu\right| > |x_{(n)} - x_{(1)}|</script><p>如果$x_{(1)} \le \mu \le x_{(n)}$，那么</p>
+<script type="math/tex; mode=display">
+\max _{i}\left|x_{i}-\mu\right| \ge \frac 12 |x_{(n)} - x_{(1)}|</script><p>当且仅当</p>
+<script type="math/tex; mode=display">
+\mu = \frac  1 2 \left(x_{(n)} + x_{(1)}\right)</script><p>时等号成立。</p>
+<h4 id="2-23"><a href="#2-23" class="headerlink" title="2.23"></a>2.23</h4><p>大部分内容见cs170 hw2，这里只讨论(b)。</p>
+<h5 id="b-3"><a href="#b-3" class="headerlink" title="(b)"></a>(b)</h5><p>感觉结论有问题，主要是$n$为奇数的情形。</p>
+<p>反例：</p>
+<p>对于元素数量为奇数的数组：</p>
+<p>如果直接保留多出来的一个元素：</p>
+<pre class="line-numbers language-none"><code class="language-none">[2,2,3,3,3,3,2] -&gt; [2,3,3,2]<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>如果删除多出来的一个元素：</p>
+<pre class="line-numbers language-none"><code class="language-none">[2,2,3,3,3] -&gt; [2,3]<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>这两种情形此题的结论都不成立。</p>
+<p>正确的方法应该是使用摩尔投票法。</p>
+<h4 id="2-24"><a href="#2-24" class="headerlink" title="2.24"></a>2.24</h4><ul>
+<li>算法名称：quickSort</li>
+<li>输入：数组$A$，起始位置$l$，终止位置$r$</li>
+</ul>
+<p>流程如下：</p>
+<ul>
+<li>$\text{pivot} = \text{Randomchoice}(A,l, r)$</li>
+<li>$i =\text{partition}(A,l, r, \text{pivot})$</li>
+<li>$\text{quickSort}(A,l,i-1)$</li>
+<li>$\text{quickSort}(A,i+1,r)$</li>
+</ul>
+<h5 id="b-4"><a href="#b-4" class="headerlink" title="(b)"></a>(b)</h5><p>如果$A$是有序的，每次选择的pivot为最小元素，那么时间复杂度为</p>
+<script type="math/tex; mode=display">
+\Theta\left(\sum_{i=1}^n i \right)=\Theta(n^2)</script><h5 id="c-2"><a href="#c-2" class="headerlink" title="(c)"></a>(c)</h5><p>pivot为第$i$大元素的概率为$1/n$，对应的时间复杂度为</p>
+<script type="math/tex; mode=display">
+T(i -1) + T(n-i)</script><p>所以时间复杂度满足递推关系</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+T(n) &= kn+\frac{1}{n} \sum_{i=1}^{n}(T(i-1)+T(n-i))\\
+nT(n)&=kn^2 + \sum_{i=1}^{n}(T(i-1)+T(n-i))
+
+\end{aligned}</script><p>取$n=n+1$可得</p>
+<script type="math/tex; mode=display">
+(n+1)T(n+1)=k(n+1)^2 + \sum_{i=1}^{n}(T(i -1)+T(n+1-i))</script><p>两式相减可得</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+(n+1)T(n+1)-nT(n)&=k(2n+1) +2T(n)\\
+(n+1)T(n+1) -(n+2)T(n) &=k(2n+1)\\
+\frac{T(n+1)}{n+2}-\frac{T(n)}{n+1}&=\frac{k(2n+1)}{(n+1)(n+2)}\\
+&\le \frac{2k}{n}
+\end{aligned}</script><p>递推可得</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+\frac{T(n)}{n +1} - \frac{T(1)}{2} &=2k\sum_{i=1}^{n-1} \frac{1}{i}\\
+T(n)&= \frac{n+1}{2} T(1) + 2k(n+1)\left(\sum_{i=1}^{n-1} \frac{1}{i}\right)\\
+T(n)&= \Theta(n\log n)
+\end{aligned}</script><p>这里利用了</p>
+<script type="math/tex; mode=display">
+\sum_{i=1}^n \frac 1 i =\Theta(\log n)</script><h4 id="2-25"><a href="#2-25" class="headerlink" title="2.25"></a>2.25</h4><h5 id="a-2"><a href="#a-2" class="headerlink" title="(a)"></a>(a)</h5><ul>
+<li>function pwr2bin($n$)<ul>
+<li>if $n = 1$: return $1010_2$</li>
+<li>else:<ul>
+<li>$z=\text{pwr2bin}(n/2)$</li>
+<li>return fastmultiply($z,z$)</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>时间复杂度的递推关系：</p>
+<script type="math/tex; mode=display">
+T(n)=T\left(\frac n 2\right) + \Theta(n^{\alpha})</script><p>因为</p>
+<script type="math/tex; mode=display">
+\log_2 1 <  \alpha= \log_2 3</script><p>所以时间复杂度为</p>
+<script type="math/tex; mode=display">
+\Theta(n^{\alpha})</script><h5 id="b-5"><a href="#b-5" class="headerlink" title="(b)"></a>(b)</h5><ul>
+<li>function dec2bin($x$)<ul>
+<li>if $n=1$: return binary[$x$]</li>
+<li>else:<ul>
+<li>split $x$ into two decimal numbers $x_L,x_R$ with $n/2$ digits each</li>
+<li>return $\text{fastmultiply}(\text{pwr2bin}({n/2}), \text{dec2bin}(x_L)) + \text{dec2bin}(x_R)$</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>说明：</p>
+<p>利用如下恒等式</p>
+<script type="math/tex; mode=display">
+x= x_L \times 10^{n/2} + x_R</script><p>注意到$n$位$10$进制数的范围是</p>
+<script type="math/tex; mode=display">
+[0, 10^{n}-1]</script><p>利用$l$位$2$进制数表示该范围，那么</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+10^{n} -1&\le 2^{l} -1 < 10^{n+1} -1\\
+ n\log_2 10 &\le l < (n+1)\log_2 10\\
+  l &\in \Theta(n)
+ \end{aligned}</script><p>所以函数的中间结果长度均为$\Theta(n)$，每一步的时间复杂度如下</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+\text{dec2bin}(x_L)&: T\left( \frac n 2\right)\\
+\text{dec2bin}(x_R)&: T\left( \frac n 2\right)\\
+\text{pwr2bin}\left( \frac n 2\right)&:\Theta(n^{\alpha}) \\
+\text{fastmultiply}(\text{pwr2bin}({n/2}), \text{dec2bin}(x_L))&: \Theta(n^{\alpha})
+\end{aligned}</script><p>所以时间复杂度的递推关系为</p>
+<script type="math/tex; mode=display">
+T(n) =2  T\left( \frac n 2\right) +\Theta(n^{\alpha})</script><p>因为</p>
+<script type="math/tex; mode=display">
+\log_2 2 =1< \alpha  =\log_2 3</script><p>所以</p>
+<script type="math/tex; mode=display">
+T(n)\in \Theta(n^{\alpha })</script><h4 id="2-26"><a href="#2-26" class="headerlink" title="2.26"></a>2.26</h4><p>错误，利用如下事实即可</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+xy &= \frac{(x+y)^2 -(x- y)^2}{4}\\
+&=[(x+y)^2-(x- y)^2] >> 2
+
+\end{aligned}</script><p>右移操作的时间复杂度为$\Theta(n)$，所以两数相乘的渐进时间复杂度不高于平方运算的渐进时间复杂度；而平方运算是一种特殊的两数相乘，所以其渐进时间复杂度小于等于两数相乘的渐进时间复杂度，从而两数相乘的渐进时间复杂度和平方运算的渐进时间复杂度相同。</p>
+<h4 id="2-29"><a href="#2-29" class="headerlink" title="2.29"></a>2.29</h4><h5 id="a-3"><a href="#a-3" class="headerlink" title="(a)"></a>(a)</h5><div class="table-container">
+<table>
+<thead>
+<tr>
+<th>$i$</th>
+<th>$z$</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>无</td>
+<td>$a_n$</td>
+</tr>
+<tr>
+<td>$n-1$</td>
+<td>$a_{n-1}+a_nx$</td>
+</tr>
+<tr>
+<td>$n-2$</td>
+<td>$a_{n-2}+a_{n-1}x+a_nx^2$</td>
+</tr>
+<tr>
+<td>$\ldots$</td>
+<td>$\ldots$</td>
+</tr>
+<tr>
+<td>$i$</td>
+<td>$\sum_{j=i}^n  a_{j} x^{j-i} $</td>
+</tr>
+<tr>
+<td>$\ldots$</td>
+<td>$\ldots$</td>
+</tr>
+<tr>
+<td>$0$</td>
+<td>$\sum_{j=0}^n  a_{j} x^{j} $</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h5 id="b-6"><a href="#b-6" class="headerlink" title="(b)"></a>(b)</h5><p>每轮的加法和乘法次数都为$1$，所以一共有$n$次乘法和$n$次加法。</p>
+<p>不存在更优的算法，原因如下：</p>
+<ul>
+<li>$n+1$项相加至少要$n$次加法</li>
+<li>$a_i \times x^i,i=1,\ldots,n$至少需要$n$次乘法（常数和$x^i$相乘）</li>
+</ul>
+<h4 id="2-31"><a href="#2-31" class="headerlink" title="2.31"></a>2.31</h4><p>假设</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+a &= \prod_{i=1}^kp_i ^{n_i}\\
+b &= \prod_{i=1}^k p_i ^{m_i}
+\end{aligned}</script><p>其中</p>
+<script type="math/tex; mode=display">
+p_1\le p_2\le\ldots \le p_k\\
+n_i \ge 0,
+m_i \ge 0, p_i为质数,i=1,\ldots, k</script><p>那么</p>
+<script type="math/tex; mode=display">
+\gcd (a, b) = \prod_{i=1}^kp_i ^{\min (m_i, n_i)}</script><h5 id="a-4"><a href="#a-4" class="headerlink" title="(a)"></a>(a)</h5><p>如果$a, b$都是偶数，那么</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+p_1&= 2\\
+n_1&\ge 1\\
+m_1&\ge 1
+
+\end{aligned}</script><p>因此</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+\gcd (a, b) 
+&= \prod_{i=1}^kp_i ^{\min (m_i, n_i)}\\
+&= p_1 ^{\min (m_1, n_1) }\prod_{i=2}^kp_i ^{\min (m_i, n_i)}\\
+&=2\times  p_1 ^{\min (m_1, n_1) -1}\prod_{i=2}^kp_i ^{\min (m_i, n_i)}\\
+&=2 \times \gcd (a/ 2, b/2)
+\end{aligned}</script><p>如果$a,b$其中一个是偶数，另一个是奇数。不妨设$a$是奇数，$b$是偶数，那么</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+p_1&= 2\\
+n_1&=0\\
+m_1&\ge  1
+
+\end{aligned}</script><p>那么</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+\gcd (a, b) 
+&= \prod_{i=1}^kp_i ^{\min (m_i, n_i)}\\
+&= p_1 ^{\min (m_1, n_1) }\prod_{i=2}^kp_i ^{\min (m_i, n_i)}\\
+&=\prod_{i=2}^kp_i ^{\min (m_i, n_i)}\\
+&=\gcd (a, b/2)
+\end{aligned}</script><p>如果$a,b$都是奇数，那么</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+\gcd (a, b) 
+&= \gcd (a-b, b)(a-b为偶数, b为奇数,运用之前的结论)\\
+&= \gcd ((a-b) /2, b) 
+\end{aligned}</script><h5 id="b-7"><a href="#b-7" class="headerlink" title="(b)"></a>(b)</h5><p>利用递推式即可：</p>
+<script type="math/tex; mode=display">
+\operatorname{gcd}(a, b)=\left\{\begin{array}{ll}
+2 \operatorname{gcd}(a / 2, b / 2) & \text { 如果 } a, b \text { 都是偶数 } \\
+\operatorname{gcd}(a, b / 2) & \text { 如果 } a \text { 是奇数, } b \text { 是偶数 } \\
+\operatorname{gcd}(a/2, b ) & \text { 如果 } a \text { 是偶数, } b \text { 是奇数 } \\
+\operatorname{gcd}((a-b) / 2) & \text { 如果 } a, b \text { 都是奇数 }
+\end{array}\right.</script><h5 id="c-3"><a href="#c-3" class="headerlink" title="(c)"></a>(c)</h5><p>当前算法：</p>
+<p>假设输入为$a,b$，对应长度为$n,m$，对应的时间复杂度为$T(n,m)$，那么时间复杂度满足递推关系：</p>
+<script type="math/tex; mode=display">
+T(n, m)=\begin{cases}
+T(n-1,m-1)+ \Theta(n+m) & a, b都为偶数\\
+T(n,m-1)+ \Theta(m) & a为奇数, b都为偶数\\
+T(n-1,m)+ \Theta(n) & a, b都为奇数\\
+T(\max(n,m)-1,m)+ \Theta(n+m ) & a为偶数, b都为奇数\\
+\end{cases}</script><p>所以每一步会使得输入的某个元素的位数减$1$，所以最多经过$n+m$步，算法会停止，每一步的时间复杂度为$\Theta(n+m)$，所以总时间复杂度为</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+\Theta\left(\sum_{i=1}^{n+m} i \right)
+&=\Theta\left(\frac{(n+m)(n+m+1)}{2} \right)\\
+&=\Theta\left(n^2 + m^2 + nm\right)\\
+
+
+\end{aligned}</script><p>特别的，对于此问题，$n=m$，所以时间复杂度为</p>
+<script type="math/tex; mode=display">
+\Theta(n^2)</script><p>欧几里得算法：</p>
+<p>首先证明Lame定理（参考sicp第32页）：</p>
+<ul>
+<li>如果欧几里得算法需要$k$步计算出一对整数的$\gcd$，那么这对数中最小的数必然大于等于第$k$个斐波那契数。</li>
+</ul>
+<p>证明：</p>
+<p>考虑算法中连续三组参数$(a_{k+1},b_{k+1}) \to (a_k, b_k)\to (a_{k-1}, b_{k-1})$</p>
+<p>下面证明</p>
+<script type="math/tex; mode=display">
+b_{k+1}\ge b_{k} + b_{k-1}</script><p>由定义可得</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+a_{k}&= b_{k+1}\\
+a_{k-1}&= b_k\\
+b_{k-1}&= a_k \mod b_{k}\\
+a_{k}&= q b_k + b_{k-1} 
+\end{aligned}</script><p>对最后一式做变量替换可得</p>
+<script type="math/tex; mode=display">
+b_{k+1}= q b_k +b_{k-1}\ge b_k + b_{k-1}</script><p>又因为</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+b_0 &= 0\ge \text{Fib}(0)\\
+b_1 &\ge 1 = \text{Fib}(1)
+\end{aligned}</script><p>所以利用数学归纳法，我们可得</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+b_{k+1}&\ge b_k + b_{k-1}\\
+&\ge  \text{Fib}(k)+\text{Fib}(k-1)\\
+&= \text{Fib}(k)
+\end{aligned}</script><p>结论得证。</p>
+<p>利用该结论，我们可得对于两个长度为$n$位的输入，$\gcd$运算的次数为$O(n)$，每次运算的时间复杂度由下式子确定：</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+q&= a_k / b_k\\
+b_{k-1}&= a_{k}- q b_k
+\end{aligned}</script><p>除法的时间复杂度为$O(n^2)$（基本算法），所以总的时间复杂度为</p>
+<script type="math/tex; mode=display">
+O(n^3)</script><p>说明该算法优于欧几里得除法。</p>
+<p>大整数除法时间复杂度参考资料：</p>
+<p><a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/36316109/what-is-the-complexity-of-long-division">https://stackoverflow.com/questions/36316109/what-is-the-complexity-of-long-division</a></p>
+<p><a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/2884172/algorithm-for-dividing-very-large-numbers">https://stackoverflow.com/questions/2884172/algorithm-for-dividing-very-large-numbers</a></p>
+<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/62088196">https://zhuanlan.zhihu.com/p/62088196</a></p>
+<h4 id="2-33"><a href="#2-33" class="headerlink" title="2.33"></a>2.33</h4><h5 id="a-5"><a href="#a-5" class="headerlink" title="(a)"></a>(a)</h5><p>利用反证法。</p>
+<p>由$M$非零可得存在元素$M_{pq}\ne 0$，下面将$2^n$个可能的取值进行分组，$v^{1},v^{2}$属于一组，当且仅当</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+v^{1}_i&=1-v^{2}_i,i=q\\
+v^1 _i&= v^2_i,i\neq q
+
+\end{aligned}</script><p>不难看出一共划分为$2^{n-1}$组。</p>
+<p>如果结论不成立，那么必然存在同组的两个$v^1,v^2$，同时满足</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+Mv^{m}&= 0\\
+\sum_{t=1}^n M_{pt}v^m_t&= 0(考虑第p行)\\
+M_{pq}v^m_q &=-\sum_{t\neq q} M_{pt}v^m_t\\
+m&=1,2
+\end{aligned}</script><p>注意到</p>
+<script type="math/tex; mode=display">
+v^1 _i= v^2_i,i\neq q</script><p>所以我们有</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+M_{pq}v^1_q 
+&=-\sum_{t\neq q} M_{pt}v^1_t\\
+&= -\sum_{t\neq q} M_{pt}v^2_t\\
+&= -M_{pq}v^2_q
+\end{aligned}</script><p>利用$M_{pq}\ne 0$，我们可得</p>
+<script type="math/tex; mode=display">
+v_q^1 + v_q^2 =0</script><p>这就与</p>
+<script type="math/tex; mode=display">
+v^{1}_q=1-v^{2}_q</script><p>矛盾。</p>
+<h5 id="b-8"><a href="#b-8" class="headerlink" title="(b)"></a>(b)</h5><p>注意到</p>
+<script type="math/tex; mode=display">
+ABv= Cv \Leftrightarrow (AB-C)v= 0</script><p>所以</p>
+<script type="math/tex; mode=display">
+\text { 如果 } A B \neq C, \quad \text { 则 } \operatorname{Pr}[A B v=C v] \le 1 / 2</script><p>注意到$ABv=A(Bv)$，所以计算$ABv,Cv$的时间复杂度为$O(n^2)$。</p>
+<p>现在设置参数$k$，构造如下算法：</p>
+<ul>
+<li>flag = true</li>
+<li>for $i=1,\ldots,k$,<ul>
+<li>随机初始化$v$</li>
+<li>如果$AB v \neq Cv$<ul>
+<li>flag = false</li>
+<li>break</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>return flag</li>
+</ul>
+<p>算法说明：</p>
+<p>如果$AB\neq C$，那么flag = true的概率$\le 1/ 2^k$，取稍大的$k$，那么可以认为该事件几乎不可能发生，所以可以近似认为flag = true时，$AB=C$；flag = false时，$AB\neq C$。</p>
+<h4 id="2-34"><a href="#2-34" class="headerlink" title="2.34"></a>2.34</h4><p>思路：</p>
+<p>动态规划，对下标为$i$的变量，维护变量$\{\max(i-10, 1),\ldots, \min(i+10, n)\}$的取值即可。</p>
+<ul>
+<li>初始化可行集$S =\{\varnothing  \}$（该集合为可行集的集合）</li>
+<li>布尔公式$B$</li>
+<li>for $i=1,\ldots, \min(21, n)$:<ul>
+<li>$B_1= B$</li>
+<li>$S_1=\{\}$</li>
+<li>for $s\in S$:<ul>
+<li>$B_1=B(s)$</li>
+<li>for $v=\text{false}, \text{true}$:<ul>
+<li>$B_1=B_1((i, v))$</li>
+<li>if $B_1$不可满足：<ul>
+<li>break</li>
+</ul>
+</li>
+<li>$s= s\cup \{(i, v)\}$</li>
+<li>$S_1= S_1\cup s$</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>$S=S_1$</li>
+</ul>
+</li>
+<li>for $i=2,\ldots, n$:<ul>
+<li>$B_1= B$</li>
+<li>$S_1=\{\}$</li>
+<li>$j=\min(i+10, n)$</li>
+<li>for $s\in S$:<ul>
+<li>$B_1=B(s)$</li>
+<li>for $v=\text{false}, \text{true}$:<ul>
+<li>如果$j$的子句不都可满足：<ul>
+<li>break</li>
+</ul>
+</li>
+<li>$s= s\cup \{(j, v)\}-\{(\max(i-10, 1), v’)\}$</li>
+<li>$S_1= S_1\cup s$</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>$S=S_1$</li>
+</ul>
+</li>
+<li>return $S$中任意元素</li>
+</ul>
+<p>时间复杂度：</p>
+<p>$n$轮循环，集合$S$的元素数量$\le 2^{21}$，所以是线性时间复杂度。</p>
+<p>参考资料：</p>
+<p><a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/10213929/linear-3sat-a-version-of-3sat-in-linear-time">https://stackoverflow.com/questions/10213929/linear-3sat-a-version-of-3sat-in-linear-time</a></p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">Doraemonzzz</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="http://doraemonzzz.com/2021/01/24/%E7%AE%97%E6%B3%95%E6%A6%82%E8%AE%BA(DPV)%E4%B9%A0%E9%A2%98%E8%A7%A3%E7%AD%94%E2%80%94%E2%80%94%E7%AC%AC2%E7%AB%A0%20%E5%88%86%E6%B2%BB%E7%AE%97%E6%B3%95/">http://doraemonzzz.com/2021/01/24/%E7%AE%97%E6%B3%95%E6%A6%82%E8%AE%BA(DPV)%E4%B9%A0%E9%A2%98%E8%A7%A3%E7%AD%94%E2%80%94%E2%80%94%E7%AC%AC2%E7%AB%A0%20%E5%88%86%E6%B2%BB%E7%AE%97%E6%B3%95/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://doraemonzzz.com" target="_blank">Doraemonzzz</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E7%AE%97%E6%B3%95%E6%A6%82%E8%AE%BA/">算法概论</a></div><div class="post_share"><div class="social-share" data-image="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2021/01/24/%E6%91%A9%E5%B0%94%E6%8A%95%E7%A5%A8%E6%B3%95%E4%B8%80%E8%88%AC%E6%83%85%E5%BD%A2%E4%B8%8B%E7%9A%84%E8%AF%81%E6%98%8E/"><img class="prev-cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">摩尔投票法一般情形下的证明</div></div></a></div><div class="next-post pull-right"><a href="/2021/01/23/%E7%AE%97%E6%B3%95%E6%A6%82%E8%AE%BA(DPV)%E4%B9%A0%E9%A2%98%E8%A7%A3%E7%AD%94%E2%80%94%E2%80%94%E7%AC%AC0%E7%AB%A0%20%E5%BA%8F%E8%A8%80/"><img class="next-cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">算法概论(DPV)习题解答——第0章 序言</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span> 相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2021/06/06/2021-6-6-算法概论(DPV)习题解答——第3章-图的分解/" title="算法概论(DPV)习题解答——第3章 图的分解"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-06-06</div><div class="title">算法概论(DPV)习题解答——第3章 图的分解</div></div></a></div><div><a href="/2021/01/23/算法概论(DPV)习题解答——第0章 序言/" title="算法概论(DPV)习题解答——第0章 序言"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-01-23</div><div class="title">算法概论(DPV)习题解答——第0章 序言</div></div></a></div><div><a href="/2021/02/21/算法概论(DPV)第2章 分治算法 总结/" title="算法概论(DPV)第2章 分治算法 总结"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-02-21</div><div class="title">算法概论(DPV)第2章 分治算法 总结</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="card-info-avatar is-center"><img class="avatar-img" src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/><div class="author-info__name">Doraemonzzz</div><div class="author-info__description">个人博客，主要记录有关机器学习，数学以及计算机科学的笔记</div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">610</div></a></div><div class="card-info-data-item is-center"><a href="/tags/"><div class="headline">标签</div><div class="length-num">59</div></a></div><div class="card-info-data-item is-center"><a href="/categories/"><div class="headline">分类</div><div class="length-num">23</div></a></div></div><a class="button--animated" id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/Doraemonzzz" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="/doraemon_zzz@163.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn card-announcement-animation"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC2%E7%AB%A0"><span class="toc-number">1.</span> <span class="toc-text">第2章</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#2-2"><span class="toc-number">1.1.</span> <span class="toc-text">2.2</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-13"><span class="toc-number">1.2.</span> <span class="toc-text">2.13</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#b"><span class="toc-number">1.2.1.</span> <span class="toc-text">(b)</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#c"><span class="toc-number">1.2.2.</span> <span class="toc-text">(c)</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-16"><span class="toc-number">1.3.</span> <span class="toc-text">2.16</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-17"><span class="toc-number">1.4.</span> <span class="toc-text">2.17</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-18"><span class="toc-number">1.5.</span> <span class="toc-text">2.18</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-19"><span class="toc-number">1.6.</span> <span class="toc-text">2.19</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#a"><span class="toc-number">1.6.1.</span> <span class="toc-text">(a)</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#b-1"><span class="toc-number">1.6.2.</span> <span class="toc-text">(b)</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-20"><span class="toc-number">1.7.</span> <span class="toc-text">2.20</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-21"><span class="toc-number">1.8.</span> <span class="toc-text">2.21</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#a-1"><span class="toc-number">1.8.1.</span> <span class="toc-text">(a)</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#b-2"><span class="toc-number">1.8.2.</span> <span class="toc-text">(b)</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#c-1"><span class="toc-number">1.8.3.</span> <span class="toc-text">(c)</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-23"><span class="toc-number">1.9.</span> <span class="toc-text">2.23</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#b-3"><span class="toc-number">1.9.1.</span> <span class="toc-text">(b)</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-24"><span class="toc-number">1.10.</span> <span class="toc-text">2.24</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#b-4"><span class="toc-number">1.10.1.</span> <span class="toc-text">(b)</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#c-2"><span class="toc-number">1.10.2.</span> <span class="toc-text">(c)</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-25"><span class="toc-number">1.11.</span> <span class="toc-text">2.25</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#a-2"><span class="toc-number">1.11.1.</span> <span class="toc-text">(a)</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#b-5"><span class="toc-number">1.11.2.</span> <span class="toc-text">(b)</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-26"><span class="toc-number">1.12.</span> <span class="toc-text">2.26</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-29"><span class="toc-number">1.13.</span> <span class="toc-text">2.29</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#a-3"><span class="toc-number">1.13.1.</span> <span class="toc-text">(a)</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#b-6"><span class="toc-number">1.13.2.</span> <span class="toc-text">(b)</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-31"><span class="toc-number">1.14.</span> <span class="toc-text">2.31</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#a-4"><span class="toc-number">1.14.1.</span> <span class="toc-text">(a)</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#b-7"><span class="toc-number">1.14.2.</span> <span class="toc-text">(b)</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#c-3"><span class="toc-number">1.14.3.</span> <span class="toc-text">(c)</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-33"><span class="toc-number">1.15.</span> <span class="toc-text">2.33</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#a-5"><span class="toc-number">1.15.1.</span> <span class="toc-text">(a)</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#b-8"><span class="toc-number">1.15.2.</span> <span class="toc-text">(b)</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-34"><span class="toc-number">1.16.</span> <span class="toc-text">2.34</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2021/06/06/2021-6-6-%E7%AE%97%E6%B3%95%E6%A6%82%E8%AE%BA(DPV)%E4%B9%A0%E9%A2%98%E8%A7%A3%E7%AD%94%E2%80%94%E2%80%94%E7%AC%AC3%E7%AB%A0-%E5%9B%BE%E7%9A%84%E5%88%86%E8%A7%A3/" title="算法概论(DPV)习题解答——第3章 图的分解"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="算法概论(DPV)习题解答——第3章 图的分解"/></a><div class="content"><a class="title" href="/2021/06/06/2021-6-6-%E7%AE%97%E6%B3%95%E6%A6%82%E8%AE%BA(DPV)%E4%B9%A0%E9%A2%98%E8%A7%A3%E7%AD%94%E2%80%94%E2%80%94%E7%AC%AC3%E7%AB%A0-%E5%9B%BE%E7%9A%84%E5%88%86%E8%A7%A3/" title="算法概论(DPV)习题解答——第3章 图的分解">算法概论(DPV)习题解答——第3章 图的分解</a><time datetime="2021-06-06T14:35:00.000Z" title="发表于 2021-06-06 22:35:00">2021-06-06</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/06/06/2021-6-6-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E7%AC%AC5%E7%AB%A0-%E4%B9%A0%E9%A2%98%E8%A7%A3%E6%9E%90/" title="深入理解计算机系统 第5章 习题解析"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="深入理解计算机系统 第5章 习题解析"/></a><div class="content"><a class="title" href="/2021/06/06/2021-6-6-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E7%AC%AC5%E7%AB%A0-%E4%B9%A0%E9%A2%98%E8%A7%A3%E6%9E%90/" title="深入理解计算机系统 第5章 习题解析">深入理解计算机系统 第5章 习题解析</a><time datetime="2021-06-06T07:23:00.000Z" title="发表于 2021-06-06 15:23:00">2021-06-06</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/06/05/2021-6-5-Stanford-Compiler-PA5%E7%BF%BB%E8%AF%91/" title="Stanford Compiler PA5翻译"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Stanford Compiler PA5翻译"/></a><div class="content"><a class="title" href="/2021/06/05/2021-6-5-Stanford-Compiler-PA5%E7%BF%BB%E8%AF%91/" title="Stanford Compiler PA5翻译">Stanford Compiler PA5翻译</a><time datetime="2021-06-05T06:12:00.000Z" title="发表于 2021-06-05 14:12:00">2021-06-05</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/06/04/2021-6-4-Stanford-Compiler-PA4%E7%BF%BB%E8%AF%91/" title="Stanford Compiler PA4翻译"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Stanford Compiler PA4翻译"/></a><div class="content"><a class="title" href="/2021/06/04/2021-6-4-Stanford-Compiler-PA4%E7%BF%BB%E8%AF%91/" title="Stanford Compiler PA4翻译">Stanford Compiler PA4翻译</a><time datetime="2021-06-03T16:17:00.000Z" title="发表于 2021-06-04 00:17:00">2021-06-04</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/06/03/2021-6-3-%E5%B7%A7%E5%A6%99%E7%9A%84Y%E8%BF%90%E7%AE%97%E7%AC%A6/" title="巧妙的Y运算符"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="巧妙的Y运算符"/></a><div class="content"><a class="title" href="/2021/06/03/2021-6-3-%E5%B7%A7%E5%A6%99%E7%9A%84Y%E8%BF%90%E7%AE%97%E7%AC%A6/" title="巧妙的Y运算符">巧妙的Y运算符</a><time datetime="2021-06-03T00:54:00.000Z" title="发表于 2021-06-03 08:54:00">2021-06-03</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2021 By Doraemonzzz</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><div class="js-pjax"><script>if (!window.MathJax) {
+  window.MathJax = {
+    loader: {
+      source: {
+        '[tex]/amsCd': '[tex]/amscd'
+      }
+    },
+    tex: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]],
+      tags: 'ams'
+    },
+    options: {
+      renderActions: {
+        findScript: [10, doc => {
+          for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+            const display = !!node.type.match(/; *mode=display/)
+            const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+            const text = document.createTextNode('')
+            node.parentNode.replaceChild(text, node)
+            math.start = {node: text, delim: '', n: 0}
+            math.end = {node: text, delim: '', n: 0}
+            doc.math.push(math)
+          }
+        }, ''],
+        addClass: [200,() => {
+          document.querySelectorAll('mjx-container:not([display=\'true\']').forEach( node => {
+            const target = node.parentNode
+            if (!target.classList.contains('has-jax')) {
+              target.classList.add('mathjax-overflow')
+            }
+          })
+        }, '', false]
+      }
+    }
+  }
+  
+  const script = document.createElement('script')
+  script.src = 'https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js'
+  script.id = 'MathJax-script'
+  script.async = true
+  document.head.appendChild(script)
+} else {
+  MathJax.startup.document.state(0)
+  MathJax.texReset()
+  MathJax.typeset()
+}</script></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

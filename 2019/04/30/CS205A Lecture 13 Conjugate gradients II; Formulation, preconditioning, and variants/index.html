@@ -1,0 +1,414 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>CS205A Lecture 13 Conjugate gradients II; Formulation; preconditioning; and variants | Doraemonzzz</title><meta name="keywords" content="CS205A"><meta name="author" content="Doraemonzzz"><meta name="copyright" content="Doraemonzzz"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="课程主页：https:&#x2F;&#x2F;graphics.stanford.edu&#x2F;courses&#x2F;cs205a-13-fall&#x2F;schedule.html 这次回顾第十三讲，这一讲完整介绍了共轭梯度法。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="CS205A Lecture 13 Conjugate gradients II; Formulation; preconditioning; and variants">
+<meta property="og:url" content="http://doraemonzzz.com/2019/04/30/CS205A%20Lecture%2013%20Conjugate%20gradients%20II;%20Formulation,%20preconditioning,%20and%20variants/index.html">
+<meta property="og:site_name" content="Doraemonzzz">
+<meta property="og:description" content="课程主页：https:&#x2F;&#x2F;graphics.stanford.edu&#x2F;courses&#x2F;cs205a-13-fall&#x2F;schedule.html 这次回顾第十三讲，这一讲完整介绍了共轭梯度法。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg">
+<meta property="article:published_time" content="2019-04-30T11:31:00.000Z">
+<meta property="article:modified_time" content="2019-05-10T07:52:06.691Z">
+<meta property="article:author" content="Doraemonzzz">
+<meta property="article:tag" content="CS205A">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="http://doraemonzzz.com/2019/04/30/CS205A%20Lecture%2013%20Conjugate%20gradients%20II;%20Formulation,%20preconditioning,%20and%20variants/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"prismjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    jQuery: 'https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js',
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+    },
+    fancybox: {
+      js: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isanchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'CS205A Lecture 13 Conjugate gradients II; Formulation; preconditioning; and variants',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2019-05-10 15:52:06'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    })(window)</script><meta name="generator" content="Hexo 5.4.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="author-avatar"><img class="avatar-img" src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">文章</div><div class="length-num">610</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">标签</div><div class="length-num">59</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/categories/"><div class="headline">分类</div><div class="length-num">23</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">Doraemonzzz</a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">CS205A Lecture 13 Conjugate gradients II; Formulation; preconditioning; and variants</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2019-04-30T11:31:00.000Z" title="发表于 2019-04-30 19:31:00">2019-04-30</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2019-05-10T07:52:06.691Z" title="更新于 2019-05-10 15:52:06">2019-05-10</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E6%95%B0%E5%80%BC%E5%88%86%E6%9E%90/">数值分析</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="CS205A Lecture 13 Conjugate gradients II; Formulation; preconditioning; and variants"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p>课程主页：<a target="_blank" rel="noopener" href="https://graphics.stanford.edu/courses/cs205a-13-fall/schedule.html">https://graphics.stanford.edu/courses/cs205a-13-fall/schedule.html</a></p>
+<p>这次回顾第十三讲，这一讲完整介绍了共轭梯度法。</p>
+<span id="more"></span>
+<p>首先回顾梯度下降的残差：</p>
+<script type="math/tex; mode=display">
+\vec{r}_{k} = \vec{b}-A \vec{x}_{k}</script><p>下面讨论$\vec r_{k+1}$和$\vec r_k$的关系。我们知道更新公式为</p>
+<script type="math/tex; mode=display">
+\vec{x}_{k+1}=\vec{x}_{k}+\alpha_{k+1} \vec{v}_{k+1}</script><p>其中</p>
+<script type="math/tex; mode=display">
+\alpha_{k+1}=\frac{\vec{v}_{k+1}^{\top} \vec{r}_{k} }{\vec{v}_{k+1}^{\top} A \vec{v}_{k+1} }</script><p>那么$\vec r_{k+1}$计算方式如下：</p>
+<script type="math/tex; mode=display">
+\begin{aligned} 
+\vec{r}_{k+1} &=\vec{b}-A \vec{x}_{k+1} \\ 
+&=\vec{b}-A\left(\vec{x}_{k}+\alpha_{k+1} \vec{v}_{k+1}\right)  \\ 
+&=\left(\vec{b}-A \vec{x}_{k}\right)-\alpha_{k+1} A \vec{v}_{k+1} \\ &=\vec{r}_{k}-\alpha_{k+1} A \vec{v}_{k+1}  
+\end{aligned}</script><p>特别的，在梯度下降法中，我们取</p>
+<script type="math/tex; mode=display">
+\vec{v}_{k+1} =\vec{r}_{k}</script><p>那么</p>
+<script type="math/tex; mode=display">
+\vec{r}_{k+1}=\vec{r}_{k}-\alpha_{k+1} A \vec{r}_{k}</script><p>递推上式得到如下命题：</p>
+<h4 id="命题10-3"><a href="#命题10-3" class="headerlink" title="命题10.3"></a>命题10.3</h4><script type="math/tex; mode=display">
+如果对f使用梯度下降法，那么\operatorname{span}\left\{\vec{r}_{0}, \ldots, \vec{r}_{k}\right\}=\operatorname{span}\left\{\vec{r}_{0}, A \vec{r}_{0}, \ldots, A^{k} \vec{r}_{0}\right\}</script><p>其中</p>
+<script type="math/tex; mode=display">
+f(\vec{x}) = \frac{1}{2} \vec{x}^{\top} A \vec{x}-\vec{b}^{\top} \vec{x}+c</script><p>注意上述命题不能保证如下事实成立：</p>
+<script type="math/tex; mode=display">
+\vec{x}_{k}-\vec{x}_{0} \neq {\arg \min} _{\vec{v} \in \operatorname{span}\left\{\vec{r}_{0}, A \vec{r}_{0}, \ldots, A^{k-1} \vec{r}_{0}\right\} } f\left(\vec{x}_{0}+\vec{v}\right)</script><p>因为第$k$步的更新结果能会破坏前$k-1$次的结果。但是，如果找到$A$共轭向量组$\{\vec v_1,\ldots ,\vec v_n\}$，那么结合之前的讨论不难得到如下命题：</p>
+<h4 id="命题10-4"><a href="#命题10-4" class="headerlink" title="命题10.4"></a>命题10.4</h4><script type="math/tex; mode=display">
+假设\vec x_k是沿着共轭向量组迭代更新k次的结果，那么\\
+\vec{x}_{k}-\vec{x}_{0} = {\arg \min} _
+{\vec{v} \in \operatorname{span}\left\{\vec{v}_{1}, \vec{v}_{2}, \ldots, \vec{v}_{k}\right\} }
+f\left(\vec{x}_{0}+\vec{v}\right)</script><p>所以接下来只要讨论如何找到$A$共轭向量组即可。</p>
+<h3 id="生成-A-共轭方向"><a href="#生成-A-共轭方向" class="headerlink" title="生成$A$共轭方向"></a>生成$A$共轭方向</h3><p>利用Gram-Schmidt的思路，不难得到最原始的做法：</p>
+<script type="math/tex; mode=display">
+\begin{aligned} 
+\text{Update search direction (bad Gram-Schmidt step): }&\vec{v}_{k} =A^{k-1} \vec{r}_{0}-\sum_{i<k} \frac{\left\langle A^{k-1} \vec{r}_{0}, \vec{v}_{i}\right\rangle_{A} }{\left\langle\vec{v}_{i}, \vec{v}_{i}\right\rangle_{A} } \vec{v}_{i} \\
+\text{Line search: }&\alpha_{k} =\frac{\vec{v}_{k}^{\top} \vec{r}_{k-1} }{\vec{v}_{k}^{\top} A \vec{v}_{k} } \\ 
+\text{Update estimate: }&\vec{x}_{k} =\vec{x}_{k-1}+\alpha_{k} \vec{v}_{k} \\ 
+\text{Update residual: }&\vec{r}_k =\vec{r}_{k-1}-\alpha_{k} A \vec{v}_{k} 
+\end{aligned}</script><p>不难看出该算法有如下性质：</p>
+<script type="math/tex; mode=display">
+\operatorname{span}\left\{\vec{v}_{1}, \ldots, \vec{v}_{k}\right\}=\operatorname{span}\left\{\vec{r}_{0}, A \vec{r}_{0}, \ldots, A^{k-1} \vec{r}_{0}\right\} \tag 1</script><p>这个算法有如下两个问题：</p>
+<ol>
+<li>当迭代多次以后，$A^{k-1}\vec r_0​$趋近于$A​$最大特征值对应的特征向量，这使得投影的效果越来越差。</li>
+<li>为了计算$\vec v_k$，我们需要存储$\vec v_1,\ldots ,\vec v_{k-1}$；因此每一轮比上一轮都需要更多的内存。</li>
+</ol>
+<p>上述算法的第一步是将$A^{k-1}\vec r_0 $减去其在$\operatorname{span}\left\{\vec{v}_{1}, \ldots, \vec{v}_{k-1}\right\}$上的投影，结合(1)，不难发现我们只要找到$\vec w$，使其满足如下条件即可</p>
+<script type="math/tex; mode=display">
+\vec{w} \in \operatorname{span}\left\{\vec{r}_{0}, A \vec{r}_{0}, \ldots, A^{k-1} \vec{r}_{0}\right\} \backslash \operatorname{span}\left\{\vec{r}_{0}, A \vec{r}_{0}, \ldots, A^{k-2} \vec{r}_{0}\right\}</script><p>因为</p>
+<script type="math/tex; mode=display">
+\vec{r}_{k-1} =\vec{r}_{k-2}-\alpha_{k-1} A \vec{v}_{k-1}</script><p>所以结合(1)，我们有</p>
+<script type="math/tex; mode=display">
+\vec{r}_{k-1} \in \operatorname{span}\left\{\vec{r}_{0}, A \vec{r}_{0}, \ldots, A^{k-1} \vec{r}_{0}\right\} \backslash \operatorname{span}\left\{\vec{r}_{0}, A \vec{r}_{0}, \ldots, A^{k-2} \vec{r}_{0}\right\}</script><p>所以可以选择$\vec r_k$进行如上操作，于是得到第二个算法：</p>
+<script type="math/tex; mode=display">
+\begin{aligned} 
+\text{Update search direction (bad Gram-Schmidt step): }&\vec{v}_{k} =\vec{r}_{k-1}-\sum_{i<k} \frac{\left\langle \vec{r}_{k-1}, \vec{v}_{i}\right\rangle_{A} }{\left\langle\vec{v}_{i}, \vec{v}_{i}\right\rangle_{A} } \vec{v}_{i} \\
+\text{Line search: }&\alpha_{k} =\frac{\vec{v}_{k}^{\top} \vec{r}_{k-1} }{\vec{v}_{k}^{\top} A \vec{v}_{k} } \\ 
+\text{Update estimate: }&\vec{x}_{k} =\vec{x}_{k-1}+\alpha_{k} \vec{v}_{k} \\ 
+\text{Update residual: }&\vec{r}_k =\vec{r}_{k-1}-\alpha_{k} A \vec{v}_{k} 
+\end{aligned}</script><p>该算法解决了问题1，即不用计算$A^{k-1}\vec r_0$，但是内存问题似乎还没解决。事实上，该算法已经解决内存的问题，因为我们有如下命题：</p>
+<h4 id="命题10-5"><a href="#命题10-5" class="headerlink" title="命题10.5"></a>命题10.5</h4><script type="math/tex; mode=display">
+在上述算法的条件下，对\ell<k,我们有\\
+\left\langle\vec{r}_{k}, \vec{v}_{\ell}\right\rangle_{A}=0</script><p>证明：利用数学归纳法证明。</p>
+<p>当$k=1$时，无需证明。</p>
+<p>当$k&gt;1$时，假设结论对$k’&lt;k$成立，那么因为</p>
+<script type="math/tex; mode=display">
+\vec r_k = \vec r_{k-1} -\alpha_k A\vec v_k</script><p>所以我们有</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+\left\langle\vec{r}_{k}, \vec{v}_{\ell}\right\rangle_{A}
+&=\left\langle \vec{r}_{k-1}-\alpha_{k} A \vec{v}_{k} , \vec{v}_{\ell}\right\rangle_{A} \\
+&=\left\langle\vec{r}_{k-1}, \vec{v}_{\ell}\right\rangle_{A}-\alpha_{k}\left\langle A \vec{v}_{k}, \vec{v}_{\ell}\right\rangle_{A}\\
+&=\left\langle\vec{r}_{k-1}, \vec{v}_{\ell}\right\rangle_{A}-\alpha_{k}
+(A \vec{v}_{k})^{\top} A \vec{v}_{\ell}\\
+&=\left\langle\vec{r}_{k-1}, \vec{v}_{\ell}\right\rangle_{A}-\alpha_{k}
+ \vec{v}_{k}^{\top} A^{\top}A \vec{v}_{\ell}\\
+ &=\left\langle\vec{r}_{k-1}, \vec{v}_{\ell}\right\rangle_{A}-\alpha_{k}
+ (\vec{v}_{k}^{\top}) A(A \vec{v}_{\ell})\\
+&=\left\langle\vec{r}_{k-1}, \vec{v}_{\ell}\right\rangle_{A}-\alpha_{k}\left\langle\vec{v}_{k}, A \vec{v}_{\ell}\right\rangle_{A}
+\end{aligned}</script><p>如果$\ell &lt;k-1$，那么由归纳假设，第一项为$0$。注意由(1)可得</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+\vec v_{\ell} &\in \operatorname{span}\left\{\vec{r}_{0}, A \vec{r}_{0}, \ldots, A^{\ell-1} \vec{r}_{0}\right\}\\
+A\vec v_{\ell} &\in \operatorname{span}\left\{A\vec{r}_{0}, A^2 \vec{r}_{0}, \ldots, A^{\ell} \vec{r}_{0}\right\} \subseteq \operatorname{span}\left\{\vec{r}_{0},A\vec{r}_{0}, A^2 \vec{r}_{0}, \ldots, A^{\ell} \vec{r}_{0}\right\}=
+\operatorname{span}\left\{\vec{v}_{1}, \ldots, \vec{v}_{\ell+1}\right\}
+\end{aligned}</script><p>由$\vec v_k$的构造（$A$共轭），我们可得第二项为$0​$。</p>
+<p>如果$\ell =k-1$，直接计算可得</p>
+<script type="math/tex; mode=display">
+\left\langle\vec{r}_{k}, \vec{v}_{\ell}\right\rangle_{A} =
+\left\langle\vec{r}_{k}, \vec{v}_{k-1}\right\rangle_{A}</script><p>由残差公式可得</p>
+<script type="math/tex; mode=display">
+A \vec{v}_{k-1}=\frac{1}{\alpha_{k-1} }\left(\vec{r}_{k-2}-\vec{r}_{k-1}\right)</script><p>和$\vec r_k​$做内积得到</p>
+<script type="math/tex; mode=display">
+\left\langle\vec{r}_{k}, \vec{v}_{k-1}\right\rangle_{A}=\frac{1}{\alpha_{k-1} } \vec{r}_{k}^{\top}\left(\vec{r}_{k-2}-\vec{r}_{k-1}\right)</script><p>由(1)可得</p>
+<script type="math/tex; mode=display">
+\vec{r}_{k-2}-\vec{r}_{k-1}\in \operatorname{span}\left\{\vec{r}_{0}, A \vec{r}_{0}, \ldots, A^{k-1} \vec{r}_{0}\right\}</script><p>因为</p>
+<script type="math/tex; mode=display">
+\vec r_k = -\nabla f(\vec x_k)</script><p>结合命题10.4可得我们必然有</p>
+<script type="math/tex; mode=display">
+\vec{r}_{k} \perp \operatorname{span}\left\{\vec{r}_{0}, A \vec{r}_{0}, \ldots, A^{k-1} \vec{r}_{0}\right\}</script><p>因为如果上式不成立，那么子空间存在一个方向可以减少$f ​$，因此</p>
+<script type="math/tex; mode=display">
+\left\langle\vec{r}_{k}, \vec{v}_{k-1}\right\rangle_{A}=\frac{1}{\alpha_{k-1} } \vec{r}_{k}^{\top}\left(\vec{r}_{k-2}-\vec{r}_{k-1}\right)=0</script><p>有了上述命题，我们可以对第二个算法的第一步进行化简：</p>
+<script type="math/tex; mode=display">
+\begin{aligned} 
+\vec{v}_{k} 
+&=\vec{r}_{k-1}-\sum_{i<k} \frac{\left\langle\vec{r}_{k-1}, \vec{v}_{i}\right\rangle_{A} }{\left\langle\vec{v}_{i}, \vec{v}_{i}\right\rangle_{A} } \vec{v}_{i}  \\ 
+&=\vec{r}_{k-1}-\frac{\left\langle\vec{r}_{k-1}, \vec{v}_{k-1}\right\rangle_{A} }{\left\langle\vec{v}_{k-1}, \vec{v}_{k-1}\right\rangle_A} \vec{v}_{k-1}
+\end{aligned}</script><p>将上述内容总结即可得到最终算法：</p>
+<script type="math/tex; mode=display">
+\begin{aligned} 
+\text{Update search direction: }&\vec{v}_{k} =\vec{r}_{k-1}-\frac{\left\langle\vec{r}_{k-1}, \vec{v}_{k-1}\right\rangle_{A} }{\left\langle\vec{v}_{k-1}, \vec{v}_{k-1}\right\rangle_A} \vec{v}_{k-1} \\
+\text{Line search: }&\alpha_{k} =\frac{\vec{v}_{k}^{\top} \vec{r}_{k-1} }{\vec{v}_{k}^{\top} A \vec{v}_{k} } \\ 
+\text{Update estimate: }&\vec{x}_{k} =\vec{x}_{k-1}+\alpha_{k} \vec{v}_{k} \\ 
+\text{Update residual: }&\vec{r}_k =\vec{r}_{k-1}-\alpha_{k} A \vec{v}_{k} 
+\end{aligned}</script><p>最后补充一个命题：</p>
+<h4 id="命题10-6"><a href="#命题10-6" class="headerlink" title="命题10.6"></a>命题10.6</h4><script type="math/tex; mode=display">
+\forall k \leq i, \vec{r}_{i} \cdot \vec{v}_{k}=0</script><p>证明：由之前讨论可得</p>
+<script type="math/tex; mode=display">
+\vec r_k=-\nabla f\left(\vec{x}_{k}\right) \perp \operatorname{span}\left\{\vec{r}_{0}, A \vec{r}_{0}, \ldots, A^{k-1} \vec{r}_{0}\right\}= \operatorname{span}\left\{\vec{v}_{1}, \ldots, \vec{v}_{k}\right\}</script><p>所以结论得证。</p>
+<h3 id="共轭梯度法分析"><a href="#共轭梯度法分析" class="headerlink" title="共轭梯度法分析"></a>共轭梯度法分析</h3><p>现在对上述算法稍作分析，由命题10.6可得</p>
+<script type="math/tex; mode=display">
+\vec v_{k-1} ^{\top} \vec r_{k-1}=0</script><p>因此由$\vec v_k$的定义，可得</p>
+<script type="math/tex; mode=display">
+\alpha_{k} =\frac{\vec{v}_{k}^{\top} \vec{r}_{k-1} }{\vec{v}_{k}^{\top} A \vec{v}_{k} }
+=\frac{ \vec{r}_{k-1}^{\top} \vec{r}_{k-1} }{\vec{v}_{k}^{\top} A \vec{v}_{k} } \ge 0</script><p>记</p>
+<script type="math/tex; mode=display">
+\begin{aligned} 
+\beta_{k} & =-\frac{\left\langle\vec{r}_{k-1}, \vec{v}_{k-1}\right\rangle_{A} }{\left\langle\vec{v}_{k-1}, \vec{v}_{k-1}\right\rangle_{A} } \\
+\vec{v}_{k} &=\vec{r}_{k-1}+\beta_{k} \vec{v}_{k-1} 
+\end{aligned}</script><p>化简$\beta_k$可得</p>
+<script type="math/tex; mode=display">
+\begin{aligned} 
+\beta_{k} & =-\frac{\left\langle\vec{r}_{k-1}, \vec{v}_{k-1}\right\rangle_{A} }{\left\langle\vec{v}_{k-1}, \vec{v}_{k-1}\right\rangle_{A} } \\ 
+&=-\frac{\vec{r}_{k-1}^{\top} A \vec{v}_{k-1} }{\vec{v}_{k-1}^{\top} A \vec{v}_{k-1} }  \\
+&=-\frac{\vec{r}_{k-1}^{\top}\left(\vec{r}_{k-2}-\vec{r}_{k-1}\right)}{\alpha_{k-1} \vec{v}_{k-1}^{\top} A \vec{v}_{k-1} }& \vec{r}_{k-1}=\vec{r}_{k-2}-\alpha_{k-1} A \vec{v}_{k-1}\\
+ &=\frac{\vec{r}_{k-1}^{\top} \vec{r}_{k-1} }{\alpha_{k-1} \vec{v}_{k-1}^{\top} A \vec{v}_{k-1} } & \vec{r}_{k-1}^{\top}\vec{r}_{k-2} =0,后续证明这点 \\ 
+ &=\frac{\vec{r}_{k-1}^{\top} \vec{r}_{k-1} }{\vec{r}_{k-2}^{\top} \vec{r}_{k-2} } 
+ & \alpha_{k} \vec{v}_{k}^{\top} A \vec{v}_{k} = \vec{r}_{k-1}^{\top} \vec{r}_{k-1},\alpha_k的定义
+\end{aligned}</script><p>所以</p>
+<script type="math/tex; mode=display">
+\beta_k \ge 0</script><p>最后补充证明</p>
+<script type="math/tex; mode=display">
+\vec{r}_{k-1}^{\top}\vec{r}_{k-2} =0</script><p>原因如下</p>
+<script type="math/tex; mode=display">
+\begin{aligned} 
+\vec{r}_{k-2}^{\top} \vec{r}_{k-1} 
+&=\vec{r}_{k-2}^{\top}\left(\vec{r}_{k-2}-\alpha_{k-1} A \vec{v}_{k-1}\right)\\ 
+&=\vec{r}_{k-2}^{\top} \vec{r}_{k-2}-\frac{\vec{r}_{k-2}^{\top} \vec{r}_{k-2} }{\vec{v}_{k-1}^{\top} A \vec{v}_{k-1} } \vec{r}_{k-2}^{\top} A \vec{v}_{k-1} 
+&\alpha_{k-1}=\frac{ \vec{r}_{k-2}^{\top} \vec{r}_{k-2} }{\vec{v}_{k-1}^{\top} A \vec{v}_{k-1} }\\ 
+& = \vec{r}_{k-2}^{\top} \vec{r}_{k-2}-\frac{\vec{r}_{k-2}^{\top} \vec{r}_{k-2} }
+{\vec{v}_{k-1}^{\top} A \vec{v}_{k-1} } (\vec{v}_{k-1}-\beta_{k-1} \vec{v}_{k-2})^{\top} A \vec{v}_{k-1} 
+&\vec{v}_{k-1} =\vec{r}_{k-2}+\beta_{k-1} \vec{v}_{k-2}\\
+&=\vec{r}_{k-2}^{\top} \vec{r}_{k-2}-\frac{\vec{r}_{k-2}^{\top} \vec{r}_{k-2} }{\vec{v}_{k-1}^{\top} A \vec{v}_{k-1} } \vec{v}_{k-1}^{\top} A \vec{v}_{k-1} 
+ & \vec v_{k-2},\vec v_{k-1}为A共轭\\
+&=0
+\end{aligned}</script><p>将上述内容总结成如下算法：</p>
+<script type="math/tex; mode=display">
+\begin{aligned} 
+\text{Update search direction: }\beta_{k} &=\frac{\vec{r}_{k-1}^{\top} \vec{r}_{k-1} }{\vec{r}_{k-2}^{\top} \vec{r}_{k-2} } \\ 
+\vec{v}_{k} &=\vec{r}_{k-1}+\beta_{k} \vec{v}_{k-1} \\ 
+\text{Line search: }\alpha_{k} &=\frac{\vec{r}_{k-1}^{\top} \vec{r}_{k-1} }{\vec{v}_{k}^{\top} A \vec{v}_{k} } \\ 
+\text{Update estimate: }\vec{x}_{k} &=\vec{x}_{k-1}+\alpha_{k} \vec{v}_{k} \\ 
+\text{Update residual: }\vec{r}_{k} &=\vec{r}_{k-1}-\alpha_{k} A \vec{v}_{k}
+\end{aligned}</script><h4 id="收敛性"><a href="#收敛性" class="headerlink" title="收敛性"></a>收敛性</h4><p>假设$\vec x’$为极值点，关于收敛性有如下结论：</p>
+<script type="math/tex; mode=display">
+\frac{f\left(\vec{x}_{k}\right)-f\left(\vec{x}'\right)}{f\left(\vec{x}_{0}\right)-f\left(\vec{x}'\right)} \leq 2\left(\frac{\sqrt{\kappa}-1}{\sqrt{\kappa}+1}\right)^{k}</script><p>其中</p>
+<script type="math/tex; mode=display">
+\kappa = \text{cond }A</script><h3 id="Preconditioning"><a href="#Preconditioning" class="headerlink" title="Preconditioning"></a>Preconditioning</h3><p>我们知道，对于线性系统</p>
+<script type="math/tex; mode=display">
+A\vec x = \vec b</script><p>如果$P$可逆，那么如下线性系统等价于原始线性系统</p>
+<script type="math/tex; mode=display">
+P A\vec x = P \vec b</script><p>如果</p>
+<script type="math/tex; mode=display">
+\text{cond }PA\ll \text{cond }A</script><p>那么新的系统比原始系统更好求解，这种条件下，称$P$为preconditioner。Preconditioner的想法很有吸引力，但是有如下两个问题：</p>
+<ol>
+<li>如果$A$正定，但$PA$不一定正定。</li>
+<li>我们需要$P$比$A^{-1}$更好计算。</li>
+</ol>
+<h4 id="CG-with-Preconditioning"><a href="#CG-with-Preconditioning" class="headerlink" title="CG with Preconditioning"></a>CG with Preconditioning</h4><p>假设Preconditioner $P$为正定对称矩阵，那么使用Cholesky分解，我们有</p>
+<script type="math/tex; mode=display">
+P^{-1} =EE^{\top}</script><p>在这个假设下，我们有如下命题：</p>
+<h4 id="命题10-7"><a href="#命题10-7" class="headerlink" title="命题10.7"></a>命题10.7</h4><script type="math/tex; mode=display">
+PA的条件数和E^{-1}AE^{-{\top} }相同</script><p>证明：首先考虑$E^{-1}AE^{-{\top} }$的奇异值，因为$E^{-1}AE^{-{\top} }$对称，所以奇异值等于特征值，所以讨论特征值即可。假设</p>
+<script type="math/tex; mode=display">
+E^{-1}AE^{-{\top} } \vec x =\lambda \vec x \tag 2</script><p>注意</p>
+<script type="math/tex; mode=display">
+P =E^{-{\top} } E^{-1}</script><p>所以对(2)左乘$E^{-{\top} }​$得到</p>
+<script type="math/tex; mode=display">
+E^{-\top }E^{-1}AE^{-\top } \vec x =PAE^{-\top } \vec x =\lambda E^{-\top } \vec x</script><p>定义</p>
+<script type="math/tex; mode=display">
+\vec y =E^{-\top} \vec x</script><p>那么有</p>
+<script type="math/tex; mode=display">
+PA\vec y =\lambda \vec y</script><p>所以$PA$特征值和$E^{-1}AE^{-{\top} }$的特征值相同，假设最大最小特征值为$\lambda_1,\lambda_2$，对应的特征向量为$\vec x _1,\vec x_2 $，那么</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+\lambda_1\| \vec x \| \le {\| PA \vec x \|} \le  \lambda_2\| \vec x \|\\
+\lambda_1 \le  \frac{\| PA \vec x \|}{\| \vec x \|} \le  \lambda_2
+\end{aligned}</script><p>因此</p>
+<script type="math/tex; mode=display">
+\text{cond }PA = \frac{\lambda_2}{\lambda_1} =\text{cond }E^{-1}AE^{-{\top} }</script><p>最后一个等号是因为奇异值和条件数的关系。</p>
+<p>上述事实告诉我们，如果我们求解</p>
+<script type="math/tex; mode=display">
+E^{-1}AE^{-{\top} } \vec x =E^{-1}\vec b</script><p>在条件数方面等价于求解</p>
+<script type="math/tex; mode=display">
+PA \vec x =P\vec b</script><p>结合上述讨论，我们可以用如下方式近似求解$A\vec x=\vec b​$：</p>
+<ol>
+<li>求解$E^{-1}AE^{-{\top} }  \vec y =E^{-1}\vec b​$</li>
+<li>求解$\vec x = E^{-\top} \vec y$</li>
+</ol>
+<p>将这个步骤和CG结合得到如下算法，将$A$用$E^{-1}AE^{-{\top} } $替换：</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+\text{Update search direction: }\beta_{k}&=\frac{\vec{r}_{k-1}^{\top} \vec{r}_{k-1} }{ {\vec{r}_{k-2}^{\top} \vec{r}_{k-2} }} \\ \vec{v}_{k}&=\vec{r}_{k-1}+\beta_{k} \vec{v}_{k-1} \\ 
+\text{Line search: }\alpha_{k}&=\frac{\vec{r}_{k-1} \vec{r}_{k-1} }{\vec{v}_{k}^{\top} E^{-1} A E^{-\top} \vec{v}_{k} } \\ 
+\text{Update estimate: }\vec{y}_{k}&=\vec{y}_{k-1}+\alpha_{k} E^{-1} A E^{-\top} \vec{v}_{k} \\ \text{Update residual: }\vec{r}_{k}&=\vec{r}_{k-1}-\alpha_{k} E^{-1} A E^{-\top} \vec{v}_{k}
+\end{aligned}</script><p>如果定义</p>
+<script type="math/tex; mode=display">
+\tilde{r}_{k} = E \vec{r}_{k}, \tilde{v}_{k} = E^{-\top} \vec{v}_{k},\vec{x}_{k}= E \vec{y}_{k}</script><p>结合</p>
+<script type="math/tex; mode=display">
+P =E^{-{\top} } E^{-1}</script><p>我们可以将上述算法改写为：</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+\text{Update search direction: }\beta_{k}&=\frac{\tilde{r}_{k-1}^{\top} P \tilde{r}_{k-1} }{\tilde{r}_{k-2}^{\top} P \tilde{r}_{k-2} } \\ \tilde{v}_{k}&=P \tilde{r}_{k-1}+\beta_{k} \tilde{v}_{k-1} \\ 
+\text{Line search: }\alpha_{k}&=\frac{\vec{r}_{k-1}^{\top} P \vec{r}_{k-1} }{\tilde{v}_{k}^{\top} A \tilde{v}_{k} }\\ 
+\text{Update estimate: }\vec{x}_{k}&=\vec{x}_{k-1}+\alpha_{k} \tilde{v}_{k} \\ 
+\text{Update residual: }\tilde{r}_{k}&=\tilde{r}_{k-1}-\alpha_{k} A \tilde{v}_{k}
+\end{aligned}</script><h4 id="常见的Preconditioners"><a href="#常见的Preconditioners" class="headerlink" title="常见的Preconditioners"></a>常见的Preconditioners</h4><p>比较常见Preconditioner为选择对角元或者用系数矩阵近似逆矩阵，具体的见讲义。</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">Doraemonzzz</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="http://doraemonzzz.com/2019/04/30/CS205A%20Lecture%2013%20Conjugate%20gradients%20II;%20Formulation,%20preconditioning,%20and%20variants/">http://doraemonzzz.com/2019/04/30/CS205A%20Lecture%2013%20Conjugate%20gradients%20II;%20Formulation,%20preconditioning,%20and%20variants/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://doraemonzzz.com" target="_blank">Doraemonzzz</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/CS205A/">CS205A</a></div><div class="post_share"><div class="social-share" data-image="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2019/04/30/CS205A%20Lecture%2014%20Interpolation/"><img class="prev-cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">CS205A Lecture 14 Interpolation</div></div></a></div><div class="next-post pull-right"><a href="/2019/04/30/From%20Nand%20to%20Tetris%20week%202/"><img class="next-cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">From Nand to Tetris week 2</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span> 相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2019/03/24/CS205A HW0/" title="CS205A HW0"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2019-03-24</div><div class="title">CS205A HW0</div></div></a></div><div><a href="/2019/03/25/CS205A HW1/" title="CS205A HW1"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2019-03-25</div><div class="title">CS205A HW1</div></div></a></div><div><a href="/2019/03/31/CS205A HW2/" title="CS205A HW2"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2019-03-31</div><div class="title">CS205A HW2</div></div></a></div><div><a href="/2019/04/10/CS205A HW4/" title="CS205A HW4"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2019-04-10</div><div class="title">CS205A HW4</div></div></a></div><div><a href="/2019/03/31/CS205A HW3/" title="CS205A HW3"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2019-03-31</div><div class="title">CS205A HW3</div></div></a></div><div><a href="/2019/04/24/CS205A HW5/" title="CS205A HW5"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2019-04-24</div><div class="title">CS205A HW5</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="card-info-avatar is-center"><img class="avatar-img" src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/><div class="author-info__name">Doraemonzzz</div><div class="author-info__description">个人博客，主要记录有关机器学习，数学以及计算机科学的笔记</div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">610</div></a></div><div class="card-info-data-item is-center"><a href="/tags/"><div class="headline">标签</div><div class="length-num">59</div></a></div><div class="card-info-data-item is-center"><a href="/categories/"><div class="headline">分类</div><div class="length-num">23</div></a></div></div><a class="button--animated" id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/Doraemonzzz" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="/doraemon_zzz@163.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn card-announcement-animation"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%91%BD%E9%A2%9810-3"><span class="toc-number">1.</span> <span class="toc-text">命题10.3</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%91%BD%E9%A2%9810-4"><span class="toc-number">2.</span> <span class="toc-text">命题10.4</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%94%9F%E6%88%90-A-%E5%85%B1%E8%BD%AD%E6%96%B9%E5%90%91"><span class="toc-number"></span> <span class="toc-text">生成$A$共轭方向</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%91%BD%E9%A2%9810-5"><span class="toc-number">1.</span> <span class="toc-text">命题10.5</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%91%BD%E9%A2%9810-6"><span class="toc-number">2.</span> <span class="toc-text">命题10.6</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%B1%E8%BD%AD%E6%A2%AF%E5%BA%A6%E6%B3%95%E5%88%86%E6%9E%90"><span class="toc-number"></span> <span class="toc-text">共轭梯度法分析</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%94%B6%E6%95%9B%E6%80%A7"><span class="toc-number">1.</span> <span class="toc-text">收敛性</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Preconditioning"><span class="toc-number"></span> <span class="toc-text">Preconditioning</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#CG-with-Preconditioning"><span class="toc-number">1.</span> <span class="toc-text">CG with Preconditioning</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%91%BD%E9%A2%9810-7"><span class="toc-number">2.</span> <span class="toc-text">命题10.7</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%B8%B8%E8%A7%81%E7%9A%84Preconditioners"><span class="toc-number">3.</span> <span class="toc-text">常见的Preconditioners</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2021/06/06/2021-6-6-%E7%AE%97%E6%B3%95%E6%A6%82%E8%AE%BA(DPV)%E4%B9%A0%E9%A2%98%E8%A7%A3%E7%AD%94%E2%80%94%E2%80%94%E7%AC%AC3%E7%AB%A0-%E5%9B%BE%E7%9A%84%E5%88%86%E8%A7%A3/" title="算法概论(DPV)习题解答——第3章 图的分解"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="算法概论(DPV)习题解答——第3章 图的分解"/></a><div class="content"><a class="title" href="/2021/06/06/2021-6-6-%E7%AE%97%E6%B3%95%E6%A6%82%E8%AE%BA(DPV)%E4%B9%A0%E9%A2%98%E8%A7%A3%E7%AD%94%E2%80%94%E2%80%94%E7%AC%AC3%E7%AB%A0-%E5%9B%BE%E7%9A%84%E5%88%86%E8%A7%A3/" title="算法概论(DPV)习题解答——第3章 图的分解">算法概论(DPV)习题解答——第3章 图的分解</a><time datetime="2021-06-06T14:35:00.000Z" title="发表于 2021-06-06 22:35:00">2021-06-06</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/06/06/2021-6-6-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E7%AC%AC5%E7%AB%A0-%E4%B9%A0%E9%A2%98%E8%A7%A3%E6%9E%90/" title="深入理解计算机系统 第5章 习题解析"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="深入理解计算机系统 第5章 习题解析"/></a><div class="content"><a class="title" href="/2021/06/06/2021-6-6-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E7%AC%AC5%E7%AB%A0-%E4%B9%A0%E9%A2%98%E8%A7%A3%E6%9E%90/" title="深入理解计算机系统 第5章 习题解析">深入理解计算机系统 第5章 习题解析</a><time datetime="2021-06-06T07:23:00.000Z" title="发表于 2021-06-06 15:23:00">2021-06-06</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/06/05/2021-6-5-Stanford-Compiler-PA5%E7%BF%BB%E8%AF%91/" title="Stanford Compiler PA5翻译"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Stanford Compiler PA5翻译"/></a><div class="content"><a class="title" href="/2021/06/05/2021-6-5-Stanford-Compiler-PA5%E7%BF%BB%E8%AF%91/" title="Stanford Compiler PA5翻译">Stanford Compiler PA5翻译</a><time datetime="2021-06-05T06:12:00.000Z" title="发表于 2021-06-05 14:12:00">2021-06-05</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/06/04/2021-6-4-Stanford-Compiler-PA4%E7%BF%BB%E8%AF%91/" title="Stanford Compiler PA4翻译"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Stanford Compiler PA4翻译"/></a><div class="content"><a class="title" href="/2021/06/04/2021-6-4-Stanford-Compiler-PA4%E7%BF%BB%E8%AF%91/" title="Stanford Compiler PA4翻译">Stanford Compiler PA4翻译</a><time datetime="2021-06-03T16:17:00.000Z" title="发表于 2021-06-04 00:17:00">2021-06-04</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/06/03/2021-6-3-%E5%B7%A7%E5%A6%99%E7%9A%84Y%E8%BF%90%E7%AE%97%E7%AC%A6/" title="巧妙的Y运算符"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="巧妙的Y运算符"/></a><div class="content"><a class="title" href="/2021/06/03/2021-6-3-%E5%B7%A7%E5%A6%99%E7%9A%84Y%E8%BF%90%E7%AE%97%E7%AC%A6/" title="巧妙的Y运算符">巧妙的Y运算符</a><time datetime="2021-06-03T00:54:00.000Z" title="发表于 2021-06-03 08:54:00">2021-06-03</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2021 By Doraemonzzz</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><div class="js-pjax"><script>if (!window.MathJax) {
+  window.MathJax = {
+    loader: {
+      source: {
+        '[tex]/amsCd': '[tex]/amscd'
+      }
+    },
+    tex: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]],
+      tags: 'ams'
+    },
+    options: {
+      renderActions: {
+        findScript: [10, doc => {
+          for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+            const display = !!node.type.match(/; *mode=display/)
+            const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+            const text = document.createTextNode('')
+            node.parentNode.replaceChild(text, node)
+            math.start = {node: text, delim: '', n: 0}
+            math.end = {node: text, delim: '', n: 0}
+            doc.math.push(math)
+          }
+        }, ''],
+        addClass: [200,() => {
+          document.querySelectorAll('mjx-container:not([display=\'true\']').forEach( node => {
+            const target = node.parentNode
+            if (!target.classList.contains('has-jax')) {
+              target.classList.add('mathjax-overflow')
+            }
+          })
+        }, '', false]
+      }
+    }
+  }
+  
+  const script = document.createElement('script')
+  script.src = 'https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js'
+  script.id = 'MathJax-script'
+  script.async = true
+  document.head.appendChild(script)
+} else {
+  MathJax.startup.document.state(0)
+  MathJax.texReset()
+  MathJax.typeset()
+}</script></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

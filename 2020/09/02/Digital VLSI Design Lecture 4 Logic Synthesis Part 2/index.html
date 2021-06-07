@@ -1,0 +1,630 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Digital VLSI Design Lecture 4 Logic Synthesis Part 2 | Doraemonzzz</title><meta name="keywords" content="芯片设计"><meta name="author" content="Doraemonzzz"><meta name="copyright" content="Doraemonzzz"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="课程主页： http:&#x2F;&#x2F;www.eng.biu.ac.il&#x2F;temanad&#x2F;digital-vlsi-design&#x2F; 课程视频： https:&#x2F;&#x2F;www.youtube.com&#x2F;watch?reload&#x3D;9&amp;v&#x3D;RbZ3BXbd6_k&amp;list&#x3D;PLZU5hLL_713x0_AV_rVbay0pWmED7992G https:&#x2F;&#x2F;www.bilibili.com&#x2F;video&#x2F;BV">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Digital VLSI Design Lecture 4 Logic Synthesis Part 2">
+<meta property="og:url" content="http://doraemonzzz.com/2020/09/02/Digital%20VLSI%20Design%20Lecture%204%20Logic%20Synthesis%20Part%202/index.html">
+<meta property="og:site_name" content="Doraemonzzz">
+<meta property="og:description" content="课程主页： http:&#x2F;&#x2F;www.eng.biu.ac.il&#x2F;temanad&#x2F;digital-vlsi-design&#x2F; 课程视频： https:&#x2F;&#x2F;www.youtube.com&#x2F;watch?reload&#x3D;9&amp;v&#x3D;RbZ3BXbd6_k&amp;list&#x3D;PLZU5hLL_713x0_AV_rVbay0pWmED7992G https:&#x2F;&#x2F;www.bilibili.com&#x2F;video&#x2F;BV">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg">
+<meta property="article:published_time" content="2020-09-02T15:43:00.000Z">
+<meta property="article:modified_time" content="2020-09-04T17:10:59.293Z">
+<meta property="article:author" content="Doraemonzzz">
+<meta property="article:tag" content="芯片设计">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="http://doraemonzzz.com/2020/09/02/Digital%20VLSI%20Design%20Lecture%204%20Logic%20Synthesis%20Part%202/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"prismjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    jQuery: 'https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js',
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+    },
+    fancybox: {
+      js: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isanchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'Digital VLSI Design Lecture 4 Logic Synthesis Part 2',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2020-09-05 01:10:59'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    })(window)</script><meta name="generator" content="Hexo 5.4.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="author-avatar"><img class="avatar-img" src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">文章</div><div class="length-num">610</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">标签</div><div class="length-num">59</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/categories/"><div class="headline">分类</div><div class="length-num">23</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">Doraemonzzz</a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">Digital VLSI Design Lecture 4 Logic Synthesis Part 2</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2020-09-02T15:43:00.000Z" title="发表于 2020-09-02 23:43:00">2020-09-02</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2020-09-04T17:10:59.293Z" title="更新于 2020-09-05 01:10:59">2020-09-05</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E9%9B%86%E6%88%90%E7%94%B5%E8%B7%AF/">集成电路</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="Digital VLSI Design Lecture 4 Logic Synthesis Part 2"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p>课程主页：</p>
+<p><a target="_blank" rel="noopener" href="http://www.eng.biu.ac.il/temanad/digital-vlsi-design/">http://www.eng.biu.ac.il/temanad/digital-vlsi-design/</a></p>
+<p>课程视频：</p>
+<p><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?reload=9&amp;v=RbZ3BXbd6_k&amp;list=PLZU5hLL_713x0_AV_rVbay0pWmED7992G">https://www.youtube.com/watch?reload=9&amp;v=RbZ3BXbd6_k&amp;list=PLZU5hLL_713x0_AV_rVbay0pWmED7992G</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1EA411n7VQ?from=search&amp;seid=14545899898143497364">https://www.bilibili.com/video/BV1EA411n7VQ?from=search&amp;seid=14545899898143497364</a></p>
+<p>这次回顾第四讲，这一讲继续介绍了逻辑综合。</p>
+<span id="more"></span>
+<h3 id="布尔最小化"><a href="#布尔最小化" class="headerlink" title="布尔最小化"></a>布尔最小化</h3><h4 id="细化与绑定"><a href="#细化与绑定" class="headerlink" title="细化与绑定"></a>细化与绑定</h4><ul>
+<li>在逻辑综合的下一步骤中，工具：<ul>
+<li>将RTL编译为布尔数据结构（细化） </li>
+<li>将非开关量模块绑定到叶子单元（绑定）</li>
+<li>优化布尔逻辑（最小化）</li>
+</ul>
+</li>
+<li>最终的设计被映射到通用的、与技术无关的逻辑门</li>
+<li>这是综合的核心，自八十年代以来一直是计算机科学中一个非常核心的研究课题</li>
+</ul>
+<p><img src="https://github.com/Doraemonzzz/md-photo/blob/master/Digital%20VLSI%20Design/Lecture%204/2020090201.jpg?raw=true" alt=""></p>
+<h4 id="细化例子"><a href="#细化例子" class="headerlink" title="细化例子"></a>细化例子</h4><p><img src="https://github.com/Doraemonzzz/md-photo/blob/master/Digital%20VLSI%20Design/Lecture%204/2020090202.jpg?raw=true" alt=""></p>
+<h4 id="两级逻辑"><a href="#两级逻辑" class="headerlink" title="两级逻辑"></a>两级逻辑</h4><ul>
+<li>在细化过程中，定义主要输入和输出（端口），并推导时序元素（触发器，锁存器）</li>
+<li>这导致一组组合逻辑云： <ul>
+<li>输入端口和寄存器输出为逻辑的输入</li>
+<li>输出端口和寄存器输入是逻辑的输出</li>
+<li>输出可描述为输入的开关的函数</li>
+<li>布尔最小化的目的是减少输出函数中的因子数 </li>
+</ul>
+</li>
+<li>许多不同的数据结构用于表示布尔函数：<ul>
+<li>真值表、立方体、BDD、方程等</li>
+<li>大部分研究都是在SOP或POS表示法上发展起来的，这两者通常称为“二级逻辑”</li>
+</ul>
+</li>
+</ul>
+<h4 id="二级逻辑最小化"><a href="#二级逻辑最小化" class="headerlink" title="二级逻辑最小化"></a>二级逻辑最小化</h4><ul>
+<li>卡诺图，但是难以自动化(NP-complete)</li>
+<li>Quine-McCluskey方法，易于在软件中实现，但是计算复杂度太高</li>
+</ul>
+<h4 id="Espresso启发式最小化"><a href="#Espresso启发式最小化" class="headerlink" title="Espresso启发式最小化"></a>Espresso启发式最小化</h4><pre class="line-numbers language-none"><code class="language-none">ESPRESSO(F)&#123;
+	do &#123;
+		reduce(F);
+		expand(F);
+		irredundant(F);
+	&#125;while (fewer terms in F);
+	verify(F);
+&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<ul>
+<li>从SOP开始<ul>
+<li>Expand<ul>
+<li>使每个立方体尽可能大而不覆盖OFF集中的一个点。 </li>
+<li>增加因子数量（更糟糕的解决方案）。</li>
+</ul>
+</li>
+<li>Irredundant<ul>
+<li>扔掉多余的立方体。 </li>
+<li>删除被较大立方体覆盖的小立方体。 </li>
+</ul>
+</li>
+<li>Reduce<ul>
+<li>覆盖中的立方体大小减少了 。</li>
+</ul>
+</li>
+<li>一般而言，新覆盖与最初的覆盖不同<ul>
+<li>expand和irredundant的步骤可能会找到一种覆盖ON集合中的点的新方法。 </li>
+<li>希望新的覆盖会更小一些。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h4 id="Espresso例子"><a href="#Espresso例子" class="headerlink" title="Espresso例子"></a>Espresso例子</h4><p><img src="https://github.com/Doraemonzzz/md-photo/blob/master/Digital%20VLSI%20Design/Lecture%204/2020090203.jpg?raw=true" alt=""></p>
+<script type="math/tex; mode=display">
+\begin{array}{l}
+f=\bar{A} \bar{C}+\bar{C} D+A C+C \bar{D} \\
+f=\bar{A} \bar{C}+A \bar{C} D+A C+\bar{A} C \bar{D}
+\end{array}</script><p><img src="https://github.com/Doraemonzzz/md-photo/blob/master/Digital%20VLSI%20Design/Lecture%204/2020090204.jpg?raw=true" alt=""></p>
+<script type="math/tex; mode=display">
+\begin{array}{l}
+f=\bar{A} \bar{C}+A D+A C+C \bar{D} \\
+f=\bar{A} \bar{C}+A D+C \bar{D}
+\end{array}</script><h4 id="多级逻辑最小化"><a href="#多级逻辑最小化" class="headerlink" title="多级逻辑最小化"></a>多级逻辑最小化</h4><ul>
+<li>两级逻辑最小化已经得到广泛的研究，并由此产生了许多著名的方法。 <ul>
+<li>然而，通常使用许多层次的逻辑是更好和/或更实用。</li>
+</ul>
+</li>
+<li>因此，提出了一个全新的优化方案，即多级逻辑最小化。 <ul>
+<li>在本课程中，我们将不讨论多级最小化问题，但是，您应该知道逻辑最小化通常输出多级，而不是两级。</li>
+</ul>
+</li>
+</ul>
+<p>例子：</p>
+<p><img src="https://github.com/Doraemonzzz/md-photo/blob/master/Digital%20VLSI%20Design/Lecture%204/2020090301.jpg?raw=true" alt=""></p>
+<h4 id="BDD"><a href="#BDD" class="headerlink" title="BDD"></a>BDD</h4><ul>
+<li>BDD是表示给定函数真值表的DAG。</li>
+</ul>
+<p><img src="https://github.com/Doraemonzzz/md-photo/blob/master/Digital%20VLSI%20Design/Lecture%204/2020090302.jpg?raw=true" alt=""></p>
+<ul>
+<li>函数的香农展开将函数与其辅因子相关联：<ul>
+<li>给定一个布尔函数：$f\left(x_{1}, x_{2}, \ldots, x_{i}, \ldots, x_{n}\right)$</li>
+<li>正辅因子：$f_{i}^{1}=f\left(x_{1}, x_{2}, \ldots, 1, \ldots, x_{n}\right)$</li>
+<li>负辅助因子：$f_{i}^{0}=f\left(x_{1}, x_{2}, \ldots, 0, \ldots, x_{n}\right)$</li>
+</ul>
+</li>
+<li>香农展开定理指出<ul>
+<li>$f=x_{i}^{\prime}f_{i}^{0}+x_{i} f_{i}^{1}$</li>
+<li>$f=\left(x_{i}+f_{i}^{0}\right)\left(x_{i}^{\prime}+f_{i}^{1}\right)$</li>
+</ul>
+</li>
+<li><p>这导致BDD的形成：</p>
+<ul>
+<li><script type="math/tex; mode=display">
+\begin{aligned}
+f &=a c+b c+a^{\prime} b^{\prime} c^{\prime} \\
+&=a^{\prime}\left(b^{\prime} c^{\prime}+b c\right)+a(c+b c) \\
+&=a^{\prime}\left(b^{\prime} c^{\prime}+b c\right)+a(c)
+\end{aligned}</script></li>
+</ul>
+</li>
+<li><p>BDD的一些优点： </p>
+<ul>
+<li>检查tautology是微不足道的<ul>
+<li>tautology是指BDD为常数1</li>
+</ul>
+</li>
+<li>取反<ul>
+<li>给定函数$f$的BDD，可以通过交换终止节点获得$f’$的BDD。 </li>
+</ul>
+</li>
+<li>等价性检查。<ul>
+<li>如果函数$f$和$g$的BDD（在相同的变量顺序下）相同，则这两个函数是等价的。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>要点： <ul>
+<li>如果变量被扩展的顺序被改变，BDD的大小会发生很大变化。 </li>
+<li>BDD中的节点数可以是变量数的指数</li>
+</ul>
+</li>
+</ul>
+<p><img src="https://github.com/Doraemonzzz/md-photo/blob/master/Digital%20VLSI%20Design/Lecture%204/2020090303.jpg?raw=true" alt=""></p>
+<h4 id="ROBDD"><a href="#ROBDD" class="headerlink" title="ROBDD"></a>ROBDD</h4><ul>
+<li><p>BDD会变得很大。 </p>
+<ul>
+<li>所以，让我们看看我们是否可以提供一个化简的表达。 </li>
+</ul>
+</li>
+<li><p>化简规则1：合并等价叶子节点</p>
+<p><img src="https://github.com/Doraemonzzz/md-photo/blob/master/Digital%20VLSI%20Design/Lecture%204/2020090304.jpg?raw=true" alt=""></p>
+</li>
+<li><p>化简规则2：合并同构节点</p>
+<p><img src="https://github.com/Doraemonzzz/md-photo/blob/master/Digital%20VLSI%20Design/Lecture%204/2020090305.jpg?raw=true" alt=""></p>
+</li>
+<li><p>化简规则2：消除冗余测试</p>
+<p><img src="https://github.com/Doraemonzzz/md-photo/blob/master/Digital%20VLSI%20Design/Lecture%204/2020090306.jpg?raw=true" alt=""></p>
+</li>
+</ul>
+<h3 id="约束定义"><a href="#约束定义" class="headerlink" title="约束定义"></a>约束定义</h3><ul>
+<li><p>在细化之后，设计被加载到综合工具中，并存储在数据结构中。 </p>
+</li>
+<li><p>分级端口（输入/输出）和寄存器可以按名称访问。 </p>
+<pre class="line-numbers language-none"><code class="language-none">set in_ports [get_ports IN*]
+set regs [get_cells -hier *_reg]<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+</li>
+<li><p>此时，我们可以以SDC格式加载设计约束，我们将在第5节课中学习</p>
+<pre class="line-numbers language-none"><code class="language-none">read sdc -verbose sdc&#x2F;constraints.sdc<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<ul>
+<li><p>例如，要创建时钟并定义目标频率： </p>
+<pre class="line-numbers language-none"><code class="language-none">create_clock -period $PERIOD -name $CLK_NAME [get_ports $CLK_PORT]<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+</li>
+</ul>
+</li>
+<li><p>仔细检查工具是否接受所有约束！</p>
+</li>
+</ul>
+<h3 id="技术映射"><a href="#技术映射" class="headerlink" title="技术映射"></a>技术映射</h3><ul>
+<li>技术映射是从技术库中选择门实现电路的逻辑合成阶段。 </li>
+<li>为什么要做技术映射？<ul>
+<li>直接实现可能不太好。 </li>
+<li>例如，$F= abcdef$作为$6$输入与门，会造成较长的延迟。</li>
+<li>库的门是预先设计的，通常在面积、延迟、功率等方面进行优化。 </li>
+</ul>
+</li>
+<li>可以应用最小代价树覆盖算法来解决这个问题。</li>
+</ul>
+<h4 id="技术映射算法"><a href="#技术映射算法" class="headerlink" title="技术映射算法"></a>技术映射算法</h4><ul>
+<li>使用递归树覆盖算法，我们可以很容易地并且几乎是最佳地将逻辑网络映射到技术库。</li>
+<li>这个过程包括三个步骤： <ul>
+<li>将网表和技术库映射到简单门 <ul>
+<li>用NAND2和NOT门描述网表</li>
+<li>用NAND2和NOT门的描述SC库，并将成本与每个门相关联</li>
+</ul>
+</li>
+<li>将输入网表树形化<ul>
+<li>树覆盖只能用于树</li>
+<li>将扇出$&gt;2$的地方划分树</li>
+</ul>
+</li>
+<li>最小成本树匹配<ul>
+<li>对于树中的每个节点，递归地在该节点上找到最小成本目标模式。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>让我们简单地介绍一下这些步骤</li>
+</ul>
+<h4 id="1-简单门映射"><a href="#1-简单门映射" class="headerlink" title="1.简单门映射"></a>1.简单门映射</h4><ul>
+<li><p>将De Morgan定律应用到布尔函数中，使其成为NAND2和NOT门的集合。 </p>
+<ul>
+<li><p>以多级逻辑最小化为例：</p>
+<p><img src="https://github.com/Doraemonzzz/md-photo/blob/master/Digital%20VLSI%20Design/Lecture%204/2020090507.jpg?raw=true" alt=""></p>
+</li>
+</ul>
+</li>
+<li><p>然后，给定一组具有成本度量（面积/延迟/功率）的门（标准单元库）：</p>
+</li>
+</ul>
+<p><img src="https://github.com/Doraemonzzz/md-photo/blob/master/Digital%20VLSI%20Design/Lecture%204/2020090508.jpg?raw=true" alt="">  </p>
+<ul>
+<li>我们需要用相同的NAND2/NOT集合来定义门：</li>
+</ul>
+<p><img src="https://github.com/Doraemonzzz/md-photo/blob/master/Digital%20VLSI%20Design/Lecture%204/2020090509.jpg?raw=true" alt=""></p>
+<h4 id="2-树形化"><a href="#2-树形化" class="headerlink" title="2.树形化"></a>2.树形化</h4><ul>
+<li>要应用树覆盖算法，我们必须在树上工作！<ul>
+<li>任何给定的逻辑网络都是树形的吗？</li>
+<li>不！</li>
+<li>我们必须在扇出$&gt;2$的任意节点划分树</li>
+</ul>
+</li>
+</ul>
+<p><img src="https://github.com/Doraemonzzz/md-photo/blob/master/Digital%20VLSI%20Design/Lecture%204/2020090510.jpg?raw=true" alt=""></p>
+<h4 id="3-最小树覆盖"><a href="#3-最小树覆盖" class="headerlink" title="3.最小树覆盖"></a>3.最小树覆盖</h4><ul>
+<li><p>现在，我们可以应用递归算法来达到最小覆盖： </p>
+<ul>
+<li><p>从图的输出开始。</p>
+</li>
+<li><p>对于每个节点，找到所有匹配的目标模式。</p>
+</li>
+<li><p>节点$i$使用门$g$的代价为：</p>
+<script type="math/tex; mode=display">
+\operatorname{cost}(i)=\min _{k}\left\{\operatorname{cost}\left(g_{i}\right)+\sum_{k} \operatorname{cost}\left(k_{i}\right)\right\}</script><ul>
+<li><p>其中$k_i$是$g$门的输入：</p>
+<p><img src="https://github.com/Doraemonzzz/md-photo/blob/master/Digital%20VLSI%20Design/Lecture%204/2020090514.jpg?raw=true" alt=""></p>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>为简化起见，我们将重新绘制图表并显示一个示例： </p>
+<ul>
+<li>每个NOT只是一个空圆：<img src="https://github.com/Doraemonzzz/md-photo/blob/master/Digital%20VLSI%20Design/Lecture%204/2020090511.jpg?raw=true" alt=""></li>
+<li>每个NAND只是一个完整的圆： <img src="https://github.com/Doraemonzzz/md-photo/blob/master/Digital%20VLSI%20Design/Lecture%204/2020090512.jpg?raw=true" alt=""></li>
+<li>每一个输入只是一个方框：<img src="https://github.com/Doraemonzzz/md-photo/blob/master/Digital%20VLSI%20Design/Lecture%204/2020090513.jpg?raw=true" alt=""></li>
+</ul>
+</li>
+</ul>
+<p>完整例子：</p>
+<p><img src="https://github.com/Doraemonzzz/md-photo/blob/master/Digital%20VLSI%20Design/Lecture%204/2020090515.jpg?raw=true" alt=""></p>
+<h3 id="综合Verilog"><a href="#综合Verilog" class="headerlink" title="综合Verilog"></a>综合Verilog</h3><h4 id="我们可能忽略的部分"><a href="#我们可能忽略的部分" class="headerlink" title="我们可能忽略的部分"></a>我们可能忽略的部分</h4><ul>
+<li><p>既然我们已经看到了综合是如何工作的，让我们重温一下我们可能跳过或只是简单地提到过的一些事情… </p>
+</li>
+<li><p>以一个简单的$4\to 2$编码器为例： </p>
+<ul>
+<li>取独热码向量，输出$1$的位置。 </li>
+<li>一种可能性是用嵌套的if else块来描述这个逻辑： </li>
+<li><img src="https://github.com/Doraemonzzz/md-photo/blob/master/Digital%20VLSI%20Design/Lecture%204/2020090516.jpg?raw=true" alt=""></li>
+<li><img src="https://github.com/Doraemonzzz/md-photo/blob/master/Digital%20VLSI%20Design/Lecture%204/2020090517.jpg?raw=true" alt=""></li>
+<li>这个结果称为“优先逻辑”<ul>
+<li>即，有些比特优先于其他比特。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>最好使用case构造： </p>
+<ul>
+<li><p>所有情形并行匹配</p>
+</li>
+<li><p>更好的是，综合可以优化常数和其他布尔等式：</p>
+<p><img src="https://github.com/Doraemonzzz/md-photo/blob/master/Digital%20VLSI%20Design/Lecture%204/2020090518.jpg?raw=true" alt=""></p>
+<p><img src="https://github.com/Doraemonzzz/md-photo/blob/master/Digital%20VLSI%20Design/Lecture%204/2020090519.jpg?raw=true" alt=""></p>
+<p><img src="https://github.com/Doraemonzzz/md-photo/blob/master/Digital%20VLSI%20Design/Lecture%204/2020090520.jpg?raw=true" alt=""></p>
+<p><img src="https://github.com/Doraemonzzz/md-photo/blob/master/Digital%20VLSI%20Design/Lecture%204/2020090521.jpg?raw=true" alt=""></p>
+</li>
+</ul>
+</li>
+<li><p>在前面的示例中，如果编码错误（即不是独热码），我们将在逻辑模拟中传播$x$。 </p>
+<ul>
+<li><p>但是如果我们保证输入是一个独热码呢？ </p>
+</li>
+<li><p>然后我们可以用不同的方式编写代码：</p>
+<p><img src="https://github.com/Doraemonzzz/md-photo/blob/master/Digital%20VLSI%20Design/Lecture%204/2020090522.jpg?raw=true" alt=""></p>
+</li>
+<li><p>事实上，我们已经实现了“优先级译码器”。</p>
+</li>
+</ul>
+</li>
+</ul>
+<h4 id="运算符的几点内容"><a href="#运算符的几点内容" class="headerlink" title="运算符的几点内容"></a>运算符的几点内容</h4><ul>
+<li>逻辑运算符映射到基本逻辑门</li>
+<li>算术运算符映射到加法器、减法器</li>
+<li>关系运算符生成比较器</li>
+<li>固定数量的移位只是电线连接<ul>
+<li>不涉及逻辑 </li>
+</ul>
+</li>
+<li>可变的移位量$\to$移位器</li>
+<li>条件表达式生成逻辑或MUX</li>
+</ul>
+<h4 id="数据路径综合"><a href="#数据路径综合" class="headerlink" title="数据路径综合"></a>数据路径综合</h4><ul>
+<li><p>复杂运算符（加法器、乘法器等）以特殊方式实现：</p>
+<p><img src="https://github.com/Doraemonzzz/md-photo/blob/master/Digital%20VLSI%20Design/Lecture%204/2020090523.jpg?raw=true" alt=""></p>
+</li>
+<li><p>预先写好的说明可在Synopsys DesignWare或Cadence ChipWare IP库中找到。</p>
+</li>
+</ul>
+<h4 id="时钟门控"><a href="#时钟门控" class="headerlink" title="时钟门控"></a>时钟门控</h4><ul>
+<li>如你所知，由于时钟是不断摆动的，它是一个主要的能力消耗者。 <ul>
+<li>因此，为了节省电力，我们将尽量关闭不使用的闸门的时钟。 </li>
+</ul>
+</li>
+<li>块级（Global）时钟门控<ul>
+<li>如果某些工作模式不使用整个模块/组件，则应在RTL中定义时钟门。 </li>
+</ul>
+</li>
+<li>寄存器级（Local）时钟门控配置寄存器。 <ul>
+<li>但是，即使在寄存器级别，如果触发器不改变其输出，由于时钟振荡，内部电源仍然耗散。 </li>
+<li>这在启用的信号采样中非常常见，因此，综合工具可以自动检测和门控。</li>
+</ul>
+</li>
+</ul>
+<p><img src="https://github.com/Doraemonzzz/md-photo/blob/master/Digital%20VLSI%20Design/Lecture%204/2020090524.jpg?raw=true" alt=""></p>
+<p><img src="https://github.com/Doraemonzzz/md-photo/blob/master/Digital%20VLSI%20Design/Lecture%204/2020090525.jpg?raw=true" alt=""></p>
+<ul>
+<li><p>局部时钟门控：3种方法 </p>
+<ul>
+<li>逻辑综合器发现并实现局部门控机会</li>
+<li>RTL代码显式指定时钟门控 </li>
+<li>RTL中显式实例化的时钟门控单元</li>
+</ul>
+</li>
+<li><p>全局时钟门控：2种方法</p>
+<ul>
+<li>RTL代码显式指定时钟门控</li>
+<li>RTL中显式实例化的时钟门控单元</li>
+</ul>
+<p><img src="https://github.com/Doraemonzzz/md-photo/blob/master/Digital%20VLSI%20Design/Lecture%204/2020090526.jpg?raw=true" alt=""></p>
+</li>
+</ul>
+<h4 id="时钟门控——毛刺问题"><a href="#时钟门控——毛刺问题" class="headerlink" title="时钟门控——毛刺问题"></a>时钟门控——毛刺问题</h4><p><img src="https://github.com/Doraemonzzz/md-photo/blob/master/Digital%20VLSI%20Design/Lecture%204/2020090527.jpg?raw=true" alt=""></p>
+<h4 id="解决方案：无毛刺时钟门"><a href="#解决方案：无毛刺时钟门" class="headerlink" title="解决方案：无毛刺时钟门"></a>解决方案：无毛刺时钟门</h4><p> 通过在正相期间锁存enable信号，我们可以消除毛刺：</p>
+<p><img src="https://github.com/Doraemonzzz/md-photo/blob/master/Digital%20VLSI%20Design/Lecture%204/2020090528.jpg?raw=true" alt=""></p>
+<p><img src="https://github.com/Doraemonzzz/md-photo/blob/master/Digital%20VLSI%20Design/Lecture%204/2020090529.jpg?raw=true" alt=""></p>
+<h4 id="合并时钟enable门"><a href="#合并时钟enable门" class="headerlink" title="合并时钟enable门"></a>合并时钟enable门</h4><ul>
+<li>具有共同的enable时钟门可以合并<ul>
+<li>更低的时钟树功率，更少的门</li>
+<li>可能影响enable信号定时和倾斜</li>
+</ul>
+</li>
+</ul>
+<p><img src="https://github.com/Doraemonzzz/md-photo/blob/master/Digital%20VLSI%20Design/Lecture%204/2020090530.jpg?raw=true" alt=""></p>
+<h4 id="数据门控"><a href="#数据门控" class="headerlink" title="数据门控"></a>数据门控</h4><ul>
+<li>虽然时钟门控是被很好的理解和自动化的，但是由于没有使用的数据信号的振荡，也会发生一些问题。 </li>
+<li>这些情况应得到识别，数据应该门控。</li>
+</ul>
+<p><img src="https://github.com/Doraemonzzz/md-photo/blob/master/Digital%20VLSI%20Design/Lecture%204/2020090531.jpg?raw=true" alt=""></p>
+<p><img src="https://github.com/Doraemonzzz/md-photo/blob/master/Digital%20VLSI%20Design/Lecture%204/2020090532.jpg?raw=true" alt=""></p>
+<h4 id="设计与验证-HDL-Linting"><a href="#设计与验证-HDL-Linting" class="headerlink" title="设计与验证-HDL Linting"></a>设计与验证-HDL Linting</h4><ul>
+<li>HDL Linting工具可快速轻松检查可能出现的编码不一致：<ul>
+<li>仿真问题</li>
+<li>综合问题</li>
+<li>模拟综合不匹配</li>
+<li>时钟门控</li>
+<li>锁存推断</li>
+<li>时钟域交叉问题</li>
+<li>无意义的赋值/隐式位宽问题 </li>
+</ul>
+</li>
+<li>不用于检查语法正确性</li>
+<li>或者，一些综合工具会给你基本的lint警告<ul>
+<li>对于仿真综合不匹配错误</li>
+</ul>
+</li>
+</ul>
+<p><img src="https://github.com/Doraemonzzz/md-photo/blob/master/Digital%20VLSI%20Design/Lecture%204/2020090533.jpg?raw=true" alt=""></p>
+<h3 id="时钟优化"><a href="#时钟优化" class="headerlink" title="时钟优化"></a>时钟优化</h3><h4 id="我们可以优化时间吗"><a href="#我们可以优化时间吗" class="headerlink" title="我们可以优化时间吗"></a>我们可以优化时间吗</h4><ul>
+<li>综合器对逻辑运用许多“转换”以改进开销函数：<ul>
+<li>调整单元格大小</li>
+<li>缓冲区或克隆以减少关键网络上的负载</li>
+<li>分解大单元</li>
+<li>交换pin或等效网之间的交换连接</li>
+<li>前移关键信号</li>
+<li>填充早期路径</li>
+<li>区域恢复 </li>
+</ul>
+</li>
+<li>简单示例：<ul>
+<li>双反相器移除变换：</li>
+</ul>
+</li>
+</ul>
+<p><img src="https://github.com/Doraemonzzz/md-photo/blob/master/Digital%20VLSI%20Design/Lecture%204/2020090534.jpg?raw=true" alt=""></p>
+<p><img src="https://github.com/Doraemonzzz/md-photo/blob/master/Digital%20VLSI%20Design/Lecture%204/2020090535.jpg?raw=true" alt=""></p>
+<h4 id="调整大小、克隆和缓冲"><a href="#调整大小、克隆和缓冲" class="headerlink" title="调整大小、克隆和缓冲"></a>调整大小、克隆和缓冲</h4><ul>
+<li><p>调整逻辑门的大小以更好地驱动负载： </p>
+<p><img src="https://github.com/Doraemonzzz/md-photo/blob/master/Digital%20VLSI%20Design/Lecture%204/2020090536.jpg?raw=true" alt=""></p>
+</li>
+<li><p>或复制（复制门）以分散负载： </p>
+<p><img src="https://github.com/Doraemonzzz/md-photo/blob/master/Digital%20VLSI%20Design/Lecture%204/2020090537.jpg?raw=true" alt=""></p>
+</li>
+<li><p>或只是缓冲扇出网：</p>
+<p><img src="https://github.com/Doraemonzzz/md-photo/blob/master/Digital%20VLSI%20Design/Lecture%204/2020090538.jpg?raw=true" alt=""></p>
+</li>
+</ul>
+<h4 id="重新设计扇入-扇出树"><a href="#重新设计扇入-扇出树" class="headerlink" title="重新设计扇入/扇出树"></a>重新设计扇入/扇出树</h4><ul>
+<li><p>重新设计树的扇入</p>
+<p><img src="https://github.com/Doraemonzzz/md-photo/blob/master/Digital%20VLSI%20Design/Lecture%204/2020090539.jpg?raw=true" alt=""> </p>
+</li>
+<li><p>重新设计树的扇出</p>
+<p><img src="https://github.com/Doraemonzzz/md-photo/blob/master/Digital%20VLSI%20Design/Lecture%204/2020090540.jpg?raw=true" alt=""></p>
+</li>
+</ul>
+<h4 id="分解和交换"><a href="#分解和交换" class="headerlink" title="分解和交换"></a>分解和交换</h4><ul>
+<li><p>考虑将复杂的门分解为不太复杂的门： </p>
+<p><img src="https://github.com/Doraemonzzz/md-photo/blob/master/Digital%20VLSI%20Design/Lecture%204/2020090541.jpg?raw=true" alt=""></p>
+</li>
+<li><p>互换交流pin： </p>
+<ul>
+<li>对到达时间和延误进行简单的排序可以帮助</li>
+</ul>
+<p><img src="https://github.com/Doraemonzzz/md-photo/blob/master/Digital%20VLSI%20Design/Lecture%204/2020090542.jpg?raw=true" alt=""></p>
+</li>
+</ul>
+<h4 id="再定时"><a href="#再定时" class="headerlink" title="再定时"></a>再定时</h4><ul>
+<li><p>假定网络如下： </p>
+<p><img src="https://github.com/Doraemonzzz/md-photo/blob/master/Digital%20VLSI%20Design/Lecture%204/2020090543.jpg?raw=true" alt=""></p>
+</li>
+<li><p>如何满足10ns时钟周期？ </p>
+</li>
+<li><p>顺序元素和组合逻辑的重新排序</p>
+<p><img src="https://github.com/Doraemonzzz/md-photo/blob/master/Digital%20VLSI%20Design/Lecture%204/2020090544.jpg?raw=true" alt=""></p>
+</li>
+</ul>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">Doraemonzzz</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="http://doraemonzzz.com/2020/09/02/Digital%20VLSI%20Design%20Lecture%204%20Logic%20Synthesis%20Part%202/">http://doraemonzzz.com/2020/09/02/Digital%20VLSI%20Design%20Lecture%204%20Logic%20Synthesis%20Part%202/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://doraemonzzz.com" target="_blank">Doraemonzzz</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E8%8A%AF%E7%89%87%E8%AE%BE%E8%AE%A1/">芯片设计</a></div><div class="post_share"><div class="social-share" data-image="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2020/09/05/Stanford%20Compiler%20Week%202%20Lexical%20Analysis%20and%20Finite%20Automata/"><img class="prev-cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">Stanford Compiler Week 2 Lexical Analysis and Finite Automata</div></div></a></div><div class="next-post pull-right"><a href="/2020/09/02/Stanford%20Compiler%20Week%201%20Introduction%20and%20The%20Cool%20Programming%20Language/"><img class="next-cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">Stanford Compiler Week 1 Introduction and The Cool Programming Language</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span> 相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2020/08/17/Digital VLSI Design Lecture 1 Introduction/" title="Digital VLSI Design Lecture 1 Introduction"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-08-17</div><div class="title">Digital VLSI Design Lecture 1 Introduction</div></div></a></div><div><a href="/2020/08/19/Digital VLSI Design Lecture 2 Verilog/" title="Digital VLSI Design Lecture 2 Verilog"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-08-19</div><div class="title">Digital VLSI Design Lecture 2 Verilog</div></div></a></div><div><a href="/2020/09/01/Digital VLSI Design Lecture 3 Logic Synthesis Part 1/" title="Digital VLSI Design Lecture 3 Logic Synthesis Part 1"><img class="cover" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-09-01</div><div class="title">Digital VLSI Design Lecture 3 Logic Synthesis Part 1</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="card-info-avatar is-center"><img class="avatar-img" src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/><div class="author-info__name">Doraemonzzz</div><div class="author-info__description">个人博客，主要记录有关机器学习，数学以及计算机科学的笔记</div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">610</div></a></div><div class="card-info-data-item is-center"><a href="/tags/"><div class="headline">标签</div><div class="length-num">59</div></a></div><div class="card-info-data-item is-center"><a href="/categories/"><div class="headline">分类</div><div class="length-num">23</div></a></div></div><a class="button--animated" id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/Doraemonzzz" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="/doraemon_zzz@163.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn card-announcement-animation"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B8%83%E5%B0%94%E6%9C%80%E5%B0%8F%E5%8C%96"><span class="toc-number">1.</span> <span class="toc-text">布尔最小化</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%BB%86%E5%8C%96%E4%B8%8E%E7%BB%91%E5%AE%9A"><span class="toc-number">1.1.</span> <span class="toc-text">细化与绑定</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%BB%86%E5%8C%96%E4%BE%8B%E5%AD%90"><span class="toc-number">1.2.</span> <span class="toc-text">细化例子</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%B8%A4%E7%BA%A7%E9%80%BB%E8%BE%91"><span class="toc-number">1.3.</span> <span class="toc-text">两级逻辑</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BA%8C%E7%BA%A7%E9%80%BB%E8%BE%91%E6%9C%80%E5%B0%8F%E5%8C%96"><span class="toc-number">1.4.</span> <span class="toc-text">二级逻辑最小化</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Espresso%E5%90%AF%E5%8F%91%E5%BC%8F%E6%9C%80%E5%B0%8F%E5%8C%96"><span class="toc-number">1.5.</span> <span class="toc-text">Espresso启发式最小化</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Espresso%E4%BE%8B%E5%AD%90"><span class="toc-number">1.6.</span> <span class="toc-text">Espresso例子</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%A4%9A%E7%BA%A7%E9%80%BB%E8%BE%91%E6%9C%80%E5%B0%8F%E5%8C%96"><span class="toc-number">1.7.</span> <span class="toc-text">多级逻辑最小化</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#BDD"><span class="toc-number">1.8.</span> <span class="toc-text">BDD</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#ROBDD"><span class="toc-number">1.9.</span> <span class="toc-text">ROBDD</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BA%A6%E6%9D%9F%E5%AE%9A%E4%B9%89"><span class="toc-number">2.</span> <span class="toc-text">约束定义</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8A%80%E6%9C%AF%E6%98%A0%E5%B0%84"><span class="toc-number">3.</span> <span class="toc-text">技术映射</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%8A%80%E6%9C%AF%E6%98%A0%E5%B0%84%E7%AE%97%E6%B3%95"><span class="toc-number">3.1.</span> <span class="toc-text">技术映射算法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-%E7%AE%80%E5%8D%95%E9%97%A8%E6%98%A0%E5%B0%84"><span class="toc-number">3.2.</span> <span class="toc-text">1.简单门映射</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-%E6%A0%91%E5%BD%A2%E5%8C%96"><span class="toc-number">3.3.</span> <span class="toc-text">2.树形化</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-%E6%9C%80%E5%B0%8F%E6%A0%91%E8%A6%86%E7%9B%96"><span class="toc-number">3.4.</span> <span class="toc-text">3.最小树覆盖</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BB%BC%E5%90%88Verilog"><span class="toc-number">4.</span> <span class="toc-text">综合Verilog</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%88%91%E4%BB%AC%E5%8F%AF%E8%83%BD%E5%BF%BD%E7%95%A5%E7%9A%84%E9%83%A8%E5%88%86"><span class="toc-number">4.1.</span> <span class="toc-text">我们可能忽略的部分</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%BF%90%E7%AE%97%E7%AC%A6%E7%9A%84%E5%87%A0%E7%82%B9%E5%86%85%E5%AE%B9"><span class="toc-number">4.2.</span> <span class="toc-text">运算符的几点内容</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E8%B7%AF%E5%BE%84%E7%BB%BC%E5%90%88"><span class="toc-number">4.3.</span> <span class="toc-text">数据路径综合</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%97%B6%E9%92%9F%E9%97%A8%E6%8E%A7"><span class="toc-number">4.4.</span> <span class="toc-text">时钟门控</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%97%B6%E9%92%9F%E9%97%A8%E6%8E%A7%E2%80%94%E2%80%94%E6%AF%9B%E5%88%BA%E9%97%AE%E9%A2%98"><span class="toc-number">4.5.</span> <span class="toc-text">时钟门控——毛刺问题</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88%EF%BC%9A%E6%97%A0%E6%AF%9B%E5%88%BA%E6%97%B6%E9%92%9F%E9%97%A8"><span class="toc-number">4.6.</span> <span class="toc-text">解决方案：无毛刺时钟门</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%90%88%E5%B9%B6%E6%97%B6%E9%92%9Fenable%E9%97%A8"><span class="toc-number">4.7.</span> <span class="toc-text">合并时钟enable门</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E9%97%A8%E6%8E%A7"><span class="toc-number">4.8.</span> <span class="toc-text">数据门控</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%AE%BE%E8%AE%A1%E4%B8%8E%E9%AA%8C%E8%AF%81-HDL-Linting"><span class="toc-number">4.9.</span> <span class="toc-text">设计与验证-HDL Linting</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%97%B6%E9%92%9F%E4%BC%98%E5%8C%96"><span class="toc-number">5.</span> <span class="toc-text">时钟优化</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%88%91%E4%BB%AC%E5%8F%AF%E4%BB%A5%E4%BC%98%E5%8C%96%E6%97%B6%E9%97%B4%E5%90%97"><span class="toc-number">5.1.</span> <span class="toc-text">我们可以优化时间吗</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%B0%83%E6%95%B4%E5%A4%A7%E5%B0%8F%E3%80%81%E5%85%8B%E9%9A%86%E5%92%8C%E7%BC%93%E5%86%B2"><span class="toc-number">5.2.</span> <span class="toc-text">调整大小、克隆和缓冲</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%87%8D%E6%96%B0%E8%AE%BE%E8%AE%A1%E6%89%87%E5%85%A5-%E6%89%87%E5%87%BA%E6%A0%91"><span class="toc-number">5.3.</span> <span class="toc-text">重新设计扇入&#x2F;扇出树</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%88%86%E8%A7%A3%E5%92%8C%E4%BA%A4%E6%8D%A2"><span class="toc-number">5.4.</span> <span class="toc-text">分解和交换</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%86%8D%E5%AE%9A%E6%97%B6"><span class="toc-number">5.5.</span> <span class="toc-text">再定时</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2021/06/06/2021-6-6-%E7%AE%97%E6%B3%95%E6%A6%82%E8%AE%BA(DPV)%E4%B9%A0%E9%A2%98%E8%A7%A3%E7%AD%94%E2%80%94%E2%80%94%E7%AC%AC3%E7%AB%A0-%E5%9B%BE%E7%9A%84%E5%88%86%E8%A7%A3/" title="算法概论(DPV)习题解答——第3章 图的分解"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="算法概论(DPV)习题解答——第3章 图的分解"/></a><div class="content"><a class="title" href="/2021/06/06/2021-6-6-%E7%AE%97%E6%B3%95%E6%A6%82%E8%AE%BA(DPV)%E4%B9%A0%E9%A2%98%E8%A7%A3%E7%AD%94%E2%80%94%E2%80%94%E7%AC%AC3%E7%AB%A0-%E5%9B%BE%E7%9A%84%E5%88%86%E8%A7%A3/" title="算法概论(DPV)习题解答——第3章 图的分解">算法概论(DPV)习题解答——第3章 图的分解</a><time datetime="2021-06-06T14:35:00.000Z" title="发表于 2021-06-06 22:35:00">2021-06-06</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/06/06/2021-6-6-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E7%AC%AC5%E7%AB%A0-%E4%B9%A0%E9%A2%98%E8%A7%A3%E6%9E%90/" title="深入理解计算机系统 第5章 习题解析"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="深入理解计算机系统 第5章 习题解析"/></a><div class="content"><a class="title" href="/2021/06/06/2021-6-6-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E7%AC%AC5%E7%AB%A0-%E4%B9%A0%E9%A2%98%E8%A7%A3%E6%9E%90/" title="深入理解计算机系统 第5章 习题解析">深入理解计算机系统 第5章 习题解析</a><time datetime="2021-06-06T07:23:00.000Z" title="发表于 2021-06-06 15:23:00">2021-06-06</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/06/05/2021-6-5-Stanford-Compiler-PA5%E7%BF%BB%E8%AF%91/" title="Stanford Compiler PA5翻译"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Stanford Compiler PA5翻译"/></a><div class="content"><a class="title" href="/2021/06/05/2021-6-5-Stanford-Compiler-PA5%E7%BF%BB%E8%AF%91/" title="Stanford Compiler PA5翻译">Stanford Compiler PA5翻译</a><time datetime="2021-06-05T06:12:00.000Z" title="发表于 2021-06-05 14:12:00">2021-06-05</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/06/04/2021-6-4-Stanford-Compiler-PA4%E7%BF%BB%E8%AF%91/" title="Stanford Compiler PA4翻译"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Stanford Compiler PA4翻译"/></a><div class="content"><a class="title" href="/2021/06/04/2021-6-4-Stanford-Compiler-PA4%E7%BF%BB%E8%AF%91/" title="Stanford Compiler PA4翻译">Stanford Compiler PA4翻译</a><time datetime="2021-06-03T16:17:00.000Z" title="发表于 2021-06-04 00:17:00">2021-06-04</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/06/03/2021-6-3-%E5%B7%A7%E5%A6%99%E7%9A%84Y%E8%BF%90%E7%AE%97%E7%AC%A6/" title="巧妙的Y运算符"><img src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="巧妙的Y运算符"/></a><div class="content"><a class="title" href="/2021/06/03/2021-6-3-%E5%B7%A7%E5%A6%99%E7%9A%84Y%E8%BF%90%E7%AE%97%E7%AC%A6/" title="巧妙的Y运算符">巧妙的Y运算符</a><time datetime="2021-06-03T00:54:00.000Z" title="发表于 2021-06-03 08:54:00">2021-06-03</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2021 By Doraemonzzz</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><div class="js-pjax"><script>if (!window.MathJax) {
+  window.MathJax = {
+    loader: {
+      source: {
+        '[tex]/amsCd': '[tex]/amscd'
+      }
+    },
+    tex: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]],
+      tags: 'ams'
+    },
+    options: {
+      renderActions: {
+        findScript: [10, doc => {
+          for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+            const display = !!node.type.match(/; *mode=display/)
+            const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+            const text = document.createTextNode('')
+            node.parentNode.replaceChild(text, node)
+            math.start = {node: text, delim: '', n: 0}
+            math.end = {node: text, delim: '', n: 0}
+            doc.math.push(math)
+          }
+        }, ''],
+        addClass: [200,() => {
+          document.querySelectorAll('mjx-container:not([display=\'true\']').forEach( node => {
+            const target = node.parentNode
+            if (!target.classList.contains('has-jax')) {
+              target.classList.add('mathjax-overflow')
+            }
+          })
+        }, '', false]
+      }
+    }
+  }
+  
+  const script = document.createElement('script')
+  script.src = 'https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js'
+  script.id = 'MathJax-script'
+  script.async = true
+  document.head.appendChild(script)
+} else {
+  MathJax.startup.document.state(0)
+  MathJax.texReset()
+  MathJax.typeset()
+}</script></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
