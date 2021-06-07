@@ -1,0 +1,527 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>Doraemonzzz</title>
+  
+  <subtitle>Learn For Fun</subtitle>
+  <link href="http://doraemonzzz.com/atom.xml" rel="self"/>
+  
+  <link href="http://doraemonzzz.com/"/>
+  <updated>2021-06-07T16:32:22.095Z</updated>
+  <id>http://doraemonzzz.com/</id>
+  
+  <author>
+    <name>Doraemonzzz</name>
+    
+  </author>
+  
+  <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>算法概论(DPV)习题解答——第3章 图的分解</title>
+    <link href="http://doraemonzzz.com/2021/06/06/2021-6-6-%E7%AE%97%E6%B3%95%E6%A6%82%E8%AE%BA(DPV)%E4%B9%A0%E9%A2%98%E8%A7%A3%E7%AD%94%E2%80%94%E2%80%94%E7%AC%AC3%E7%AB%A0-%E5%9B%BE%E7%9A%84%E5%88%86%E8%A7%A3/"/>
+    <id>http://doraemonzzz.com/2021/06/06/2021-6-6-%E7%AE%97%E6%B3%95%E6%A6%82%E8%AE%BA(DPV)%E4%B9%A0%E9%A2%98%E8%A7%A3%E7%AD%94%E2%80%94%E2%80%94%E7%AC%AC3%E7%AB%A0-%E5%9B%BE%E7%9A%84%E5%88%86%E8%A7%A3/</id>
+    <published>2021-06-06T14:35:00.000Z</published>
+    <updated>2021-06-07T16:32:22.095Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;书籍介绍：&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://book.douban.com/subject/3155710/&quot;&gt;https://book.douban.com/subject/3155710/&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;配套课程：&lt;/p&gt;
+&lt;p&gt;CS170（伯克利），CS161（斯坦福）&lt;/p&gt;
+&lt;p&gt;github仓库：&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://github.com/Doraemonzzz/Algorithm-DPV&quot;&gt;https://github.com/Doraemonzzz/Algorithm-DPV&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;参考资料：&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://math.stackexchange.com/questions/114240/disjoint-edges-between-vertices-of-odd-degree&quot;&gt;https://math.stackexchange.com/questions/114240/disjoint-edges-between-vertices-of-odd-degree&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://cg3.chero.help/9780077388492-7007638.html&quot;&gt;https://cg3.chero.help/9780077388492-7007638.html&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;这次回顾第3章，图的分解。&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="算法" scheme="http://doraemonzzz.com/categories/%E7%AE%97%E6%B3%95/"/>
+    
+    
+    <category term="算法概论" scheme="http://doraemonzzz.com/tags/%E7%AE%97%E6%B3%95%E6%A6%82%E8%AE%BA/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>深入理解计算机系统 第5章 习题解析</title>
+    <link href="http://doraemonzzz.com/2021/06/06/2021-6-6-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E7%AC%AC5%E7%AB%A0-%E4%B9%A0%E9%A2%98%E8%A7%A3%E6%9E%90/"/>
+    <id>http://doraemonzzz.com/2021/06/06/2021-6-6-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E7%AC%AC5%E7%AB%A0-%E4%B9%A0%E9%A2%98%E8%A7%A3%E6%9E%90/</id>
+    <published>2021-06-06T07:23:00.000Z</published>
+    <updated>2021-06-05T07:28:05.742Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;这次更新第5章习题。&lt;/p&gt;
+&lt;p&gt;参考资料：&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://dreamanddead.github.io/CSAPP-3e-Solutions/chapter4/&quot;&gt;https://dreamanddead.github.io/CSAPP-3e-Solutions/chapter4/&lt;/a&gt;&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="计算机原理" scheme="http://doraemonzzz.com/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%8E%9F%E7%90%86/"/>
+    
+    
+    <category term="深入理解计算机系统" scheme="http://doraemonzzz.com/tags/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Stanford Compiler PA5翻译</title>
+    <link href="http://doraemonzzz.com/2021/06/05/2021-6-5-Stanford-Compiler-PA5%E7%BF%BB%E8%AF%91/"/>
+    <id>http://doraemonzzz.com/2021/06/05/2021-6-5-Stanford-Compiler-PA5%E7%BF%BB%E8%AF%91/</id>
+    <published>2021-06-05T06:12:00.000Z</published>
+    <updated>2021-06-06T16:01:52.439Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;课程主页：&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://www.edx.org/course/compilers&quot;&gt;https://www.edx.org/course/compilers&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;课程视频：&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://www.bilibili.com/video/BV1NE411376V?p=20&amp;amp;t=6&quot;&gt;https://www.bilibili.com/video/BV1NE411376V?p=20&amp;amp;t=6&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;这部分对PA5进行翻译。&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="编译原理" scheme="http://doraemonzzz.com/categories/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/"/>
+    
+    
+    <category term="斯坦福大学编译原理" scheme="http://doraemonzzz.com/tags/%E6%96%AF%E5%9D%A6%E7%A6%8F%E5%A4%A7%E5%AD%A6%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Stanford Compiler PA4翻译</title>
+    <link href="http://doraemonzzz.com/2021/06/04/2021-6-4-Stanford-Compiler-PA4%E7%BF%BB%E8%AF%91/"/>
+    <id>http://doraemonzzz.com/2021/06/04/2021-6-4-Stanford-Compiler-PA4%E7%BF%BB%E8%AF%91/</id>
+    <published>2021-06-03T16:17:00.000Z</published>
+    <updated>2021-06-06T15:59:49.063Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;课程主页：&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://www.edx.org/course/compilers&quot;&gt;https://www.edx.org/course/compilers&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;课程视频：&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://www.bilibili.com/video/BV1NE411376V?p=20&amp;amp;t=6&quot;&gt;https://www.bilibili.com/video/BV1NE411376V?p=20&amp;amp;t=6&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;这部分对PA4进行翻译。&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="编译原理" scheme="http://doraemonzzz.com/categories/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/"/>
+    
+    
+    <category term="斯坦福大学编译原理" scheme="http://doraemonzzz.com/tags/%E6%96%AF%E5%9D%A6%E7%A6%8F%E5%A4%A7%E5%AD%A6%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>巧妙的Y运算符</title>
+    <link href="http://doraemonzzz.com/2021/06/03/2021-6-3-%E5%B7%A7%E5%A6%99%E7%9A%84Y%E8%BF%90%E7%AE%97%E7%AC%A6/"/>
+    <id>http://doraemonzzz.com/2021/06/03/2021-6-3-%E5%B7%A7%E5%A6%99%E7%9A%84Y%E8%BF%90%E7%AE%97%E7%AC%A6/</id>
+    <published>2021-06-03T00:54:00.000Z</published>
+    <updated>2021-06-05T06:38:26.919Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;在完成SICP 4.21时接触到Y运算符，感觉很巧妙，这里加以总结，大部分内容来自于第二份讲义，这里只做了翻译以及总结的工作。&lt;/p&gt;
+&lt;p&gt;参考资料：&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://liujiacai.net/blog/2016/02/22/recursion-without-name/&quot;&gt;https://liujiacai.net/blog/2016/02/22/recursion-without-name/&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://mvanier.livejournal.com/2897.html&quot;&gt;https://mvanier.livejournal.com/2897.html&lt;/a&gt;&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="计算机原理" scheme="http://doraemonzzz.com/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%8E%9F%E7%90%86/"/>
+    
+    
+    <category term="计算机程序的构造和解释" scheme="http://doraemonzzz.com/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A8%8B%E5%BA%8F%E7%9A%84%E6%9E%84%E9%80%A0%E5%92%8C%E8%A7%A3%E9%87%8A/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Stanford Compiler Week 9 Java</title>
+    <link href="http://doraemonzzz.com/2021/05/27/2021-5-27-Stanford-Compiler-Week-9-Java/"/>
+    <id>http://doraemonzzz.com/2021/05/27/2021-5-27-Stanford-Compiler-Week-9-Java/</id>
+    <published>2021-05-27T14:35:00.000Z</published>
+    <updated>2021-05-27T15:22:20.357Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;课程主页：&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://www.edx.org/course/compilers&quot;&gt;https://www.edx.org/course/compilers&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;课程视频：&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://www.bilibili.com/video/BV1NE411376V?p=20&amp;amp;t=6&quot;&gt;https://www.bilibili.com/video/BV1NE411376V?p=20&amp;amp;t=6&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;备注：&lt;/p&gt;
+&lt;p&gt;图片均来自于课件。&lt;/p&gt;
+&lt;p&gt;这次回顾Java。&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="编译原理" scheme="http://doraemonzzz.com/categories/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/"/>
+    
+    
+    <category term="斯坦福大学编译原理" scheme="http://doraemonzzz.com/tags/%E6%96%AF%E5%9D%A6%E7%A6%8F%E5%A4%A7%E5%AD%A6%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Stanford Compiler Week 9 Garbage Collection</title>
+    <link href="http://doraemonzzz.com/2021/05/26/2021-5-26-Stanford-Compiler-Week-9-Garbage-Collection/"/>
+    <id>http://doraemonzzz.com/2021/05/26/2021-5-26-Stanford-Compiler-Week-9-Garbage-Collection/</id>
+    <published>2021-05-26T15:45:00.000Z</published>
+    <updated>2021-05-26T17:02:05.236Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;课程主页：&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://www.edx.org/course/compilers&quot;&gt;https://www.edx.org/course/compilers&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;课程视频：&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://www.bilibili.com/video/BV1NE411376V?p=20&amp;amp;t=6&quot;&gt;https://www.bilibili.com/video/BV1NE411376V?p=20&amp;amp;t=6&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;备注：&lt;/p&gt;
+&lt;p&gt;图片均来自于课件。&lt;/p&gt;
+&lt;p&gt;这次回顾垃圾回收。&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="编译原理" scheme="http://doraemonzzz.com/categories/%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/"/>
+    
+    
+    <category term="斯坦福大学编译原理" scheme="http://doraemonzzz.com/tags/%E6%96%AF%E5%9D%A6%E7%A6%8F%E5%A4%A7%E5%AD%A6%E7%BC%96%E8%AF%91%E5%8E%9F%E7%90%86/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>CS170 Efficient Algorithms and Intractable Problems HW11</title>
+    <link href="http://doraemonzzz.com/2021/05/26/2021-5-26-CS170-Efficient-Algorithms-and-Intractable-Problems-HW11/"/>
+    <id>http://doraemonzzz.com/2021/05/26/2021-5-26-CS170-Efficient-Algorithms-and-Intractable-Problems-HW11/</id>
+    <published>2021-05-26T15:39:00.000Z</published>
+    <updated>2021-05-26T15:40:16.658Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;课程主页：&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://cs170.org/&quot;&gt;https://cs170.org/&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://inst.eecs.berkeley.edu/~cs170/fa18/&quot;&gt;https://inst.eecs.berkeley.edu/~cs170/fa18/&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;课程视频：&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://www.bilibili.com/video/BV1wK411g7ck&quot;&gt;https://www.bilibili.com/video/BV1wK411g7ck&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;参考资料：&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://cs170.org/assets/pdf/dis12-sol.pdf&quot;&gt;https://cs170.org/assets/pdf/dis12-sol.pdf&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://www.cse.iitk.ac.in/users/rmittal/prev_course/f14/notes/lec24.pdf&quot;&gt;https://www.cse.iitk.ac.in/users/rmittal/prev_course/f14/notes/lec24.pdf&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;http://theory.stanford.edu/~trevisan/cs261/lecture07.pdf&quot;&gt;http://theory.stanford.edu/~trevisan/cs261/lecture07.pdf&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://cs170.org/assets/pdf/hw11-sol.pdf&quot;&gt;https://cs170.org/assets/pdf/hw11-sol.pdf&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;这次回顾HW11。&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="算法" scheme="http://doraemonzzz.com/categories/%E7%AE%97%E6%B3%95/"/>
+    
+    
+    <category term="CS170" scheme="http://doraemonzzz.com/tags/CS170/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>计算机程序的构造和解释(SICP) 第4章 习题解析 Part2</title>
+    <link href="http://doraemonzzz.com/2021/05/25/2021-5-25-%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A8%8B%E5%BA%8F%E7%9A%84%E6%9E%84%E9%80%A0%E5%92%8C%E8%A7%A3%E9%87%8A(SICP)-%E7%AC%AC4%E7%AB%A0-%E4%B9%A0%E9%A2%98%E8%A7%A3%E6%9E%90-Part2/"/>
+    <id>http://doraemonzzz.com/2021/05/25/2021-5-25-%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A8%8B%E5%BA%8F%E7%9A%84%E6%9E%84%E9%80%A0%E5%92%8C%E8%A7%A3%E9%87%8A(SICP)-%E7%AC%AC4%E7%AB%A0-%E4%B9%A0%E9%A2%98%E8%A7%A3%E6%9E%90-Part2/</id>
+    <published>2021-05-25T15:37:00.000Z</published>
+    <updated>2021-06-03T00:55:54.258Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;这次回顾第四章第二部分习题。&lt;/p&gt;
+&lt;p&gt;学习资料：&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://ocw.mit.edu/courses/electrical-engineering-and-computer-science/6-001-structure-and-interpretation-of-computer-programs-spring-2005/index.htm&quot;&gt;https://ocw.mit.edu/courses/electrical-engineering-and-computer-science/6-001-structure-and-interpretation-of-computer-programs-spring-2005/index.htm&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://github.com/DeathKing/Learning-SICP&quot;&gt;https://github.com/DeathKing/Learning-SICP&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://mitpress.mit.edu/sites/default/files/sicp/index.html&quot;&gt;https://mitpress.mit.edu/sites/default/files/sicp/index.html&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://www.bilibili.com/video/BV1Xx41117tr?from=search&amp;amp;seid=14983483066585274454&quot;&gt;https://www.bilibili.com/video/BV1Xx41117tr?from=search&amp;amp;seid=14983483066585274454&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;参考资料：&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://sicp.readthedocs.io/en/latest&quot;&gt;https://sicp.readthedocs.io/en/latest&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;http://community.schemewiki.org/?SICP-Solutions&quot;&gt;http://community.schemewiki.org/?SICP-Solutions&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;http://community.schemewiki.org/?sicp&quot;&gt;http://community.schemewiki.org/?sicp&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://liujiacai.net/blog/2016/02/22/recursion-without-name/&quot;&gt;https://liujiacai.net/blog/2016/02/22/recursion-without-name/&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://mvanier.livejournal.com/2897.html&quot;&gt;https://mvanier.livejournal.com/2897.html&lt;/a&gt;&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="计算机原理" scheme="http://doraemonzzz.com/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%8E%9F%E7%90%86/"/>
+    
+    
+    <category term="计算机程序的构造和解释" scheme="http://doraemonzzz.com/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A8%8B%E5%BA%8F%E7%9A%84%E6%9E%84%E9%80%A0%E5%92%8C%E8%A7%A3%E9%87%8A/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>CS170 Efficient Algorithms and Intractable Problems HW14</title>
+    <link href="http://doraemonzzz.com/2021/05/25/2021-5-25-CS170-Efficient-Algorithms-and-Intractable-Problems-HW14/"/>
+    <id>http://doraemonzzz.com/2021/05/25/2021-5-25-CS170-Efficient-Algorithms-and-Intractable-Problems-HW14/</id>
+    <published>2021-05-24T17:16:00.000Z</published>
+    <updated>2021-05-24T17:16:54.765Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;课程主页：&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://cs170.org/&quot;&gt;https://cs170.org/&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://inst.eecs.berkeley.edu/~cs170/fa18/&quot;&gt;https://inst.eecs.berkeley.edu/~cs170/fa18/&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;课程视频：&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://www.bilibili.com/video/BV1wK411g7ck&quot;&gt;https://www.bilibili.com/video/BV1wK411g7ck&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;参考资料：&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://blogs.asarkar.com/assets/docs/algorithms-curated/Maximum%20Independent%20Set%20Problem%20-%20Chekuri.pdf&quot;&gt;https://blogs.asarkar.com/assets/docs/algorithms-curated/Maximum%20Independent%20Set%20Problem%20-%20Chekuri.pdf&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;这次回顾HW14。&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="算法" scheme="http://doraemonzzz.com/categories/%E7%AE%97%E6%B3%95/"/>
+    
+    
+    <category term="CS170" scheme="http://doraemonzzz.com/tags/CS170/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>CS170 Efficient Algorithms and Intractable Problems HW13</title>
+    <link href="http://doraemonzzz.com/2021/05/25/2021-5-25-CS170-Efficient-Algorithms-and-Intractable-Problems-HW13/"/>
+    <id>http://doraemonzzz.com/2021/05/25/2021-5-25-CS170-Efficient-Algorithms-and-Intractable-Problems-HW13/</id>
+    <published>2021-05-24T17:01:00.000Z</published>
+    <updated>2021-05-24T17:02:19.193Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;课程主页：&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://cs170.org/&quot;&gt;https://cs170.org/&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://inst.eecs.berkeley.edu/~cs170/fa18/&quot;&gt;https://inst.eecs.berkeley.edu/~cs170/fa18/&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;课程视频：&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://www.bilibili.com/video/BV1wK411g7ck&quot;&gt;https://www.bilibili.com/video/BV1wK411g7ck&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;参考资料：&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://blogs.asarkar.com/assets/docs/algorithms-curated/Maximum%20Independent%20Set%20Problem%20-%20Chekuri.pdf&quot;&gt;https://blogs.asarkar.com/assets/docs/algorithms-curated/Maximum%20Independent%20Set%20Problem%20-%20Chekuri.pdf&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;这次回顾HW13。&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="算法" scheme="http://doraemonzzz.com/categories/%E7%AE%97%E6%B3%95/"/>
+    
+    
+    <category term="CS170" scheme="http://doraemonzzz.com/tags/CS170/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>CS170 Efficient Algorithms and Intractable Problems Section12</title>
+    <link href="http://doraemonzzz.com/2021/05/25/2021-5-25-CS170-Efficient-Algorithms-and-Intractable-Problems-Section12/"/>
+    <id>http://doraemonzzz.com/2021/05/25/2021-5-25-CS170-Efficient-Algorithms-and-Intractable-Problems-Section12/</id>
+    <published>2021-05-24T16:02:00.000Z</published>
+    <updated>2021-05-24T16:03:02.502Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;课程主页：&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://cs170.org/&quot;&gt;https://cs170.org/&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://inst.eecs.berkeley.edu/~cs170/fa18/&quot;&gt;https://inst.eecs.berkeley.edu/~cs170/fa18/&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;课程视频：&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://www.bilibili.com/video/BV1wK411g7ck&quot;&gt;https://www.bilibili.com/video/BV1wK411g7ck&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;这次回顾Section 12。&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="算法" scheme="http://doraemonzzz.com/categories/%E7%AE%97%E6%B3%95/"/>
+    
+    
+    <category term="CS170" scheme="http://doraemonzzz.com/tags/CS170/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>CS170 Efficient Algorithms and Intractable Problems HW12</title>
+    <link href="http://doraemonzzz.com/2021/05/24/2021-5-24-CS170-Efficient-Algorithms-and-Intractable-Problems-HW12/"/>
+    <id>http://doraemonzzz.com/2021/05/24/2021-5-24-CS170-Efficient-Algorithms-and-Intractable-Problems-HW12/</id>
+    <published>2021-05-24T15:50:00.000Z</published>
+    <updated>2021-05-24T15:51:01.323Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;课程主页：&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://cs170.org/&quot;&gt;https://cs170.org/&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://inst.eecs.berkeley.edu/~cs170/fa18/&quot;&gt;https://inst.eecs.berkeley.edu/~cs170/fa18/&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;课程视频：&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://www.bilibili.com/video/BV1wK411g7ck&quot;&gt;https://www.bilibili.com/video/BV1wK411g7ck&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;参考资料：&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://blogs.asarkar.com/assets/docs/algorithms-curated/Maximum%20Independent%20Set%20Problem%20-%20Chekuri.pdf&quot;&gt;https://blogs.asarkar.com/assets/docs/algorithms-curated/Maximum%20Independent%20Set%20Problem%20-%20Chekuri.pdf&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;这次回顾HW12。&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="算法" scheme="http://doraemonzzz.com/categories/%E7%AE%97%E6%B3%95/"/>
+    
+    
+    <category term="CS170" scheme="http://doraemonzzz.com/tags/CS170/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>CS170 Efficient Algorithms and Intractable Problems Section11</title>
+    <link href="http://doraemonzzz.com/2021/05/24/2021-5-24-CS170-Efficient-Algorithms-and-Intractable-Problems-Section11/"/>
+    <id>http://doraemonzzz.com/2021/05/24/2021-5-24-CS170-Efficient-Algorithms-and-Intractable-Problems-Section11/</id>
+    <published>2021-05-24T15:34:00.000Z</published>
+    <updated>2021-05-24T15:36:54.016Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;课程主页：&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://cs170.org/&quot;&gt;https://cs170.org/&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://inst.eecs.berkeley.edu/~cs170/fa18/&quot;&gt;https://inst.eecs.berkeley.edu/~cs170/fa18/&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;课程视频：&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://www.bilibili.com/video/BV1wK411g7ck&quot;&gt;https://www.bilibili.com/video/BV1wK411g7ck&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;这次回顾Section 11。&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="算法" scheme="http://doraemonzzz.com/categories/%E7%AE%97%E6%B3%95/"/>
+    
+    
+    <category term="CS170" scheme="http://doraemonzzz.com/tags/CS170/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>CS170 Efficient Algorithms and Intractable Problems HW10</title>
+    <link href="http://doraemonzzz.com/2021/05/20/2021-5-20-CS170-Efficient-Algorithms-and-Intractable-Problems-HW10/"/>
+    <id>http://doraemonzzz.com/2021/05/20/2021-5-20-CS170-Efficient-Algorithms-and-Intractable-Problems-HW10/</id>
+    <published>2021-05-20T03:00:00.000Z</published>
+    <updated>2021-05-20T03:01:07.719Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;课程主页：&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://cs170.org/&quot;&gt;https://cs170.org/&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://inst.eecs.berkeley.edu/~cs170/fa18/&quot;&gt;https://inst.eecs.berkeley.edu/~cs170/fa18/&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;课程视频：&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://www.bilibili.com/video/BV1wK411g7ck&quot;&gt;https://www.bilibili.com/video/BV1wK411g7ck&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;参考资料：&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://cs170.org/assets/pdf/hw09-sol.pdf&quot;&gt;https://cs170.org/assets/pdf/hw09-sol.pdf&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;吴彧文（atyuwen）Algorithms.Exercises.solution&lt;/p&gt;
+&lt;p&gt;这次回顾HW10。&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="算法" scheme="http://doraemonzzz.com/categories/%E7%AE%97%E6%B3%95/"/>
+    
+    
+    <category term="CS170" scheme="http://doraemonzzz.com/tags/CS170/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>CS170 Efficient Algorithms and Intractable Problems Section10</title>
+    <link href="http://doraemonzzz.com/2021/05/20/2021-5-20-CS170-Efficient-Algorithms-and-Intractable-Problems-Section10/"/>
+    <id>http://doraemonzzz.com/2021/05/20/2021-5-20-CS170-Efficient-Algorithms-and-Intractable-Problems-Section10/</id>
+    <published>2021-05-20T02:20:00.000Z</published>
+    <updated>2021-05-20T02:21:11.309Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;课程主页：&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://cs170.org/&quot;&gt;https://cs170.org/&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://inst.eecs.berkeley.edu/~cs170/fa18/&quot;&gt;https://inst.eecs.berkeley.edu/~cs170/fa18/&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;课程视频：&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://www.bilibili.com/video/BV1wK411g7ck&quot;&gt;https://www.bilibili.com/video/BV1wK411g7ck&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;这次回顾Section 10。&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="算法" scheme="http://doraemonzzz.com/categories/%E7%AE%97%E6%B3%95/"/>
+    
+    
+    <category term="CS170" scheme="http://doraemonzzz.com/tags/CS170/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>CS170 Efficient Algorithms and Intractable Problems HW9</title>
+    <link href="http://doraemonzzz.com/2021/05/18/2021-5-18-CS170-Efficient-Algorithms-and-Intractable-Problems-HW9/"/>
+    <id>http://doraemonzzz.com/2021/05/18/2021-5-18-CS170-Efficient-Algorithms-and-Intractable-Problems-HW9/</id>
+    <published>2021-05-18T01:21:00.000Z</published>
+    <updated>2021-05-18T01:21:40.067Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;课程主页：&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://cs170.org/&quot;&gt;https://cs170.org/&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://inst.eecs.berkeley.edu/~cs170/fa18/&quot;&gt;https://inst.eecs.berkeley.edu/~cs170/fa18/&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;课程视频：&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://www.bilibili.com/video/BV1wK411g7ck&quot;&gt;https://www.bilibili.com/video/BV1wK411g7ck&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;这次回顾HW9。&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="算法" scheme="http://doraemonzzz.com/categories/%E7%AE%97%E6%B3%95/"/>
+    
+    
+    <category term="CS170" scheme="http://doraemonzzz.com/tags/CS170/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>CS170 Efficient Algorithms and Intractable Problems Section9</title>
+    <link href="http://doraemonzzz.com/2021/05/18/2021-5-18-CS170-Efficient-Algorithms-and-Intractable-Problems-Section9/"/>
+    <id>http://doraemonzzz.com/2021/05/18/2021-5-18-CS170-Efficient-Algorithms-and-Intractable-Problems-Section9/</id>
+    <published>2021-05-18T01:00:00.000Z</published>
+    <updated>2021-05-20T03:01:14.801Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;课程主页：&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://cs170.org/&quot;&gt;https://cs170.org/&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://inst.eecs.berkeley.edu/~cs170/fa18/&quot;&gt;https://inst.eecs.berkeley.edu/~cs170/fa18/&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;课程视频：&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://www.bilibili.com/video/BV1wK411g7ck&quot;&gt;https://www.bilibili.com/video/BV1wK411g7ck&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;参考资料：&lt;/p&gt;
+&lt;p&gt;吴彧文（atyuwen）Algorithms.Exercises.solution&lt;/p&gt;
+&lt;p&gt;这次回顾Section 9。&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="算法" scheme="http://doraemonzzz.com/categories/%E7%AE%97%E6%B3%95/"/>
+    
+    
+    <category term="CS170" scheme="http://doraemonzzz.com/tags/CS170/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>计算机程序的构造和解释(SICP) 第4章 习题解析 Part1</title>
+    <link href="http://doraemonzzz.com/2021/05/17/2021-5-17-%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A8%8B%E5%BA%8F%E7%9A%84%E6%9E%84%E9%80%A0%E5%92%8C%E8%A7%A3%E9%87%8A(SICP)-%E7%AC%AC4%E7%AB%A0-%E4%B9%A0%E9%A2%98%E8%A7%A3%E6%9E%90-Part1/"/>
+    <id>http://doraemonzzz.com/2021/05/17/2021-5-17-%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A8%8B%E5%BA%8F%E7%9A%84%E6%9E%84%E9%80%A0%E5%92%8C%E8%A7%A3%E9%87%8A(SICP)-%E7%AC%AC4%E7%AB%A0-%E4%B9%A0%E9%A2%98%E8%A7%A3%E6%9E%90-Part1/</id>
+    <published>2021-05-16T16:15:00.000Z</published>
+    <updated>2021-05-16T16:15:57.983Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;这次回顾第四章第一部分习题。&lt;/p&gt;
+&lt;p&gt;学习资料：&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://ocw.mit.edu/courses/electrical-engineering-and-computer-science/6-001-structure-and-interpretation-of-computer-programs-spring-2005/index.htm&quot;&gt;https://ocw.mit.edu/courses/electrical-engineering-and-computer-science/6-001-structure-and-interpretation-of-computer-programs-spring-2005/index.htm&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://github.com/DeathKing/Learning-SICP&quot;&gt;https://github.com/DeathKing/Learning-SICP&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://mitpress.mit.edu/sites/default/files/sicp/index.html&quot;&gt;https://mitpress.mit.edu/sites/default/files/sicp/index.html&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://www.bilibili.com/video/BV1Xx41117tr?from=search&amp;amp;seid=14983483066585274454&quot;&gt;https://www.bilibili.com/video/BV1Xx41117tr?from=search&amp;amp;seid=14983483066585274454&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;参考资料：&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://sicp.readthedocs.io/en/latest&quot;&gt;https://sicp.readthedocs.io/en/latest&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;http://community.schemewiki.org/?SICP-Solutions&quot;&gt;http://community.schemewiki.org/?SICP-Solutions&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;http://community.schemewiki.org/?sicp&quot;&gt;http://community.schemewiki.org/?sicp&lt;/a&gt;&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="计算机原理" scheme="http://doraemonzzz.com/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%8E%9F%E7%90%86/"/>
+    
+    
+    <category term="计算机程序的构造和解释" scheme="http://doraemonzzz.com/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A8%8B%E5%BA%8F%E7%9A%84%E6%9E%84%E9%80%A0%E5%92%8C%E8%A7%A3%E9%87%8A/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>CS170 Efficient Algorithms and Intractable Problems HW8</title>
+    <link href="http://doraemonzzz.com/2021/05/13/2021-5-13-CS170-Efficient-Algorithms-and-Intractable-Problems-HW8/"/>
+    <id>http://doraemonzzz.com/2021/05/13/2021-5-13-CS170-Efficient-Algorithms-and-Intractable-Problems-HW8/</id>
+    <published>2021-05-13T01:25:00.000Z</published>
+    <updated>2021-05-22T17:28:14.823Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;课程主页：&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://cs170.org/&quot;&gt;https://cs170.org/&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://inst.eecs.berkeley.edu/~cs170/fa18/&quot;&gt;https://inst.eecs.berkeley.edu/~cs170/fa18/&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;课程视频：&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://www.bilibili.com/video/BV1wK411g7ck&quot;&gt;https://www.bilibili.com/video/BV1wK411g7ck&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;参考资料：&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://people.eecs.berkeley.edu/~daw/teaching/cs170-s03/Notes/lecture15.pdf&quot;&gt;https://people.eecs.berkeley.edu/~daw/teaching/cs170-s03/Notes/lecture15.pdf&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://piazza.com/class_profile/get_resource/honxzoabz711ew/hvep5i3vb292gs&quot;&gt;https://piazza.com/class_profile/get_resource/honxzoabz711ew/hvep5i3vb292gs&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;这次回顾HW8。&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="算法" scheme="http://doraemonzzz.com/categories/%E7%AE%97%E6%B3%95/"/>
+    
+    
+    <category term="CS170" scheme="http://doraemonzzz.com/tags/CS170/"/>
+    
+  </entry>
+  
+</feed>
