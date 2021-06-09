@@ -3140,6 +3140,38 @@ blockquote footer cite:before {
   -ms-flex-direction: column;
   flex-direction: column;
 }
+.page .card-categories {
+  -webkit-box-ordinal-group: 5;
+  -moz-box-ordinal-group: 5;
+  -o-box-ordinal-group: 5;
+  -ms-flex-order: 5;
+  -webkit-order: 5;
+  order: 5;
+}
+.page .card-tags {
+  -webkit-box-ordinal-group: 6;
+  -moz-box-ordinal-group: 6;
+  -o-box-ordinal-group: 6;
+  -ms-flex-order: 6;
+  -webkit-order: 6;
+  order: 6;
+}
+.page .card-archives {
+  -webkit-box-ordinal-group: '';
+  -moz-box-ordinal-group: '';
+  -o-box-ordinal-group: '';
+  -ms-flex-order: '';
+  -webkit-order: '';
+  order: '';
+}
+.page .card-webinfo {
+  -webkit-box-ordinal-group: 2;
+  -moz-box-ordinal-group: 2;
+  -o-box-ordinal-group: 2;
+  -ms-flex-order: 2;
+  -webkit-order: 2;
+  order: 2;
+}
 @-moz-keyframes more-btn-move {
   0%, 100% {
     -webkit-transform: translateX(0);
