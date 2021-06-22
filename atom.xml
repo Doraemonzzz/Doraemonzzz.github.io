@@ -6,7 +6,7 @@
   <link href="http://www.doraemonzzz.com/atom.xml" rel="self"/>
   
   <link href="http://www.doraemonzzz.com/"/>
-  <updated>2021-06-14T09:02:03.335Z</updated>
+  <updated>2021-06-22T17:37:36.767Z</updated>
   <id>http://www.doraemonzzz.com/</id>
   
   <author>
@@ -17,11 +17,141 @@
   <generator uri="https://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>计算机网络——自顶向下方法（第七版）Socket Programming Assignment 3:SMTP</title>
+    <link href="http://www.doraemonzzz.com/2021/06/22/2021-6-22-%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E2%80%94%E2%80%94%E8%87%AA%E9%A1%B6%E5%90%91%E4%B8%8B%E6%96%B9%E6%B3%95%EF%BC%88%E7%AC%AC%E4%B8%83%E7%89%88%EF%BC%89Socket-Programming-Assignment-3SMTP/"/>
+    <id>http://www.doraemonzzz.com/2021/06/22/2021-6-22-%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E2%80%94%E2%80%94%E8%87%AA%E9%A1%B6%E5%90%91%E4%B8%8B%E6%96%B9%E6%B3%95%EF%BC%88%E7%AC%AC%E4%B8%83%E7%89%88%EF%BC%89Socket-Programming-Assignment-3SMTP/</id>
+    <published>2021-06-22T15:51:00.000Z</published>
+    <updated>2021-06-22T17:37:36.767Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;这部分回顾Socket Programming Assignment 3: SMTP。&lt;/p&gt;
+&lt;p&gt;参考资料：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;https://github.com/jzplp/Computer-Network-A-Top-Down-Approach-Answer/blob/master/Chapter-2/Socket-Programming-Assignment-2/UDPPingerClient.py&quot;&gt;https://github.com/jzplp/Computer-Network-A-Top-Down-Approach-Answer/blob/master/Chapter-2/Socket-Programming-Assignment-2/UDPPingerClient.py&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://github.com/moranzcw/Computer-Networking-A-Top-Down-Approach-NOTES&quot;&gt;https://github.com/moranzcw/Computer-Networking-A-Top-Down-Approach-NOTES&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;http://www.ruanyifeng.com/blog/2008/06/mime.html&quot;&gt;http://www.ruanyifeng.com/blog/2008/06/mime.html&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://my.oschina.net/u/3314358/blog/1825595&quot;&gt;https://my.oschina.net/u/3314358/blog/1825595&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://blog.csdn.net/weixin_41789943/article/details/82348946&quot;&gt;https://blog.csdn.net/weixin_41789943/article/details/82348946&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://blog.csdn.net/PoetMeng/article/details/53507865&quot;&gt;https://blog.csdn.net/PoetMeng/article/details/53507865&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://zhuanlan.zhihu.com/p/146565620&quot;&gt;https://zhuanlan.zhihu.com/p/146565620&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://blog.csdn.net/chjuan1122/article/details/1046579&quot;&gt;https://blog.csdn.net/chjuan1122/article/details/1046579&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://stackoverflow.com/questions/4656287/what-rules-apply-to-mime-boundary&quot;&gt;https://stackoverflow.com/questions/4656287/what-rules-apply-to-mime-boundary&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</summary>
+    
+    
+    
+    <category term="计算机网络" scheme="http://www.doraemonzzz.com/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/"/>
+    
+    
+    <category term="Socket Programming" scheme="http://www.doraemonzzz.com/tags/Socket-Programming/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>计算机网络——自顶向下方法（第七版）Socket Programming Assignment 2:UDPpinger</title>
+    <link href="http://www.doraemonzzz.com/2021/06/22/2021-6-22-%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E2%80%94%E2%80%94%E8%87%AA%E9%A1%B6%E5%90%91%E4%B8%8B%E6%96%B9%E6%B3%95%EF%BC%88%E7%AC%AC%E4%B8%83%E7%89%88%EF%BC%89Socket-Programming-Assignment-2UDPpinger/"/>
+    <id>http://www.doraemonzzz.com/2021/06/22/2021-6-22-%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E2%80%94%E2%80%94%E8%87%AA%E9%A1%B6%E5%90%91%E4%B8%8B%E6%96%B9%E6%B3%95%EF%BC%88%E7%AC%AC%E4%B8%83%E7%89%88%EF%BC%89Socket-Programming-Assignment-2UDPpinger/</id>
+    <published>2021-06-22T15:21:00.000Z</published>
+    <updated>2021-06-22T15:52:18.240Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;这部分回顾Socket Programming Assignment 2: UDPpinger。&lt;/p&gt;
+&lt;p&gt;参考资料：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;https://github.com/jzplp/Computer-Network-A-Top-Down-Approach-Answer/blob/master/Chapter-2/Socket-Programming-Assignment-2/UDPPingerClient.py&quot;&gt;https://github.com/jzplp/Computer-Network-A-Top-Down-Approach-Answer/blob/master/Chapter-2/Socket-Programming-Assignment-2/UDPPingerClient.py&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://github.com/moranzcw/Computer-Networking-A-Top-Down-Approach-NOTES&quot;&gt;https://github.com/moranzcw/Computer-Networking-A-Top-Down-Approach-NOTES&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</summary>
+    
+    
+    
+    <category term="计算机网络" scheme="http://www.doraemonzzz.com/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/"/>
+    
+    
+    <category term="Socket Programming" scheme="http://www.doraemonzzz.com/tags/Socket-Programming/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>计算机网络——自顶向下方法（第七版）Socket Programming Assignment 1:WebServer</title>
+    <link href="http://www.doraemonzzz.com/2021/06/22/2021-6-22-%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E2%80%94%E2%80%94%E8%87%AA%E9%A1%B6%E5%90%91%E4%B8%8B%E6%96%B9%E6%B3%95%EF%BC%88%E7%AC%AC%E4%B8%83%E7%89%88%EF%BC%89Socket-Programming-Assignment-1WebServer/"/>
+    <id>http://www.doraemonzzz.com/2021/06/22/2021-6-22-%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E2%80%94%E2%80%94%E8%87%AA%E9%A1%B6%E5%90%91%E4%B8%8B%E6%96%B9%E6%B3%95%EF%BC%88%E7%AC%AC%E4%B8%83%E7%89%88%EF%BC%89Socket-Programming-Assignment-1WebServer/</id>
+    <published>2021-06-22T14:44:00.000Z</published>
+    <updated>2021-06-22T15:52:06.303Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;这部分回顾Socket Programming Assignment 1: WebServer。&lt;/p&gt;
+&lt;p&gt;参考资料：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;https://github.com/jzplp/Computer-Network-A-Top-Down-Approach-Answer/blob/master/Chapter-2/Socket-Programming-Assignment-2/UDPPingerClient.py&quot;&gt;https://github.com/jzplp/Computer-Network-A-Top-Down-Approach-Answer/blob/master/Chapter-2/Socket-Programming-Assignment-2/UDPPingerClient.py&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://github.com/moranzcw/Computer-Networking-A-Top-Down-Approach-NOTES&quot;&gt;https://github.com/moranzcw/Computer-Networking-A-Top-Down-Approach-NOTES&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</summary>
+    
+    
+    
+    <category term="计算机网络" scheme="http://www.doraemonzzz.com/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/"/>
+    
+    
+    <category term="Socket Programming" scheme="http://www.doraemonzzz.com/tags/Socket-Programming/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>计算机程序的构造和解释(SICP) 第4章 习题解析 Part4</title>
+    <link href="http://www.doraemonzzz.com/2021/06/21/2021-6-21-%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A8%8B%E5%BA%8F%E7%9A%84%E6%9E%84%E9%80%A0%E5%92%8C%E8%A7%A3%E9%87%8A(SICP)-%E7%AC%AC4%E7%AB%A0-%E4%B9%A0%E9%A2%98%E8%A7%A3%E6%9E%90-Part4/"/>
+    <id>http://www.doraemonzzz.com/2021/06/21/2021-6-21-%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A8%8B%E5%BA%8F%E7%9A%84%E6%9E%84%E9%80%A0%E5%92%8C%E8%A7%A3%E9%87%8A(SICP)-%E7%AC%AC4%E7%AB%A0-%E4%B9%A0%E9%A2%98%E8%A7%A3%E6%9E%90-Part4/</id>
+    <published>2021-06-21T01:54:00.000Z</published>
+    <updated>2021-06-21T01:54:17.339Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;这次回顾第四章第四部分习题。&lt;/p&gt;
+&lt;p&gt;学习资料：&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://ocw.mit.edu/courses/electrical-engineering-and-computer-science/6-001-structure-and-interpretation-of-computer-programs-spring-2005/index.htm&quot;&gt;https://ocw.mit.edu/courses/electrical-engineering-and-computer-science/6-001-structure-and-interpretation-of-computer-programs-spring-2005/index.htm&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://github.com/DeathKing/Learning-SICP&quot;&gt;https://github.com/DeathKing/Learning-SICP&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://mitpress.mit.edu/sites/default/files/sicp/index.html&quot;&gt;https://mitpress.mit.edu/sites/default/files/sicp/index.html&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://www.bilibili.com/video/BV1Xx41117tr?from=search&amp;amp;seid=14983483066585274454&quot;&gt;https://www.bilibili.com/video/BV1Xx41117tr?from=search&amp;amp;seid=14983483066585274454&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;参考资料：&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://sicp.readthedocs.io/en/latest&quot;&gt;https://sicp.readthedocs.io/en/latest&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;http://community.schemewiki.org/?SICP-Solutions&quot;&gt;http://community.schemewiki.org/?SICP-Solutions&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;http://community.schemewiki.org/?sicp&quot;&gt;http://community.schemewiki.org/?sicp&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://liujiacai.net/blog/2016/02/22/recursion-without-name/&quot;&gt;https://liujiacai.net/blog/2016/02/22/recursion-without-name/&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://mvanier.livejournal.com/2897.html&quot;&gt;https://mvanier.livejournal.com/2897.html&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://github.com/jiacai2050/sicp&quot;&gt;https://github.com/jiacai2050/sicp&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://liujiacai.net/&quot;&gt;https://liujiacai.net/&lt;/a&gt;&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="计算机原理" scheme="http://www.doraemonzzz.com/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%8E%9F%E7%90%86/"/>
+    
+    
+    <category term="计算机程序的构造和解释" scheme="http://www.doraemonzzz.com/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A8%8B%E5%BA%8F%E7%9A%84%E6%9E%84%E9%80%A0%E5%92%8C%E8%A7%A3%E9%87%8A/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Hexo博客不蒜子阅读次数迁移至Leancloud</title>
+    <link href="http://www.doraemonzzz.com/2021/06/19/2021-6-19-Hexo%E5%8D%9A%E5%AE%A2%E4%B8%8D%E8%92%9C%E5%AD%90%E9%98%85%E8%AF%BB%E6%AC%A1%E6%95%B0%E8%BF%81%E7%A7%BB%E8%87%B3Leancloud/"/>
+    <id>http://www.doraemonzzz.com/2021/06/19/2021-6-19-Hexo%E5%8D%9A%E5%AE%A2%E4%B8%8D%E8%92%9C%E5%AD%90%E9%98%85%E8%AF%BB%E6%AC%A1%E6%95%B0%E8%BF%81%E7%A7%BB%E8%87%B3Leancloud/</id>
+    <published>2021-06-19T15:15:28.000Z</published>
+    <updated>2021-06-19T17:11:10.245Z</updated>
+    
+    
+    <summary type="html">最近在给博客迁移主题时，发现阅读排行榜的阅读次数和实际阅读次数不一致，检查后发现原因为阅读排行榜是基于Leancloud，而博客的阅读次数是基于不蒜子，由于不蒜子的阅读次数无法手动修改，所以使两者一致的方法只能是将不蒜子的阅读次数迁移至Leancloud，本文给出迁移的方案以及代码。</summary>
+    
+    
+    
+    <category term="Hexo" scheme="http://www.doraemonzzz.com/categories/Hexo/"/>
+    
+    
+    <category term="博客配置" scheme="http://www.doraemonzzz.com/tags/%E5%8D%9A%E5%AE%A2%E9%85%8D%E7%BD%AE/"/>
+    
+  </entry>
+  
+  <entry>
     <title>计算机程序的构造和解释(SICP) 第4章 习题解析 Part3</title>
     <link href="http://www.doraemonzzz.com/2021/06/14/2021-6-14-%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A8%8B%E5%BA%8F%E7%9A%84%E6%9E%84%E9%80%A0%E5%92%8C%E8%A7%A3%E9%87%8A(SICP)-%E7%AC%AC4%E7%AB%A0-%E4%B9%A0%E9%A2%98%E8%A7%A3%E6%9E%90-Part3/"/>
     <id>http://www.doraemonzzz.com/2021/06/14/2021-6-14-%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A8%8B%E5%BA%8F%E7%9A%84%E6%9E%84%E9%80%A0%E5%92%8C%E8%A7%A3%E9%87%8A(SICP)-%E7%AC%AC4%E7%AB%A0-%E4%B9%A0%E9%A2%98%E8%A7%A3%E6%9E%90-Part3/</id>
     <published>2021-06-14T09:01:00.000Z</published>
-    <updated>2021-06-14T09:02:03.335Z</updated>
+    <updated>2021-06-21T01:53:23.845Z</updated>
     
     
     <summary type="html">&lt;p&gt;这次回顾第四章第三部分习题。&lt;/p&gt;
@@ -35,7 +165,9 @@
 &lt;p&gt;&lt;a href=&quot;http://community.schemewiki.org/?SICP-Solutions&quot;&gt;http://community.schemewiki.org/?SICP-Solutions&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;&lt;a href=&quot;http://community.schemewiki.org/?sicp&quot;&gt;http://community.schemewiki.org/?sicp&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;&lt;a href=&quot;https://liujiacai.net/blog/2016/02/22/recursion-without-name/&quot;&gt;https://liujiacai.net/blog/2016/02/22/recursion-without-name/&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;&lt;a href=&quot;https://mvanier.livejournal.com/2897.html&quot;&gt;https://mvanier.livejournal.com/2897.html&lt;/a&gt;&lt;/p&gt;</summary>
+&lt;p&gt;&lt;a href=&quot;https://mvanier.livejournal.com/2897.html&quot;&gt;https://mvanier.livejournal.com/2897.html&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://github.com/jiacai2050/sicp&quot;&gt;https://github.com/jiacai2050/sicp&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://liujiacai.net/&quot;&gt;https://liujiacai.net/&lt;/a&gt;&lt;/p&gt;</summary>
     
     
     
@@ -155,12 +287,12 @@
     <link href="http://www.doraemonzzz.com/2021/06/06/2021-6-6-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E7%AC%AC5%E7%AB%A0-%E4%B9%A0%E9%A2%98%E8%A7%A3%E6%9E%90/"/>
     <id>http://www.doraemonzzz.com/2021/06/06/2021-6-6-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E7%AC%AC5%E7%AB%A0-%E4%B9%A0%E9%A2%98%E8%A7%A3%E6%9E%90/</id>
     <published>2021-06-06T07:23:00.000Z</published>
-    <updated>2021-06-05T07:28:05.742Z</updated>
+    <updated>2021-06-20T04:48:59.918Z</updated>
     
     
     <summary type="html">&lt;p&gt;这次更新第5章习题。&lt;/p&gt;
 &lt;p&gt;参考资料：&lt;/p&gt;
-&lt;p&gt;&lt;a href=&quot;https://dreamanddead.github.io/CSAPP-3e-Solutions/chapter4/&quot;&gt;https://dreamanddead.github.io/CSAPP-3e-Solutions/chapter4/&lt;/a&gt;&lt;/p&gt;</summary>
+&lt;p&gt;&lt;a href=&quot;https://dreamanddead.github.io/CSAPP-3e-Solutions/chapter5/&quot;&gt;https://dreamanddead.github.io/CSAPP-3e-Solutions/chapter5/&lt;/a&gt;&lt;/p&gt;</summary>
     
     
     
@@ -365,133 +497,6 @@
 &lt;p&gt;&lt;a href=&quot;https://blogs.asarkar.com/assets/docs/algorithms-curated/Maximum%20Independent%20Set%20Problem%20-%20Chekuri.pdf&quot;&gt;https://blogs.asarkar.com/assets/docs/algorithms-curated/Maximum%20Independent%20Set%20Problem%20-%20Chekuri.pdf&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;&lt;a href=&quot;https://cs170.org/assets/pdf/dis10-sol.pdf&quot;&gt;https://cs170.org/assets/pdf/dis10-sol.pdf&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;这次回顾HW14。&lt;/p&gt;</summary>
-    
-    
-    
-    <category term="算法" scheme="http://www.doraemonzzz.com/categories/%E7%AE%97%E6%B3%95/"/>
-    
-    
-    <category term="CS170" scheme="http://www.doraemonzzz.com/tags/CS170/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>CS170 Efficient Algorithms and Intractable Problems HW13</title>
-    <link href="http://www.doraemonzzz.com/2021/05/25/2021-5-25-CS170-Efficient-Algorithms-and-Intractable-Problems-HW13/"/>
-    <id>http://www.doraemonzzz.com/2021/05/25/2021-5-25-CS170-Efficient-Algorithms-and-Intractable-Problems-HW13/</id>
-    <published>2021-05-24T17:01:00.000Z</published>
-    <updated>2021-05-24T17:02:19.193Z</updated>
-    
-    
-    <summary type="html">&lt;p&gt;课程主页：&lt;/p&gt;
-&lt;p&gt;&lt;a href=&quot;https://cs170.org/&quot;&gt;https://cs170.org/&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;&lt;a href=&quot;https://inst.eecs.berkeley.edu/~cs170/fa18/&quot;&gt;https://inst.eecs.berkeley.edu/~cs170/fa18/&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;课程视频：&lt;/p&gt;
-&lt;p&gt;&lt;a href=&quot;https://www.bilibili.com/video/BV1wK411g7ck&quot;&gt;https://www.bilibili.com/video/BV1wK411g7ck&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;参考资料：&lt;/p&gt;
-&lt;p&gt;&lt;a href=&quot;https://blogs.asarkar.com/assets/docs/algorithms-curated/Maximum%20Independent%20Set%20Problem%20-%20Chekuri.pdf&quot;&gt;https://blogs.asarkar.com/assets/docs/algorithms-curated/Maximum%20Independent%20Set%20Problem%20-%20Chekuri.pdf&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;这次回顾HW13。&lt;/p&gt;</summary>
-    
-    
-    
-    <category term="算法" scheme="http://www.doraemonzzz.com/categories/%E7%AE%97%E6%B3%95/"/>
-    
-    
-    <category term="CS170" scheme="http://www.doraemonzzz.com/tags/CS170/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>CS170 Efficient Algorithms and Intractable Problems Section12</title>
-    <link href="http://www.doraemonzzz.com/2021/05/25/2021-5-25-CS170-Efficient-Algorithms-and-Intractable-Problems-Section12/"/>
-    <id>http://www.doraemonzzz.com/2021/05/25/2021-5-25-CS170-Efficient-Algorithms-and-Intractable-Problems-Section12/</id>
-    <published>2021-05-24T16:02:00.000Z</published>
-    <updated>2021-05-24T16:03:02.502Z</updated>
-    
-    
-    <summary type="html">&lt;p&gt;课程主页：&lt;/p&gt;
-&lt;p&gt;&lt;a href=&quot;https://cs170.org/&quot;&gt;https://cs170.org/&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;&lt;a href=&quot;https://inst.eecs.berkeley.edu/~cs170/fa18/&quot;&gt;https://inst.eecs.berkeley.edu/~cs170/fa18/&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;课程视频：&lt;/p&gt;
-&lt;p&gt;&lt;a href=&quot;https://www.bilibili.com/video/BV1wK411g7ck&quot;&gt;https://www.bilibili.com/video/BV1wK411g7ck&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;这次回顾Section 12。&lt;/p&gt;</summary>
-    
-    
-    
-    <category term="算法" scheme="http://www.doraemonzzz.com/categories/%E7%AE%97%E6%B3%95/"/>
-    
-    
-    <category term="CS170" scheme="http://www.doraemonzzz.com/tags/CS170/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>CS170 Efficient Algorithms and Intractable Problems HW12</title>
-    <link href="http://www.doraemonzzz.com/2021/05/24/2021-5-24-CS170-Efficient-Algorithms-and-Intractable-Problems-HW12/"/>
-    <id>http://www.doraemonzzz.com/2021/05/24/2021-5-24-CS170-Efficient-Algorithms-and-Intractable-Problems-HW12/</id>
-    <published>2021-05-24T15:50:00.000Z</published>
-    <updated>2021-05-24T15:51:01.323Z</updated>
-    
-    
-    <summary type="html">&lt;p&gt;课程主页：&lt;/p&gt;
-&lt;p&gt;&lt;a href=&quot;https://cs170.org/&quot;&gt;https://cs170.org/&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;&lt;a href=&quot;https://inst.eecs.berkeley.edu/~cs170/fa18/&quot;&gt;https://inst.eecs.berkeley.edu/~cs170/fa18/&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;课程视频：&lt;/p&gt;
-&lt;p&gt;&lt;a href=&quot;https://www.bilibili.com/video/BV1wK411g7ck&quot;&gt;https://www.bilibili.com/video/BV1wK411g7ck&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;参考资料：&lt;/p&gt;
-&lt;p&gt;&lt;a href=&quot;https://blogs.asarkar.com/assets/docs/algorithms-curated/Maximum%20Independent%20Set%20Problem%20-%20Chekuri.pdf&quot;&gt;https://blogs.asarkar.com/assets/docs/algorithms-curated/Maximum%20Independent%20Set%20Problem%20-%20Chekuri.pdf&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;这次回顾HW12。&lt;/p&gt;</summary>
-    
-    
-    
-    <category term="算法" scheme="http://www.doraemonzzz.com/categories/%E7%AE%97%E6%B3%95/"/>
-    
-    
-    <category term="CS170" scheme="http://www.doraemonzzz.com/tags/CS170/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>CS170 Efficient Algorithms and Intractable Problems Section11</title>
-    <link href="http://www.doraemonzzz.com/2021/05/24/2021-5-24-CS170-Efficient-Algorithms-and-Intractable-Problems-Section11/"/>
-    <id>http://www.doraemonzzz.com/2021/05/24/2021-5-24-CS170-Efficient-Algorithms-and-Intractable-Problems-Section11/</id>
-    <published>2021-05-24T15:34:00.000Z</published>
-    <updated>2021-05-24T15:36:54.016Z</updated>
-    
-    
-    <summary type="html">&lt;p&gt;课程主页：&lt;/p&gt;
-&lt;p&gt;&lt;a href=&quot;https://cs170.org/&quot;&gt;https://cs170.org/&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;&lt;a href=&quot;https://inst.eecs.berkeley.edu/~cs170/fa18/&quot;&gt;https://inst.eecs.berkeley.edu/~cs170/fa18/&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;课程视频：&lt;/p&gt;
-&lt;p&gt;&lt;a href=&quot;https://www.bilibili.com/video/BV1wK411g7ck&quot;&gt;https://www.bilibili.com/video/BV1wK411g7ck&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;这次回顾Section 11。&lt;/p&gt;</summary>
-    
-    
-    
-    <category term="算法" scheme="http://www.doraemonzzz.com/categories/%E7%AE%97%E6%B3%95/"/>
-    
-    
-    <category term="CS170" scheme="http://www.doraemonzzz.com/tags/CS170/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>CS170 Efficient Algorithms and Intractable Problems HW10</title>
-    <link href="http://www.doraemonzzz.com/2021/05/20/2021-5-20-CS170-Efficient-Algorithms-and-Intractable-Problems-HW10/"/>
-    <id>http://www.doraemonzzz.com/2021/05/20/2021-5-20-CS170-Efficient-Algorithms-and-Intractable-Problems-HW10/</id>
-    <published>2021-05-20T03:00:00.000Z</published>
-    <updated>2021-05-20T03:01:07.719Z</updated>
-    
-    
-    <summary type="html">&lt;p&gt;课程主页：&lt;/p&gt;
-&lt;p&gt;&lt;a href=&quot;https://cs170.org/&quot;&gt;https://cs170.org/&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;&lt;a href=&quot;https://inst.eecs.berkeley.edu/~cs170/fa18/&quot;&gt;https://inst.eecs.berkeley.edu/~cs170/fa18/&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;课程视频：&lt;/p&gt;
-&lt;p&gt;&lt;a href=&quot;https://www.bilibili.com/video/BV1wK411g7ck&quot;&gt;https://www.bilibili.com/video/BV1wK411g7ck&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;参考资料：&lt;/p&gt;
-&lt;p&gt;&lt;a href=&quot;https://cs170.org/assets/pdf/hw09-sol.pdf&quot;&gt;https://cs170.org/assets/pdf/hw09-sol.pdf&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;吴彧文（atyuwen）Algorithms.Exercises.solution&lt;/p&gt;
-&lt;p&gt;这次回顾HW10。&lt;/p&gt;</summary>
     
     
     
