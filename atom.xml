@@ -6,7 +6,7 @@
   <link href="http://www.doraemonzzz.com/atom.xml" rel="self"/>
   
   <link href="http://www.doraemonzzz.com/"/>
-  <updated>2021-07-15T16:03:08.116Z</updated>
+  <updated>2021-07-25T12:09:54.724Z</updated>
   <id>http://www.doraemonzzz.com/</id>
   
   <author>
@@ -15,6 +15,167 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>计算机程序的构造和解释(SICP) 第5章 习题解析 Part1</title>
+    <link href="http://www.doraemonzzz.com/2021/07/25/2021-7-25-%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A8%8B%E5%BA%8F%E7%9A%84%E6%9E%84%E9%80%A0%E5%92%8C%E8%A7%A3%E9%87%8A(SICP)-%E7%AC%AC5%E7%AB%A0-%E4%B9%A0%E9%A2%98%E8%A7%A3%E6%9E%90-Part1/"/>
+    <id>http://www.doraemonzzz.com/2021/07/25/2021-7-25-%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A8%8B%E5%BA%8F%E7%9A%84%E6%9E%84%E9%80%A0%E5%92%8C%E8%A7%A3%E9%87%8A(SICP)-%E7%AC%AC5%E7%AB%A0-%E4%B9%A0%E9%A2%98%E8%A7%A3%E6%9E%90-Part1/</id>
+    <published>2021-07-25T12:09:00.000Z</published>
+    <updated>2021-07-25T12:09:54.724Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;这次回顾第五章第一部分习题。&lt;/p&gt;
+&lt;p&gt;学习资料：&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://ocw.mit.edu/courses/electrical-engineering-and-computer-science/6-001-structure-and-interpretation-of-computer-programs-spring-2005/index.htm&quot;&gt;https://ocw.mit.edu/courses/electrical-engineering-and-computer-science/6-001-structure-and-interpretation-of-computer-programs-spring-2005/index.htm&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://github.com/DeathKing/Learning-SICP&quot;&gt;https://github.com/DeathKing/Learning-SICP&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://mitpress.mit.edu/sites/default/files/sicp/index.html&quot;&gt;https://mitpress.mit.edu/sites/default/files/sicp/index.html&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://www.bilibili.com/video/BV1Xx41117tr?from=search&amp;amp;seid=14983483066585274454&quot;&gt;https://www.bilibili.com/video/BV1Xx41117tr?from=search&amp;amp;seid=14983483066585274454&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;参考资料：&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://sicp.readthedocs.io/en/latest&quot;&gt;https://sicp.readthedocs.io/en/latest&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;http://community.schemewiki.org/?SICP-Solutions&quot;&gt;http://community.schemewiki.org/?SICP-Solutions&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;http://community.schemewiki.org/?sicp&quot;&gt;http://community.schemewiki.org/?sicp&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://liujiacai.net/blog/2016/02/22/recursion-without-name/&quot;&gt;https://liujiacai.net/blog/2016/02/22/recursion-without-name/&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://mvanier.livejournal.com/2897.html&quot;&gt;https://mvanier.livejournal.com/2897.html&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://github.com/jiacai2050/sicp&quot;&gt;https://github.com/jiacai2050/sicp&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://liujiacai.net/&quot;&gt;https://liujiacai.net/&lt;/a&gt;&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="计算机原理" scheme="http://www.doraemonzzz.com/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%8E%9F%E7%90%86/"/>
+    
+    
+    <category term="计算机程序的构造和解释" scheme="http://www.doraemonzzz.com/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A8%8B%E5%BA%8F%E7%9A%84%E6%9E%84%E9%80%A0%E5%92%8C%E8%A7%A3%E9%87%8A/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>计算机程序的构造和解释(SICP) 第4章 习题解析 Part7</title>
+    <link href="http://www.doraemonzzz.com/2021/07/25/2021-7-25-%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A8%8B%E5%BA%8F%E7%9A%84%E6%9E%84%E9%80%A0%E5%92%8C%E8%A7%A3%E9%87%8A(SICP)-%E7%AC%AC4%E7%AB%A0-%E4%B9%A0%E9%A2%98%E8%A7%A3%E6%9E%90-Part7/"/>
+    <id>http://www.doraemonzzz.com/2021/07/25/2021-7-25-%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A8%8B%E5%BA%8F%E7%9A%84%E6%9E%84%E9%80%A0%E5%92%8C%E8%A7%A3%E9%87%8A(SICP)-%E7%AC%AC4%E7%AB%A0-%E4%B9%A0%E9%A2%98%E8%A7%A3%E6%9E%90-Part7/</id>
+    <published>2021-07-25T11:49:00.000Z</published>
+    <updated>2021-07-25T11:50:17.898Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;这次回顾第四章第七部分习题，最后一部分的源码难度较大，所以先忽略后续习题。&lt;/p&gt;
+&lt;p&gt;学习资料：&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://ocw.mit.edu/courses/electrical-engineering-and-computer-science/6-001-structure-and-interpretation-of-computer-programs-spring-2005/index.htm&quot;&gt;https://ocw.mit.edu/courses/electrical-engineering-and-computer-science/6-001-structure-and-interpretation-of-computer-programs-spring-2005/index.htm&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://github.com/DeathKing/Learning-SICP&quot;&gt;https://github.com/DeathKing/Learning-SICP&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://mitpress.mit.edu/sites/default/files/sicp/index.html&quot;&gt;https://mitpress.mit.edu/sites/default/files/sicp/index.html&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://www.bilibili.com/video/BV1Xx41117tr?from=search&amp;amp;seid=14983483066585274454&quot;&gt;https://www.bilibili.com/video/BV1Xx41117tr?from=search&amp;amp;seid=14983483066585274454&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;参考资料：&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://sicp.readthedocs.io/en/latest&quot;&gt;https://sicp.readthedocs.io/en/latest&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;http://community.schemewiki.org/?SICP-Solutions&quot;&gt;http://community.schemewiki.org/?SICP-Solutions&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;http://community.schemewiki.org/?sicp&quot;&gt;http://community.schemewiki.org/?sicp&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://liujiacai.net/blog/2016/02/22/recursion-without-name/&quot;&gt;https://liujiacai.net/blog/2016/02/22/recursion-without-name/&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://mvanier.livejournal.com/2897.html&quot;&gt;https://mvanier.livejournal.com/2897.html&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://github.com/jiacai2050/sicp&quot;&gt;https://github.com/jiacai2050/sicp&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://liujiacai.net/&quot;&gt;https://liujiacai.net/&lt;/a&gt;&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="计算机原理" scheme="http://www.doraemonzzz.com/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%8E%9F%E7%90%86/"/>
+    
+    
+    <category term="计算机程序的构造和解释" scheme="http://www.doraemonzzz.com/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A8%8B%E5%BA%8F%E7%9A%84%E6%9E%84%E9%80%A0%E5%92%8C%E8%A7%A3%E9%87%8A/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>MIT 6.S081 Operating System Enginerring Lab1 Utilities</title>
+    <link href="http://www.doraemonzzz.com/2021/07/20/2021-7-20-MIT-6.S081-Operating-System-Enginerring-Lab1-Utilities/"/>
+    <id>http://www.doraemonzzz.com/2021/07/20/2021-7-20-MIT-6.S081-Operating-System-Enginerring-Lab1-Utilities/</id>
+    <published>2021-07-20T01:25:00.000Z</published>
+    <updated>2021-07-20T16:56:54.162Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;这里给出Lab1 Utilities的解析，由于对很多linux函数不太熟悉，所以还是花了比较多的时间。&lt;/p&gt;
+&lt;p&gt;学习资料：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;https://pdos.csail.mit.edu/6.828/2020/schedule.html&quot;&gt;https://pdos.csail.mit.edu/6.828/2020/schedule.html&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://mit-public-courses-cn-translatio.gitbook.io/mit6-s081/&quot;&gt;https://mit-public-courses-cn-translatio.gitbook.io/mit6-s081/&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://th0ar.gitbooks.io/xv6-chinese/content/&quot;&gt;https://th0ar.gitbooks.io/xv6-chinese/content/&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://www.bilibili.com/video/BV19k4y1C7kA&quot;&gt;https://www.bilibili.com/video/BV19k4y1C7kA&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;参考资料：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;https://github.com/PKUFlyingPig/MIT6.S081-2020fall/tree/master/reports&quot;&gt;https://github.com/PKUFlyingPig/MIT6.S081-2020fall/tree/master/reports&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</summary>
+    
+    
+    
+    <category term="操作系统" scheme="http://www.doraemonzzz.com/categories/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/"/>
+    
+    
+    <category term="6.S081" scheme="http://www.doraemonzzz.com/tags/6-S081/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>MIT 6.S081 Operating System Enginerring 实验环境配置</title>
+    <link href="http://www.doraemonzzz.com/2021/07/20/2021-7-20-MIT-6.S081-Operating-System-Enginerring-%E5%AE%9E%E9%AA%8C%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/"/>
+    <id>http://www.doraemonzzz.com/2021/07/20/2021-7-20-MIT-6.S081-Operating-System-Enginerring-%E5%AE%9E%E9%AA%8C%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/</id>
+    <published>2021-07-20T01:06:00.000Z</published>
+    <updated>2021-07-20T01:24:30.938Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;最近开始学习操作系统相关知识，学习材料为MIT 6.S081，这里给出实验环境的配置方法。&lt;/p&gt;
+&lt;p&gt;学习资料：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;https://pdos.csail.mit.edu/6.828/2020/schedule.html&quot;&gt;https://pdos.csail.mit.edu/6.828/2020/schedule.html&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://mit-public-courses-cn-translatio.gitbook.io/mit6-s081/&quot;&gt;https://mit-public-courses-cn-translatio.gitbook.io/mit6-s081/&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://th0ar.gitbooks.io/xv6-chinese/content/&quot;&gt;https://th0ar.gitbooks.io/xv6-chinese/content/&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://www.bilibili.com/video/BV19k4y1C7kA&quot;&gt;https://www.bilibili.com/video/BV19k4y1C7kA&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;参考资料：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;&lt;a href=&quot;https://blog.csdn.net/qq_40994260/article/details/112511370&quot;&gt;https://blog.csdn.net/qq_40994260/article/details/112511370&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;&lt;a href=&quot;https://blog.csdn.net/davidietop/article/details/88909622&quot;&gt;https://blog.csdn.net/davidietop/article/details/88909622&lt;/a&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://pdos.csail.mit.edu/6.828/2020/tools.html&quot;&gt;https://pdos.csail.mit.edu/6.828/2020/tools.html&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://blog.csdn.net/duanlove/article/details/54666441&quot;&gt;https://blog.csdn.net/duanlove/article/details/54666441&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</summary>
+    
+    
+    
+    <category term="操作系统" scheme="http://www.doraemonzzz.com/categories/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/"/>
+    
+    
+    <category term="6.S081" scheme="http://www.doraemonzzz.com/tags/6-S081/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>计算机程序的构造和解释(SICP) 第4章 习题解析 Part6</title>
+    <link href="http://www.doraemonzzz.com/2021/07/17/2021-7-17-%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A8%8B%E5%BA%8F%E7%9A%84%E6%9E%84%E9%80%A0%E5%92%8C%E8%A7%A3%E9%87%8A(SICP)-%E7%AC%AC4%E7%AB%A0-%E4%B9%A0%E9%A2%98%E8%A7%A3%E6%9E%90-Part6/"/>
+    <id>http://www.doraemonzzz.com/2021/07/17/2021-7-17-%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A8%8B%E5%BA%8F%E7%9A%84%E6%9E%84%E9%80%A0%E5%92%8C%E8%A7%A3%E9%87%8A(SICP)-%E7%AC%AC4%E7%AB%A0-%E4%B9%A0%E9%A2%98%E8%A7%A3%E6%9E%90-Part6/</id>
+    <published>2021-07-16T16:13:00.000Z</published>
+    <updated>2021-07-16T16:14:03.280Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;这次回顾第四章第六部分习题。&lt;/p&gt;
+&lt;p&gt;学习资料：&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://ocw.mit.edu/courses/electrical-engineering-and-computer-science/6-001-structure-and-interpretation-of-computer-programs-spring-2005/index.htm&quot;&gt;https://ocw.mit.edu/courses/electrical-engineering-and-computer-science/6-001-structure-and-interpretation-of-computer-programs-spring-2005/index.htm&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://github.com/DeathKing/Learning-SICP&quot;&gt;https://github.com/DeathKing/Learning-SICP&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://mitpress.mit.edu/sites/default/files/sicp/index.html&quot;&gt;https://mitpress.mit.edu/sites/default/files/sicp/index.html&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://www.bilibili.com/video/BV1Xx41117tr?from=search&amp;amp;seid=14983483066585274454&quot;&gt;https://www.bilibili.com/video/BV1Xx41117tr?from=search&amp;amp;seid=14983483066585274454&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;参考资料：&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://sicp.readthedocs.io/en/latest&quot;&gt;https://sicp.readthedocs.io/en/latest&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;http://community.schemewiki.org/?SICP-Solutions&quot;&gt;http://community.schemewiki.org/?SICP-Solutions&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;http://community.schemewiki.org/?sicp&quot;&gt;http://community.schemewiki.org/?sicp&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://liujiacai.net/blog/2016/02/22/recursion-without-name/&quot;&gt;https://liujiacai.net/blog/2016/02/22/recursion-without-name/&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://mvanier.livejournal.com/2897.html&quot;&gt;https://mvanier.livejournal.com/2897.html&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://github.com/jiacai2050/sicp&quot;&gt;https://github.com/jiacai2050/sicp&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://liujiacai.net/&quot;&gt;https://liujiacai.net/&lt;/a&gt;&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="计算机原理" scheme="http://www.doraemonzzz.com/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%8E%9F%E7%90%86/"/>
+    
+    
+    <category term="计算机程序的构造和解释" scheme="http://www.doraemonzzz.com/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A8%8B%E5%BA%8F%E7%9A%84%E6%9E%84%E9%80%A0%E5%92%8C%E8%A7%A3%E9%87%8A/"/>
+    
+  </entry>
   
   <entry>
     <title>Stanford Compiler PA4</title>
@@ -398,118 +559,6 @@
     
     
     <category term="博客配置" scheme="http://www.doraemonzzz.com/tags/%E5%8D%9A%E5%AE%A2%E9%85%8D%E7%BD%AE/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>计算机程序的构造和解释(SICP) 第4章 习题解析 Part3</title>
-    <link href="http://www.doraemonzzz.com/2021/06/14/2021-6-14-%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A8%8B%E5%BA%8F%E7%9A%84%E6%9E%84%E9%80%A0%E5%92%8C%E8%A7%A3%E9%87%8A(SICP)-%E7%AC%AC4%E7%AB%A0-%E4%B9%A0%E9%A2%98%E8%A7%A3%E6%9E%90-Part3/"/>
-    <id>http://www.doraemonzzz.com/2021/06/14/2021-6-14-%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A8%8B%E5%BA%8F%E7%9A%84%E6%9E%84%E9%80%A0%E5%92%8C%E8%A7%A3%E9%87%8A(SICP)-%E7%AC%AC4%E7%AB%A0-%E4%B9%A0%E9%A2%98%E8%A7%A3%E6%9E%90-Part3/</id>
-    <published>2021-06-14T09:01:00.000Z</published>
-    <updated>2021-06-21T01:53:23.845Z</updated>
-    
-    
-    <summary type="html">&lt;p&gt;这次回顾第四章第三部分习题。&lt;/p&gt;
-&lt;p&gt;学习资料：&lt;/p&gt;
-&lt;p&gt;&lt;a href=&quot;https://ocw.mit.edu/courses/electrical-engineering-and-computer-science/6-001-structure-and-interpretation-of-computer-programs-spring-2005/index.htm&quot;&gt;https://ocw.mit.edu/courses/electrical-engineering-and-computer-science/6-001-structure-and-interpretation-of-computer-programs-spring-2005/index.htm&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;&lt;a href=&quot;https://github.com/DeathKing/Learning-SICP&quot;&gt;https://github.com/DeathKing/Learning-SICP&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;&lt;a href=&quot;https://mitpress.mit.edu/sites/default/files/sicp/index.html&quot;&gt;https://mitpress.mit.edu/sites/default/files/sicp/index.html&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;&lt;a href=&quot;https://www.bilibili.com/video/BV1Xx41117tr?from=search&amp;amp;seid=14983483066585274454&quot;&gt;https://www.bilibili.com/video/BV1Xx41117tr?from=search&amp;amp;seid=14983483066585274454&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;参考资料：&lt;/p&gt;
-&lt;p&gt;&lt;a href=&quot;https://sicp.readthedocs.io/en/latest&quot;&gt;https://sicp.readthedocs.io/en/latest&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;&lt;a href=&quot;http://community.schemewiki.org/?SICP-Solutions&quot;&gt;http://community.schemewiki.org/?SICP-Solutions&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;&lt;a href=&quot;http://community.schemewiki.org/?sicp&quot;&gt;http://community.schemewiki.org/?sicp&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;&lt;a href=&quot;https://liujiacai.net/blog/2016/02/22/recursion-without-name/&quot;&gt;https://liujiacai.net/blog/2016/02/22/recursion-without-name/&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;&lt;a href=&quot;https://mvanier.livejournal.com/2897.html&quot;&gt;https://mvanier.livejournal.com/2897.html&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;&lt;a href=&quot;https://github.com/jiacai2050/sicp&quot;&gt;https://github.com/jiacai2050/sicp&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;&lt;a href=&quot;https://liujiacai.net/&quot;&gt;https://liujiacai.net/&lt;/a&gt;&lt;/p&gt;</summary>
-    
-    
-    
-    <category term="计算机原理" scheme="http://www.doraemonzzz.com/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%8E%9F%E7%90%86/"/>
-    
-    
-    <category term="计算机程序的构造和解释" scheme="http://www.doraemonzzz.com/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A8%8B%E5%BA%8F%E7%9A%84%E6%9E%84%E9%80%A0%E5%92%8C%E8%A7%A3%E9%87%8A/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>给Hexo Butterfly主题首页增加字数总计，阅读时长</title>
-    <link href="http://www.doraemonzzz.com/2021/06/13/2021-6-13-%E7%BB%99Hexo-Butterfly%E4%B8%BB%E9%A2%98%E9%A6%96%E9%A1%B5%E5%A2%9E%E5%8A%A0%E5%AD%97%E6%95%B0%E6%80%BB%E8%AE%A1%EF%BC%8C%E9%98%85%E8%AF%BB%E6%97%B6%E9%95%BF/"/>
-    <id>http://www.doraemonzzz.com/2021/06/13/2021-6-13-%E7%BB%99Hexo-Butterfly%E4%B8%BB%E9%A2%98%E9%A6%96%E9%A1%B5%E5%A2%9E%E5%8A%A0%E5%AD%97%E6%95%B0%E6%80%BB%E8%AE%A1%EF%BC%8C%E9%98%85%E8%AF%BB%E6%97%B6%E9%95%BF/</id>
-    <published>2021-06-13T09:27:28.000Z</published>
-    <updated>2021-06-13T15:22:41.517Z</updated>
-    
-    
-    <summary type="html">原生的Butterfly主题首页无法显示字数总计，阅读时长，本文给出配置的方法。</summary>
-    
-    
-    
-    <category term="Hexo" scheme="http://www.doraemonzzz.com/categories/Hexo/"/>
-    
-    
-    <category term="博客配置" scheme="http://www.doraemonzzz.com/tags/%E5%8D%9A%E5%AE%A2%E9%85%8D%E7%BD%AE/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>博客内容整理</title>
-    <link href="http://www.doraemonzzz.com/2021/06/12/2021-6-12-%E5%8D%9A%E5%AE%A2%E5%86%85%E5%AE%B9%E6%95%B4%E7%90%86/"/>
-    <id>http://www.doraemonzzz.com/2021/06/12/2021-6-12-%E5%8D%9A%E5%AE%A2%E5%86%85%E5%AE%B9%E6%95%B4%E7%90%86/</id>
-    <published>2021-06-12T08:26:28.000Z</published>
-    <updated>2021-06-14T13:44:24.380Z</updated>
-    
-    
-    <summary type="html">记录对博客内容整理的过程。</summary>
-    
-    
-    
-    <category term="Hexo" scheme="http://www.doraemonzzz.com/categories/Hexo/"/>
-    
-    
-    <category term="博客配置" scheme="http://www.doraemonzzz.com/tags/%E5%8D%9A%E5%AE%A2%E9%85%8D%E7%BD%AE/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>博客主题配置</title>
-    <link href="http://www.doraemonzzz.com/2021/06/12/2021-6-12-%E5%8D%9A%E5%AE%A2%E9%85%8D%E7%BD%AE/"/>
-    <id>http://www.doraemonzzz.com/2021/06/12/2021-6-12-%E5%8D%9A%E5%AE%A2%E9%85%8D%E7%BD%AE/</id>
-    <published>2021-06-12T01:32:28.000Z</published>
-    <updated>2021-06-13T17:29:37.503Z</updated>
-    
-    
-    <summary type="html">记录博客主题的配置以及相关优化。</summary>
-    
-    
-    
-    <category term="Hexo" scheme="http://www.doraemonzzz.com/categories/Hexo/"/>
-    
-    
-    <category term="博客配置" scheme="http://www.doraemonzzz.com/tags/%E5%8D%9A%E5%AE%A2%E9%85%8D%E7%BD%AE/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>计算机网络——自顶向下方法（第七版）Wireshark Lab1:Getting Started</title>
-    <link href="http://www.doraemonzzz.com/2021/06/09/2021-6-9-%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E2%80%94%E2%80%94%E8%87%AA%E9%A1%B6%E5%90%91%E4%B8%8B%E6%96%B9%E6%B3%95%EF%BC%88%E7%AC%AC%E4%B8%83%E7%89%88%EF%BC%89Wireshark-Lab1-Getting-Started/"/>
-    <id>http://www.doraemonzzz.com/2021/06/09/2021-6-9-%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E2%80%94%E2%80%94%E8%87%AA%E9%A1%B6%E5%90%91%E4%B8%8B%E6%96%B9%E6%B3%95%EF%BC%88%E7%AC%AC%E4%B8%83%E7%89%88%EF%BC%89Wireshark-Lab1-Getting-Started/</id>
-    <published>2021-06-09T15:40:00.000Z</published>
-    <updated>2021-07-12T01:22:32.072Z</updated>
-    
-    
-    <summary type="html">&lt;p&gt;这部分回顾Wireshark Lab1，该实验主要是对wireshark有个初步了解。&lt;/p&gt;
-&lt;p&gt;参考资料：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&quot;https://github.com/moranzcw/Computer-Networking-A-Top-Down-Approach-NOTES&quot;&gt;https://github.com/moranzcw/Computer-Networking-A-Top-Down-Approach-NOTES&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;</summary>
-    
-    
-    
-    <category term="计算机网络" scheme="http://www.doraemonzzz.com/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/"/>
-    
-    
-    <category term="Wireshark Lab" scheme="http://www.doraemonzzz.com/tags/Wireshark-Lab/"/>
     
   </entry>
   

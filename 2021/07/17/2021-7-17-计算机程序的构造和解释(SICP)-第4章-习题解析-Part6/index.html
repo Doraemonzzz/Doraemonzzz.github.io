@@ -1,0 +1,627 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>计算机程序的构造和解释(SICP) 第4章 习题解析 Part6 | Doraemonzzz</title><meta name="keywords" content="计算机程序的构造和解释"><meta name="author" content="Doraemonzzz"><meta name="copyright" content="Doraemonzzz"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="这次回顾第四章第六部分习题。 学习资料： https:&#x2F;&#x2F;ocw.mit.edu&#x2F;courses&#x2F;electrical-engineering-and-computer-science&#x2F;6-001-structure-and-interpretation-of-computer-programs-spring-2005&#x2F;index.htm https:&#x2F;&#x2F;github.com&#x2F;DeathKing&#x2F;">
+<meta property="og:type" content="article">
+<meta property="og:title" content="计算机程序的构造和解释(SICP) 第4章 习题解析 Part6">
+<meta property="og:url" content="http://www.doraemonzzz.com/2021/07/17/2021-7-17-%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A8%8B%E5%BA%8F%E7%9A%84%E6%9E%84%E9%80%A0%E5%92%8C%E8%A7%A3%E9%87%8A(SICP)-%E7%AC%AC4%E7%AB%A0-%E4%B9%A0%E9%A2%98%E8%A7%A3%E6%9E%90-Part6/index.html">
+<meta property="og:site_name" content="Doraemonzzz">
+<meta property="og:description" content="这次回顾第四章第六部分习题。 学习资料： https:&#x2F;&#x2F;ocw.mit.edu&#x2F;courses&#x2F;electrical-engineering-and-computer-science&#x2F;6-001-structure-and-interpretation-of-computer-programs-spring-2005&#x2F;index.htm https:&#x2F;&#x2F;github.com&#x2F;DeathKing&#x2F;">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg">
+<meta property="article:published_time" content="2021-07-16T16:13:00.000Z">
+<meta property="article:modified_time" content="2021-07-16T16:14:03.280Z">
+<meta property="article:author" content="Doraemonzzz">
+<meta property="article:tag" content="计算机程序的构造和解释">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg"><link rel="shortcut icon" href="https://github.com/Doraemonzzz/md-photo/blob/master/%E5%A4%B4%E5%83%8F.jpg?raw=true"><link rel="canonical" href="http://www.doraemonzzz.com/2021/07/17/2021-7-17-%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A8%8B%E5%BA%8F%E7%9A%84%E6%9E%84%E9%80%A0%E5%92%8C%E8%A7%A3%E9%87%8A(SICP)-%E7%AC%AC4%E7%AB%A0-%E4%B9%A0%E9%A2%98%E8%A7%A3%E6%9E%90-Part6/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//www.google-analytics.com" crossorigin=""/><link rel="preconnect" href="//hm.baidu.com"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><script>var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?6f00f37f957f0608abb8c571105456f0";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script><script async="async" src="https://www.googletagmanager.com/gtag/js?id=UA-G-RE4B1LKRZD"></script><script>window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'UA-G-RE4B1LKRZD');
+</script><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"search.xml","languages":{"hits_empty":"找不到您查询的内容：${query}"}},
+  translate: {"defaultEncoding":2,"translateDelay":0,"msgToTraditionalChinese":"繁","msgToSimplifiedChinese":"簡"},
+  noticeOutdate: {"limitDay":500,"position":"top","messagePrev":"距离上次更新已经","messageNext":"天了，文章内容可能已经过时。"},
+  highlight: {"plugin":"prismjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":200},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    jQuery: 'https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js',
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+    },
+    fancybox: {
+      js: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css'
+    }
+  },
+  isPhotoFigcaption: true,
+  islazyload: true,
+  isanchor: true
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '计算机程序的构造和解释(SICP) 第4章 习题解析 Part6',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2021-07-17 00:14:03'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const fontSizeVal = saveToLocal.get('global-font-size')
+    if (fontSizeVal !== undefined) {
+      document.documentElement.style.setProperty('--global-font-size', fontSizeVal + 'px')
+    }
+    })(window)</script><link rel="stylesheet" href="/css/bilibili.css" media="defer" onload="this.media='all'"><meta name="google-site-verification" content="c4v-NmuUZRgl3cvtg9GKswryK1YLaPztd_5M-df5VNI" /><meta name="generator" content="Hexo 5.4.0"><link rel="alternate" href="/atom.xml" title="Doraemonzzz" type="application/atom+xml">
+</head><body><div id="loading-box"><div class="loading-left-bg"></div><div class="loading-right-bg"></div><div class="spinner-box"><div class="configure-border-1"><div class="configure-core"></div></div><div class="configure-border-2"><div class="configure-core"></div></div><div class="loading-word">加载中...</div></div></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="author-avatar"><img class="avatar-img" src= "/img/loading.gif" data-lazy-src="https://github.com/Doraemonzzz/md-photo/blob/master/%E5%A4%B4%E5%83%8F.jpg?raw=true" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">文章</div><div class="length-num">635</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">标签</div><div class="length-num">65</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/categories/"><div class="headline">分类</div><div class="length-num">26</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-chart-pie"></i><span> 博客统计</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/charts/"><i class="fa-fw far fa-chart-bar"></i><span> 文章统计</span></a></li><li><a class="site-page child" href="/census/"><i class="fa-fw fas fa-chart-area"></i><span> 访问统计</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/top/"><i class="fa-fw fab fa-hotjar"></i><span> 阅读排行榜</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fa fa-heartbeat"></i><span> 娱乐</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于我</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">Doraemonzzz</a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-chart-pie"></i><span> 博客统计</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/charts/"><i class="fa-fw far fa-chart-bar"></i><span> 文章统计</span></a></li><li><a class="site-page child" href="/census/"><i class="fa-fw fas fa-chart-area"></i><span> 访问统计</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/top/"><i class="fa-fw fab fa-hotjar"></i><span> 阅读排行榜</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fa fa-heartbeat"></i><span> 娱乐</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于我</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">计算机程序的构造和解释(SICP) 第4章 习题解析 Part6</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2021-07-16T16:13:00.000Z" title="发表于 2021-07-17 00:13:00">2021-07-17</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2021-07-16T16:14:03.280Z" title="更新于 2021-07-17 00:14:03">2021-07-17</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%8E%9F%E7%90%86/">计算机原理</a></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-tag"></i><a class="article-meta__tags" href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A8%8B%E5%BA%8F%E7%9A%84%E6%9E%84%E9%80%A0%E5%92%8C%E8%A7%A3%E9%87%8A/">计算机程序的构造和解释</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">1.6k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>9分钟</span></span><span class="post-meta-separator">|</span><span class="leancloud_visitors" id="/2021/07/17/2021-7-17-%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A8%8B%E5%BA%8F%E7%9A%84%E6%9E%84%E9%80%A0%E5%92%8C%E8%A7%A3%E9%87%8A(SICP)-%E7%AC%AC4%E7%AB%A0-%E4%B9%A0%E9%A2%98%E8%A7%A3%E6%9E%90-Part6/" data-flag-title="计算机程序的构造和解释(SICP) 第4章 习题解析 Part6"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span class="leancloud-visitors-count"></span></span><span class="post-meta-separator">|</span><span class="post-meta-commentcount"><i class="far fa-comments fa-fw post-meta-icon"></i><span class="post-meta-label">评论数:</span><a href="/2021/07/17/2021-7-17-%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A8%8B%E5%BA%8F%E7%9A%84%E6%9E%84%E9%80%A0%E5%92%8C%E8%A7%A3%E9%87%8A(SICP)-%E7%AC%AC4%E7%AB%A0-%E4%B9%A0%E9%A2%98%E8%A7%A3%E6%9E%90-Part6/#post-comment" itemprop="discussionUrl"><span class="valine-comment-count" data-xid="/2021/07/17/2021-7-17-%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A8%8B%E5%BA%8F%E7%9A%84%E6%9E%84%E9%80%A0%E5%92%8C%E8%A7%A3%E9%87%8A(SICP)-%E7%AC%AC4%E7%AB%A0-%E4%B9%A0%E9%A2%98%E8%A7%A3%E6%9E%90-Part6/" itemprop="commentCount"></span></a></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p>这次回顾第四章第六部分习题。</p>
+<p>学习资料：</p>
+<p><a target="_blank" rel="noopener" href="https://ocw.mit.edu/courses/electrical-engineering-and-computer-science/6-001-structure-and-interpretation-of-computer-programs-spring-2005/index.htm">https://ocw.mit.edu/courses/electrical-engineering-and-computer-science/6-001-structure-and-interpretation-of-computer-programs-spring-2005/index.htm</a></p>
+<p><a target="_blank" rel="noopener" href="https://github.com/DeathKing/Learning-SICP">https://github.com/DeathKing/Learning-SICP</a></p>
+<p><a target="_blank" rel="noopener" href="https://mitpress.mit.edu/sites/default/files/sicp/index.html">https://mitpress.mit.edu/sites/default/files/sicp/index.html</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1Xx41117tr?from=search&amp;seid=14983483066585274454">https://www.bilibili.com/video/BV1Xx41117tr?from=search&amp;seid=14983483066585274454</a></p>
+<p>参考资料：</p>
+<p><a target="_blank" rel="noopener" href="https://sicp.readthedocs.io/en/latest">https://sicp.readthedocs.io/en/latest</a></p>
+<p><a target="_blank" rel="noopener" href="http://community.schemewiki.org/?SICP-Solutions">http://community.schemewiki.org/?SICP-Solutions</a></p>
+<p><a target="_blank" rel="noopener" href="http://community.schemewiki.org/?sicp">http://community.schemewiki.org/?sicp</a></p>
+<p><a target="_blank" rel="noopener" href="https://liujiacai.net/blog/2016/02/22/recursion-without-name/">https://liujiacai.net/blog/2016/02/22/recursion-without-name/</a></p>
+<p><a target="_blank" rel="noopener" href="https://mvanier.livejournal.com/2897.html">https://mvanier.livejournal.com/2897.html</a></p>
+<p><a target="_blank" rel="noopener" href="https://github.com/jiacai2050/sicp">https://github.com/jiacai2050/sicp</a></p>
+<p><a target="_blank" rel="noopener" href="https://liujiacai.net/">https://liujiacai.net/</a></p>
+<span id="more"></span>
+<h4 id="4-55-p309"><a href="#4-55-p309" class="headerlink" title="4.55(p309)"></a>4.55(p309)</h4><p>代码：</p>
+<pre class="line-numbers language-scheme" data-language="scheme"><code class="language-scheme"><span class="token punctuation">(</span><span class="token function">load</span> <span class="token string">"ch4-query.scm"</span><span class="token punctuation">)</span>
+
+<span class="token punctuation">(</span><span class="token function">initialize-data-base</span> microshaft-data-base<span class="token punctuation">)</span>
+<span class="token punctuation">(</span><span class="token function">query-driver-loop</span><span class="token punctuation">)</span>
+
+<span class="token comment">; (a)</span>
+<span class="token punctuation">(</span><span class="token function">supervisor</span> ?person <span class="token punctuation">(</span><span class="token function">Bitdiddle</span> Ben<span class="token punctuation">)</span><span class="token punctuation">)</span>
+
+<span class="token comment">; (b)</span>
+<span class="token punctuation">(</span><span class="token function">job</span> ?person <span class="token punctuation">(</span><span class="token function">accounting</span> . ?other<span class="token punctuation">)</span><span class="token punctuation">)</span>
+
+<span class="token comment">; (c)</span>
+<span class="token punctuation">(</span><span class="token function">address</span> ?person <span class="token punctuation">(</span><span class="token function">Slumerville</span> . ?other<span class="token punctuation">)</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>结果：</p>
+<pre class="line-numbers language-none"><code class="language-none">;;; Query input:
+; (a)
+(supervisor ?person (Bitdiddle Ben))
+;;; Query results:
+(supervisor (tweakit lem e) (bitdiddle ben))
+(supervisor (fect cy d) (bitdiddle ben))
+(supervisor (hacker alyssa p) (bitdiddle ben))
+
+;;; Query input:
+; (b)
+(job ?person (accounting . ?other))
+;;; Query results:
+(job (cratchet robert) (accounting scrivener))
+(job (scrooge eben) (accounting chief accountant))
+
+;;; Query input:
+; (c)
+(address ?person (Slumerville . ?other))
+;;; Query results:
+(address (aull dewitt) (slumerville (onion square) 5))
+(address (reasoner louis) (slumerville (pine tree road) 80))
+(address (bitdiddle ben) (slumerville (ridge road) 10))<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h4 id="4-56-p311"><a href="#4-56-p311" class="headerlink" title="4.56(p311)"></a>4.56(p311)</h4><p>代码：</p>
+<pre class="line-numbers language-scheme" data-language="scheme"><code class="language-scheme"><span class="token punctuation">(</span><span class="token function">load</span> <span class="token string">"ch4-query.scm"</span><span class="token punctuation">)</span>
+
+<span class="token punctuation">(</span><span class="token function">initialize-data-base</span> microshaft-data-base<span class="token punctuation">)</span>
+<span class="token punctuation">(</span><span class="token function">query-driver-loop</span><span class="token punctuation">)</span>
+
+<span class="token comment">; (a)</span>
+<span class="token punctuation">(</span><span class="token builtin">and</span> <span class="token punctuation">(</span><span class="token function">supervisor</span> ?person <span class="token punctuation">(</span><span class="token function">Bitdiddle</span> Ben<span class="token punctuation">)</span><span class="token punctuation">)</span>
+     <span class="token punctuation">(</span><span class="token function">address</span> ?person ?where<span class="token punctuation">)</span><span class="token punctuation">)</span>
+
+<span class="token comment">; (b)</span>
+<span class="token punctuation">(</span><span class="token builtin">and</span> <span class="token punctuation">(</span><span class="token function">salary</span> <span class="token punctuation">(</span><span class="token function">Bitdiddle</span> Ben<span class="token punctuation">)</span> ?amount1<span class="token punctuation">)</span> 
+     <span class="token punctuation">(</span><span class="token function">salary</span> ?person ?amount2<span class="token punctuation">)</span>
+     <span class="token punctuation">(</span><span class="token function">lisp-value</span> &lt; ?amount2 ?amount1<span class="token punctuation">)</span><span class="token punctuation">)</span>
+
+<span class="token comment">; (c)</span>
+<span class="token comment">; 和顺序有关</span>
+<span class="token punctuation">(</span><span class="token builtin">and</span> <span class="token punctuation">(</span><span class="token builtin">not</span> <span class="token punctuation">(</span><span class="token function">job</span> ?x <span class="token punctuation">(</span><span class="token function">computer</span> . ?other<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+     <span class="token punctuation">(</span><span class="token function">supervisor</span> ?y ?x<span class="token punctuation">)</span>
+     <span class="token punctuation">(</span><span class="token function">job</span> ?y ?job<span class="token punctuation">)</span><span class="token punctuation">)</span>
+
+<span class="token punctuation">(</span><span class="token builtin">and</span> <span class="token punctuation">(</span><span class="token function">supervisor</span> ?y ?x<span class="token punctuation">)</span>
+     <span class="token punctuation">(</span><span class="token builtin">not</span> <span class="token punctuation">(</span><span class="token function">job</span> ?x <span class="token punctuation">(</span><span class="token function">computer</span> . ?other<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+     <span class="token punctuation">(</span><span class="token function">job</span> ?y ?job<span class="token punctuation">)</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>结果：</p>
+<pre class="line-numbers language-none"><code class="language-none">;;; Query input:
+; (a)
+(and (supervisor ?person (Bitdiddle Ben))
+     (address ?person ?where))
+;;; Query results:
+(and (supervisor (tweakit lem e) (bitdiddle ben)) (address (tweakit lem e) (boston (bay state road) 22)))
+(and (supervisor (fect cy d) (bitdiddle ben)) (address (fect cy d) (cambridge (ames street) 3)))
+(and (supervisor (hacker alyssa p) (bitdiddle ben)) (address (hacker alyssa p) (cambridge (mass ave) 78)))
+
+;;; Query input:
+; (b)
+(and (salary (Bitdiddle Ben) ?amount1) 
+     (salary ?person ?amount2)
+     (lisp-value &lt; ?amount2 ?amount1))
+;;; Query results:
+(and (salary (bitdiddle ben) 60000) (salary (aull dewitt) 25000) (lisp-value &lt; 25000 60000))
+(and (salary (bitdiddle ben) 60000) (salary (cratchet robert) 18000) (lisp-value &lt; 18000 60000))
+(and (salary (bitdiddle ben) 60000) (salary (reasoner louis) 30000) (lisp-value &lt; 30000 60000))
+(and (salary (bitdiddle ben) 60000) (salary (tweakit lem e) 25000) (lisp-value &lt; 25000 60000))
+(and (salary (bitdiddle ben) 60000) (salary (fect cy d) 35000) (lisp-value &lt; 35000 60000))
+(and (salary (bitdiddle ben) 60000) (salary (hacker alyssa p) 40000) (lisp-value &lt; 40000 60000))
+
+;;; Query input:
+; (c)
+; 和顺序有关
+(and (not (job ?x (computer . ?other)))
+     (supervisor ?y ?x)
+     (job ?y ?job))
+;;; Query results:
+
+;;; Query input:
+(and (supervisor ?y ?x)
+     (not (job ?x (computer . ?other)))
+     (job ?y ?job))
+;;; Query results:
+(and (supervisor (aull dewitt) (warbucks oliver)) (not (job (warbucks oliver) (computer . ?other))) (job (aull dewitt) (administration secretary)))
+(and (supervisor (cratchet robert) (scrooge eben)) (not (job (scrooge eben) (computer . ?other))) (job (cratchet robert) (accounting scrivener)))
+(and (supervisor (scrooge eben) (warbucks oliver)) (not (job (warbucks oliver) (computer . ?other))) (job (scrooge eben) (accounting chief accountant)))
+(and (supervisor (bitdiddle ben) (warbucks oliver)) (not (job (warbucks oliver) (computer . ?other))) (job (bitdiddle ben) (computer wizard)))<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h4 id="4-57-p312"><a href="#4-57-p312" class="headerlink" title="4.57(p312)"></a>4.57(p312)</h4><p>备注：规则需要在ch4-query.scm中添加。</p>
+<p>新增规则：</p>
+<pre class="line-numbers language-scheme" data-language="scheme"><code class="language-scheme"><span class="token comment">; 4.57 add</span>
+<span class="token punctuation">(</span><span class="token function">rule</span> <span class="token punctuation">(</span><span class="token function">replace</span> ?p1 ?p2<span class="token punctuation">)</span>
+      <span class="token punctuation">(</span><span class="token builtin">and</span> <span class="token punctuation">(</span><span class="token function">job</span> ?p1 ?job1<span class="token punctuation">)</span>
+           <span class="token punctuation">(</span><span class="token function">job</span> ?p2 ?job2<span class="token punctuation">)</span>
+           <span class="token punctuation">(</span><span class="token builtin">or</span> <span class="token punctuation">(</span><span class="token function">same</span> ?job1 ?job2<span class="token punctuation">)</span>
+               <span class="token punctuation">(</span><span class="token function">can-do-job</span> ?job1 ?job2<span class="token punctuation">)</span><span class="token punctuation">)</span>
+           <span class="token punctuation">(</span><span class="token builtin">not</span> <span class="token punctuation">(</span><span class="token function">same</span> ?p1 ?p2<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>代码：</p>
+<pre class="line-numbers language-scheme" data-language="scheme"><code class="language-scheme"><span class="token punctuation">(</span><span class="token function">load</span> <span class="token string">"ch4-query.scm"</span><span class="token punctuation">)</span>
+
+<span class="token punctuation">(</span><span class="token function">initialize-data-base</span> microshaft-data-base<span class="token punctuation">)</span>
+<span class="token punctuation">(</span><span class="token function">query-driver-loop</span><span class="token punctuation">)</span>
+
+<span class="token comment">; (a)</span>
+<span class="token punctuation">(</span><span class="token function">replace</span> ?person <span class="token punctuation">(</span><span class="token function">Fect</span> Cy D<span class="token punctuation">)</span><span class="token punctuation">)</span>
+
+<span class="token comment">; (b)</span>
+<span class="token punctuation">(</span><span class="token builtin">and</span> <span class="token punctuation">(</span><span class="token function">replace</span> ?p1 ?p2<span class="token punctuation">)</span>
+     <span class="token punctuation">(</span><span class="token function">salary</span> ?p1 ?m1<span class="token punctuation">)</span>
+     <span class="token punctuation">(</span><span class="token function">salary</span> ?p2 ?m2<span class="token punctuation">)</span>
+     <span class="token punctuation">(</span><span class="token function">lisp-value</span> &lt; ?m1 ?m2<span class="token punctuation">)</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>实验结果：</p>
+<pre class="line-numbers language-none"><code class="language-none">;;; Query input:
+; (a)
+(replace ?person (Fect Cy D))
+;;; Query results:
+(replace (bitdiddle ben) (fect cy d))
+(replace (hacker alyssa p) (fect cy d))
+
+;;; Query input:
+; (b)
+(and (replace ?p1 ?p2)
+     (salary ?p1 ?m1)
+     (salary ?p2 ?m2)
+     (lisp-value &lt; ?m1 ?m2))
+;;; Query results:
+(and (replace (aull dewitt) (warbucks oliver)) (salary (aull dewitt) 25000) (salary (warbucks oliver) 150000) (lisp-value &lt; 25000 150000))
+(and (replace (fect cy d) (hacker alyssa p)) (salary (fect cy d) 35000) (salary (hacker alyssa p) 40000) (lisp-value &lt; 35000 40000))<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h4 id="4-58-p312"><a href="#4-58-p312" class="headerlink" title="4.58(p312)"></a>4.58(p312)</h4><p>参考资料：</p>
+<p><a target="_blank" rel="noopener" href="http://community.schemewiki.org/?sicp-ex-4.58">http://community.schemewiki.org/?sicp-ex-4.58</a></p>
+<p>新增规则：</p>
+<pre class="line-numbers language-scheme" data-language="scheme"><code class="language-scheme"><span class="token comment">; 4.58 add</span>
+<span class="token comment">; 规则不能重复定义</span>
+<span class="token punctuation">(</span><span class="token function">rule</span> <span class="token punctuation">(</span><span class="token function">big-names</span> ?person ?department<span class="token punctuation">)</span>
+      <span class="token punctuation">(</span><span class="token builtin">and</span> <span class="token punctuation">(</span><span class="token function">job</span> ?person <span class="token punctuation">(</span><span class="token function">?department</span> . ?o1<span class="token punctuation">)</span><span class="token punctuation">)</span>
+          <span class="token punctuation">(</span><span class="token builtin">or</span> <span class="token punctuation">(</span><span class="token builtin">not</span> <span class="token punctuation">(</span><span class="token function">supervisor</span> ?person ?boss<span class="token punctuation">)</span><span class="token punctuation">)</span>
+              <span class="token punctuation">(</span><span class="token builtin">and</span> <span class="token punctuation">(</span><span class="token function">supervisor</span> ?person ?boss<span class="token punctuation">)</span>
+                   <span class="token punctuation">(</span><span class="token builtin">not</span> <span class="token punctuation">(</span><span class="token function">job</span> ?boss <span class="token punctuation">(</span><span class="token function">?department</span> . ?o2<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>代码：</p>
+<pre class="line-numbers language-scheme" data-language="scheme"><code class="language-scheme"><span class="token punctuation">(</span><span class="token function">load</span> <span class="token string">"ch4-query.scm"</span><span class="token punctuation">)</span>
+
+<span class="token punctuation">(</span><span class="token function">initialize-data-base</span> microshaft-data-base<span class="token punctuation">)</span>
+<span class="token punctuation">(</span><span class="token function">query-driver-loop</span><span class="token punctuation">)</span>
+
+<span class="token punctuation">(</span><span class="token function">big-names</span> ?person ?department<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>实验结果：</p>
+<pre class="line-numbers language-none"><code class="language-none">;;; Query input:
+(big-names ?person ?department)
+;;; Query results:
+(big-names (warbucks oliver) administration)
+(big-names (scrooge eben) accounting)
+(big-names (bitdiddle ben) computer)<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h4 id="4-59-p312"><a href="#4-59-p312" class="headerlink" title="4.59(p312)"></a>4.59(p312)</h4><p>新增规则：</p>
+<pre class="line-numbers language-scheme" data-language="scheme"><code class="language-scheme"><span class="token comment">; 4.59 add</span>
+<span class="token punctuation">(</span><span class="token function">meeting</span> accounting <span class="token punctuation">(</span><span class="token function">Monday</span> 9am<span class="token punctuation">)</span><span class="token punctuation">)</span>
+<span class="token punctuation">(</span><span class="token function">meeting</span> administration <span class="token punctuation">(</span><span class="token function">Monday</span> 10am<span class="token punctuation">)</span><span class="token punctuation">)</span>
+<span class="token punctuation">(</span><span class="token function">meeting</span> computer <span class="token punctuation">(</span><span class="token function">Wednesday</span> 3pm<span class="token punctuation">)</span><span class="token punctuation">)</span>
+<span class="token punctuation">(</span><span class="token function">meeting</span> administration <span class="token punctuation">(</span><span class="token function">Friday</span> 1pm<span class="token punctuation">)</span><span class="token punctuation">)</span>
+<span class="token punctuation">(</span><span class="token function">meeting</span> whole-company <span class="token punctuation">(</span><span class="token function">Wednesday</span> 4pm<span class="token punctuation">)</span><span class="token punctuation">)</span>
+
+<span class="token punctuation">(</span><span class="token function">rule</span> <span class="token punctuation">(</span><span class="token function">meeting-time</span> ?person ?day-and-time<span class="token punctuation">)</span>
+      <span class="token punctuation">(</span><span class="token builtin">and</span> <span class="token punctuation">(</span><span class="token function">job</span> ?person <span class="token punctuation">(</span><span class="token function">?department</span> . ?other<span class="token punctuation">)</span><span class="token punctuation">)</span>
+           <span class="token punctuation">(</span><span class="token builtin">or</span> <span class="token punctuation">(</span><span class="token function">meeting</span> whole-company ?day-and-time<span class="token punctuation">)</span>
+               <span class="token punctuation">(</span><span class="token function">meeting</span> ?department ?day-and-time<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>代码：</p>
+<pre class="line-numbers language-scheme" data-language="scheme"><code class="language-scheme"><span class="token punctuation">(</span><span class="token function">load</span> <span class="token string">"ch4-query.scm"</span><span class="token punctuation">)</span>
+
+<span class="token punctuation">(</span><span class="token function">initialize-data-base</span> microshaft-data-base<span class="token punctuation">)</span>
+<span class="token punctuation">(</span><span class="token function">query-driver-loop</span><span class="token punctuation">)</span>
+
+<span class="token comment">; (a)</span>
+<span class="token punctuation">(</span><span class="token function">meeting</span> ?name <span class="token punctuation">(</span><span class="token function">Friday</span> ?time<span class="token punctuation">)</span><span class="token punctuation">)</span>
+
+<span class="token comment">; (b)</span>
+<span class="token punctuation">(</span><span class="token function">meeting-time</span> <span class="token punctuation">(</span><span class="token function">aull</span> dewitt<span class="token punctuation">)</span> ?day-and-time<span class="token punctuation">)</span>
+
+<span class="token comment">; (c)</span>
+<span class="token punctuation">(</span><span class="token function">meeting-time</span> <span class="token punctuation">(</span><span class="token function">Hacker</span> Alyssa P<span class="token punctuation">)</span> ?day-and-time<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>实验结果：</p>
+<pre class="line-numbers language-none"><code class="language-none">;;; Query input:
+; (a)
+(meeting ?name (Friday ?time))
+;;; Query results:
+(meeting administration (friday 1pm))
+
+;;; Query input:
+; (b)
+(meeting-time (aull dewitt) ?day-and-time)
+;;; Query results:
+(meeting-time (aull dewitt) (wednesday 4pm))
+(meeting-time (aull dewitt) (friday 1pm))
+(meeting-time (aull dewitt) (monday 10am))
+
+;;; Query input:
+; (c)
+(meeting-time (Hacker Alyssa P) ?day-and-time)
+;;; Query results:
+(meeting-time (hacker alyssa p) (wednesday 4pm))
+(meeting-time (hacker alyssa p) (wednesday 3pm))<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h4 id="4-60-p313"><a href="#4-60-p313" class="headerlink" title="4.60(p313)"></a>4.60(p313)</h4><p>参考资料：</p>
+<p><a target="_blank" rel="noopener" href="http://community.schemewiki.org/?sicp-ex-4.60">http://community.schemewiki.org/?sicp-ex-4.60</a></p>
+<p>lives-near的代码：</p>
+<pre class="line-numbers language-scheme" data-language="scheme"><code class="language-scheme"><span class="token punctuation">(</span><span class="token function">rule</span> <span class="token punctuation">(</span><span class="token function">lives-near</span> ?person-1 ?person-2<span class="token punctuation">)</span>
+      <span class="token punctuation">(</span><span class="token builtin">and</span> <span class="token punctuation">(</span><span class="token function">address</span> ?person-1 <span class="token punctuation">(</span><span class="token function">?town</span> . ?rest-1<span class="token punctuation">)</span><span class="token punctuation">)</span>
+           <span class="token punctuation">(</span><span class="token function">address</span> ?person-2 <span class="token punctuation">(</span><span class="token function">?town</span> . ?rest-2<span class="token punctuation">)</span><span class="token punctuation">)</span>
+           <span class="token punctuation">(</span><span class="token builtin">not</span> <span class="token punctuation">(</span><span class="token function">same</span> ?person-1 ?person-2<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+<p>注意person-1, person-2是对称的，所以会出现两次，要使得每对结果只出现一次，应该对每一对内的结果增加排序。</p>
+<p>添加的规则：</p>
+<pre class="line-numbers language-scheme" data-language="scheme"><code class="language-scheme"><span class="token comment">; not in microshaft-data-base</span>
+<span class="token comment">; 4.60 add</span>
+<span class="token punctuation">(</span><span class="token keyword">define</span> <span class="token punctuation">(</span><span class="token function">person->string</span> person<span class="token punctuation">)</span>
+  <span class="token punctuation">(</span><span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token builtin">null?</span> person<span class="token punctuation">)</span>
+    <span class="token string">""</span>
+    <span class="token punctuation">(</span><span class="token builtin">string-append</span> <span class="token punctuation">(</span><span class="token builtin">symbol->string</span> <span class="token punctuation">(</span><span class="token builtin">car</span> person<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">(</span><span class="token function">person->string</span> <span class="token punctuation">(</span><span class="token builtin">cdr</span> person<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+
+<span class="token punctuation">(</span><span class="token keyword">define</span> <span class="token punctuation">(</span><span class="token function">person>?</span> p1 p2<span class="token punctuation">)</span>
+  <span class="token punctuation">(</span><span class="token builtin">string>?</span> <span class="token punctuation">(</span><span class="token function">person->string</span> p1<span class="token punctuation">)</span> <span class="token punctuation">(</span><span class="token function">person->string</span> p2<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+
+<span class="token comment">; in microshaft-data-base</span>
+<span class="token comment">; 4.60 add</span>
+<span class="token punctuation">(</span><span class="token function">rule</span> <span class="token punctuation">(</span><span class="token function">lives-near-unique</span> ?person-1 ?person-2<span class="token punctuation">)</span>
+      <span class="token punctuation">(</span><span class="token builtin">and</span> <span class="token punctuation">(</span><span class="token function">address</span> ?person-1 <span class="token punctuation">(</span><span class="token function">?town</span> . ?rest-1<span class="token punctuation">)</span><span class="token punctuation">)</span>
+           <span class="token punctuation">(</span><span class="token function">address</span> ?person-2 <span class="token punctuation">(</span><span class="token function">?town</span> . ?rest-2<span class="token punctuation">)</span><span class="token punctuation">)</span>
+           <span class="token punctuation">(</span><span class="token builtin">not</span> <span class="token punctuation">(</span><span class="token function">same</span> ?person-1 ?person-2<span class="token punctuation">)</span><span class="token punctuation">)</span>
+           <span class="token punctuation">(</span><span class="token function">lisp-value</span> person>? ?person-1 ?person-2<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>实验结果：</p>
+<pre class="line-numbers language-none"><code class="language-none">;;; Query input:
+(lives-near-unique ?person-1 ?person-2)
+;;; Query results:
+(lives-near-unique (reasoner louis) (aull dewitt))
+(lives-near-unique (reasoner louis) (bitdiddle ben))
+(lives-near-unique (hacker alyssa p) (fect cy d))
+(lives-near-unique (bitdiddle ben) (aull dewitt))<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h4 id="4-61-p314"><a href="#4-61-p314" class="headerlink" title="4.61(p314)"></a>4.61(p314)</h4><p>代码：</p>
+<pre class="line-numbers language-scheme" data-language="scheme"><code class="language-scheme"><span class="token punctuation">(</span><span class="token function">load</span> <span class="token string">"ch4-query.scm"</span><span class="token punctuation">)</span>
+
+<span class="token punctuation">(</span><span class="token function">initialize-data-base</span> microshaft-data-base<span class="token punctuation">)</span>
+<span class="token punctuation">(</span><span class="token function">query-driver-loop</span><span class="token punctuation">)</span>
+
+<span class="token punctuation">(</span><span class="token function">?x</span> next-to ?y in <span class="token punctuation">(</span><span class="token number">1</span> <span class="token punctuation">(</span><span class="token number">2</span> <span class="token number">3</span><span class="token punctuation">)</span> <span class="token number">4</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+<span class="token punctuation">(</span><span class="token function">?x</span> next-to <span class="token number">1</span> in <span class="token punctuation">(</span><span class="token number">2</span> <span class="token number">1</span> <span class="token number">3</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>实验结果：</p>
+<pre class="line-numbers language-none"><code class="language-none">;;; Query input:
+(?x next-to ?y in (1 (2 3) 4))
+;;; Query results:
+((2 3) next-to 4 in (1 (2 3) 4))
+(1 next-to (2 3) in (1 (2 3) 4))
+
+;;; Query input:
+(?x next-to 1 in (2 1 3 1))
+;;; Query results:
+(3 next-to 1 in (2 1 3 1))
+(2 next-to 1 in (2 1 3 1))<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h4 id="4-62-p314"><a href="#4-62-p314" class="headerlink" title="4.62(p314)"></a>4.62(p314)</h4><p>参考资料：</p>
+<p><a target="_blank" rel="noopener" href="http://community.schemewiki.org/?sicp-ex-4.62">http://community.schemewiki.org/?sicp-ex-4.62</a></p>
+<p>添加的规则：</p>
+<pre class="line-numbers language-scheme" data-language="scheme"><code class="language-scheme"><span class="token comment">; 4.62 add</span>
+<span class="token punctuation">(</span><span class="token function">rule</span> <span class="token punctuation">(</span><span class="token function">last-pair</span> <span class="token punctuation">(</span><span class="token function">?x</span><span class="token punctuation">)</span> ?x<span class="token punctuation">)</span><span class="token punctuation">)</span>
+<span class="token punctuation">(</span><span class="token function">rule</span> <span class="token punctuation">(</span><span class="token function">last-pair</span> <span class="token punctuation">(</span><span class="token function">?u</span> . ?v<span class="token punctuation">)</span> ?x<span class="token punctuation">)</span>
+      <span class="token punctuation">(</span><span class="token function">last-pair</span> ?v ?x<span class="token punctuation">)</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+<p>代码：</p>
+<pre class="line-numbers language-scheme" data-language="scheme"><code class="language-scheme"><span class="token punctuation">(</span><span class="token function">load</span> <span class="token string">"ch4-query.scm"</span><span class="token punctuation">)</span>
+
+<span class="token punctuation">(</span><span class="token function">initialize-data-base</span> microshaft-data-base<span class="token punctuation">)</span>
+<span class="token punctuation">(</span><span class="token function">query-driver-loop</span><span class="token punctuation">)</span>
+
+<span class="token punctuation">(</span><span class="token function">last-pair</span> <span class="token punctuation">(</span><span class="token number">3</span><span class="token punctuation">)</span> ?x<span class="token punctuation">)</span>
+<span class="token punctuation">(</span><span class="token function">last-pair</span> <span class="token punctuation">(</span><span class="token number">1</span> <span class="token number">2</span> <span class="token number">3</span><span class="token punctuation">)</span> ?x<span class="token punctuation">)</span>
+<span class="token punctuation">(</span><span class="token function">last-pair</span> <span class="token punctuation">(</span><span class="token number">2</span> ?x<span class="token punctuation">)</span> <span class="token punctuation">(</span><span class="token number">3</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+
+<span class="token comment">; 死循环</span>
+<span class="token comment">; (last-pair ?x (3))</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>结果：</p>
+<pre class="line-numbers language-none"><code class="language-none">;;; Query input:
+(last-pair (3) ?x)
+;;; Query results:
+(last-pair (3) 3)
+
+;;; Query input:
+(last-pair (1 2 3) ?x)
+;;; Query results:
+(last-pair (1 2 3) 3)
+
+;;; Query input:
+(last-pair (2 ?x) (3))
+;;; Query results:
+(last-pair (2 (3)) (3))<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h4 id="4-63-p314"><a href="#4-63-p314" class="headerlink" title="4.63(p314)"></a>4.63(p314)</h4><p>备注：</p>
+<p>这里</p>
+<pre class="line-numbers language-none"><code class="language-none">(relation a b)<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>可以理解为</p>
+<pre class="line-numbers language-none"><code class="language-none">a&#39;s relation is b<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>添加的规则：</p>
+<pre class="line-numbers language-scheme" data-language="scheme"><code class="language-scheme"><span class="token comment">; 4.63</span>
+<span class="token punctuation">(</span><span class="token function">son</span> Adam Cain<span class="token punctuation">)</span>
+<span class="token punctuation">(</span><span class="token function">son</span> Cain Enoch<span class="token punctuation">)</span>
+<span class="token punctuation">(</span><span class="token function">son</span> Enoch Irad<span class="token punctuation">)</span>
+<span class="token punctuation">(</span><span class="token function">son</span> Irad Mehujael<span class="token punctuation">)</span>
+<span class="token punctuation">(</span><span class="token function">son</span> Mehujael Methushael<span class="token punctuation">)</span>
+<span class="token punctuation">(</span><span class="token function">son</span> Methushael Lamech<span class="token punctuation">)</span>
+<span class="token punctuation">(</span><span class="token function">wife</span> Lamech Ada<span class="token punctuation">)</span>
+<span class="token punctuation">(</span><span class="token function">son</span> Ada Jabal<span class="token punctuation">)</span>
+<span class="token punctuation">(</span><span class="token function">son</span> Ada Jubal<span class="token punctuation">)</span>
+
+<span class="token punctuation">(</span><span class="token function">rule</span> <span class="token punctuation">(</span><span class="token function">son?</span> ?x ?y<span class="token punctuation">)</span>
+      <span class="token punctuation">(</span><span class="token builtin">or</span> <span class="token punctuation">(</span><span class="token function">son</span> ?x ?y<span class="token punctuation">)</span>
+          <span class="token punctuation">(</span><span class="token builtin">and</span> <span class="token punctuation">(</span><span class="token function">wife</span> ?z ?x<span class="token punctuation">)</span>
+               <span class="token punctuation">(</span><span class="token function">son</span> ?z ?y<span class="token punctuation">)</span><span class="token punctuation">)</span>
+          <span class="token punctuation">(</span><span class="token builtin">and</span> <span class="token punctuation">(</span><span class="token function">wife</span> ?x ?z<span class="token punctuation">)</span>
+               <span class="token punctuation">(</span><span class="token function">son</span> ?z ?y<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+
+<span class="token punctuation">(</span><span class="token function">rule</span> <span class="token punctuation">(</span><span class="token function">grandson?</span> ?x ?y<span class="token punctuation">)</span>
+      <span class="token punctuation">(</span><span class="token builtin">and</span> <span class="token punctuation">(</span><span class="token function">son?</span> ?x ?z<span class="token punctuation">)</span>
+           <span class="token punctuation">(</span><span class="token function">son?</span> ?z ?y<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>结果：</p>
+<pre class="line-numbers language-none"><code class="language-none">;;; Query input:
+(son? Lamech ?name)
+;;; Query results:
+(son? lamech jubal)
+(son? lamech jabal)
+
+;;; Query input:
+(son? Ada ?name)
+;;; Query results:
+(son? ada jubal)
+(son? ada jabal)
+
+;;; Query input:
+(grandson? ?name Methushael)
+;;; Query results:
+(grandson? irad methushael)
+
+;;; Query input:
+(grandson? Methushael ?name)
+;;; Query results:
+(grandson? methushael jubal)
+(grandson? methushael jabal)<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">Doraemonzzz</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="http://www.doraemonzzz.com/2021/07/17/2021-7-17-%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A8%8B%E5%BA%8F%E7%9A%84%E6%9E%84%E9%80%A0%E5%92%8C%E8%A7%A3%E9%87%8A(SICP)-%E7%AC%AC4%E7%AB%A0-%E4%B9%A0%E9%A2%98%E8%A7%A3%E6%9E%90-Part6/">http://www.doraemonzzz.com/2021/07/17/2021-7-17-%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A8%8B%E5%BA%8F%E7%9A%84%E6%9E%84%E9%80%A0%E5%92%8C%E8%A7%A3%E9%87%8A(SICP)-%E7%AC%AC4%E7%AB%A0-%E4%B9%A0%E9%A2%98%E8%A7%A3%E6%9E%90-Part6/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://www.doraemonzzz.com" target="_blank">Doraemonzzz</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A8%8B%E5%BA%8F%E7%9A%84%E6%9E%84%E9%80%A0%E5%92%8C%E8%A7%A3%E9%87%8A/">计算机程序的构造和解释</a></div><div class="post_share"><div class="social-share" data-image="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2021/07/20/2021-7-20-MIT-6.S081-Operating-System-Enginerring-%E5%AE%9E%E9%AA%8C%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/"><img class="prev-cover" src= "/img/loading.gif" data-lazy-src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">MIT 6.S081 Operating System Enginerring 实验环境配置</div></div></a></div><div class="next-post pull-right"><a href="/2021/07/15/2021-7-15-Stanford-Compiler-PA4/"><img class="next-cover" src= "/img/loading.gif" data-lazy-src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">Stanford Compiler PA4</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span> 相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2021/04/13/2021-4-13-计算机程序的构造和解释(SICP)环境配置(续)/" title="计算机程序的构造和解释(SICP)环境配置(wsl2 + vscode + mit scheme)"><img class="cover" src= "/img/loading.gif" data-lazy-src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-04-13</div><div class="title">计算机程序的构造和解释(SICP)环境配置(wsl2 + vscode + mit scheme)</div></div></a></div><div><a href="/2021/04/20/2021-4-20-计算机程序的构造和解释(SICP)-第3章-习题解析-Part6/" title="计算机程序的构造和解释(SICP) 第3章 习题解析 Part6"><img class="cover" src= "/img/loading.gif" data-lazy-src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-04-20</div><div class="title">计算机程序的构造和解释(SICP) 第3章 习题解析 Part6</div></div></a></div><div><a href="/2021/04/24/2021-4-24-计算机程序的构造和解释(SICP)-第3章-习题解析-Part7/" title="计算机程序的构造和解释(SICP) 第3章 习题解析 Part7"><img class="cover" src= "/img/loading.gif" data-lazy-src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-04-24</div><div class="title">计算机程序的构造和解释(SICP) 第3章 习题解析 Part7</div></div></a></div><div><a href="/2021/05/17/2021-5-17-计算机程序的构造和解释(SICP)-第4章-习题解析-Part1/" title="计算机程序的构造和解释(SICP) 第4章 习题解析 Part1"><img class="cover" src= "/img/loading.gif" data-lazy-src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-05-17</div><div class="title">计算机程序的构造和解释(SICP) 第4章 习题解析 Part1</div></div></a></div><div><a href="/2021/05/04/2021-5-4-计算机程序的构造和解释(SICP)-第3章-习题解析-Part8/" title="计算机程序的构造和解释(SICP) 第3章 习题解析 Part8"><img class="cover" src= "/img/loading.gif" data-lazy-src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-05-04</div><div class="title">计算机程序的构造和解释(SICP) 第3章 习题解析 Part8</div></div></a></div><div><a href="/2021/06/14/2021-6-14-计算机程序的构造和解释(SICP)-第4章-习题解析-Part3/" title="计算机程序的构造和解释(SICP) 第4章 习题解析 Part3"><img class="cover" src= "/img/loading.gif" data-lazy-src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-06-14</div><div class="title">计算机程序的构造和解释(SICP) 第4章 习题解析 Part3</div></div></a></div></div></div><hr/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div><div id="comment-switch"><span class="first-comment">Valine</span><span class="switch-btn"></span><span class="second-comment">Livere</span></div></div><div class="comment-wrap"><div><div class="vcomment" id="vcomment"></div></div><div><div id="lv-container" data-id="city" data-uid="MTAyMC8zNDcxOS8xMTI1Ng=="></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="card-info-avatar is-center"><img class="avatar-img" src= "/img/loading.gif" data-lazy-src="https://github.com/Doraemonzzz/md-photo/blob/master/%E5%A4%B4%E5%83%8F.jpg?raw=true" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/><div class="author-info__name">Doraemonzzz</div><div class="author-info__description">个人博客，主要记录有关机器学习，数学以及计算机科学的笔记</div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">635</div></a></div><div class="card-info-data-item is-center"><a href="/tags/"><div class="headline">标签</div><div class="length-num">65</div></a></div><div class="card-info-data-item is-center"><a href="/categories/"><div class="headline">分类</div><div class="length-num">26</div></a></div></div><a class="button--animated" id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/Doraemonzzz"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/Doraemonzzz" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="/doraemon_zzz@163.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a><a class="social-icon" href="https://space.bilibili.com/291079982" target="_blank" title="Bilibili"><i class="iconfont icon-bilibili"></i></a><a class="social-icon" href="/atom.xml" target="_blank" title=""><i class="fa fa-rss"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn card-announcement-animation"></i><span>公告</span></div><div class="announcement_content">暂无公告</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#4-55-p309"><span class="toc-number">1.</span> <span class="toc-text">4.55(p309)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-56-p311"><span class="toc-number">2.</span> <span class="toc-text">4.56(p311)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-57-p312"><span class="toc-number">3.</span> <span class="toc-text">4.57(p312)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-58-p312"><span class="toc-number">4.</span> <span class="toc-text">4.58(p312)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-59-p312"><span class="toc-number">5.</span> <span class="toc-text">4.59(p312)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-60-p313"><span class="toc-number">6.</span> <span class="toc-text">4.60(p313)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-61-p314"><span class="toc-number">7.</span> <span class="toc-text">4.61(p314)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-62-p314"><span class="toc-number">8.</span> <span class="toc-text">4.62(p314)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-63-p314"><span class="toc-number">9.</span> <span class="toc-text">4.63(p314)</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2021/07/25/2021-7-25-%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A8%8B%E5%BA%8F%E7%9A%84%E6%9E%84%E9%80%A0%E5%92%8C%E8%A7%A3%E9%87%8A(SICP)-%E7%AC%AC5%E7%AB%A0-%E4%B9%A0%E9%A2%98%E8%A7%A3%E6%9E%90-Part1/" title="计算机程序的构造和解释(SICP) 第5章 习题解析 Part1"><img src= "/img/loading.gif" data-lazy-src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="计算机程序的构造和解释(SICP) 第5章 习题解析 Part1"/></a><div class="content"><a class="title" href="/2021/07/25/2021-7-25-%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A8%8B%E5%BA%8F%E7%9A%84%E6%9E%84%E9%80%A0%E5%92%8C%E8%A7%A3%E9%87%8A(SICP)-%E7%AC%AC5%E7%AB%A0-%E4%B9%A0%E9%A2%98%E8%A7%A3%E6%9E%90-Part1/" title="计算机程序的构造和解释(SICP) 第5章 习题解析 Part1">计算机程序的构造和解释(SICP) 第5章 习题解析 Part1</a><time datetime="2021-07-25T12:09:00.000Z" title="发表于 2021-07-25 20:09:00">2021-07-25</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/07/25/2021-7-25-%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A8%8B%E5%BA%8F%E7%9A%84%E6%9E%84%E9%80%A0%E5%92%8C%E8%A7%A3%E9%87%8A(SICP)-%E7%AC%AC4%E7%AB%A0-%E4%B9%A0%E9%A2%98%E8%A7%A3%E6%9E%90-Part7/" title="计算机程序的构造和解释(SICP) 第4章 习题解析 Part7"><img src= "/img/loading.gif" data-lazy-src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="计算机程序的构造和解释(SICP) 第4章 习题解析 Part7"/></a><div class="content"><a class="title" href="/2021/07/25/2021-7-25-%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A8%8B%E5%BA%8F%E7%9A%84%E6%9E%84%E9%80%A0%E5%92%8C%E8%A7%A3%E9%87%8A(SICP)-%E7%AC%AC4%E7%AB%A0-%E4%B9%A0%E9%A2%98%E8%A7%A3%E6%9E%90-Part7/" title="计算机程序的构造和解释(SICP) 第4章 习题解析 Part7">计算机程序的构造和解释(SICP) 第4章 习题解析 Part7</a><time datetime="2021-07-25T11:49:00.000Z" title="发表于 2021-07-25 19:49:00">2021-07-25</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/07/20/2021-7-20-MIT-6.S081-Operating-System-Enginerring-Lab1-Utilities/" title="MIT 6.S081 Operating System Enginerring Lab1 Utilities"><img src= "/img/loading.gif" data-lazy-src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="MIT 6.S081 Operating System Enginerring Lab1 Utilities"/></a><div class="content"><a class="title" href="/2021/07/20/2021-7-20-MIT-6.S081-Operating-System-Enginerring-Lab1-Utilities/" title="MIT 6.S081 Operating System Enginerring Lab1 Utilities">MIT 6.S081 Operating System Enginerring Lab1 Utilities</a><time datetime="2021-07-20T01:25:00.000Z" title="发表于 2021-07-20 09:25:00">2021-07-20</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/07/20/2021-7-20-MIT-6.S081-Operating-System-Enginerring-%E5%AE%9E%E9%AA%8C%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/" title="MIT 6.S081 Operating System Enginerring 实验环境配置"><img src= "/img/loading.gif" data-lazy-src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="MIT 6.S081 Operating System Enginerring 实验环境配置"/></a><div class="content"><a class="title" href="/2021/07/20/2021-7-20-MIT-6.S081-Operating-System-Enginerring-%E5%AE%9E%E9%AA%8C%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/" title="MIT 6.S081 Operating System Enginerring 实验环境配置">MIT 6.S081 Operating System Enginerring 实验环境配置</a><time datetime="2021-07-20T01:06:00.000Z" title="发表于 2021-07-20 09:06:00">2021-07-20</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/07/17/2021-7-17-%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A8%8B%E5%BA%8F%E7%9A%84%E6%9E%84%E9%80%A0%E5%92%8C%E8%A7%A3%E9%87%8A(SICP)-%E7%AC%AC4%E7%AB%A0-%E4%B9%A0%E9%A2%98%E8%A7%A3%E6%9E%90-Part6/" title="计算机程序的构造和解释(SICP) 第4章 习题解析 Part6"><img src= "/img/loading.gif" data-lazy-src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="计算机程序的构造和解释(SICP) 第4章 习题解析 Part6"/></a><div class="content"><a class="title" href="/2021/07/17/2021-7-17-%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A8%8B%E5%BA%8F%E7%9A%84%E6%9E%84%E9%80%A0%E5%92%8C%E8%A7%A3%E9%87%8A(SICP)-%E7%AC%AC4%E7%AB%A0-%E4%B9%A0%E9%A2%98%E8%A7%A3%E6%9E%90-Part6/" title="计算机程序的构造和解释(SICP) 第4章 习题解析 Part6">计算机程序的构造和解释(SICP) 第4章 习题解析 Part6</a><time datetime="2021-07-16T16:13:00.000Z" title="发表于 2021-07-17 00:13:00">2021-07-17</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2018 - 2021 By Doraemonzzz</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="font-plus" type="button" title="放大字体"><i class="fas fa-plus"></i></button><button id="font-minus" type="button" title="缩小字体"><i class="fas fa-minus"></i></button><button id="translateLink" type="button" title="简繁转换">简</button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div id="local-search"><div class="search-dialog"><div class="search-dialog__title" id="local-search-title">本地搜索</div><div id="local-input-panel"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div></div><hr/><div id="local-search-results"></div><span class="search-close-button"><i class="fas fa-times"></i></span></div><div id="search-mask"></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="/js/tw_cn.js"></script><script src="https://cdn.jsdelivr.net/npm/vanilla-lazyload/dist/lazyload.iife.min.js"></script><script src="/js/search/local-search.js"></script><script>var preloader = {
+  endLoading: () => {
+    document.body.style.overflow = 'auto';
+    document.getElementById('loading-box').classList.add("loaded")
+  },
+  initLoading: () => {
+    document.body.style.overflow = '';
+    document.getElementById('loading-box').classList.remove("loaded")
+
+  }
+}
+window.addEventListener('load',preloader.endLoading())</script><div class="js-pjax"><script>if (!window.MathJax) {
+  window.MathJax = {
+    tex: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]],
+      tags: 'ams'
+    },
+    chtml: {
+      scale: 1.25
+    },
+    options: {
+      renderActions: {
+        findScript: [10, doc => {
+          for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+            const display = !!node.type.match(/; *mode=display/)
+            const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+            const text = document.createTextNode('')
+            node.parentNode.replaceChild(text, node)
+            math.start = {node: text, delim: '', n: 0}
+            math.end = {node: text, delim: '', n: 0}
+            doc.math.push(math)
+          }
+        }, '']
+      }
+    }
+  }
+  
+  const script = document.createElement('script')
+  script.src = 'https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js'
+  script.id = 'MathJax-script'
+  script.async = true
+  document.head.appendChild(script)
+} else {
+  MathJax.startup.document.state(0)
+  MathJax.texReset()
+  MathJax.typeset()
+}</script><script>function loadValine () {
+  function initValine () {
+    const valine = new Valine(Object.assign({
+      el: '#vcomment',
+      appId: 'IpnmxCW9CvYWIXbol5QXsegX-MdYXbMMI',
+      appKey: 'w57DVCdbxcyB1TYYagMIMJIU',
+      placeholder: 'Please leave your footprints',
+      avatar: 'monsterid',
+      meta: 'nick,mail,link'.split(','),
+      pageSize: '10',
+      lang: 'en',
+      recordIP: false,
+      serverURLs: '',
+      emojiCDN: '',
+      emojiMaps: "",
+      enableQQ: false,
+      path: window.location.pathname,
+      requiredFields: ["nick,mail"],
+      visitor: true
+    }, null))
+  }
+
+  if (typeof Valine === 'function') initValine() 
+  else getScript('https://cdn.jsdelivr.net/npm/valine/dist/Valine.min.js').then(initValine)
+}
+
+if ('Valine' === 'Valine' || !false) {
+  if (false) btf.loadComment(document.getElementById('vcomment'),loadValine)
+  else setTimeout(loadValine, 0)
+} else {
+  function loadOtherComment () {
+    loadValine()
+  }
+}</script><script>function loadLivere () {
+  if (typeof LivereTower === 'object') {
+    window.LivereTower.init()
+  }
+  else {
+    (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+    })(document, 'script');
+  }
+}
+
+if ('Valine' === 'Livere' || !false) {
+  if (false) btf.loadComment(document.getElementById('lv-container'), loadLivere)
+  else loadLivere()
+}
+else {
+  function loadOtherComment () {
+    loadLivere()
+  }
+}</script></div><script defer="defer" id="fluttering_ribbon" mobile="false" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/canvas-fluttering-ribbon.min.js"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
