@@ -1,0 +1,659 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>深入理解计算机系统 第6章 笔记整理 | Doraemonzzz</title><meta name="keywords" content="深入理解计算机系统"><meta name="author" content="Doraemonzzz"><meta name="copyright" content="Doraemonzzz"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="这次回顾深入理解计算机系统第6章 ，这一章介绍了存储器层次结构。 电子书地址： http:&#x2F;&#x2F;eol.bnuz.edu.cn&#x2F;meol&#x2F;common&#x2F;script&#x2F;preview&#x2F;download_preview.jsp?fileid&#x3D;2169600&amp;resid&#x3D;242120&amp;lid&#x3D;28605 备注：图片和总结内容均来自于电子书。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="深入理解计算机系统 第6章 笔记整理">
+<meta property="og:url" content="http://www.doraemonzzz.com/2021/08/01/2021-8-1-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E7%AC%AC6%E7%AB%A0-%E7%AC%94%E8%AE%B0%E6%95%B4%E7%90%86/index.html">
+<meta property="og:site_name" content="Doraemonzzz">
+<meta property="og:description" content="这次回顾深入理解计算机系统第6章 ，这一章介绍了存储器层次结构。 电子书地址： http:&#x2F;&#x2F;eol.bnuz.edu.cn&#x2F;meol&#x2F;common&#x2F;script&#x2F;preview&#x2F;download_preview.jsp?fileid&#x3D;2169600&amp;resid&#x3D;242120&amp;lid&#x3D;28605 备注：图片和总结内容均来自于电子书。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg">
+<meta property="article:published_time" content="2021-08-01T02:57:00.000Z">
+<meta property="article:modified_time" content="2021-08-01T03:35:27.914Z">
+<meta property="article:author" content="Doraemonzzz">
+<meta property="article:tag" content="深入理解计算机系统">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg"><link rel="shortcut icon" href="https://github.com/Doraemonzzz/md-photo/blob/master/%E5%A4%B4%E5%83%8F.jpg?raw=true"><link rel="canonical" href="http://www.doraemonzzz.com/2021/08/01/2021-8-1-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E7%AC%AC6%E7%AB%A0-%E7%AC%94%E8%AE%B0%E6%95%B4%E7%90%86/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//www.google-analytics.com" crossorigin=""/><link rel="preconnect" href="//hm.baidu.com"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><script>var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?6f00f37f957f0608abb8c571105456f0";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script><script async="async" src="https://www.googletagmanager.com/gtag/js?id=UA-G-RE4B1LKRZD"></script><script>window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'UA-G-RE4B1LKRZD');
+</script><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"search.xml","languages":{"hits_empty":"找不到您查询的内容：${query}"}},
+  translate: {"defaultEncoding":2,"translateDelay":0,"msgToTraditionalChinese":"繁","msgToSimplifiedChinese":"簡"},
+  noticeOutdate: {"limitDay":500,"position":"top","messagePrev":"距离上次更新已经","messageNext":"天了，文章内容可能已经过时。"},
+  highlight: {"plugin":"prismjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":200},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    jQuery: 'https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js',
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+    },
+    fancybox: {
+      js: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css'
+    }
+  },
+  isPhotoFigcaption: true,
+  islazyload: true,
+  isanchor: true
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '深入理解计算机系统 第6章 笔记整理',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2021-08-01 11:35:27'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const fontSizeVal = saveToLocal.get('global-font-size')
+    if (fontSizeVal !== undefined) {
+      document.documentElement.style.setProperty('--global-font-size', fontSizeVal + 'px')
+    }
+    })(window)</script><link rel="stylesheet" href="/css/bilibili.css" media="defer" onload="this.media='all'"><meta name="google-site-verification" content="c4v-NmuUZRgl3cvtg9GKswryK1YLaPztd_5M-df5VNI" /><meta name="generator" content="Hexo 5.4.0"><link rel="alternate" href="/atom.xml" title="Doraemonzzz" type="application/atom+xml">
+</head><body><div id="loading-box"><div class="loading-left-bg"></div><div class="loading-right-bg"></div><div class="spinner-box"><div class="configure-border-1"><div class="configure-core"></div></div><div class="configure-border-2"><div class="configure-core"></div></div><div class="loading-word">加载中...</div></div></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="author-avatar"><img class="avatar-img" src= "/img/loading.gif" data-lazy-src="https://github.com/Doraemonzzz/md-photo/blob/master/%E5%A4%B4%E5%83%8F.jpg?raw=true" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">文章</div><div class="length-num">641</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">标签</div><div class="length-num">66</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/categories/"><div class="headline">分类</div><div class="length-num">26</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-chart-pie"></i><span> 博客统计</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/charts/"><i class="fa-fw far fa-chart-bar"></i><span> 文章统计</span></a></li><li><a class="site-page child" href="/census/"><i class="fa-fw fas fa-chart-area"></i><span> 访问统计</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/top/"><i class="fa-fw fab fa-hotjar"></i><span> 阅读排行榜</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fa fa-heartbeat"></i><span> 娱乐</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于我</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">Doraemonzzz</a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-chart-pie"></i><span> 博客统计</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/charts/"><i class="fa-fw far fa-chart-bar"></i><span> 文章统计</span></a></li><li><a class="site-page child" href="/census/"><i class="fa-fw fas fa-chart-area"></i><span> 访问统计</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/top/"><i class="fa-fw fab fa-hotjar"></i><span> 阅读排行榜</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fa fa-heartbeat"></i><span> 娱乐</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于我</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">深入理解计算机系统 第6章 笔记整理</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2021-08-01T02:57:00.000Z" title="发表于 2021-08-01 10:57:00">2021-08-01</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2021-08-01T03:35:27.914Z" title="更新于 2021-08-01 11:35:27">2021-08-01</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%8E%9F%E7%90%86/">计算机原理</a></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-tag"></i><a class="article-meta__tags" href="/tags/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F/">深入理解计算机系统</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">3.3k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>10分钟</span></span><span class="post-meta-separator">|</span><span class="leancloud_visitors" id="/2021/08/01/2021-8-1-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E7%AC%AC6%E7%AB%A0-%E7%AC%94%E8%AE%B0%E6%95%B4%E7%90%86/" data-flag-title="深入理解计算机系统 第6章 笔记整理"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span class="leancloud-visitors-count"></span></span><span class="post-meta-separator">|</span><span class="post-meta-commentcount"><i class="far fa-comments fa-fw post-meta-icon"></i><span class="post-meta-label">评论数:</span><a href="/2021/08/01/2021-8-1-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E7%AC%AC6%E7%AB%A0-%E7%AC%94%E8%AE%B0%E6%95%B4%E7%90%86/#post-comment" itemprop="discussionUrl"><span class="valine-comment-count" data-xid="/2021/08/01/2021-8-1-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E7%AC%AC6%E7%AB%A0-%E7%AC%94%E8%AE%B0%E6%95%B4%E7%90%86/" itemprop="commentCount"></span></a></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p>这次回顾深入理解计算机系统第6章 ，这一章介绍了存储器层次结构。</p>
+<p>电子书地址：</p>
+<p><a target="_blank" rel="noopener" href="http://eol.bnuz.edu.cn/meol/common/script/preview/download_preview.jsp?fileid=2169600&amp;resid=242120&amp;lid=28605">http://eol.bnuz.edu.cn/meol/common/script/preview/download_preview.jsp?fileid=2169600&amp;resid=242120&amp;lid=28605</a></p>
+<p>备注：图片和总结内容均来自于电子书。</p>
+<span id="more"></span>
+<h1 id="第6章：存储器层次结构"><a href="#第6章：存储器层次结构" class="headerlink" title="第6章：存储器层次结构"></a>第6章：存储器层次结构</h1><h2 id="重要概念提要"><a href="#重要概念提要" class="headerlink" title="重要概念提要"></a>重要概念提要</h2><ul>
+<li>局部性：<ul>
+<li>时间局部性；</li>
+<li>空间局部性；</li>
+<li>指令局部性；</li>
+</ul>
+</li>
+<li>缓存不命中（读）：<ul>
+<li>强制性不命中（冷不命中）；</li>
+<li>冲突不命中；</li>
+<li>容量不命中；</li>
+</ul>
+</li>
+<li>缓存不命中（写）：<ul>
+<li>直写；</li>
+<li>写回；</li>
+<li>写分配；</li>
+<li>非写分配；</li>
+</ul>
+</li>
+<li>高速缓存：<ul>
+<li>直接映射高速缓存；</li>
+<li>$E$路组相连高速缓存；</li>
+<li>全相连高速缓存；</li>
+</ul>
+</li>
+<li>冲突不命中相关概念：<ul>
+<li>抖动；</li>
+<li>选择中间位做索引的原因；</li>
+</ul>
+</li>
+<li></li>
+</ul>
+<h2 id="6-1-存储技术"><a href="#6-1-存储技术" class="headerlink" title="6.1 存储技术"></a>6.1 存储技术</h2><p>略过。</p>
+<h2 id="6-2-局部性"><a href="#6-2-局部性" class="headerlink" title="6.2 局部性"></a>6.2 局部性</h2><h3 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h3><ul>
+<li>编写良好的计算机程序具有良好的局部性（locality）：<ul>
+<li>计算机程序倾向于引用临近于其他最近引用过的数据项；</li>
+<li>或者最近引用过的数据项本身；</li>
+</ul>
+</li>
+<li>这种倾向性称为局部性原理。</li>
+<li>有良好局部性的程序比局部性差的程序运行的更快。</li>
+</ul>
+<h3 id="两种不同的局部性"><a href="#两种不同的局部性" class="headerlink" title="两种不同的局部性"></a>两种不同的局部性</h3><ul>
+<li>时间局部性<ul>
+<li>被引用过一次的内存位置可能在不远的将来再被引用；</li>
+</ul>
+</li>
+<li>空间局部性<ul>
+<li>被引用过一次的内存位置的附近可能在不远的将来再被引用；</li>
+</ul>
+</li>
+</ul>
+<h3 id="局部性的例子"><a href="#局部性的例子" class="headerlink" title="局部性的例子"></a>局部性的例子</h3><ul>
+<li>硬件层<ul>
+<li>引入高速缓存存储器来保存最近被引用的指令和数据项；</li>
+</ul>
+</li>
+<li>操作系统<ul>
+<li>使用主存作为虚拟地址空间来作为最近被引用块的高速缓存块；</li>
+</ul>
+</li>
+<li>web浏览器<ul>
+<li>将最近被引用的文档放在本地磁盘；</li>
+</ul>
+</li>
+</ul>
+<h3 id="数据局部性"><a href="#数据局部性" class="headerlink" title="数据局部性"></a>数据局部性</h3><h4 id="例1"><a href="#例1" class="headerlink" title="例1"></a>例1</h4><pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">int</span> <span class="token function">sumvec</span><span class="token punctuation">(</span><span class="token keyword">int</span> v<span class="token punctuation">[</span>N<span class="token punctuation">]</span><span class="token punctuation">)</span> 
+<span class="token punctuation">&#123;</span>  	
+    <span class="token keyword">int</span> i<span class="token punctuation">,</span> sum <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> 
+
+    <span class="token keyword">for</span> <span class="token punctuation">(</span>i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> N<span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span>
+	sum <span class="token operator">+=</span> v<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">;</span>
+    <span class="token keyword">return</span> sum<span class="token punctuation">;</span>	
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>分析：</p>
+<ul>
+<li>由于sum每次循环都会被引用，所以有好的时间局部性；</li>
+<li>由于sum是标量，所以没有空间局部性；</li>
+<li>v有很好的空间局部性；</li>
+</ul>
+<p>小结：</p>
+<ul>
+<li>对于数组，每隔$k$个元素进行访问，就称为步长为$k$的引用模式；<ul>
+<li>空间局部性随着$k$增大而降低；</li>
+</ul>
+</li>
+<li>步长为$1$的引用模式为顺序引用模式，例如此处的数组v；</li>
+</ul>
+<h4 id="例2"><a href="#例2" class="headerlink" title="例2"></a>例2</h4><p>代码1：</p>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">int</span> <span class="token function">sumarrayrows</span><span class="token punctuation">(</span><span class="token keyword">int</span> a<span class="token punctuation">[</span>M<span class="token punctuation">]</span><span class="token punctuation">[</span>N<span class="token punctuation">]</span><span class="token punctuation">)</span> 
+<span class="token punctuation">&#123;</span>  	
+    <span class="token keyword">int</span> i<span class="token punctuation">,</span> j<span class="token punctuation">,</span> sum <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">for</span> <span class="token punctuation">(</span>i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> M<span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> 
+	<span class="token keyword">for</span> <span class="token punctuation">(</span>j <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> j <span class="token operator">&lt;</span> N<span class="token punctuation">;</span> j<span class="token operator">++</span><span class="token punctuation">)</span>
+	    sum <span class="token operator">+=</span> a<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token punctuation">;</span>
+    <span class="token keyword">return</span> sum<span class="token punctuation">;</span>	
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>该程序空间局部性较好，因为引用模式的步长为$1$。</p>
+<p>代码2：</p>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">int</span> <span class="token function">sumarraycols</span><span class="token punctuation">(</span><span class="token keyword">int</span> a<span class="token punctuation">[</span>M<span class="token punctuation">]</span><span class="token punctuation">[</span>N<span class="token punctuation">]</span><span class="token punctuation">)</span> 
+<span class="token punctuation">&#123;</span>  	
+    <span class="token keyword">int</span> i<span class="token punctuation">,</span> j<span class="token punctuation">,</span> sum <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">for</span> <span class="token punctuation">(</span>j <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> j <span class="token operator">&lt;</span> N<span class="token punctuation">;</span> j<span class="token operator">++</span><span class="token punctuation">)</span>
+	<span class="token keyword">for</span> <span class="token punctuation">(</span>i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> M<span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> 
+	    sum <span class="token operator">+=</span> a<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token punctuation">;</span>
+    <span class="token keyword">return</span> sum<span class="token punctuation">;</span>	
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>该程序时间局部性较差，因为引用模式的步长为$N$。</p>
+<h3 id="指令局部性"><a href="#指令局部性" class="headerlink" title="指令局部性"></a>指令局部性</h3><p>由于指令存放在内存中，所以也可以评价程序关于取指的局部性，考虑之前的例1：</p>
+<ul>
+<li>for中循环体是按顺序执行的，所以循环指令有和好的空间局部性；</li>
+<li>循环体会被执行多次，所以有很好的时间局部性；</li>
+</ul>
+<h3 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h3><p>评价局部性的简单原则：</p>
+<ul>
+<li>重复引用相同变量的程序有良好的时间局部性。</li>
+<li>对于具有步长为$k$的引用模式的程序，步长越小，空间局部性越好。具有步长为$1$的引用模式的程序有很好的空间局部性。在内存中以大步长跳来跳去的程序空间局部性会很差。</li>
+<li>对于取指令来说，循环有好的时间和空间局部性。循环体越小，循环迭代次数越多，局部性越好。</li>
+</ul>
+<h2 id="6-3-存储器层次结构"><a href="#6-3-存储器层次结构" class="headerlink" title="6.3 存储器层次结构"></a>6.3 存储器层次结构</h2><p>不同存储技术的访问时间差异很大。速度较快的技术每字节的成本要比速度较慢的技术高，而且容量较小。为了能够用较低的价格得到更好的存储性能，有人提出了存储器层次结构，整体如下：</p>
+<p><img src= "/img/loading.gif" data-lazy-src="https://github.com/Doraemonzzz/md-photo/blob/master/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F/%E7%AC%AC6%E7%AB%A0/2021072501.jpg?raw=true" alt=""></p>
+<p>中心思想是，对于每个$k$，位于$k$层的更快更小的存储设备作为位于$k+1$层的更大更慢的存储设备的缓存。</p>
+<h3 id="存储器层次结构中的缓存"><a href="#存储器层次结构中的缓存" class="headerlink" title="存储器层次结构中的缓存"></a>存储器层次结构中的缓存</h3><p>以第$k$层和第$k+1$层为例：</p>
+<p><img src= "/img/loading.gif" data-lazy-src="https://github.com/Doraemonzzz/md-photo/blob/master/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F/%E7%AC%AC6%E7%AB%A0/2021072502.jpg?raw=true" alt=""></p>
+<ul>
+<li>第$k,k+1$层的存储器被划分成连续的数据对象组块（chunk），称为块（block），每块都有唯一的地址或名字，第$ k+1$层的块数更多；</li>
+<li>任何时刻，第$k$层的缓存包含第$k+1$层的子集副本；<ul>
+<li>例如上图中第$k$层包含$4,9,14,3$；</li>
+</ul>
+</li>
+<li>数据总是以块大小为传送单元在第$k$层和第$k+1$层之间来回复制；<ul>
+<li>对于不同的$k$，传送单元大小不同，一般来说，$k$越大，传送单元越大；</li>
+</ul>
+</li>
+</ul>
+<h3 id="缓存命中和不命中"><a href="#缓存命中和不命中" class="headerlink" title="缓存命中和不命中"></a>缓存命中和不命中</h3><p>假设要从第$k$层读取$d$，那么会有如下两种情况：</p>
+<ul>
+<li>缓存命中<ul>
+<li>如果第$k$层中包含数据$d$，那么就称为缓存命中；</li>
+</ul>
+</li>
+<li>缓存不命中<ul>
+<li>如果第$k$层中没有缓存数据$d$，那么就称为缓存不命中；此时会从第$k+1$层取出包含$d$的块，然后缓存到第$k$层中；</li>
+<li>如果第$k$层的缓存已满，那么会覆盖现存的某个块，这称为替换或驱逐，被驱逐的块称为牺牲块，该块由替换策略来控制。</li>
+</ul>
+</li>
+</ul>
+<p>缓存不命中的种类：</p>
+<ul>
+<li>强制性不命中（冷不命中）：<ul>
+<li>第$k$层的缓存是空的（此时所有对数据的访问都会不命中），空缓存也被称为冷缓存；</li>
+<li>通常是短暂的；</li>
+</ul>
+</li>
+<li>冲突不命中：<ul>
+<li>产生不命中后需要执行某个放置策略来确定第$k+1$层中取出的块放在哪，这种情形产生的不命中称为冲突不命中；</li>
+</ul>
+</li>
+<li>容量不命中：<ul>
+<li>程序每个阶段访问的缓存块的相对稳定集合，称为这个阶段的工作集，当工作集的大小超过缓存的大小时，缓存会经历容量不命中；</li>
+</ul>
+</li>
+</ul>
+<h2 id="6-4-高速缓存存储器"><a href="#6-4-高速缓存存储器" class="headerlink" title="6.4 高速缓存存储器"></a>6.4 高速缓存存储器</h2><p>这部分假设CPU和主存之间只有一个L1高速缓存，忽略L2，L3高速缓存。</p>
+<h3 id="通用的高速缓存存储器组织结构"><a href="#通用的高速缓存存储器组织结构" class="headerlink" title="通用的高速缓存存储器组织结构"></a>通用的高速缓存存储器组织结构</h3><p>考虑满足如下条件的计算机系统：</p>
+<ul>
+<li>每个存储器地址有$m$位，形成$M=2^m$个不同地址；</li>
+</ul>
+<p>该机器的高速缓存块信息如下：</p>
+<ul>
+<li>有$S=2^s$个高速缓存组；</li>
+<li>每个组包含$E$个高速缓存行；</li>
+<li>每个行由$B=2^b$字节的数据块组成；<ul>
+<li>有一个有效位指明该行是否包含有意义的信息；</li>
+<li>有$t=m-(b+s)$个标记位唯一标识行；</li>
+</ul>
+</li>
+<li>高速缓存结构用$(S,E,B,m)$描述；</li>
+<li>高速缓存的容量大小定义为$C=S\times E\times B$；</li>
+</ul>
+<p>图示：</p>
+<p><img src= "/img/loading.gif" data-lazy-src="https://github.com/Doraemonzzz/md-photo/blob/master/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F/%E7%AC%AC6%E7%AB%A0/2021072601.jpg?raw=true" alt=""></p>
+<p>上图为高速缓存$(S,E,B,m)$的通用组织：</p>
+<ul>
+<li>(a) 高速缓存是一个高速缓存组的数据；每组包含一行或多行，每行包含一个有效位，一些标记位和一个数据块；</li>
+<li>(b) 高速缓存的结构将$m$个地址位划分成了$t$个标记位，$s$个组索引和$b$个块偏移位；</li>
+</ul>
+<p>参数总结：</p>
+<p>基本参数：</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>$S=2^s$</td>
+<td>组数</td>
+</tr>
+<tr>
+<td>$E$</td>
+<td>每个组的行数</td>
+</tr>
+<tr>
+<td>$B=2^b$</td>
+<td>块大小（字节）</td>
+</tr>
+<tr>
+<td>$m=\log_2 M$</td>
+<td>（主存）物理地址位数</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>衍生参数：</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>$M=2^m$</td>
+<td>内存地址的最大数量</td>
+</tr>
+<tr>
+<td>$s=\log_2 (S)$</td>
+<td>组索引位数量</td>
+</tr>
+<tr>
+<td>$b=\log_2(B)$</td>
+<td>块偏移位数量</td>
+</tr>
+<tr>
+<td>$t=m-(s+b)$</td>
+<td>标记位数量</td>
+</tr>
+<tr>
+<td>$C=B\times E\times S$</td>
+<td>不包括像有效位和标记位这样开销的高速缓存大小（字节）</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h3 id="高速缓存的作用方式"><a href="#高速缓存的作用方式" class="headerlink" title="高速缓存的作用方式"></a>高速缓存的作用方式</h3><p>当一条加载指令指示CPU从主存地址$A$中读一个字时，它将$A$的地址发送到高速缓存，然后进行如下操作：</p>
+<ul>
+<li>解析$A$的标记，组索引，块偏移；</li>
+<li>（组选择）通过组索引定位到对应的组；</li>
+<li>（行匹配）通过标记位判断组中的哪一行包含$A$处的字；<ul>
+<li>如果存在这样的行且设置了有效位（字抽取），则说明高速缓存中缓存了$A$的字；<ul>
+<li>块偏移给出了$B$个字节的数据块中的起始字偏移；</li>
+</ul>
+</li>
+<li>否则说明高速缓存中没有缓存$A$的字；</li>
+</ul>
+</li>
+</ul>
+<h3 id="几种不同的高速缓存"><a href="#几种不同的高速缓存" class="headerlink" title="几种不同的高速缓存"></a>几种不同的高速缓存</h3><p>根据高速缓存行数$E$，高速缓存可以分为三类：</p>
+<ul>
+<li>$E=1$：直接映射高速缓存；<ul>
+<li>每组只有一行；</li>
+</ul>
+</li>
+<li>$1&lt;E&lt;C/B$：$E$路组相连高速缓存；</li>
+<li>$E=C/B$：全相连高速缓存；<ul>
+<li>只有一个组，包含所有的行；</li>
+</ul>
+</li>
+</ul>
+<p>后续会分别介绍这三种情形，从如下基本步骤介绍：</p>
+<ul>
+<li>组选择；</li>
+<li>行匹配和字选择；</li>
+<li>缓存不命中时的行替换规则；</li>
+</ul>
+<h4 id="直接映射高速缓存"><a href="#直接映射高速缓存" class="headerlink" title="直接映射高速缓存"></a>直接映射高速缓存</h4><p>此时$E=1$，表示每组只有$1$行：</p>
+<p><img src= "/img/loading.gif" data-lazy-src="https://github.com/Doraemonzzz/md-photo/blob/master/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F/%E7%AC%AC6%E7%AB%A0/2021072602.jpg?raw=true" alt=""></p>
+<p>组选择：</p>
+<p><img src= "/img/loading.gif" data-lazy-src="https://github.com/Doraemonzzz/md-photo/blob/master/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F/%E7%AC%AC6%E7%AB%A0/2021072603.jpg?raw=true" alt=""></p>
+<p>行匹配和字选择：</p>
+<p><img src= "/img/loading.gif" data-lazy-src="https://github.com/Doraemonzzz/md-photo/blob/master/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F/%E7%AC%AC6%E7%AB%A0/2021072604.jpg?raw=true" alt=""></p>
+<p>说明：</p>
+<ul>
+<li>这里行数为$1$，不需要选择；</li>
+<li>$w_0$表示低位。</li>
+</ul>
+<p>缓存不命中时的行替换规则：</p>
+<ul>
+<li>由于行数为$1$，所以如果不命中时替换当前行即可；</li>
+</ul>
+<h5 id="例子"><a href="#例子" class="headerlink" title="例子"></a>例子</h5><p>考虑计算向量点积的函数：</p>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">float</span> <span class="token function">dotprod</span><span class="token punctuation">(</span><span class="token keyword">float</span> x<span class="token punctuation">[</span><span class="token number">8</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token keyword">float</span> y<span class="token punctuation">[</span><span class="token number">8</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+<span class="token punctuation">&#123;</span>
+	<span class="token keyword">float</span> sum <span class="token operator">=</span> <span class="token number">0.0</span><span class="token punctuation">;</span>
+    <span class="token keyword">int</span> i<span class="token punctuation">;</span>
+    
+    <span class="token keyword">for</span> <span class="token punctuation">(</span>i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> <span class="token number">8</span><span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span>
+        sum <span class="token operator">+=</span> x<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">*</span> y<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">;</span>
+   	<span class="token keyword">return</span> sum<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>对于$x,y$来说，该函数有良好的空间局部性，所以理论上命中率较高，但实际上并非如此，原因如下：</p>
+<p>假设浮点数是$4$个字节，数组$x$被加载到地址$0$，数组$y$被加载到地址$32$，sum存放在CPU寄存器中（不需要内存引用），假设$x[i],y[i]$的高速缓存映射关系如下：</p>
+<p><img src= "/img/loading.gif" data-lazy-src="https://github.com/Doraemonzzz/md-photo/blob/master/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F/%E7%AC%AC6%E7%AB%A0/2021072605.jpg?raw=true" alt=""></p>
+<p>循环过程中的缓存情况如下：</p>
+<ul>
+<li>引用$x[0]$，缓存不命中，加载$x[0]\sim x[3]$；</li>
+<li>引用$y[0]$，缓存不命中，加载$y[0]\sim y[3]$；</li>
+<li>…</li>
+</ul>
+<p>每次引用均会导致冲突不命中，这种现象称为抖动，解决方法在数组的结尾放一些填充位，对于此例可以定义：</p>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">float</span> x<span class="token punctuation">[</span><span class="token number">12</span><span class="token punctuation">]</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>那么$x[i],y[i]$的高速缓存映射关系如下：</p>
+<p><img src= "/img/loading.gif" data-lazy-src="D:\Github\md-photo\深入理解计算机系统\第6章\2021072606.jpg" alt=""></p>
+<h5 id="选择中间位做索引的原因"><a href="#选择中间位做索引的原因" class="headerlink" title="选择中间位做索引的原因"></a>选择中间位做索引的原因</h5><p>选择中间位做索引的原因：高位做索引会使得一些连续的内存块映射到相同的高速缓存块。</p>
+<p>图示：</p>
+<p><img src= "/img/loading.gif" data-lazy-src="https://github.com/Doraemonzzz/md-photo/blob/master/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F/%E7%AC%AC6%E7%AB%A0/2021072607.jpg?raw=true" alt=""></p>
+<h4 id="E-路组相连高速缓存"><a href="#E-路组相连高速缓存" class="headerlink" title="$E$路组相连高速缓存"></a>$E$路组相连高速缓存</h4><p>此时$1&lt;E&lt;C/B$。</p>
+<p>组选择：</p>
+<p><img src= "/img/loading.gif" data-lazy-src="https://github.com/Doraemonzzz/md-photo/blob/master/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F/%E7%AC%AC6%E7%AB%A0/2021072608.jpg?raw=true" alt=""></p>
+<p>行匹配和字选择：</p>
+<p><img src= "/img/loading.gif" data-lazy-src="https://github.com/Doraemonzzz/md-photo/blob/master/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F/%E7%AC%AC6%E7%AB%A0/2021072609.jpg?raw=true" alt=""></p>
+<p>缓存不命中时的行替换规则：</p>
+<ul>
+<li>最不常使用（LFU）</li>
+<li>最近最少使用（LRU）</li>
+</ul>
+<h4 id="全相连高速缓存"><a href="#全相连高速缓存" class="headerlink" title="全相连高速缓存"></a>全相连高速缓存</h4><p>此时$E=C/B$，只有一个组，包含所有的行：</p>
+<p><img src= "/img/loading.gif" data-lazy-src="https://github.com/Doraemonzzz/md-photo/blob/master/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F/%E7%AC%AC6%E7%AB%A0/2021072611.jpg?raw=true" alt=""></p>
+<p>组选择：</p>
+<p>注意此时没有组索引位。</p>
+<p><img src= "/img/loading.gif" data-lazy-src="https://github.com/Doraemonzzz/md-photo/blob/master/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F/%E7%AC%AC6%E7%AB%A0/2021072612.jpg?raw=true" alt=""></p>
+<p>行匹配和字选择：</p>
+<p><img src= "/img/loading.gif" data-lazy-src="https://github.com/Doraemonzzz/md-photo/blob/master/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F/%E7%AC%AC6%E7%AB%A0/2021072701.jpg?raw=true" alt=""></p>
+<p>说明：</p>
+<ul>
+<li>因为高速缓存电路必须并行地搜索许多相匹配的标记，构造一个又大又快的相联高速缓存很困难，而且很昂贵。</li>
+<li>因此，全相联高速缓存只适合做小的高速缓存，例如虚拟内存系统中的翻译备用缓冲器(TLB)。</li>
+</ul>
+<h3 id="有关写的问题"><a href="#有关写的问题" class="headerlink" title="有关写的问题"></a>有关写的问题</h3><p>假设要写一个已经缓存了的字$w$，在高速缓存更新了它的副本后，如何在低一层的高速缓存中更新，有如下几种方式：</p>
+<ul>
+<li>直写：立即将$w$的高速缓存块写回到低一层中；</li>
+<li>写回：尽可能地推迟更新，只有当替换算法要驱逐当前层的缓存块之，才更新低一层；<ul>
+<li>写回能减少总线流量；</li>
+<li>但是增加了复杂性，需要增加额外的修改位表明是否被修改过；</li>
+</ul>
+</li>
+</ul>
+<p>处理写不命中的方法：</p>
+<ul>
+<li>写分配：加载相应低一层中的块到高速缓存中，然后更新当前高速缓存块；<ul>
+<li>写回中通常使用；</li>
+</ul>
+</li>
+<li>非写分配：避开高速缓存，直接把这个字写到低一层中；<ul>
+<li>直写中通常使用；</li>
+</ul>
+</li>
+</ul>
+<p>课本建议：</p>
+<ul>
+<li>使用写回和写分配的高速缓存模型。</li>
+</ul>
+<h3 id="高速缓存参数的性能指标"><a href="#高速缓存参数的性能指标" class="headerlink" title="高速缓存参数的性能指标"></a>高速缓存参数的性能指标</h3><p>常见指标：</p>
+<ul>
+<li>不命中率：不命中数量/引用数量；</li>
+<li>命中率：1-不命中率；</li>
+<li>命中时间：高速缓存传送一个字到CPU所需的时间，包括组选择，行确认和字选择的时间；</li>
+<li>不命中处罚：由不命中所引起的额外时间；</li>
+</ul>
+<p>其他度量：</p>
+<ul>
+<li>高速缓存的大小；</li>
+<li>块大小；</li>
+<li>相连度（$E$）；</li>
+<li>写策略；</li>
+</ul>
+<h2 id="6-5-6-7-小结"><a href="#6-5-6-7-小结" class="headerlink" title="6.5~6.7 小结"></a>6.5~6.7 小结</h2><p>编写高效代码的技巧：</p>
+<ul>
+<li>将注意力集中在内循环上，大部分计算和内存访问都发生在这里。</li>
+<li>通过按照数据对象存储在内存中的顺序、以步长为1的来读数据，从而使得你程序中的空间局部性最大。</li>
+<li>一旦从存储器中读入了一个数据对象，就尽可能多地使用它，从而使得程序中的时间局部性最大。</li>
+</ul>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">Doraemonzzz</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="http://www.doraemonzzz.com/2021/08/01/2021-8-1-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E7%AC%AC6%E7%AB%A0-%E7%AC%94%E8%AE%B0%E6%95%B4%E7%90%86/">http://www.doraemonzzz.com/2021/08/01/2021-8-1-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E7%AC%AC6%E7%AB%A0-%E7%AC%94%E8%AE%B0%E6%95%B4%E7%90%86/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://www.doraemonzzz.com" target="_blank">Doraemonzzz</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F/">深入理解计算机系统</a></div><div class="post_share"><div class="social-share" data-image="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2021/08/01/2021-8-1-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E7%AC%AC7%E7%AB%A0-%E7%AC%94%E8%AE%B0%E6%95%B4%E7%90%86/"><img class="prev-cover" src= "/img/loading.gif" data-lazy-src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">深入理解计算机系统 第7章 笔记整理</div></div></a></div><div class="next-post pull-right"><a href="/2021/08/01/2021-8-1-%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A8%8B%E5%BA%8F%E7%9A%84%E6%9E%84%E9%80%A0%E5%92%8C%E8%A7%A3%E9%87%8A(SICP)-%E7%AC%AC5%E7%AB%A0-%E4%B9%A0%E9%A2%98%E8%A7%A3%E6%9E%90-Part2/"><img class="next-cover" src= "/img/loading.gif" data-lazy-src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">计算机程序的构造和解释(SICP) 第5章 习题解析 Part2</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span> 相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2021/06/06/2021-6-6-深入理解计算机系统-第5章-习题解析/" title="深入理解计算机系统 第5章 习题解析"><img class="cover" src= "/img/loading.gif" data-lazy-src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-06-06</div><div class="title">深入理解计算机系统 第5章 习题解析</div></div></a></div><div><a href="/2021/02/21/深入理解计算机系统 第1章 笔记整理/" title="深入理解计算机系统 第1章 笔记整理"><img class="cover" src= "/img/loading.gif" data-lazy-src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-02-21</div><div class="title">深入理解计算机系统 第1章 笔记整理</div></div></a></div><div><a href="/2020/09/20/深入理解计算机系统 第2章 习题解析 Part1/" title="深入理解计算机系统 第2章 习题解析 Part1"><img class="cover" src= "/img/loading.gif" data-lazy-src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-09-20</div><div class="title">深入理解计算机系统 第2章 习题解析 Part1</div></div></a></div><div><a href="/2020/09/26/深入理解计算机系统 第2章 习题解析 Part2/" title="深入理解计算机系统 第2章 习题解析 Part2"><img class="cover" src= "/img/loading.gif" data-lazy-src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-09-26</div><div class="title">深入理解计算机系统 第2章 习题解析 Part2</div></div></a></div><div><a href="/2020/10/24/深入理解计算机系统 第2章 习题解析 Part4/" title="深入理解计算机系统 第2章 习题解析 Part4"><img class="cover" src= "/img/loading.gif" data-lazy-src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-10-24</div><div class="title">深入理解计算机系统 第2章 习题解析 Part4</div></div></a></div><div><a href="/2020/10/18/深入理解计算机系统 第2章 习题解析 Part3/" title="深入理解计算机系统 第2章 习题解析 Part3"><img class="cover" src= "/img/loading.gif" data-lazy-src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-10-18</div><div class="title">深入理解计算机系统 第2章 习题解析 Part3</div></div></a></div></div></div><hr/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div><div id="comment-switch"><span class="first-comment">Valine</span><span class="switch-btn"></span><span class="second-comment">Livere</span></div></div><div class="comment-wrap"><div><div class="vcomment" id="vcomment"></div></div><div><div id="lv-container" data-id="city" data-uid="MTAyMC8zNDcxOS8xMTI1Ng=="></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="card-info-avatar is-center"><img class="avatar-img" src= "/img/loading.gif" data-lazy-src="https://github.com/Doraemonzzz/md-photo/blob/master/%E5%A4%B4%E5%83%8F.jpg?raw=true" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/><div class="author-info__name">Doraemonzzz</div><div class="author-info__description">个人博客，主要记录有关机器学习，数学以及计算机科学的笔记</div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">641</div></a></div><div class="card-info-data-item is-center"><a href="/tags/"><div class="headline">标签</div><div class="length-num">66</div></a></div><div class="card-info-data-item is-center"><a href="/categories/"><div class="headline">分类</div><div class="length-num">26</div></a></div></div><a class="button--animated" id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/Doraemonzzz"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/Doraemonzzz" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="/doraemon_zzz@163.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a><a class="social-icon" href="https://space.bilibili.com/291079982" target="_blank" title="Bilibili"><i class="iconfont icon-bilibili"></i></a><a class="social-icon" href="/atom.xml" target="_blank" title=""><i class="fa fa-rss"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn card-announcement-animation"></i><span>公告</span></div><div class="announcement_content">暂无公告</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%AC%AC6%E7%AB%A0%EF%BC%9A%E5%AD%98%E5%82%A8%E5%99%A8%E5%B1%82%E6%AC%A1%E7%BB%93%E6%9E%84"><span class="toc-number">1.</span> <span class="toc-text">第6章：存储器层次结构</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%87%8D%E8%A6%81%E6%A6%82%E5%BF%B5%E6%8F%90%E8%A6%81"><span class="toc-number">1.1.</span> <span class="toc-text">重要概念提要</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6-1-%E5%AD%98%E5%82%A8%E6%8A%80%E6%9C%AF"><span class="toc-number">1.2.</span> <span class="toc-text">6.1 存储技术</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6-2-%E5%B1%80%E9%83%A8%E6%80%A7"><span class="toc-number">1.3.</span> <span class="toc-text">6.2 局部性</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5"><span class="toc-number">1.3.1.</span> <span class="toc-text">基本概念</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%A4%E7%A7%8D%E4%B8%8D%E5%90%8C%E7%9A%84%E5%B1%80%E9%83%A8%E6%80%A7"><span class="toc-number">1.3.2.</span> <span class="toc-text">两种不同的局部性</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B1%80%E9%83%A8%E6%80%A7%E7%9A%84%E4%BE%8B%E5%AD%90"><span class="toc-number">1.3.3.</span> <span class="toc-text">局部性的例子</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E5%B1%80%E9%83%A8%E6%80%A7"><span class="toc-number">1.3.4.</span> <span class="toc-text">数据局部性</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BE%8B1"><span class="toc-number">1.3.4.1.</span> <span class="toc-text">例1</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BE%8B2"><span class="toc-number">1.3.4.2.</span> <span class="toc-text">例2</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8C%87%E4%BB%A4%E5%B1%80%E9%83%A8%E6%80%A7"><span class="toc-number">1.3.5.</span> <span class="toc-text">指令局部性</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B0%8F%E7%BB%93"><span class="toc-number">1.3.6.</span> <span class="toc-text">小结</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6-3-%E5%AD%98%E5%82%A8%E5%99%A8%E5%B1%82%E6%AC%A1%E7%BB%93%E6%9E%84"><span class="toc-number">1.4.</span> <span class="toc-text">6.3 存储器层次结构</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AD%98%E5%82%A8%E5%99%A8%E5%B1%82%E6%AC%A1%E7%BB%93%E6%9E%84%E4%B8%AD%E7%9A%84%E7%BC%93%E5%AD%98"><span class="toc-number">1.4.1.</span> <span class="toc-text">存储器层次结构中的缓存</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BC%93%E5%AD%98%E5%91%BD%E4%B8%AD%E5%92%8C%E4%B8%8D%E5%91%BD%E4%B8%AD"><span class="toc-number">1.4.2.</span> <span class="toc-text">缓存命中和不命中</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6-4-%E9%AB%98%E9%80%9F%E7%BC%93%E5%AD%98%E5%AD%98%E5%82%A8%E5%99%A8"><span class="toc-number">1.5.</span> <span class="toc-text">6.4 高速缓存存储器</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%80%9A%E7%94%A8%E7%9A%84%E9%AB%98%E9%80%9F%E7%BC%93%E5%AD%98%E5%AD%98%E5%82%A8%E5%99%A8%E7%BB%84%E7%BB%87%E7%BB%93%E6%9E%84"><span class="toc-number">1.5.1.</span> <span class="toc-text">通用的高速缓存存储器组织结构</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%AB%98%E9%80%9F%E7%BC%93%E5%AD%98%E7%9A%84%E4%BD%9C%E7%94%A8%E6%96%B9%E5%BC%8F"><span class="toc-number">1.5.2.</span> <span class="toc-text">高速缓存的作用方式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%87%A0%E7%A7%8D%E4%B8%8D%E5%90%8C%E7%9A%84%E9%AB%98%E9%80%9F%E7%BC%93%E5%AD%98"><span class="toc-number">1.5.3.</span> <span class="toc-text">几种不同的高速缓存</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%9B%B4%E6%8E%A5%E6%98%A0%E5%B0%84%E9%AB%98%E9%80%9F%E7%BC%93%E5%AD%98"><span class="toc-number">1.5.3.1.</span> <span class="toc-text">直接映射高速缓存</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E4%BE%8B%E5%AD%90"><span class="toc-number">1.5.3.1.1.</span> <span class="toc-text">例子</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E9%80%89%E6%8B%A9%E4%B8%AD%E9%97%B4%E4%BD%8D%E5%81%9A%E7%B4%A2%E5%BC%95%E7%9A%84%E5%8E%9F%E5%9B%A0"><span class="toc-number">1.5.3.1.2.</span> <span class="toc-text">选择中间位做索引的原因</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#E-%E8%B7%AF%E7%BB%84%E7%9B%B8%E8%BF%9E%E9%AB%98%E9%80%9F%E7%BC%93%E5%AD%98"><span class="toc-number">1.5.3.2.</span> <span class="toc-text">$E$路组相连高速缓存</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%85%A8%E7%9B%B8%E8%BF%9E%E9%AB%98%E9%80%9F%E7%BC%93%E5%AD%98"><span class="toc-number">1.5.3.3.</span> <span class="toc-text">全相连高速缓存</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9C%89%E5%85%B3%E5%86%99%E7%9A%84%E9%97%AE%E9%A2%98"><span class="toc-number">1.5.4.</span> <span class="toc-text">有关写的问题</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%AB%98%E9%80%9F%E7%BC%93%E5%AD%98%E5%8F%82%E6%95%B0%E7%9A%84%E6%80%A7%E8%83%BD%E6%8C%87%E6%A0%87"><span class="toc-number">1.5.5.</span> <span class="toc-text">高速缓存参数的性能指标</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6-5-6-7-%E5%B0%8F%E7%BB%93"><span class="toc-number">1.6.</span> <span class="toc-text">6.5~6.7 小结</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2021/08/01/2021-8-1-MIT-6.S081-Operating-System-Enginerring-Lab2-System-calls/" title="MIT 6.S081 Operating System Enginerring Lab2 System calls"><img src= "/img/loading.gif" data-lazy-src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="MIT 6.S081 Operating System Enginerring Lab2 System calls"/></a><div class="content"><a class="title" href="/2021/08/01/2021-8-1-MIT-6.S081-Operating-System-Enginerring-Lab2-System-calls/" title="MIT 6.S081 Operating System Enginerring Lab2 System calls">MIT 6.S081 Operating System Enginerring Lab2 System calls</a><time datetime="2021-08-01T07:15:00.000Z" title="发表于 2021-08-01 15:15:00">2021-08-01</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/08/01/2021-8-01-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E7%AC%AC7%E7%AB%A0-%E4%B9%A0%E9%A2%98%E8%A7%A3%E6%9E%90/" title="深入理解计算机系统 第7章 习题解析"><img src= "/img/loading.gif" data-lazy-src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="深入理解计算机系统 第7章 习题解析"/></a><div class="content"><a class="title" href="/2021/08/01/2021-8-01-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E7%AC%AC7%E7%AB%A0-%E4%B9%A0%E9%A2%98%E8%A7%A3%E6%9E%90/" title="深入理解计算机系统 第7章 习题解析">深入理解计算机系统 第7章 习题解析</a><time datetime="2021-08-01T04:55:00.000Z" title="发表于 2021-08-01 12:55:00">2021-08-01</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/08/01/2021-8-1-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E7%AC%AC7%E7%AB%A0-%E7%AC%94%E8%AE%B0%E6%95%B4%E7%90%86/" title="深入理解计算机系统 第7章 笔记整理"><img src= "/img/loading.gif" data-lazy-src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="深入理解计算机系统 第7章 笔记整理"/></a><div class="content"><a class="title" href="/2021/08/01/2021-8-1-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E7%AC%AC7%E7%AB%A0-%E7%AC%94%E8%AE%B0%E6%95%B4%E7%90%86/" title="深入理解计算机系统 第7章 笔记整理">深入理解计算机系统 第7章 笔记整理</a><time datetime="2021-08-01T03:35:00.000Z" title="发表于 2021-08-01 11:35:00">2021-08-01</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/08/01/2021-8-1-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E7%AC%AC6%E7%AB%A0-%E7%AC%94%E8%AE%B0%E6%95%B4%E7%90%86/" title="深入理解计算机系统 第6章 笔记整理"><img src= "/img/loading.gif" data-lazy-src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="深入理解计算机系统 第6章 笔记整理"/></a><div class="content"><a class="title" href="/2021/08/01/2021-8-1-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E7%AC%AC6%E7%AB%A0-%E7%AC%94%E8%AE%B0%E6%95%B4%E7%90%86/" title="深入理解计算机系统 第6章 笔记整理">深入理解计算机系统 第6章 笔记整理</a><time datetime="2021-08-01T02:57:00.000Z" title="发表于 2021-08-01 10:57:00">2021-08-01</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/08/01/2021-8-1-%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A8%8B%E5%BA%8F%E7%9A%84%E6%9E%84%E9%80%A0%E5%92%8C%E8%A7%A3%E9%87%8A(SICP)-%E7%AC%AC5%E7%AB%A0-%E4%B9%A0%E9%A2%98%E8%A7%A3%E6%9E%90-Part2/" title="计算机程序的构造和解释(SICP) 第5章 习题解析 Part2"><img src= "/img/loading.gif" data-lazy-src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="计算机程序的构造和解释(SICP) 第5章 习题解析 Part2"/></a><div class="content"><a class="title" href="/2021/08/01/2021-8-1-%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A8%8B%E5%BA%8F%E7%9A%84%E6%9E%84%E9%80%A0%E5%92%8C%E8%A7%A3%E9%87%8A(SICP)-%E7%AC%AC5%E7%AB%A0-%E4%B9%A0%E9%A2%98%E8%A7%A3%E6%9E%90-Part2/" title="计算机程序的构造和解释(SICP) 第5章 习题解析 Part2">计算机程序的构造和解释(SICP) 第5章 习题解析 Part2</a><time datetime="2021-07-31T16:49:00.000Z" title="发表于 2021-08-01 00:49:00">2021-08-01</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2018 - 2021 By Doraemonzzz</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="font-plus" type="button" title="放大字体"><i class="fas fa-plus"></i></button><button id="font-minus" type="button" title="缩小字体"><i class="fas fa-minus"></i></button><button id="translateLink" type="button" title="简繁转换">简</button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div id="local-search"><div class="search-dialog"><div class="search-dialog__title" id="local-search-title">本地搜索</div><div id="local-input-panel"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div></div><hr/><div id="local-search-results"></div><span class="search-close-button"><i class="fas fa-times"></i></span></div><div id="search-mask"></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="/js/tw_cn.js"></script><script src="https://cdn.jsdelivr.net/npm/vanilla-lazyload/dist/lazyload.iife.min.js"></script><script src="/js/search/local-search.js"></script><script>var preloader = {
+  endLoading: () => {
+    document.body.style.overflow = 'auto';
+    document.getElementById('loading-box').classList.add("loaded")
+  },
+  initLoading: () => {
+    document.body.style.overflow = '';
+    document.getElementById('loading-box').classList.remove("loaded")
+
+  }
+}
+window.addEventListener('load',preloader.endLoading())</script><div class="js-pjax"><script>if (!window.MathJax) {
+  window.MathJax = {
+    tex: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]],
+      tags: 'ams'
+    },
+    chtml: {
+      scale: 1.25
+    },
+    options: {
+      renderActions: {
+        findScript: [10, doc => {
+          for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+            const display = !!node.type.match(/; *mode=display/)
+            const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+            const text = document.createTextNode('')
+            node.parentNode.replaceChild(text, node)
+            math.start = {node: text, delim: '', n: 0}
+            math.end = {node: text, delim: '', n: 0}
+            doc.math.push(math)
+          }
+        }, '']
+      }
+    }
+  }
+  
+  const script = document.createElement('script')
+  script.src = 'https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js'
+  script.id = 'MathJax-script'
+  script.async = true
+  document.head.appendChild(script)
+} else {
+  MathJax.startup.document.state(0)
+  MathJax.texReset()
+  MathJax.typeset()
+}</script><script>function loadValine () {
+  function initValine () {
+    const valine = new Valine(Object.assign({
+      el: '#vcomment',
+      appId: 'IpnmxCW9CvYWIXbol5QXsegX-MdYXbMMI',
+      appKey: 'w57DVCdbxcyB1TYYagMIMJIU',
+      placeholder: 'Please leave your footprints',
+      avatar: 'monsterid',
+      meta: 'nick,mail,link'.split(','),
+      pageSize: '10',
+      lang: 'en',
+      recordIP: false,
+      serverURLs: '',
+      emojiCDN: '',
+      emojiMaps: "",
+      enableQQ: false,
+      path: window.location.pathname,
+      requiredFields: ["nick,mail"],
+      visitor: true
+    }, null))
+  }
+
+  if (typeof Valine === 'function') initValine() 
+  else getScript('https://cdn.jsdelivr.net/npm/valine/dist/Valine.min.js').then(initValine)
+}
+
+if ('Valine' === 'Valine' || !false) {
+  if (false) btf.loadComment(document.getElementById('vcomment'),loadValine)
+  else setTimeout(loadValine, 0)
+} else {
+  function loadOtherComment () {
+    loadValine()
+  }
+}</script><script>function loadLivere () {
+  if (typeof LivereTower === 'object') {
+    window.LivereTower.init()
+  }
+  else {
+    (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+    })(document, 'script');
+  }
+}
+
+if ('Valine' === 'Livere' || !false) {
+  if (false) btf.loadComment(document.getElementById('lv-container'), loadLivere)
+  else loadLivere()
+}
+else {
+  function loadOtherComment () {
+    loadLivere()
+  }
+}</script></div><script defer="defer" id="fluttering_ribbon" mobile="false" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/canvas-fluttering-ribbon.min.js"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
