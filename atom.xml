@@ -6,7 +6,7 @@
   <link href="http://www.doraemonzzz.com/atom.xml" rel="self"/>
   
   <link href="http://www.doraemonzzz.com/"/>
-  <updated>2021-08-15T05:04:43.543Z</updated>
+  <updated>2021-08-15T08:35:55.952Z</updated>
   <id>http://www.doraemonzzz.com/</id>
   
   <author>
@@ -15,6 +15,29 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>torch中Parameter和tensor的区别</title>
+    <link href="http://www.doraemonzzz.com/2021/08/15/2021-8-15-torch%E4%B8%ADParameter%E5%92%8Ctensor%E7%9A%84%E5%8C%BA%E5%88%AB/"/>
+    <id>http://www.doraemonzzz.com/2021/08/15/2021-8-15-torch%E4%B8%ADParameter%E5%92%8Ctensor%E7%9A%84%E5%8C%BA%E5%88%AB/</id>
+    <published>2021-08-15T08:28:00.000Z</published>
+    <updated>2021-08-15T08:35:55.952Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;参考资料：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;https://blog.csdn.net/hei653779919/article/details/106648928&quot;&gt;https://blog.csdn.net/hei653779919/article/details/106648928&lt;/a&gt;&lt;br&gt;&lt;a href=&quot;https://discuss.pytorch.org/t/why-model-to-device-wouldnt-put-tensors-on-a-custom-layer-to-the-same-device/17964/4&quot;&gt;https://discuss.pytorch.org/t/why-model-to-device-wouldnt-put-tensors-on-a-custom-layer-to-the-same-device/17964/4&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;最近使用pytorch时候碰到了一个Paramerter和tensor的坑， 这里记录一下。&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="深度学习" scheme="http://www.doraemonzzz.com/categories/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/"/>
+    
+    
+    <category term="pytorch" scheme="http://www.doraemonzzz.com/tags/pytorch/"/>
+    
+  </entry>
   
   <entry>
     <title>深入理解计算机系统 第8章 异常控制流</title>
@@ -204,7 +227,7 @@
     <link href="http://www.doraemonzzz.com/2021/07/30/2021-7-30-%E5%85%B3%E4%BA%8ESelfAttention%E6%97%B6%E9%97%B4%E7%A9%BA%E9%97%B4%E5%A4%8D%E6%9D%82%E5%BA%A6%E7%9A%84%E6%80%9D%E8%80%83/"/>
     <id>http://www.doraemonzzz.com/2021/07/30/2021-7-30-%E5%85%B3%E4%BA%8ESelfAttention%E6%97%B6%E9%97%B4%E7%A9%BA%E9%97%B4%E5%A4%8D%E6%9D%82%E5%BA%A6%E7%9A%84%E6%80%9D%E8%80%83/</id>
     <published>2021-07-30T14:20:00.000Z</published>
-    <updated>2021-08-01T16:10:09.277Z</updated>
+    <updated>2021-08-15T08:43:40.465Z</updated>
     
     
     <summary type="html">&lt;p&gt;参考资料：&lt;/p&gt;
@@ -527,25 +550,6 @@
 &lt;li&gt;&lt;a href=&quot;https://discuss.flarum.org.cn/d/1216&quot;&gt;https://discuss.flarum.org.cn/d/1216&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&quot;https://hub.docker.com/_/mysql&quot;&gt;https://hub.docker.com/_/mysql&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;</summary>
-    
-    
-    
-    <category term="论坛" scheme="http://www.doraemonzzz.com/categories/%E8%AE%BA%E5%9D%9B/"/>
-    
-    
-    <category term="Flarum" scheme="http://www.doraemonzzz.com/tags/Flarum/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Flarum插件安装（一）</title>
-    <link href="http://www.doraemonzzz.com/2021/07/04/2021-7-4-Flarum%E6%8F%92%E4%BB%B6%E5%AE%89%E8%A3%85%EF%BC%88%E4%B8%80%EF%BC%89/"/>
-    <id>http://www.doraemonzzz.com/2021/07/04/2021-7-4-Flarum%E6%8F%92%E4%BB%B6%E5%AE%89%E8%A3%85%EF%BC%88%E4%B8%80%EF%BC%89/</id>
-    <published>2021-07-04T06:49:00.000Z</published>
-    <updated>2021-07-04T08:06:25.406Z</updated>
-    
-    
-    <summary type="html">&lt;p&gt;这部分给出论坛已经安装的插件以及对应功能，方便后续更新，查找问题。&lt;/p&gt;</summary>
     
     
     
