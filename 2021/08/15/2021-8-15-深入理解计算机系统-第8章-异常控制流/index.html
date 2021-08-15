@@ -1,0 +1,1595 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>深入理解计算机系统 第8章 异常控制流 | Doraemonzzz</title><meta name="keywords" content="深入理解计算机系统"><meta name="author" content="Doraemonzzz"><meta name="copyright" content="Doraemonzzz"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="这次回顾深入理解计算机系统第8章 ，这一章介绍了异常控制流。 电子书地址： http:&#x2F;&#x2F;eol.bnuz.edu.cn&#x2F;meol&#x2F;common&#x2F;script&#x2F;preview&#x2F;download_preview.jsp?fileid&#x3D;2169600&amp;resid&#x3D;242120&amp;lid&#x3D;28605 备注：图片和总结内容均来自于电子书。 参考资料： https:&#x2F;&#x2F;baike.baidu.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="深入理解计算机系统 第8章 异常控制流">
+<meta property="og:url" content="http://www.doraemonzzz.com/2021/08/15/2021-8-15-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E7%AC%AC8%E7%AB%A0-%E5%BC%82%E5%B8%B8%E6%8E%A7%E5%88%B6%E6%B5%81/index.html">
+<meta property="og:site_name" content="Doraemonzzz">
+<meta property="og:description" content="这次回顾深入理解计算机系统第8章 ，这一章介绍了异常控制流。 电子书地址： http:&#x2F;&#x2F;eol.bnuz.edu.cn&#x2F;meol&#x2F;common&#x2F;script&#x2F;preview&#x2F;download_preview.jsp?fileid&#x3D;2169600&amp;resid&#x3D;242120&amp;lid&#x3D;28605 备注：图片和总结内容均来自于电子书。 参考资料： https:&#x2F;&#x2F;baike.baidu.">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg">
+<meta property="article:published_time" content="2021-08-15T05:03:00.000Z">
+<meta property="article:modified_time" content="2021-08-15T05:04:43.543Z">
+<meta property="article:author" content="Doraemonzzz">
+<meta property="article:tag" content="深入理解计算机系统">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg"><link rel="shortcut icon" href="https://github.com/Doraemonzzz/md-photo/blob/master/%E5%A4%B4%E5%83%8F.jpg?raw=true"><link rel="canonical" href="http://www.doraemonzzz.com/2021/08/15/2021-8-15-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E7%AC%AC8%E7%AB%A0-%E5%BC%82%E5%B8%B8%E6%8E%A7%E5%88%B6%E6%B5%81/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//www.google-analytics.com" crossorigin=""/><link rel="preconnect" href="//hm.baidu.com"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><script>var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?6f00f37f957f0608abb8c571105456f0";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script><script async="async" src="https://www.googletagmanager.com/gtag/js?id=UA-G-RE4B1LKRZD"></script><script>window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'UA-G-RE4B1LKRZD');
+</script><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"search.xml","languages":{"hits_empty":"找不到您查询的内容：${query}"}},
+  translate: {"defaultEncoding":2,"translateDelay":0,"msgToTraditionalChinese":"繁","msgToSimplifiedChinese":"簡"},
+  noticeOutdate: {"limitDay":500,"position":"top","messagePrev":"距离上次更新已经","messageNext":"天了，文章内容可能已经过时。"},
+  highlight: {"plugin":"prismjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":200},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    jQuery: 'https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js',
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+    },
+    fancybox: {
+      js: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css'
+    }
+  },
+  isPhotoFigcaption: true,
+  islazyload: true,
+  isanchor: true
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '深入理解计算机系统 第8章 异常控制流',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2021-08-15 13:04:43'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const fontSizeVal = saveToLocal.get('global-font-size')
+    if (fontSizeVal !== undefined) {
+      document.documentElement.style.setProperty('--global-font-size', fontSizeVal + 'px')
+    }
+    })(window)</script><link rel="stylesheet" href="/css/bilibili.css" media="defer" onload="this.media='all'"><meta name="google-site-verification" content="c4v-NmuUZRgl3cvtg9GKswryK1YLaPztd_5M-df5VNI" /><meta name="generator" content="Hexo 5.4.0"><link rel="alternate" href="/atom.xml" title="Doraemonzzz" type="application/atom+xml">
+</head><body><div id="loading-box"><div class="loading-left-bg"></div><div class="loading-right-bg"></div><div class="spinner-box"><div class="configure-border-1"><div class="configure-core"></div></div><div class="configure-border-2"><div class="configure-core"></div></div><div class="loading-word">加载中...</div></div></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="author-avatar"><img class="avatar-img" src= "/img/loading.gif" data-lazy-src="https://github.com/Doraemonzzz/md-photo/blob/master/%E5%A4%B4%E5%83%8F.jpg?raw=true" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">文章</div><div class="length-num">643</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">标签</div><div class="length-num">66</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/categories/"><div class="headline">分类</div><div class="length-num">26</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-chart-pie"></i><span> 博客统计</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/charts/"><i class="fa-fw far fa-chart-bar"></i><span> 文章统计</span></a></li><li><a class="site-page child" href="/census/"><i class="fa-fw fas fa-chart-area"></i><span> 访问统计</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/top/"><i class="fa-fw fab fa-hotjar"></i><span> 阅读排行榜</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fa fa-heartbeat"></i><span> 娱乐</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于我</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">Doraemonzzz</a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-chart-pie"></i><span> 博客统计</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/charts/"><i class="fa-fw far fa-chart-bar"></i><span> 文章统计</span></a></li><li><a class="site-page child" href="/census/"><i class="fa-fw fas fa-chart-area"></i><span> 访问统计</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/top/"><i class="fa-fw fab fa-hotjar"></i><span> 阅读排行榜</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fa fa-heartbeat"></i><span> 娱乐</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于我</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">深入理解计算机系统 第8章 异常控制流</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2021-08-15T05:03:00.000Z" title="发表于 2021-08-15 13:03:00">2021-08-15</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2021-08-15T05:04:43.543Z" title="更新于 2021-08-15 13:04:43">2021-08-15</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%8E%9F%E7%90%86/">计算机原理</a></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-tag"></i><a class="article-meta__tags" href="/tags/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F/">深入理解计算机系统</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">9.2k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>30分钟</span></span><span class="post-meta-separator">|</span><span class="leancloud_visitors" id="/2021/08/15/2021-8-15-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E7%AC%AC8%E7%AB%A0-%E5%BC%82%E5%B8%B8%E6%8E%A7%E5%88%B6%E6%B5%81/" data-flag-title="深入理解计算机系统 第8章 异常控制流"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span class="leancloud-visitors-count"></span></span><span class="post-meta-separator">|</span><span class="post-meta-commentcount"><i class="far fa-comments fa-fw post-meta-icon"></i><span class="post-meta-label">评论数:</span><a href="/2021/08/15/2021-8-15-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E7%AC%AC8%E7%AB%A0-%E5%BC%82%E5%B8%B8%E6%8E%A7%E5%88%B6%E6%B5%81/#post-comment" itemprop="discussionUrl"><span class="valine-comment-count" data-xid="/2021/08/15/2021-8-15-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E7%AC%AC8%E7%AB%A0-%E5%BC%82%E5%B8%B8%E6%8E%A7%E5%88%B6%E6%B5%81/" itemprop="commentCount"></span></a></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p>这次回顾深入理解计算机系统第8章 ，这一章介绍了异常控制流。</p>
+<p>电子书地址：</p>
+<p><a target="_blank" rel="noopener" href="http://eol.bnuz.edu.cn/meol/common/script/preview/download_preview.jsp?fileid=2169600&amp;resid=242120&amp;lid=28605">http://eol.bnuz.edu.cn/meol/common/script/preview/download_preview.jsp?fileid=2169600&amp;resid=242120&amp;lid=28605</a></p>
+<p>备注：图片和总结内容均来自于电子书。</p>
+<p>参考资料：</p>
+<p><a target="_blank" rel="noopener" href="https://baike.baidu.com/item/%E5%8F%AF%E9%87%8D%E5%85%A5%E5%87%BD%E6%95%B0/4521100?fr=aladdin">https://baike.baidu.com/item/%E5%8F%AF%E9%87%8D%E5%85%A5%E5%87%BD%E6%95%B0/4521100?fr=aladdin</a></p>
+<span id="more"></span>
+<h1 id="第8章：异常控制流"><a href="#第8章：异常控制流" class="headerlink" title="第8章：异常控制流"></a>第8章：异常控制流</h1><h2 id="重要概念"><a href="#重要概念" class="headerlink" title="重要概念"></a>重要概念</h2><ul>
+<li>控制流：<ul>
+<li>平滑流；</li>
+<li>异常控制流（Exceptional Control Flow, ECF）；</li>
+</ul>
+</li>
+<li>异常：<ul>
+<li>异常号和异常表；</li>
+<li>异常表基址寄存器；</li>
+<li>异常和过程调用的区别；</li>
+<li>类别：<ul>
+<li>异步：<ul>
+<li>中断；</li>
+</ul>
+</li>
+<li>同步（也叫作故障指令）：<ul>
+<li>陷阱；<ul>
+<li>系统调用；</li>
+<li>跳转表；</li>
+</ul>
+</li>
+<li>故障；</li>
+<li>终止；</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>C++, Java中的异常是“软件”异常，需要和硬件异常区分；</li>
+<li>Segmentation fault</li>
+</ul>
+</li>
+<li>程序与进程的区别；</li>
+<li>并发，并行；</li>
+<li>用户模式和内核模式；</li>
+<li>进程状态：<ul>
+<li>运行；</li>
+<li>终止；</li>
+<li>停止；</li>
+</ul>
+</li>
+<li>execve, fork；</li>
+<li>信号和信号处理程序；</li>
+<li>转储内存；</li>
+</ul>
+<h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><h3 id="控制流"><a href="#控制流" class="headerlink" title="控制流"></a>控制流</h3><p>从给处理器加电开始直到断点，假设程序计数器的序列为：</p>
+<script type="math/tex; mode=display">
+a_{0}, a_{1}, \ldots, a_{n-1}</script><p>其中$a_k$是指令$I_k$的地址。$a_k$到$a_{k+1}$的过渡称为<strong>控制转移</strong>，控制转移的序列称为<strong>控制流</strong>。</p>
+<h3 id="控制流的类型"><a href="#控制流的类型" class="headerlink" title="控制流的类型"></a>控制流的类型</h3><ul>
+<li>平滑流<ul>
+<li>$I_k, k_{k+1}$在内存中相邻。</li>
+</ul>
+</li>
+<li>异常控制流（Exceptional Control Flow, ECF）<ul>
+<li>突变的控制流（用来应对系统状态变化，例如硬件定时器定期产生信号，子进程终止后通知父进程等等）。</li>
+</ul>
+</li>
+</ul>
+<h2 id="8-1-异常"><a href="#8-1-异常" class="headerlink" title="8.1 异常"></a>8.1 异常</h2><h3 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h3><p>异常：</p>
+<ul>
+<li>控制流中的突变；</li>
+<li>异常控制流的一种形式；</li>
+<li>一部分由硬件实现，一部分由操作系统实现；</li>
+</ul>
+<p>异常基本思想：</p>
+<ul>
+<li>当处理器状态中发生一个重要的变化时，处理器正在执行某个指令$I_{\mathrm{curr}}$；<ul>
+<li>状态变化称为<strong>事件</strong>；</li>
+<li>事件可能和当前指令的执行密切相关；<ul>
+<li>例如除以0；</li>
+</ul>
+</li>
+<li>也能没有关系；<ul>
+<li>例如系统定时器产生信号；</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>处理器检测到有事件发生后，通过一张叫做<strong>异常表</strong>的跳转表，进行一个间接过程调用（异常），到一个专门设计用来处理这类事件的操作系统子程序（<strong>异常处理程序（exception handler）</strong>）；</li>
+<li>异常处理程序完成处理后，根据引起异常的类型，发生以下三种情形；<ul>
+<li>处理程序将控制返回给当前指令$I_{\mathrm{curr}}$，即当事件发生时正在执行的指令；</li>
+<li>处理程序将控制返回给$I_{\mathrm{next}}$，即如果没有发生异常将会执行的下一条指令；</li>
+<li>处理程序终止被中断的程序；</li>
+</ul>
+</li>
+</ul>
+<p>异常控制流图示：</p>
+<p><img src= "/img/loading.gif" data-lazy-src="https://github.com/Doraemonzzz/md-photo/blob/master/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F/%E7%AC%AC8%E7%AB%A0/2021080901.jpg?raw=true" alt=""></p>
+<h3 id="异常处理"><a href="#异常处理" class="headerlink" title="异常处理"></a>异常处理</h3><ul>
+<li>系统中每种类型的异常都对应一个非负<strong>异常号</strong>；</li>
+<li>在系统启动时，操作系统分配和初始化一张<strong>异常表</strong>，表目$k$包含异常$k$的处理程序地址；<ul>
+<li>异常表样式：<ul>
+<li><img src= "/img/loading.gif" data-lazy-src="https://github.com/Doraemonzzz/md-photo/blob/master/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F/%E7%AC%AC8%E7%AB%A0/2021080902.jpg?raw=true" alt=""></li>
+</ul>
+</li>
+<li>异常表的起始地址放在一个叫做<strong>异常表基址寄存器</strong>的特殊CPU寄存器中；</li>
+<li>异常表寻址过程：<ul>
+<li><img src= "/img/loading.gif" data-lazy-src="https://github.com/Doraemonzzz/md-photo/blob/master/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F/%E7%AC%AC8%E7%AB%A0/2021080903.jpg?raw=true" alt=""></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>异常和过程调用的区别：<ul>
+<li>异常的返回地址是当且指令或者下一条指令；过程调用的返回地址由寄存器确定；</li>
+<li>处理器会将一些额外的处理器状态压到栈里；<ul>
+<li>如果控制从用户程序转移到内核，那么这些项目被压到内核栈而不是用户栈中；</li>
+</ul>
+</li>
+<li>异常处理程序运行在内核模式下，对所有的系统资源都有完全的访问权；</li>
+</ul>
+</li>
+</ul>
+<h3 id="异常的类别"><a href="#异常的类别" class="headerlink" title="异常的类别"></a>异常的类别</h3><div class="table-container">
+<table>
+<thead>
+<tr>
+<th>类别</th>
+<th>原因</th>
+<th>异步/同步</th>
+<th>返回行为</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>中断</td>
+<td>来自I/O设备的信号</td>
+<td>异步</td>
+<td>总是返回到下一条指令</td>
+</tr>
+<tr>
+<td>陷阱</td>
+<td>有意的异常</td>
+<td>同步</td>
+<td>总是返回到下一条指令</td>
+</tr>
+<tr>
+<td>故障</td>
+<td>潜在可恢复的错误</td>
+<td>同步</td>
+<td>可能返回到当前指令</td>
+</tr>
+<tr>
+<td>终止</td>
+<td>不可恢复的错误</td>
+<td>同步</td>
+<td>不会返回</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>说明：</p>
+<ul>
+<li>异步异常是由处理器外部的I/O设备中的事件产生的，同步异常是执行一条指令的直接产物；</li>
+<li>陷阱，故障和终止也叫作<strong>故障指令</strong>；</li>
+<li>有时也划分为异步异常（中断），同步异常（陷阱，故障和终止）；</li>
+<li>某些手册会拥“异常”仅表示同步事件引起的控制流改变；</li>
+</ul>
+<h4 id="中断"><a href="#中断" class="headerlink" title="中断"></a>中断</h4><ul>
+<li>异步发生，是由来自处理器外部的I/O设备的信号的结果；<ul>
+<li>由于不是由任何一条指令造成的，所以为异步；</li>
+</ul>
+</li>
+<li>也称为硬件中断；</li>
+<li>对应的异常处理程序通常称为<strong>中断处理程序</strong>；</li>
+</ul>
+<p>中断处理的流程：</p>
+<p><img src= "/img/loading.gif" data-lazy-src="https://github.com/Doraemonzzz/md-photo/blob/master/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F/%E7%AC%AC8%E7%AB%A0/2021080904.jpg?raw=true" alt=""></p>
+<h4 id="陷阱和系统调用"><a href="#陷阱和系统调用" class="headerlink" title="陷阱和系统调用"></a>陷阱和系统调用</h4><ul>
+<li>陷阱是有意的异常，是执行一条指令的结果；<ul>
+<li>最重要的用途是在用户程序和内核程序之间提供一个像过程一样的接口，叫做<strong>系统调用</strong>；</li>
+</ul>
+</li>
+<li>为了让用户使用内核服务，处理器提供了指令“syscall n”，执行syscall会导致一个到异常处理程序的陷阱；</li>
+</ul>
+<p>陷阱处理的流程：</p>
+<p><img src= "/img/loading.gif" data-lazy-src="https://github.com/Doraemonzzz/md-photo/blob/master/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F/%E7%AC%AC8%E7%AB%A0/2021080905.jpg?raw=true" alt=""></p>
+<p>备注：</p>
+<ul>
+<li>普通函数运行在用户模式中；</li>
+<li>系统调用运行在内核模式中；</li>
+</ul>
+<h4 id="故障"><a href="#故障" class="headerlink" title="故障"></a>故障</h4><ul>
+<li>故障由错误引起，能够被故障处理程序修正；</li>
+<li>如果处理程序可以修正错误，那么久返回到引起故障的指令并重新执行；</li>
+<li>否则返回到内核中的abort例程，abort会终止引起故障的应用程序；</li>
+</ul>
+<p>故障处理的流程：</p>
+<p><img src= "/img/loading.gif" data-lazy-src="https://github.com/Doraemonzzz/md-photo/blob/master/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F/%E7%AC%AC8%E7%AB%A0/2021080906.jpg?raw=true" alt=""></p>
+<h5 id="例子：缺页异常"><a href="#例子：缺页异常" class="headerlink" title="例子：缺页异常"></a>例子：缺页异常</h5><ul>
+<li>当指令引用一个虚拟地址，而与该地址相对应的物理页面不在内存中，因此必须从磁盘中取出时，就会发生故障；</li>
+<li>缺页处理程序从磁盘加载适当的页面，然后将控制返回给引起故障的指令；</li>
+<li>当指令再次执行时，相应的物理页面已经驻留在内存中了，指令就可以没有故障地运行完成了；</li>
+</ul>
+<h4 id="终止"><a href="#终止" class="headerlink" title="终止"></a>终止</h4><ul>
+<li>终止是不可恢复的致命错误造成的结果；<ul>
+<li>通常是硬件错误；</li>
+</ul>
+</li>
+<li>终止处理程序<strong>从不将</strong>控制返回给应用程序；</li>
+<li>处理程序将控制返回给一个abort例程，该例程会终止该应用程序；</li>
+</ul>
+<p>终止处理的流程：</p>
+<p><img src= "/img/loading.gif" data-lazy-src="https://github.com/Doraemonzzz/md-photo/blob/master/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F/%E7%AC%AC8%E7%AB%A0/2021080907.jpg?raw=true" alt=""></p>
+<h3 id="Linux-x86-64系统中的异常"><a href="#Linux-x86-64系统中的异常" class="headerlink" title="Linux/x86-64系统中的异常"></a>Linux/x86-64系统中的异常</h3><h4 id="故障和终止"><a href="#故障和终止" class="headerlink" title="故障和终止"></a>故障和终止</h4><p>例子：</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th style="text-align:left">异常号</th>
+<th style="text-align:left">描述</th>
+<th style="text-align:left">异常类别</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">0</td>
+<td style="text-align:left">除法错误</td>
+<td style="text-align:left">故障</td>
+</tr>
+<tr>
+<td style="text-align:left">13</td>
+<td style="text-align:left">一般保护故障</td>
+<td style="text-align:left">故障</td>
+</tr>
+<tr>
+<td style="text-align:left">14</td>
+<td style="text-align:left">缺页</td>
+<td style="text-align:left">故障</td>
+</tr>
+<tr>
+<td style="text-align:left">18</td>
+<td style="text-align:left">机器检查</td>
+<td style="text-align:left">终止</td>
+</tr>
+<tr>
+<td style="text-align:left">32-255</td>
+<td style="text-align:left">操作系统定义的异常</td>
+<td style="text-align:left">中断或陷阱</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>说明：</p>
+<ul>
+<li>一般保护故障<ul>
+<li>通常产生原因是程序引用了一个未定义的虚拟内存区域，或者程序试图写一个只读的文本段；</li>
+<li>Linux不会尝试恢复这类故障；</li>
+<li>通常会把这种一般保护故障报告为“段故障”（Segmentation fault）；</li>
+</ul>
+</li>
+<li>机器检查<ul>
+<li>在导致故障的指令执行中检测到致命的硬件错误时发生的；</li>
+<li>机器检查处理程序从不返回控制给应用程序；</li>
+</ul>
+</li>
+</ul>
+<h4 id="系统调用"><a href="#系统调用" class="headerlink" title="系统调用"></a>系统调用</h4><ul>
+<li>Linux提供几百种系统调用，每个系统调用都有一个唯一的整数号，对应于一个到内核中<strong>跳转表</strong>的偏移量，注意跳转表和异常表不同；</li>
+<li>一般不使用syscall n的形式，因为标准C库提供了一组方便的包装函数；</li>
+<li>系统调用的参数是通过寄存器而不是栈传递的；<ul>
+<li>%rax包含系统调用号，寄存器%rdi、%rsi、ordx、%r10、%r8和%r9包含最多6个参数（分别表示第一，二……个参数）；</li>
+<li>从系统调用返回时，寄存器%rcx和%r11都会被破坏，%rax包含返回值。-4095到-1之间的负数返回值表明发生了错误，对应于负的errno。</li>
+</ul>
+</li>
+</ul>
+<p>系统调用示例：</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th style="text-align:center">编号</th>
+<th style="text-align:center">名字</th>
+<th style="text-align:left">描述</th>
+<th style="text-align:center">编号</th>
+<th style="text-align:center">名字</th>
+<th style="text-align:left">描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">0</td>
+<td style="text-align:center">read</td>
+<td style="text-align:left">读文件</td>
+<td style="text-align:center">33</td>
+<td style="text-align:center">pause</td>
+<td style="text-align:left">挂起进程直到信号到达</td>
+</tr>
+<tr>
+<td style="text-align:center">1</td>
+<td style="text-align:center">write</td>
+<td style="text-align:left">写文件</td>
+<td style="text-align:center">37</td>
+<td style="text-align:center">alarm</td>
+<td style="text-align:left">调度告警信号的传送</td>
+</tr>
+<tr>
+<td style="text-align:center">2</td>
+<td style="text-align:center">open</td>
+<td style="text-align:left">打开文件</td>
+<td style="text-align:center">39</td>
+<td style="text-align:center">getpid</td>
+<td style="text-align:left">获得进程ID</td>
+</tr>
+<tr>
+<td style="text-align:center">3</td>
+<td style="text-align:center">close</td>
+<td style="text-align:left">关闭文件</td>
+<td style="text-align:center">57</td>
+<td style="text-align:center">fork</td>
+<td style="text-align:left">创建进程</td>
+</tr>
+<tr>
+<td style="text-align:center">4</td>
+<td style="text-align:center">stat</td>
+<td style="text-align:left">获得文件信息</td>
+<td style="text-align:center">59</td>
+<td style="text-align:center">execve</td>
+<td style="text-align:left">执行一个程序</td>
+</tr>
+<tr>
+<td style="text-align:center">9</td>
+<td style="text-align:center">mmap</td>
+<td style="text-align:left">将内存页映射到文件</td>
+<td style="text-align:center">60</td>
+<td style="text-align:center">_exit</td>
+<td style="text-align:left">终止进程</td>
+</tr>
+<tr>
+<td style="text-align:center">12</td>
+<td style="text-align:center">brk</td>
+<td style="text-align:left">重置堆顶</td>
+<td style="text-align:center">61</td>
+<td style="text-align:center">wait4</td>
+<td style="text-align:left">等待一个进程终止</td>
+</tr>
+<tr>
+<td style="text-align:center">32</td>
+<td style="text-align:center">dup2</td>
+<td style="text-align:left">复制文件描述符</td>
+<td style="text-align:center">62</td>
+<td style="text-align:center">kill</td>
+<td style="text-align:left">发送信号到一个进程</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h2 id="8-2-进程"><a href="#8-2-进程" class="headerlink" title="8.2 进程"></a>8.2 进程</h2><ul>
+<li>异常是允许操作系统内核提供<strong>进程</strong>（process）概念的基本构造块；</li>
+<li>进程的定义为<strong>一个执行中程序的示例</strong>；</li>
+<li>每个程序都运行在某个进程的<strong>上下文</strong>中；<ul>
+<li>上下文是由程序正确运行所需状态组成；</li>
+<li>状态包括代码，数据，栈，寄存器等等；</li>
+</ul>
+</li>
+<li>进程给提供给应用程序的关键抽象：<ul>
+<li>一个独立的逻辑控制流，它提供一个假象，好像我们的程序独占地使用处理器；</li>
+<li>一个私有的地址空间，它提供一个假象，好像我们的程序独占地使用内存系统；</li>
+</ul>
+</li>
+</ul>
+<h3 id="逻辑控制流"><a href="#逻辑控制流" class="headerlink" title="逻辑控制流"></a>逻辑控制流</h3><ul>
+<li>程序计数器（PC值）的序列叫做逻辑控制流，简称<strong>逻辑流</strong>；</li>
+<li>进程是轮流使用处理器的，每个进程执行它的流的一部分，然后被<strong>抢占</strong>;</li>
+</ul>
+<p>逻辑流示例：</p>
+<p><img src= "/img/loading.gif" data-lazy-src="https://github.com/Doraemonzzz/md-photo/blob/master/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F/%E7%AC%AC8%E7%AB%A0/2021081001.jpg?raw=true" alt=""></p>
+<h3 id="并发流"><a href="#并发流" class="headerlink" title="并发流"></a>并发流</h3><ul>
+<li>如果一个逻辑流在执行时间上与另一个流重叠，称为<strong>并发流</strong>；<ul>
+<li>流$X$和$Y$相互并发，当且仅当$X$在$Y$开始之后和$Y$结束之前开始，或者$Y$在$X$开始之后和$X$结束之前开始；</li>
+<li>在示例中，<ul>
+<li>并发执行：$A,B$；$A,C$；</li>
+<li>未并发：$B,C$；</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>多个流并发地执行的一般现象称为<strong>并发</strong>；</li>
+<li>一个进程和其他进程轮流运行的概念称为<strong>多任务</strong>；<ul>
+<li>一个进程执行它的控制流的一部分的每一时间段叫做<strong>时间片</strong>；</li>
+<li>多任务也叫作<strong>时间分片</strong>；</li>
+</ul>
+</li>
+<li>并发流和处理器核，计算机数无关；<ul>
+<li>只要两个流在时间上重叠，那么就是并发的；</li>
+</ul>
+</li>
+<li>如果两个流并发地运行在不同的处理器或者计算机上，那么称为<strong>并行流</strong>，它们<strong>并行地运行</strong>，<strong>并行地执行</strong>；</li>
+</ul>
+<h3 id="私有地址空间"><a href="#私有地址空间" class="headerlink" title="私有地址空间"></a>私有地址空间</h3><ul>
+<li><p>进程也为每个程序提供一种假象，好像它独占地使用系统地址空间；</p>
+</li>
+<li><p>一台$n$位地址的机器上，地址空间是$2^n$个可能地址的集合，$0,1,\ldots, 2^n -1$；</p>
+</li>
+<li><p>进程为每个程序提供它自己的<strong>私有地址空间</strong>；</p>
+<ul>
+<li>某个进程关联的内存字节不能被其他进程读或者写；</li>
+</ul>
+</li>
+<li><p>进程私有地址空间的结构：</p>
+<ul>
+<li><img src= "/img/loading.gif" data-lazy-src="https://github.com/Doraemonzzz/md-photo/blob/master/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F/%E7%AC%AC8%E7%AB%A0/2021081002.jpg?raw=true" alt=""></li>
+</ul>
+</li>
+</ul>
+<h3 id="用户模式和内核模式"><a href="#用户模式和内核模式" class="headerlink" title="用户模式和内核模式"></a>用户模式和内核模式</h3><ul>
+<li>处理器是用某个控制寄存器中的一个模式位（mode bit）来描述了进程当前享有的特权；<ul>
+<li>当设置了模式位时，进程就运行在<strong>内核模式</strong>中（有时叫做<strong>超级用户模式</strong>）；<ul>
+<li>该模式下的进程可以执行任何指令，访问系统中的任何内存位置；</li>
+</ul>
+</li>
+<li>当没有设置了模式位时，进程就运行在<strong>用户模式</strong>；<ul>
+<li>该模式下的进程不允许指令特权指令，例如停止处理器，发起I/O等等；</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>运行应用程序的进程初始时是在用户模式中；<ul>
+<li>通过异常，控制转移到异常处理程序，处理器将模式从用户模式变为内核模式；</li>
+<li>当返回到应用程序代码时，处理器就把模式从内核模式改回到用户模式；</li>
+</ul>
+</li>
+<li>Linux中/proc文件系统运行用户模式进程访问内核数据结构；<ul>
+<li>例如/proc/cpuinfo</li>
+</ul>
+</li>
+</ul>
+<h3 id="上下文切换"><a href="#上下文切换" class="headerlink" title="上下文切换"></a>上下文切换</h3><ul>
+<li>操作系统内核使用一种称为<strong>上下文切换</strong>的较高形式的异常控制流来实现多任务；<ul>
+<li>该机制建立在8.1中的较低层异常机制之上；</li>
+</ul>
+</li>
+<li>内核为每个进程维持一个<strong>上下文</strong>；<ul>
+<li>上下文是由程序正确运行所需状态组成；</li>
+<li>状态包括代码，数据，栈，寄存器等等；</li>
+</ul>
+</li>
+<li>在进程执行的某些时刻，内核可以决定抢占当前进程，并重新开始一个先前被抢占了的进程。这种决策就叫做<strong>调度</strong>（scheduling），是由内核中称为<strong>调度器</strong>（scheduler）的代码处理的；</li>
+<li>内核使用上下文切换的机制来将控制转移到新的进程；</li>
+<li>上下文切换：<ul>
+<li>保存当前进程的上下文；</li>
+<li>恢复某个先前被抢占的进程被保存的上下文；</li>
+<li>将控制传递给这个新恢复的进程；</li>
+</ul>
+</li>
+<li>系统调用，中断都有可能引发上下文切换；</li>
+<li>上下文切换示例：<ul>
+<li><img src= "/img/loading.gif" data-lazy-src="https://github.com/Doraemonzzz/md-photo/blob/master/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F/%E7%AC%AC8%E7%AB%A0/202108103.jpg?raw=true" alt=""></li>
+</ul>
+</li>
+</ul>
+<h2 id="8-3-系统错误处理"><a href="#8-3-系统错误处理" class="headerlink" title="8.3 系统错误处理"></a>8.3 系统错误处理</h2><p>当Unix系统级函数遇到错误时，通常会返回-1，并设置全局整数变量errno来表示什么出错了，一个程序示例如下：</p>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token punctuation">(</span>pid <span class="token operator">=</span> <span class="token function">fork</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token operator">&lt;</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token function">fprintf</span><span class="token punctuation">(</span><span class="token constant">stderr</span><span class="token punctuation">,</span> <span class="token string">"fork error: %s\n"</span><span class="token punctuation">,</span> <span class="token function">strerror</span><span class="token punctuation">(</span>errno<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">exit</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+<p>为了方便使用，课本使用了<strong>错误处理包装函数</strong>，具体可见csapp.h。</p>
+<h2 id="8-4-进程控制"><a href="#8-4-进程控制" class="headerlink" title="8.4 进程控制"></a>8.4 进程控制</h2><h3 id="获取进程ID"><a href="#获取进程ID" class="headerlink" title="获取进程ID"></a>获取进程ID</h3><p>获取进程ID的函数：</p>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;sys/types.h></span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;unistd.h></span></span>
+
+<span class="token class-name">pid_t</span> <span class="token function">getpid</span><span class="token punctuation">(</span><span class="token keyword">void</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token class-name">pid_t</span> <span class="token function">getppid</span><span class="token punctuation">(</span><span class="token keyword">void</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+返回<span class="token operator">:</span> 调用者或其父进程的PID，<span class="token class-name">pid_t</span>在Linux中为<span class="token keyword">int</span>。<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h3 id="创建和终止进程"><a href="#创建和终止进程" class="headerlink" title="创建和终止进程"></a>创建和终止进程</h3><ul>
+<li>进程总是处于下面三种状态之一<ul>
+<li>运行<ul>
+<li>在CPU上执行；</li>
+<li>或者在等待被执行且最终被内核调度；</li>
+</ul>
+</li>
+<li>停止<ul>
+<li>进程的执行被<strong>挂起（suspended）</strong>，且不会被调度；</li>
+<li>当收到SIGSTOP，SIGTSTP，SIGTTIN或者SIGTTOU信号时进程就会停止；保持停止直到收到SIGCONT信号，此时进程再次开始<strong>运行</strong>；</li>
+</ul>
+</li>
+<li>终止<ul>
+<li>进程永远地停止；</li>
+<li>因为三种原因终止；<ul>
+<li>收到一个默认行为是终止进程的信号；</li>
+<li>从主程序返回；</li>
+<li>调用exit函数；</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>exit函数：</p>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;stdlib.h></span></span>
+
+<span class="token keyword">void</span> <span class="token function">exit</span><span class="token punctuation">(</span><span class="token keyword">int</span> status<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+该函数不返回。<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>fork函数：</p>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;sys/types.h></span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;unistd.h></span></span>
+
+<span class="token class-name">pid_t</span> <span class="token function">fork</span><span class="token punctuation">(</span><span class="token keyword">void</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+返回<span class="token operator">:</span> 子进程返回<span class="token number">0</span>，父进程返回子进程的PID，如果出错，则为一<span class="token number">1</span>。<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h4 id="fork函数说明"><a href="#fork函数说明" class="headerlink" title="fork函数说明"></a>fork函数说明</h4><ul>
+<li><p>父进程使用fork函数创建子进程；</p>
+</li>
+<li><p>创建的子进程几乎但不完全与父进程相同；</p>
+<ul>
+<li>子进程的虚拟地址空间和父进程的虚拟地址空间相同的（<strong>但是相同</strong>）一份副本；<ul>
+<li>包括代码，数据段，堆，共享库和用户栈；</li>
+<li>包括文件描述符相同的副本；</li>
+</ul>
+</li>
+<li>最大的区别在于有不同的PID；<ul>
+<li>子进程返回0；</li>
+<li>父进程返回子进程的pid；<ul>
+<li>子进程的pid总是为非零；</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>fork函数只被调用一次，但是返回两次；</p>
+<ul>
+<li>两次返回分别在父进程和子进程中；</li>
+</ul>
+</li>
+<li><p>子进程和父进程是并发执行的，不能保证执行的顺序；</p>
+</li>
+<li><p>进程图可以帮助学习fork函数，例如：</p>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">&#123;</span>
+	<span class="token function">Fork</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">Fork</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"hello\n"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">exit</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>该函数对应进程图：</p>
+<p><img src= "/img/loading.gif" data-lazy-src="https://github.com/Doraemonzzz/md-photo/blob/master/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F/%E7%AC%AC8%E7%AB%A0/2021081101.jpg?raw=true" alt=""></p>
+</li>
+</ul>
+<h4 id="例子"><a href="#例子" class="headerlink" title="例子"></a>例子</h4><pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;sys/types.h></span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;unistd.h></span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">"csapp.h"</span></span>
+
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+    <span class="token class-name">pid_t</span> pid<span class="token punctuation">;</span>
+    <span class="token class-name">pid_t</span> cur_pid<span class="token punctuation">;</span>
+    cur_pid <span class="token operator">=</span> <span class="token function">getpid</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    pid <span class="token operator">=</span> <span class="token function">Fork</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>pid <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+        <span class="token comment">// child</span>
+        <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"This is child!\n"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"pid of child: x = %d\n"</span><span class="token punctuation">,</span> <span class="token function">getpid</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"pid of parent: x = %d\n"</span><span class="token punctuation">,</span> <span class="token function">getppid</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token function">exit</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+
+    <span class="token comment">// parent</span>
+    <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"This is parent!\n"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"pid of child: x = %d\n"</span><span class="token punctuation">,</span> pid<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"pid of parent: x = %d\n"</span><span class="token punctuation">,</span> cur_pid<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">exit</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>编译：</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">gcc -o pid pid.c -lpthread<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>结果：</p>
+<pre class="line-numbers language-none"><code class="language-none">This is parent!
+pid of child: x &#x3D; 634
+pid of parent: x &#x3D; 633
+This is child!
+pid of child: x &#x3D; 634
+pid of parent: x &#x3D; 633<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h3 id="回收子进程"><a href="#回收子进程" class="headerlink" title="回收子进程"></a>回收子进程</h3><ul>
+<li>当一个进程由于某种原因终止时，内核并不是立即把它从系统中清除；</li>
+<li>相反，进程被保持在一种已终止的状态中，直到被它的父进程<strong>回收（reaped）</strong>；</li>
+<li>当父进程回收已终止的子进程时，内核将子进程的退出状态传递给父进程，然后抛弃已终止的进程，从此时开始，该进程就不存在了。</li>
+<li>一个终止了但还未被回收的进程称为<strong>僵死进程（zombpie）</strong>；</li>
+<li>如果父进程先于子进程终止，那么内核会安排init进程成为它的孤儿进程的养父；<ul>
+<li>init进程的PID为1，是在系统启动时由内核创建的，它不会终止，是所有进程的祖先；</li>
+</ul>
+</li>
+<li>长期运行的程序应该回收僵死进程，因为它们消耗内存资源；</li>
+</ul>
+<h4 id="相关函数"><a href="#相关函数" class="headerlink" title="相关函数"></a>相关函数</h4><h5 id="waitpid"><a href="#waitpid" class="headerlink" title="waitpid"></a>waitpid</h5><p>waitpid函数等待它的子进程终止或者停止：</p>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;sys/types.h></span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;sys/wait.h></span></span>
+
+<span class="token class-name">pid_t</span> <span class="token function">waitpid</span><span class="token punctuation">(</span><span class="token class-name">pid_t</span> pid<span class="token punctuation">,</span> <span class="token keyword">int</span> <span class="token operator">*</span>statusp<span class="token punctuation">,</span> <span class="token keyword">int</span> options<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+返回：如果成功，则为子进程的PID，如果WNOHANG，则为<span class="token number">0</span>，如果其他错误，则为<span class="token operator">-</span><span class="token number">1</span>。<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>基本说明：</p>
+<ul>
+<li>默认情况下（当options=0时），waitpid挂起调用进程的执行，直到它的<strong>等待集合（wait set）</strong>中的一个子进程终止。</li>
+<li>如果等待集合中的一个进程在刚调用的时刻就已经终止了，那么waitpid就立即返回。</li>
+<li>在这两种情况中，waitpid返回导致waitpid返回的已终止子进程的PID。</li>
+<li>此时，已终止的子进程已经被回收，内核会从系统中删除掉它的所有痕迹。</li>
+</ul>
+<p>补充说明：</p>
+<ul>
+<li>判断等待集合的成员<ul>
+<li>由pid确定：<ul>
+<li>如果pid &gt; 0，那么等待集合就是一个单独的子进程，进程ID等于pid；</li>
+<li>如果pid = -1，那么等待集合就是由父进程所有的子进程组成；</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>修改默认行为<ul>
+<li>由参数options确定；</li>
+<li>可选项为可以通过将options设置为常量WNOHANG、 WUNTRACED和WCONTINUED的各种组合来修改默认行为；<ul>
+<li>具体见8.4.3；</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>检查已回收子进程的退出状态<ul>
+<li>如果statusp参数是非空的，那么waitpid就会在status中放上关于导致返回的子进程的状态信息，status是 statusp指向的值；</li>
+<li>wait.h头文件定义了解释status参数的几个宏；<ul>
+<li>WIFEXITED(status)</li>
+<li>WEXITSTATUS(status)</li>
+<li>WIFSIGNALED(status)</li>
+<li>WTERMSIG(status)</li>
+<li>WIFSTOPPED(status)</li>
+<li>WSTOPSIG(status)</li>
+<li>WIFCONTINUED(status)</li>
+<li>具体见8.4.3，517；</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>如果调用进程没有子进程，那么waitpid返回-1，并且设置errno为ECHILD。</li>
+<li>如果waitpid函数被一个信号中断，那么它返回-1，并设置errno为EINTR。</li>
+</ul>
+<h5 id="wait"><a href="#wait" class="headerlink" title="wait"></a>wait</h5><p>wait函数是waitpid函数的简单版本：</p>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;sys/types.h></span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;sys/wait.h></span></span>
+
+<span class="token class-name">pid_t</span> <span class="token function">wait</span><span class="token punctuation">(</span><span class="token keyword">int</span> <span class="token operator">*</span>statusp<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+返回<span class="token operator">:</span> 如果成功，则为子进程的PID，如果出错，则为<span class="token operator">-</span><span class="token number">1</span>。<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>说明：</p>
+<ul>
+<li>wait(&amp;status)等价于调用wait(-1, &amp;status, 0)；</li>
+</ul>
+<h4 id="例子-1"><a href="#例子-1" class="headerlink" title="例子"></a>例子</h4><p>见8.4.3，520页。</p>
+<h3 id="让进程休眠"><a href="#让进程休眠" class="headerlink" title="让进程休眠"></a>让进程休眠</h3><p>sleep函数将一个进程挂起一段指定的时间：</p>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;unistd.h></span></span>
+
+<span class="token keyword">unsigned</span> <span class="token keyword">int</span> <span class="token function">sleep</span><span class="token punctuation">(</span><span class="token keyword">unsigned</span> <span class="token keyword">int</span> secs<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+返回<span class="token operator">:</span> 还要休眠的秒数。<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>说明：</p>
+<ul>
+<li>如果请求的时间量已经到了，sleep返回0，否则返回还剩下的要休眠的秒数；<ul>
+<li>例如sleep被一个信号中断而过早地返回；</li>
+</ul>
+</li>
+</ul>
+<p>pause函数：</p>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;unistd.h></span></span>
+
+<span class="token keyword">int</span> <span class="token function">pause</span><span class="token punctuation">(</span><span class="token keyword">void</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+总是返回<span class="token operator">-</span><span class="token number">1</span>。<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>说明：</p>
+<ul>
+<li>该函数调用函数休眠，直到该进程收到一个信号；</li>
+</ul>
+<h3 id="加载并运行程序"><a href="#加载并运行程序" class="headerlink" title="加载并运行程序"></a>加载并运行程序</h3><p>execve函数：</p>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;unistd.h></span></span>
+
+<span class="token keyword">int</span> <span class="token function">execve</span><span class="token punctuation">(</span><span class="token keyword">const</span> <span class="token keyword">char</span> <span class="token operator">*</span>filename<span class="token punctuation">,</span> <span class="token keyword">const</span> <span class="token keyword">char</span> <span class="token operator">*</span>argv<span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token keyword">const</span> <span class="token keyword">char</span> <span class="token operator">*</span>envp<span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+如果成功，则不返回，如果错误，则返回<span class="token operator">-</span><span class="token number">1</span>。<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>说明：</p>
+<ul>
+<li><p>execve函数在当前进程的上下文中加载并运行一个新程序；</p>
+</li>
+<li><p>execve函数加载并运行可执行目标文件filename，且带参数列表argv和环境变量列表envp；</p>
+</li>
+<li><p>只有当出现错误时，例如找不到filename，execve才会返回到调用程序；</p>
+</li>
+<li><p>所以，与fork一次调用返回两次不同，execve<strong>调用一次并从不返回</strong>；</p>
+</li>
+<li><p>参数列表和环境变量组织结构：</p>
+<p><img src= "/img/loading.gif" data-lazy-src="https://github.com/Doraemonzzz/md-photo/blob/master/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F/%E7%AC%AC8%E7%AB%A0/2021081201.jpg?raw=true" alt=""></p>
+</li>
+<li><p>在 execve加载了filename之后，它调用7.9节中描述的启动代码。启动代码设置栈，并将控制传递给新程序的主函数，该主函数有如下形式的原型：</p>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token keyword">int</span> argc<span class="token punctuation">,</span> <span class="token keyword">char</span> <span class="token operator">*</span><span class="token operator">*</span>argv<span class="token punctuation">,</span> <span class="token keyword">char</span> <span class="token operator">*</span><span class="token operator">*</span>envp<span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>或者</p>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token keyword">int</span> argc<span class="token punctuation">,</span> <span class="token keyword">char</span> <span class="token operator">*</span>argv<span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token keyword">char</span> <span class="token operator">*</span>envp<span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<ul>
+<li>参数说明：<ul>
+<li>argc给出argv[]数组中非空指针的数量；</li>
+<li>argv指向argv[]数组中的第一个条目；</li>
+<li>envp指向envp[]数组中的第一个条目；</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>getenv函数：</p>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;stdlib.h></span></span>
+
+<span class="token keyword">char</span> <span class="token operator">*</span><span class="token function">getenv</span><span class="token punctuation">(</span><span class="token keyword">const</span> <span class="token keyword">char</span> <span class="token operator">*</span>name<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+返回<span class="token operator">:</span> 若存在则为指向name的指针，若无匹配的，则为<span class="token constant">NULL</span>。<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>说明：</p>
+<ul>
+<li>getenv函数在环境数组中搜索字符串“name=value”。如果找到了, 它就返回一个指向value的指针，否则它就返回 NULL；</li>
+</ul>
+<p>setenv，unsetenv函数：</p>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;stdlib.h></span></span>
+<span class="token keyword">int</span> <span class="token function">setenv</span><span class="token punctuation">(</span><span class="token keyword">const</span> <span class="token keyword">char</span> <span class="token operator">*</span>name<span class="token punctuation">,</span> <span class="token keyword">const</span> <span class="token keyword">char</span> <span class="token operator">*</span>newvalue<span class="token punctuation">,</span> <span class="token keyword">int</span> overwrite<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+返回<span class="token operator">:</span> 若成功则为<span class="token number">0</span><span class="token punctuation">,</span> 若错误则为一<span class="token number">1</span>。
+
+<span class="token keyword">void</span> <span class="token function">unsetenv</span><span class="token punctuation">(</span><span class="token keyword">const</span> <span class="token keyword">char</span> <span class="token operator">*</span>name<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+返回<span class="token operator">:</span>无。<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>说明：</p>
+<ul>
+<li>如果环境数组包含一个形如“name=oldvalue”的字符串，那么unsetenv会删除它，而setenv会用newvalue代替 oldvalue，但是只有在overwirte非零时才会这样。</li>
+<li>如果name不存在，那么setenv就把 “name=newvalue” 添加到数组中。</li>
+</ul>
+<p>bash中等价命令：</p>
+<ul>
+<li>export, unset</li>
+</ul>
+<h2 id="8-5-信号"><a href="#8-5-信号" class="headerlink" title="8.5 信号"></a>8.5 信号</h2><h3 id="简介-1"><a href="#简介-1" class="headerlink" title="简介"></a>简介</h3><ul>
+<li>硬件和软件合作提供基本的低层异常机制；</li>
+<li>操作系统利用异常来支持进程上下文切换；</li>
+<li>这部分将介绍被称为<strong>Linux信号</strong>的软件形式异常；<ul>
+<li>信号允许进程和内核中断其他进程；</li>
+<li>一条信号是一条小消息，通知进程系统中发生了某种类型的事件；</li>
+<li>信号的意义在于提供一种机制，通知用户进程发生了某些低级的硬件异常，这些异常在正常情况下对用户进程不可见；</li>
+</ul>
+</li>
+</ul>
+<h4 id="常见Linux信号"><a href="#常见Linux信号" class="headerlink" title="常见Linux信号"></a>常见Linux信号</h4><div class="table-container">
+<table>
+<thead>
+<tr>
+<th style="text-align:center">序号</th>
+<th style="text-align:left">名称</th>
+<th style="text-align:left">默认行为</th>
+<th style="text-align:left">相应事件</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">1</td>
+<td style="text-align:left">SIGHUP</td>
+<td style="text-align:left">终止</td>
+<td style="text-align:left">终端线挂断</td>
+</tr>
+<tr>
+<td style="text-align:center">2</td>
+<td style="text-align:left">SIGINT</td>
+<td style="text-align:left">终止</td>
+<td style="text-align:left">来自键盘的中断</td>
+</tr>
+<tr>
+<td style="text-align:center">3</td>
+<td style="text-align:left">SIGQUIT</td>
+<td style="text-align:left">终止</td>
+<td style="text-align:left">来自键盘的退出</td>
+</tr>
+<tr>
+<td style="text-align:center">4</td>
+<td style="text-align:left">SIGILL</td>
+<td style="text-align:left">终止</td>
+<td style="text-align:left">非法指令</td>
+</tr>
+<tr>
+<td style="text-align:center">5</td>
+<td style="text-align:left">SIGTRAP</td>
+<td style="text-align:left">终止并转储内存</td>
+<td style="text-align:left">跟踪陷阱</td>
+</tr>
+<tr>
+<td style="text-align:center">6</td>
+<td style="text-align:left">SIGABRT</td>
+<td style="text-align:left">终止并转储内存</td>
+<td style="text-align:left">来自abort函数的终止信号</td>
+</tr>
+<tr>
+<td style="text-align:center">7</td>
+<td style="text-align:left">SIGBUS</td>
+<td style="text-align:left">终止</td>
+<td style="text-align:left">总线错误</td>
+</tr>
+<tr>
+<td style="text-align:center">8</td>
+<td style="text-align:left">SIGFPE</td>
+<td style="text-align:left">终止并转储内存</td>
+<td style="text-align:left">浮点异常</td>
+</tr>
+<tr>
+<td style="text-align:center">9</td>
+<td style="text-align:left">SIGKILL</td>
+<td style="text-align:left">终止</td>
+<td style="text-align:left">杀死程序</td>
+</tr>
+<tr>
+<td style="text-align:center">10</td>
+<td style="text-align:left">SIGUSR1</td>
+<td style="text-align:left">终止</td>
+<td style="text-align:left">用户定义的信号1</td>
+</tr>
+<tr>
+<td style="text-align:center">11</td>
+<td style="text-align:left">SIGSEGV</td>
+<td style="text-align:left">终止并转储内存</td>
+<td style="text-align:left">无效的内存引用（段故障 )</td>
+</tr>
+<tr>
+<td style="text-align:center">12</td>
+<td style="text-align:left">SIGUSR2</td>
+<td style="text-align:left">终止</td>
+<td style="text-align:left">用户定义的信号2</td>
+</tr>
+<tr>
+<td style="text-align:center">13</td>
+<td style="text-align:left">SIGPIPE</td>
+<td style="text-align:left">终止</td>
+<td style="text-align:left">向一个没有读用户的管道做写操作</td>
+</tr>
+<tr>
+<td style="text-align:center">14</td>
+<td style="text-align:left">SIGALRM</td>
+<td style="text-align:left">终止</td>
+<td style="text-align:left">来自alarm函数的定时器信号</td>
+</tr>
+<tr>
+<td style="text-align:center">15</td>
+<td style="text-align:left">SIGTERM</td>
+<td style="text-align:left">终止</td>
+<td style="text-align:left">软件终止信号</td>
+</tr>
+<tr>
+<td style="text-align:center">16</td>
+<td style="text-align:left">SIGSTKFLT</td>
+<td style="text-align:left">终止</td>
+<td style="text-align:left">协处理器上的栈故障</td>
+</tr>
+<tr>
+<td style="text-align:center">17</td>
+<td style="text-align:left">SIGCHLD</td>
+<td style="text-align:left">忽略</td>
+<td style="text-align:left">一个子进程停止或者终止</td>
+</tr>
+<tr>
+<td style="text-align:center">18</td>
+<td style="text-align:left">SIGCONT</td>
+<td style="text-align:left">忽略</td>
+<td style="text-align:left">继续进程如果该进程停止</td>
+</tr>
+<tr>
+<td style="text-align:center">19</td>
+<td style="text-align:left">SIGSTOP</td>
+<td style="text-align:left">停止直到下一个SIGCONT</td>
+<td style="text-align:left">不是来自终端的停止信号</td>
+</tr>
+<tr>
+<td style="text-align:center">20</td>
+<td style="text-align:left">SIGTSTP</td>
+<td style="text-align:left">停止直到下一个SIGCONT</td>
+<td style="text-align:left">来自终端的停止信号</td>
+</tr>
+<tr>
+<td style="text-align:center">21</td>
+<td style="text-align:left">SIGTTIN</td>
+<td style="text-align:left">停止直到下一个SIGCONT</td>
+<td style="text-align:left">后台进程从终端读</td>
+</tr>
+<tr>
+<td style="text-align:center">22</td>
+<td style="text-align:left">SIGTTOU</td>
+<td style="text-align:left">停止直到下一个SIGCONT</td>
+<td style="text-align:left">后台进程向终端写</td>
+</tr>
+<tr>
+<td style="text-align:center">23</td>
+<td style="text-align:left">SIGURG</td>
+<td style="text-align:left">忽略</td>
+<td style="text-align:left">套接字上的紧急情况</td>
+</tr>
+<tr>
+<td style="text-align:center">24</td>
+<td style="text-align:left">SIGXCPU</td>
+<td style="text-align:left">终止</td>
+<td style="text-align:left">CPU时间限制超出</td>
+</tr>
+<tr>
+<td style="text-align:center">25</td>
+<td style="text-align:left">SIGXFSZ</td>
+<td style="text-align:left">终止</td>
+<td style="text-align:left">文件大小限制超出</td>
+</tr>
+<tr>
+<td style="text-align:center">26</td>
+<td style="text-align:left">SIGVTALRM</td>
+<td style="text-align:left">终止</td>
+<td style="text-align:left">虛拟定时器期满</td>
+</tr>
+<tr>
+<td style="text-align:center">27</td>
+<td style="text-align:left">SIGPROF</td>
+<td style="text-align:left">终止</td>
+<td style="text-align:left">剖析定时器期满</td>
+</tr>
+<tr>
+<td style="text-align:center">28</td>
+<td style="text-align:left">SIGWINCH</td>
+<td style="text-align:left">忽略</td>
+<td style="text-align:left">窗口大小变化</td>
+</tr>
+<tr>
+<td style="text-align:center">29</td>
+<td style="text-align:left">SIGIO</td>
+<td style="text-align:left">终止</td>
+<td style="text-align:left">在某个描述符上可执行I/O操作</td>
+</tr>
+<tr>
+<td style="text-align:center">30</td>
+<td style="text-align:left">SIGPWR</td>
+<td style="text-align:left">终止</td>
+<td style="text-align:left">电源故障</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>说明：</p>
+<ul>
+<li>“转储内存”是一个历史术语，指把代码和数据内存段的映像写到磁盘上；</li>
+</ul>
+<h4 id="信号术语"><a href="#信号术语" class="headerlink" title="信号术语"></a>信号术语</h4><ul>
+<li><p>发送一个信号到目的进程是由两个不同步骤组成：</p>
+<ul>
+<li><p>发送信号；</p>
+<ul>
+<li>内核通过更新目的进程上下文中某个状态，发送一个信号给目的进程；</li>
+<li>发送信号有两种原因：<ul>
+<li>内核检测到一个系统事件；</li>
+<li>一个进程调用了kill函数；</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>接收信号；</p>
+<ul>
+<li><p>目的进程被内核强迫以某种方式对信号的发送作出反应时，它就接受了信号；</p>
+</li>
+<li><p>进程对信号的反馈有三种方式：</p>
+<ul>
+<li>忽略；</li>
+<li>终止；</li>
+<li>执行<strong>信号处理程序（signal handler）</strong>；</li>
+</ul>
+</li>
+<li><p>基本思想：</p>
+<p><img src= "/img/loading.gif" data-lazy-src="https://github.com/Doraemonzzz/md-photo/blob/master/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F/%E7%AC%AC8%E7%AB%A0/2021081203.jpg?raw=true" alt=""></p>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>说明：</p>
+<ul>
+<li>一个发出而没有被接收的信号叫待处理信号；<ul>
+<li>一种类型最多只会有一个待处理信号，如果一个进程有一个类型为$k$的待处理信号，那么接下来任何发送到该进程的类型为$k$的信号都会被抛弃；</li>
+<li>待处理信号最多只能被接收一次；</li>
+<li>内核为每个进程在pending位向量（信号掩码）维护待处理信号的集合，在blocked位向量中维护着被阻塞的信号集合；<ul>
+<li>当传送了一个类型为$k$的信号，内核会设置pending中的第$k$位；</li>
+<li>当接收了一个类型为$k$的信号，内核就会清除pending中的第$k$位；</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>进程可以选择性的<strong>阻塞</strong>接收某种信号；<ul>
+<li>当一种信号被阻塞时，它仍然可以发送，但是不会被接收，直到取消阻塞为止；</li>
+</ul>
+</li>
+</ul>
+<h3 id="发送信号"><a href="#发送信号" class="headerlink" title="发送信号"></a>发送信号</h3><h4 id="进程组函数"><a href="#进程组函数" class="headerlink" title="进程组函数"></a>进程组函数</h4><p>getpgrp函数：</p>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;unistd.h></span></span>
+
+<span class="token class-name">pid_t</span> <span class="token function">getpgrp</span><span class="token punctuation">(</span><span class="token keyword">void</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+返回<span class="token operator">:</span> 调用进程的进程组ID。<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>setpgid函数：</p>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;unistd.h></span></span>
+
+<span class="token keyword">int</span> <span class="token function">setpgid</span><span class="token punctuation">(</span><span class="token class-name">pid_t</span> pid<span class="token punctuation">,</span> <span class="token class-name">pid_t</span> pgid<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+返回<span class="token operator">:</span> 若成功则为<span class="token number">0</span>，若错误则为<span class="token operator">-</span><span class="token number">1</span>。<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>说明：</p>
+<ul>
+<li>getpgrp函数返回当前进程的进程组ID；</li>
+<li>setpgid将进程pid的进程组改为pgid；<ul>
+<li>如果pid是0，那么就使用当前进程的PID；</li>
+<li>如果pgid是0，那么就用pid指定的进程的PID作为进程组ID；</li>
+</ul>
+</li>
+</ul>
+<h4 id="用-bin-kill程序发送信号"><a href="#用-bin-kill程序发送信号" class="headerlink" title="用/bin/kill程序发送信号"></a>用/bin/kill程序发送信号</h4><p>使用方式：</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">/bin/kill signal pid<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>说明：</p>
+<ul>
+<li>/bin/kill程序发送信号|signal|给进程PID中；</li>
+<li>如果signal &lt; 0，则将信号|signal|发送给进程组PID中每个进程；</li>
+<li>使用/bin/kill是为了指定绝对路径，因为有些Unix shell中有内置的kill命令；</li>
+</ul>
+<h4 id="从键盘发送信号"><a href="#从键盘发送信号" class="headerlink" title="从键盘发送信号"></a>从键盘发送信号</h4><ul>
+<li><p>Unix shell使用作业（job）这个抽象概念来表示为对一条命令行求值而创建的进程；</p>
+</li>
+<li><p>在任何时刻，至多只有一个前台作业和0个或多个后台作业；</p>
+<ul>
+<li><p>前台后台进程组示例：</p>
+<p><img src= "/img/loading.gif" data-lazy-src="https://github.com/Doraemonzzz/md-photo/blob/master/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F/%E7%AC%AC8%E7%AB%A0/2021081204.jpg?raw=true" alt=""></p>
+</li>
+<li><p>Ctrl + C会导致内核发送一个SIGINT信号到前台进程组中的每个进程，默认结果是终止前台作业；</p>
+</li>
+<li><p>Ctrl + Z会发送一个SIGTSTP信号到前台进程组中的每个进程，默认结果是停止（挂起）前台作业；</p>
+</li>
+</ul>
+</li>
+</ul>
+<h4 id="用kill函数发送信号"><a href="#用kill函数发送信号" class="headerlink" title="用kill函数发送信号"></a>用kill函数发送信号</h4><p>kill函数：</p>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;sys/types.h></span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;signal.h></span></span>
+
+<span class="token keyword">int</span> <span class="token function">kill</span><span class="token punctuation">(</span><span class="token class-name">pid_t</span> pid<span class="token punctuation">,</span> <span class="token keyword">int</span> sig<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+返回：若成功则为<span class="token number">0</span>，若错误则为<span class="token operator">-</span><span class="token number">1</span>。<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>说明：</p>
+<ul>
+<li>如果pid &gt; 0，那么kill发送信号sig给进程pid；</li>
+<li>如果pid = 0，那么kill发送信号sig给调用进程所在进程组中的每个进程，包括调用进程自己；</li>
+<li>如果pid &lt; 0，那么kill发送信号sig给进程组|pid|中的每个进程；</li>
+</ul>
+<h4 id="用alarm函数发送信号"><a href="#用alarm函数发送信号" class="headerlink" title="用alarm函数发送信号"></a>用alarm函数发送信号</h4><p>alarm函数：</p>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;unistd.h></span></span>
+
+<span class="token keyword">unsigned</span> <span class="token keyword">int</span> <span class="token function">alarm</span><span class="token punctuation">(</span><span class="token keyword">unsigned</span> <span class="token keyword">int</span> secs<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+返回<span class="token operator">:</span> 前一次闹钟剩余的秒数，若以前没有设定闹钟，则为<span class="token number">0</span>。<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>说明：</p>
+<ul>
+<li>alarm函数安排内核在secs秒后发送一个SIGALRM信号给调用进程；</li>
+<li>如果secs = 0，那么不会调度安排新的闹钟（alarm）；</li>
+<li>在任何情况下，对alarm的调用都将取消任何待处理的（pending）闹钟；<ul>
+<li>并且返回任何待处理的闹钟在被发送前还剩下的秒数；</li>
+<li>如果没有待处理的闹钟，就返回零；</li>
+</ul>
+</li>
+</ul>
+<h3 id="接收信号"><a href="#接收信号" class="headerlink" title="接收信号"></a>接收信号</h3><p>接收信号的流程：</p>
+<ul>
+<li>当内核把进程$p$从内核模式切换到用户模式时，它会检查进程$p$的未被阻塞的待处理信号的集合（pending &amp; ~blocked）；</li>
+<li>如果该集合为空，内核将控制传递到$p$的逻辑控制流中的下一条指令$I_{\text{next}}$；</li>
+<li>如果集合非空，内核选择集合中的某个信号$k$（通常是最小的$k$），然后强制$p$接收信号$k$；</li>
+<li>收到信号$k$会触发进程采取某种行为；</li>
+<li>完成行为后，控制传递到$p$的逻辑控制流中的下一条指令$I_{\text{next}}$；</li>
+</ul>
+<p>信号的默认行为，具体可见常见Linux信号一节：</p>
+<ul>
+<li>进程终止；</li>
+<li>进程终止并转储内存；</li>
+<li>进程停止（挂起）直到被SIGCONT信号重启；</li>
+<li>进程忽略该信号；</li>
+</ul>
+<p>进程可以通过signal函数修改和信号关联的默认行为（除了SIGSTOP和SIGKILL），signal函数描述：</p>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;signal.h></span></span>
+<span class="token keyword">typedef</span> <span class="token keyword">void</span> <span class="token punctuation">(</span><span class="token operator">*</span><span class="token class-name">sighandler_t</span><span class="token punctuation">)</span><span class="token punctuation">(</span><span class="token keyword">int</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token class-name">sighandler_t</span> <span class="token function">signal</span><span class="token punctuation">(</span><span class="token keyword">int</span> signum，<span class="token class-name">sighandler_t</span> handler<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+返回：若成功则为指向前次处理程序的指针，若出错则为<span class="token function">SIG_ERR</span><span class="token punctuation">(</span>不设置errno<span class="token punctuation">)</span>。<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>说明：</p>
+<ul>
+<li><p>如果handler是SIG_IGN，那么忽略类型为signum的信号；</p>
+</li>
+<li><p>如果handler是SIG_DFL，那么类型为signum的信号行为恢复为默认行为；</p>
+</li>
+<li><p>否则，handler就是用户定义的函数的地址，这个函数被称为信号处理程序，只要进程接收到一个类型为signum的信号，就会调用这个程序；</p>
+<ul>
+<li>通过把处理程序的地址传递到signal函数从而改变默认行为，这叫做<strong>设置信号处理程序</strong>（installing the handler）；</li>
+<li>调用信号处理程序被称为<strong>捕获信号</strong>；</li>
+<li>执行信号处理程序被称为<strong>处理信号</strong>；</li>
+</ul>
+</li>
+<li><p>信号处理程序可以被其他信号处理程序中断；</p>
+<p><img src= "/img/loading.gif" data-lazy-src="https://github.com/Doraemonzzz/md-photo/blob/master/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F/%E7%AC%AC8%E7%AB%A0/2021081205.jpg?raw=true" alt=""></p>
+</li>
+</ul>
+<h3 id="阻塞和解除阻塞信号"><a href="#阻塞和解除阻塞信号" class="headerlink" title="阻塞和解除阻塞信号"></a>阻塞和解除阻塞信号</h3><ul>
+<li>阻塞信号分为隐式和显式；<ul>
+<li>隐式：<ul>
+<li>如果程序捕获了信号$s$，当前正在运行处理程序$S$，如果发送给进程另一个信号$s$，那么$s$会变成待处理而没有被接收；</li>
+</ul>
+</li>
+<li>显式：<ul>
+<li>使用sigprocmask函数及其辅助函数明确阻塞和解除阻塞信号；</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>sigprocmask函数及其辅助函数：</p>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;signal.h></span></span>
+
+<span class="token keyword">int</span> <span class="token function">sigprocmask</span><span class="token punctuation">(</span><span class="token keyword">int</span> how<span class="token punctuation">,</span> <span class="token keyword">const</span> <span class="token class-name">sigset_t</span> <span class="token operator">*</span>set<span class="token punctuation">,</span> <span class="token class-name">sigset_t</span> <span class="token operator">*</span>oldset<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">int</span> <span class="token function">sigemptyset</span><span class="token punctuation">(</span><span class="token class-name">sigset_t</span> <span class="token operator">*</span>set<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">int</span> <span class="token function">sigfillset</span><span class="token punctuation">(</span><span class="token class-name">sigset_t</span> <span class="token operator">*</span>set<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">int</span> <span class="token function">sigaddset</span><span class="token punctuation">(</span><span class="token class-name">sigset_t</span> <span class="token operator">*</span>set<span class="token punctuation">,</span> <span class="token keyword">int</span> signum<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">int</span> <span class="token function">sigdelset</span><span class="token punctuation">(</span><span class="token class-name">sigset_t</span> <span class="token operator">*</span>set<span class="token punctuation">,</span> <span class="token keyword">int</span> signum<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+返回：如果成功则为<span class="token number">0</span>，若出错则为<span class="token operator">-</span><span class="token number">1</span>。
+
+<span class="token keyword">int</span> <span class="token function">sigismember</span><span class="token punctuation">(</span><span class="token keyword">const</span> <span class="token class-name">sigset_t</span><span class="token operator">*</span>set<span class="token punctuation">,</span> <span class="token keyword">int</span> signum<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+返回：若signum是set的成员则为<span class="token number">1</span>，如果不是则为<span class="token number">0</span>，若出错则为<span class="token operator">-</span><span class="token number">1</span>。<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>说明：</p>
+<ul>
+<li>sigprocmask改变blocked位向量，具体行为和how的值有关：<ul>
+<li>how = SIG_BLOCK：把set中的信号添加到blocked中（blocked=blocked | set）；</li>
+<li>how = SIG_UNBLOCK：从blocked中删除set中的信号（blocked=blocked &amp; ~set）；</li>
+<li>how = SIG_SETMASK：block=set；</li>
+<li>如果oldset非空，那么blocked位向量之前的值保存在oldset中；</li>
+</ul>
+</li>
+<li>sigemptyset初始化set为空集合；</li>
+<li>sigfillset函数把每个信号都添加到set中；</li>
+<li>sigaddset函数把signum添加到set；</li>
+<li>sigdelset从set中删除signum；</li>
+<li>如果signum是set的成员，那么sigismember返回1，否则返回0。</li>
+</ul>
+<h3 id="编写信号处理程序"><a href="#编写信号处理程序" class="headerlink" title="编写信号处理程序"></a>编写信号处理程序</h3><ul>
+<li>信号处理程序非常棘手，原因如下：<ul>
+<li>处理程序与主程序并发运行，共享同样的全局变量，因此可能与主程序和其他处理程序互相干扰；</li>
+<li>如何以及何时接收信号的规则常常有违人的直觉；</li>
+<li>不同的系统有不同的信号处理语义；</li>
+</ul>
+</li>
+</ul>
+<p>后续给出编写<strong>安全，正确和可移植</strong>的信号处理程序的基本规则。</p>
+<h4 id="安全的信号处理"><a href="#安全的信号处理" class="headerlink" title="安全的信号处理"></a>安全的信号处理</h4><p>保守的编写程序的原则：</p>
+<ul>
+<li>G0.  处理程序要尽可能简单。</li>
+<li>G1．在处理程序中只调用异步信号安全的函数。<ul>
+<li><strong>异步信号安全</strong>的函数（简称<strong>安全</strong>的函数）能够被信号处理程序安全地调用；<ul>
+<li>或者是<strong>可重入</strong>，即可以在任何时刻被打断；</li>
+<li>或者不能被信号处理程序中断；</li>
+</ul>
+</li>
+<li>具体例子见8.5.5（534页）；</li>
+<li>产生输出唯一安全的方法是使用write；</li>
+</ul>
+</li>
+<li>G2．保存和恢复errno。<ul>
+<li>如果处理程序调用_exit终止进程，那么就不需要保存恢复errno；</li>
+</ul>
+</li>
+<li>G3．阻塞所有的信号，保护对共享全局数据结构的访问。</li>
+<li>G4．用volatile声明全局变量。<ul>
+<li>volatile int g；</li>
+<li>告诉编译器不要缓存该全局变量；</li>
+</ul>
+</li>
+<li>G5．用sig_atomic_t声明标志。<ul>
+<li>在常见的处理程序中，处理程序会写全局标志来记录收到了信号；</li>
+<li>主程序周期性地读这个标志，响应信号，再清除该标志；</li>
+<li>C提供整型数据类型sig_atomic_t，对它的读和写是<strong>原子</strong>的（不可中断的）；<ul>
+<li>volatile sig_atomic_t flag;</li>
+</ul>
+</li>
+<li>只适用于单个读写，不适用于flag++, flag = flag + 10；</li>
+</ul>
+</li>
+</ul>
+<p>补充：</p>
+<p>安全的输出函数：</p>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">"csapp.h"</span></span>
+
+<span class="token class-name">ssize_t</span> <span class="token function">sio_put1</span><span class="token punctuation">(</span><span class="token keyword">long</span> v<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token class-name">ssize_t</span> <span class="token function">sio_puts</span><span class="token punctuation">(</span><span class="token keyword">char</span> s<span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+返回<span class="token operator">:</span> 如果成功则为传送的字节数，如果出错，则为一<span class="token number">1</span>。
+<span class="token keyword">void</span> <span class="token function">sio_error</span><span class="token punctuation">(</span><span class="token keyword">char</span> s<span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+返回<span class="token operator">:</span> 空。<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h4 id="正确的信号处理"><a href="#正确的信号处理" class="headerlink" title="正确的信号处理"></a>正确的信号处理</h4><p>未处理的信号是不排队的，具体例子见课本537页。</p>
+<h4 id="可移植的信号处理"><a href="#可移植的信号处理" class="headerlink" title="可移植的信号处理"></a>可移植的信号处理</h4><ul>
+<li>不同的系统有不同的信号处理语义；<ul>
+<li>signal函数的语义各有不同；</li>
+<li>系统调用可以被中断；<ul>
+<li>像read、write和accept这样的系统调用潜在地会阻塞进程一段较长的时间，称为<strong>慢速系统调用</strong>；</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>为了解决这些问题，Posix标准定义了sigaction函数：</p>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;signal.h></span></span>
+<span class="token keyword">int</span> <span class="token function">sigaction</span><span class="token punctuation">(</span><span class="token keyword">int</span> signum<span class="token punctuation">,</span> <span class="token keyword">struct</span> <span class="token class-name">sigaction</span> <span class="token operator">*</span>act<span class="token punctuation">,</span> <span class="token keyword">struct</span> <span class="token class-name">sigaction</span> <span class="token operator">*</span>oldact<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+返回<span class="token operator">:</span> 若成功则为<span class="token number">0</span>，若出错则为<span class="token operator">-</span><span class="token number">1</span>。<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+<p>该函数比较复杂，一般使用包装函数Signal：</p>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token class-name">handler_t</span> <span class="token operator">*</span><span class="token function">Signal</span><span class="token punctuation">(</span><span class="token keyword">int</span> signum<span class="token punctuation">,</span> <span class="token class-name">handler_t</span> <span class="token operator">*</span>handler<span class="token punctuation">)</span>
+<span class="token punctuation">&#123;</span>
+    <span class="token keyword">struct</span> <span class="token class-name">sigaction</span> action<span class="token punctuation">,</span> old_action<span class="token punctuation">;</span>
+    action<span class="token punctuation">.</span>sa_handler <span class="token operator">=</span> handler<span class="token punctuation">;</span>
+    <span class="token function">sigemptyset</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>action<span class="token punctuation">.</span>sa_mask<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">/* Block sigs of type being handled */</span>
+    action<span class="token punctuation">.</span>sa_flags <span class="token operator">=</span> SA_RESTART<span class="token punctuation">;</span> <span class="token comment">/* Restart syscalls if possible */</span>
+    
+    <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">sigaction</span><span class="token punctuation">(</span>signum，<span class="token operator">&amp;</span>action，<span class="token operator">&amp;</span>old_action<span class="token punctuation">)</span> <span class="token operator">&lt;</span> O<span class="token punctuation">)</span>
+    	<span class="token function">unix_error</span><span class="token punctuation">(</span><span class="token string">"Signal error"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">return</span> <span class="token punctuation">(</span>old_action<span class="token punctuation">.</span>sa_handler<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>Signal包装函数设置了一个信号处理程序，其信号处理语义如下：</p>
+<ul>
+<li>只有这个处理程序当前正在处理的那种类型的信号被阻塞；</li>
+<li>和所有信号实现一样，信号不会排队等待；</li>
+<li>只要可能，被中断的系统调用会自动重启；</li>
+<li>一旦设置了信号处理程序，它就会一直保持，直到signal带着handler参数为SIG_IGN或者SIG_DFL被调用；</li>
+</ul>
+<p>补充：</p>
+<ul>
+<li>posix（Portable Operating System Interface）的中文名称为可移植操作系统接口；</li>
+</ul>
+<h3 id="同步流以避免讨厌的并发错误"><a href="#同步流以避免讨厌的并发错误" class="headerlink" title="同步流以避免讨厌的并发错误"></a>同步流以避免讨厌的并发错误</h3><ul>
+<li>例子见542页；</li>
+<li>在这部分的例子中，main函数中的addjob和处理程序中调用deletejob之间存在<strong>竞争</strong>；</li>
+<li>如果addjob赢得竞争，则结果正确；否则结果错误；</li>
+</ul>
+<h3 id="显式地等待信号"><a href="#显式地等待信号" class="headerlink" title="显式地等待信号"></a>显式地等待信号</h3><p>sigsuspend函数：</p>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;signal.h></span></span>
+
+<span class="token keyword">int</span> <span class="token function">sigsuspend</span><span class="token punctuation">(</span><span class="token keyword">const</span> <span class="token class-name">sigset_t</span> <span class="token operator">*</span>mask<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+返回<span class="token operator">:</span> <span class="token operator">-</span><span class="token number">1</span>。<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>说明：</p>
+<ul>
+<li><p>sigsuspend函数暂时用mask替换当前的阻塞集合，然后挂起该进程，直到收到一个信号，其行为要么是运行一个处理程序，要么是终止该进程；</p>
+<ul>
+<li>如果它的行为是终止，那么该进程不从sigsuspend返回就直接终止；</li>
+<li>如果它的行为是运行一个处理程序，那么sigsuspend从处理程序返回，恢复调用sigsuspend时原有的阻塞集合；</li>
+</ul>
+</li>
+<li><p>sigsuspend函数等价于如下代码的原子版本：</p>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token function">sigprocmask</span><span class="token punctuation">(</span>SIG_SETMASK<span class="token punctuation">,</span> <span class="token operator">&amp;</span>mask<span class="token punctuation">,</span> <span class="token operator">&amp;</span>prev<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token function">pause</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token function">sigprocmask</span><span class="token punctuation">(</span>SIG_SETMASK<span class="token punctuation">,</span> <span class="token operator">&amp;</span>prev<span class="token punctuation">,</span> <span class="token constant">NULL</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+</li>
+</ul>
+<p>例子见课本544。</p>
+<h2 id="8-6-非本地跳转"><a href="#8-6-非本地跳转" class="headerlink" title="8.6 非本地跳转"></a>8.6 非本地跳转</h2><ul>
+<li><p>C语言提供了一种用户级异常控制流形式，称为<strong>非本地跳转（nonlocaljump）</strong>；</p>
+</li>
+<li><p>它将控制直接从一个函数转移到另一个当前正在执行的函数，而不需要经过正常的调用——返回序列；</p>
+</li>
+<li><p>非本地跳转是通过setjmp和longjmp函数来提供的。</p>
+</li>
+<li><p>setjmp函数：</p>
+<ul>
+<li><p>setjmp函数在env缓冲区中保存当前<strong>调用环境</strong>，以供后面的longjmp使用，并返回0。</p>
+<ul>
+<li>调用环境包括程序计数器、栈指针和通用目的寄存器。</li>
+</ul>
+</li>
+<li><p>setjmp的返回值不能赋值给变量，例如如下写法是错误的：</p>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c">rc <span class="token operator">=</span> <span class="token function">setjmp</span><span class="token punctuation">(</span>env<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">/* wrong! */</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+</li>
+<li><p>但是可以安全地用在switch或条件语句的测试中；</p>
+</li>
+</ul>
+</li>
+<li><p>longjmp函数：</p>
+<ul>
+<li>longjmp函数从env缓冲区中恢复调用环境，然后触发一个从最近次初始化env的setjmp调用的返回。然后setjmp返回，并带有非零的返回值retval。</li>
+</ul>
+</li>
+<li><p>sigsetjmp和siglongjmp函数是setjmp和longjmp的可以被信号处理程序使用的版本；</p>
+</li>
+</ul>
+<p>说明：</p>
+<ul>
+<li>调用和返回关系：<ul>
+<li>setjmp函数只被调用一次，但返回多次；<ul>
+<li>一次是第一次调用setjmp，调用环境保存在缓冲区env时；</li>
+<li>一次是为每个相应的longjmp调用；</li>
+</ul>
+</li>
+<li>longjmp被调用一次，但从不返回；</li>
+</ul>
+</li>
+<li>非本地跳转的应用：<ul>
+<li>允许从一个深层嵌套的函数调用中立即返回（通常是由某错误引起）；</li>
+<li>使一个信号处理程序分支到一个特殊的代码位置，而不是返回到被信号到达中断了的指令的位置；</li>
+</ul>
+</li>
+<li>与C++和Java中的软件异常类比：<ul>
+<li>C++和Java中的异常是C语言的setjmp和longjmp函数的更加结构化版本；</li>
+<li>try语句中的catch类似于setjmp；</li>
+<li>throw类似于longjmp；</li>
+</ul>
+</li>
+</ul>
+<p>函数接口：</p>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;setjmp.h></span></span>
+
+<span class="token keyword">int</span> <span class="token function">setjmp</span><span class="token punctuation">(</span>jmp_buf env<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">int</span> <span class="token function">sigsetjmp</span><span class="token punctuation">(</span>sigjmp_buf env<span class="token punctuation">,</span> <span class="token keyword">int</span> savesigs<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+返回<span class="token operator">:</span> setjmp返回<span class="token number">0</span>，longjmp返回非零。
+    
+<span class="token keyword">void</span> <span class="token function">longjmp</span><span class="token punctuation">(</span>jmp_buf env<span class="token punctuation">,</span> <span class="token keyword">int</span> retval<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">void</span> <span class="token function">siglongjmp</span><span class="token punctuation">(</span>sigjmp_buf env<span class="token punctuation">,</span> <span class="token keyword">int</span> retval<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+从不返回。<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h2 id="8-7-操作进程的工具"><a href="#8-7-操作进程的工具" class="headerlink" title="8.7 操作进程的工具"></a>8.7 操作进程的工具</h2><p>略过，见课本。</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">Doraemonzzz</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="http://www.doraemonzzz.com/2021/08/15/2021-8-15-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E7%AC%AC8%E7%AB%A0-%E5%BC%82%E5%B8%B8%E6%8E%A7%E5%88%B6%E6%B5%81/">http://www.doraemonzzz.com/2021/08/15/2021-8-15-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E7%AC%AC8%E7%AB%A0-%E5%BC%82%E5%B8%B8%E6%8E%A7%E5%88%B6%E6%B5%81/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://www.doraemonzzz.com" target="_blank">Doraemonzzz</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F/">深入理解计算机系统</a></div><div class="post_share"><div class="social-share" data-image="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="next-post pull-full"><a href="/2021/08/15/2021-8-15-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E7%AC%AC8%E7%AB%A0-%E4%B9%A0%E9%A2%98%E8%A7%A3%E6%9E%90/"><img class="next-cover" src= "/img/loading.gif" data-lazy-src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">深入理解计算机系统 第8章 习题解析</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span> 相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2021/06/06/2021-6-6-深入理解计算机系统-第5章-习题解析/" title="深入理解计算机系统 第5章 习题解析"><img class="cover" src= "/img/loading.gif" data-lazy-src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-06-06</div><div class="title">深入理解计算机系统 第5章 习题解析</div></div></a></div><div><a href="/2021/02/21/深入理解计算机系统 第1章 笔记整理/" title="深入理解计算机系统 第1章 笔记整理"><img class="cover" src= "/img/loading.gif" data-lazy-src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-02-21</div><div class="title">深入理解计算机系统 第1章 笔记整理</div></div></a></div><div><a href="/2020/09/20/深入理解计算机系统 第2章 习题解析 Part1/" title="深入理解计算机系统 第2章 习题解析 Part1"><img class="cover" src= "/img/loading.gif" data-lazy-src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-09-20</div><div class="title">深入理解计算机系统 第2章 习题解析 Part1</div></div></a></div><div><a href="/2020/09/26/深入理解计算机系统 第2章 习题解析 Part2/" title="深入理解计算机系统 第2章 习题解析 Part2"><img class="cover" src= "/img/loading.gif" data-lazy-src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-09-26</div><div class="title">深入理解计算机系统 第2章 习题解析 Part2</div></div></a></div><div><a href="/2020/10/24/深入理解计算机系统 第2章 习题解析 Part4/" title="深入理解计算机系统 第2章 习题解析 Part4"><img class="cover" src= "/img/loading.gif" data-lazy-src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-10-24</div><div class="title">深入理解计算机系统 第2章 习题解析 Part4</div></div></a></div><div><a href="/2020/10/18/深入理解计算机系统 第2章 习题解析 Part3/" title="深入理解计算机系统 第2章 习题解析 Part3"><img class="cover" src= "/img/loading.gif" data-lazy-src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-10-18</div><div class="title">深入理解计算机系统 第2章 习题解析 Part3</div></div></a></div></div></div><hr/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div><div id="comment-switch"><span class="first-comment">Valine</span><span class="switch-btn"></span><span class="second-comment">Livere</span></div></div><div class="comment-wrap"><div><div class="vcomment" id="vcomment"></div></div><div><div id="lv-container" data-id="city" data-uid="MTAyMC8zNDcxOS8xMTI1Ng=="></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="card-info-avatar is-center"><img class="avatar-img" src= "/img/loading.gif" data-lazy-src="https://github.com/Doraemonzzz/md-photo/blob/master/%E5%A4%B4%E5%83%8F.jpg?raw=true" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/><div class="author-info__name">Doraemonzzz</div><div class="author-info__description">个人博客，主要记录有关机器学习，数学以及计算机科学的笔记</div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">643</div></a></div><div class="card-info-data-item is-center"><a href="/tags/"><div class="headline">标签</div><div class="length-num">66</div></a></div><div class="card-info-data-item is-center"><a href="/categories/"><div class="headline">分类</div><div class="length-num">26</div></a></div></div><a class="button--animated" id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/Doraemonzzz"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/Doraemonzzz" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="/doraemon_zzz@163.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a><a class="social-icon" href="https://space.bilibili.com/291079982" target="_blank" title="Bilibili"><i class="iconfont icon-bilibili"></i></a><a class="social-icon" href="/atom.xml" target="_blank" title=""><i class="fa fa-rss"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn card-announcement-animation"></i><span>公告</span></div><div class="announcement_content">暂无公告</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%AC%AC8%E7%AB%A0%EF%BC%9A%E5%BC%82%E5%B8%B8%E6%8E%A7%E5%88%B6%E6%B5%81"><span class="toc-number">1.</span> <span class="toc-text">第8章：异常控制流</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%87%8D%E8%A6%81%E6%A6%82%E5%BF%B5"><span class="toc-number">1.1.</span> <span class="toc-text">重要概念</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AE%80%E4%BB%8B"><span class="toc-number">1.2.</span> <span class="toc-text">简介</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8E%A7%E5%88%B6%E6%B5%81"><span class="toc-number">1.2.1.</span> <span class="toc-text">控制流</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8E%A7%E5%88%B6%E6%B5%81%E7%9A%84%E7%B1%BB%E5%9E%8B"><span class="toc-number">1.2.2.</span> <span class="toc-text">控制流的类型</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#8-1-%E5%BC%82%E5%B8%B8"><span class="toc-number">1.3.</span> <span class="toc-text">8.1 异常</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A6%82%E5%BF%B5"><span class="toc-number">1.3.1.</span> <span class="toc-text">概念</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86"><span class="toc-number">1.3.2.</span> <span class="toc-text">异常处理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BC%82%E5%B8%B8%E7%9A%84%E7%B1%BB%E5%88%AB"><span class="toc-number">1.3.3.</span> <span class="toc-text">异常的类别</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%B8%AD%E6%96%AD"><span class="toc-number">1.3.3.1.</span> <span class="toc-text">中断</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%99%B7%E9%98%B1%E5%92%8C%E7%B3%BB%E7%BB%9F%E8%B0%83%E7%94%A8"><span class="toc-number">1.3.3.2.</span> <span class="toc-text">陷阱和系统调用</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%95%85%E9%9A%9C"><span class="toc-number">1.3.3.3.</span> <span class="toc-text">故障</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E4%BE%8B%E5%AD%90%EF%BC%9A%E7%BC%BA%E9%A1%B5%E5%BC%82%E5%B8%B8"><span class="toc-number">1.3.3.3.1.</span> <span class="toc-text">例子：缺页异常</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%BB%88%E6%AD%A2"><span class="toc-number">1.3.3.4.</span> <span class="toc-text">终止</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Linux-x86-64%E7%B3%BB%E7%BB%9F%E4%B8%AD%E7%9A%84%E5%BC%82%E5%B8%B8"><span class="toc-number">1.3.4.</span> <span class="toc-text">Linux&#x2F;x86-64系统中的异常</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%95%85%E9%9A%9C%E5%92%8C%E7%BB%88%E6%AD%A2"><span class="toc-number">1.3.4.1.</span> <span class="toc-text">故障和终止</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%B3%BB%E7%BB%9F%E8%B0%83%E7%94%A8"><span class="toc-number">1.3.4.2.</span> <span class="toc-text">系统调用</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#8-2-%E8%BF%9B%E7%A8%8B"><span class="toc-number">1.4.</span> <span class="toc-text">8.2 进程</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%80%BB%E8%BE%91%E6%8E%A7%E5%88%B6%E6%B5%81"><span class="toc-number">1.4.1.</span> <span class="toc-text">逻辑控制流</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B9%B6%E5%8F%91%E6%B5%81"><span class="toc-number">1.4.2.</span> <span class="toc-text">并发流</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%A7%81%E6%9C%89%E5%9C%B0%E5%9D%80%E7%A9%BA%E9%97%B4"><span class="toc-number">1.4.3.</span> <span class="toc-text">私有地址空间</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%94%A8%E6%88%B7%E6%A8%A1%E5%BC%8F%E5%92%8C%E5%86%85%E6%A0%B8%E6%A8%A1%E5%BC%8F"><span class="toc-number">1.4.4.</span> <span class="toc-text">用户模式和内核模式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%8A%E4%B8%8B%E6%96%87%E5%88%87%E6%8D%A2"><span class="toc-number">1.4.5.</span> <span class="toc-text">上下文切换</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#8-3-%E7%B3%BB%E7%BB%9F%E9%94%99%E8%AF%AF%E5%A4%84%E7%90%86"><span class="toc-number">1.5.</span> <span class="toc-text">8.3 系统错误处理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#8-4-%E8%BF%9B%E7%A8%8B%E6%8E%A7%E5%88%B6"><span class="toc-number">1.6.</span> <span class="toc-text">8.4 进程控制</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%8E%B7%E5%8F%96%E8%BF%9B%E7%A8%8BID"><span class="toc-number">1.6.1.</span> <span class="toc-text">获取进程ID</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%9B%E5%BB%BA%E5%92%8C%E7%BB%88%E6%AD%A2%E8%BF%9B%E7%A8%8B"><span class="toc-number">1.6.2.</span> <span class="toc-text">创建和终止进程</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#fork%E5%87%BD%E6%95%B0%E8%AF%B4%E6%98%8E"><span class="toc-number">1.6.2.1.</span> <span class="toc-text">fork函数说明</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BE%8B%E5%AD%90"><span class="toc-number">1.6.2.2.</span> <span class="toc-text">例子</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9B%9E%E6%94%B6%E5%AD%90%E8%BF%9B%E7%A8%8B"><span class="toc-number">1.6.3.</span> <span class="toc-text">回收子进程</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%9B%B8%E5%85%B3%E5%87%BD%E6%95%B0"><span class="toc-number">1.6.3.1.</span> <span class="toc-text">相关函数</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#waitpid"><span class="toc-number">1.6.3.1.1.</span> <span class="toc-text">waitpid</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#wait"><span class="toc-number">1.6.3.1.2.</span> <span class="toc-text">wait</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BE%8B%E5%AD%90-1"><span class="toc-number">1.6.3.2.</span> <span class="toc-text">例子</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AE%A9%E8%BF%9B%E7%A8%8B%E4%BC%91%E7%9C%A0"><span class="toc-number">1.6.4.</span> <span class="toc-text">让进程休眠</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8A%A0%E8%BD%BD%E5%B9%B6%E8%BF%90%E8%A1%8C%E7%A8%8B%E5%BA%8F"><span class="toc-number">1.6.5.</span> <span class="toc-text">加载并运行程序</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#8-5-%E4%BF%A1%E5%8F%B7"><span class="toc-number">1.7.</span> <span class="toc-text">8.5 信号</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AE%80%E4%BB%8B-1"><span class="toc-number">1.7.1.</span> <span class="toc-text">简介</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%B8%B8%E8%A7%81Linux%E4%BF%A1%E5%8F%B7"><span class="toc-number">1.7.1.1.</span> <span class="toc-text">常见Linux信号</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BF%A1%E5%8F%B7%E6%9C%AF%E8%AF%AD"><span class="toc-number">1.7.1.2.</span> <span class="toc-text">信号术语</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%91%E9%80%81%E4%BF%A1%E5%8F%B7"><span class="toc-number">1.7.2.</span> <span class="toc-text">发送信号</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%BF%9B%E7%A8%8B%E7%BB%84%E5%87%BD%E6%95%B0"><span class="toc-number">1.7.2.1.</span> <span class="toc-text">进程组函数</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%94%A8-bin-kill%E7%A8%8B%E5%BA%8F%E5%8F%91%E9%80%81%E4%BF%A1%E5%8F%B7"><span class="toc-number">1.7.2.2.</span> <span class="toc-text">用&#x2F;bin&#x2F;kill程序发送信号</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BB%8E%E9%94%AE%E7%9B%98%E5%8F%91%E9%80%81%E4%BF%A1%E5%8F%B7"><span class="toc-number">1.7.2.3.</span> <span class="toc-text">从键盘发送信号</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%94%A8kill%E5%87%BD%E6%95%B0%E5%8F%91%E9%80%81%E4%BF%A1%E5%8F%B7"><span class="toc-number">1.7.2.4.</span> <span class="toc-text">用kill函数发送信号</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%94%A8alarm%E5%87%BD%E6%95%B0%E5%8F%91%E9%80%81%E4%BF%A1%E5%8F%B7"><span class="toc-number">1.7.2.5.</span> <span class="toc-text">用alarm函数发送信号</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8E%A5%E6%94%B6%E4%BF%A1%E5%8F%B7"><span class="toc-number">1.7.3.</span> <span class="toc-text">接收信号</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%98%BB%E5%A1%9E%E5%92%8C%E8%A7%A3%E9%99%A4%E9%98%BB%E5%A1%9E%E4%BF%A1%E5%8F%B7"><span class="toc-number">1.7.4.</span> <span class="toc-text">阻塞和解除阻塞信号</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BC%96%E5%86%99%E4%BF%A1%E5%8F%B7%E5%A4%84%E7%90%86%E7%A8%8B%E5%BA%8F"><span class="toc-number">1.7.5.</span> <span class="toc-text">编写信号处理程序</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AE%89%E5%85%A8%E7%9A%84%E4%BF%A1%E5%8F%B7%E5%A4%84%E7%90%86"><span class="toc-number">1.7.5.1.</span> <span class="toc-text">安全的信号处理</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%AD%A3%E7%A1%AE%E7%9A%84%E4%BF%A1%E5%8F%B7%E5%A4%84%E7%90%86"><span class="toc-number">1.7.5.2.</span> <span class="toc-text">正确的信号处理</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8F%AF%E7%A7%BB%E6%A4%8D%E7%9A%84%E4%BF%A1%E5%8F%B7%E5%A4%84%E7%90%86"><span class="toc-number">1.7.5.3.</span> <span class="toc-text">可移植的信号处理</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%90%8C%E6%AD%A5%E6%B5%81%E4%BB%A5%E9%81%BF%E5%85%8D%E8%AE%A8%E5%8E%8C%E7%9A%84%E5%B9%B6%E5%8F%91%E9%94%99%E8%AF%AF"><span class="toc-number">1.7.6.</span> <span class="toc-text">同步流以避免讨厌的并发错误</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%98%BE%E5%BC%8F%E5%9C%B0%E7%AD%89%E5%BE%85%E4%BF%A1%E5%8F%B7"><span class="toc-number">1.7.7.</span> <span class="toc-text">显式地等待信号</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#8-6-%E9%9D%9E%E6%9C%AC%E5%9C%B0%E8%B7%B3%E8%BD%AC"><span class="toc-number">1.8.</span> <span class="toc-text">8.6 非本地跳转</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#8-7-%E6%93%8D%E4%BD%9C%E8%BF%9B%E7%A8%8B%E7%9A%84%E5%B7%A5%E5%85%B7"><span class="toc-number">1.9.</span> <span class="toc-text">8.7 操作进程的工具</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2021/08/15/2021-8-15-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E7%AC%AC8%E7%AB%A0-%E5%BC%82%E5%B8%B8%E6%8E%A7%E5%88%B6%E6%B5%81/" title="深入理解计算机系统 第8章 异常控制流"><img src= "/img/loading.gif" data-lazy-src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="深入理解计算机系统 第8章 异常控制流"/></a><div class="content"><a class="title" href="/2021/08/15/2021-8-15-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E7%AC%AC8%E7%AB%A0-%E5%BC%82%E5%B8%B8%E6%8E%A7%E5%88%B6%E6%B5%81/" title="深入理解计算机系统 第8章 异常控制流">深入理解计算机系统 第8章 异常控制流</a><time datetime="2021-08-15T05:03:00.000Z" title="发表于 2021-08-15 13:03:00">2021-08-15</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/08/15/2021-8-15-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E7%AC%AC8%E7%AB%A0-%E4%B9%A0%E9%A2%98%E8%A7%A3%E6%9E%90/" title="深入理解计算机系统 第8章 习题解析"><img src= "/img/loading.gif" data-lazy-src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="深入理解计算机系统 第8章 习题解析"/></a><div class="content"><a class="title" href="/2021/08/15/2021-8-15-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E7%AC%AC8%E7%AB%A0-%E4%B9%A0%E9%A2%98%E8%A7%A3%E6%9E%90/" title="深入理解计算机系统 第8章 习题解析">深入理解计算机系统 第8章 习题解析</a><time datetime="2021-08-15T03:48:00.000Z" title="发表于 2021-08-15 11:48:00">2021-08-15</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/08/01/2021-8-1-MIT-6.S081-Operating-System-Enginerring-Lab2-System-calls/" title="MIT 6.S081 Operating System Enginerring Lab2 System calls"><img src= "/img/loading.gif" data-lazy-src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="MIT 6.S081 Operating System Enginerring Lab2 System calls"/></a><div class="content"><a class="title" href="/2021/08/01/2021-8-1-MIT-6.S081-Operating-System-Enginerring-Lab2-System-calls/" title="MIT 6.S081 Operating System Enginerring Lab2 System calls">MIT 6.S081 Operating System Enginerring Lab2 System calls</a><time datetime="2021-08-01T07:15:00.000Z" title="发表于 2021-08-01 15:15:00">2021-08-01</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/08/01/2021-8-01-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E7%AC%AC7%E7%AB%A0-%E4%B9%A0%E9%A2%98%E8%A7%A3%E6%9E%90/" title="深入理解计算机系统 第7章 习题解析"><img src= "/img/loading.gif" data-lazy-src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="深入理解计算机系统 第7章 习题解析"/></a><div class="content"><a class="title" href="/2021/08/01/2021-8-01-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E7%AC%AC7%E7%AB%A0-%E4%B9%A0%E9%A2%98%E8%A7%A3%E6%9E%90/" title="深入理解计算机系统 第7章 习题解析">深入理解计算机系统 第7章 习题解析</a><time datetime="2021-08-01T04:55:00.000Z" title="发表于 2021-08-01 12:55:00">2021-08-01</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/08/01/2021-8-1-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E7%AC%AC7%E7%AB%A0-%E7%AC%94%E8%AE%B0%E6%95%B4%E7%90%86/" title="深入理解计算机系统 第7章 笔记整理"><img src= "/img/loading.gif" data-lazy-src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="深入理解计算机系统 第7章 笔记整理"/></a><div class="content"><a class="title" href="/2021/08/01/2021-8-1-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E7%AC%AC7%E7%AB%A0-%E7%AC%94%E8%AE%B0%E6%95%B4%E7%90%86/" title="深入理解计算机系统 第7章 笔记整理">深入理解计算机系统 第7章 笔记整理</a><time datetime="2021-08-01T03:35:00.000Z" title="发表于 2021-08-01 11:35:00">2021-08-01</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2018 - 2021 By Doraemonzzz</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="font-plus" type="button" title="放大字体"><i class="fas fa-plus"></i></button><button id="font-minus" type="button" title="缩小字体"><i class="fas fa-minus"></i></button><button id="translateLink" type="button" title="简繁转换">简</button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div id="local-search"><div class="search-dialog"><div class="search-dialog__title" id="local-search-title">本地搜索</div><div id="local-input-panel"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div></div><hr/><div id="local-search-results"></div><span class="search-close-button"><i class="fas fa-times"></i></span></div><div id="search-mask"></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="/js/tw_cn.js"></script><script src="https://cdn.jsdelivr.net/npm/vanilla-lazyload/dist/lazyload.iife.min.js"></script><script src="/js/search/local-search.js"></script><script>var preloader = {
+  endLoading: () => {
+    document.body.style.overflow = 'auto';
+    document.getElementById('loading-box').classList.add("loaded")
+  },
+  initLoading: () => {
+    document.body.style.overflow = '';
+    document.getElementById('loading-box').classList.remove("loaded")
+
+  }
+}
+window.addEventListener('load',preloader.endLoading())</script><div class="js-pjax"><script>if (!window.MathJax) {
+  window.MathJax = {
+    tex: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]],
+      tags: 'ams'
+    },
+    chtml: {
+      scale: 1.25
+    },
+    options: {
+      renderActions: {
+        findScript: [10, doc => {
+          for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+            const display = !!node.type.match(/; *mode=display/)
+            const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+            const text = document.createTextNode('')
+            node.parentNode.replaceChild(text, node)
+            math.start = {node: text, delim: '', n: 0}
+            math.end = {node: text, delim: '', n: 0}
+            doc.math.push(math)
+          }
+        }, '']
+      }
+    }
+  }
+  
+  const script = document.createElement('script')
+  script.src = 'https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js'
+  script.id = 'MathJax-script'
+  script.async = true
+  document.head.appendChild(script)
+} else {
+  MathJax.startup.document.state(0)
+  MathJax.texReset()
+  MathJax.typeset()
+}</script><script>function loadValine () {
+  function initValine () {
+    const valine = new Valine(Object.assign({
+      el: '#vcomment',
+      appId: 'IpnmxCW9CvYWIXbol5QXsegX-MdYXbMMI',
+      appKey: 'w57DVCdbxcyB1TYYagMIMJIU',
+      placeholder: 'Please leave your footprints',
+      avatar: 'monsterid',
+      meta: 'nick,mail,link'.split(','),
+      pageSize: '10',
+      lang: 'en',
+      recordIP: false,
+      serverURLs: '',
+      emojiCDN: '',
+      emojiMaps: "",
+      enableQQ: false,
+      path: window.location.pathname,
+      requiredFields: ["nick,mail"],
+      visitor: true
+    }, null))
+  }
+
+  if (typeof Valine === 'function') initValine() 
+  else getScript('https://cdn.jsdelivr.net/npm/valine/dist/Valine.min.js').then(initValine)
+}
+
+if ('Valine' === 'Valine' || !false) {
+  if (false) btf.loadComment(document.getElementById('vcomment'),loadValine)
+  else setTimeout(loadValine, 0)
+} else {
+  function loadOtherComment () {
+    loadValine()
+  }
+}</script><script>function loadLivere () {
+  if (typeof LivereTower === 'object') {
+    window.LivereTower.init()
+  }
+  else {
+    (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+    })(document, 'script');
+  }
+}
+
+if ('Valine' === 'Livere' || !false) {
+  if (false) btf.loadComment(document.getElementById('lv-container'), loadLivere)
+  else loadLivere()
+}
+else {
+  function loadOtherComment () {
+    loadLivere()
+  }
+}</script></div><script defer="defer" id="fluttering_ribbon" mobile="false" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/canvas-fluttering-ribbon.min.js"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
