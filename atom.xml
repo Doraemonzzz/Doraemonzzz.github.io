@@ -6,7 +6,7 @@
   <link href="http://www.doraemonzzz.com/atom.xml" rel="self"/>
   
   <link href="http://www.doraemonzzz.com/"/>
-  <updated>2021-09-09T15:55:25.469Z</updated>
+  <updated>2021-09-14T16:09:03.722Z</updated>
   <id>http://www.doraemonzzz.com/</id>
   
   <author>
@@ -17,11 +17,91 @@
   <generator uri="https://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>CMU 15-213 Lab6 Malloc Lab</title>
+    <link href="http://www.doraemonzzz.com/2021/09/15/2021-9-15-CMU-15-213-Lab6-Malloc-Lab/"/>
+    <id>http://www.doraemonzzz.com/2021/09/15/2021-9-15-CMU-15-213-Lab6-Malloc-Lab/</id>
+    <published>2021-09-14T16:07:00.000Z</published>
+    <updated>2021-09-14T16:09:03.722Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;这次回顾Malloc Lab，主要对课本上的版本进行简单修改。&lt;/p&gt;
+&lt;p&gt;课程主页：&lt;a href=&quot;http://www.cs.cmu.edu/afs/cs/academic/class/15213-f15/www/schedule.html&quot;&gt;http://www.cs.cmu.edu/afs/cs/academic/class/15213-f15/www/schedule.html&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;课程资料：&lt;a href=&quot;https://github.com/EugeneLiu/translationCSAPP&quot;&gt;https://github.com/EugeneLiu/translationCSAPP&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;课程视频：&lt;a href=&quot;https://www.bilibili.com/video/av31289365/&quot;&gt;https://www.bilibili.com/video/av31289365/&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;参考资料：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;/vm/malloc/mm.c&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://blog.csdn.net/qq_32693119/article/details/80535662&quot;&gt;https://blog.csdn.net/qq_32693119/article/details/80535662&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://zhuanlan.zhihu.com/p/150100073&quot;&gt;https://zhuanlan.zhihu.com/p/150100073&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://github.com/quanvuong/CSAPP-Malloc-Lab&quot;&gt;https://github.com/quanvuong/CSAPP-Malloc-Lab&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://dreamanddead.github.io/CSAPP-3e-Solutions/chapter9/9.18/&quot;&gt;https://dreamanddead.github.io/CSAPP-3e-Solutions/chapter9/9.18/&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://github.com/DreamAndDead/CSAPP-3e-Solutions/blob/gh-pages/chapter9/code/vm/mm.9.18.c&quot;&gt;https://github.com/DreamAndDead/CSAPP-3e-Solutions/blob/gh-pages/chapter9/code/vm/mm.9.18.c&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</summary>
+    
+    
+    
+    <category term="计算机原理" scheme="http://www.doraemonzzz.com/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%8E%9F%E7%90%86/"/>
+    
+    
+    <category term="CMU 15-213" scheme="http://www.doraemonzzz.com/tags/CMU-15-213/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>深入理解计算机系统 第9章 虚拟内存</title>
+    <link href="http://www.doraemonzzz.com/2021/09/14/2021-9-14-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E7%AC%AC9%E7%AB%A0-%E8%99%9A%E6%8B%9F%E5%86%85%E5%AD%98/"/>
+    <id>http://www.doraemonzzz.com/2021/09/14/2021-9-14-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E7%AC%AC9%E7%AB%A0-%E8%99%9A%E6%8B%9F%E5%86%85%E5%AD%98/</id>
+    <published>2021-09-14T14:44:00.000Z</published>
+    <updated>2021-09-14T14:44:41.780Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;这次更新第9章习题。&lt;/p&gt;
+&lt;p&gt;参考资料：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;https://blog.csdn.net/qq_21792169/article/details/50454475&quot;&gt;https://blog.csdn.net/qq_21792169/article/details/50454475&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://dreamanddead.github.io/CSAPP-3e-Solutions/chapter8/&quot;&gt;https://dreamanddead.github.io/CSAPP-3e-Solutions/chapter8/&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</summary>
+    
+    
+    
+    <category term="计算机原理" scheme="http://www.doraemonzzz.com/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%8E%9F%E7%90%86/"/>
+    
+    
+    <category term="深入理解计算机系统" scheme="http://www.doraemonzzz.com/tags/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>深度学习中batch size, update freq以及多卡的关系</title>
+    <link href="http://www.doraemonzzz.com/2021/09/12/2021-9-12-%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E4%B8%ADbatch-size,-update-freq%E4%BB%A5%E5%8F%8A%E5%A4%9A%E5%8D%A1%E7%9A%84%E5%85%B3%E7%B3%BB/"/>
+    <id>http://www.doraemonzzz.com/2021/09/12/2021-9-12-%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E4%B8%ADbatch-size,-update-freq%E4%BB%A5%E5%8F%8A%E5%A4%9A%E5%8D%A1%E7%9A%84%E5%85%B3%E7%B3%BB/</id>
+    <published>2021-09-12T02:11:00.000Z</published>
+    <updated>2021-09-12T03:10:44.911Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;最近训练模型时一直被batsh size, number updates以及多卡的关系搞混，这里对其进行总结。&lt;/p&gt;
+&lt;p&gt;参考资料：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;https://stackoverflow.com/questions/4752626/epoch-vs-iteration-when-training-neural-networks&quot;&gt;https://stackoverflow.com/questions/4752626/epoch-vs-iteration-when-training-neural-networks&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://github.com/pytorch/fairseq/issues/979&quot;&gt;https://github.com/pytorch/fairseq/issues/979&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;http://www.linzehui.me/2019/01/28/%E7%A2%8E%E7%89%87%E7%9F%A5%E8%AF%86/%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8fairseq%E5%A4%8D%E7%8E%B0Transformer%20NMT/&quot;&gt;http://www.linzehui.me/2019/01/28/%E7%A2%8E%E7%89%87%E7%9F%A5%E8%AF%86/%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8fairseq%E5%A4%8D%E7%8E%B0Transformer%20NMT/&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</summary>
+    
+    
+    
+    <category term="深度学习" scheme="http://www.doraemonzzz.com/categories/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/"/>
+    
+    
+    <category term="深度学习基本知识" scheme="http://www.doraemonzzz.com/tags/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E5%9F%BA%E6%9C%AC%E7%9F%A5%E8%AF%86/"/>
+    
+  </entry>
+  
+  <entry>
     <title>RSA加密简介</title>
     <link href="http://www.doraemonzzz.com/2021/09/09/2021-9-9-RSA%E5%8A%A0%E5%AF%86%E7%AE%80%E4%BB%8B/"/>
     <id>http://www.doraemonzzz.com/2021/09/09/2021-9-9-RSA%E5%8A%A0%E5%AF%86%E7%AE%80%E4%BB%8B/</id>
     <published>2021-09-09T15:00:50.000Z</published>
-    <updated>2021-09-09T15:55:25.469Z</updated>
+    <updated>2021-09-09T16:29:37.249Z</updated>
     
     
     <summary type="html">&lt;p&gt;最近在做SICP练习时又复习了一遍RSA加密，趁这个机会对该算法进行小结。&lt;/p&gt;
@@ -437,90 +517,6 @@
     
     
     <category term="深入理解计算机系统" scheme="http://www.doraemonzzz.com/tags/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>计算机程序的构造和解释(SICP) 第5章 习题解析 Part2</title>
-    <link href="http://www.doraemonzzz.com/2021/08/01/2021-8-1-%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A8%8B%E5%BA%8F%E7%9A%84%E6%9E%84%E9%80%A0%E5%92%8C%E8%A7%A3%E9%87%8A(SICP)-%E7%AC%AC5%E7%AB%A0-%E4%B9%A0%E9%A2%98%E8%A7%A3%E6%9E%90-Part2/"/>
-    <id>http://www.doraemonzzz.com/2021/08/01/2021-8-1-%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A8%8B%E5%BA%8F%E7%9A%84%E6%9E%84%E9%80%A0%E5%92%8C%E8%A7%A3%E9%87%8A(SICP)-%E7%AC%AC5%E7%AB%A0-%E4%B9%A0%E9%A2%98%E8%A7%A3%E6%9E%90-Part2/</id>
-    <published>2021-07-31T16:49:00.000Z</published>
-    <updated>2021-07-31T16:49:44.754Z</updated>
-    
-    
-    <summary type="html">&lt;p&gt;这次回顾第五章第二部分习题。&lt;/p&gt;
-&lt;p&gt;学习资料：&lt;/p&gt;
-&lt;p&gt;&lt;a href=&quot;https://ocw.mit.edu/courses/electrical-engineering-and-computer-science/6-001-structure-and-interpretation-of-computer-programs-spring-2005/index.htm&quot;&gt;https://ocw.mit.edu/courses/electrical-engineering-and-computer-science/6-001-structure-and-interpretation-of-computer-programs-spring-2005/index.htm&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;&lt;a href=&quot;https://github.com/DeathKing/Learning-SICP&quot;&gt;https://github.com/DeathKing/Learning-SICP&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;&lt;a href=&quot;https://mitpress.mit.edu/sites/default/files/sicp/index.html&quot;&gt;https://mitpress.mit.edu/sites/default/files/sicp/index.html&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;&lt;a href=&quot;https://www.bilibili.com/video/BV1Xx41117tr?from=search&amp;amp;seid=14983483066585274454&quot;&gt;https://www.bilibili.com/video/BV1Xx41117tr?from=search&amp;amp;seid=14983483066585274454&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;参考资料：&lt;/p&gt;
-&lt;p&gt;&lt;a href=&quot;https://sicp.readthedocs.io/en/latest&quot;&gt;https://sicp.readthedocs.io/en/latest&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;&lt;a href=&quot;http://community.schemewiki.org/?SICP-Solutions&quot;&gt;http://community.schemewiki.org/?SICP-Solutions&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;&lt;a href=&quot;http://community.schemewiki.org/?sicp&quot;&gt;http://community.schemewiki.org/?sicp&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;&lt;a href=&quot;https://liujiacai.net/blog/2016/02/22/recursion-without-name/&quot;&gt;https://liujiacai.net/blog/2016/02/22/recursion-without-name/&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;&lt;a href=&quot;https://mvanier.livejournal.com/2897.html&quot;&gt;https://mvanier.livejournal.com/2897.html&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;&lt;a href=&quot;https://github.com/jiacai2050/sicp&quot;&gt;https://github.com/jiacai2050/sicp&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;&lt;a href=&quot;https://liujiacai.net/&quot;&gt;https://liujiacai.net/&lt;/a&gt;&lt;/p&gt;</summary>
-    
-    
-    
-    <category term="计算机原理" scheme="http://www.doraemonzzz.com/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%8E%9F%E7%90%86/"/>
-    
-    
-    <category term="计算机程序的构造和解释" scheme="http://www.doraemonzzz.com/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A8%8B%E5%BA%8F%E7%9A%84%E6%9E%84%E9%80%A0%E5%92%8C%E8%A7%A3%E9%87%8A/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>关于SelfAttention时间空间复杂度的思考</title>
-    <link href="http://www.doraemonzzz.com/2021/07/30/2021-7-30-%E5%85%B3%E4%BA%8ESelfAttention%E6%97%B6%E9%97%B4%E7%A9%BA%E9%97%B4%E5%A4%8D%E6%9D%82%E5%BA%A6%E7%9A%84%E6%80%9D%E8%80%83/"/>
-    <id>http://www.doraemonzzz.com/2021/07/30/2021-7-30-%E5%85%B3%E4%BA%8ESelfAttention%E6%97%B6%E9%97%B4%E7%A9%BA%E9%97%B4%E5%A4%8D%E6%9D%82%E5%BA%A6%E7%9A%84%E6%80%9D%E8%80%83/</id>
-    <published>2021-07-30T14:20:00.000Z</published>
-    <updated>2021-08-15T08:43:40.465Z</updated>
-    
-    
-    <summary type="html">&lt;p&gt;参考资料：&lt;/p&gt;
-&lt;p&gt;&lt;a href=&quot;https://github.com/pytorch/pytorch/blob/master/torch/nn/functional.py&quot;&gt;https://github.com/pytorch/pytorch/blob/master/torch/nn/functional.py&lt;/a&gt;&lt;/p&gt;</summary>
-    
-    
-    
-    <category term="深度学习" scheme="http://www.doraemonzzz.com/categories/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/"/>
-    
-    
-    <category term="transformer优化" scheme="http://www.doraemonzzz.com/tags/transformer%E4%BC%98%E5%8C%96/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>计算机程序的构造和解释(SICP) 第5章 习题解析 Part1</title>
-    <link href="http://www.doraemonzzz.com/2021/07/25/2021-7-25-%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A8%8B%E5%BA%8F%E7%9A%84%E6%9E%84%E9%80%A0%E5%92%8C%E8%A7%A3%E9%87%8A(SICP)-%E7%AC%AC5%E7%AB%A0-%E4%B9%A0%E9%A2%98%E8%A7%A3%E6%9E%90-Part1/"/>
-    <id>http://www.doraemonzzz.com/2021/07/25/2021-7-25-%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A8%8B%E5%BA%8F%E7%9A%84%E6%9E%84%E9%80%A0%E5%92%8C%E8%A7%A3%E9%87%8A(SICP)-%E7%AC%AC5%E7%AB%A0-%E4%B9%A0%E9%A2%98%E8%A7%A3%E6%9E%90-Part1/</id>
-    <published>2021-07-25T12:09:00.000Z</published>
-    <updated>2021-07-25T12:09:54.724Z</updated>
-    
-    
-    <summary type="html">&lt;p&gt;这次回顾第五章第一部分习题。&lt;/p&gt;
-&lt;p&gt;学习资料：&lt;/p&gt;
-&lt;p&gt;&lt;a href=&quot;https://ocw.mit.edu/courses/electrical-engineering-and-computer-science/6-001-structure-and-interpretation-of-computer-programs-spring-2005/index.htm&quot;&gt;https://ocw.mit.edu/courses/electrical-engineering-and-computer-science/6-001-structure-and-interpretation-of-computer-programs-spring-2005/index.htm&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;&lt;a href=&quot;https://github.com/DeathKing/Learning-SICP&quot;&gt;https://github.com/DeathKing/Learning-SICP&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;&lt;a href=&quot;https://mitpress.mit.edu/sites/default/files/sicp/index.html&quot;&gt;https://mitpress.mit.edu/sites/default/files/sicp/index.html&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;&lt;a href=&quot;https://www.bilibili.com/video/BV1Xx41117tr?from=search&amp;amp;seid=14983483066585274454&quot;&gt;https://www.bilibili.com/video/BV1Xx41117tr?from=search&amp;amp;seid=14983483066585274454&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;参考资料：&lt;/p&gt;
-&lt;p&gt;&lt;a href=&quot;https://sicp.readthedocs.io/en/latest&quot;&gt;https://sicp.readthedocs.io/en/latest&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;&lt;a href=&quot;http://community.schemewiki.org/?SICP-Solutions&quot;&gt;http://community.schemewiki.org/?SICP-Solutions&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;&lt;a href=&quot;http://community.schemewiki.org/?sicp&quot;&gt;http://community.schemewiki.org/?sicp&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;&lt;a href=&quot;https://liujiacai.net/blog/2016/02/22/recursion-without-name/&quot;&gt;https://liujiacai.net/blog/2016/02/22/recursion-without-name/&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;&lt;a href=&quot;https://mvanier.livejournal.com/2897.html&quot;&gt;https://mvanier.livejournal.com/2897.html&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;&lt;a href=&quot;https://github.com/jiacai2050/sicp&quot;&gt;https://github.com/jiacai2050/sicp&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;&lt;a href=&quot;https://liujiacai.net/&quot;&gt;https://liujiacai.net/&lt;/a&gt;&lt;/p&gt;</summary>
-    
-    
-    
-    <category term="计算机原理" scheme="http://www.doraemonzzz.com/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%8E%9F%E7%90%86/"/>
-    
-    
-    <category term="计算机程序的构造和解释" scheme="http://www.doraemonzzz.com/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A8%8B%E5%BA%8F%E7%9A%84%E6%9E%84%E9%80%A0%E5%92%8C%E8%A7%A3%E9%87%8A/"/>
     
   </entry>
   

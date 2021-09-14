@@ -1,0 +1,619 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>CMU 15-213 Lab6 Malloc Lab | Doraemonzzz</title><meta name="keywords" content="CMU 15-213"><meta name="author" content="Doraemonzzz"><meta name="copyright" content="Doraemonzzz"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="这次回顾Malloc Lab，主要对课本上的版本进行简单修改。 课程主页：http:&#x2F;&#x2F;www.cs.cmu.edu&#x2F;afs&#x2F;cs&#x2F;academic&#x2F;class&#x2F;15213-f15&#x2F;www&#x2F;schedule.html 课程资料：https:&#x2F;&#x2F;github.com&#x2F;EugeneLiu&#x2F;translationCSAPP 课程视频：https:&#x2F;&#x2F;www.bilibili.com&#x2F;video&#x2F;av31">
+<meta property="og:type" content="article">
+<meta property="og:title" content="CMU 15-213 Lab6 Malloc Lab">
+<meta property="og:url" content="http://www.doraemonzzz.com/2021/09/15/2021-9-15-CMU-15-213-Lab6-Malloc-Lab/index.html">
+<meta property="og:site_name" content="Doraemonzzz">
+<meta property="og:description" content="这次回顾Malloc Lab，主要对课本上的版本进行简单修改。 课程主页：http:&#x2F;&#x2F;www.cs.cmu.edu&#x2F;afs&#x2F;cs&#x2F;academic&#x2F;class&#x2F;15213-f15&#x2F;www&#x2F;schedule.html 课程资料：https:&#x2F;&#x2F;github.com&#x2F;EugeneLiu&#x2F;translationCSAPP 课程视频：https:&#x2F;&#x2F;www.bilibili.com&#x2F;video&#x2F;av31">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg">
+<meta property="article:published_time" content="2021-09-14T16:07:00.000Z">
+<meta property="article:modified_time" content="2021-09-14T16:09:03.722Z">
+<meta property="article:author" content="Doraemonzzz">
+<meta property="article:tag" content="CMU 15-213">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg"><link rel="shortcut icon" href="https://github.com/Doraemonzzz/md-photo/blob/master/%E5%A4%B4%E5%83%8F.jpg?raw=true"><link rel="canonical" href="http://www.doraemonzzz.com/2021/09/15/2021-9-15-CMU-15-213-Lab6-Malloc-Lab/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//www.google-analytics.com" crossorigin=""/><link rel="preconnect" href="//hm.baidu.com"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><script>var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?6f00f37f957f0608abb8c571105456f0";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script><script async="async" src="https://www.googletagmanager.com/gtag/js?id=UA-G-RE4B1LKRZD"></script><script>window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'UA-G-RE4B1LKRZD');
+</script><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"search.xml","languages":{"hits_empty":"找不到您查询的内容：${query}"}},
+  translate: {"defaultEncoding":2,"translateDelay":0,"msgToTraditionalChinese":"繁","msgToSimplifiedChinese":"簡"},
+  noticeOutdate: {"limitDay":500,"position":"top","messagePrev":"距离上次更新已经","messageNext":"天了，文章内容可能已经过时。"},
+  highlight: {"plugin":"prismjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":200},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    jQuery: 'https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js',
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+    },
+    fancybox: {
+      js: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css'
+    }
+  },
+  isPhotoFigcaption: true,
+  islazyload: true,
+  isanchor: true
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'CMU 15-213 Lab6 Malloc Lab',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2021-09-15 00:09:03'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const fontSizeVal = saveToLocal.get('global-font-size')
+    if (fontSizeVal !== undefined) {
+      document.documentElement.style.setProperty('--global-font-size', fontSizeVal + 'px')
+    }
+    })(window)</script><link rel="stylesheet" href="/css/bilibili.css" media="defer" onload="this.media='all'"><meta name="google-site-verification" content="c4v-NmuUZRgl3cvtg9GKswryK1YLaPztd_5M-df5VNI" /><meta name="generator" content="Hexo 5.4.0"><link rel="alternate" href="/atom.xml" title="Doraemonzzz" type="application/atom+xml">
+</head><body><div id="loading-box"><div class="loading-left-bg"></div><div class="loading-right-bg"></div><div class="spinner-box"><div class="configure-border-1"><div class="configure-core"></div></div><div class="configure-border-2"><div class="configure-core"></div></div><div class="loading-word">加载中...</div></div></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="author-avatar"><img class="avatar-img" src= "/img/loading.gif" data-lazy-src="https://github.com/Doraemonzzz/md-photo/blob/master/%E5%A4%B4%E5%83%8F.jpg?raw=true" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">文章</div><div class="length-num">657</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">标签</div><div class="length-num">68</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/categories/"><div class="headline">分类</div><div class="length-num">26</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-chart-pie"></i><span> 博客统计</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/charts/"><i class="fa-fw far fa-chart-bar"></i><span> 文章统计</span></a></li><li><a class="site-page child" href="/census/"><i class="fa-fw fas fa-chart-area"></i><span> 访问统计</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/top/"><i class="fa-fw fab fa-hotjar"></i><span> 阅读排行榜</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fa fa-heartbeat"></i><span> 娱乐</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于我</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">Doraemonzzz</a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-chart-pie"></i><span> 博客统计</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/charts/"><i class="fa-fw far fa-chart-bar"></i><span> 文章统计</span></a></li><li><a class="site-page child" href="/census/"><i class="fa-fw fas fa-chart-area"></i><span> 访问统计</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/top/"><i class="fa-fw fab fa-hotjar"></i><span> 阅读排行榜</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fa fa-heartbeat"></i><span> 娱乐</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于我</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">CMU 15-213 Lab6 Malloc Lab</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2021-09-14T16:07:00.000Z" title="发表于 2021-09-15 00:07:00">2021-09-15</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2021-09-14T16:09:03.722Z" title="更新于 2021-09-15 00:09:03">2021-09-15</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%8E%9F%E7%90%86/">计算机原理</a></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-tag"></i><a class="article-meta__tags" href="/tags/CMU-15-213/">CMU 15-213</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">2k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>10分钟</span></span><span class="post-meta-separator">|</span><span class="leancloud_visitors" id="/2021/09/15/2021-9-15-CMU-15-213-Lab6-Malloc-Lab/" data-flag-title="CMU 15-213 Lab6 Malloc Lab"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span class="leancloud-visitors-count"></span></span><span class="post-meta-separator">|</span><span class="post-meta-commentcount"><i class="far fa-comments fa-fw post-meta-icon"></i><span class="post-meta-label">评论数:</span><a href="/2021/09/15/2021-9-15-CMU-15-213-Lab6-Malloc-Lab/#post-comment" itemprop="discussionUrl"><span class="valine-comment-count" data-xid="/2021/09/15/2021-9-15-CMU-15-213-Lab6-Malloc-Lab/" itemprop="commentCount"></span></a></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p>这次回顾Malloc Lab，主要对课本上的版本进行简单修改。</p>
+<p>课程主页：<a target="_blank" rel="noopener" href="http://www.cs.cmu.edu/afs/cs/academic/class/15213-f15/www/schedule.html">http://www.cs.cmu.edu/afs/cs/academic/class/15213-f15/www/schedule.html</a></p>
+<p>课程资料：<a target="_blank" rel="noopener" href="https://github.com/EugeneLiu/translationCSAPP">https://github.com/EugeneLiu/translationCSAPP</a></p>
+<p>课程视频：<a target="_blank" rel="noopener" href="https://www.bilibili.com/video/av31289365/">https://www.bilibili.com/video/av31289365/</a></p>
+<p>参考资料：</p>
+<ul>
+<li>/vm/malloc/mm.c</li>
+<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_32693119/article/details/80535662">https://blog.csdn.net/qq_32693119/article/details/80535662</a></li>
+<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/150100073">https://zhuanlan.zhihu.com/p/150100073</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/quanvuong/CSAPP-Malloc-Lab">https://github.com/quanvuong/CSAPP-Malloc-Lab</a></li>
+<li><a target="_blank" rel="noopener" href="https://dreamanddead.github.io/CSAPP-3e-Solutions/chapter9/9.18/">https://dreamanddead.github.io/CSAPP-3e-Solutions/chapter9/9.18/</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/DreamAndDead/CSAPP-3e-Solutions/blob/gh-pages/chapter9/code/vm/mm.9.18.c">https://github.com/DreamAndDead/CSAPP-3e-Solutions/blob/gh-pages/chapter9/code/vm/mm.9.18.c</a></li>
+</ul>
+<span id="more"></span>
+<h2 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h2><p>完成该lab需要完全理解9.9.12。</p>
+<p>报错1：</p>
+<pre class="line-numbers language-none"><code class="language-none">&#x2F;usr&#x2F;include&#x2F;stdio.h:27:10: fatal error: bits&#x2F;libc-header-start.h: No such file or directory
+ #include &lt;bits&#x2F;libc-header-start.h&gt;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<p>解决方法：</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">apt-get</span> <span class="token function">install</span> gcc-multilib<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>报错2：</p>
+<p>没有tracefiles文件，可以在如下地址下载：</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/quanvuong/CSAPP-Malloc-Lab">https://github.com/quanvuong/CSAPP-Malloc-Lab</a></li>
+</ul>
+<p>报错3：</p>
+<pre class="line-numbers language-none"><code class="language-none">.&#x2F;mdriver -V
+
+Testing mm malloc
+Reading tracefile: amptjp-bal.rep
+Could not open &#x2F;afs&#x2F;cs&#x2F;project&#x2F;ics2&#x2F;im&#x2F;labs&#x2F;malloclab&#x2F;traces&#x2F;amptjp-bal.rep in read_trace: No such file or directory<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>修改config.h中TRACEDIR为自己的TRACEDIR。</p>
+<p>运行方式：</p>
+<pre class="line-numbers language-none"><code class="language-none">make  &amp;&amp; .&#x2F;mdriver -V<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<h2 id="宏说明"><a href="#宏说明" class="headerlink" title="宏说明"></a>宏说明</h2><pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token comment">/* Pack a size and allocated bit into a word */</span>
+<span class="token comment">// #define PACK(size, alloc)  ((size) | (alloc)) //line:vm:mm:pack</span>
+<span class="token comment">// 第一位记录是否alloc, 第二位记录前一个位置是否alloc</span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">define</span> <span class="token macro-name function">PACK</span><span class="token expression"><span class="token punctuation">(</span>size<span class="token punctuation">,</span> alloc<span class="token punctuation">,</span> prev_alloc<span class="token punctuation">)</span>  <span class="token punctuation">(</span><span class="token punctuation">(</span>size<span class="token punctuation">)</span> <span class="token operator">|</span> <span class="token punctuation">(</span>alloc<span class="token punctuation">)</span> <span class="token operator">|</span> <span class="token punctuation">(</span><span class="token punctuation">(</span>prev_alloc<span class="token punctuation">)</span> <span class="token operator">&lt;&lt;</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">)</span> </span><span class="token comment">//line:vm:mm:pack</span></span>
+<span class="token comment">// 获得第二位, 判断前一个块是否alloc</span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">define</span> <span class="token macro-name function">IS_PREV_ALLOC</span><span class="token expression"><span class="token punctuation">(</span>p<span class="token punctuation">)</span>    <span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token function">GET</span><span class="token punctuation">(</span>p<span class="token punctuation">)</span> <span class="token operator">>></span> <span class="token number">1</span><span class="token punctuation">)</span> <span class="token operator">&amp;</span> <span class="token number">0x1</span><span class="token punctuation">)</span></span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>由于内存块是按字节对齐的，所以最后三位为0，利用最后一位标记当前内存块是否alloc，倒数第二位标记前一个内存卡是否alloc。</p>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token comment">/* Read and write a word at address p */</span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">define</span> <span class="token macro-name function">GET</span><span class="token expression"><span class="token punctuation">(</span>p<span class="token punctuation">)</span>       <span class="token punctuation">(</span><span class="token operator">*</span><span class="token punctuation">(</span><span class="token keyword">unsigned</span> <span class="token keyword">int</span> <span class="token operator">*</span><span class="token punctuation">)</span><span class="token punctuation">(</span>p<span class="token punctuation">)</span><span class="token punctuation">)</span>            </span><span class="token comment">//line:vm:mm:get</span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">define</span> <span class="token macro-name function">PUT</span><span class="token expression"><span class="token punctuation">(</span>p<span class="token punctuation">,</span> val<span class="token punctuation">)</span>  <span class="token punctuation">(</span><span class="token operator">*</span><span class="token punctuation">(</span><span class="token keyword">unsigned</span> <span class="token keyword">int</span> <span class="token operator">*</span><span class="token punctuation">)</span><span class="token punctuation">(</span>p<span class="token punctuation">)</span> <span class="token operator">=</span> <span class="token punctuation">(</span>val<span class="token punctuation">)</span><span class="token punctuation">)</span>    </span><span class="token comment">//line:vm:mm:put</span></span>
+
+<span class="token comment">/* Read the size and allocated fields from address p */</span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">define</span> <span class="token macro-name function">GET_SIZE</span><span class="token expression"><span class="token punctuation">(</span>p<span class="token punctuation">)</span>  <span class="token punctuation">(</span><span class="token function">GET</span><span class="token punctuation">(</span>p<span class="token punctuation">)</span> <span class="token operator">&amp;</span> <span class="token operator">~</span><span class="token number">0x7</span><span class="token punctuation">)</span>                   </span><span class="token comment">//line:vm:mm:getsize</span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">define</span> <span class="token macro-name function">GET_ALLOC</span><span class="token expression"><span class="token punctuation">(</span>p<span class="token punctuation">)</span> <span class="token punctuation">(</span><span class="token function">GET</span><span class="token punctuation">(</span>p<span class="token punctuation">)</span> <span class="token operator">&amp;</span> <span class="token number">0x1</span><span class="token punctuation">)</span>                    </span><span class="token comment">//line:vm:mm:getalloc</span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>GET获得头部（4字节），PUT设置头部4字节，头部前三个字节记录块大小。</p>
+<p>说明：</p>
+<ul>
+<li>块大小包括首部尾部；</li>
+</ul>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token comment">/* Given block ptr bp, compute address of its header and footer */</span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">define</span> <span class="token macro-name function">HDRP</span><span class="token expression"><span class="token punctuation">(</span>bp<span class="token punctuation">)</span>       <span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token keyword">char</span> <span class="token operator">*</span><span class="token punctuation">)</span><span class="token punctuation">(</span>bp<span class="token punctuation">)</span> <span class="token operator">-</span> WSIZE<span class="token punctuation">)</span>                      </span><span class="token comment">//line:vm:mm:hdrp</span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">define</span> <span class="token macro-name function">FTRP</span><span class="token expression"><span class="token punctuation">(</span>bp<span class="token punctuation">)</span>       <span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token keyword">char</span> <span class="token operator">*</span><span class="token punctuation">)</span><span class="token punctuation">(</span>bp<span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token function">GET_SIZE</span><span class="token punctuation">(</span><span class="token function">HDRP</span><span class="token punctuation">(</span>bp<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token operator">-</span> DSIZE<span class="token punctuation">)</span> </span><span class="token comment">//line:vm:mm:ftrp</span></span>
+
+<span class="token comment">/* Given block ptr bp, compute address of next and previous blocks */</span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">define</span> <span class="token macro-name function">NEXT_BLKP</span><span class="token expression"><span class="token punctuation">(</span>bp<span class="token punctuation">)</span>  <span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token keyword">char</span> <span class="token operator">*</span><span class="token punctuation">)</span><span class="token punctuation">(</span>bp<span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token function">GET_SIZE</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token keyword">char</span> <span class="token operator">*</span><span class="token punctuation">)</span><span class="token punctuation">(</span>bp<span class="token punctuation">)</span> <span class="token operator">-</span> WSIZE<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span> </span><span class="token comment">//line:vm:mm:nextblkp</span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">define</span> <span class="token macro-name function">PREV_BLKP</span><span class="token expression"><span class="token punctuation">(</span>bp<span class="token punctuation">)</span>  <span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token keyword">char</span> <span class="token operator">*</span><span class="token punctuation">)</span><span class="token punctuation">(</span>bp<span class="token punctuation">)</span> <span class="token operator">-</span> <span class="token function">GET_SIZE</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token keyword">char</span> <span class="token operator">*</span><span class="token punctuation">)</span><span class="token punctuation">(</span>bp<span class="token punctuation">)</span> <span class="token operator">-</span> DSIZE<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span> </span><span class="token comment">//line:vm:mm:prevblkp</span></span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>bp指向有效载荷的第一位，HDRP指向head的位置，FTRP指向foot的位置，NEXT_BLKP指向后一个块的bp位置，PREV_BLKP指向前一个块的bp位置。</p>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token comment">/* Global variables */</span>
+<span class="token keyword">static</span> <span class="token keyword">char</span> <span class="token operator">*</span>heap_listp <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>  <span class="token comment">/* Pointer to first block */</span> 
+<span class="token keyword">static</span> <span class="token keyword">char</span> <span class="token operator">*</span>rover<span class="token punctuation">;</span>           <span class="token comment">/* Next fit rover */</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+<p>heap_listp指向第一个块，rover指向前一次内存分配的位置。</p>
+<h2 id="代码说明"><a href="#代码说明" class="headerlink" title="代码说明"></a>代码说明</h2><p>辅助函数：</p>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token operator">*</span><span class="token function">extend_heap</span><span class="token punctuation">(</span><span class="token class-name">size_t</span> words<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">place</span><span class="token punctuation">(</span><span class="token keyword">void</span> <span class="token operator">*</span>bp<span class="token punctuation">,</span> <span class="token class-name">size_t</span> asize<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token operator">*</span><span class="token function">find_fit</span><span class="token punctuation">(</span><span class="token class-name">size_t</span> asize<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token operator">*</span><span class="token function">coalesce</span><span class="token punctuation">(</span><span class="token keyword">void</span> <span class="token operator">*</span>bp<span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+<p>核心函数：</p>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">int</span> <span class="token function">mm_init</span><span class="token punctuation">(</span><span class="token keyword">void</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">void</span> <span class="token operator">*</span><span class="token function">mm_malloc</span><span class="token punctuation">(</span><span class="token class-name">size_t</span> size<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">void</span> <span class="token function">mm_free</span><span class="token punctuation">(</span><span class="token keyword">void</span> <span class="token operator">*</span>bp<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">void</span> <span class="token operator">*</span><span class="token function">mm_realloc</span><span class="token punctuation">(</span><span class="token keyword">void</span> <span class="token operator">*</span>ptr<span class="token punctuation">,</span> <span class="token class-name">size_t</span> size<span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+<p>该版本实现的功能如下：</p>
+<ul>
+<li>下一次适配；</li>
+<li>空闲块需要脚部，已分配块只需要头部，见9.9.11；</li>
+</ul>
+<h3 id="mm-init"><a href="#mm-init" class="headerlink" title="mm_init"></a>mm_init</h3><p>初始化函数，注意对齐块，序言块和结尾块：</p>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token comment">/* 
+ * mm_init - initialize the malloc package.
+ */</span>
+<span class="token keyword">int</span> <span class="token function">mm_init</span><span class="token punctuation">(</span><span class="token keyword">void</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token comment">// 填充字(WSIZE) + 序言块(2*WSIZE) + 结尾块(WSIZE)</span>
+    <span class="token comment">// 如果产生错误, 则返回-1</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token punctuation">(</span>heap_listp <span class="token operator">=</span> <span class="token function">mem_sbrk</span><span class="token punctuation">(</span><span class="token number">4</span> <span class="token operator">*</span> WSIZE<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token operator">==</span> <span class="token punctuation">(</span><span class="token keyword">void</span> <span class="token operator">*</span><span class="token punctuation">)</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+        <span class="token keyword">return</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+    <span class="token comment">// 对齐块</span>
+    <span class="token function">PUT</span><span class="token punctuation">(</span>heap_listp<span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token comment">// 序言块</span>
+    <span class="token function">PUT</span><span class="token punctuation">(</span>heap_listp <span class="token operator">+</span> <span class="token punctuation">(</span><span class="token number">1</span> <span class="token operator">*</span> WSIZE<span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token function">PACK</span><span class="token punctuation">(</span>DSIZE<span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">PUT</span><span class="token punctuation">(</span>heap_listp <span class="token operator">+</span> <span class="token punctuation">(</span><span class="token number">2</span> <span class="token operator">*</span> WSIZE<span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token function">PACK</span><span class="token punctuation">(</span>DSIZE<span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token comment">// 结尾块</span>
+    <span class="token function">PUT</span><span class="token punctuation">(</span>heap_listp <span class="token operator">+</span> <span class="token punctuation">(</span><span class="token number">3</span> <span class="token operator">*</span> WSIZE<span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token function">PACK</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token comment">// 指向第二个序言块</span>
+    heap_listp <span class="token operator">+=</span> <span class="token punctuation">(</span><span class="token number">2</span> <span class="token operator">*</span> WSIZE<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    rover <span class="token operator">=</span> heap_listp<span class="token punctuation">;</span>
+
+    <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">extend_heap</span><span class="token punctuation">(</span>CHUNKSIZE <span class="token operator">/</span> WSIZE<span class="token punctuation">)</span> <span class="token operator">==</span> <span class="token constant">NULL</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">return</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+
+    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h3 id="mm-malloc"><a href="#mm-malloc" class="headerlink" title="mm_malloc"></a>mm_malloc</h3><p>size指有效载荷大小，注意申请空间时需要头部尾部：</p>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">void</span> <span class="token operator">*</span><span class="token function">mm_malloc</span><span class="token punctuation">(</span><span class="token class-name">size_t</span> size<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token class-name">size_t</span> asize<span class="token punctuation">;</span>
+    <span class="token class-name">size_t</span> extendsize<span class="token punctuation">;</span>
+    <span class="token keyword">char</span> <span class="token operator">*</span>bp<span class="token punctuation">;</span>
+
+    <span class="token comment">// 第一次malloc</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>heap_listp <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token function">mm_init</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+
+    <span class="token comment">// 忽略空申请</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>size <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">return</span> <span class="token constant">NULL</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>size <span class="token operator">&lt;=</span> WSIZE<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token comment">// head + content + 8字节对齐</span>
+        <span class="token comment">// 4 + 4</span>
+        asize <span class="token operator">=</span> DSIZE<span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span><span class="token keyword">else</span> <span class="token punctuation">&#123;</span> 
+        <span class="token comment">// head + 8字节对齐</span>
+        asize <span class="token operator">=</span> DSIZE <span class="token operator">*</span> <span class="token punctuation">(</span><span class="token punctuation">(</span>size <span class="token operator">+</span> <span class="token punctuation">(</span>WSIZE<span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token punctuation">(</span>DSIZE <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token operator">/</span> DSIZE<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+    <span class="token comment">// head + foot + 对齐</span>
+    <span class="token comment">// asize = DSIZE + DSIZE * ((size + (DSIZE - 1)) / DSIZE);</span>
+
+    <span class="token comment">// 如果没找到合适的块, 则申请额外空间</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token punctuation">(</span>bp <span class="token operator">=</span> <span class="token function">find_fit</span><span class="token punctuation">(</span>asize<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token operator">==</span> <span class="token constant">NULL</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        extendsize <span class="token operator">=</span> <span class="token function">MAX</span><span class="token punctuation">(</span>asize<span class="token punctuation">,</span> CHUNKSIZE<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token comment">// 无法申请到空间</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token punctuation">(</span>bp <span class="token operator">=</span> <span class="token function">extend_heap</span><span class="token punctuation">(</span>extendsize <span class="token operator">/</span> WSIZE<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token operator">==</span> <span class="token constant">NULL</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+            <span class="token keyword">return</span> <span class="token constant">NULL</span><span class="token punctuation">;</span>
+        <span class="token punctuation">&#125;</span>
+    <span class="token punctuation">&#125;</span>
+
+    <span class="token comment">// 设置块</span>
+    <span class="token function">place</span><span class="token punctuation">(</span>bp<span class="token punctuation">,</span> asize<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">return</span> bp<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h3 id="mm-free"><a href="#mm-free" class="headerlink" title="mm_free"></a>mm_free</h3><pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">void</span> <span class="token function">mm_free</span><span class="token punctuation">(</span><span class="token keyword">void</span> <span class="token operator">*</span>bp<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>bp <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">return</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+
+    <span class="token class-name">size_t</span> size <span class="token operator">=</span> <span class="token function">GET_SIZE</span><span class="token punctuation">(</span><span class="token function">HDRP</span><span class="token punctuation">(</span>bp<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token comment">// 如果为空则申请</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>heap_listp <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token function">mm_init</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+
+    <span class="token comment">// 更新cur bp</span>
+    <span class="token function">PUT</span><span class="token punctuation">(</span><span class="token function">HDRP</span><span class="token punctuation">(</span>bp<span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token function">PACK</span><span class="token punctuation">(</span>size<span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token function">IS_PREV_ALLOC</span><span class="token punctuation">(</span><span class="token function">HDRP</span><span class="token punctuation">(</span>bp<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">PUT</span><span class="token punctuation">(</span><span class="token function">FTRP</span><span class="token punctuation">(</span>bp<span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token function">PACK</span><span class="token punctuation">(</span>size<span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token function">IS_PREV_ALLOC</span><span class="token punctuation">(</span><span class="token function">HDRP</span><span class="token punctuation">(</span>bp<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token comment">// 更新next bp</span>
+    <span class="token keyword">void</span> <span class="token operator">*</span>next <span class="token operator">=</span> <span class="token function">NEXT_BLKP</span><span class="token punctuation">(</span>bp<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token class-name">size_t</span> next_size <span class="token operator">=</span> <span class="token function">GET_SIZE</span><span class="token punctuation">(</span><span class="token function">HDRP</span><span class="token punctuation">(</span>next<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">GET_ALLOC</span><span class="token punctuation">(</span><span class="token function">HDRP</span><span class="token punctuation">(</span>next<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token comment">// 注意alloc没有foot</span>
+        <span class="token function">PUT</span><span class="token punctuation">(</span><span class="token function">HDRP</span><span class="token punctuation">(</span>next<span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token function">PACK</span><span class="token punctuation">(</span>next_size<span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span><span class="token keyword">else</span> <span class="token punctuation">&#123;</span>
+        <span class="token function">PUT</span><span class="token punctuation">(</span><span class="token function">HDRP</span><span class="token punctuation">(</span>next<span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token function">PACK</span><span class="token punctuation">(</span>next_size<span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token function">PUT</span><span class="token punctuation">(</span><span class="token function">FTRP</span><span class="token punctuation">(</span>next<span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token function">PACK</span><span class="token punctuation">(</span>next_size<span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+    
+    <span class="token function">coalesce</span><span class="token punctuation">(</span>bp<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h3 id="mm-realloc"><a href="#mm-realloc" class="headerlink" title="mm_realloc"></a>mm_realloc</h3><p>参考课本的realloc：</p>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">void</span> <span class="token operator">*</span><span class="token function">mm_realloc</span><span class="token punctuation">(</span><span class="token keyword">void</span> <span class="token operator">*</span>ptr<span class="token punctuation">,</span> <span class="token class-name">size_t</span> size<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token class-name">size_t</span> oldsize<span class="token punctuation">;</span>
+    <span class="token keyword">void</span> <span class="token operator">*</span>newptr<span class="token punctuation">;</span>
+    
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>ptr <span class="token operator">==</span> <span class="token constant">NULL</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">return</span> <span class="token function">mm_malloc</span><span class="token punctuation">(</span>size<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>size <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token function">mm_free</span><span class="token punctuation">(</span>ptr<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+
+    newptr <span class="token operator">=</span> <span class="token function">mm_malloc</span><span class="token punctuation">(</span>size<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token comment">/* If realloc() fails the original block is left untouched  */</span>
+    <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token operator">!</span>newptr<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+
+    <span class="token comment">/* Copy the old data. */</span>
+    oldsize <span class="token operator">=</span> <span class="token function">GET_SIZE</span><span class="token punctuation">(</span><span class="token function">HDRP</span><span class="token punctuation">(</span>ptr<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">if</span><span class="token punctuation">(</span>size <span class="token operator">&lt;</span> oldsize<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        oldsize <span class="token operator">=</span> size<span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+    <span class="token function">memcpy</span><span class="token punctuation">(</span>newptr<span class="token punctuation">,</span> ptr<span class="token punctuation">,</span> oldsize<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token comment">/* Free the old block. */</span>
+    <span class="token function">mm_free</span><span class="token punctuation">(</span>ptr<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">return</span> newptr<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h3 id="extend-heap"><a href="#extend-heap" class="headerlink" title="extend_heap"></a>extend_heap</h3><pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token comment">// 给heap扩充空闲块, 返回块指针</span>
+<span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token operator">*</span><span class="token function">extend_heap</span><span class="token punctuation">(</span><span class="token class-name">size_t</span> words<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">char</span> <span class="token operator">*</span>bp<span class="token punctuation">;</span>
+    <span class="token class-name">size_t</span> size<span class="token punctuation">;</span>
+    <span class="token comment">// 2字对齐</span>
+    size <span class="token operator">=</span> <span class="token punctuation">(</span>words <span class="token operator">%</span> <span class="token number">2</span><span class="token punctuation">)</span> <span class="token operator">?</span> <span class="token punctuation">(</span>words <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">)</span> <span class="token operator">*</span> WSIZE <span class="token operator">:</span> words <span class="token operator">*</span> WSIZE<span class="token punctuation">;</span>
+    <span class="token comment">// 扩充失败</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token punctuation">(</span>bp <span class="token operator">=</span> <span class="token function">mem_sbrk</span><span class="token punctuation">(</span>size<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token operator">==</span> <span class="token punctuation">(</span><span class="token keyword">void</span> <span class="token operator">*</span><span class="token punctuation">)</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+        <span class="token keyword">return</span> <span class="token constant">NULL</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+
+    <span class="token comment">// 更新head, foot</span>
+    <span class="token function">PUT</span><span class="token punctuation">(</span><span class="token function">HDRP</span><span class="token punctuation">(</span>bp<span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token function">PACK</span><span class="token punctuation">(</span>size<span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token function">IS_PREV_ALLOC</span><span class="token punctuation">(</span><span class="token function">HDRP</span><span class="token punctuation">(</span>bp<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">PUT</span><span class="token punctuation">(</span><span class="token function">FTRP</span><span class="token punctuation">(</span>bp<span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token function">PACK</span><span class="token punctuation">(</span>size<span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token function">IS_PREV_ALLOC</span><span class="token punctuation">(</span><span class="token function">HDRP</span><span class="token punctuation">(</span>bp<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token comment">// 更新结尾块</span>
+    <span class="token function">PUT</span><span class="token punctuation">(</span><span class="token function">HDRP</span><span class="token punctuation">(</span><span class="token function">NEXT_BLKP</span><span class="token punctuation">(</span>bp<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token function">PACK</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+   
+    <span class="token comment">// 合并块</span>
+    <span class="token keyword">return</span> <span class="token function">coalesce</span><span class="token punctuation">(</span>bp<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h3 id="coalesce"><a href="#coalesce" class="headerlink" title="coalesce"></a>coalesce</h3><p>参考课本的函数即可，这里对prev_alloc进行了修改：</p>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token comment">// 合并块, 返回合并后的指针</span>
+<span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token operator">*</span><span class="token function">coalesce</span><span class="token punctuation">(</span><span class="token keyword">void</span> <span class="token operator">*</span>bp<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token comment">// size_t prev_alloc = GET_ALLOC(FTRP(PREV_BLKP(bp)));</span>
+    <span class="token class-name">size_t</span> prev_alloc <span class="token operator">=</span> <span class="token function">IS_PREV_ALLOC</span><span class="token punctuation">(</span><span class="token function">HDRP</span><span class="token punctuation">(</span>bp<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token class-name">size_t</span> next_alloc <span class="token operator">=</span> <span class="token function">GET_ALLOC</span><span class="token punctuation">(</span><span class="token function">HDRP</span><span class="token punctuation">(</span><span class="token function">NEXT_BLKP</span><span class="token punctuation">(</span>bp<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token class-name">size_t</span> size <span class="token operator">=</span> <span class="token function">GET_SIZE</span><span class="token punctuation">(</span><span class="token function">HDRP</span><span class="token punctuation">(</span>bp<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token comment">// free的前面为alloc</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>prev_alloc <span class="token operator">&amp;&amp;</span> next_alloc<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span> <span class="token comment">// afa</span>
+        <span class="token keyword">return</span> bp<span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span><span class="token keyword">else</span> <span class="token keyword">if</span> <span class="token punctuation">(</span>prev_alloc <span class="token operator">&amp;&amp;</span> <span class="token punctuation">(</span><span class="token operator">!</span>next_alloc<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span> <span class="token comment">// aff</span>
+        size <span class="token operator">+=</span> <span class="token function">GET_SIZE</span><span class="token punctuation">(</span><span class="token function">HDRP</span><span class="token punctuation">(</span><span class="token function">NEXT_BLKP</span><span class="token punctuation">(</span>bp<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token function">PUT</span><span class="token punctuation">(</span><span class="token function">HDRP</span><span class="token punctuation">(</span>bp<span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token function">PACK</span><span class="token punctuation">(</span>size<span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token function">PUT</span><span class="token punctuation">(</span><span class="token function">FTRP</span><span class="token punctuation">(</span>bp<span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token function">PACK</span><span class="token punctuation">(</span>size<span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span><span class="token keyword">else</span> <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token operator">!</span>prev_alloc<span class="token punctuation">)</span> <span class="token operator">&amp;&amp;</span> next_alloc<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span> <span class="token comment">// ffa</span>
+        size <span class="token operator">+=</span> <span class="token function">GET_SIZE</span><span class="token punctuation">(</span><span class="token function">HDRP</span><span class="token punctuation">(</span><span class="token function">PREV_BLKP</span><span class="token punctuation">(</span>bp<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token function">PUT</span><span class="token punctuation">(</span><span class="token function">FTRP</span><span class="token punctuation">(</span>bp<span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token function">PACK</span><span class="token punctuation">(</span>size<span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token function">PUT</span><span class="token punctuation">(</span><span class="token function">HDRP</span><span class="token punctuation">(</span><span class="token function">PREV_BLKP</span><span class="token punctuation">(</span>bp<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token function">PACK</span><span class="token punctuation">(</span>size<span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        bp <span class="token operator">=</span> <span class="token function">PREV_BLKP</span><span class="token punctuation">(</span>bp<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span><span class="token keyword">else</span> <span class="token punctuation">&#123;</span> <span class="token comment">// fff</span>
+        size <span class="token operator">+=</span> <span class="token function">GET_SIZE</span><span class="token punctuation">(</span><span class="token function">HDRP</span><span class="token punctuation">(</span><span class="token function">PREV_BLKP</span><span class="token punctuation">(</span>bp<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token function">GET_SIZE</span><span class="token punctuation">(</span><span class="token function">FTRP</span><span class="token punctuation">(</span><span class="token function">NEXT_BLKP</span><span class="token punctuation">(</span>bp<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token function">PUT</span><span class="token punctuation">(</span><span class="token function">HDRP</span><span class="token punctuation">(</span><span class="token function">PREV_BLKP</span><span class="token punctuation">(</span>bp<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token function">PACK</span><span class="token punctuation">(</span>size<span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token function">PUT</span><span class="token punctuation">(</span><span class="token function">FTRP</span><span class="token punctuation">(</span><span class="token function">NEXT_BLKP</span><span class="token punctuation">(</span>bp<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token function">PACK</span><span class="token punctuation">(</span>size<span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        bp <span class="token operator">=</span> <span class="token function">PREV_BLKP</span><span class="token punctuation">(</span>bp<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+
+    <span class="token comment">// 更新下一次适配的指针</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token punctuation">(</span>rover <span class="token operator">></span> <span class="token punctuation">(</span><span class="token keyword">char</span> <span class="token operator">*</span><span class="token punctuation">)</span>bp<span class="token punctuation">)</span> <span class="token operator">&amp;&amp;</span> <span class="token punctuation">(</span>rover <span class="token operator">&lt;</span> <span class="token function">NEXT_BLKP</span><span class="token punctuation">(</span>bp<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        rover <span class="token operator">=</span> bp<span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+
+    <span class="token keyword">return</span> bp<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h3 id="find-fit"><a href="#find-fit" class="headerlink" title="find_fit"></a>find_fit</h3><pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token comment">// 下一次适配</span>
+<span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token operator">*</span><span class="token function">find_fit</span><span class="token punctuation">(</span><span class="token class-name">size_t</span> asize<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">char</span> <span class="token operator">*</span>oldrover <span class="token operator">=</span> rover<span class="token punctuation">;</span>
+
+    <span class="token comment">// 从上次匹配的地址开始找</span>
+    <span class="token keyword">for</span> <span class="token punctuation">(</span> <span class="token punctuation">;</span> <span class="token function">GET_SIZE</span><span class="token punctuation">(</span><span class="token function">HDRP</span><span class="token punctuation">(</span>rover<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token operator">></span> <span class="token number">0</span><span class="token punctuation">;</span> rover <span class="token operator">=</span> <span class="token function">NEXT_BLKP</span><span class="token punctuation">(</span>rover<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span><span class="token function">GET_ALLOC</span><span class="token punctuation">(</span><span class="token function">HDRP</span><span class="token punctuation">(</span>rover<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token operator">&amp;&amp;</span> <span class="token punctuation">(</span>asize <span class="token operator">&lt;=</span> <span class="token function">GET_SIZE</span><span class="token punctuation">(</span><span class="token function">HDRP</span><span class="token punctuation">(</span>rover<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+            <span class="token keyword">return</span> rover<span class="token punctuation">;</span>
+        <span class="token punctuation">&#125;</span>
+    <span class="token punctuation">&#125;</span>
+
+    <span class="token comment">// 如果没找到则从头开始</span>
+    <span class="token keyword">void</span> <span class="token operator">*</span>bp<span class="token punctuation">;</span>
+    <span class="token keyword">for</span> <span class="token punctuation">(</span>rover <span class="token operator">=</span> heap_listp<span class="token punctuation">;</span> rover <span class="token operator">&lt;</span> oldrover<span class="token punctuation">;</span> rover <span class="token operator">=</span> <span class="token function">NEXT_BLKP</span><span class="token punctuation">(</span>rover<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span><span class="token function">GET_ALLOC</span><span class="token punctuation">(</span><span class="token function">HDRP</span><span class="token punctuation">(</span>rover<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token operator">&amp;&amp;</span> <span class="token punctuation">(</span>asize <span class="token operator">&lt;=</span> <span class="token function">GET_SIZE</span><span class="token punctuation">(</span><span class="token function">HDRP</span><span class="token punctuation">(</span>rover<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+            <span class="token keyword">return</span> rover<span class="token punctuation">;</span>
+        <span class="token punctuation">&#125;</span>
+    <span class="token punctuation">&#125;</span>
+
+    <span class="token comment">// 没找到则返回null</span>
+    <span class="token keyword">return</span> <span class="token constant">NULL</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h3 id="place"><a href="#place" class="headerlink" title="place"></a>place</h3><pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token comment">// 设置块, 如果块大小大于申请大小 + 2 * DSIZE, 则划分块, 不用设置脚步</span>
+<span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">place</span><span class="token punctuation">(</span><span class="token keyword">void</span> <span class="token operator">*</span>bp<span class="token punctuation">,</span> <span class="token class-name">size_t</span> asize<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token comment">// 保证csize >= asize</span>
+    <span class="token class-name">size_t</span> csize <span class="token operator">=</span> <span class="token function">GET_SIZE</span><span class="token punctuation">(</span><span class="token function">HDRP</span><span class="token punctuation">(</span>bp<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    
+    <span class="token comment">// 有问题</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>csize <span class="token operator">>=</span> asize <span class="token operator">+</span> <span class="token punctuation">(</span><span class="token number">2</span> <span class="token operator">*</span> DSIZE<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token comment">// 划分, 设置剩余部分为未划分</span>
+        <span class="token comment">// 标记为alloc, free前面为alloc</span>
+        <span class="token function">PUT</span><span class="token punctuation">(</span><span class="token function">HDRP</span><span class="token punctuation">(</span>bp<span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token function">PACK</span><span class="token punctuation">(</span>asize<span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token comment">// PUT(FTRP(bp), PACK(asize, 1));</span>
+        bp <span class="token operator">=</span> <span class="token function">NEXT_BLKP</span><span class="token punctuation">(</span>bp<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token function">PUT</span><span class="token punctuation">(</span><span class="token function">HDRP</span><span class="token punctuation">(</span>bp<span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token function">PACK</span><span class="token punctuation">(</span>csize <span class="token operator">-</span> asize<span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token function">PUT</span><span class="token punctuation">(</span><span class="token function">FTRP</span><span class="token punctuation">(</span>bp<span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token function">PACK</span><span class="token punctuation">(</span>csize <span class="token operator">-</span> asize<span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span><span class="token keyword">else</span> <span class="token punctuation">&#123;</span>
+        <span class="token comment">// </span>
+        <span class="token function">PUT</span><span class="token punctuation">(</span><span class="token function">HDRP</span><span class="token punctuation">(</span>bp<span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token function">PACK</span><span class="token punctuation">(</span>csize<span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">void</span> <span class="token operator">*</span>next_bp <span class="token operator">=</span> <span class="token function">NEXT_BLKP</span><span class="token punctuation">(</span>bp<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token class-name">size_t</span> size <span class="token operator">=</span> <span class="token function">GET_SIZE</span><span class="token punctuation">(</span><span class="token function">HDRP</span><span class="token punctuation">(</span>next_bp<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token function">PUT</span><span class="token punctuation">(</span><span class="token function">HDRP</span><span class="token punctuation">(</span>next_bp<span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token function">PACK</span><span class="token punctuation">(</span>size<span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token comment">// PUT(FTRP(bp), PACK(csize, 1));</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h2 id="实验结果"><a href="#实验结果" class="headerlink" title="实验结果"></a>实验结果</h2><p>当前版本：</p>
+<pre class="line-numbers language-none"><code class="language-none">trace  valid  util     ops      secs  Kops
+ 0       yes   90%    5694  0.001748  3258
+ 1       yes   92%    5848  0.001267  4616
+ 2       yes   95%    6648  0.004152  1601
+ 3       yes   96%    5380  0.004113  1308
+ 4       yes   66%   14400  0.000156 92072
+ 5       yes   91%    4800  0.004463  1076
+ 6       yes   89%    4800  0.004313  1113
+ 7       yes   55%   12000  0.020264   592
+ 8       yes   51%   24000  0.009431  2545
+ 9       yes   27%   14401  0.124472   116
+10       yes   34%   14401  0.002566  5611
+Total          71%  112372  0.176945   635
+
+Perf index &#x3D; 43 (util) + 40 (thru) &#x3D; 83&#x2F;100<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>课本版本（首次适配）：</p>
+<pre class="line-numbers language-none"><code class="language-none">Results for mm malloc:
+trace  valid  util     ops      secs  Kops
+ 0       yes   99%    5694  0.006908   824
+ 1       yes   99%    5848  0.005984   977
+ 2       yes   99%    6648  0.010540   631
+ 3       yes  100%    5380  0.007576   710
+ 4       yes   66%   14400  0.000112128917
+ 5       yes   92%    4800  0.006536   734
+ 6       yes   92%    4800  0.006056   793
+ 7       yes   55%   12000  0.140259    86
+ 8       yes   51%   24000  0.258947    93
+ 9       yes   27%   14401  0.097961   147
+10       yes   34%   14401  0.002108  6833
+Total          74%  112372  0.542987   207
+
+Perf index &#x3D; 44 (util) + 14 (thru) &#x3D; 58&#x2F;100<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>下一次适配：</p>
+<pre class="line-numbers language-none"><code class="language-none">Results for mm malloc:
+trace  valid  util     ops      secs  Kops
+ 0       yes   91%    5694  0.001704  3342
+ 1       yes   92%    5848  0.001098  5328
+ 2       yes   95%    6648  0.003192  2083
+ 3       yes   97%    5380  0.003308  1627
+ 4       yes   66%   14400  0.000094153191
+ 5       yes   91%    4800  0.003757  1278
+ 6       yes   89%    4800  0.003610  1330
+ 7       yes   55%   12000  0.014973   801
+ 8       yes   51%   24000  0.007385  3250
+ 9       yes   27%   14401  0.097140   148
+10       yes   45%   14401  0.002111  6822
+Total          73%  112372  0.138371   812
+
+Perf index &#x3D; 44 (util) + 40 (thru) &#x3D; 84&#x2F;100<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">Doraemonzzz</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="http://www.doraemonzzz.com/2021/09/15/2021-9-15-CMU-15-213-Lab6-Malloc-Lab/">http://www.doraemonzzz.com/2021/09/15/2021-9-15-CMU-15-213-Lab6-Malloc-Lab/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://www.doraemonzzz.com" target="_blank">Doraemonzzz</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/CMU-15-213/">CMU 15-213</a></div><div class="post_share"><div class="social-share" data-image="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="next-post pull-full"><a href="/2021/09/14/2021-9-14-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E7%AC%AC9%E7%AB%A0-%E8%99%9A%E6%8B%9F%E5%86%85%E5%AD%98/"><img class="next-cover" src= "/img/loading.gif" data-lazy-src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">深入理解计算机系统 第9章 虚拟内存</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span> 相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2020/04/30/CMU 15-213 Intro to Computer Systems Lecture 1/" title="CMU 15-213 Intro to Computer Systems Lecture 1"><img class="cover" src= "/img/loading.gif" data-lazy-src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-04-30</div><div class="title">CMU 15-213 Intro to Computer Systems Lecture 1</div></div></a></div><div><a href="/2020/06/10/CMU 15-213 Intro to Computer Systems Lecture 12/" title="CMU 15-213 Intro to Computer Systems Lecture 12"><img class="cover" src= "/img/loading.gif" data-lazy-src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-06-10</div><div class="title">CMU 15-213 Intro to Computer Systems Lecture 12</div></div></a></div><div><a href="/2020/06/08/CMU 15-213 Intro to Computer Systems Lecture 10/" title="CMU 15-213 Intro to Computer Systems Lecture 10"><img class="cover" src= "/img/loading.gif" data-lazy-src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-06-08</div><div class="title">CMU 15-213 Intro to Computer Systems Lecture 10</div></div></a></div><div><a href="/2020/06/09/CMU 15-213 Intro to Computer Systems Lecture 11/" title="CMU 15-213 Intro to Computer Systems Lecture 11"><img class="cover" src= "/img/loading.gif" data-lazy-src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-06-09</div><div class="title">CMU 15-213 Intro to Computer Systems Lecture 11</div></div></a></div><div><a href="/2020/06/16/CMU 15-213 Intro to Computer Systems Lecture 13/" title="CMU 15-213 Intro to Computer Systems Lecture 13"><img class="cover" src= "/img/loading.gif" data-lazy-src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-06-16</div><div class="title">CMU 15-213 Intro to Computer Systems Lecture 13</div></div></a></div><div><a href="/2020/05/01/CMU 15-213 Intro to Computer Systems Lecture 2/" title="CMU 15-213 Intro to Computer Systems Lecture 2"><img class="cover" src= "/img/loading.gif" data-lazy-src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-05-01</div><div class="title">CMU 15-213 Intro to Computer Systems Lecture 2</div></div></a></div></div></div><hr/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div><div id="comment-switch"><span class="first-comment">Valine</span><span class="switch-btn"></span><span class="second-comment">Livere</span></div></div><div class="comment-wrap"><div><div class="vcomment" id="vcomment"></div></div><div><div id="lv-container" data-id="city" data-uid="MTAyMC8zNDcxOS8xMTI1Ng=="></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="card-info-avatar is-center"><img class="avatar-img" src= "/img/loading.gif" data-lazy-src="https://github.com/Doraemonzzz/md-photo/blob/master/%E5%A4%B4%E5%83%8F.jpg?raw=true" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/><div class="author-info__name">Doraemonzzz</div><div class="author-info__description">个人博客，主要记录有关机器学习，数学以及计算机科学的笔记</div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">657</div></a></div><div class="card-info-data-item is-center"><a href="/tags/"><div class="headline">标签</div><div class="length-num">68</div></a></div><div class="card-info-data-item is-center"><a href="/categories/"><div class="headline">分类</div><div class="length-num">26</div></a></div></div><a class="button--animated" id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/Doraemonzzz"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/Doraemonzzz" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="/doraemon_zzz@163.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a><a class="social-icon" href="https://space.bilibili.com/291079982" target="_blank" title="Bilibili"><i class="iconfont icon-bilibili"></i></a><a class="social-icon" href="/atom.xml" target="_blank" title=""><i class="fa fa-rss"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn card-announcement-animation"></i><span>公告</span></div><div class="announcement_content">暂无公告</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%87%86%E5%A4%87%E5%B7%A5%E4%BD%9C"><span class="toc-number">1.</span> <span class="toc-text">准备工作</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%8F%E8%AF%B4%E6%98%8E"><span class="toc-number">2.</span> <span class="toc-text">宏说明</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%A3%E7%A0%81%E8%AF%B4%E6%98%8E"><span class="toc-number">3.</span> <span class="toc-text">代码说明</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#mm-init"><span class="toc-number">3.1.</span> <span class="toc-text">mm_init</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#mm-malloc"><span class="toc-number">3.2.</span> <span class="toc-text">mm_malloc</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#mm-free"><span class="toc-number">3.3.</span> <span class="toc-text">mm_free</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#mm-realloc"><span class="toc-number">3.4.</span> <span class="toc-text">mm_realloc</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#extend-heap"><span class="toc-number">3.5.</span> <span class="toc-text">extend_heap</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#coalesce"><span class="toc-number">3.6.</span> <span class="toc-text">coalesce</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#find-fit"><span class="toc-number">3.7.</span> <span class="toc-text">find_fit</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#place"><span class="toc-number">3.8.</span> <span class="toc-text">place</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%9E%E9%AA%8C%E7%BB%93%E6%9E%9C"><span class="toc-number">4.</span> <span class="toc-text">实验结果</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2021/09/15/2021-9-15-CMU-15-213-Lab6-Malloc-Lab/" title="CMU 15-213 Lab6 Malloc Lab"><img src= "/img/loading.gif" data-lazy-src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="CMU 15-213 Lab6 Malloc Lab"/></a><div class="content"><a class="title" href="/2021/09/15/2021-9-15-CMU-15-213-Lab6-Malloc-Lab/" title="CMU 15-213 Lab6 Malloc Lab">CMU 15-213 Lab6 Malloc Lab</a><time datetime="2021-09-14T16:07:00.000Z" title="发表于 2021-09-15 00:07:00">2021-09-15</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/09/14/2021-9-14-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E7%AC%AC9%E7%AB%A0-%E8%99%9A%E6%8B%9F%E5%86%85%E5%AD%98/" title="深入理解计算机系统 第9章 虚拟内存"><img src= "/img/loading.gif" data-lazy-src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="深入理解计算机系统 第9章 虚拟内存"/></a><div class="content"><a class="title" href="/2021/09/14/2021-9-14-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E7%AC%AC9%E7%AB%A0-%E8%99%9A%E6%8B%9F%E5%86%85%E5%AD%98/" title="深入理解计算机系统 第9章 虚拟内存">深入理解计算机系统 第9章 虚拟内存</a><time datetime="2021-09-14T14:44:00.000Z" title="发表于 2021-09-14 22:44:00">2021-09-14</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/09/12/2021-9-12-%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E4%B8%ADbatch-size,-update-freq%E4%BB%A5%E5%8F%8A%E5%A4%9A%E5%8D%A1%E7%9A%84%E5%85%B3%E7%B3%BB/" title="深度学习中batch size, update freq以及多卡的关系"><img src= "/img/loading.gif" data-lazy-src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="深度学习中batch size, update freq以及多卡的关系"/></a><div class="content"><a class="title" href="/2021/09/12/2021-9-12-%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E4%B8%ADbatch-size,-update-freq%E4%BB%A5%E5%8F%8A%E5%A4%9A%E5%8D%A1%E7%9A%84%E5%85%B3%E7%B3%BB/" title="深度学习中batch size, update freq以及多卡的关系">深度学习中batch size, update freq以及多卡的关系</a><time datetime="2021-09-12T02:11:00.000Z" title="发表于 2021-09-12 10:11:00">2021-09-12</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/09/09/2021-9-9-RSA%E5%8A%A0%E5%AF%86%E7%AE%80%E4%BB%8B/" title="RSA加密简介"><img src= "/img/loading.gif" data-lazy-src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="RSA加密简介"/></a><div class="content"><a class="title" href="/2021/09/09/2021-9-9-RSA%E5%8A%A0%E5%AF%86%E7%AE%80%E4%BB%8B/" title="RSA加密简介">RSA加密简介</a><time datetime="2021-09-09T15:00:50.000Z" title="发表于 2021-09-09 23:00:50">2021-09-09</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/09/07/2021-9-7-%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A8%8B%E5%BA%8F%E7%9A%84%E6%9E%84%E9%80%A0%E5%92%8C%E8%A7%A3%E9%87%8A(SICP)-Assignment-6-Prisoners-dilemma/" title="计算机程序的构造和解释(SICP) Assignment 6 Prisoner's dilemma"><img src= "/img/loading.gif" data-lazy-src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="计算机程序的构造和解释(SICP) Assignment 6 Prisoner's dilemma"/></a><div class="content"><a class="title" href="/2021/09/07/2021-9-7-%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A8%8B%E5%BA%8F%E7%9A%84%E6%9E%84%E9%80%A0%E5%92%8C%E8%A7%A3%E9%87%8A(SICP)-Assignment-6-Prisoners-dilemma/" title="计算机程序的构造和解释(SICP) Assignment 6 Prisoner's dilemma">计算机程序的构造和解释(SICP) Assignment 6 Prisoner's dilemma</a><time datetime="2021-09-07T15:43:00.000Z" title="发表于 2021-09-07 23:43:00">2021-09-07</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2018 - 2021 By Doraemonzzz</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="font-plus" type="button" title="放大字体"><i class="fas fa-plus"></i></button><button id="font-minus" type="button" title="缩小字体"><i class="fas fa-minus"></i></button><button id="translateLink" type="button" title="简繁转换">简</button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div id="local-search"><div class="search-dialog"><div class="search-dialog__title" id="local-search-title">本地搜索</div><div id="local-input-panel"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div></div><hr/><div id="local-search-results"></div><span class="search-close-button"><i class="fas fa-times"></i></span></div><div id="search-mask"></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="/js/tw_cn.js"></script><script src="https://cdn.jsdelivr.net/npm/vanilla-lazyload/dist/lazyload.iife.min.js"></script><script src="/js/search/local-search.js"></script><script>var preloader = {
+  endLoading: () => {
+    document.body.style.overflow = 'auto';
+    document.getElementById('loading-box').classList.add("loaded")
+  },
+  initLoading: () => {
+    document.body.style.overflow = '';
+    document.getElementById('loading-box').classList.remove("loaded")
+
+  }
+}
+window.addEventListener('load',preloader.endLoading())</script><div class="js-pjax"><script>if (!window.MathJax) {
+  window.MathJax = {
+    tex: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]],
+      tags: 'ams'
+    },
+    chtml: {
+      scale: 1.25
+    },
+    options: {
+      renderActions: {
+        findScript: [10, doc => {
+          for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+            const display = !!node.type.match(/; *mode=display/)
+            const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+            const text = document.createTextNode('')
+            node.parentNode.replaceChild(text, node)
+            math.start = {node: text, delim: '', n: 0}
+            math.end = {node: text, delim: '', n: 0}
+            doc.math.push(math)
+          }
+        }, '']
+      }
+    }
+  }
+  
+  const script = document.createElement('script')
+  script.src = 'https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js'
+  script.id = 'MathJax-script'
+  script.async = true
+  document.head.appendChild(script)
+} else {
+  MathJax.startup.document.state(0)
+  MathJax.texReset()
+  MathJax.typeset()
+}</script><script>function loadValine () {
+  function initValine () {
+    const valine = new Valine(Object.assign({
+      el: '#vcomment',
+      appId: 'IpnmxCW9CvYWIXbol5QXsegX-MdYXbMMI',
+      appKey: 'w57DVCdbxcyB1TYYagMIMJIU',
+      placeholder: 'Please leave your footprints',
+      avatar: 'monsterid',
+      meta: 'nick,mail,link'.split(','),
+      pageSize: '10',
+      lang: 'en',
+      recordIP: false,
+      serverURLs: '',
+      emojiCDN: '',
+      emojiMaps: "",
+      enableQQ: false,
+      path: window.location.pathname,
+      requiredFields: ["nick,mail"],
+      visitor: true
+    }, null))
+  }
+
+  if (typeof Valine === 'function') initValine() 
+  else getScript('https://cdn.jsdelivr.net/npm/valine/dist/Valine.min.js').then(initValine)
+}
+
+if ('Valine' === 'Valine' || !false) {
+  if (false) btf.loadComment(document.getElementById('vcomment'),loadValine)
+  else setTimeout(loadValine, 0)
+} else {
+  function loadOtherComment () {
+    loadValine()
+  }
+}</script><script>function loadLivere () {
+  if (typeof LivereTower === 'object') {
+    window.LivereTower.init()
+  }
+  else {
+    (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+    })(document, 'script');
+  }
+}
+
+if ('Valine' === 'Livere' || !false) {
+  if (false) btf.loadComment(document.getElementById('lv-container'), loadLivere)
+  else loadLivere()
+}
+else {
+  function loadOtherComment () {
+    loadLivere()
+  }
+}</script></div><script defer="defer" id="fluttering_ribbon" mobile="false" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/canvas-fluttering-ribbon.min.js"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
