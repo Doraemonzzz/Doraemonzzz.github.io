@@ -1,0 +1,796 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>深入理解计算机系统 第9章 笔记整理 p2 | Doraemonzzz</title><meta name="keywords" content="深入理解计算机系统"><meta name="author" content="Doraemonzzz"><meta name="copyright" content="Doraemonzzz"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="这次回顾深入理解计算机系统第9章动态内存分配部分。 电子书地址： http:&#x2F;&#x2F;eol.bnuz.edu.cn&#x2F;meol&#x2F;common&#x2F;script&#x2F;preview&#x2F;download_preview.jsp?fileid&#x3D;2169600&amp;resid&#x3D;242120&amp;lid&#x3D;28605 备注：图片和总结内容均来自于电子书。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="深入理解计算机系统 第9章 笔记整理 p2">
+<meta property="og:url" content="http://www.doraemonzzz.com/2021/09/16/2021-9-16-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E7%AC%AC9%E7%AB%A0-%E7%AC%94%E8%AE%B0%E6%95%B4%E7%90%86-p2/index.html">
+<meta property="og:site_name" content="Doraemonzzz">
+<meta property="og:description" content="这次回顾深入理解计算机系统第9章动态内存分配部分。 电子书地址： http:&#x2F;&#x2F;eol.bnuz.edu.cn&#x2F;meol&#x2F;common&#x2F;script&#x2F;preview&#x2F;download_preview.jsp?fileid&#x3D;2169600&amp;resid&#x3D;242120&amp;lid&#x3D;28605 备注：图片和总结内容均来自于电子书。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg">
+<meta property="article:published_time" content="2021-09-15T16:36:00.000Z">
+<meta property="article:modified_time" content="2021-09-15T16:37:11.573Z">
+<meta property="article:author" content="Doraemonzzz">
+<meta property="article:tag" content="深入理解计算机系统">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg"><link rel="shortcut icon" href="https://github.com/Doraemonzzz/md-photo/blob/master/%E5%A4%B4%E5%83%8F.jpg?raw=true"><link rel="canonical" href="http://www.doraemonzzz.com/2021/09/16/2021-9-16-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E7%AC%AC9%E7%AB%A0-%E7%AC%94%E8%AE%B0%E6%95%B4%E7%90%86-p2/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//www.google-analytics.com" crossorigin=""/><link rel="preconnect" href="//hm.baidu.com"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><script>var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?6f00f37f957f0608abb8c571105456f0";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script><script async="async" src="https://www.googletagmanager.com/gtag/js?id=UA-G-RE4B1LKRZD"></script><script>window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'UA-G-RE4B1LKRZD');
+</script><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"search.xml","languages":{"hits_empty":"找不到您查询的内容：${query}"}},
+  translate: {"defaultEncoding":2,"translateDelay":0,"msgToTraditionalChinese":"繁","msgToSimplifiedChinese":"簡"},
+  noticeOutdate: {"limitDay":500,"position":"top","messagePrev":"距离上次更新已经","messageNext":"天了，文章内容可能已经过时。"},
+  highlight: {"plugin":"prismjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":200},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    jQuery: 'https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js',
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+    },
+    fancybox: {
+      js: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css'
+    }
+  },
+  isPhotoFigcaption: true,
+  islazyload: true,
+  isanchor: true
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '深入理解计算机系统 第9章 笔记整理 p2',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2021-09-16 00:37:11'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const fontSizeVal = saveToLocal.get('global-font-size')
+    if (fontSizeVal !== undefined) {
+      document.documentElement.style.setProperty('--global-font-size', fontSizeVal + 'px')
+    }
+    })(window)</script><link rel="stylesheet" href="/css/bilibili.css" media="defer" onload="this.media='all'"><meta name="google-site-verification" content="c4v-NmuUZRgl3cvtg9GKswryK1YLaPztd_5M-df5VNI" /><meta name="generator" content="Hexo 5.4.0"><link rel="alternate" href="/atom.xml" title="Doraemonzzz" type="application/atom+xml">
+</head><body><div id="loading-box"><div class="loading-left-bg"></div><div class="loading-right-bg"></div><div class="spinner-box"><div class="configure-border-1"><div class="configure-core"></div></div><div class="configure-border-2"><div class="configure-core"></div></div><div class="loading-word">加载中...</div></div></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="author-avatar"><img class="avatar-img" src= "/img/loading.gif" data-lazy-src="https://github.com/Doraemonzzz/md-photo/blob/master/%E5%A4%B4%E5%83%8F.jpg?raw=true" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">文章</div><div class="length-num">659</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">标签</div><div class="length-num">68</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/categories/"><div class="headline">分类</div><div class="length-num">26</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-chart-pie"></i><span> 博客统计</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/charts/"><i class="fa-fw far fa-chart-bar"></i><span> 文章统计</span></a></li><li><a class="site-page child" href="/census/"><i class="fa-fw fas fa-chart-area"></i><span> 访问统计</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/top/"><i class="fa-fw fab fa-hotjar"></i><span> 阅读排行榜</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fa fa-heartbeat"></i><span> 娱乐</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于我</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">Doraemonzzz</a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-chart-pie"></i><span> 博客统计</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/charts/"><i class="fa-fw far fa-chart-bar"></i><span> 文章统计</span></a></li><li><a class="site-page child" href="/census/"><i class="fa-fw fas fa-chart-area"></i><span> 访问统计</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/top/"><i class="fa-fw fab fa-hotjar"></i><span> 阅读排行榜</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fa fa-heartbeat"></i><span> 娱乐</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于我</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">深入理解计算机系统 第9章 笔记整理 p2</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2021-09-15T16:36:00.000Z" title="发表于 2021-09-16 00:36:00">2021-09-16</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2021-09-15T16:37:11.573Z" title="更新于 2021-09-16 00:37:11">2021-09-16</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%8E%9F%E7%90%86/">计算机原理</a></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-tag"></i><a class="article-meta__tags" href="/tags/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F/">深入理解计算机系统</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">6.1k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>19分钟</span></span><span class="post-meta-separator">|</span><span class="leancloud_visitors" id="/2021/09/16/2021-9-16-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E7%AC%AC9%E7%AB%A0-%E7%AC%94%E8%AE%B0%E6%95%B4%E7%90%86-p2/" data-flag-title="深入理解计算机系统 第9章 笔记整理 p2"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span class="leancloud-visitors-count"></span></span><span class="post-meta-separator">|</span><span class="post-meta-commentcount"><i class="far fa-comments fa-fw post-meta-icon"></i><span class="post-meta-label">评论数:</span><a href="/2021/09/16/2021-9-16-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E7%AC%AC9%E7%AB%A0-%E7%AC%94%E8%AE%B0%E6%95%B4%E7%90%86-p2/#post-comment" itemprop="discussionUrl"><span class="valine-comment-count" data-xid="/2021/09/16/2021-9-16-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E7%AC%AC9%E7%AB%A0-%E7%AC%94%E8%AE%B0%E6%95%B4%E7%90%86-p2/" itemprop="commentCount"></span></a></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p>这次回顾深入理解计算机系统第9章动态内存分配部分。</p>
+<p>电子书地址：</p>
+<p><a target="_blank" rel="noopener" href="http://eol.bnuz.edu.cn/meol/common/script/preview/download_preview.jsp?fileid=2169600&amp;resid=242120&amp;lid=28605">http://eol.bnuz.edu.cn/meol/common/script/preview/download_preview.jsp?fileid=2169600&amp;resid=242120&amp;lid=28605</a></p>
+<p>备注：图片和总结内容均来自于电子书。</p>
+<span id="more"></span>
+<h1 id="第9章：虚拟内存"><a href="#第9章：虚拟内存" class="headerlink" title="第9章：虚拟内存"></a>第9章：虚拟内存</h1><h2 id="重要概念"><a href="#重要概念" class="headerlink" title="重要概念"></a>重要概念</h2><ul>
+<li>一个区域(area)就是已经存在着的（已分配的）虚拟内存的连续片(chunk)，这些页是以某种方式相关联的；</li>
+<li>任务结构(task_struct)；</li>
+<li>内存映射(memory mapping)；</li>
+<li>普通文件，匿名文件（请求二进制零的页(demand-zero page)），交换文件；</li>
+<li>共享对象，私有对象，共享区域，私有区域；<ul>
+<li>私有的写时复制；</li>
+</ul>
+</li>
+<li>vm_area_structs（区域结构）；</li>
+<li>显式分配器(explicit allocator)，隐式分配器(implicit allocator)；</li>
+<li>聚集有效载荷(aggregate payload)；</li>
+<li>动态内存分配器考虑的问题：空闲块组织，放置，分割，合并；</li>
+<li>内部碎片，外部碎片，假碎片；</li>
+<li>放置策略：<ul>
+<li>首次适配(first fit)；</li>
+<li>下一次适配(next fit)；</li>
+<li>最佳适配(best fit)；</li>
+</ul>
+</li>
+</ul>
+<h2 id="Linux-虚拟内存系统"><a href="#Linux-虚拟内存系统" class="headerlink" title="Linux 虚拟内存系统"></a>Linux 虚拟内存系统</h2><p>Linux为每个进程维护了一个单独的虚拟地址空间，如下图所示：</p>
+<p><img src= "/img/loading.gif" data-lazy-src="https://github.com/Doraemonzzz/md-photo/blob/master/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F/%E7%AC%AC9%E7%AB%A0/p2/2021091301.jpg?raw=true" alt=""></p>
+<h3 id="Linux虚拟内存区域"><a href="#Linux虚拟内存区域" class="headerlink" title="Linux虚拟内存区域"></a>Linux虚拟内存区域</h3><ul>
+<li>Linux将虚拟内存组织成一些区域（也叫做段）的集合。</li>
+<li>一个区域(area)就是已经存在着的（已分配的）虚拟内存的连续片(chunk)，这些页是以某种方式相关联的。<ul>
+<li>例如，代码段、数据段、堆、共享库段，以及用户栈都是不同的区域。</li>
+</ul>
+</li>
+<li>每个存在的虚拟页面都保存在某个区域中，而不属于某个区域的虚拟页是不存在的，并且不能被进程引用。</li>
+</ul>
+<p>内核为系统中每个进程维护了一个单独的任务结构(task_struct)，记录一个进程中虚拟内存区域的内核数据结构如下：</p>
+<p><img src= "/img/loading.gif" data-lazy-src="https://github.com/Doraemonzzz/md-photo/blob/master/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F/%E7%AC%AC9%E7%AB%A0/p2/2021091302.jpg?raw=true" alt=""></p>
+<p>说明：</p>
+<ul>
+<li>task_struct：每个进程对应的任务结构；</li>
+<li>mm_struct：描述虚拟存当前状态；<ul>
+<li>pgd：指向第一级页表（页全局目录）的基址，运行进程时位于CR3控制寄存器中；</li>
+<li>mmap：指向vm_area_structs（区域结构）的链表；</li>
+</ul>
+</li>
+<li>vm_area_structs：描述当前虚拟地址空间的一个区域；<ul>
+<li>vm_start：指向这个区域的起始处；</li>
+<li>vm_end：指向这个区域的结束处；</li>
+<li>vmprot：描述这个区域内包含的所有页的读写许可权限；</li>
+<li>vm_flags：描述这个区域内的页面是与其他进程共享的，还是这个进程私有的（还描述了其他一些信息）；</li>
+<li>vm_next：指向链表中下一个区域结构；</li>
+</ul>
+</li>
+</ul>
+<h3 id="Linux缺页异常处理"><a href="#Linux缺页异常处理" class="headerlink" title="Linux缺页异常处理"></a>Linux缺页异常处理</h3><p>如果翻译虚拟地址$A$时触发了缺页异常，那么控制转移到内核的缺页处理程序，按照如下步骤进行处理：</p>
+<ul>
+<li>判断虚拟地址$A$是否合法？<ul>
+<li>判断地址$A$是否在某个区域结构定义的区域内，即把$A$和每个区域结构中vm_start和vm_end作比较，如果不合法则对应图中“1”；</li>
+</ul>
+</li>
+<li>判断内存访问是否合法？<ul>
+<li>即判断是否有读，写或执行这个区域的权限，如果不合法则对应图中“2”；</li>
+</ul>
+</li>
+<li>其余情形对应“3”；<ul>
+<li>正常缺页；</li>
+</ul>
+</li>
+</ul>
+<p><img src= "/img/loading.gif" data-lazy-src="https://github.com/Doraemonzzz/md-photo/blob/master/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F/%E7%AC%AC9%E7%AB%A0/p2/2021091303.jpg?raw=true" alt=""></p>
+<h2 id="内存映射"><a href="#内存映射" class="headerlink" title="内存映射"></a>内存映射</h2><h3 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h3><ul>
+<li>内存映射(memory mapping)：<ul>
+<li>将虚拟内存与一个磁盘上的对象关联起来，以初始化虚拟内存区域的内容；</li>
+</ul>
+</li>
+<li>虚拟内存区域可以映射到如下两种类型的对象：<ul>
+<li>Linux文件系统中的<strong>普通文件</strong>，即映射到一个普通磁盘文件的连续部分；</li>
+<li><strong>匿名文件</strong>，由内核创建，包含全是二进制零，也叫<strong>请求二进制零的页(demand-zero page)</strong>；<ul>
+<li>CPU第一次引用该区域的虚拟页面时，内核在物理内存中找到一个牺牲页面，用二进制零覆盖牺牲页面并更新页表；</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>一旦一个虚拟页面被初始化了，就在一个由内核维护的专门<strong>交换文件</strong>(swap file)之间换来换去；<ul>
+<li>交换文件也叫作交换空间(swap space)或者交换区域(swap area)；</li>
+<li>在任何时刻，交换空间都限制这当前运行着的进程能够分配的虚拟页面的总数；</li>
+</ul>
+</li>
+</ul>
+<h3 id="再看共享对象"><a href="#再看共享对象" class="headerlink" title="再看共享对象"></a>再看共享对象</h3><ul>
+<li>一个对象可以被映射到虚拟内存的一个区域，要么作为<strong>共享对象</strong>，要么作为<strong>私有对象</strong>；<ul>
+<li>映射到共享对象的虚拟内存区域叫做<strong>共享区域</strong>；</li>
+<li>映射到私有对象的虚拟内存区域叫做<strong>私有区域</strong>；</li>
+<li>对于一个映射到共享对象的区域的改变，对于也把该共享对象映射到虚拟内存的其他进程而言是可见的，这些变化也会反映在磁盘上的原始对象中；</li>
+<li>对于一个映射到私有对象的区域做的改变，对于其他进程来说是不可见的，并且进程对这个区域所做的任何写操作都不会反映在磁盘上的对象中；</li>
+</ul>
+</li>
+</ul>
+<h4 id="共享对象"><a href="#共享对象" class="headerlink" title="共享对象"></a>共享对象</h4><p><img src= "/img/loading.gif" data-lazy-src="https://github.com/Doraemonzzz/md-photo/blob/master/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F/%E7%AC%AC9%E7%AB%A0/p2/2021091304.jpg?raw=true" alt=""></p>
+<h4 id="私有对象"><a href="#私有对象" class="headerlink" title="私有对象"></a>私有对象</h4><p>私有对象在物理内存中只保存私有对象的一份副本。</p>
+<p>示例：</p>
+<ul>
+<li>在下图中，两个进程将一个私有对象映射到它们虚拟内存的不同区域，但是共享这个对象的同一个物理副本；</li>
+<li>相应私有区域的页表条目被标记为只读，区域结构被标记为<strong>私有的写时复制</strong>；</li>
+<li>如果一个进程试图写它自己的私有区域内的某个页面，那么会触发一个保护故障：<ul>
+<li>在物理内存中创建这个页面的新副本，更新页表条目指向这个新副本，恢复这个页面的写权限，然后写操作就可以正常执行了；</li>
+</ul>
+</li>
+</ul>
+<p><img src= "/img/loading.gif" data-lazy-src="https://github.com/Doraemonzzz/md-photo/blob/master/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F/%E7%AC%AC9%E7%AB%A0/p2/2021091305.jpg?raw=true" alt=""></p>
+<h3 id="再看fork函数"><a href="#再看fork函数" class="headerlink" title="再看fork函数"></a>再看fork函数</h3><ul>
+<li>当fork函数被当前进程调用时，内核为新进程创建各种数据结构，并分配给它一个唯一的PID。为了给这个新进程创建虚拟内存，它创建了当前进程的mm_struct、区域结构和页表的原样副本。它将两个进程中的每个页面都标记为只读，并将两个进程中的每个区域结构都标记为私有的写时复制。</li>
+<li>当fork在新进程中返回时，新进程现在的虚拟内存刚好和调用fork时存在的虚拟内存相同。当这两个进程中的任一个后来进行写操作时，写时复制机制就会创建新页面， 因此，也就为每个进程保持了私有地址空间的抽象概念。</li>
+</ul>
+<h3 id="再看execve函数"><a href="#再看execve函数" class="headerlink" title="再看execve函数"></a>再看execve函数</h3><p>假设运行了如下execve调用：</p>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token function">execve</span><span class="token punctuation">(</span><span class="token string">"a.out"</span><span class="token punctuation">,</span> <span class="token constant">NULL</span><span class="token punctuation">,</span> <span class="token constant">NULL</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>加载并运行a.out需要以下几个步骤：</p>
+<ul>
+<li>删除已存在的用户区域。<ul>
+<li>删除当前进程虚拟地址的用户部分中的已存在的区域结构。</li>
+</ul>
+</li>
+<li>映射私有区域。<ul>
+<li>为新程序的代码、数据、bss和栈区域创建新的区域结构。所有这些 新的区域都是私有的、写时复制的。</li>
+<li>代码和数据区域被映射为a.out文件中的.text和.data区 。</li>
+<li>bss区域是请求二进制零的，映射到匿名文件，其大小包含在a.out中。</li>
+<li>栈和堆区域也是请求二进制零的，初始长度为零。</li>
+</ul>
+</li>
+<li>映射共享区域。<ul>
+<li>如果a.out程序与共享对象（或目标）链接，比如标准C库libc.so，那么这些对象都是动态链接到这个程序的，然后再映射到用户虚拟地址空间中的共享区域内。</li>
+</ul>
+</li>
+<li>设置程序计数器(PC)。<ul>
+<li>execve做的最后一件事情就是设置当前进程上下文中的程序计数器，使之指向代码区域的入口点。</li>
+</ul>
+</li>
+</ul>
+<p>图示：</p>
+<p><img src= "/img/loading.gif" data-lazy-src="https://github.com/Doraemonzzz/md-photo/blob/master/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F/%E7%AC%AC9%E7%AB%A0/p2/2021091306.jpg?raw=true" alt=""></p>
+<h3 id="使用mmap函数的用户级内存映射"><a href="#使用mmap函数的用户级内存映射" class="headerlink" title="使用mmap函数的用户级内存映射"></a>使用mmap函数的用户级内存映射</h3><p>Linux进程可以使用mmap函数来创建新的内存区域，并将对象映射到这些区域中：</p>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;unistd.h></span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;sys/mman.h></span></span>
+
+<span class="token keyword">void</span><span class="token operator">*</span><span class="token function">mmap</span><span class="token punctuation">(</span><span class="token keyword">void</span> <span class="token operator">*</span>start<span class="token punctuation">,</span> <span class="token class-name">size_t</span> length<span class="token punctuation">,</span> <span class="token keyword">int</span> prot，<span class="token keyword">int</span> flags<span class="token punctuation">,</span> <span class="token keyword">int</span> fd<span class="token punctuation">,</span> <span class="token class-name">off_t</span> offset<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+返回<span class="token operator">:</span>若成功时则为指向映射区域的指针，若出错则为<span class="token function">MAP_FAILED</span><span class="token punctuation">(</span><span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span>。<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>图示：</p>
+<p><img src= "/img/loading.gif" data-lazy-src="https://github.com/Doraemonzzz/md-photo/blob/master/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F/%E7%AC%AC9%E7%AB%A0/p2/2021091307.jpg?raw=true" alt=""></p>
+<p>具体参数见：</p>
+<p>9.8.4</p>
+<p>munmap函数删除虚拟内存区域：</p>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;unistd.h></span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;sys/mman.h></span></span>
+
+<span class="token keyword">int</span> <span class="token function">munmap</span><span class="token punctuation">(</span><span class="token keyword">void</span> <span class="token operator">*</span>start<span class="token punctuation">,</span><span class="token class-name">size_t</span> length<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+返回<span class="token operator">:</span> 若成功则为<span class="token number">0</span>，若出错则为<span class="token operator">-</span><span class="token number">1</span>。<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h2 id="动态内存分配"><a href="#动态内存分配" class="headerlink" title="动态内存分配"></a>动态内存分配</h2><h3 id="简介-1"><a href="#简介-1" class="headerlink" title="简介"></a>简介</h3><ul>
+<li>实际中一般不使用mmap，munmap创建和删除虚拟内存的区域，而是使用动态内存分配器(dynamic memory allocator)申请额外的虚拟内存。</li>
+<li>动态内存分配器维护着一个进程的虚拟内存区域，称为堆(heap) 。假设堆是一个请求二进制零的区域，它紧接在末初始化的数据区域后开始，并向上生长（向更高的地址）。对于每个进程，内核维护着一个变量brk指向堆的顶部。</li>
+<li>分配器将堆视为一组不同大小的块集合来维护，每个块就是一个连续的虚拟内存片，要么是<strong>已分配</strong>，要么是<strong>空闲</strong>；<ul>
+<li>空闲块保持空闲，直到它显式地被应用所分配。</li>
+<li>一个分配的块保持已分配状态，直到它被释放，这种释放要么是应用程序显式执行的，要么是内存分配器自身隐式执行的。</li>
+</ul>
+</li>
+<li>两种分配器：<ul>
+<li>显式分配器(explicit allocator)，要求应用显式地释放任何已分配的块。<ul>
+<li>例子：C语言中的malloc和free。</li>
+</ul>
+</li>
+<li>隐式分配器(implicit allocator)， 要求分配器检测一个已分配块何时不再被程序所使用，那么就释放这个块。<ul>
+<li>隐式分配器也叫做垃圾收集器(garbage collector)，自动释放末使用的已分配的块的过程叫做垃圾收集（garbage collection)。</li>
+<li>例子：Lisp, ML, Java依赖垃圾收集来释放已分配的块。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>堆示意图：</p>
+<p><img src= "/img/loading.gif" data-lazy-src="https://github.com/Doraemonzzz/md-photo/blob/master/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F/%E7%AC%AC9%E7%AB%A0/p2/2021091308.jpg?raw=true" alt=""></p>
+<h3 id="函数接口"><a href="#函数接口" class="headerlink" title="函数接口"></a>函数接口</h3><p>malloc返回一个指针，指向大小至少为size字节的内存块，该块可能做对齐，例如32位模式中返回的块地址总是8的倍数，在64位模式中返回的块地址总是16的倍数：</p>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;stdlib.h></span></span>
+<span class="token keyword">void</span> <span class="token operator">*</span><span class="token function">malloc</span><span class="token punctuation">(</span><span class="token class-name">size_t</span> size<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+返回<span class="token operator">:</span>若成功则为已分配块的指针<span class="token punctuation">,</span> 若出错则为<span class="token constant">NULL</span>。<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+<p>说明：这里假设一个字为4字节，双字为8字节。</p>
+<p>sbrk函数通过将内核的brk指针增加incr来扩展和收缩堆：</p>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;unistd.h></span></span>
+<span class="token keyword">void</span> <span class="token operator">*</span><span class="token function">sbrk</span><span class="token punctuation">(</span>intptr<span class="token operator">-</span>t incr<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+返回<span class="token operator">:</span>若成功则为旧的brk指针<span class="token punctuation">,</span> 若出错则为<span class="token operator">-</span><span class="token number">1</span>并设将errno设置为ENOMEM。<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+<p>free释放已分配的堆块，ptr参数必须指向一个从malloc, calloc或者realloc获得的已分配块的起始位置，否则行为是未定义的：</p>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;stdlib.h></span></span>
+<span class="token keyword">void</span> <span class="token function">free</span><span class="token punctuation">(</span><span class="token keyword">void</span> <span class="token operator">*</span>ptr<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+返回<span class="token operator">:</span>无。<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+<p>示例：</p>
+<p><img src= "/img/loading.gif" data-lazy-src="https://github.com/Doraemonzzz/md-photo/blob/master/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F/%E7%AC%AC9%E7%AB%A0/p2/2021091309.jpg?raw=true" alt=""></p>
+<h3 id="分配器的要求和目标"><a href="#分配器的要求和目标" class="headerlink" title="分配器的要求和目标"></a>分配器的要求和目标</h3><p>显式分配器需要在如下约束下工作：</p>
+<ul>
+<li>处理任意其请求序列；</li>
+<li>立即响应请求；<ul>
+<li>即不允许分配器为了提高性能重新排列或者缓冲请求；</li>
+</ul>
+</li>
+<li>只使用堆；</li>
+<li>对齐块（对齐要求）；</li>
+<li>不修改已分配的块；</li>
+</ul>
+<p>优化两个性能指标：</p>
+<ul>
+<li><p>目标1：最大化吞吐率。</p>
+<ul>
+<li>即单位时间里完成的请求数。</li>
+</ul>
+</li>
+<li><p>目标2：最大化内存利用率。</p>
+<ul>
+<li><p>常见的指标为峰值利用率(peak utilization)，计算方式如下：</p>
+<ul>
+<li><p>请求一个$p$字节的块，那么得到的已分配块的<strong>有效载荷(payload)</strong>是$p$字节；</p>
+</li>
+<li><p>给定$n$个分配和释放请求的某种顺序：</p>
+<script type="math/tex; mode=display">
+R_{0}, R_{1}, \cdots, R_{k}, \cdots, R_{n-1}</script></li>
+<li><p>在请求$R_k$完成之后，<strong>聚集有效载荷(aggregate payload)</strong>$P_k$为当前已分配的有效载荷之和，$H_k$为堆的当前大小（单调非递减），那么前$k+1$个请求的峰值利用率$U_k$为：</p>
+<script type="math/tex; mode=display">
+U_{k}=\frac{\max _{i \le\ k} P_{i}}{H_{k}}</script></li>
+</ul>
+</li>
+<li>这两个目标是相互牵制的，所以难点是找到平衡。</li>
+</ul>
+</li>
+</ul>
+<h3 id="碎片"><a href="#碎片" class="headerlink" title="碎片"></a>碎片</h3><ul>
+<li>碎片现象：<ul>
+<li>有未使用的内存，但不能用来满足分配。</li>
+</ul>
+</li>
+<li>两种碎片：<ul>
+<li>内部碎片：<ul>
+<li>发生在已分配块比有效载荷大，例如课本中使用的隐式空闲链表；</li>
+<li>只取决于以前请求的模式和分配器的实现方式；</li>
+<li>易于量化，为已分配块大小和有效载荷大小之差之和；</li>
+</ul>
+</li>
+<li>外部碎片：<ul>
+<li>发生在当空闲内存合集起来足够满足一个分配请求，但是没有一个单独的空闲块足够大可以来处理这个请求；</li>
+<li>不仅取决于以前的请求模式和分配器的实现方式，还取决于将来的请求模式；</li>
+<li>难以量化，无法预测；</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="实现问题"><a href="#实现问题" class="headerlink" title="实现问题"></a>实现问题</h3><p>动态内存分配器的实现需要考虑以下几个问题：</p>
+<ul>
+<li>空闲块组织：如何记录空闲块?</li>
+<li>放置：如何选择一个合适的空闲块来放置一个新分配的块?</li>
+<li>分割：在将一个新分配的块放置到某个空闲块之后，如何处理这个空闲块中的剩余部分?</li>
+<li>合并：如何处理一个刚刚被释放的块?</li>
+</ul>
+<h3 id="几种数据结构（空闲块组织）"><a href="#几种数据结构（空闲块组织）" class="headerlink" title="几种数据结构（空闲块组织）"></a>几种数据结构（空闲块组织）</h3><p>任何实际的分配器都需要一些数据结构，用来区分边界，已分配块和空闲块，具体如下。</p>
+<h4 id="隐式空闲链表"><a href="#隐式空闲链表" class="headerlink" title="隐式空闲链表"></a>隐式空闲链表</h4><p><img src= "/img/loading.gif" data-lazy-src="https://github.com/Doraemonzzz/md-photo/blob/master/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F/%E7%AC%AC9%E7%AB%A0/p2/2021091310.jpg?raw=true" alt=""></p>
+<p>隐式空闲链表包含：</p>
+<ul>
+<li>头部</li>
+<li>有效载荷</li>
+<li>填充</li>
+</ul>
+<p>说明：</p>
+<p>假设双字对齐，那么块大小是8的倍数，块大小的最低三位是0，利用最后低位来指明块是已分配的还是空闲的。</p>
+<p>示例：</p>
+<p><img src= "/img/loading.gif" data-lazy-src="https://github.com/Doraemonzzz/md-photo/blob/master/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F/%E7%AC%AC9%E7%AB%A0/p2/2021091311.jpg?raw=true" alt=""></p>
+<p>优点：</p>
+<ul>
+<li>简单；</li>
+</ul>
+<p>缺点：</p>
+<ul>
+<li>任何操作开销和已分配块和空闲块的大小成正比；</li>
+</ul>
+<h4 id="带边界标记的隐式空闲链表"><a href="#带边界标记的隐式空闲链表" class="headerlink" title="带边界标记的隐式空闲链表"></a>带边界标记的隐式空闲链表</h4><p><img src= "/img/loading.gif" data-lazy-src="https://github.com/Doraemonzzz/md-photo/blob/master/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F/%E7%AC%AC9%E7%AB%A0/p2/2021091312.jpg?raw=true" alt=""></p>
+<p>在块的结尾添加脚步，方便进行块合并。</p>
+<h4 id="显式空闲链表"><a href="#显式空闲链表" class="headerlink" title="显式空闲链表"></a>显式空闲链表</h4><p><img src= "/img/loading.gif" data-lazy-src="hhttps://github.com/Doraemonzzz/md-photo/blob/master/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F/%E7%AC%AC9%E7%AB%A0/p2/2021091313.jpg?raw=true" alt=""></p>
+<p>变化：</p>
+<ul>
+<li>首次适配的分配时间从块总数的线性时间减少到空闲块数量的线性时间；</li>
+<li>释放块的时间和策略有关：<ul>
+<li>后进先出(LIFO)：将新释放的块防止在链表的开始处，时间复杂度为常数；</li>
+<li>按照地址顺序来维护：链表中每个地址都小于它的后继地址，时间复杂度是线性的，优点是比LIFO排序的首次适配有更高的内存利用率，接近最佳适配的利用率；</li>
+</ul>
+</li>
+</ul>
+<h4 id="分离的空闲链表"><a href="#分离的空闲链表" class="headerlink" title="分离的空闲链表"></a>分离的空闲链表</h4><h5 id="简介-2"><a href="#简介-2" class="headerlink" title="简介"></a>简介</h5><ul>
+<li>分离存储是为了减少分配时间，思路为维护多个空闲链表，每个链表中的块大小大致相等，一般的思路是将所有可能的块大小分成一些等价类，叫做大小类；</li>
+<li>分配器维护着空闲链表数组，每个大小类一个空闲链表，按照大小的升序排列；</li>
+<li>当分配器需要一个大小为$n$的块时，就搜索相应的空闲链表；如果不能找到合适的块，就搜索下一个链表；</li>
+</ul>
+<h5 id="简单分离存储-simple-segregated-storage"><a href="#简单分离存储-simple-segregated-storage" class="headerlink" title="简单分离存储(simple segregated storage)"></a>简单分离存储(simple segregated storage)</h5><p>介绍：</p>
+<ul>
+<li>分配器维护着空闲链表数组，每个大小类一个空闲链表；</li>
+<li>每个大小类包含大小相等的块，块大小是这个大小类中最大元素的大小；</li>
+</ul>
+<p>分配：</p>
+<ul>
+<li>检查相应的空闲链表，如果链表非空，则分配其中第一块的全部，不会分割以满足分配请求；</li>
+<li>如果链表为空，分配器向操作系统请求一个固定大小的额外内存片，将这个片分成大小相等的块，并将这些块链接起来形成新的空闲链表；</li>
+</ul>
+<p>释放：</p>
+<ul>
+<li>简单地将这个快插入到响应的空闲链表前部；</li>
+</ul>
+<p>优点：</p>
+<ul>
+<li>分配和释放块都是很快的常数时间操作；</li>
+</ul>
+<p>缺点：</p>
+<ul>
+<li>很容易造成内部和外部碎片；</li>
+</ul>
+<h5 id="分离适配-segregated-fit"><a href="#分离适配-segregated-fit" class="headerlink" title="分离适配(segregated fit)"></a>分离适配(segregated fit)</h5><p>介绍：</p>
+<ul>
+<li>分配器维护着空闲链表数组，每个大小类一个空闲链表；</li>
+<li>每个空闲链表和一个大小类相关联，并且被组织成某种类型的显式或隐式链表；</li>
+</ul>
+<p>分配：</p>
+<ul>
+<li>确定请求的大小类，对适当的空闲链表做首次适配；<ul>
+<li>如果找到就（可选地）分割它，将剩余部分插入到适当的空闲链表中；</li>
+<li>如果找不到，就搜索下一个更大的大小类的空闲链表，直到找到一个合适的块；</li>
+</ul>
+</li>
+<li>如果空闲链表中没有合适的块，就像操作系统额外请求堆内存，从这个新的堆内存中分配一个块，将剩余部分放置在适当的大小类中；</li>
+</ul>
+<p>释放：</p>
+<ul>
+<li>是否后执行合并，将结果放置到相应的空闲链表；</li>
+</ul>
+<p>优点：</p>
+<ul>
+<li>搜索被限制在堆的某个部分，提高了搜索效率；</li>
+<li>对分离空闲链表的简单的首次适配搜索，其内存利用率近似于对整个堆的最佳适配搜索的内存利用率；</li>
+</ul>
+<h5 id="伙伴系统-buddy-system"><a href="#伙伴系统-buddy-system" class="headerlink" title="伙伴系统(buddy system)"></a>伙伴系统(buddy system)</h5><p>介绍：</p>
+<ul>
+<li>分离适配的一种特例，每个大小类都是2的幂；</li>
+<li>假设堆大小为$2^m$，我们为每个块大小$2^k$维护一个分离空闲链表，其中$0\le k \le m$；</li>
+<li>请求块大小向上舍入到最接近2的幂；</li>
+<li>最开始时只有一个大小为$2^m$的字的空闲块；</li>
+</ul>
+<p>分配：</p>
+<ul>
+<li>为了分配大小为$2^k$的块，找到第一个可用的，大小为$2^j$的块，其中$k\le j\le m$；<ul>
+<li>如果$j=k$，则完成；</li>
+<li>否则递归的二分这个快，直到$j=k$；将每个剩下的半块（伙伴）放置在相应的空闲链表中；</li>
+</ul>
+</li>
+</ul>
+<p>释放：</p>
+<ul>
+<li>要释放一个大小为$2^k$的块，继续合并空闲的伙伴，当遇到一个已分配的伙伴时，就停止合并；</li>
+</ul>
+<p>优点：</p>
+<ul>
+<li>快速搜索和快速合并；</li>
+</ul>
+<p>缺点：</p>
+<ul>
+<li>可能导致显著的内部碎片；</li>
+</ul>
+<p>伙伴地址计算方式：</p>
+<p>给定地址和块的大小，很容易计算出伙伴的地址，例如一个块大小为32字节，地址为：</p>
+<script type="math/tex; mode=display">
+x x x \cdots x 00000</script><p>它的伙伴地址为：</p>
+<script type="math/tex; mode=display">
+x x x \cdots x 10000</script><p>计算方式：</p>
+<script type="math/tex; mode=display">
+2^5=32</script><h3 id="放置已分配的块"><a href="#放置已分配的块" class="headerlink" title="放置已分配的块"></a>放置已分配的块</h3><ul>
+<li>当一个应用请求一个$k$字节的块时，分配器搜索空闲链表，查找一个足够大可以放置所请求的空闲块，搜索方式由放置策略(placement policy)确定，常见策略为：<ul>
+<li>首次适配(first fit)：从头开始搜索链表，选择第一个合适的空闲块；</li>
+<li>下一次适配(next fit)：从上一次查询结束的地方开始搜索链表，选择第一个合适的空闲块；</li>
+<li>最佳适配(best fit)：检查每个空闲块，选择适合所需请求大小的最小空闲块；</li>
+</ul>
+</li>
+</ul>
+<h3 id="分割空闲块"><a href="#分割空闲块" class="headerlink" title="分割空闲块"></a>分割空闲块</h3><ul>
+<li>分配器找到一个匹配的空闲块后需要决定分配空闲块中多少空间：<ul>
+<li>分配整个空闲块；</li>
+<li>将空闲块分割为两部分，第一部分变成分配块，剩下的变成一个新的空闲块；</li>
+</ul>
+</li>
+</ul>
+<h3 id="合并空闲块"><a href="#合并空闲块" class="headerlink" title="合并空闲块"></a>合并空闲块</h3><ul>
+<li><p>当分配器释放一个已分配块时，可能有其他空闲块和这个新释放的空闲块相邻，这可能引起称为假碎片(fault fragmentation)的现象：</p>
+<ul>
+<li><p>即有许多可用的空闲块被分割称为小的，无法使用的空闲块；</p>
+</li>
+<li><p>例子：</p>
+<p><img src= "/img/loading.gif" data-lazy-src="https://github.com/Doraemonzzz/md-photo/blob/master/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F/%E7%AC%AC9%E7%AB%A0/p2/2021091314.jpg?raw=true" alt=""></p>
+</li>
+</ul>
+</li>
+<li><p>解决假碎片现象的方式为合并(coalescing)：</p>
+<ul>
+<li>合并分为立即合并和推迟合并；</li>
+</ul>
+</li>
+<li><p>利用带边界标记的隐式空闲链表，可以高效的进行合并：</p>
+<ul>
+<li><p><img src= "/img/loading.gif" data-lazy-src="https://github.com/Doraemonzzz/md-photo/blob/master/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F/%E7%AC%AC9%E7%AB%A0/p2/2021091315.jpg?raw=true" alt=""></p>
+</li>
+<li><p>改进：</p>
+<ul>
+<li>当合并当前块和前后块时，只有前面的块是空闲时，才会需要用到脚步；</li>
+<li>可以将前面块已分配/空闲位存放在当前块多出来的低位（第二位）；<ul>
+<li>注意低位一共有3位；</li>
+</ul>
+</li>
+<li>此时空闲块需要脚部，已分配块不需要脚部；</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="垃圾收集"><a href="#垃圾收集" class="headerlink" title="垃圾收集"></a>垃圾收集</h2><h3 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h3><ul>
+<li>垃圾收集器(garbage collector) 是一种动态内存分配器，它自动释放程序不再需要的已分配块。这些块被称为垃圾(garbage)（因此术语就称之为垃圾收集器) 。</li>
+<li>自动回收堆存储的过程叫做垃圾收集(garbage collection)。</li>
+<li>在一个支持垃圾收集的系统中，应用显式配堆块，但是从不显示地释放它们。<ul>
+<li>在C程序的上下文中，应用调用malloc，但是从不调用free。反之，垃圾收集器定期识别垃圾块，并相应地调用free，将这些块放回到空闲链表中。</li>
+</ul>
+</li>
+</ul>
+<h3 id="垃圾收集器的基本知识"><a href="#垃圾收集器的基本知识" class="headerlink" title="垃圾收集器的基本知识"></a>垃圾收集器的基本知识</h3><ul>
+<li><p>垃圾收集器将内存视为一张有向可达图(reachability graph)，如下图所示。</p>
+<p><img src= "/img/loading.gif" data-lazy-src="https://github.com/Doraemonzzz/md-photo/blob/master/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F/%E7%AC%AC9%E7%AB%A0/p2/2021091316.jpg?raw=true" alt=""></p>
+</li>
+<li><p>该图的节点被分成一组根节点(root node)和一组堆节点(heap node)。</p>
+</li>
+<li><p>每个堆节点对应于堆中的一个已分配块。有向边$p \rightarrow q$意味着块$p$中的某个位置指向块$q$中的某个位置。</p>
+</li>
+<li><p>根节点对应于这样一种不在堆中的位置，它们中包含指向堆中的指针。这些位置可以是寄存器、栈里的变量, 或者是虚拟内存中读写数据区域内的全局变量。</p>
+</li>
+<li><p>当存在任意根节点出发并到达$p$的有向路径时，我们说节点$p$是可达的；不可达的节点集对应于<strong>垃圾</strong>；</p>
+</li>
+<li><p>垃圾收集器的角色是维护可达图的某种表示，通过释放不可达节点且将它们返回给空闲链表，来定期地回收它们；</p>
+</li>
+<li><p>保守的垃圾收集器：可达块都被正确地标记为可达了，一些不可达节点却可能被错误地标记为可达；</p>
+</li>
+<li><p>malloc包和垃圾收集器结合：</p>
+<p><img src= "/img/loading.gif" data-lazy-src="https://github.com/Doraemonzzz/md-photo/blob/master/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F/%E7%AC%AC9%E7%AB%A0/p2/2021091317.jpg?raw=true" alt=""></p>
+</li>
+</ul>
+<h3 id="Mark-amp-Sweep垃圾收集器"><a href="#Mark-amp-Sweep垃圾收集器" class="headerlink" title="Mark&amp;Sweep垃圾收集器"></a>Mark&amp;Sweep垃圾收集器</h3><p>Mark &amp;Sweep垃圾收集器由标记(mark)阶段和清除(sweep)阶段组成，标记阶段标记出根节点的所有可达的和已分配的后继，而后面的清除阶段释放每个末被标记的已分配块。块头部中空闲的低位中的一位通常用来表示这个块是否被标记了。</p>
+<p>我们对Mark\&amp;Sweep的描述将假设使用下列函数, 其中ptr定义typedef void *ptr:</p>
+<ul>
+<li>ptr isPtr(ptr p)。<ul>
+<li>如果p指向一个已分配块中的某个字，那么就返回一个指向这个块的起始位置的指针b。否则返回NULL。</li>
+</ul>
+</li>
+<li>int blockMarked(ptr b) 。<ul>
+<li>如果块b是已标记的，那么就返回true。</li>
+</ul>
+</li>
+<li>int blockAllocated(ptr b) 。<ul>
+<li>如果块b是已分配的，那么就返回true.</li>
+</ul>
+</li>
+<li>void markBlock(ptr b) 。<ul>
+<li>标记块b。</li>
+</ul>
+</li>
+<li>int length(b) 。<ul>
+<li>返回块b的以字为单位的长度(不包括头部)。</li>
+</ul>
+</li>
+<li>void unmarkBlock(ptr b) 。<ul>
+<li>将块b的状态由已标记的改为末标记的。</li>
+</ul>
+</li>
+<li>ptr nextBlock(ptr b) 。<ul>
+<li>返回堆中块b的后继。</li>
+</ul>
+</li>
+</ul>
+<p>mark函数（深搜）：</p>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">void</span> <span class="token function">mark</span><span class="token punctuation">(</span>ptr p<span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token punctuation">(</span>b <span class="token operator">=</span> <span class="token function">isPtr</span><span class="token punctuation">(</span>p<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token operator">==</span> <span class="token constant">NULL</span><span class="token punctuation">)</span>
+    	<span class="token keyword">return</span><span class="token punctuation">;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">blockMarked</span><span class="token punctuation">(</span>b<span class="token punctuation">)</span><span class="token punctuation">)</span>
+    	<span class="token keyword">return</span><span class="token punctuation">;</span>
+    <span class="token function">markBlock</span><span class="token punctuation">(</span>b<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    len <span class="token operator">=</span> <span class="token function">length</span><span class="token punctuation">(</span>b<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">for</span> <span class="token punctuation">(</span>i<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> len<span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span>
+    	<span class="token function">mark</span><span class="token punctuation">(</span>b<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">return</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>sweep函数：</p>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">void</span> <span class="token function">sweep</span><span class="token punctuation">(</span>ptr b<span class="token punctuation">,</span> ptr end<span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+	<span class="token keyword">while</span> <span class="token punctuation">(</span>b <span class="token operator">&lt;</span> end<span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+		<span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">blockMarked</span><span class="token punctuation">(</span>b<span class="token punctuation">)</span><span class="token punctuation">)</span>
+			<span class="token function">unmarkBlock</span><span class="token punctuation">(</span>b<span class="token punctuation">)</span><span class="token punctuation">;</span>
+		<span class="token keyword">else</span> <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">blockAllocated</span><span class="token punctuation">(</span>b<span class="token punctuation">)</span><span class="token punctuation">)</span>
+			<span class="token function">free</span><span class="token punctuation">(</span>b<span class="token punctuation">)</span><span class="token punctuation">;</span>
+		b <span class="token operator">=</span> <span class="token function">nextBlock</span><span class="token punctuation">(</span>b<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+	<span class="token keyword">return</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>示例：</p>
+<p><img src= "/img/loading.gif" data-lazy-src="https://github.com/Doraemonzzz/md-photo/blob/master/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F/%E7%AC%AC9%E7%AB%A0/p2/2021091318.jpg?raw=true" alt=""></p>
+<h3 id="C程序的保守Mark-amp-Sweep"><a href="#C程序的保守Mark-amp-Sweep" class="headerlink" title="C程序的保守Mark&amp;Sweep"></a>C程序的保守Mark&amp;Sweep</h3><p>C语言为isPtr函数的实现造成了一些有趣的挑战：</p>
+<ul>
+<li><p>第一，C不会用任何类型信息来标记内存位置；</p>
+</li>
+<li><p>第二，即使知道p是一个指针，isPtr也没有没有明显的方式来判断p是否指向一个已分配块的有效载荷中的某个位置。</p>
+<ul>
+<li><p>对于第二个问题，解决方法是将已分配块集合维护成一个二叉树，左子树的所有块都存放在较小的地址处，右子树的所有快都放在较大的地址处；</p>
+</li>
+<li><p>接着给每个已分配块增加两个附加字段left, right，每个字段指向某个已分配块的头部；</p>
+</li>
+<li><p>那么isPtr(ptr p)函数用树来指向对已分配块的二分查找即可；</p>
+</li>
+<li><p>图示：</p>
+<p><img src= "/img/loading.gif" data-lazy-src="https://github.com/Doraemonzzz/md-photo/blob/master/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F/%E7%AC%AC9%E7%AB%A0/p2/2021091319.jpg?raw=true" alt=""></p>
+</li>
+<li><p>该方法可能会将不可达的块标记为可达，所以是保守的，这不影响程序的正确性，但是可能导致不必要的外部碎片；</p>
+</li>
+</ul>
+</li>
+</ul>
+<p>C语言的Mark&amp;Sweep收集器必须是保守的，因为int, float可以伪装成指针。</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">Doraemonzzz</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="http://www.doraemonzzz.com/2021/09/16/2021-9-16-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E7%AC%AC9%E7%AB%A0-%E7%AC%94%E8%AE%B0%E6%95%B4%E7%90%86-p2/">http://www.doraemonzzz.com/2021/09/16/2021-9-16-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E7%AC%AC9%E7%AB%A0-%E7%AC%94%E8%AE%B0%E6%95%B4%E7%90%86-p2/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://www.doraemonzzz.com" target="_blank">Doraemonzzz</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F/">深入理解计算机系统</a></div><div class="post_share"><div class="social-share" data-image="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="next-post pull-full"><a href="/2021/09/16/2021-9-16-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E7%AC%AC9%E7%AB%A0-%E7%AC%94%E8%AE%B0%E6%95%B4%E7%90%86-p1/"><img class="next-cover" src= "/img/loading.gif" data-lazy-src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">深入理解计算机系统 第9章 笔记整理 p1</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span> 相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2021/06/06/2021-6-6-深入理解计算机系统-第5章-习题解析/" title="深入理解计算机系统 第5章 习题解析"><img class="cover" src= "/img/loading.gif" data-lazy-src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-06-06</div><div class="title">深入理解计算机系统 第5章 习题解析</div></div></a></div><div><a href="/2021/08/01/2021-8-01-深入理解计算机系统-第7章-习题解析/" title="深入理解计算机系统 第7章 习题解析"><img class="cover" src= "/img/loading.gif" data-lazy-src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-08-01</div><div class="title">深入理解计算机系统 第7章 习题解析</div></div></a></div><div><a href="/2021/08/01/2021-8-1-深入理解计算机系统-第6章-笔记整理/" title="深入理解计算机系统 第6章 笔记整理"><img class="cover" src= "/img/loading.gif" data-lazy-src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-08-01</div><div class="title">深入理解计算机系统 第6章 笔记整理</div></div></a></div><div><a href="/2021/08/15/2021-8-15-深入理解计算机系统-第8章-习题解析/" title="深入理解计算机系统 第8章 习题解析"><img class="cover" src= "/img/loading.gif" data-lazy-src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-08-15</div><div class="title">深入理解计算机系统 第8章 习题解析</div></div></a></div><div><a href="/2021/02/21/深入理解计算机系统 第1章 笔记整理/" title="深入理解计算机系统 第1章 笔记整理"><img class="cover" src= "/img/loading.gif" data-lazy-src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-02-21</div><div class="title">深入理解计算机系统 第1章 笔记整理</div></div></a></div><div><a href="/2020/09/20/深入理解计算机系统 第2章 习题解析 Part1/" title="深入理解计算机系统 第2章 习题解析 Part1"><img class="cover" src= "/img/loading.gif" data-lazy-src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-09-20</div><div class="title">深入理解计算机系统 第2章 习题解析 Part1</div></div></a></div></div></div><hr/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div><div id="comment-switch"><span class="first-comment">Valine</span><span class="switch-btn"></span><span class="second-comment">Livere</span></div></div><div class="comment-wrap"><div><div class="vcomment" id="vcomment"></div></div><div><div id="lv-container" data-id="city" data-uid="MTAyMC8zNDcxOS8xMTI1Ng=="></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="card-info-avatar is-center"><img class="avatar-img" src= "/img/loading.gif" data-lazy-src="https://github.com/Doraemonzzz/md-photo/blob/master/%E5%A4%B4%E5%83%8F.jpg?raw=true" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/><div class="author-info__name">Doraemonzzz</div><div class="author-info__description">个人博客，主要记录有关机器学习，数学以及计算机科学的笔记</div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">659</div></a></div><div class="card-info-data-item is-center"><a href="/tags/"><div class="headline">标签</div><div class="length-num">68</div></a></div><div class="card-info-data-item is-center"><a href="/categories/"><div class="headline">分类</div><div class="length-num">26</div></a></div></div><a class="button--animated" id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/Doraemonzzz"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/Doraemonzzz" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="/doraemon_zzz@163.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a><a class="social-icon" href="https://space.bilibili.com/291079982" target="_blank" title="Bilibili"><i class="iconfont icon-bilibili"></i></a><a class="social-icon" href="/atom.xml" target="_blank" title=""><i class="fa fa-rss"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn card-announcement-animation"></i><span>公告</span></div><div class="announcement_content">暂无公告</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%AC%AC9%E7%AB%A0%EF%BC%9A%E8%99%9A%E6%8B%9F%E5%86%85%E5%AD%98"><span class="toc-number">1.</span> <span class="toc-text">第9章：虚拟内存</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%87%8D%E8%A6%81%E6%A6%82%E5%BF%B5"><span class="toc-number">1.1.</span> <span class="toc-text">重要概念</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Linux-%E8%99%9A%E6%8B%9F%E5%86%85%E5%AD%98%E7%B3%BB%E7%BB%9F"><span class="toc-number">1.2.</span> <span class="toc-text">Linux 虚拟内存系统</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Linux%E8%99%9A%E6%8B%9F%E5%86%85%E5%AD%98%E5%8C%BA%E5%9F%9F"><span class="toc-number">1.2.1.</span> <span class="toc-text">Linux虚拟内存区域</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Linux%E7%BC%BA%E9%A1%B5%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86"><span class="toc-number">1.2.2.</span> <span class="toc-text">Linux缺页异常处理</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%86%85%E5%AD%98%E6%98%A0%E5%B0%84"><span class="toc-number">1.3.</span> <span class="toc-text">内存映射</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AE%80%E4%BB%8B"><span class="toc-number">1.3.1.</span> <span class="toc-text">简介</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%86%8D%E7%9C%8B%E5%85%B1%E4%BA%AB%E5%AF%B9%E8%B1%A1"><span class="toc-number">1.3.2.</span> <span class="toc-text">再看共享对象</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%85%B1%E4%BA%AB%E5%AF%B9%E8%B1%A1"><span class="toc-number">1.3.2.1.</span> <span class="toc-text">共享对象</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%A7%81%E6%9C%89%E5%AF%B9%E8%B1%A1"><span class="toc-number">1.3.2.2.</span> <span class="toc-text">私有对象</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%86%8D%E7%9C%8Bfork%E5%87%BD%E6%95%B0"><span class="toc-number">1.3.3.</span> <span class="toc-text">再看fork函数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%86%8D%E7%9C%8Bexecve%E5%87%BD%E6%95%B0"><span class="toc-number">1.3.4.</span> <span class="toc-text">再看execve函数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8mmap%E5%87%BD%E6%95%B0%E7%9A%84%E7%94%A8%E6%88%B7%E7%BA%A7%E5%86%85%E5%AD%98%E6%98%A0%E5%B0%84"><span class="toc-number">1.3.5.</span> <span class="toc-text">使用mmap函数的用户级内存映射</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8A%A8%E6%80%81%E5%86%85%E5%AD%98%E5%88%86%E9%85%8D"><span class="toc-number">1.4.</span> <span class="toc-text">动态内存分配</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AE%80%E4%BB%8B-1"><span class="toc-number">1.4.1.</span> <span class="toc-text">简介</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%87%BD%E6%95%B0%E6%8E%A5%E5%8F%A3"><span class="toc-number">1.4.2.</span> <span class="toc-text">函数接口</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%86%E9%85%8D%E5%99%A8%E7%9A%84%E8%A6%81%E6%B1%82%E5%92%8C%E7%9B%AE%E6%A0%87"><span class="toc-number">1.4.3.</span> <span class="toc-text">分配器的要求和目标</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%A2%8E%E7%89%87"><span class="toc-number">1.4.4.</span> <span class="toc-text">碎片</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%9E%E7%8E%B0%E9%97%AE%E9%A2%98"><span class="toc-number">1.4.5.</span> <span class="toc-text">实现问题</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%87%A0%E7%A7%8D%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%EF%BC%88%E7%A9%BA%E9%97%B2%E5%9D%97%E7%BB%84%E7%BB%87%EF%BC%89"><span class="toc-number">1.4.6.</span> <span class="toc-text">几种数据结构（空闲块组织）</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%9A%90%E5%BC%8F%E7%A9%BA%E9%97%B2%E9%93%BE%E8%A1%A8"><span class="toc-number">1.4.6.1.</span> <span class="toc-text">隐式空闲链表</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%B8%A6%E8%BE%B9%E7%95%8C%E6%A0%87%E8%AE%B0%E7%9A%84%E9%9A%90%E5%BC%8F%E7%A9%BA%E9%97%B2%E9%93%BE%E8%A1%A8"><span class="toc-number">1.4.6.2.</span> <span class="toc-text">带边界标记的隐式空闲链表</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%98%BE%E5%BC%8F%E7%A9%BA%E9%97%B2%E9%93%BE%E8%A1%A8"><span class="toc-number">1.4.6.3.</span> <span class="toc-text">显式空闲链表</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%88%86%E7%A6%BB%E7%9A%84%E7%A9%BA%E9%97%B2%E9%93%BE%E8%A1%A8"><span class="toc-number">1.4.6.4.</span> <span class="toc-text">分离的空闲链表</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E7%AE%80%E4%BB%8B-2"><span class="toc-number">1.4.6.4.1.</span> <span class="toc-text">简介</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E7%AE%80%E5%8D%95%E5%88%86%E7%A6%BB%E5%AD%98%E5%82%A8-simple-segregated-storage"><span class="toc-number">1.4.6.4.2.</span> <span class="toc-text">简单分离存储(simple segregated storage)</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%88%86%E7%A6%BB%E9%80%82%E9%85%8D-segregated-fit"><span class="toc-number">1.4.6.4.3.</span> <span class="toc-text">分离适配(segregated fit)</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E4%BC%99%E4%BC%B4%E7%B3%BB%E7%BB%9F-buddy-system"><span class="toc-number">1.4.6.4.4.</span> <span class="toc-text">伙伴系统(buddy system)</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%94%BE%E7%BD%AE%E5%B7%B2%E5%88%86%E9%85%8D%E7%9A%84%E5%9D%97"><span class="toc-number">1.4.7.</span> <span class="toc-text">放置已分配的块</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%86%E5%89%B2%E7%A9%BA%E9%97%B2%E5%9D%97"><span class="toc-number">1.4.8.</span> <span class="toc-text">分割空闲块</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%90%88%E5%B9%B6%E7%A9%BA%E9%97%B2%E5%9D%97"><span class="toc-number">1.4.9.</span> <span class="toc-text">合并空闲块</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9E%83%E5%9C%BE%E6%94%B6%E9%9B%86"><span class="toc-number">1.5.</span> <span class="toc-text">垃圾收集</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%8B%E7%BB%8D"><span class="toc-number">1.5.1.</span> <span class="toc-text">介绍</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9E%83%E5%9C%BE%E6%94%B6%E9%9B%86%E5%99%A8%E7%9A%84%E5%9F%BA%E6%9C%AC%E7%9F%A5%E8%AF%86"><span class="toc-number">1.5.2.</span> <span class="toc-text">垃圾收集器的基本知识</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Mark-amp-Sweep%E5%9E%83%E5%9C%BE%E6%94%B6%E9%9B%86%E5%99%A8"><span class="toc-number">1.5.3.</span> <span class="toc-text">Mark&amp;Sweep垃圾收集器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#C%E7%A8%8B%E5%BA%8F%E7%9A%84%E4%BF%9D%E5%AE%88Mark-amp-Sweep"><span class="toc-number">1.5.4.</span> <span class="toc-text">C程序的保守Mark&amp;Sweep</span></a></li></ol></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2021/09/16/2021-9-16-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E7%AC%AC9%E7%AB%A0-%E7%AC%94%E8%AE%B0%E6%95%B4%E7%90%86-p2/" title="深入理解计算机系统 第9章 笔记整理 p2"><img src= "/img/loading.gif" data-lazy-src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="深入理解计算机系统 第9章 笔记整理 p2"/></a><div class="content"><a class="title" href="/2021/09/16/2021-9-16-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E7%AC%AC9%E7%AB%A0-%E7%AC%94%E8%AE%B0%E6%95%B4%E7%90%86-p2/" title="深入理解计算机系统 第9章 笔记整理 p2">深入理解计算机系统 第9章 笔记整理 p2</a><time datetime="2021-09-15T16:36:00.000Z" title="发表于 2021-09-16 00:36:00">2021-09-16</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/09/16/2021-9-16-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E7%AC%AC9%E7%AB%A0-%E7%AC%94%E8%AE%B0%E6%95%B4%E7%90%86-p1/" title="深入理解计算机系统 第9章 笔记整理 p1"><img src= "/img/loading.gif" data-lazy-src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="深入理解计算机系统 第9章 笔记整理 p1"/></a><div class="content"><a class="title" href="/2021/09/16/2021-9-16-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E7%AC%AC9%E7%AB%A0-%E7%AC%94%E8%AE%B0%E6%95%B4%E7%90%86-p1/" title="深入理解计算机系统 第9章 笔记整理 p1">深入理解计算机系统 第9章 笔记整理 p1</a><time datetime="2021-09-15T16:34:00.000Z" title="发表于 2021-09-16 00:34:00">2021-09-16</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/09/15/2021-9-15-CMU-15-213-Lab6-Malloc-Lab/" title="CMU 15-213 Lab6 Malloc Lab"><img src= "/img/loading.gif" data-lazy-src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="CMU 15-213 Lab6 Malloc Lab"/></a><div class="content"><a class="title" href="/2021/09/15/2021-9-15-CMU-15-213-Lab6-Malloc-Lab/" title="CMU 15-213 Lab6 Malloc Lab">CMU 15-213 Lab6 Malloc Lab</a><time datetime="2021-09-14T16:07:00.000Z" title="发表于 2021-09-15 00:07:00">2021-09-15</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/09/14/2021-9-14-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E7%AC%AC9%E7%AB%A0-%E4%B9%A0%E9%A2%98%E8%A7%A3%E6%9E%90/" title="深入理解计算机系统 第9章 习题解析"><img src= "/img/loading.gif" data-lazy-src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="深入理解计算机系统 第9章 习题解析"/></a><div class="content"><a class="title" href="/2021/09/14/2021-9-14-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E7%AC%AC9%E7%AB%A0-%E4%B9%A0%E9%A2%98%E8%A7%A3%E6%9E%90/" title="深入理解计算机系统 第9章 习题解析">深入理解计算机系统 第9章 习题解析</a><time datetime="2021-09-14T14:44:00.000Z" title="发表于 2021-09-14 22:44:00">2021-09-14</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/09/12/2021-9-12-%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E4%B8%ADbatch-size,-update-freq%E4%BB%A5%E5%8F%8A%E5%A4%9A%E5%8D%A1%E7%9A%84%E5%85%B3%E7%B3%BB/" title="深度学习中batch size, update freq以及多卡的关系"><img src= "/img/loading.gif" data-lazy-src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="深度学习中batch size, update freq以及多卡的关系"/></a><div class="content"><a class="title" href="/2021/09/12/2021-9-12-%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E4%B8%ADbatch-size,-update-freq%E4%BB%A5%E5%8F%8A%E5%A4%9A%E5%8D%A1%E7%9A%84%E5%85%B3%E7%B3%BB/" title="深度学习中batch size, update freq以及多卡的关系">深度学习中batch size, update freq以及多卡的关系</a><time datetime="2021-09-12T02:11:00.000Z" title="发表于 2021-09-12 10:11:00">2021-09-12</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2018 - 2021 By Doraemonzzz</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="font-plus" type="button" title="放大字体"><i class="fas fa-plus"></i></button><button id="font-minus" type="button" title="缩小字体"><i class="fas fa-minus"></i></button><button id="translateLink" type="button" title="简繁转换">简</button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div id="local-search"><div class="search-dialog"><div class="search-dialog__title" id="local-search-title">本地搜索</div><div id="local-input-panel"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div></div><hr/><div id="local-search-results"></div><span class="search-close-button"><i class="fas fa-times"></i></span></div><div id="search-mask"></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="/js/tw_cn.js"></script><script src="https://cdn.jsdelivr.net/npm/vanilla-lazyload/dist/lazyload.iife.min.js"></script><script src="/js/search/local-search.js"></script><script>var preloader = {
+  endLoading: () => {
+    document.body.style.overflow = 'auto';
+    document.getElementById('loading-box').classList.add("loaded")
+  },
+  initLoading: () => {
+    document.body.style.overflow = '';
+    document.getElementById('loading-box').classList.remove("loaded")
+
+  }
+}
+window.addEventListener('load',preloader.endLoading())</script><div class="js-pjax"><script>if (!window.MathJax) {
+  window.MathJax = {
+    tex: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]],
+      tags: 'ams'
+    },
+    chtml: {
+      scale: 1.25
+    },
+    options: {
+      renderActions: {
+        findScript: [10, doc => {
+          for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+            const display = !!node.type.match(/; *mode=display/)
+            const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+            const text = document.createTextNode('')
+            node.parentNode.replaceChild(text, node)
+            math.start = {node: text, delim: '', n: 0}
+            math.end = {node: text, delim: '', n: 0}
+            doc.math.push(math)
+          }
+        }, '']
+      }
+    }
+  }
+  
+  const script = document.createElement('script')
+  script.src = 'https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js'
+  script.id = 'MathJax-script'
+  script.async = true
+  document.head.appendChild(script)
+} else {
+  MathJax.startup.document.state(0)
+  MathJax.texReset()
+  MathJax.typeset()
+}</script><script>function loadValine () {
+  function initValine () {
+    const valine = new Valine(Object.assign({
+      el: '#vcomment',
+      appId: 'IpnmxCW9CvYWIXbol5QXsegX-MdYXbMMI',
+      appKey: 'w57DVCdbxcyB1TYYagMIMJIU',
+      placeholder: 'Please leave your footprints',
+      avatar: 'monsterid',
+      meta: 'nick,mail,link'.split(','),
+      pageSize: '10',
+      lang: 'en',
+      recordIP: false,
+      serverURLs: '',
+      emojiCDN: '',
+      emojiMaps: "",
+      enableQQ: false,
+      path: window.location.pathname,
+      requiredFields: ["nick,mail"],
+      visitor: true
+    }, null))
+  }
+
+  if (typeof Valine === 'function') initValine() 
+  else getScript('https://cdn.jsdelivr.net/npm/valine/dist/Valine.min.js').then(initValine)
+}
+
+if ('Valine' === 'Valine' || !false) {
+  if (false) btf.loadComment(document.getElementById('vcomment'),loadValine)
+  else setTimeout(loadValine, 0)
+} else {
+  function loadOtherComment () {
+    loadValine()
+  }
+}</script><script>function loadLivere () {
+  if (typeof LivereTower === 'object') {
+    window.LivereTower.init()
+  }
+  else {
+    (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+    })(document, 'script');
+  }
+}
+
+if ('Valine' === 'Livere' || !false) {
+  if (false) btf.loadComment(document.getElementById('lv-container'), loadLivere)
+  else loadLivere()
+}
+else {
+  function loadOtherComment () {
+    loadLivere()
+  }
+}</script></div><script defer="defer" id="fluttering_ribbon" mobile="false" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/canvas-fluttering-ribbon.min.js"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

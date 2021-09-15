@@ -1,0 +1,565 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>深入理解计算机系统 第9章 笔记整理 p1 | Doraemonzzz</title><meta name="keywords" content="深入理解计算机系统"><meta name="author" content="Doraemonzzz"><meta name="copyright" content="Doraemonzzz"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="这次回顾深入理解计算机系统第9章虚拟内存部分。 电子书地址： http:&#x2F;&#x2F;eol.bnuz.edu.cn&#x2F;meol&#x2F;common&#x2F;script&#x2F;preview&#x2F;download_preview.jsp?fileid&#x3D;2169600&amp;resid&#x3D;242120&amp;lid&#x3D;28605 备注：图片和总结内容均来自于电子书。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="深入理解计算机系统 第9章 笔记整理 p1">
+<meta property="og:url" content="http://www.doraemonzzz.com/2021/09/16/2021-9-16-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E7%AC%AC9%E7%AB%A0-%E7%AC%94%E8%AE%B0%E6%95%B4%E7%90%86-p1/index.html">
+<meta property="og:site_name" content="Doraemonzzz">
+<meta property="og:description" content="这次回顾深入理解计算机系统第9章虚拟内存部分。 电子书地址： http:&#x2F;&#x2F;eol.bnuz.edu.cn&#x2F;meol&#x2F;common&#x2F;script&#x2F;preview&#x2F;download_preview.jsp?fileid&#x3D;2169600&amp;resid&#x3D;242120&amp;lid&#x3D;28605 备注：图片和总结内容均来自于电子书。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg">
+<meta property="article:published_time" content="2021-09-15T16:34:00.000Z">
+<meta property="article:modified_time" content="2021-09-15T16:37:01.288Z">
+<meta property="article:author" content="Doraemonzzz">
+<meta property="article:tag" content="深入理解计算机系统">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg"><link rel="shortcut icon" href="https://github.com/Doraemonzzz/md-photo/blob/master/%E5%A4%B4%E5%83%8F.jpg?raw=true"><link rel="canonical" href="http://www.doraemonzzz.com/2021/09/16/2021-9-16-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E7%AC%AC9%E7%AB%A0-%E7%AC%94%E8%AE%B0%E6%95%B4%E7%90%86-p1/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//www.google-analytics.com" crossorigin=""/><link rel="preconnect" href="//hm.baidu.com"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><script>var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?6f00f37f957f0608abb8c571105456f0";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script><script async="async" src="https://www.googletagmanager.com/gtag/js?id=UA-G-RE4B1LKRZD"></script><script>window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'UA-G-RE4B1LKRZD');
+</script><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"search.xml","languages":{"hits_empty":"找不到您查询的内容：${query}"}},
+  translate: {"defaultEncoding":2,"translateDelay":0,"msgToTraditionalChinese":"繁","msgToSimplifiedChinese":"簡"},
+  noticeOutdate: {"limitDay":500,"position":"top","messagePrev":"距离上次更新已经","messageNext":"天了，文章内容可能已经过时。"},
+  highlight: {"plugin":"prismjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":200},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    jQuery: 'https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js',
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+    },
+    fancybox: {
+      js: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css'
+    }
+  },
+  isPhotoFigcaption: true,
+  islazyload: true,
+  isanchor: true
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '深入理解计算机系统 第9章 笔记整理 p1',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2021-09-16 00:37:01'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const fontSizeVal = saveToLocal.get('global-font-size')
+    if (fontSizeVal !== undefined) {
+      document.documentElement.style.setProperty('--global-font-size', fontSizeVal + 'px')
+    }
+    })(window)</script><link rel="stylesheet" href="/css/bilibili.css" media="defer" onload="this.media='all'"><meta name="google-site-verification" content="c4v-NmuUZRgl3cvtg9GKswryK1YLaPztd_5M-df5VNI" /><meta name="generator" content="Hexo 5.4.0"><link rel="alternate" href="/atom.xml" title="Doraemonzzz" type="application/atom+xml">
+</head><body><div id="loading-box"><div class="loading-left-bg"></div><div class="loading-right-bg"></div><div class="spinner-box"><div class="configure-border-1"><div class="configure-core"></div></div><div class="configure-border-2"><div class="configure-core"></div></div><div class="loading-word">加载中...</div></div></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="author-avatar"><img class="avatar-img" src= "/img/loading.gif" data-lazy-src="https://github.com/Doraemonzzz/md-photo/blob/master/%E5%A4%B4%E5%83%8F.jpg?raw=true" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">文章</div><div class="length-num">659</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">标签</div><div class="length-num">68</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/categories/"><div class="headline">分类</div><div class="length-num">26</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-chart-pie"></i><span> 博客统计</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/charts/"><i class="fa-fw far fa-chart-bar"></i><span> 文章统计</span></a></li><li><a class="site-page child" href="/census/"><i class="fa-fw fas fa-chart-area"></i><span> 访问统计</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/top/"><i class="fa-fw fab fa-hotjar"></i><span> 阅读排行榜</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fa fa-heartbeat"></i><span> 娱乐</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于我</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">Doraemonzzz</a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-chart-pie"></i><span> 博客统计</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/charts/"><i class="fa-fw far fa-chart-bar"></i><span> 文章统计</span></a></li><li><a class="site-page child" href="/census/"><i class="fa-fw fas fa-chart-area"></i><span> 访问统计</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/top/"><i class="fa-fw fab fa-hotjar"></i><span> 阅读排行榜</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fa fa-heartbeat"></i><span> 娱乐</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于我</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">深入理解计算机系统 第9章 笔记整理 p1</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2021-09-15T16:34:00.000Z" title="发表于 2021-09-16 00:34:00">2021-09-16</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2021-09-15T16:37:01.288Z" title="更新于 2021-09-16 00:37:01">2021-09-16</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%8E%9F%E7%90%86/">计算机原理</a></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-tag"></i><a class="article-meta__tags" href="/tags/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F/">深入理解计算机系统</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">4.7k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>15分钟</span></span><span class="post-meta-separator">|</span><span class="leancloud_visitors" id="/2021/09/16/2021-9-16-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E7%AC%AC9%E7%AB%A0-%E7%AC%94%E8%AE%B0%E6%95%B4%E7%90%86-p1/" data-flag-title="深入理解计算机系统 第9章 笔记整理 p1"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span class="leancloud-visitors-count"></span></span><span class="post-meta-separator">|</span><span class="post-meta-commentcount"><i class="far fa-comments fa-fw post-meta-icon"></i><span class="post-meta-label">评论数:</span><a href="/2021/09/16/2021-9-16-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E7%AC%AC9%E7%AB%A0-%E7%AC%94%E8%AE%B0%E6%95%B4%E7%90%86-p1/#post-comment" itemprop="discussionUrl"><span class="valine-comment-count" data-xid="/2021/09/16/2021-9-16-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E7%AC%AC9%E7%AB%A0-%E7%AC%94%E8%AE%B0%E6%95%B4%E7%90%86-p1/" itemprop="commentCount"></span></a></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p>这次回顾深入理解计算机系统第9章虚拟内存部分。</p>
+<p>电子书地址：</p>
+<p><a target="_blank" rel="noopener" href="http://eol.bnuz.edu.cn/meol/common/script/preview/download_preview.jsp?fileid=2169600&amp;resid=242120&amp;lid=28605">http://eol.bnuz.edu.cn/meol/common/script/preview/download_preview.jsp?fileid=2169600&amp;resid=242120&amp;lid=28605</a></p>
+<p>备注：图片和总结内容均来自于电子书。</p>
+<span id="more"></span>
+<h1 id="第9章：虚拟内存"><a href="#第9章：虚拟内存" class="headerlink" title="第9章：虚拟内存"></a>第9章：虚拟内存</h1><h2 id="重要概念"><a href="#重要概念" class="headerlink" title="重要概念"></a>重要概念</h2><ul>
+<li>物理地址（Physical Address, PA）</li>
+<li>虚拟地址（Virtual Address, VA）</li>
+<li>内存管理单元（Memory Management Unit, MMU）</li>
+<li>地址空间</li>
+<li>虚拟页(Virtual Page, VP)</li>
+<li>物理页(Physical Page, PP)，也被称为页帧(page frame)</li>
+<li>虚拟页面集合的三个部分：<ul>
+<li>末分配的；</li>
+<li>缓存的；</li>
+<li>末缓存的；</li>
+</ul>
+</li>
+<li>页表(Page table)<ul>
+<li>虚拟页映射到物理页；</li>
+<li>页表条目(Page Table Entry, PTE)的数组；</li>
+<li>缺页（page fault）：DRAM缓存不命中；</li>
+</ul>
+</li>
+<li>工作集(working set)，常驻集合(resident set)，抖动(thrashing)；</li>
+<li>段错误(segmentation fault)；</li>
+<li>页表基址寄存器(Page Table Base Register, PTBR)；</li>
+<li>虚拟页面偏移(Virtual Page Offset, VPO) ；</li>
+<li>$(n-p)$位的虚拟页号( Virtual Page Number, VPN)；</li>
+<li>页表条目中物理页号(Physical Page Number, PPN)；</li>
+<li>物理页面偏移(Physical Page Offset, PPO)；</li>
+<li>翻译后备缓冲器(Translation Lookaside Buffer, TLB)；</li>
+<li>TLB索引(TLBI)是由VPN的$t$个最低位组成的，而$\mathrm{TLB}$标记( $\mathrm{TLBT})$是由$\mathrm{VPN}$中剩余的位组成的。</li>
+</ul>
+<h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>虚拟内存提供一种对主存抽象的概念，提供了三个重要功能：</p>
+<ul>
+<li>它将主存看成是一个存储在磁盘上的地址空间的高速缓存，在主存中只保存活动区域，并根据需要在磁盘和主存之间来回传送数据，通过这种方式，它高效地使用了主存。</li>
+<li>它为每个进程提供了一致的地址空间，从而简化了内存管理。</li>
+<li>它保护了每个进程的地址空间不被其他进程破坏。</li>
+</ul>
+<h2 id="物理和虚拟寻址"><a href="#物理和虚拟寻址" class="headerlink" title="物理和虚拟寻址"></a>物理和虚拟寻址</h2><h3 id="主存结构"><a href="#主存结构" class="headerlink" title="主存结构"></a>主存结构</h3><p>计算机系统的主存被组织成一个由$M$个连续的字节大小的单元组成的数组。每字节都有一个唯一的物理地址（Physical Address, PA）。第一个字节的地址为$0$，第二个为$1$，以此类推。</p>
+<h3 id="物理寻址"><a href="#物理寻址" class="headerlink" title="物理寻址"></a>物理寻址</h3><p>CPU直接读取物理地址的寻址方式称为物理寻址，示例为：</p>
+<p><img src= "/img/loading.gif" data-lazy-src="https://github.com/Doraemonzzz/md-photo/blob/master/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F/%E7%AC%AC9%E7%AB%A0/p1/2021091201.jpg?raw=true" alt=""></p>
+<p>使用场景：</p>
+<ul>
+<li>早期的PC；</li>
+<li>数字信号处理器、嵌入式微控制器；</li>
+<li>Cray超级计算机；</li>
+</ul>
+<h3 id="虚拟寻址"><a href="#虚拟寻址" class="headerlink" title="虚拟寻址"></a>虚拟寻址</h3><p>CPU通过生成一个虚拟地址（Virtual Address, VA）来访问主存的寻址方式称为虚拟寻址。</p>
+<p>虚拟地址在被送到内存之前先转换成适当的物理地址，该过程称为地址翻译，由操作系统使用称为内存管理单元（Memory Management Unit, MMU）的硬件来进行该过程。</p>
+<p>虚拟寻址示例：</p>
+<p><img src= "/img/loading.gif" data-lazy-src="https://github.com/Doraemonzzz/md-photo/blob/master/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F/%E7%AC%AC9%E7%AB%A0/p1/2021091202.jpg?raw=true" alt=""></p>
+<h2 id="地址空间"><a href="#地址空间" class="headerlink" title="地址空间"></a>地址空间</h2><p>地址空间是一个非负整数地址的有序集合：</p>
+<script type="math/tex; mode=display">
+\{0,1,2, \cdots\}</script><p>如果地址空间中的整数是连续的，那么我们说它是一个线性地址空间，后续均假设地址空间为线性地址空间。</p>
+<p>在一个带虚拟内存的系统 中，CPU从一个有$N=2^{n}$个地址的地址空间中生成虚拟地址，这个地址空间称为<strong>虚拟地址空间</strong>(virtual address space)：</p>
+<script type="math/tex; mode=display">
+\{0,1,2, \cdots, N-1\}</script><p>地址空间的大小由表示最大地址所需要的位数来描述，一个包含$N=2^n$个地址的虚拟地址空间叫做一个$n$位地址空间，现代系统通常支持32位或64位地址空间。</p>
+<p>一个系统还有一个<strong>物理地址空间</strong>(physical address space)，对应于系统中物理内存的$M$个字节：</p>
+<script type="math/tex; mode=display">
+\{0,1,2, \cdots,M-1\}</script><p>通常假设</p>
+<script type="math/tex; mode=display">
+M=2^m</script><p>说明：</p>
+<p>每个数据对象可以有多个独立的地址，每个地址选自于不同的地址空间，这也是虚拟内存的基本思想。</p>
+<h2 id="虚拟内存作为缓存的工具"><a href="#虚拟内存作为缓存的工具" class="headerlink" title="虚拟内存作为缓存的工具"></a>虚拟内存作为缓存的工具</h2><h3 id="虚拟页和物理页"><a href="#虚拟页和物理页" class="headerlink" title="虚拟页和物理页"></a>虚拟页和物理页</h3><p>虚拟页和物理页的概念：</p>
+<ul>
+<li>概念上而言，虚拟内存被组织为一个由存放在磁盘上的$N$个连续的字节大小的单元组成的数组。每字节都有一个唯一的虚拟地址，作为到数组的索引。</li>
+<li>磁盘上数组的内容被缓存在主存中，和存储器层次结构中其他缓存一样，磁盘（较低层）上的数据被分割成块， 这些块作为磁盘和主存（较高层）之间的传输单元。</li>
+<li>VM系统通过将虚拟内存分割为称为<strong>虚拟页</strong>(Virtual Page, VP)的大小固定的块来处理这个问题。每个虚拟页的大小为$P=2^{p}$字节。</li>
+<li>类似地，物理内存被分割为<strong>物理页</strong>(Physical Page, PP)，大小也为$P$字节（物理页也被称为<strong>页帧</strong>(page frame)）。</li>
+</ul>
+<p>在任意时刻，虚拟页面的集合都分为三个不相交的子集：</p>
+<ul>
+<li>末分配的：VM系统还末分配（或者创建）的页。末分配的块没有任何数据和它们相关联，因此也就不占用任何磁盘空间。</li>
+<li>缓存的：当前已缓存在物理内存中的已分配页。</li>
+<li>末缓存的：末缓存在物理内存中的已分配页。</li>
+</ul>
+<p>示例：</p>
+<p><img src= "/img/loading.gif" data-lazy-src="https://github.com/Doraemonzzz/md-photo/blob/master/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F/%E7%AC%AC9%E7%AB%A0/p1/2021091203.jpg?raw=true" alt=""></p>
+<h3 id="DRAM缓存的组织结构"><a href="#DRAM缓存的组织结构" class="headerlink" title="DRAM缓存的组织结构"></a>DRAM缓存的组织结构</h3><ul>
+<li>DRAM缓存表示虚拟内存系统的缓存，它在主存中缓存虚拟页。</li>
+<li>由于DRAM缓存不命中要由磁盘来服务，所以虚拟页往往很大，通常是$\mathrm{4KB\sim 2MB}$；</li>
+<li>DRAM是全相联的，即任何虚拟页都可以放置在任何物理页中；</li>
+<li>缓存使用写回，不是直写；</li>
+</ul>
+<h3 id="页表"><a href="#页表" class="headerlink" title="页表"></a>页表</h3><p>页表简介：</p>
+<ul>
+<li><strong>页表</strong>(page table)是存放在物理内存中的数据结构；</li>
+<li>页表将虚拟页映射到物理页；</li>
+<li>每次地址翻译硬件将一个虚拟地址转换为物理地址时，都会读取页表；</li>
+<li>操作系统负责维护页表的内容，以及在磁盘与DRAM之间来回传送页；</li>
+</ul>
+<p>详细说明：</p>
+<ul>
+<li>页表是页表条目(Page Table Entry, PTE)的数组；</li>
+<li>虚拟地址空间中的每个页在页表中一个固定偏移量处都有一个 PTE；</li>
+<li>这里假设每个PTE是由一个有效位(valid bit)和一个$n$位地址字段组成；<ul>
+<li>有效位表明了该虚拟页当前是否被缓存在DRAM中；<ul>
+<li>如果设置了有效位，那么地址字段就表示DRAM中相应的物理页的起始位置，这个物理页中缓存了该虚拟页；</li>
+<li>如果没有设置有效位，那么一个空地址表示这个虚拟页还末被分配。否则，这个地址就指向该虚拟页在磁盘上的起始位置；</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>页表示例：</p>
+<p><img src= "/img/loading.gif" data-lazy-src="https://github.com/Doraemonzzz/md-photo/blob/master/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F/%E7%AC%AC9%E7%AB%A0/p1/2021091204.jpg?raw=true" alt=""></p>
+<p>说明：</p>
+<ul>
+<li>4个虚拟页（VP1, VP2, VP4, VP7）当前被缓存在DRAM中；</li>
+<li>（VP0, VP5）还未被分配；</li>
+<li>（VP3, VP6）已经被分配，但是当前还未被缓存；</li>
+</ul>
+<h3 id="页命中"><a href="#页命中" class="headerlink" title="页命中"></a>页命中</h3><p>当CPU想要读取包含在VP2中的虚拟内存的一个字发生如下内容：</p>
+<ul>
+<li>地址翻译硬件将虚拟地址作为一个索引来定位PTE2，并从内存中读取它；</li>
+<li>因为设置了有效位，所以地址翻译硬件就知道VP2是缓存在内存中的了；</li>
+<li>使用PTE中的物理内存地址构造出这个字的物理地址；</li>
+</ul>
+<p>示例：</p>
+<p><img src= "/img/loading.gif" data-lazy-src="https://github.com/Doraemonzzz/md-photo/blob/master/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F/%E7%AC%AC9%E7%AB%A0/p1/2021091205.jpg?raw=true" alt=""></p>
+<h3 id="缺页（页不命中）"><a href="#缺页（页不命中）" class="headerlink" title="缺页（页不命中）"></a>缺页（页不命中）</h3><p>DRAM缓存不命中称为<strong>缺页</strong>(page fault)，一个具体案例如下。</p>
+<p>当CPU想要读取包含在VP3中的虚拟内存的一个字时：</p>
+<ul>
+<li>地址翻译硬件从内存中读取PTE3，从有效位推断出VP3末被缓存，并且触发一个缺页异常。</li>
+<li>缺页异常调用内核中的缺页异常处理程序，该程序会选择一个牺牲页，在此例中就是存放在PP3中的VP4。<ul>
+<li>如果VP4已经被修改了，那么内核就会将它复制回磁盘。</li>
+<li>无论哪种情况，内核都会修改VP4的页表条目, 反映出VP4不再缓存在主存中这一事实。</li>
+</ul>
+</li>
+<li>内核从磁盘复制VP3到内存中的PP3，更新PTE3，随后返回；</li>
+<li>当异常处理程序返回时，它会重新启动导致缺页的指令，该指令会把导致缺页的虚拟地址重发送到地址翻译硬件中；<ul>
+<li>此时VP3已经缓存在主存中，可以正常处理；</li>
+</ul>
+</li>
+</ul>
+<p>缺页前：</p>
+<p><img src= "/img/loading.gif" data-lazy-src="https://github.com/Doraemonzzz/md-photo/blob/master/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F/%E7%AC%AC9%E7%AB%A0/p1/2021091206.jpg?raw=true" alt=""></p>
+<p>缺页后：</p>
+<p><img src= "/img/loading.gif" data-lazy-src="https://github.com/Doraemonzzz/md-photo/blob/master/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F/%E7%AC%AC9%E7%AB%A0/p1/2021091207.jpg?raw=true" alt=""></p>
+<h4 id="说明"><a href="#说明" class="headerlink" title="说明"></a>说明</h4><p>虚拟内存和缓存术语不同，但是概念相似，例如：</p>
+<ul>
+<li>缓存中的块被称为页；</li>
+<li>在磁盘和内存之间传送页的活动叫做交换(swapping)或者页面调度(paging)；</li>
+</ul>
+<h3 id="页面分配"><a href="#页面分配" class="headerlink" title="页面分配"></a>页面分配</h3><p><img src= "/img/loading.gif" data-lazy-src="https://github.com/Doraemonzzz/md-photo/blob/master/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F/%E7%AC%AC9%E7%AB%A0/p1/2021091208.jpg?raw=true" alt=""></p>
+<p>这个示例中，VP5的分配过程是在磁盘上创建空间并更新PTE5，使它指向磁盘上这个新创建的页面。</p>
+<h3 id="局部性"><a href="#局部性" class="headerlink" title="局部性"></a>局部性</h3><ul>
+<li>虚拟内存的效率比想象的高，因为局部性原则保证了在任意时刻，程序将趋向于在一个较小的活动页面(active page)集合上工作，这个集合叫做工作集(working set)或者常驻集合(resident set)。</li>
+<li>一开始将工作集页面调度到内存中，接下来对这个工作集的引用将导致命中；</li>
+<li>如果工作集的大小超出的物理内存的大小，那么程序将产生一种不幸的状态，叫做抖动(thrashing)，这时页面将不断地换进换出。</li>
+</ul>
+<h2 id="虚拟内存作为内存管理的工作"><a href="#虚拟内存作为内存管理的工作" class="headerlink" title="虚拟内存作为内存管理的工作"></a>虚拟内存作为内存管理的工作</h2><p>操作系统为每个进程提供一个独立的页表，因而也就是一个独立的虚拟地址空间，示例如下：</p>
+<p><img src= "/img/loading.gif" data-lazy-src="https://github.com/Doraemonzzz/md-photo/blob/master/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F/%E7%AC%AC9%E7%AB%A0/p1/2021091209.jpg?raw=true" alt=""></p>
+<p>VM简化了链接和加载、代码和数据共享，以及应用程序的内存分配：</p>
+<ul>
+<li>简化链接：<ul>
+<li>独立的地址空间允许每个进程的内存映像使用相同的基本格式，而不管代码和数据实际存放在物理内存的何处。</li>
+</ul>
+</li>
+<li>简化加载：<ul>
+<li>要把目标文件中.text 和.data节加载到一个新创建的进程中，Linux加载器为代码和数据段分配虚拟页，把它们标记为无效的（即末被缓存的），将页表条目指向目标文件中适当的位置。</li>
+</ul>
+</li>
+<li>简化共享：<ul>
+<li>独立地址空间为操作系统提供了一个管理用户进程和操作系统自身之间共享的一致机制。</li>
+<li>一般而言，每个进程都有自己私有的代码、数据、堆以及栈区域，是不和其他进程共享的。</li>
+<li>如果要共享代码或数据，比如printf，操作系统通过将不同进程中适当的虚拟页面映射到相同的物理页面，从而安排多个进程共享这部分代码的一个副本，而不是在每个进程中都包括单独的内核和C标准库的副本。</li>
+</ul>
+</li>
+<li>简化内存分配：<ul>
+<li>当一个运行在用户进程中的程序要求额外的堆空间时（如调用malloc的结果），操作系统分配一个适当数字(例如$k$) 个连续的虚拟内存页面，并且将它们映射到物理内存中任意位置的$k$个任意的物理页面。<ul>
+<li>由于页表的工作方式，物理页面没有必要连续。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="虚拟内存作为内存保护的工具"><a href="#虚拟内存作为内存保护的工具" class="headerlink" title="虚拟内存作为内存保护的工具"></a>虚拟内存作为内存保护的工具</h2><p>任何现代计算机系统必须为操作系统提供手段来控制对内存系统的访问，在PTE上增加字段即可做到这点：</p>
+<p><img src= "/img/loading.gif" data-lazy-src="https://github.com/Doraemonzzz/md-photo/blob/master/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F/%E7%AC%AC9%E7%AB%A0/p1/2021091210.jpg?raw=true" alt=""></p>
+<p>说明：</p>
+<ul>
+<li>SUP位表示进程是否必须运行在内核（超级用户）模式下才能访问该页。<ul>
+<li>运行在内核模式中的进程可以访问任何页面，但是运行在用户模式中的进程只允许访问那些SUP为0的页面；</li>
+</ul>
+</li>
+<li>READ位和WRITE位控制对页面的读和写访问。<ul>
+<li>例如，如果进程$i$运行在用户模式下，那么它有读VP0和读写VP1的权限。然而，不允许它访问VP2。</li>
+</ul>
+</li>
+<li>如果一条指令违反了这些许可条件，那么CPU就触发一个一般保护故障，将控制传递给一个内核中的异常处理程序。Linux shell一般将这种异常报告为“段错误(segmentation fault)”</li>
+</ul>
+<h2 id="地址翻译"><a href="#地址翻译" class="headerlink" title="地址翻译"></a>地址翻译</h2><h3 id="符号"><a href="#符号" class="headerlink" title="符号"></a>符号</h3><p> 基本参数：</p>
+<script type="math/tex; mode=display">
+\begin{array}{|l|l|}
+\hline \text { 符 } \text { 号 } & \text { 描 } \text { 述 } \\
+\hline N=2^{n} & \text { 虚拟地址空间中的地址数量 } \\
+\hline M=2^{m} & \text { 物理地址空间中的地址数量 } \\
+\hline P=2^{p} & \text { 页的大小 (字节) } \\
+\hline
+\end{array}</script><p>虛拟地址 (VA) 的组成部分</p>
+<script type="math/tex; mode=display">
+\begin{array}{|c|c|}
+
+\hline \text { 符 } \text { 号 } & \text { 描 } \text { 述 } \\
+\hline \text { VPO } & \text { 虚拟页面偏移量 (字节) } \\
+\hline \text { VPN } & \text { 虚拟页号 } \\
+\hline \text { TLBI } & \text { TLB 索引 } \\
+\hline \text { TLBT } & \text { TLB 标记 } \\
+\hline
+\end{array}</script><p>物理地址(PA)的组成部分</p>
+<script type="math/tex; mode=display">
+\begin{array}{|l|l|}
+
+\hline \text { 符 号 } & \text { 描 } \text { 述 } \\
+\hline \text { PPO } & \text { 物理页面偏移量 (字节) } \\
+\hline \text { PPN } & \text { 物理页号 } \\
+\hline \text { CO } & \text { 缓冲块内的字节偏移量 } \\
+\hline \text { CI } & \text { 高速缓存索引 } \\
+\hline \text { CT } & \text { 高速缓存标记 } \\
+\hline
+\end{array}</script><h3 id="简介-1"><a href="#简介-1" class="headerlink" title="简介"></a>简介</h3><p>地址翻译是一个${N}$元素的虚拟地址空间(VAS)中的元素和一个$M$元素的物理地址空间(PAS)中元素之间的映射：</p>
+<script type="math/tex; mode=display">
+\text { MAP: VAS } \rightarrow \text { PAS } \cup \varnothing</script><p>其中</p>
+<script type="math/tex; mode=display">
+\operatorname{MAP}(A)=\left\{\begin{array}{l}
+A^{\prime}\quad \text { 如果虚拟地址 } A \text { 处的数据在 } \mathrm{PAS} \text { 的物理地址 } A^{\prime} \text { 处 } \\
+\varnothing\quad \ \text { 如果虚拟地址 } A \text { 处的数据不在物理内存中 }
+\end{array}\right.</script><p>利用页表实现映射的方式：</p>
+<p><img src= "/img/loading.gif" data-lazy-src="https://github.com/Doraemonzzz/md-photo/blob/master/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F/%E7%AC%AC9%E7%AB%A0/p1/2021091211.jpg?raw=true" alt=""></p>
+<p>作用方式：</p>
+<ul>
+<li>CPU中的一个控制寄存器，页表基址寄存器(Page Table Base Register, PTBR)指向当前页表。</li>
+<li>$n$位的虚拟地址包含两个部分: 一个$p$位的虚拟页面偏移(Virtual Page Offset, VPO)和一个$(n-p)$位的虚拟页号(Virtual Page Number, VPN)。</li>
+<li>MMU利用VPN来选择适当的PTE。例如，VPN 0 选择 PTE 0，VPN 1 选择 PTE 1，以此类推。</li>
+<li>将页表条目中物理页号(Physical Page Number, PPN)和虚拟地址中的VPO串联起来，就得到相应的物理地址。</li>
+<li>注因为物理和虚拟页面都是$P$字节的，所以物理页面偏移(Physical Page Offset, PPO)和VPO是相同的。</li>
+</ul>
+<p>页面命中时CPU硬件执行的步骤（完全由硬件处理）：</p>
+<ul>
+<li>第 1 步 : 处理器生成一个虚拟地址，并把它传送给MMU。</li>
+<li>第 2 步：MMU生成PTE地址，并从高速缓存/主存请求得到它。</li>
+<li>第 3 步：高速缓存/主存向MMU返回PTE。</li>
+<li>第 4 步 : MMU构造物理地址, 并把它传送给高速缓存/主存。</li>
+<li>第 5 步：高速缓存/主存返回所请求的数据字给处理器。</li>
+</ul>
+<p>示例：</p>
+<p><img src= "/img/loading.gif" data-lazy-src="https://github.com/Doraemonzzz/md-photo/blob/master/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F/%E7%AC%AC9%E7%AB%A0/p1/2021091212.jpg?raw=true" alt=""></p>
+<p>缺页时CPU硬件执行的步骤（由硬件和操作系统内核 协作完成）：</p>
+<ul>
+<li>第1步到第3步：同之前的3步；</li>
+<li>第4步：PTE 中的有效位是零, 所以MMU触发了一次异常, 传递CPU中的控制到操作系统内核中的缺页异常处理程序。</li>
+<li>第5步：缺页处理程序确定出物理内存中的牺牲页，如果这个页面已经被修改了，则把它换出到磁盘。</li>
+<li>第6步：缺页处理程序页面调入新的页面, 并更新内存中的PTE。</li>
+<li>第7步：缺页处理程序返回到原来的进程，再次执行导致缺页的指令。<ul>
+<li>CPU将引起缺页的虚拟地址重新发送给MMU。因为虚拟页面现在缓存在物理内存中，所以就会命中，主存就会将所请求字返回给处理器。</li>
+</ul>
+</li>
+</ul>
+<p>示例：</p>
+<p><img src= "/img/loading.gif" data-lazy-src="https://github.com/Doraemonzzz/md-photo/blob/master/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F/%E7%AC%AC9%E7%AB%A0/p1/2021091213.jpg?raw=true" alt=""></p>
+<h3 id="结合高速缓存和虚拟内存"><a href="#结合高速缓存和虚拟内存" class="headerlink" title="结合高速缓存和虚拟内存"></a>结合高速缓存和虚拟内存</h3><p>使用虚拟内存又使用SRAM高速缓存的系统需要决定使用虚拟内存还是物理内存来访问SRAM高速缓存，大多数系统是选择物理寻址的，具体的结合方式如下：</p>
+<p><img src= "/img/loading.gif" data-lazy-src="https://github.com/Doraemonzzz/md-photo/blob/master/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F/%E7%AC%AC9%E7%AB%A0/p1/2021091214.jpg?raw=true" alt=""></p>
+<h3 id="利用TLB加速地址翻译"><a href="#利用TLB加速地址翻译" class="headerlink" title="利用TLB加速地址翻译"></a>利用TLB加速地址翻译</h3><p>MMU中包括一个关于PTE的小缓存，称为翻译后备缓冲器(Translation Lookaside Buffer, TLB)，用来加速翻译。</p>
+<p>TLB示例：</p>
+<p><img src= "/img/loading.gif" data-lazy-src="https://github.com/Doraemonzzz/md-photo/blob/master/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F/%E7%AC%AC9%E7%AB%A0/p1/2021091215.jpg?raw=true" alt=""></p>
+<p>用于组选择和行匹配的索引和标记字段是从虚拟地址中的虚拟页号中提取出来的。如果TLB有$T=2^{t}$个组，那么 TLB索引(TLBI)是由VPN的$t$个最低位组成的，而$\mathrm{TLB}$标记($\mathrm{TLBT}$)是由$\mathrm{VPN}$中剩余的位组成的。</p>
+<p>TLB命中时的步骤：</p>
+<ul>
+<li>第1步：CPU产生一个虚拟地址。</li>
+<li>第2步和第3步：MMU从TLB中取出相应的PTE。</li>
+<li>第4步：MMU将这个虚拟地址翻译成一个物理地址，并且将它发送到高速缓存/主存。</li>
+<li>第5步：高速缓存/主存将所请求的数据字返回给 CPU 。</li>
+</ul>
+<p>示例：</p>
+<p><img src= "/img/loading.gif" data-lazy-src="https://github.com/Doraemonzzz/md-photo/blob/master/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F/%E7%AC%AC9%E7%AB%A0/p1/2021091216.jpg?raw=true" alt=""></p>
+<p>TLB不命中时的步骤：</p>
+<ul>
+<li>第1步：CPU产生一个虚拟地址。</li>
+<li>第2步到第4步：MMU从L1缓存中取出相应的 PTE，存放在TLB中。</li>
+<li>第5步：MMU将这个虚拟地址翻译成一个物理地址，并且将它发送到高速缓存/主存。</li>
+<li>第6步：高速缓存/主存将所请求的数据字返回给 CPU 。</li>
+</ul>
+<p>示例：</p>
+<p><img src= "/img/loading.gif" data-lazy-src="https://github.com/Doraemonzzz/md-photo/blob/master/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F/%E7%AC%AC9%E7%AB%A0/p1/2021091217.jpg?raw=true" alt=""></p>
+<h3 id="多级页表"><a href="#多级页表" class="headerlink" title="多级页表"></a>多级页表</h3><p>使用多级页表结构减少内存开销，二级页表示例：</p>
+<p><img src= "/img/loading.gif" data-lazy-src="https://github.com/Doraemonzzz/md-photo/blob/master/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F/%E7%AC%AC9%E7%AB%A0/p1/2021091218.jpg?raw=true" alt=""></p>
+<p>这种方法从两个方面减少了内存要求：</p>
+<ul>
+<li>第一，如果一级页表中的一个PTE是空的，那么相应的二级页表就根本不会存在。这代表着一种巨大的潜在节约，因为对于一个典型的程序，4GB的虚拟地址空间的大部分都会是末分配的。</li>
+<li>第二，只有一级页表才需要总是在主存中；虚拟内存系统可以在需要时创建、页面调入或调出二级页表，这就减少了主存的压力；只有最经常使用的二级页表才需要缓存在主存中。</li>
+</ul>
+<p>$k$级页表层次结构的地址翻译：</p>
+<ul>
+<li>虚拟地址被划分成为$k$个VPN和$1$个VPO。</li>
+<li>每个VPN $i$都是一个到第$i$级页表的索引，其中 $1 \le i \le k$ 。</li>
+<li>第$j$级页表中的每个PTE， $1 \le j\le k-1$, 都指向第$j+1$级的某个页表的基址。</li>
+<li>第$k$级页表中的每个PTE包含某个物理页面的PPN，或者一个磁盘块的地址。</li>
+<li>为了构造物理地址，在能够确定PPN之前，MMU必须访问$k$个PTE。</li>
+<li>对于只有一级的页表结构，PPO和VPO是相同的。</li>
+</ul>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">Doraemonzzz</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="http://www.doraemonzzz.com/2021/09/16/2021-9-16-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E7%AC%AC9%E7%AB%A0-%E7%AC%94%E8%AE%B0%E6%95%B4%E7%90%86-p1/">http://www.doraemonzzz.com/2021/09/16/2021-9-16-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E7%AC%AC9%E7%AB%A0-%E7%AC%94%E8%AE%B0%E6%95%B4%E7%90%86-p1/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://www.doraemonzzz.com" target="_blank">Doraemonzzz</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F/">深入理解计算机系统</a></div><div class="post_share"><div class="social-share" data-image="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2021/09/16/2021-9-16-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E7%AC%AC9%E7%AB%A0-%E7%AC%94%E8%AE%B0%E6%95%B4%E7%90%86-p2/"><img class="prev-cover" src= "/img/loading.gif" data-lazy-src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">深入理解计算机系统 第9章 笔记整理 p2</div></div></a></div><div class="next-post pull-right"><a href="/2021/09/15/2021-9-15-CMU-15-213-Lab6-Malloc-Lab/"><img class="next-cover" src= "/img/loading.gif" data-lazy-src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">CMU 15-213 Lab6 Malloc Lab</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span> 相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2021/06/06/2021-6-6-深入理解计算机系统-第5章-习题解析/" title="深入理解计算机系统 第5章 习题解析"><img class="cover" src= "/img/loading.gif" data-lazy-src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-06-06</div><div class="title">深入理解计算机系统 第5章 习题解析</div></div></a></div><div><a href="/2021/08/01/2021-8-01-深入理解计算机系统-第7章-习题解析/" title="深入理解计算机系统 第7章 习题解析"><img class="cover" src= "/img/loading.gif" data-lazy-src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-08-01</div><div class="title">深入理解计算机系统 第7章 习题解析</div></div></a></div><div><a href="/2021/08/01/2021-8-1-深入理解计算机系统-第6章-笔记整理/" title="深入理解计算机系统 第6章 笔记整理"><img class="cover" src= "/img/loading.gif" data-lazy-src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-08-01</div><div class="title">深入理解计算机系统 第6章 笔记整理</div></div></a></div><div><a href="/2021/08/15/2021-8-15-深入理解计算机系统-第8章-习题解析/" title="深入理解计算机系统 第8章 习题解析"><img class="cover" src= "/img/loading.gif" data-lazy-src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-08-15</div><div class="title">深入理解计算机系统 第8章 习题解析</div></div></a></div><div><a href="/2021/02/21/深入理解计算机系统 第1章 笔记整理/" title="深入理解计算机系统 第1章 笔记整理"><img class="cover" src= "/img/loading.gif" data-lazy-src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-02-21</div><div class="title">深入理解计算机系统 第1章 笔记整理</div></div></a></div><div><a href="/2020/09/20/深入理解计算机系统 第2章 习题解析 Part1/" title="深入理解计算机系统 第2章 习题解析 Part1"><img class="cover" src= "/img/loading.gif" data-lazy-src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-09-20</div><div class="title">深入理解计算机系统 第2章 习题解析 Part1</div></div></a></div></div></div><hr/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div><div id="comment-switch"><span class="first-comment">Valine</span><span class="switch-btn"></span><span class="second-comment">Livere</span></div></div><div class="comment-wrap"><div><div class="vcomment" id="vcomment"></div></div><div><div id="lv-container" data-id="city" data-uid="MTAyMC8zNDcxOS8xMTI1Ng=="></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="card-info-avatar is-center"><img class="avatar-img" src= "/img/loading.gif" data-lazy-src="https://github.com/Doraemonzzz/md-photo/blob/master/%E5%A4%B4%E5%83%8F.jpg?raw=true" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/><div class="author-info__name">Doraemonzzz</div><div class="author-info__description">个人博客，主要记录有关机器学习，数学以及计算机科学的笔记</div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">659</div></a></div><div class="card-info-data-item is-center"><a href="/tags/"><div class="headline">标签</div><div class="length-num">68</div></a></div><div class="card-info-data-item is-center"><a href="/categories/"><div class="headline">分类</div><div class="length-num">26</div></a></div></div><a class="button--animated" id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/Doraemonzzz"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/Doraemonzzz" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="/doraemon_zzz@163.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a><a class="social-icon" href="https://space.bilibili.com/291079982" target="_blank" title="Bilibili"><i class="iconfont icon-bilibili"></i></a><a class="social-icon" href="/atom.xml" target="_blank" title=""><i class="fa fa-rss"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn card-announcement-animation"></i><span>公告</span></div><div class="announcement_content">暂无公告</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%AC%AC9%E7%AB%A0%EF%BC%9A%E8%99%9A%E6%8B%9F%E5%86%85%E5%AD%98"><span class="toc-number">1.</span> <span class="toc-text">第9章：虚拟内存</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%87%8D%E8%A6%81%E6%A6%82%E5%BF%B5"><span class="toc-number">1.1.</span> <span class="toc-text">重要概念</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AE%80%E4%BB%8B"><span class="toc-number">1.2.</span> <span class="toc-text">简介</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%89%A9%E7%90%86%E5%92%8C%E8%99%9A%E6%8B%9F%E5%AF%BB%E5%9D%80"><span class="toc-number">1.3.</span> <span class="toc-text">物理和虚拟寻址</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%BB%E5%AD%98%E7%BB%93%E6%9E%84"><span class="toc-number">1.3.1.</span> <span class="toc-text">主存结构</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%89%A9%E7%90%86%E5%AF%BB%E5%9D%80"><span class="toc-number">1.3.2.</span> <span class="toc-text">物理寻址</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%99%9A%E6%8B%9F%E5%AF%BB%E5%9D%80"><span class="toc-number">1.3.3.</span> <span class="toc-text">虚拟寻址</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9C%B0%E5%9D%80%E7%A9%BA%E9%97%B4"><span class="toc-number">1.4.</span> <span class="toc-text">地址空间</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%99%9A%E6%8B%9F%E5%86%85%E5%AD%98%E4%BD%9C%E4%B8%BA%E7%BC%93%E5%AD%98%E7%9A%84%E5%B7%A5%E5%85%B7"><span class="toc-number">1.5.</span> <span class="toc-text">虚拟内存作为缓存的工具</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%99%9A%E6%8B%9F%E9%A1%B5%E5%92%8C%E7%89%A9%E7%90%86%E9%A1%B5"><span class="toc-number">1.5.1.</span> <span class="toc-text">虚拟页和物理页</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#DRAM%E7%BC%93%E5%AD%98%E7%9A%84%E7%BB%84%E7%BB%87%E7%BB%93%E6%9E%84"><span class="toc-number">1.5.2.</span> <span class="toc-text">DRAM缓存的组织结构</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%A1%B5%E8%A1%A8"><span class="toc-number">1.5.3.</span> <span class="toc-text">页表</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%A1%B5%E5%91%BD%E4%B8%AD"><span class="toc-number">1.5.4.</span> <span class="toc-text">页命中</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BC%BA%E9%A1%B5%EF%BC%88%E9%A1%B5%E4%B8%8D%E5%91%BD%E4%B8%AD%EF%BC%89"><span class="toc-number">1.5.5.</span> <span class="toc-text">缺页（页不命中）</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%AF%B4%E6%98%8E"><span class="toc-number">1.5.5.1.</span> <span class="toc-text">说明</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%A1%B5%E9%9D%A2%E5%88%86%E9%85%8D"><span class="toc-number">1.5.6.</span> <span class="toc-text">页面分配</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B1%80%E9%83%A8%E6%80%A7"><span class="toc-number">1.5.7.</span> <span class="toc-text">局部性</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%99%9A%E6%8B%9F%E5%86%85%E5%AD%98%E4%BD%9C%E4%B8%BA%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86%E7%9A%84%E5%B7%A5%E4%BD%9C"><span class="toc-number">1.6.</span> <span class="toc-text">虚拟内存作为内存管理的工作</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%99%9A%E6%8B%9F%E5%86%85%E5%AD%98%E4%BD%9C%E4%B8%BA%E5%86%85%E5%AD%98%E4%BF%9D%E6%8A%A4%E7%9A%84%E5%B7%A5%E5%85%B7"><span class="toc-number">1.7.</span> <span class="toc-text">虚拟内存作为内存保护的工具</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9C%B0%E5%9D%80%E7%BF%BB%E8%AF%91"><span class="toc-number">1.8.</span> <span class="toc-text">地址翻译</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%A6%E5%8F%B7"><span class="toc-number">1.8.1.</span> <span class="toc-text">符号</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AE%80%E4%BB%8B-1"><span class="toc-number">1.8.2.</span> <span class="toc-text">简介</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BB%93%E5%90%88%E9%AB%98%E9%80%9F%E7%BC%93%E5%AD%98%E5%92%8C%E8%99%9A%E6%8B%9F%E5%86%85%E5%AD%98"><span class="toc-number">1.8.3.</span> <span class="toc-text">结合高速缓存和虚拟内存</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%A9%E7%94%A8TLB%E5%8A%A0%E9%80%9F%E5%9C%B0%E5%9D%80%E7%BF%BB%E8%AF%91"><span class="toc-number">1.8.4.</span> <span class="toc-text">利用TLB加速地址翻译</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A4%9A%E7%BA%A7%E9%A1%B5%E8%A1%A8"><span class="toc-number">1.8.5.</span> <span class="toc-text">多级页表</span></a></li></ol></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2021/09/16/2021-9-16-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E7%AC%AC9%E7%AB%A0-%E7%AC%94%E8%AE%B0%E6%95%B4%E7%90%86-p2/" title="深入理解计算机系统 第9章 笔记整理 p2"><img src= "/img/loading.gif" data-lazy-src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="深入理解计算机系统 第9章 笔记整理 p2"/></a><div class="content"><a class="title" href="/2021/09/16/2021-9-16-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E7%AC%AC9%E7%AB%A0-%E7%AC%94%E8%AE%B0%E6%95%B4%E7%90%86-p2/" title="深入理解计算机系统 第9章 笔记整理 p2">深入理解计算机系统 第9章 笔记整理 p2</a><time datetime="2021-09-15T16:36:00.000Z" title="发表于 2021-09-16 00:36:00">2021-09-16</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/09/16/2021-9-16-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E7%AC%AC9%E7%AB%A0-%E7%AC%94%E8%AE%B0%E6%95%B4%E7%90%86-p1/" title="深入理解计算机系统 第9章 笔记整理 p1"><img src= "/img/loading.gif" data-lazy-src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="深入理解计算机系统 第9章 笔记整理 p1"/></a><div class="content"><a class="title" href="/2021/09/16/2021-9-16-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E7%AC%AC9%E7%AB%A0-%E7%AC%94%E8%AE%B0%E6%95%B4%E7%90%86-p1/" title="深入理解计算机系统 第9章 笔记整理 p1">深入理解计算机系统 第9章 笔记整理 p1</a><time datetime="2021-09-15T16:34:00.000Z" title="发表于 2021-09-16 00:34:00">2021-09-16</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/09/15/2021-9-15-CMU-15-213-Lab6-Malloc-Lab/" title="CMU 15-213 Lab6 Malloc Lab"><img src= "/img/loading.gif" data-lazy-src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="CMU 15-213 Lab6 Malloc Lab"/></a><div class="content"><a class="title" href="/2021/09/15/2021-9-15-CMU-15-213-Lab6-Malloc-Lab/" title="CMU 15-213 Lab6 Malloc Lab">CMU 15-213 Lab6 Malloc Lab</a><time datetime="2021-09-14T16:07:00.000Z" title="发表于 2021-09-15 00:07:00">2021-09-15</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/09/14/2021-9-14-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E7%AC%AC9%E7%AB%A0-%E4%B9%A0%E9%A2%98%E8%A7%A3%E6%9E%90/" title="深入理解计算机系统 第9章 习题解析"><img src= "/img/loading.gif" data-lazy-src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="深入理解计算机系统 第9章 习题解析"/></a><div class="content"><a class="title" href="/2021/09/14/2021-9-14-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E7%AC%AC9%E7%AB%A0-%E4%B9%A0%E9%A2%98%E8%A7%A3%E6%9E%90/" title="深入理解计算机系统 第9章 习题解析">深入理解计算机系统 第9章 习题解析</a><time datetime="2021-09-14T14:44:00.000Z" title="发表于 2021-09-14 22:44:00">2021-09-14</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/09/12/2021-9-12-%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E4%B8%ADbatch-size,-update-freq%E4%BB%A5%E5%8F%8A%E5%A4%9A%E5%8D%A1%E7%9A%84%E5%85%B3%E7%B3%BB/" title="深度学习中batch size, update freq以及多卡的关系"><img src= "/img/loading.gif" data-lazy-src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="深度学习中batch size, update freq以及多卡的关系"/></a><div class="content"><a class="title" href="/2021/09/12/2021-9-12-%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E4%B8%ADbatch-size,-update-freq%E4%BB%A5%E5%8F%8A%E5%A4%9A%E5%8D%A1%E7%9A%84%E5%85%B3%E7%B3%BB/" title="深度学习中batch size, update freq以及多卡的关系">深度学习中batch size, update freq以及多卡的关系</a><time datetime="2021-09-12T02:11:00.000Z" title="发表于 2021-09-12 10:11:00">2021-09-12</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2018 - 2021 By Doraemonzzz</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="font-plus" type="button" title="放大字体"><i class="fas fa-plus"></i></button><button id="font-minus" type="button" title="缩小字体"><i class="fas fa-minus"></i></button><button id="translateLink" type="button" title="简繁转换">简</button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div id="local-search"><div class="search-dialog"><div class="search-dialog__title" id="local-search-title">本地搜索</div><div id="local-input-panel"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div></div><hr/><div id="local-search-results"></div><span class="search-close-button"><i class="fas fa-times"></i></span></div><div id="search-mask"></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="/js/tw_cn.js"></script><script src="https://cdn.jsdelivr.net/npm/vanilla-lazyload/dist/lazyload.iife.min.js"></script><script src="/js/search/local-search.js"></script><script>var preloader = {
+  endLoading: () => {
+    document.body.style.overflow = 'auto';
+    document.getElementById('loading-box').classList.add("loaded")
+  },
+  initLoading: () => {
+    document.body.style.overflow = '';
+    document.getElementById('loading-box').classList.remove("loaded")
+
+  }
+}
+window.addEventListener('load',preloader.endLoading())</script><div class="js-pjax"><script>if (!window.MathJax) {
+  window.MathJax = {
+    tex: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]],
+      tags: 'ams'
+    },
+    chtml: {
+      scale: 1.25
+    },
+    options: {
+      renderActions: {
+        findScript: [10, doc => {
+          for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+            const display = !!node.type.match(/; *mode=display/)
+            const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+            const text = document.createTextNode('')
+            node.parentNode.replaceChild(text, node)
+            math.start = {node: text, delim: '', n: 0}
+            math.end = {node: text, delim: '', n: 0}
+            doc.math.push(math)
+          }
+        }, '']
+      }
+    }
+  }
+  
+  const script = document.createElement('script')
+  script.src = 'https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js'
+  script.id = 'MathJax-script'
+  script.async = true
+  document.head.appendChild(script)
+} else {
+  MathJax.startup.document.state(0)
+  MathJax.texReset()
+  MathJax.typeset()
+}</script><script>function loadValine () {
+  function initValine () {
+    const valine = new Valine(Object.assign({
+      el: '#vcomment',
+      appId: 'IpnmxCW9CvYWIXbol5QXsegX-MdYXbMMI',
+      appKey: 'w57DVCdbxcyB1TYYagMIMJIU',
+      placeholder: 'Please leave your footprints',
+      avatar: 'monsterid',
+      meta: 'nick,mail,link'.split(','),
+      pageSize: '10',
+      lang: 'en',
+      recordIP: false,
+      serverURLs: '',
+      emojiCDN: '',
+      emojiMaps: "",
+      enableQQ: false,
+      path: window.location.pathname,
+      requiredFields: ["nick,mail"],
+      visitor: true
+    }, null))
+  }
+
+  if (typeof Valine === 'function') initValine() 
+  else getScript('https://cdn.jsdelivr.net/npm/valine/dist/Valine.min.js').then(initValine)
+}
+
+if ('Valine' === 'Valine' || !false) {
+  if (false) btf.loadComment(document.getElementById('vcomment'),loadValine)
+  else setTimeout(loadValine, 0)
+} else {
+  function loadOtherComment () {
+    loadValine()
+  }
+}</script><script>function loadLivere () {
+  if (typeof LivereTower === 'object') {
+    window.LivereTower.init()
+  }
+  else {
+    (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+    })(document, 'script');
+  }
+}
+
+if ('Valine' === 'Livere' || !false) {
+  if (false) btf.loadComment(document.getElementById('lv-container'), loadLivere)
+  else loadLivere()
+}
+else {
+  function loadOtherComment () {
+    loadLivere()
+  }
+}</script></div><script defer="defer" id="fluttering_ribbon" mobile="false" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/canvas-fluttering-ribbon.min.js"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
