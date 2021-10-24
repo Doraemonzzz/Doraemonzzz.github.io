@@ -1,0 +1,1063 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>深入理解计算机系统 第12章 笔记整理 | Doraemonzzz</title><meta name="keywords" content="深入理解计算机系统"><meta name="author" content="Doraemonzzz"><meta name="copyright" content="Doraemonzzz"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="这次回顾深入理解计算机系统第12章并发编程。 电子书地址： http:&#x2F;&#x2F;eol.bnuz.edu.cn&#x2F;meol&#x2F;common&#x2F;script&#x2F;preview&#x2F;download_preview.jsp?fileid&#x3D;2169600&amp;resid&#x3D;242120&amp;lid&#x3D;28605 备注：图片和总结内容均来自于电子书。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="深入理解计算机系统 第12章 笔记整理">
+<meta property="og:url" content="http://www.doraemonzzz.com/2021/10/24/2021-10-24-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E7%AC%AC12%E7%AB%A0-%E7%AC%94%E8%AE%B0%E6%95%B4%E7%90%86/index.html">
+<meta property="og:site_name" content="Doraemonzzz">
+<meta property="og:description" content="这次回顾深入理解计算机系统第12章并发编程。 电子书地址： http:&#x2F;&#x2F;eol.bnuz.edu.cn&#x2F;meol&#x2F;common&#x2F;script&#x2F;preview&#x2F;download_preview.jsp?fileid&#x3D;2169600&amp;resid&#x3D;242120&amp;lid&#x3D;28605 备注：图片和总结内容均来自于电子书。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg">
+<meta property="article:published_time" content="2021-10-24T02:40:00.000Z">
+<meta property="article:modified_time" content="2021-10-24T02:41:26.547Z">
+<meta property="article:author" content="Doraemonzzz">
+<meta property="article:tag" content="深入理解计算机系统">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg"><link rel="shortcut icon" href="https://github.com/Doraemonzzz/md-photo/blob/master/%E5%A4%B4%E5%83%8F.jpg?raw=true"><link rel="canonical" href="http://www.doraemonzzz.com/2021/10/24/2021-10-24-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E7%AC%AC12%E7%AB%A0-%E7%AC%94%E8%AE%B0%E6%95%B4%E7%90%86/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//www.google-analytics.com" crossorigin=""/><link rel="preconnect" href="//hm.baidu.com"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><script>var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?6f00f37f957f0608abb8c571105456f0";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script><script async="async" src="https://www.googletagmanager.com/gtag/js?id=UA-G-RE4B1LKRZD"></script><script>window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'UA-G-RE4B1LKRZD');
+</script><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"search.xml","languages":{"hits_empty":"找不到您查询的内容：${query}"}},
+  translate: {"defaultEncoding":2,"translateDelay":0,"msgToTraditionalChinese":"繁","msgToSimplifiedChinese":"簡"},
+  noticeOutdate: {"limitDay":500,"position":"top","messagePrev":"距离上次更新已经","messageNext":"天了，文章内容可能已经过时。"},
+  highlight: {"plugin":"prismjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":200},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    jQuery: 'https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js',
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+    },
+    fancybox: {
+      js: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css'
+    }
+  },
+  isPhotoFigcaption: true,
+  islazyload: true,
+  isanchor: true
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '深入理解计算机系统 第12章 笔记整理',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2021-10-24 10:41:26'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const fontSizeVal = saveToLocal.get('global-font-size')
+    if (fontSizeVal !== undefined) {
+      document.documentElement.style.setProperty('--global-font-size', fontSizeVal + 'px')
+    }
+    })(window)</script><link rel="stylesheet" href="/css/bilibili.css" media="defer" onload="this.media='all'"><meta name="google-site-verification" content="c4v-NmuUZRgl3cvtg9GKswryK1YLaPztd_5M-df5VNI" /><meta name="generator" content="Hexo 5.4.0"><link rel="alternate" href="/atom.xml" title="Doraemonzzz" type="application/atom+xml">
+</head><body><div id="loading-box"><div class="loading-left-bg"></div><div class="loading-right-bg"></div><div class="spinner-box"><div class="configure-border-1"><div class="configure-core"></div></div><div class="configure-border-2"><div class="configure-core"></div></div><div class="loading-word">加载中...</div></div></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="author-avatar"><img class="avatar-img" src= "/img/loading.gif" data-lazy-src="https://github.com/Doraemonzzz/md-photo/blob/master/%E5%A4%B4%E5%83%8F.jpg?raw=true" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">文章</div><div class="length-num">667</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">标签</div><div class="length-num">68</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/categories/"><div class="headline">分类</div><div class="length-num">26</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-chart-pie"></i><span> 博客统计</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/charts/"><i class="fa-fw far fa-chart-bar"></i><span> 文章统计</span></a></li><li><a class="site-page child" href="/census/"><i class="fa-fw fas fa-chart-area"></i><span> 访问统计</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/top/"><i class="fa-fw fab fa-hotjar"></i><span> 阅读排行榜</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fa fa-heartbeat"></i><span> 娱乐</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于我</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">Doraemonzzz</a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-chart-pie"></i><span> 博客统计</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/charts/"><i class="fa-fw far fa-chart-bar"></i><span> 文章统计</span></a></li><li><a class="site-page child" href="/census/"><i class="fa-fw fas fa-chart-area"></i><span> 访问统计</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/top/"><i class="fa-fw fab fa-hotjar"></i><span> 阅读排行榜</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fa fa-heartbeat"></i><span> 娱乐</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于我</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">深入理解计算机系统 第12章 笔记整理</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2021-10-24T02:40:00.000Z" title="发表于 2021-10-24 10:40:00">2021-10-24</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2021-10-24T02:41:26.547Z" title="更新于 2021-10-24 10:41:26">2021-10-24</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%8E%9F%E7%90%86/">计算机原理</a></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-tag"></i><a class="article-meta__tags" href="/tags/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F/">深入理解计算机系统</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">8.1k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>27分钟</span></span><span class="post-meta-separator">|</span><span class="leancloud_visitors" id="/2021/10/24/2021-10-24-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E7%AC%AC12%E7%AB%A0-%E7%AC%94%E8%AE%B0%E6%95%B4%E7%90%86/" data-flag-title="深入理解计算机系统 第12章 笔记整理"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span class="leancloud-visitors-count"></span></span><span class="post-meta-separator">|</span><span class="post-meta-commentcount"><i class="far fa-comments fa-fw post-meta-icon"></i><span class="post-meta-label">评论数:</span><a href="/2021/10/24/2021-10-24-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E7%AC%AC12%E7%AB%A0-%E7%AC%94%E8%AE%B0%E6%95%B4%E7%90%86/#post-comment" itemprop="discussionUrl"><span class="valine-comment-count" data-xid="/2021/10/24/2021-10-24-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E7%AC%AC12%E7%AB%A0-%E7%AC%94%E8%AE%B0%E6%95%B4%E7%90%86/" itemprop="commentCount"></span></a></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p>这次回顾深入理解计算机系统第12章并发编程。</p>
+<p>电子书地址：</p>
+<p><a target="_blank" rel="noopener" href="http://eol.bnuz.edu.cn/meol/common/script/preview/download_preview.jsp?fileid=2169600&amp;resid=242120&amp;lid=28605">http://eol.bnuz.edu.cn/meol/common/script/preview/download_preview.jsp?fileid=2169600&amp;resid=242120&amp;lid=28605</a></p>
+<p>备注：图片和总结内容均来自于电子书。</p>
+<span id="more"></span>
+<h1 id="第12章：并发编程"><a href="#第12章：并发编程" class="headerlink" title="第12章：并发编程"></a>第12章：并发编程</h1><h2 id="重要概念"><a href="#重要概念" class="headerlink" title="重要概念"></a>重要概念</h2><ul>
+<li><p>如果逻辑控制流在时间上重叠，那么它们就是<strong>并发的</strong>，这种常见的现象称为<strong>并发</strong>。</p>
+</li>
+<li><p>现代操作系统提供了三种基本的构造并发程序的方法：</p>
+<ul>
+<li>进程；</li>
+<li>I/O多路复用；</li>
+<li>线程；</li>
+</ul>
+</li>
+<li><p>主线程(main thread)，对等线程(peer thread)，两者的区别；</p>
+</li>
+<li><p>多线程程序中变量的种类：</p>
+<ul>
+<li>全局变量；</li>
+<li>本地自动变量；</li>
+<li>本地静态变量；</li>
+</ul>
+</li>
+<li><p>信号量相关：</p>
+<ul>
+<li>进度图（progress graph）</li>
+<li>临界区（critical section）</li>
+<li>互斥（mutual exclusion）</li>
+<li>不安全区（unsafe region）</li>
+<li>安全轨迹线（safe trajectory）</li>
+<li>不安全轨迹线（unsafe trajectory）</li>
+<li>信号量</li>
+<li>二元信号量（binary semaphore）</li>
+<li>互斥锁（mutex）</li>
+<li>对互斥锁加锁</li>
+<li>禁止区（forbidden region）</li>
+</ul>
+</li>
+<li><p>生产者-消费者问题和读者-写问题；</p>
+</li>
+<li><p>顺序，并发和并行程序之间的关系；</p>
+</li>
+<li><p>并行程序相关概念：</p>
+<ul>
+<li>强扩展（strong scaling）</li>
+<li>弱扩展（weak scaling）</li>
+<li>加速比</li>
+<li>绝对加速比（absolute speedup）</li>
+<li>相对加速比（relative speedup）</li>
+<li>效率（efficiency）</li>
+</ul>
+</li>
+<li><p>并发相关问题：</p>
+<ul>
+<li>线程安全的（thread-safe）和线程不安全的（thread-unsafe）</li>
+<li>四个（不相交的）线程不安全函数类</li>
+<li>加锁-复制（lock-and-copy）</li>
+<li>可重入函数（reentrant function）：当它们被多个线程调用时，不会引用任何共享数据。<ul>
+<li>可重入，显式可重入，隐式可重入</li>
+</ul>
+</li>
+<li>竞争</li>
+<li>死锁<ul>
+<li>死锁状态</li>
+<li>死锁区域</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><ul>
+<li>如果逻辑控制流在时间上重叠，那么它们就是<strong>并发的</strong>。这种常见的现象称为<strong>并发</strong>，出现在计算机系统的许多不同层面上：<ul>
+<li>内核；</li>
+<li>信号处理；</li>
+<li>应用级；</li>
+</ul>
+</li>
+<li>应用级并发有用的情形：<ul>
+<li>访问慢速I/O设备；</li>
+<li>与人交互；</li>
+<li>通过推迟工作以降低延迟；</li>
+<li>服务多个网络客户端；</li>
+<li>在多核机器上进行并行计算；</li>
+</ul>
+</li>
+<li>使用应用级并发的应用程序称为并发程序，现代操作系统提供了三种基本的构造并发程序的方法：<ul>
+<li>进程；</li>
+<li>I/O多路复用；</li>
+<li>线程；</li>
+</ul>
+</li>
+</ul>
+<p>后续的讨论都以11章的echo服务器为例。</p>
+<h2 id="基于进程的并发编程"><a href="#基于进程的并发编程" class="headerlink" title="基于进程的并发编程"></a>基于进程的并发编程</h2><h3 id="说明"><a href="#说明" class="headerlink" title="说明"></a>说明</h3><ul>
+<li>假设我们有两个客户端和一个服务器，服务器正在监听一个监听描述符（比如指述符3）上的连接请求；</li>
+<li>现在假设服务器接受了客户端1的连接请求，并返回一个已连接描述符（比如指述符4），如图 12-1 所示；</li>
+<li>在接受连接请求之后，服务器派生一个子进程，这个子进程获得服务器描述符表的完整副本；</li>
+<li>子进程关闭它的副本中的监听描述符3，而父进程关闭它的已连接描述符4的副本，因为不再需要这些描述符了；</li>
+<li>这就得到了图12-2中的状态，其中子进程正忙于为客户端提供服务；</li>
+</ul>
+<p>图示：</p>
+<p><img src= "/img/loading.gif" data-lazy-src="https://github.com/Doraemonzzz/md-photo/blob/master/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F/%E7%AC%AC12%E7%AB%A0/2021101301.jpg?raw=true" alt=""></p>
+<ul>
+<li>现在，假设在父进程为客户端1创建了子进程之后，它接受一个新的客户端2的连接请求，并返回一个新的已连接描述符（比如描述符5），如图 12-3 所示；</li>
+<li>然后，父进程又派生另一个子进程，这个子进程用已连接描述符5为它的客户端提供服务，如图12-4所示；</li>
+<li>此时，父进程正在等待下一个连接请求，而两个子进程正在并发地为它们各自的客户端提供服务；</li>
+</ul>
+<p>图示：</p>
+<p><img src= "/img/loading.gif" data-lazy-src="https://github.com/Doraemonzzz/md-photo/blob/master/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F/%E7%AC%AC12%E7%AB%A0/2021101302.jpg?raw=true" alt=""></p>
+<h3 id="优劣势"><a href="#优劣势" class="headerlink" title="优劣势"></a>优劣势</h3><p>优势：</p>
+<ul>
+<li>对于在父、子进程间共享状态信息，进程有一个非常清晰的模型：共享文件表，但是不共享用户地址空间；</li>
+<li>一个进程不可能不小心覆盖另一个进程的虚拟内存，这就消除了许多令人迷惑的错误；</li>
+</ul>
+<p>劣势：</p>
+<ul>
+<li>独立的地址空间使得进程共享状态信息变得更加困难，为了共享信息，它们必须使用显式的IPC（进程间通信）机制；</li>
+<li>基于进程的设计的另一个缺点是，它们往往比较慢，因为进程控制和IPC的开销很高；</li>
+</ul>
+<h2 id="基于I-O多路复用的并发编程"><a href="#基于I-O多路复用的并发编程" class="headerlink" title="基于I/O多路复用的并发编程"></a>基于I/O多路复用的并发编程</h2><ul>
+<li>如果有多个I/O事件，一个解决办法就是I/O多路复用（I/O multiplexing）技术；</li>
+<li>基本的思路就是使用select函数，要求内核挂起进程，只有在一个或多个I/O事件发生后，才将控制返回给应用程序；</li>
+</ul>
+<p>示例：</p>
+<ul>
+<li>当集合$\{0,4\}$中任意描述符准备好读时返回。</li>
+<li>当集合$\{1,2,7\}$中任意描述符准备好写时返回。</li>
+<li>如果在等待一个I/O事件发生时过了$152.13$秒，就超时。</li>
+</ul>
+<p>函数接口：</p>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;sys/select.h></span></span>
+
+<span class="token keyword">int</span> <span class="token function">select</span><span class="token punctuation">(</span><span class="token keyword">int</span> n<span class="token punctuation">,</span> fd_set <span class="token operator">*</span>fdset<span class="token punctuation">,</span> <span class="token constant">NULL</span><span class="token punctuation">,</span> <span class="token constant">NULL</span><span class="token punctuation">,</span> <span class="token constant">NULL</span><span class="token punctuation">)</span><span class="token punctuation">;</span> 
+返回已准备好的描述符的非零的个数，若出错则为<span class="token operator">-</span><span class="token number">1</span>。
+    
+<span class="token function">FD_ZERO</span><span class="token punctuation">(</span>fd_set <span class="token operator">*</span>fdset<span class="token punctuation">)</span><span class="token punctuation">;</span>				<span class="token comment">/* Clear all bits in fdset */</span>
+<span class="token function">FD_CLR</span><span class="token punctuation">(</span><span class="token keyword">int</span> fd<span class="token punctuation">,</span> fd_set <span class="token operator">*</span>fdset<span class="token punctuation">)</span><span class="token punctuation">;</span>	 	<span class="token comment">/* Clear bit fd in fdset */</span>
+<span class="token function">FD_SET</span><span class="token punctuation">(</span><span class="token keyword">int</span> fd<span class="token punctuation">,</span> fd_set <span class="token operator">*</span>fdset<span class="token punctuation">)</span><span class="token punctuation">;</span>	 	<span class="token comment">/* Turn on bit fd in fdset */</span>
+<span class="token function">FD_ISSET</span><span class="token punctuation">(</span><span class="token keyword">int</span> fd<span class="token punctuation">,</span> fd_set <span class="token operator">*</span>fdset<span class="token punctuation">)</span><span class="token punctuation">;</span> 	<span class="token comment">/* Is bit fd in fdset on? */</span>
+处理描述符集合的宏。<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>说明：</p>
+<ul>
+<li><p>select函数处理类型为fd_set的集合，也叫做描述符集合。逻辑上, 我们将描述符集合看成一个大小为$n$的位向量：</p>
+<script type="math/tex; mode=display">
+b_{n-1}, \cdots, b_{1}, b_{0}</script><p>每个位$b_{k}$对应于描述符$k$ 。</p>
+<ul>
+<li>当且仅当$b_{k}=1$，描述符$k$才表明是描述符集合的一个元素。</li>
+</ul>
+</li>
+<li><p>只允许对描述符集合做三件事: </p>
+<ul>
+<li>1)分配它们；</li>
+<li>2)将一个此种类型的变量赋值给另一个变量；</li>
+<li>3)用FD_ZERO、FD_SET、FD_CLR 和FD_ISSET宏来修改和检查它们；</li>
+</ul>
+</li>
+</ul>
+<p>select函数详细说明：</p>
+<ul>
+<li>select函数有两个输入：<ul>
+<li>读集合的描述符集合(fdset)；</li>
+<li>该读集合的基数(n)，任何描述符集合的最大基数；</li>
+</ul>
+</li>
+<li>select函数会一直阻塞，直到读集合中至少有一个描述符准备好可以读：<ul>
+<li>当且仅当一个从该描述符读取一个字节的请求不会阻塞时，描述符$k$就表示准备好可以读了；</li>
+</ul>
+</li>
+<li>select有一个副作用，它修改参数fdset指向的fd_set，指明读集合的一个子集，称为<strong>准备好集合(ready set)</strong>，这个集合是由读集合中准备好可以读了的描述符组成的；<ul>
+<li>注意，由于这个副作用，我们必须在每次调用select时都更新读集合；</li>
+</ul>
+</li>
+<li>该函数返回的值指明了准备好集合的基数；</li>
+</ul>
+<p>例子见课本12.2.1。</p>
+<h3 id="优劣势-1"><a href="#优劣势-1" class="headerlink" title="优劣势"></a>优劣势</h3><p>优点：</p>
+<ul>
+<li>比基于进程的设计给了程序员更多的对程序行为的控制；<ul>
+<li>例如，我们可以设想编写一个事件驱动的并发服务器，为某些客户端提供它们需要的服务，而这对于基于进程的并发服务器来说是很困难的；</li>
+</ul>
+</li>
+<li>一个基于I/O多路复用的事件驱动服务器是运行在单一进程上下文中的，因此每个逻辑流都能访问该进程的全部地址空间，这使得在流之间共享数据变得很容易；</li>
+<li>事件驱动设计常常比基于进程的设计要高效得多，因为它们不需要进程上下文切换来调度新的流；</li>
+</ul>
+<p>缺点：</p>
+<ul>
+<li>编码复杂；</li>
+<li>不能充分利用多核处理器；</li>
+</ul>
+<h2 id="基于线程的并发编程"><a href="#基于线程的并发编程" class="headerlink" title="基于线程的并发编程"></a>基于线程的并发编程</h2><p>介绍：</p>
+<ul>
+<li><strong>线程(thread)</strong>就是运行在进程上下文中的逻辑流；</li>
+<li>线程由内核自动调度；</li>
+<li>每个线程都有它自己的<strong>线程上下文(thread context)</strong>，包括一个唯一的整数线程ID(Thread ID, TID)、栈、栈指针、程序计数器、通用目的寄存器和条件码；</li>
+<li>所有的运行在一个进程里的线程共享该进程的整个虚拟地址空间；</li>
+</ul>
+<p>说明：</p>
+<ul>
+<li>基于线程的逻辑流结合了基于进程和基于I/O多路复用的流的特性；</li>
+<li>同进程一样，线程由内核自动调度，并且内核通过一个整数ID来识别线程；</li>
+<li>同基于I/O多路复用的流一 样，多个线程运行在单一进程的上下文中，因此共享这个进程虚拟地址空间的所有内容，包括它的代码、数据、堆、共享库和打开的文件；</li>
+</ul>
+<h3 id="线程执行模型"><a href="#线程执行模型" class="headerlink" title="线程执行模型"></a>线程执行模型</h3><p>介绍：</p>
+<ul>
+<li>每个进程开始生命周期时都是单一线程，这个线程称为<strong>主线程(main thread)</strong>；</li>
+<li>在某一时刻，主线程创建一个<strong>对等线程(peer thread)</strong>，从这个时间点开始，两个线程就并发地运行；</li>
+<li>最后，因为主线程执行一个慢速系统调用，例如read或者sleep，或者因为被系统的间隔计时器中断，控制就会通过上下文切换传递到对等线程；</li>
+<li>对等线程会执行一段时间，然后控制传递回主线程，依次类推；</li>
+</ul>
+<p>图示：</p>
+<p><img src= "/img/loading.gif" data-lazy-src="https://github.com/Doraemonzzz/md-photo/blob/master/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F/%E7%AC%AC12%E7%AB%A0/2021101303.jpg?raw=true" alt=""></p>
+<p>线程和进程的区别：</p>
+<ul>
+<li>一个线程的上下文要比一个进程的上下文小得多，所以线程的上下文切换要比进程的上下文切换快得多；</li>
+<li>另一个不同就是线程不像进程那样，不是按照严格的父子层次来组织的；<ul>
+<li>和一个进程相关的线程组成一个对等（线程）池，独立于其他线程创建的线程，主线程和其他线程的区别仅在于它总是进程中第一个运行的线程；</li>
+<li>对等（线程）池概念的主要影响是，一个线程可以杀死它的任何对等线程，或者等待它的任意对等线程终止；</li>
+<li>每个对等线程都能读写相同的共享数据；</li>
+</ul>
+</li>
+</ul>
+<h3 id="创建线程"><a href="#创建线程" class="headerlink" title="创建线程"></a>创建线程</h3><p>接口：</p>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;pthread.h></span></span>
+<span class="token keyword">typedef</span> <span class="token keyword">void</span> <span class="token operator">*</span><span class="token punctuation">(</span>func<span class="token punctuation">)</span><span class="token punctuation">(</span><span class="token keyword">void</span> <span class="token operator">*</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token keyword">int</span> <span class="token function">pthread_create</span><span class="token punctuation">(</span><span class="token class-name">pthread_t</span> <span class="token operator">*</span>tid<span class="token punctuation">,</span> <span class="token class-name">pthread_attr_t</span> <span class="token operator">*</span>attr<span class="token punctuation">,</span> func <span class="token operator">*</span>f<span class="token punctuation">,</span> <span class="token keyword">void</span> <span class="token operator">*</span>arg<span class="token punctuation">)</span><span class="token punctuation">;</span>
+若成功则返回<span class="token number">0</span>，若出错则为非零。
+    
+<span class="token class-name">pthread_t</span> <span class="token function">pthread_self</span><span class="token punctuation">(</span><span class="token keyword">void</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+返回调用者的线程ID。<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>说明：</p>
+<ul>
+<li>pthread_create函数创建一个新的线程，并带着一个输人变量arg，在新线程的上下文中运行线程例程f ；</li>
+<li>能用attr参数来改变新创建线程的默认属性，在我们的示例中，总是用一个为NULL的attr参数来调用 pthread_create函数；</li>
+<li>当pthread_create返回时，参数tid包含新创建线程的ID；</li>
+<li>新线程可以通过调用pthread_self函数来获得它自已的线程ID。</li>
+</ul>
+<h3 id="终止线程"><a href="#终止线程" class="headerlink" title="终止线程"></a>终止线程</h3><p>接口：</p>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;pthread.h></span></span>
+
+<span class="token keyword">void</span> <span class="token function">pthread_exit</span><span class="token punctuation">(</span><span class="token keyword">void</span> <span class="token operator">*</span>thread_return<span class="token punctuation">)</span><span class="token punctuation">;</span>
+从不返回。
+
+<span class="token keyword">int</span> <span class="token function">pthread_cancel</span><span class="token punctuation">(</span><span class="token class-name">pthread_t</span> tid<span class="token punctuation">)</span><span class="token punctuation">;</span>
+若成功则返回<span class="token number">0</span>，若出错则为非零。<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>说明：</p>
+<ul>
+<li>一个线程是以下列方式之一来终止的：<ul>
+<li>当顶层的线程例程返回时，线程会隐式地终止；</li>
+<li>通过调用pthread_exit函数，线程会显式地终止；<ul>
+<li>如果主线程调用pthread_exit，它会等待所有其他对等线程终止，然后再终止主线程和整个进程，返回值为thread_return；</li>
+</ul>
+</li>
+<li>如果某个对等线程调用Linux的exit函数，该函数终止进程以及所有与该进程相关的线程；</li>
+<li>另一个对等线程通过以当前线程ID作为参数调用pthread_cancel函数来终止当前线程；</li>
+</ul>
+</li>
+</ul>
+<h3 id="回收已终止线程的资源"><a href="#回收已终止线程的资源" class="headerlink" title="回收已终止线程的资源"></a>回收已终止线程的资源</h3><p>接口：</p>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;pthread.h></span></span>
+
+<span class="token keyword">int</span> <span class="token function">pthread_join</span><span class="token punctuation">(</span><span class="token class-name">pthread_t</span> tid<span class="token punctuation">,</span> <span class="token keyword">void</span> <span class="token operator">*</span><span class="token operator">*</span>thread_return<span class="token punctuation">)</span><span class="token punctuation">;</span>
+若成功则返回<span class="token number">0</span>，若出错则为非零。<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+<p>说明：</p>
+<ul>
+<li>线程通过调用pthread_join函数等待其他线程终止；</li>
+<li>pthread_join函数会阻塞，直到线程tid终止，将线程例程返回的通用(void*)指针赋值为thread_return指向的位置，然后回收已终止线程占用的所有内存资源；</li>
+<li>和Linux的wait函数不同，pthread_join函数只能等待一个指定的线程终止；<ul>
+<li>没有办法让pthread_wait等待任意一个线程终止；</li>
+</ul>
+</li>
+</ul>
+<h3 id="分离线程"><a href="#分离线程" class="headerlink" title="分离线程"></a>分离线程</h3><p>说明：</p>
+<ul>
+<li>在任何一个时间点上，线程是<strong>可结合的</strong>(joinable)或者是<strong>分离的</strong>(detached)；</li>
+<li>一个可结合的线程能够被其他线程收回和杀死，在被其他线程回收之前，它的内存资源（例如栈）是不释放的；</li>
+<li>相反，一个分离的线程是不能被其他线程回收或杀死的，它的内存资源在它终止时由系统自动释放；</li>
+<li>默认情况下，线程被创建成可结合的。为了避免内存泄漏，每个可结合线程都应该要么被其他线程显式地收回，要么通过调用pthread_detach函数被分离；</li>
+</ul>
+<p>接口：</p>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;pthread.h></span></span>
+
+<span class="token keyword">int</span> <span class="token function">pthread_detach</span><span class="token punctuation">(</span><span class="token class-name">pthread_t</span> tid<span class="token punctuation">)</span><span class="token punctuation">;</span>
+若成功则返回<span class="token number">0</span>，若出错则为非零。<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+<p>补充：</p>
+<ul>
+<li>pthread_detach函数分离可结合线程tid；</li>
+<li>线程能够通过以pthread_self()为参数的pthread_detach调用来分离它们自己；</li>
+<li>大部分情况想都将使用分离的线程；</li>
+</ul>
+<h3 id="初始化线程"><a href="#初始化线程" class="headerlink" title="初始化线程"></a>初始化线程</h3><ul>
+<li>pthread_once函数允许你初始化与线程例程相关的状态；</li>
+<li>once_control变量是一个全局或者静态变量，总是被初始化为PTHREAD_ONCE_ INIT；</li>
+<li>当第一次用参数once_control调用pthread_once时，它调用init_routine, 这是一个没有输人参数、也不返回什么的函数；</li>
+<li>接下来的以once_control为参数的pthread_once调用不做任何事情；</li>
+<li>无论何时，当你需要动态初始化多个线程共享的全局变量时，pthread_once函数是很有用的；</li>
+</ul>
+<p>接口：</p>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;pthread.h></span></span>
+
+<span class="token class-name">pthread_once_t</span> once_control <span class="token operator">=</span> PTHREAD_ONCE_INIT<span class="token punctuation">;</span>
+<span class="token keyword">int</span> <span class="token function">pthread_once</span><span class="token punctuation">(</span><span class="token class-name">pthread_once_t</span> <span class="token operator">*</span>once_control<span class="token punctuation">,</span> <span class="token keyword">void</span><span class="token punctuation">(</span><span class="token operator">*</span>init_routine<span class="token punctuation">)</span><span class="token punctuation">(</span><span class="token keyword">void</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+总是返回<span class="token number">0</span>。<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h2 id="线程程序中的共享变量"><a href="#线程程序中的共享变量" class="headerlink" title="线程程序中的共享变量"></a>线程程序中的共享变量</h2><h3 id="线程内存模型"><a href="#线程内存模型" class="headerlink" title="线程内存模型"></a>线程内存模型</h3><ul>
+<li>一组并发线程运行在一个进程的上下文中；</li>
+<li>每个线程都有它自己独立的线程上下文，包括<ul>
+<li>线程ID、栈、栈指针、程序计数器、条件码和通用目的寄存器值。</li>
+</ul>
+</li>
+<li>每个线程和其他线程一起共享进程上下文的剩余部分，这包括<ul>
+<li>整个用户虚拟地址空间，是由只读文本 (代码)、读/写数据、堆以及所有的共享库代码和数据区域组成的。</li>
+<li>线程也共享相同的打开文件的集合。</li>
+</ul>
+</li>
+<li>寄存器是不共享的，虚拟内存是共享的。</li>
+<li>不同的线程栈是不对其他线程设防的，如果一个线程以某种方式得到一个指向其他线程栈的指针，那么它就可以读写这个栈的任何部分。</li>
+</ul>
+<h3 id="将变量映射到内存"><a href="#将变量映射到内存" class="headerlink" title="将变量映射到内存"></a>将变量映射到内存</h3><p>多线程的C程序中变量根据它们的存储类型被映射到虚拟内存：</p>
+<ul>
+<li>全局变量<ul>
+<li>全局变量是定义在函数之外的变量。</li>
+<li>在运行时，虚拟内存的读/写区域只包含每个全局变量的一个实例，任何线程都可以引用。</li>
+</ul>
+</li>
+<li>本地自动变量<ul>
+<li>本地自动变量就是定义在函数内部但是没有static属性的变量。</li>
+<li>在运行时，每个线程的栈都包含它自己的所有本地自动变量的实例，即使多个线程执行同一个线程例程时也是如此。</li>
+</ul>
+</li>
+<li>本地静态变量<ul>
+<li>本地静态变量是定义在函数内部并有static属性的变量。</li>
+<li>和全局变量一样，虚拟内存的读/写区域只包含在程序中声明的每个本地静态变量的一个实例。</li>
+</ul>
+</li>
+</ul>
+<h3 id="共享变量"><a href="#共享变量" class="headerlink" title="共享变量"></a>共享变量</h3><p>我们说一个变量v当且仅当它的一个实例被一个以上的线程引用。</p>
+<h2 id="用信号量同步线程"><a href="#用信号量同步线程" class="headerlink" title="用信号量同步线程"></a>用信号量同步线程</h2><h3 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h3><p>共享变量是十分方便，但是它们也引人了同步错误(synchronization error)的可能性，考虑如下例子：</p>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token comment">/* 
+ * badcnt.c - An improperly synchronized counter program 
+ */</span>
+<span class="token comment">/* $begin badcnt */</span>
+<span class="token comment">/* WARNING: This code is buggy! */</span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">"csapp.h"</span></span>
+
+<span class="token keyword">void</span> <span class="token operator">*</span><span class="token function">thread</span><span class="token punctuation">(</span><span class="token keyword">void</span> <span class="token operator">*</span>vargp<span class="token punctuation">)</span><span class="token punctuation">;</span>  <span class="token comment">/* Thread routine prototype */</span>
+
+<span class="token comment">/* Global shared variable */</span>
+<span class="token keyword">volatile</span> <span class="token keyword">long</span> cnt <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> <span class="token comment">/* Counter */</span>
+
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token keyword">int</span> argc<span class="token punctuation">,</span> <span class="token keyword">char</span> <span class="token operator">*</span><span class="token operator">*</span>argv<span class="token punctuation">)</span> 
+<span class="token punctuation">&#123;</span>
+    <span class="token keyword">long</span> niters<span class="token punctuation">;</span>
+    <span class="token class-name">pthread_t</span> tid1<span class="token punctuation">,</span> tid2<span class="token punctuation">;</span>
+
+    <span class="token comment">/* Check input argument */</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>argc <span class="token operator">!=</span> <span class="token number">2</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span> 
+	<span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"usage: %s &lt;niters>\n"</span><span class="token punctuation">,</span> argv<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token function">exit</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+    niters <span class="token operator">=</span> <span class="token function">atoi</span><span class="token punctuation">(</span>argv<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token comment">/* Create threads and wait for them to finish */</span>
+    <span class="token function">Pthread_create</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>tid1<span class="token punctuation">,</span> <span class="token constant">NULL</span><span class="token punctuation">,</span> thread<span class="token punctuation">,</span> <span class="token operator">&amp;</span>niters<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">Pthread_create</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>tid2<span class="token punctuation">,</span> <span class="token constant">NULL</span><span class="token punctuation">,</span> thread<span class="token punctuation">,</span> <span class="token operator">&amp;</span>niters<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">Pthread_join</span><span class="token punctuation">(</span>tid1<span class="token punctuation">,</span> <span class="token constant">NULL</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">Pthread_join</span><span class="token punctuation">(</span>tid2<span class="token punctuation">,</span> <span class="token constant">NULL</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token comment">/* Check result */</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>cnt <span class="token operator">!=</span> <span class="token punctuation">(</span><span class="token number">2</span> <span class="token operator">*</span> niters<span class="token punctuation">)</span><span class="token punctuation">)</span>
+	<span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"BOOM! cnt=%ld\n"</span><span class="token punctuation">,</span> cnt<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">else</span>
+	<span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"OK cnt=%ld\n"</span><span class="token punctuation">,</span> cnt<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">exit</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token comment">/* Thread routine */</span>
+<span class="token keyword">void</span> <span class="token operator">*</span><span class="token function">thread</span><span class="token punctuation">(</span><span class="token keyword">void</span> <span class="token operator">*</span>vargp<span class="token punctuation">)</span> 
+<span class="token punctuation">&#123;</span>
+    <span class="token keyword">long</span> i<span class="token punctuation">,</span> niters <span class="token operator">=</span> <span class="token operator">*</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token keyword">long</span> <span class="token operator">*</span><span class="token punctuation">)</span>vargp<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">for</span> <span class="token punctuation">(</span>i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> niters<span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token comment">//line:conc:badcnt:beginloop</span>
+	cnt<span class="token operator">++</span><span class="token punctuation">;</span>                   <span class="token comment">//line:conc:badcnt:endloop</span>
+
+    <span class="token keyword">return</span> <span class="token constant">NULL</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+<span class="token comment">/* $end badcnt */</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>因为每个线程都对计数器增加了$\mathrm {niters}$次，我们预计它的最终值是$2\times  \mathrm {niters}$，但是最后结果却不是这样，并且运行结果都不同。</p>
+<p>将循环部分的汇编代码分成五个部分：</p>
+<p><img src= "/img/loading.gif" data-lazy-src="https://github.com/Doraemonzzz/md-photo/blob/master/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F/%E7%AC%AC12%E7%AB%A0/2021101701.jpg?raw=true" alt=""></p>
+<ul>
+<li>$H_{i}$：在循环头部的指令块。</li>
+<li>$L_{i}$：加载共享变量$\mathrm{cnt}$到累加寄存器$\mathrm{\%rdx_i}$的指令, 这里表示线$\mathrm{\%rdx_i}$程$i$中的寄存器$\mathrm{\%rdx}$的值。</li>
+<li>$U_{i}$：更新（增加）$\mathrm{\%rdx_i}$的指令。</li>
+<li>$S_{i}$：将$\mathrm{\%rdx_i}$的更新值存回到共享变量$\mathrm{cnt}$的指令。</li>
+<li>$T_{i}$：循环尾部的指令块。</li>
+</ul>
+<p>注意头和尾只操作本地栈变量，而$L_{i},U_{i}$和$S_{i}$操作共享计数器变量的内容。</p>
+<p>如果$L_i, U_i, S_i$的顺序正确，则结果正确，否则可能产生错误结果：</p>
+<p><img src= "/img/loading.gif" data-lazy-src="https://github.com/Doraemonzzz/md-photo/blob/master/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F/%E7%AC%AC12%E7%AB%A0/2021101702.jpg?raw=true" alt=""></p>
+<h3 id="进度图"><a href="#进度图" class="headerlink" title="进度图"></a>进度图</h3><ul>
+<li>进度图(progress graph)将$n$个并发线程的执行模型化为一条$n$维笛卡儿空间中的轨迹线。</li>
+<li>每条轴$k$对应于线程$k$的进度。每个$\left(I_{1}, I_{2}, \cdots, I_{n}\right)$代表线程$k(k=1, \cdots, n)$已经完成了指令$I_{k}$这一状态。</li>
+<li>图的原点对应于没有任何线程完成一条指令的初始状态。</li>
+</ul>
+<p>一个程序的执行历史被模型化为状态空间中的一条轨迹线，图12-20展示了下面指令顺序对应的轨迹线：</p>
+<script type="math/tex; mode=display">
+H_{1}, L_{1}, U_{1}, H_{2}, L_{2}, S_{1}, T_{1}, U_{2}, S_{2}, T_{2}</script><p>图示：</p>
+<p><img src= "/img/loading.gif" data-lazy-src="https://github.com/Doraemonzzz/md-photo/blob/master/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F/%E7%AC%AC12%E7%AB%A0/2021101703.jpg?raw=true" alt=""></p>
+<p>回到之前的例子：</p>
+<ul>
+<li>对于线程$i$，操作共享变量$\mathrm{cnt}$内容的指令$\left(L_{i}, U_{i}, S_{i}\right)$构成了一个（关于共享变量$\mathrm{cnt}$的）<strong>临界区</strong>（critical section），这个临界区不应该和其他进程的临界区交替执行。</li>
+<li>换句话说，我们想要确保每个线程在执行它的临界区中的指令时，拥有对共享变量的互斥的访问（mutually exclusive access）。</li>
+<li>通常这种现象称为<strong>互斥</strong>（mutual exclusion）。</li>
+<li>两个临界区的交集形成的状态空间区域称为<strong>不安全区</strong>（unsafe region）。</li>
+<li>绕开不安全区的轨迹线叫做<strong>安全轨迹线</strong>（safe trajectory），接触到任何不安全区的轨迹线就叫做<strong>不安全轨迹线</strong>（unsafe trajectory）。</li>
+</ul>
+<p><img src= "/img/loading.gif" data-lazy-src="https://github.com/Doraemonzzz/md-photo/blob/master/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F/%E7%AC%AC12%E7%AB%A0/2021101704.jpg?raw=true" alt=""></p>
+<p>同步线程的方式是使他们总是有一条安全轨迹线，一种方式是使用信号量。</p>
+<h3 id="信号量"><a href="#信号量" class="headerlink" title="信号量"></a>信号量</h3><p>信号量$s$是具有非负整数值的全局变量，只能由两种特殊的操作来处理，这两种操作称为$P$和$V$：</p>
+<ul>
+<li>$P(s)$：如果$s$是非零的，那么$P$将$s$减1，并且立即返回。如果$s$为零，那么就挂起这个线程，直到$s$变为非零，而一个$V$操作会重启这个线程。在重启之后，$P$操作将$s$减1，并将控制返回给调用者。<ul>
+<li>$P$ 中的测试和减1操作是不可分割的，也就是说， 一旦预测信号量$s$变为非零，就会将$s$减1，不能有中断。 </li>
+</ul>
+</li>
+<li>$V(s)$：$V$操作将$s$加1。如果有任何线程阻塞在$P$操作等待$s$变成非零，那么$V$操作会重启这些线程中的一个，然后该线程将$s$减1，完成它的$P$操作。<ul>
+<li>$V$中的加1操作也是不可分割的，也就是加载、加1和存储信号量的过程中没有中断。</li>
+<li>$V$的定义中没有定义等待线程被重启动的顺序，唯一的要求是$V$必须只能重启一个正在等待的线程。因此，当有多个线程在等待同一个信号量时，无法预测$V$操作要重启哪一个线程。</li>
+</ul>
+</li>
+</ul>
+<p>接口：</p>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;semaphore.h></span></span>
+
+<span class="token keyword">int</span> <span class="token function">sem_init</span><span class="token punctuation">(</span><span class="token class-name">sem_t</span> <span class="token operator">*</span>sem<span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token keyword">unsigned</span> <span class="token keyword">int</span> value<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">int</span> <span class="token function">sem_wait</span><span class="token punctuation">(</span><span class="token class-name">sem_t</span> <span class="token operator">*</span>s<span class="token punctuation">)</span><span class="token punctuation">;</span>	<span class="token comment">/* P(s）*/</span>
+<span class="token keyword">int</span> <span class="token function">sem_post</span><span class="token punctuation">(</span><span class="token class-name">sem_t</span> <span class="token operator">*</span>s<span class="token punctuation">)</span><span class="token punctuation">;</span>	<span class="token comment">/* v(s) */</span>
+
+返回：若成功则为<span class="token number">0</span>，若出错则为<span class="token operator">-</span><span class="token number">1</span>。<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>说明：</p>
+<ul>
+<li>sem_init函数将信号量sem初始化为value，每个信号量在使用前必须初始化，针对我们的目的，中间的参数总是零。</li>
+<li>程序分别通过调用sem_wait和sem_post函数来执行$P$和$V$操作。</li>
+</ul>
+<p>等价的$P, V$接口：</p>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">"csapp.h"</span></span>
+
+<span class="token keyword">void</span> <span class="token function">P</span><span class="token punctuation">(</span><span class="token class-name">sem_t</span> <span class="token operator">*</span>s<span class="token punctuation">)</span><span class="token punctuation">;</span>	<span class="token comment">/* wrapper function for sem_wait */</span>
+<span class="token keyword">void</span> <span class="token function">v</span><span class="token punctuation">(</span><span class="token class-name">sem_t</span> <span class="token operator">*</span>s<span class="token punctuation">)</span><span class="token punctuation">;</span>	<span class="token comment">/* Wrapper function for sem_post */</span>
+
+返回：无。<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h3 id="使用信号量来实现互斥"><a href="#使用信号量来实现互斥" class="headerlink" title="使用信号量来实现互斥"></a>使用信号量来实现互斥</h3><ul>
+<li>信号量提供了一种很方便的方法来确保对共享变量的互斥访问。<ul>
+<li>基本思想是将每个共享变量（或者一组相关的共享变量）与一个信号量$s$（<strong>初始为1</strong>）联系起来，然后用$P(s)$和$V(s)$操作将相应的临界区包围起来。</li>
+</ul>
+</li>
+<li>以这种方式来保护共享变量的信号量叫做<strong>二元信号量（binary semaphore）</strong>，因为它的值总是0或者1 。</li>
+<li>以提供互斥为目的的二元信号量常常也称为<strong>互斥锁（mutex）</strong>。</li>
+<li>在一个互斥锁上执行$P$操作称为<strong>对互斥锁加锁</strong>，执行$V$操作称为<strong>对互斥锁解锁</strong>。</li>
+<li>对一个 互斥锁加了锁但是还没有解锁的线程称为<strong>占用这个互斥锁</strong>。</li>
+<li>一个被用作一组可用资源的计数器的信号量被称为<strong>计数信号量</strong>。</li>
+</ul>
+<p>用二元信号量来正确同步程序计数器的示例：</p>
+<ul>
+<li>用$P,V$创建一组状态，叫做<strong>禁止区（forbidden region）</strong>，其中$s&lt;0$ 。</li>
+<li>因为信号量的不变性，没有实际可行的轨迹线能够包含禁止区中的状态。</li>
+<li>而且，因为禁止区完全包括了不安全区，所以没有实际可行的轨迹线能够接触不安全区的任何部分。</li>
+<li>因此，每条实际可行的轨迹线都是安全的，而且不管运行时指令顺序是怎样的，程序都会正确地增加计数器值。</li>
+</ul>
+<p>代码</p>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token comment">/* 
+ * goodcnt.c - A correctly synchronized counter program 
+ */</span>
+<span class="token comment">/* $begin goodcnt */</span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">"csapp.h"</span></span>
+
+<span class="token keyword">void</span> <span class="token operator">*</span><span class="token function">thread</span><span class="token punctuation">(</span><span class="token keyword">void</span> <span class="token operator">*</span>vargp<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">/* Thread routine prototype */</span>
+
+<span class="token comment">/* Global shared variables */</span>
+<span class="token comment">/* $begin goodcntsemdef */</span>
+    <span class="token keyword">volatile</span> <span class="token keyword">long</span> cnt <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> <span class="token comment">/* Counter */</span>
+    <span class="token class-name">sem_t</span> mutex<span class="token punctuation">;</span>           <span class="token comment">/* Semaphore that protects counter */</span>
+<span class="token comment">/* $end goodcntsemdef */</span>
+
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token keyword">int</span> argc<span class="token punctuation">,</span> <span class="token keyword">char</span> <span class="token operator">*</span><span class="token operator">*</span>argv<span class="token punctuation">)</span> 
+<span class="token punctuation">&#123;</span>
+    <span class="token keyword">int</span> niters<span class="token punctuation">;</span>
+    <span class="token class-name">pthread_t</span> tid1<span class="token punctuation">,</span> tid2<span class="token punctuation">;</span>
+
+    <span class="token comment">/* Check input argument */</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>argc <span class="token operator">!=</span> <span class="token number">2</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+	<span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"usage: %s &lt;niters>\n"</span><span class="token punctuation">,</span> argv<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token function">exit</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+    niters <span class="token operator">=</span> <span class="token function">atoi</span><span class="token punctuation">(</span>argv<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token comment">/* Create threads and wait for them to finish */</span>
+<span class="token comment">/* $begin goodcntseminit */</span>
+    <span class="token function">Sem_init</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>mutex<span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>  <span class="token comment">/* mutex = 1 */</span>
+<span class="token comment">/* $end goodcntseminit */</span>
+    <span class="token function">Pthread_create</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>tid1<span class="token punctuation">,</span> <span class="token constant">NULL</span><span class="token punctuation">,</span> thread<span class="token punctuation">,</span> <span class="token operator">&amp;</span>niters<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">Pthread_create</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>tid2<span class="token punctuation">,</span> <span class="token constant">NULL</span><span class="token punctuation">,</span> thread<span class="token punctuation">,</span> <span class="token operator">&amp;</span>niters<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">Pthread_join</span><span class="token punctuation">(</span>tid1<span class="token punctuation">,</span> <span class="token constant">NULL</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">Pthread_join</span><span class="token punctuation">(</span>tid2<span class="token punctuation">,</span> <span class="token constant">NULL</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token comment">/* Check result */</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>cnt <span class="token operator">!=</span> <span class="token punctuation">(</span><span class="token number">2</span> <span class="token operator">*</span> niters<span class="token punctuation">)</span><span class="token punctuation">)</span>
+	<span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"BOOM! cnt=%ld\n"</span><span class="token punctuation">,</span> cnt<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">else</span>
+	<span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"OK cnt=%ld\n"</span><span class="token punctuation">,</span> cnt<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">exit</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token comment">/* Thread routine */</span>
+<span class="token keyword">void</span> <span class="token operator">*</span><span class="token function">thread</span><span class="token punctuation">(</span><span class="token keyword">void</span> <span class="token operator">*</span>vargp<span class="token punctuation">)</span> 
+<span class="token punctuation">&#123;</span>
+    <span class="token keyword">int</span> i<span class="token punctuation">,</span> niters <span class="token operator">=</span> <span class="token operator">*</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token keyword">int</span> <span class="token operator">*</span><span class="token punctuation">)</span>vargp<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token comment">/* $begin goodcntthread */</span>
+    <span class="token keyword">for</span> <span class="token punctuation">(</span>i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> niters<span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+	<span class="token function">P</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>mutex<span class="token punctuation">)</span><span class="token punctuation">;</span>
+	cnt<span class="token operator">++</span><span class="token punctuation">;</span>
+	<span class="token function">V</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>mutex<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token comment">/* $end goodcntthread */</span>
+    <span class="token keyword">return</span> <span class="token constant">NULL</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+<span class="token comment">/* $end goodcnt */</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>图示：</p>
+<p><img src= "/img/loading.gif" data-lazy-src="https://github.com/Doraemonzzz/md-photo/blob/master/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F/%E7%AC%AC12%E7%AB%A0/2021101705.jpg?raw=true" alt=""></p>
+<h3 id="利用信号量来调度共享资源"><a href="#利用信号量来调度共享资源" class="headerlink" title="利用信号量来调度共享资源"></a>利用信号量来调度共享资源</h3><p>信号量的另一个重要作用是调度对共享资源的访问，有两个经典例子。</p>
+<h4 id="生产者-消费者问题"><a href="#生产者-消费者问题" class="headerlink" title="生产者-消费者问题"></a>生产者-消费者问题</h4><ul>
+<li>生产者和消费者线程共享一个有$n$个槽的有限缓冲区。</li>
+<li>生产者线程反复地生成新的项目（item），并把它们揷人到缓冲区中。</li>
+<li>消费者线程不断地从缓冲区中取出这些项目，然后消费（使用）它们。</li>
+<li>示例：多媒体系统。</li>
+</ul>
+<p>图示：</p>
+<p><img src= "/img/loading.gif" data-lazy-src="https://github.com/Doraemonzzz/md-photo/blob/master/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F/%E7%AC%AC12%E7%AB%A0/2021101706.jpg?raw=true" alt=""></p>
+<h4 id="读者-写者问题"><a href="#读者-写者问题" class="headerlink" title="读者-写者问题"></a>读者-写者问题</h4><ul>
+<li>一组并发的线程要访问一个共享对象，例如一个主存中的数据结构，或者一个磁盘上的数据库。</li>
+<li>有些线程只读对象，而其他的线程只修改对象。</li>
+<li>修改对象的线程叫做写者，只读对象的线程叫做读者。</li>
+<li>写者必须拥有对对象的独占的访问，而读者可以和无限多个其他的读者共享对象。</li>
+<li>一般来说，有无限多个并发的读者和写者。</li>
+<li>示例：航班预订系统。</li>
+</ul>
+<h2 id="使用线程提高并行性"><a href="#使用线程提高并行性" class="headerlink" title="使用线程提高并行性"></a>使用线程提高并行性</h2><p>顺序，并发和并行程序之间的关系：</p>
+<ul>
+<li>写顺序程序只有一条逻辑流。</li>
+<li>写并发程序有多条并发流。</li>
+<li>并行程序是一个运行在多个处理器上的并发程序。</li>
+</ul>
+<p>图示：</p>
+<p><img src= "/img/loading.gif" data-lazy-src="https://github.com/Doraemonzzz/md-photo/blob/master/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F/%E7%AC%AC12%E7%AB%A0/2021101707.jpg?raw=true" alt=""></p>
+<p>说明：</p>
+<ul>
+<li>操作（$P$和$V$）代价太大。</li>
+<li>这突显了并行编程的一项重要教训：同步开销巨大，要尽可能避免。</li>
+<li>如果无可避免，必须要用尽可能多的有用计算弥补这个开销。</li>
+</ul>
+<h3 id="刻画并行程序的性能"><a href="#刻画并行程序的性能" class="headerlink" title="刻画并行程序的性能"></a>刻画并行程序的性能</h3><ul>
+<li><p>并行程序的<strong>加速比（speedup）</strong>：</p>
+<script type="math/tex; mode=display">
+S_{p}=\frac{T_{1}}{T_{p}}</script><ul>
+<li>这里$p$是处理器核的数量，$T_{K}$是在$k$个核上的运行时间。</li>
+<li>这个公式有时被称为<strong>强扩展（strong scaling）</strong>。</li>
+<li>当$T_{1}$是程序顺序执行版本的执行时间时，$S_{p}$称为<strong>绝对加速比（absolute speedup）</strong>。</li>
+<li>当$T_{1}$是程序并行版本在一个核上的执行时间时，$S_{p}$称为<strong>相对加速比（relative speedup）</strong>。</li>
+<li>绝对加速比比相对加速比能更真实地衡量并行的好处。因为即使是当并行程序在一 个处理器上运行时，也常常会受到同步开销的影响，而这些开销会人为地增加相对加速比的数值,因为它们增加了分子的大小。</li>
+<li>另一方面，绝对加速比比相对加速比更难以测量，因为测量绝对加速比需要程序的两种不同的版本。对于复杂的并行代码，创建一个独立的顺序版本可能不太实际，或者因为代码太复杂，或者因为源代码不可得。</li>
+</ul>
+</li>
+<li><p>一种相关的测量量称为<strong>效率（efficiency）</strong>，定义为</p>
+<script type="math/tex; mode=display">
+E_{p}=\frac{S_{p}}{p}=\frac{T_{1}}{p T_{p}}</script><ul>
+<li>通常表示为范围在$(0,100]$之间的百分比。</li>
+<li>效率是对由于并行化造成的开销的衡量，具有高效率的程序比效率低的程序在有用的工作上花费更多的时间，在同步和通信上花费更少的时间。</li>
+</ul>
+</li>
+<li><p>加速比还有另外一面，称为<strong>弱扩展(weak scaling)</strong>。</p>
+<ul>
+<li>在增加处理器数量的同时，增加问题的规模，这样随着处理器数量的增加，每个处理器执行的工作量保持不变。</li>
+<li>在这种描述中，加速比和效率被表达为单位时间完成的工作总量。</li>
+</ul>
+</li>
+</ul>
+<h2 id="其他并发问题"><a href="#其他并发问题" class="headerlink" title="其他并发问题"></a>其他并发问题</h2><h3 id="线程安全"><a href="#线程安全" class="headerlink" title="线程安全"></a>线程安全</h3><ul>
+<li>一个函数被称为<strong>线程安全的（thread-safe）</strong>，当且仅当被多个并发线程反复地调用时, 它会一直产生正确的结果。</li>
+<li>如果一个函数不是线程安全的，我们就说它是<strong>线程不安全的（thread-unsafe）</strong>。</li>
+</ul>
+<p>四个（不相交的）线程不安全函数类：</p>
+<ul>
+<li><p>第1类：不保护共享变量的函数。</p>
+<ul>
+<li>示例：badcnt。</li>
+<li>将这类线程不安全函数变成线程安全函数的方法是使用$P,V$。</li>
+<li>优点：调用程序中不需要做任何修改。</li>
+<li>缺点：缺点是同步操作将减慢程序的执行时间。</li>
+</ul>
+</li>
+<li><p>第2类：保持跨越多个调用的状态的函数。</p>
+<ul>
+<li><p>示例：rand。</p>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;stdio.h></span></span>
+
+<span class="token comment">/* $begin rand */</span>
+<span class="token keyword">unsigned</span> next_seed <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>
+
+<span class="token comment">/* rand - return pseudorandom integer in the range 0..32767 */</span>
+<span class="token keyword">unsigned</span> <span class="token function">rand</span><span class="token punctuation">(</span><span class="token keyword">void</span><span class="token punctuation">)</span>
+<span class="token punctuation">&#123;</span>
+    next_seed <span class="token operator">=</span> next_seed<span class="token operator">*</span><span class="token number">1103515245</span> <span class="token operator">+</span> <span class="token number">12543</span><span class="token punctuation">;</span>
+    <span class="token keyword">return</span> <span class="token punctuation">(</span><span class="token keyword">unsigned</span><span class="token punctuation">)</span><span class="token punctuation">(</span>next_seed<span class="token operator">>></span><span class="token number">16</span><span class="token punctuation">)</span> <span class="token operator">%</span> <span class="token number">32768</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token comment">/* srand - set the initial seed for rand() */</span>
+<span class="token keyword">void</span> <span class="token function">srand</span><span class="token punctuation">(</span><span class="token keyword">unsigned</span> new_seed<span class="token punctuation">)</span>
+<span class="token punctuation">&#123;</span>
+    next_seed <span class="token operator">=</span> new_seed<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span> 
+<span class="token comment">/* $end rand */</span>
+
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">&#123;</span>
+    <span class="token function">srand</span><span class="token punctuation">(</span><span class="token number">100</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"%d\n"</span><span class="token punctuation">,</span> <span class="token function">rand</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"%d\n"</span><span class="token punctuation">,</span> <span class="token function">rand</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"%d\n"</span><span class="token punctuation">,</span> <span class="token function">rand</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+</li>
+<li><p>将这类线程不安全函数变成线程安全函数的方法重写。</p>
+</li>
+<li><p>缺点：需要修改调用程序，工作量很大。</p>
+</li>
+</ul>
+</li>
+<li><p>第3类：返回指向静态变量的指针的函数。</p>
+<ul>
+<li><p>示例：ctime，gethostbyname，计算结果放在一个静态变量里，然后返回指向该静态变量的指针。</p>
+</li>
+<li><p>有两种方法来处理这类线程不安全函数。</p>
+<ul>
+<li><p>一种选择是重写函数，使得调用者传递存放结果的变量的地址。这就消除了所有共享数据，但是它要求程序员能够修改函数的源代码。</p>
+</li>
+<li><p>另一种方式是在调用时候<strong>加锁-复制（lock-and-copy）</strong>技术，将线程不安全函数与互斥锁联系起来。</p>
+<ul>
+<li>在每一个调用位置，对互斥锁加锁，调用线程不安全函数，将函数返回的结果复制到一个私有的内存位置，然后对互斥锁解锁。</li>
+<li>一般会写一个包装函数。</li>
+</ul>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token comment">/* 
+ * ctime_ts - A thread-safe wrapper for ctime
+ */</span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">"csapp.h"</span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">define</span> <span class="token macro-name">MAXSTR</span> <span class="token expression"><span class="token number">128</span></span></span>
+
+<span class="token keyword">static</span> <span class="token class-name">sem_t</span> mutex<span class="token punctuation">;</span> <span class="token comment">/* protects calls to ctime */</span>
+
+<span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">init_ctime_ts</span><span class="token punctuation">(</span><span class="token keyword">void</span><span class="token punctuation">)</span>
+<span class="token punctuation">&#123;</span>
+    <span class="token function">Sem_init</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>mutex<span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token comment">/* $begin ctime_ts */</span>
+<span class="token keyword">char</span> <span class="token operator">*</span><span class="token function">ctime_ts</span><span class="token punctuation">(</span><span class="token keyword">const</span> <span class="token class-name">time_t</span> <span class="token operator">*</span>timep<span class="token punctuation">,</span> <span class="token keyword">char</span> <span class="token operator">*</span>privatep<span class="token punctuation">)</span>
+<span class="token punctuation">&#123;</span>
+    <span class="token keyword">char</span> <span class="token operator">*</span>sharedp<span class="token punctuation">;</span> 
+
+    <span class="token function">P</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>mutex<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    sharedp <span class="token operator">=</span> <span class="token function">ctime</span><span class="token punctuation">(</span>timep<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">strcpy</span><span class="token punctuation">(</span>privatep<span class="token punctuation">,</span> sharedp<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">/* Copy string from shared to private */</span>
+    <span class="token function">V</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>mutex<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">return</span> privatep<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+<span class="token comment">/* $end ctime_ts */</span>
+
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">&#123;</span>
+    <span class="token keyword">char</span> timestr<span class="token punctuation">[</span>MAXSTR<span class="token punctuation">]</span><span class="token punctuation">;</span>
+    <span class="token class-name">time_t</span> timeval<span class="token punctuation">;</span>
+
+    <span class="token comment">/* Thread-safe code to print the current time string */</span>
+    <span class="token function">init_ctime_ts</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    timeval <span class="token operator">=</span> <span class="token function">time</span><span class="token punctuation">(</span><span class="token constant">NULL</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">ctime_ts</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>timeval<span class="token punctuation">,</span> timestr<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"%s"</span><span class="token punctuation">,</span> timestr<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">exit</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>第4类：调用线程不安全函数的函数。</p>
+<ul>
+<li>如果是被调用的函数是第2类，则是线程不安全的；否则可能为线程安全的。</li>
+</ul>
+</li>
+</ul>
+<h3 id="可重入性"><a href="#可重入性" class="headerlink" title="可重入性"></a>可重入性</h3><ul>
+<li>有一类重要的线程安全函数，叫做<strong>可重入函数（reentrant function）</strong>。</li>
+<li>其特点在于它们具有这样一种属性：<strong>当它们被多个线程调用时，不会引用任何共享数据</strong>。</li>
+</ul>
+<p>线程安全函数，可重入函数的关系：</p>
+<p><img src= "/img/loading.gif" data-lazy-src="https://github.com/Doraemonzzz/md-photo/blob/master/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F/%E7%AC%AC12%E7%AB%A0/2021101708.jpg?raw=true" alt=""></p>
+<p>显式可重入和隐式可重入：</p>
+<ul>
+<li>如果所有的函数参数都是传值传递的（即没有指针），并且所有的数据引用都是本地的自动栈变量（即没有引用静态或全局变量），那么函数就是<strong>显式可重入的（explicitly reentrant）</strong>。<ul>
+<li>无论它是被如何调用的，都可以断言它是可重人的。</li>
+</ul>
+</li>
+<li>如果允许显式可重人函数中一些参数是引用传递的（即允许它们传递指针），那么我们就得到了一个<strong>隐式可重入的（implicitly reentrant）</strong>函数。<ul>
+<li>也就是说，如果调用线程小心地传递指向非共享数据的指针，那么它是可重入的。</li>
+</ul>
+</li>
+</ul>
+<h3 id="竞争"><a href="#竞争" class="headerlink" title="竞争"></a>竞争</h3><ul>
+<li>当一个程序的正确性依赖于一个线程要在另一个线程到达$y$点之前到达它的控制流中的$x$点时，就会发生<strong>竞争（race）</strong>。</li>
+<li>通常发生竞争是因为程序员假定线程将按照某种特殊的轨迹线穿过执行状态空间，而忘记了另一条准则规定: 多线程的程序必须对任何可行的轨迹线都正确工作。</li>
+</ul>
+<p>示例：</p>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token comment">/* 
+ * race.c - demonstrates a race condition
+ */</span>
+<span class="token comment">/* $begin race */</span>
+<span class="token comment">/* WARNING: This code is buggy! */</span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">"csapp.h"</span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">define</span> <span class="token macro-name">N</span> <span class="token expression"><span class="token number">4</span></span></span>
+
+<span class="token keyword">void</span> <span class="token operator">*</span><span class="token function">thread</span><span class="token punctuation">(</span><span class="token keyword">void</span> <span class="token operator">*</span>vargp<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> 
+<span class="token punctuation">&#123;</span>
+    <span class="token class-name">pthread_t</span> tid<span class="token punctuation">[</span>N<span class="token punctuation">]</span><span class="token punctuation">;</span>
+    <span class="token keyword">int</span> i<span class="token punctuation">;</span>
+
+    <span class="token keyword">for</span> <span class="token punctuation">(</span>i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> N<span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span>                        <span class="token comment">//line:conc:race:incri</span>
+	<span class="token function">Pthread_create</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>tid<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token constant">NULL</span><span class="token punctuation">,</span> thread<span class="token punctuation">,</span> <span class="token operator">&amp;</span>i<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">//line:conc:race:createthread</span>
+    <span class="token keyword">for</span> <span class="token punctuation">(</span>i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> N<span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> 
+	<span class="token function">Pthread_join</span><span class="token punctuation">(</span>tid<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token constant">NULL</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">exit</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token comment">/* Thread routine */</span>
+<span class="token keyword">void</span> <span class="token operator">*</span><span class="token function">thread</span><span class="token punctuation">(</span><span class="token keyword">void</span> <span class="token operator">*</span>vargp<span class="token punctuation">)</span> 
+<span class="token punctuation">&#123;</span>
+    <span class="token keyword">int</span> myid <span class="token operator">=</span> <span class="token operator">*</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token keyword">int</span> <span class="token operator">*</span><span class="token punctuation">)</span>vargp<span class="token punctuation">)</span><span class="token punctuation">;</span>  <span class="token comment">//line:conc:race:derefarg</span>
+    <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"Hello from thread %d\n"</span><span class="token punctuation">,</span> myid<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">return</span> <span class="token constant">NULL</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+<span class="token comment">/* $end race */</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>解决方法是为每个线程分配一个独立的块：</p>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token comment">/* 
+ * norace.c - fixes the race in race.c
+ */</span>
+<span class="token comment">/* $begin norace */</span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">"csapp.h"</span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">define</span> <span class="token macro-name">N</span> <span class="token expression"><span class="token number">4</span></span></span>
+
+<span class="token keyword">void</span> <span class="token operator">*</span><span class="token function">thread</span><span class="token punctuation">(</span><span class="token keyword">void</span> <span class="token operator">*</span>vargp<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token punctuation">)</span> 
+<span class="token punctuation">&#123;</span>
+    <span class="token class-name">pthread_t</span> tid<span class="token punctuation">[</span>N<span class="token punctuation">]</span><span class="token punctuation">;</span>
+    <span class="token keyword">int</span> i<span class="token punctuation">,</span> <span class="token operator">*</span>ptr<span class="token punctuation">;</span>
+
+    <span class="token keyword">for</span> <span class="token punctuation">(</span>i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> N<span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        ptr <span class="token operator">=</span> <span class="token function">Malloc</span><span class="token punctuation">(</span><span class="token keyword">sizeof</span><span class="token punctuation">(</span><span class="token keyword">int</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>                    <span class="token comment">//line:conc:norace:createthread1</span>
+        <span class="token operator">*</span>ptr <span class="token operator">=</span> i<span class="token punctuation">;</span>                                     <span class="token comment">//line:conc:norace:createthread2</span>
+        <span class="token function">Pthread_create</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>tid<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token constant">NULL</span><span class="token punctuation">,</span> thread<span class="token punctuation">,</span> ptr<span class="token punctuation">)</span><span class="token punctuation">;</span>   <span class="token comment">//line:conc:norace:createthread3</span>
+    <span class="token punctuation">&#125;</span> <span class="token comment">//line:conc:norace:endloop</span>
+    <span class="token keyword">for</span> <span class="token punctuation">(</span>i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> N<span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> 
+        <span class="token function">Pthread_join</span><span class="token punctuation">(</span>tid<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token constant">NULL</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">exit</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token comment">/* Thread routine */</span>
+<span class="token keyword">void</span> <span class="token operator">*</span><span class="token function">thread</span><span class="token punctuation">(</span><span class="token keyword">void</span> <span class="token operator">*</span>vargp<span class="token punctuation">)</span> 
+<span class="token punctuation">&#123;</span>
+    <span class="token keyword">int</span> myid <span class="token operator">=</span> <span class="token operator">*</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token keyword">int</span> <span class="token operator">*</span><span class="token punctuation">)</span>vargp<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">//line:conc:norace:assign</span>
+    <span class="token function">Free</span><span class="token punctuation">(</span>vargp<span class="token punctuation">)</span><span class="token punctuation">;</span> 
+    <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"Hello from thread %d\n"</span><span class="token punctuation">,</span> myid<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">return</span> <span class="token constant">NULL</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+<span class="token comment">/* $end norace */</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h3 id="死锁"><a href="#死锁" class="headerlink" title="死锁"></a>死锁</h3><p><strong>死锁（deadlock）</strong>，指的是一 组线程被阻塞了，等待一个永远也不会为真的条件。</p>
+<p>示例：</p>
+<p><img src= "/img/loading.gif" data-lazy-src="https://github.com/Doraemonzzz/md-photo/blob/master/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F/%E7%AC%AC12%E7%AB%A0/2021102401.jpg?raw=true" alt=""></p>
+<p>说明：</p>
+<ul>
+<li>如果使用$P$和$V$操作顺序不当，以至于两个信号量的禁止区域重叠。如果某个执行轨迹线碰巧到达了<strong>死锁状态</strong>$d$，那么就不可能有进一步的进展了，因为重叠的禁止区域阻塞了每个合法方向上的进展。</li>
+<li>重叠的禁止区域引起了一组称为<strong>死锁区域（deadlock region）</strong>的状态。</li>
+</ul>
+<p>规避死锁的规则：</p>
+<ul>
+<li>互斥锁加锁顺序规则：给定所有互斥操作的一个全序，如果每个线程都是以一种顺序获得互斥锁并以相反的顺序释放，那么这个程序就是无死锁的。</li>
+</ul>
+<p>示例：</p>
+<p><img src= "/img/loading.gif" data-lazy-src="https://github.com/Doraemonzzz/md-photo/blob/master/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F/%E7%AC%AC12%E7%AB%A0/2021101709.jpg?raw=true" alt=""></p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">Doraemonzzz</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="http://www.doraemonzzz.com/2021/10/24/2021-10-24-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E7%AC%AC12%E7%AB%A0-%E7%AC%94%E8%AE%B0%E6%95%B4%E7%90%86/">http://www.doraemonzzz.com/2021/10/24/2021-10-24-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E7%AC%AC12%E7%AB%A0-%E7%AC%94%E8%AE%B0%E6%95%B4%E7%90%86/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://www.doraemonzzz.com" target="_blank">Doraemonzzz</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F/">深入理解计算机系统</a></div><div class="post_share"><div class="social-share" data-image="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="next-post pull-full"><a href="/2021/10/17/2021-10-17-CMU-15-213-Intro-to-Computer-Systems-Lecture-23-to-Lecture-24/"><img class="next-cover" src= "/img/loading.gif" data-lazy-src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">CMU 15-213 Intro to Computer Systems Lecture 23 to Lecture 24</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span> 相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2021/06/06/2021-6-6-深入理解计算机系统-第5章-习题解析/" title="深入理解计算机系统 第5章 习题解析"><img class="cover" src= "/img/loading.gif" data-lazy-src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-06-06</div><div class="title">深入理解计算机系统 第5章 习题解析</div></div></a></div><div><a href="/2021/08/01/2021-8-01-深入理解计算机系统-第7章-习题解析/" title="深入理解计算机系统 第7章 习题解析"><img class="cover" src= "/img/loading.gif" data-lazy-src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-08-01</div><div class="title">深入理解计算机系统 第7章 习题解析</div></div></a></div><div><a href="/2021/08/01/2021-8-1-深入理解计算机系统-第6章-笔记整理/" title="深入理解计算机系统 第6章 笔记整理"><img class="cover" src= "/img/loading.gif" data-lazy-src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-08-01</div><div class="title">深入理解计算机系统 第6章 笔记整理</div></div></a></div><div><a href="/2021/08/15/2021-8-15-深入理解计算机系统-第8章-习题解析/" title="深入理解计算机系统 第8章 习题解析"><img class="cover" src= "/img/loading.gif" data-lazy-src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-08-15</div><div class="title">深入理解计算机系统 第8章 习题解析</div></div></a></div><div><a href="/2021/02/21/深入理解计算机系统 第1章 笔记整理/" title="深入理解计算机系统 第1章 笔记整理"><img class="cover" src= "/img/loading.gif" data-lazy-src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-02-21</div><div class="title">深入理解计算机系统 第1章 笔记整理</div></div></a></div><div><a href="/2020/09/20/深入理解计算机系统 第2章 习题解析 Part1/" title="深入理解计算机系统 第2章 习题解析 Part1"><img class="cover" src= "/img/loading.gif" data-lazy-src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-09-20</div><div class="title">深入理解计算机系统 第2章 习题解析 Part1</div></div></a></div></div></div><hr/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div><div id="comment-switch"><span class="first-comment">Valine</span><span class="switch-btn"></span><span class="second-comment">Livere</span></div></div><div class="comment-wrap"><div><div class="vcomment" id="vcomment"></div></div><div><div id="lv-container" data-id="city" data-uid="MTAyMC8zNDcxOS8xMTI1Ng=="></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="card-info-avatar is-center"><img class="avatar-img" src= "/img/loading.gif" data-lazy-src="https://github.com/Doraemonzzz/md-photo/blob/master/%E5%A4%B4%E5%83%8F.jpg?raw=true" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/><div class="author-info__name">Doraemonzzz</div><div class="author-info__description">个人博客，主要记录有关机器学习，数学以及计算机科学的笔记</div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">667</div></a></div><div class="card-info-data-item is-center"><a href="/tags/"><div class="headline">标签</div><div class="length-num">68</div></a></div><div class="card-info-data-item is-center"><a href="/categories/"><div class="headline">分类</div><div class="length-num">26</div></a></div></div><a class="button--animated" id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/Doraemonzzz"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/Doraemonzzz" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="/doraemon_zzz@163.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a><a class="social-icon" href="https://space.bilibili.com/291079982" target="_blank" title="Bilibili"><i class="iconfont icon-bilibili"></i></a><a class="social-icon" href="/atom.xml" target="_blank" title=""><i class="fa fa-rss"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn card-announcement-animation"></i><span>公告</span></div><div class="announcement_content">暂无公告</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%AC%AC12%E7%AB%A0%EF%BC%9A%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B"><span class="toc-number">1.</span> <span class="toc-text">第12章：并发编程</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%87%8D%E8%A6%81%E6%A6%82%E5%BF%B5"><span class="toc-number">1.1.</span> <span class="toc-text">重要概念</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AE%80%E4%BB%8B"><span class="toc-number">1.2.</span> <span class="toc-text">简介</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9F%BA%E4%BA%8E%E8%BF%9B%E7%A8%8B%E7%9A%84%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B"><span class="toc-number">1.3.</span> <span class="toc-text">基于进程的并发编程</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AF%B4%E6%98%8E"><span class="toc-number">1.3.1.</span> <span class="toc-text">说明</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BC%98%E5%8A%A3%E5%8A%BF"><span class="toc-number">1.3.2.</span> <span class="toc-text">优劣势</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9F%BA%E4%BA%8EI-O%E5%A4%9A%E8%B7%AF%E5%A4%8D%E7%94%A8%E7%9A%84%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B"><span class="toc-number">1.4.</span> <span class="toc-text">基于I&#x2F;O多路复用的并发编程</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BC%98%E5%8A%A3%E5%8A%BF-1"><span class="toc-number">1.4.1.</span> <span class="toc-text">优劣势</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9F%BA%E4%BA%8E%E7%BA%BF%E7%A8%8B%E7%9A%84%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B"><span class="toc-number">1.5.</span> <span class="toc-text">基于线程的并发编程</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BA%BF%E7%A8%8B%E6%89%A7%E8%A1%8C%E6%A8%A1%E5%9E%8B"><span class="toc-number">1.5.1.</span> <span class="toc-text">线程执行模型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%9B%E5%BB%BA%E7%BA%BF%E7%A8%8B"><span class="toc-number">1.5.2.</span> <span class="toc-text">创建线程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BB%88%E6%AD%A2%E7%BA%BF%E7%A8%8B"><span class="toc-number">1.5.3.</span> <span class="toc-text">终止线程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9B%9E%E6%94%B6%E5%B7%B2%E7%BB%88%E6%AD%A2%E7%BA%BF%E7%A8%8B%E7%9A%84%E8%B5%84%E6%BA%90"><span class="toc-number">1.5.4.</span> <span class="toc-text">回收已终止线程的资源</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%86%E7%A6%BB%E7%BA%BF%E7%A8%8B"><span class="toc-number">1.5.5.</span> <span class="toc-text">分离线程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%9D%E5%A7%8B%E5%8C%96%E7%BA%BF%E7%A8%8B"><span class="toc-number">1.5.6.</span> <span class="toc-text">初始化线程</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BA%BF%E7%A8%8B%E7%A8%8B%E5%BA%8F%E4%B8%AD%E7%9A%84%E5%85%B1%E4%BA%AB%E5%8F%98%E9%87%8F"><span class="toc-number">1.6.</span> <span class="toc-text">线程程序中的共享变量</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BA%BF%E7%A8%8B%E5%86%85%E5%AD%98%E6%A8%A1%E5%9E%8B"><span class="toc-number">1.6.1.</span> <span class="toc-text">线程内存模型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B0%86%E5%8F%98%E9%87%8F%E6%98%A0%E5%B0%84%E5%88%B0%E5%86%85%E5%AD%98"><span class="toc-number">1.6.2.</span> <span class="toc-text">将变量映射到内存</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%B1%E4%BA%AB%E5%8F%98%E9%87%8F"><span class="toc-number">1.6.3.</span> <span class="toc-text">共享变量</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%94%A8%E4%BF%A1%E5%8F%B7%E9%87%8F%E5%90%8C%E6%AD%A5%E7%BA%BF%E7%A8%8B"><span class="toc-number">1.7.</span> <span class="toc-text">用信号量同步线程</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%A4%BA%E4%BE%8B"><span class="toc-number">1.7.1.</span> <span class="toc-text">示例</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BF%9B%E5%BA%A6%E5%9B%BE"><span class="toc-number">1.7.2.</span> <span class="toc-text">进度图</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BF%A1%E5%8F%B7%E9%87%8F"><span class="toc-number">1.7.3.</span> <span class="toc-text">信号量</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8%E4%BF%A1%E5%8F%B7%E9%87%8F%E6%9D%A5%E5%AE%9E%E7%8E%B0%E4%BA%92%E6%96%A5"><span class="toc-number">1.7.4.</span> <span class="toc-text">使用信号量来实现互斥</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%A9%E7%94%A8%E4%BF%A1%E5%8F%B7%E9%87%8F%E6%9D%A5%E8%B0%83%E5%BA%A6%E5%85%B1%E4%BA%AB%E8%B5%84%E6%BA%90"><span class="toc-number">1.7.5.</span> <span class="toc-text">利用信号量来调度共享资源</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%94%9F%E4%BA%A7%E8%80%85-%E6%B6%88%E8%B4%B9%E8%80%85%E9%97%AE%E9%A2%98"><span class="toc-number">1.7.5.1.</span> <span class="toc-text">生产者-消费者问题</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%AF%BB%E8%80%85-%E5%86%99%E8%80%85%E9%97%AE%E9%A2%98"><span class="toc-number">1.7.5.2.</span> <span class="toc-text">读者-写者问题</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8%E7%BA%BF%E7%A8%8B%E6%8F%90%E9%AB%98%E5%B9%B6%E8%A1%8C%E6%80%A7"><span class="toc-number">1.8.</span> <span class="toc-text">使用线程提高并行性</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%BB%E7%94%BB%E5%B9%B6%E8%A1%8C%E7%A8%8B%E5%BA%8F%E7%9A%84%E6%80%A7%E8%83%BD"><span class="toc-number">1.8.1.</span> <span class="toc-text">刻画并行程序的性能</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%B6%E4%BB%96%E5%B9%B6%E5%8F%91%E9%97%AE%E9%A2%98"><span class="toc-number">1.9.</span> <span class="toc-text">其他并发问题</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BA%BF%E7%A8%8B%E5%AE%89%E5%85%A8"><span class="toc-number">1.9.1.</span> <span class="toc-text">线程安全</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%AF%E9%87%8D%E5%85%A5%E6%80%A7"><span class="toc-number">1.9.2.</span> <span class="toc-text">可重入性</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AB%9E%E4%BA%89"><span class="toc-number">1.9.3.</span> <span class="toc-text">竞争</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%AD%BB%E9%94%81"><span class="toc-number">1.9.4.</span> <span class="toc-text">死锁</span></a></li></ol></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2021/10/24/2021-10-24-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E7%AC%AC12%E7%AB%A0-%E7%AC%94%E8%AE%B0%E6%95%B4%E7%90%86/" title="深入理解计算机系统 第12章 笔记整理"><img src= "/img/loading.gif" data-lazy-src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="深入理解计算机系统 第12章 笔记整理"/></a><div class="content"><a class="title" href="/2021/10/24/2021-10-24-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E7%AC%AC12%E7%AB%A0-%E7%AC%94%E8%AE%B0%E6%95%B4%E7%90%86/" title="深入理解计算机系统 第12章 笔记整理">深入理解计算机系统 第12章 笔记整理</a><time datetime="2021-10-24T02:40:00.000Z" title="发表于 2021-10-24 10:40:00">2021-10-24</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/10/17/2021-10-17-CMU-15-213-Intro-to-Computer-Systems-Lecture-23-to-Lecture-24/" title="CMU 15-213 Intro to Computer Systems Lecture 23 to Lecture 24"><img src= "/img/loading.gif" data-lazy-src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="CMU 15-213 Intro to Computer Systems Lecture 23 to Lecture 24"/></a><div class="content"><a class="title" href="/2021/10/17/2021-10-17-CMU-15-213-Intro-to-Computer-Systems-Lecture-23-to-Lecture-24/" title="CMU 15-213 Intro to Computer Systems Lecture 23 to Lecture 24">CMU 15-213 Intro to Computer Systems Lecture 23 to Lecture 24</a><time datetime="2021-10-17T09:41:00.000Z" title="发表于 2021-10-17 17:41:00">2021-10-17</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/10/16/2021-10-16-CMU-15-213-Intro-to-Computer-Systems-Lecture-21-to-Lecture-22/" title="CMU 15-213 Intro to Computer Systems Lecture 21 to Lecture 22"><img src= "/img/loading.gif" data-lazy-src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="CMU 15-213 Intro to Computer Systems Lecture 21 to Lecture 22"/></a><div class="content"><a class="title" href="/2021/10/16/2021-10-16-CMU-15-213-Intro-to-Computer-Systems-Lecture-21-to-Lecture-22/" title="CMU 15-213 Intro to Computer Systems Lecture 21 to Lecture 22">CMU 15-213 Intro to Computer Systems Lecture 21 to Lecture 22</a><time datetime="2021-10-16T08:04:00.000Z" title="发表于 2021-10-16 16:04:00">2021-10-16</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/10/15/2021-10-15-CMU-15-213-Intro-to-Computer-Systems-Lecture-18-to-Lecture-20/" title="CMU 15-213 Intro to Computer Systems Lecture 18 to Lecture 20"><img src= "/img/loading.gif" data-lazy-src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="CMU 15-213 Intro to Computer Systems Lecture 18 to Lecture 20"/></a><div class="content"><a class="title" href="/2021/10/15/2021-10-15-CMU-15-213-Intro-to-Computer-Systems-Lecture-18-to-Lecture-20/" title="CMU 15-213 Intro to Computer Systems Lecture 18 to Lecture 20">CMU 15-213 Intro to Computer Systems Lecture 18 to Lecture 20</a><time datetime="2021-10-15T14:55:00.000Z" title="发表于 2021-10-15 22:55:00">2021-10-15</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/09/22/2021-9-22-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E7%AC%AC11%E7%AB%A0-%E4%B9%A0%E9%A2%98%E8%A7%A3%E6%9E%90/" title="深入理解计算机系统 第11章 习题解析"><img src= "/img/loading.gif" data-lazy-src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="深入理解计算机系统 第11章 习题解析"/></a><div class="content"><a class="title" href="/2021/09/22/2021-9-22-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E7%AC%AC11%E7%AB%A0-%E4%B9%A0%E9%A2%98%E8%A7%A3%E6%9E%90/" title="深入理解计算机系统 第11章 习题解析">深入理解计算机系统 第11章 习题解析</a><time datetime="2021-09-22T15:10:00.000Z" title="发表于 2021-09-22 23:10:00">2021-09-22</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2018 - 2021 By Doraemonzzz</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="font-plus" type="button" title="放大字体"><i class="fas fa-plus"></i></button><button id="font-minus" type="button" title="缩小字体"><i class="fas fa-minus"></i></button><button id="translateLink" type="button" title="简繁转换">简</button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div id="local-search"><div class="search-dialog"><div class="search-dialog__title" id="local-search-title">本地搜索</div><div id="local-input-panel"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div></div><hr/><div id="local-search-results"></div><span class="search-close-button"><i class="fas fa-times"></i></span></div><div id="search-mask"></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="/js/tw_cn.js"></script><script src="https://cdn.jsdelivr.net/npm/vanilla-lazyload/dist/lazyload.iife.min.js"></script><script src="/js/search/local-search.js"></script><script>var preloader = {
+  endLoading: () => {
+    document.body.style.overflow = 'auto';
+    document.getElementById('loading-box').classList.add("loaded")
+  },
+  initLoading: () => {
+    document.body.style.overflow = '';
+    document.getElementById('loading-box').classList.remove("loaded")
+
+  }
+}
+window.addEventListener('load',preloader.endLoading())</script><div class="js-pjax"><script>if (!window.MathJax) {
+  window.MathJax = {
+    tex: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]],
+      tags: 'ams'
+    },
+    chtml: {
+      scale: 1.25
+    },
+    options: {
+      renderActions: {
+        findScript: [10, doc => {
+          for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+            const display = !!node.type.match(/; *mode=display/)
+            const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+            const text = document.createTextNode('')
+            node.parentNode.replaceChild(text, node)
+            math.start = {node: text, delim: '', n: 0}
+            math.end = {node: text, delim: '', n: 0}
+            doc.math.push(math)
+          }
+        }, '']
+      }
+    }
+  }
+  
+  const script = document.createElement('script')
+  script.src = 'https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js'
+  script.id = 'MathJax-script'
+  script.async = true
+  document.head.appendChild(script)
+} else {
+  MathJax.startup.document.state(0)
+  MathJax.texReset()
+  MathJax.typeset()
+}</script><script>function loadValine () {
+  function initValine () {
+    const valine = new Valine(Object.assign({
+      el: '#vcomment',
+      appId: 'IpnmxCW9CvYWIXbol5QXsegX-MdYXbMMI',
+      appKey: 'w57DVCdbxcyB1TYYagMIMJIU',
+      placeholder: 'Please leave your footprints',
+      avatar: 'monsterid',
+      meta: 'nick,mail,link'.split(','),
+      pageSize: '10',
+      lang: 'en',
+      recordIP: false,
+      serverURLs: '',
+      emojiCDN: '',
+      emojiMaps: "",
+      enableQQ: false,
+      path: window.location.pathname,
+      requiredFields: ["nick,mail"],
+      visitor: true
+    }, null))
+  }
+
+  if (typeof Valine === 'function') initValine() 
+  else getScript('https://cdn.jsdelivr.net/npm/valine/dist/Valine.min.js').then(initValine)
+}
+
+if ('Valine' === 'Valine' || !false) {
+  if (false) btf.loadComment(document.getElementById('vcomment'),loadValine)
+  else setTimeout(loadValine, 0)
+} else {
+  function loadOtherComment () {
+    loadValine()
+  }
+}</script><script>function loadLivere () {
+  if (typeof LivereTower === 'object') {
+    window.LivereTower.init()
+  }
+  else {
+    (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+    })(document, 'script');
+  }
+}
+
+if ('Valine' === 'Livere' || !false) {
+  if (false) btf.loadComment(document.getElementById('lv-container'), loadLivere)
+  else loadLivere()
+}
+else {
+  function loadOtherComment () {
+    loadLivere()
+  }
+}</script></div><script defer="defer" id="fluttering_ribbon" mobile="false" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/canvas-fluttering-ribbon.min.js"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

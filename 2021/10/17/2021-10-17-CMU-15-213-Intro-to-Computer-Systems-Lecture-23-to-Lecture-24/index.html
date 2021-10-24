@@ -1,0 +1,514 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>CMU 15-213 Intro to Computer Systems Lecture 23 to Lecture 24 | Doraemonzzz</title><meta name="keywords" content="CMU 15-213"><meta name="author" content="Doraemonzzz"><meta name="copyright" content="Doraemonzzz"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="课程主页：http:&#x2F;&#x2F;www.cs.cmu.edu&#x2F;afs&#x2F;cs&#x2F;academic&#x2F;class&#x2F;15213-f15&#x2F;www&#x2F;schedule.html 课程资料：https:&#x2F;&#x2F;github.com&#x2F;EugeneLiu&#x2F;translationCSAPP 课程视频：https:&#x2F;&#x2F;www.bilibili.com&#x2F;video&#x2F;av31289365&#x2F; 这一部分回顾Lecture 23至Lecture">
+<meta property="og:type" content="article">
+<meta property="og:title" content="CMU 15-213 Intro to Computer Systems Lecture 23 to Lecture 24">
+<meta property="og:url" content="http://www.doraemonzzz.com/2021/10/17/2021-10-17-CMU-15-213-Intro-to-Computer-Systems-Lecture-23-to-Lecture-24/index.html">
+<meta property="og:site_name" content="Doraemonzzz">
+<meta property="og:description" content="课程主页：http:&#x2F;&#x2F;www.cs.cmu.edu&#x2F;afs&#x2F;cs&#x2F;academic&#x2F;class&#x2F;15213-f15&#x2F;www&#x2F;schedule.html 课程资料：https:&#x2F;&#x2F;github.com&#x2F;EugeneLiu&#x2F;translationCSAPP 课程视频：https:&#x2F;&#x2F;www.bilibili.com&#x2F;video&#x2F;av31289365&#x2F; 这一部分回顾Lecture 23至Lecture">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg">
+<meta property="article:published_time" content="2021-10-17T09:41:00.000Z">
+<meta property="article:modified_time" content="2021-10-24T03:09:11.350Z">
+<meta property="article:author" content="Doraemonzzz">
+<meta property="article:tag" content="CMU 15-213">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg"><link rel="shortcut icon" href="https://github.com/Doraemonzzz/md-photo/blob/master/%E5%A4%B4%E5%83%8F.jpg?raw=true"><link rel="canonical" href="http://www.doraemonzzz.com/2021/10/17/2021-10-17-CMU-15-213-Intro-to-Computer-Systems-Lecture-23-to-Lecture-24/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//www.google-analytics.com" crossorigin=""/><link rel="preconnect" href="//hm.baidu.com"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><script>var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?6f00f37f957f0608abb8c571105456f0";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script><script async="async" src="https://www.googletagmanager.com/gtag/js?id=UA-G-RE4B1LKRZD"></script><script>window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'UA-G-RE4B1LKRZD');
+</script><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"search.xml","languages":{"hits_empty":"找不到您查询的内容：${query}"}},
+  translate: {"defaultEncoding":2,"translateDelay":0,"msgToTraditionalChinese":"繁","msgToSimplifiedChinese":"簡"},
+  noticeOutdate: {"limitDay":500,"position":"top","messagePrev":"距离上次更新已经","messageNext":"天了，文章内容可能已经过时。"},
+  highlight: {"plugin":"prismjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":200},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    jQuery: 'https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js',
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+    },
+    fancybox: {
+      js: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css'
+    }
+  },
+  isPhotoFigcaption: true,
+  islazyload: true,
+  isanchor: true
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'CMU 15-213 Intro to Computer Systems Lecture 23 to Lecture 24',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2021-10-24 11:09:11'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const fontSizeVal = saveToLocal.get('global-font-size')
+    if (fontSizeVal !== undefined) {
+      document.documentElement.style.setProperty('--global-font-size', fontSizeVal + 'px')
+    }
+    })(window)</script><link rel="stylesheet" href="/css/bilibili.css" media="defer" onload="this.media='all'"><meta name="google-site-verification" content="c4v-NmuUZRgl3cvtg9GKswryK1YLaPztd_5M-df5VNI" /><meta name="generator" content="Hexo 5.4.0"><link rel="alternate" href="/atom.xml" title="Doraemonzzz" type="application/atom+xml">
+</head><body><div id="loading-box"><div class="loading-left-bg"></div><div class="loading-right-bg"></div><div class="spinner-box"><div class="configure-border-1"><div class="configure-core"></div></div><div class="configure-border-2"><div class="configure-core"></div></div><div class="loading-word">加载中...</div></div></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="author-avatar"><img class="avatar-img" src= "/img/loading.gif" data-lazy-src="https://github.com/Doraemonzzz/md-photo/blob/master/%E5%A4%B4%E5%83%8F.jpg?raw=true" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">文章</div><div class="length-num">667</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">标签</div><div class="length-num">68</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/categories/"><div class="headline">分类</div><div class="length-num">26</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-chart-pie"></i><span> 博客统计</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/charts/"><i class="fa-fw far fa-chart-bar"></i><span> 文章统计</span></a></li><li><a class="site-page child" href="/census/"><i class="fa-fw fas fa-chart-area"></i><span> 访问统计</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/top/"><i class="fa-fw fab fa-hotjar"></i><span> 阅读排行榜</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fa fa-heartbeat"></i><span> 娱乐</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于我</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">Doraemonzzz</a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-chart-pie"></i><span> 博客统计</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/charts/"><i class="fa-fw far fa-chart-bar"></i><span> 文章统计</span></a></li><li><a class="site-page child" href="/census/"><i class="fa-fw fas fa-chart-area"></i><span> 访问统计</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/top/"><i class="fa-fw fab fa-hotjar"></i><span> 阅读排行榜</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fa fa-heartbeat"></i><span> 娱乐</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于我</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">CMU 15-213 Intro to Computer Systems Lecture 23 to Lecture 24</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2021-10-17T09:41:00.000Z" title="发表于 2021-10-17 17:41:00">2021-10-17</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2021-10-24T03:09:11.350Z" title="更新于 2021-10-24 11:09:11">2021-10-24</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%8E%9F%E7%90%86/">计算机原理</a></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-tag"></i><a class="article-meta__tags" href="/tags/CMU-15-213/">CMU 15-213</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">1.3k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>4分钟</span></span><span class="post-meta-separator">|</span><span class="leancloud_visitors" id="/2021/10/17/2021-10-17-CMU-15-213-Intro-to-Computer-Systems-Lecture-23-to-Lecture-24/" data-flag-title="CMU 15-213 Intro to Computer Systems Lecture 23 to Lecture 24"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span class="leancloud-visitors-count"></span></span><span class="post-meta-separator">|</span><span class="post-meta-commentcount"><i class="far fa-comments fa-fw post-meta-icon"></i><span class="post-meta-label">评论数:</span><a href="/2021/10/17/2021-10-17-CMU-15-213-Intro-to-Computer-Systems-Lecture-23-to-Lecture-24/#post-comment" itemprop="discussionUrl"><span class="valine-comment-count" data-xid="/2021/10/17/2021-10-17-CMU-15-213-Intro-to-Computer-Systems-Lecture-23-to-Lecture-24/" itemprop="commentCount"></span></a></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p>课程主页：<a target="_blank" rel="noopener" href="http://www.cs.cmu.edu/afs/cs/academic/class/15213-f15/www/schedule.html">http://www.cs.cmu.edu/afs/cs/academic/class/15213-f15/www/schedule.html</a></p>
+<p>课程资料：<a target="_blank" rel="noopener" href="https://github.com/EugeneLiu/translationCSAPP">https://github.com/EugeneLiu/translationCSAPP</a></p>
+<p>课程视频：<a target="_blank" rel="noopener" href="https://www.bilibili.com/video/av31289365/">https://www.bilibili.com/video/av31289365/</a></p>
+<p>这一部分回顾Lecture 23至Lecture 24，介绍了并发编程。</p>
+<p>备注：图片和总结内容均来自于课件。</p>
+<span id="more"></span>
+<p>说明：</p>
+<p>大部分内容已经整理过，这里仅仅进行补充。</p>
+<h2 id="Lecture-23"><a href="#Lecture-23" class="headerlink" title="Lecture 23"></a>Lecture 23</h2><h3 id="并发编程很困难"><a href="#并发编程很困难" class="headerlink" title="并发编程很困难"></a>并发编程很困难</h3><ul>
+<li>并发编程的经典问题类：<ul>
+<li>竞争：结果取决于系统中其他地方的任意调度决策。<ul>
+<li>示例：谁获得了飞机上的最后一个座位？</li>
+</ul>
+</li>
+<li>死锁：资源分配不当阻碍前进。<ul>
+<li>例子：交通拥堵。</li>
+</ul>
+</li>
+<li>活锁/饥饿/公平：外部事件和/或系统调度决策可以阻止子任务的进展。<ul>
+<li>例子：人们总是在你前面排队。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="迭代服务器的基本流"><a href="#迭代服务器的基本流" class="headerlink" title="迭代服务器的基本流"></a>迭代服务器的基本流</h3><p>迭代服务器一次处理一个请求：</p>
+<p><img src= "/img/loading.gif" data-lazy-src="https://github.com/Doraemonzzz/md-photo/blob/master/CMU%2015-213%20Intro%20to%20Computer%20Systems/Lecture23/2021101701.jpg?raw=true" alt=""></p>
+<p>解决方法是使用并发服务器，并发服务器使用多个并发流同时为多个客户端提供服务：</p>
+<p><img src= "/img/loading.gif" data-lazy-src="https://github.com/Doraemonzzz/md-photo/blob/master/CMU%2015-213%20Intro%20to%20Computer%20Systems/Lecture23/2021101702.jpg?raw=true" alt=""></p>
+<h3 id="基于进程"><a href="#基于进程" class="headerlink" title="基于进程"></a>基于进程</h3><p><img src= "/img/loading.gif" data-lazy-src="https://github.com/Doraemonzzz/md-photo/blob/master/CMU%2015-213%20Intro%20to%20Computer%20Systems/Lecture23/2021101703.jpg?raw=true" alt=""></p>
+<h4 id="优缺点"><a href="#优缺点" class="headerlink" title="优缺点"></a>优缺点</h4><p>优点：</p>
+<ul>
+<li>并发处理多个连接；</li>
+<li>清晰的共享模型；<ul>
+<li>描述符（否）</li>
+<li>文件表（是）</li>
+<li>全局变量（否）</li>
+</ul>
+</li>
+<li>简单明了；</li>
+</ul>
+<p>缺点：</p>
+<ul>
+<li>进程控制的额外开销；</li>
+<li>在进程之间共享数据非常重要<ul>
+<li>需要 IPC（进程间通信）机制<ul>
+<li>FIFO（即管道）、System V 共享内存和信号量；</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="基于事件"><a href="#基于事件" class="headerlink" title="基于事件"></a>基于事件</h3><h4 id="优缺点-1"><a href="#优缺点-1" class="headerlink" title="优缺点"></a>优缺点</h4><p>优点：</p>
+<ul>
+<li>一个逻辑控制流和地址空间；</li>
+<li>可以使用调试器单步执行；</li>
+<li>没有进程或线程控制开销；</li>
+<li>高性能Web服务器和搜索引擎的首选设计，例如，Node.js、nginx、Tornado；</li>
+</ul>
+<p>缺点</p>
+<ul>
+<li>与基于进程或线程的设计相比，代码要复杂得多；</li>
+<li>难以提供细粒度的并发；<ul>
+<li>例如，如何处理部分HTTP请求头；</li>
+</ul>
+</li>
+<li>无法利用多核；<ul>
+<li>单线程控制；</li>
+</ul>
+</li>
+</ul>
+<h3 id="基于进程-1"><a href="#基于进程-1" class="headerlink" title="基于进程"></a>基于进程</h3><p>进程的传统视角：</p>
+<ul>
+<li>进程 = 进程上下文 + 代码、数据和堆栈；</li>
+</ul>
+<p><img src= "/img/loading.gif" data-lazy-src="https://github.com/Doraemonzzz/md-photo/blob/master/CMU%2015-213%20Intro%20to%20Computer%20Systems/Lecture23/2021101704.jpg?raw=true" alt=""></p>
+<p>进程的另一个视角：</p>
+<ul>
+<li>进程 = 线程 + 代码、数据和内核上下文；</li>
+</ul>
+<p><img src= "/img/loading.gif" data-lazy-src="https://github.com/Doraemonzzz/md-photo/blob/master/CMU%2015-213%20Intro%20to%20Computer%20Systems/Lecture23/2021101705.jpg?raw=true" alt=""></p>
+<p>多进程示例：</p>
+<p><img src= "/img/loading.gif" data-lazy-src="https://github.com/Doraemonzzz/md-photo/blob/master/CMU%2015-213%20Intro%20to%20Computer%20Systems/Lecture23/2021101706.jpg?raw=true" alt=""></p>
+<h4 id="线程的逻辑视角"><a href="#线程的逻辑视角" class="headerlink" title="线程的逻辑视角"></a>线程的逻辑视角</h4><ul>
+<li>与进程关联的线程形成对等线程池，与形成树层次结构的进程不同；</li>
+</ul>
+<p><img src= "/img/loading.gif" data-lazy-src="https://github.com/Doraemonzzz/md-photo/blob/master/CMU%2015-213%20Intro%20to%20Computer%20Systems/Lecture23/2021101707.jpg?raw=true" alt=""></p>
+<h4 id="线程-VS-进程"><a href="#线程-VS-进程" class="headerlink" title="线程 VS 进程"></a>线程 VS 进程</h4><ul>
+<li>线程和进程的相同点<ul>
+<li>都有自己的逻辑控制流；</li>
+<li>都可以与其他人同时运行（可能在不同的内核上）；</li>
+<li>都能进行上下文切换 ；</li>
+</ul>
+</li>
+<li>线程和进程的不同点<ul>
+<li>线程共享所有代码和数据（本地堆栈除外） ；<ul>
+<li>进程（通常） 不能共享；</li>
+</ul>
+</li>
+<li>线程比进程开销小<ul>
+<li>进程控制（创建和收割）是线程控制的两倍；</li>
+<li>Linux上时间开销：<ul>
+<li>创建和回收进程约20K周期；</li>
+<li>创建和收割线程约10K周期；</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h4 id="优缺点-2"><a href="#优缺点-2" class="headerlink" title="优缺点"></a>优缺点</h4><p>优点：</p>
+<ul>
+<li>易于在线程之间共享数据结构，例如日志信息、文件缓存；</li>
+<li>线程比进程更高效；</li>
+</ul>
+<p>缺点：</p>
+<ul>
+<li>无意共享可能会引入微妙且难以重现的错误！<ul>
+<li>可以轻松共享数据是线程的最大优势也是最大的弱点；</li>
+<li>很难知道哪些数据是共享的，哪些是私有的；</li>
+<li>很难通过测试来检测；<ul>
+<li>出现不好的竞争结果的概率非常低，但不是零！</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="Lecture-24"><a href="#Lecture-24" class="headerlink" title="Lecture 24"></a>Lecture 24</h2><p>略过。</p>
+<h2 id="Lecture-25"><a href="#Lecture-25" class="headerlink" title="Lecture 25"></a>Lecture 25</h2><p>略过。</p>
+<h2 id="Lecture-26"><a href="#Lecture-26" class="headerlink" title="Lecture 26"></a>Lecture 26</h2><p>这部分介绍快排的并行版本。</p>
+<h3 id="串行快排"><a href="#串行快排" class="headerlink" title="串行快排"></a>串行快排</h3><h4 id="串行快排伪代码"><a href="#串行快排伪代码" class="headerlink" title="串行快排伪代码"></a>串行快排伪代码</h4><p>对$N$个随机数构成的数组$X$进行排序：</p>
+<ul>
+<li>从$X$中选择“主元”$p$</li>
+<li>将$X$重新排列成<ul>
+<li>$L$：值$\le p$</li>
+<li>$R$：值$\ge p$</li>
+</ul>
+</li>
+<li>递归排序$L$，得到$L’$</li>
+<li>递归排序$R$，得到$R’$</li>
+<li>返回$L’ : p : R’$</li>
+</ul>
+<h4 id="串行快排可视化"><a href="#串行快排可视化" class="headerlink" title="串行快排可视化"></a>串行快排可视化</h4><p><img src= "/img/loading.gif" data-lazy-src="https://github.com/Doraemonzzz/md-photo/blob/master/CMU%2015-213%20Intro%20to%20Computer%20Systems/Lecture23/2021101708.jpg?raw=true" alt=""></p>
+<p><img src= "/img/loading.gif" data-lazy-src="https://github.com/Doraemonzzz/md-photo/blob/master/CMU%2015-213%20Intro%20to%20Computer%20Systems/Lecture23/2021101709.jpg?raw=true" alt=""></p>
+<h3 id="并行快排"><a href="#并行快排" class="headerlink" title="并行快排"></a>并行快排</h3><h4 id="并行快排伪代码"><a href="#并行快排伪代码" class="headerlink" title="并行快排伪代码"></a>并行快排伪代码</h4><ul>
+<li>如果$N\le \mathrm{Nthresh}$，进行串行快排；</li>
+<li>其他情况：<ul>
+<li>从$X$中选择“主元”$p$</li>
+<li>将X重新排列成<ul>
+<li>$L$：值$\le p$</li>
+<li>$R$：值$\ge p$</li>
+</ul>
+</li>
+<li>递归产生单独的线程<ul>
+<li>递归排序$L$，得到$L’$</li>
+<li>递归排序$R$，得到$R’$</li>
+</ul>
+</li>
+<li>返回$L’ : p : R’$</li>
+</ul>
+</li>
+</ul>
+<h4 id="并行快排可视化"><a href="#并行快排可视化" class="headerlink" title="并行快排可视化"></a>并行快排可视化</h4><p><img src= "/img/loading.gif" data-lazy-src="https://github.com/Doraemonzzz/md-photo/blob/master/CMU%2015-213%20Intro%20to%20Computer%20Systems/Lecture23/2021101710.jpg?raw=true" alt=""></p>
+<p><img src= "/img/loading.gif" data-lazy-src="https://github.com/Doraemonzzz/md-photo/blob/master/CMU%2015-213%20Intro%20to%20Computer%20Systems/Lecture23/2021101711.jpg?raw=true" alt=""></p>
+<ul>
+<li>任务：对数据的子范围进行排序<ul>
+<li>指定为：<ul>
+<li>base：起始地址；</li>
+<li>nele：子范围中的元素数；</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>作为单独的线程运行</li>
+</ul>
+<p><img src= "/img/loading.gif" data-lazy-src="https://github.com/Doraemonzzz/md-photo/blob/master/CMU%2015-213%20Intro%20to%20Computer%20Systems/Lecture23/2021101712.jpg?raw=true" alt=""></p>
+<ul>
+<li>使用串行快速排序对子范围进行排序</li>
+</ul>
+<p><img src= "/img/loading.gif" data-lazy-src="https://github.com/Doraemonzzz/md-photo/blob/master/CMU%2015-213%20Intro%20to%20Computer%20Systems/Lecture23/2021101713.jpg?raw=true" alt=""></p>
+<p>代码：</p>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">void</span> <span class="token function">tqsort</span><span class="token punctuation">(</span><span class="token class-name">data_t</span> <span class="token operator">*</span>base<span class="token punctuation">,</span> <span class="token class-name">size_t</span> nele<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token function">init_task</span><span class="token punctuation">(</span>nele<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    global_base <span class="token operator">=</span> base<span class="token punctuation">;</span>
+    global_end <span class="token operator">=</span> global_base <span class="token operator">+</span> nele <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">;</span>
+    task_queue_ptr tq <span class="token operator">=</span> <span class="token function">new_task_queue</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">tqsort_helper</span><span class="token punctuation">(</span>base<span class="token punctuation">,</span> nele<span class="token punctuation">,</span> tq<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">join_tasks</span><span class="token punctuation">(</span>tq<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">free_task_queue</span><span class="token punctuation">(</span>tq<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token comment">/* Multi-threaded quicksort */</span>
+<span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">tqsort_helper</span><span class="token punctuation">(</span><span class="token class-name">data_t</span> <span class="token operator">*</span>base<span class="token punctuation">,</span> <span class="token class-name">size_t</span> nele<span class="token punctuation">,</span>
+                          task_queue_ptr tq<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>nele <span class="token operator">&lt;=</span> nele_max_sort_serial<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token comment">/* Use sequential sort */</span>
+        <span class="token function">qsort_serial</span><span class="token punctuation">(</span>base<span class="token punctuation">,</span> nele<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">return</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+    <span class="token class-name">sort_task_t</span> <span class="token operator">*</span>t <span class="token operator">=</span> <span class="token function">new_task</span><span class="token punctuation">(</span>base<span class="token punctuation">,</span> nele<span class="token punctuation">,</span> tq<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">spawn_task</span><span class="token punctuation">(</span>tq<span class="token punctuation">,</span> sort_thread<span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token keyword">void</span> <span class="token operator">*</span><span class="token punctuation">)</span> t<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token comment">/* Thread routine for many-threaded quicksort */</span>
+<span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token operator">*</span><span class="token function">sort_thread</span><span class="token punctuation">(</span><span class="token keyword">void</span> <span class="token operator">*</span>vargp<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token class-name">sort_task_t</span> <span class="token operator">*</span>t <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token class-name">sort_task_t</span> <span class="token operator">*</span><span class="token punctuation">)</span> vargp<span class="token punctuation">;</span>
+    <span class="token class-name">data_t</span> <span class="token operator">*</span>base <span class="token operator">=</span> t<span class="token operator">-></span>base<span class="token punctuation">;</span>
+    <span class="token class-name">size_t</span> nele <span class="token operator">=</span> t<span class="token operator">-></span>nele<span class="token punctuation">;</span>
+    task_queue_ptr tq <span class="token operator">=</span> t<span class="token operator">-></span>tq<span class="token punctuation">;</span>
+    <span class="token function">free</span><span class="token punctuation">(</span>vargp<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token class-name">size_t</span> m <span class="token operator">=</span> <span class="token function">partition</span><span class="token punctuation">(</span>base<span class="token punctuation">,</span> nele<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>m <span class="token operator">></span> <span class="token number">1</span><span class="token punctuation">)</span>
+        <span class="token function">tqsort_helper</span><span class="token punctuation">(</span>base<span class="token punctuation">,</span> m<span class="token punctuation">,</span> tq<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>nele<span class="token operator">-</span><span class="token number">1</span> <span class="token operator">></span> m<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">)</span>
+        <span class="token function">tqsort_helper</span><span class="token punctuation">(</span>base<span class="token operator">+</span>m<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">,</span> nele<span class="token operator">-</span>m<span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">,</span> tq<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">return</span> <span class="token constant">NULL</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h3 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h3><ul>
+<li>必须有并行化策略<ul>
+<li>分成$K$个独立的部分；</li>
+<li>分而治之；</li>
+</ul>
+</li>
+<li>内循环必须是无同步的<ul>
+<li>同步操作非常昂贵；</li>
+</ul>
+</li>
+<li>当心阿姆达尔定律<ul>
+<li>串行代码可能成为瓶颈；</li>
+</ul>
+</li>
+<li>你可以做到！<ul>
+<li>实现适度的并行性并不困难；</li>
+<li>建立实验框架并测试多种策略；</li>
+</ul>
+</li>
+</ul>
+<h3 id="存储一致性"><a href="#存储一致性" class="headerlink" title="存储一致性"></a>存储一致性</h3><p><img src= "/img/loading.gif" data-lazy-src="https://github.com/Doraemonzzz/md-photo/blob/master/CMU%2015-213%20Intro%20to%20Computer%20Systems/Lecture23/2021101714.jpg?raw=true" alt=""></p>
+<p><img src= "/img/loading.gif" data-lazy-src="https://github.com/Doraemonzzz/md-photo/blob/master/CMU%2015-213%20Intro%20to%20Computer%20Systems/Lecture23/2021101715.jpg?raw=true" alt=""></p>
+<p>不可能的结果：</p>
+<ul>
+<li>1, 100; 100, 1</li>
+</ul>
+<h3 id="用状态标记每个缓存块"><a href="#用状态标记每个缓存块" class="headerlink" title="用状态标记每个缓存块"></a>用状态标记每个缓存块</h3><ul>
+<li>无效（Invalid）：不能使用值；</li>
+<li>共享（Shared）：可读副本；</li>
+<li>独占（Exclusive）：可写副本；</li>
+</ul>
+<p>示例：</p>
+<p><img src= "/img/loading.gif" data-lazy-src="https://github.com/Doraemonzzz/md-photo/blob/master/CMU%2015-213%20Intro%20to%20Computer%20Systems/Lecture23/2021101716.jpg?raw=true" alt=""></p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">Doraemonzzz</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="http://www.doraemonzzz.com/2021/10/17/2021-10-17-CMU-15-213-Intro-to-Computer-Systems-Lecture-23-to-Lecture-24/">http://www.doraemonzzz.com/2021/10/17/2021-10-17-CMU-15-213-Intro-to-Computer-Systems-Lecture-23-to-Lecture-24/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://www.doraemonzzz.com" target="_blank">Doraemonzzz</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/CMU-15-213/">CMU 15-213</a></div><div class="post_share"><div class="social-share" data-image="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2021/10/24/2021-10-24-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E7%AC%AC12%E7%AB%A0-%E7%AC%94%E8%AE%B0%E6%95%B4%E7%90%86/"><img class="prev-cover" src= "/img/loading.gif" data-lazy-src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">深入理解计算机系统 第12章 笔记整理</div></div></a></div><div class="next-post pull-right"><a href="/2021/10/16/2021-10-16-CMU-15-213-Intro-to-Computer-Systems-Lecture-21-to-Lecture-22/"><img class="next-cover" src= "/img/loading.gif" data-lazy-src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">CMU 15-213 Intro to Computer Systems Lecture 21 to Lecture 22</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span> 相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2020/04/30/CMU 15-213 Intro to Computer Systems Lecture 1/" title="CMU 15-213 Intro to Computer Systems Lecture 1"><img class="cover" src= "/img/loading.gif" data-lazy-src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-04-30</div><div class="title">CMU 15-213 Intro to Computer Systems Lecture 1</div></div></a></div><div><a href="/2020/06/10/CMU 15-213 Intro to Computer Systems Lecture 12/" title="CMU 15-213 Intro to Computer Systems Lecture 12"><img class="cover" src= "/img/loading.gif" data-lazy-src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-06-10</div><div class="title">CMU 15-213 Intro to Computer Systems Lecture 12</div></div></a></div><div><a href="/2020/06/08/CMU 15-213 Intro to Computer Systems Lecture 10/" title="CMU 15-213 Intro to Computer Systems Lecture 10"><img class="cover" src= "/img/loading.gif" data-lazy-src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-06-08</div><div class="title">CMU 15-213 Intro to Computer Systems Lecture 10</div></div></a></div><div><a href="/2020/06/09/CMU 15-213 Intro to Computer Systems Lecture 11/" title="CMU 15-213 Intro to Computer Systems Lecture 11"><img class="cover" src= "/img/loading.gif" data-lazy-src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-06-09</div><div class="title">CMU 15-213 Intro to Computer Systems Lecture 11</div></div></a></div><div><a href="/2020/06/16/CMU 15-213 Intro to Computer Systems Lecture 13/" title="CMU 15-213 Intro to Computer Systems Lecture 13"><img class="cover" src= "/img/loading.gif" data-lazy-src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-06-16</div><div class="title">CMU 15-213 Intro to Computer Systems Lecture 13</div></div></a></div><div><a href="/2020/05/01/CMU 15-213 Intro to Computer Systems Lecture 2/" title="CMU 15-213 Intro to Computer Systems Lecture 2"><img class="cover" src= "/img/loading.gif" data-lazy-src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2020-05-01</div><div class="title">CMU 15-213 Intro to Computer Systems Lecture 2</div></div></a></div></div></div><hr/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div><div id="comment-switch"><span class="first-comment">Valine</span><span class="switch-btn"></span><span class="second-comment">Livere</span></div></div><div class="comment-wrap"><div><div class="vcomment" id="vcomment"></div></div><div><div id="lv-container" data-id="city" data-uid="MTAyMC8zNDcxOS8xMTI1Ng=="></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="card-info-avatar is-center"><img class="avatar-img" src= "/img/loading.gif" data-lazy-src="https://github.com/Doraemonzzz/md-photo/blob/master/%E5%A4%B4%E5%83%8F.jpg?raw=true" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/><div class="author-info__name">Doraemonzzz</div><div class="author-info__description">个人博客，主要记录有关机器学习，数学以及计算机科学的笔记</div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">667</div></a></div><div class="card-info-data-item is-center"><a href="/tags/"><div class="headline">标签</div><div class="length-num">68</div></a></div><div class="card-info-data-item is-center"><a href="/categories/"><div class="headline">分类</div><div class="length-num">26</div></a></div></div><a class="button--animated" id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/Doraemonzzz"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/Doraemonzzz" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="/doraemon_zzz@163.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a><a class="social-icon" href="https://space.bilibili.com/291079982" target="_blank" title="Bilibili"><i class="iconfont icon-bilibili"></i></a><a class="social-icon" href="/atom.xml" target="_blank" title=""><i class="fa fa-rss"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn card-announcement-animation"></i><span>公告</span></div><div class="announcement_content">暂无公告</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Lecture-23"><span class="toc-number">1.</span> <span class="toc-text">Lecture 23</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B%E5%BE%88%E5%9B%B0%E9%9A%BE"><span class="toc-number">1.1.</span> <span class="toc-text">并发编程很困难</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BF%AD%E4%BB%A3%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%9A%84%E5%9F%BA%E6%9C%AC%E6%B5%81"><span class="toc-number">1.2.</span> <span class="toc-text">迭代服务器的基本流</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9F%BA%E4%BA%8E%E8%BF%9B%E7%A8%8B"><span class="toc-number">1.3.</span> <span class="toc-text">基于进程</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BC%98%E7%BC%BA%E7%82%B9"><span class="toc-number">1.3.1.</span> <span class="toc-text">优缺点</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9F%BA%E4%BA%8E%E4%BA%8B%E4%BB%B6"><span class="toc-number">1.4.</span> <span class="toc-text">基于事件</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BC%98%E7%BC%BA%E7%82%B9-1"><span class="toc-number">1.4.1.</span> <span class="toc-text">优缺点</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9F%BA%E4%BA%8E%E8%BF%9B%E7%A8%8B-1"><span class="toc-number">1.5.</span> <span class="toc-text">基于进程</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%BA%BF%E7%A8%8B%E7%9A%84%E9%80%BB%E8%BE%91%E8%A7%86%E8%A7%92"><span class="toc-number">1.5.1.</span> <span class="toc-text">线程的逻辑视角</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%BA%BF%E7%A8%8B-VS-%E8%BF%9B%E7%A8%8B"><span class="toc-number">1.5.2.</span> <span class="toc-text">线程 VS 进程</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BC%98%E7%BC%BA%E7%82%B9-2"><span class="toc-number">1.5.3.</span> <span class="toc-text">优缺点</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Lecture-24"><span class="toc-number">2.</span> <span class="toc-text">Lecture 24</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Lecture-25"><span class="toc-number">3.</span> <span class="toc-text">Lecture 25</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Lecture-26"><span class="toc-number">4.</span> <span class="toc-text">Lecture 26</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%B2%E8%A1%8C%E5%BF%AB%E6%8E%92"><span class="toc-number">4.1.</span> <span class="toc-text">串行快排</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%B8%B2%E8%A1%8C%E5%BF%AB%E6%8E%92%E4%BC%AA%E4%BB%A3%E7%A0%81"><span class="toc-number">4.1.1.</span> <span class="toc-text">串行快排伪代码</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%B8%B2%E8%A1%8C%E5%BF%AB%E6%8E%92%E5%8F%AF%E8%A7%86%E5%8C%96"><span class="toc-number">4.1.2.</span> <span class="toc-text">串行快排可视化</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B9%B6%E8%A1%8C%E5%BF%AB%E6%8E%92"><span class="toc-number">4.2.</span> <span class="toc-text">并行快排</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%B9%B6%E8%A1%8C%E5%BF%AB%E6%8E%92%E4%BC%AA%E4%BB%A3%E7%A0%81"><span class="toc-number">4.2.1.</span> <span class="toc-text">并行快排伪代码</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%B9%B6%E8%A1%8C%E5%BF%AB%E6%8E%92%E5%8F%AF%E8%A7%86%E5%8C%96"><span class="toc-number">4.2.2.</span> <span class="toc-text">并行快排可视化</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B0%8F%E7%BB%93"><span class="toc-number">4.3.</span> <span class="toc-text">小结</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AD%98%E5%82%A8%E4%B8%80%E8%87%B4%E6%80%A7"><span class="toc-number">4.4.</span> <span class="toc-text">存储一致性</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%94%A8%E7%8A%B6%E6%80%81%E6%A0%87%E8%AE%B0%E6%AF%8F%E4%B8%AA%E7%BC%93%E5%AD%98%E5%9D%97"><span class="toc-number">4.5.</span> <span class="toc-text">用状态标记每个缓存块</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2021/10/24/2021-10-24-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E7%AC%AC12%E7%AB%A0-%E7%AC%94%E8%AE%B0%E6%95%B4%E7%90%86/" title="深入理解计算机系统 第12章 笔记整理"><img src= "/img/loading.gif" data-lazy-src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="深入理解计算机系统 第12章 笔记整理"/></a><div class="content"><a class="title" href="/2021/10/24/2021-10-24-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E7%AC%AC12%E7%AB%A0-%E7%AC%94%E8%AE%B0%E6%95%B4%E7%90%86/" title="深入理解计算机系统 第12章 笔记整理">深入理解计算机系统 第12章 笔记整理</a><time datetime="2021-10-24T02:40:00.000Z" title="发表于 2021-10-24 10:40:00">2021-10-24</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/10/17/2021-10-17-CMU-15-213-Intro-to-Computer-Systems-Lecture-23-to-Lecture-24/" title="CMU 15-213 Intro to Computer Systems Lecture 23 to Lecture 24"><img src= "/img/loading.gif" data-lazy-src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="CMU 15-213 Intro to Computer Systems Lecture 23 to Lecture 24"/></a><div class="content"><a class="title" href="/2021/10/17/2021-10-17-CMU-15-213-Intro-to-Computer-Systems-Lecture-23-to-Lecture-24/" title="CMU 15-213 Intro to Computer Systems Lecture 23 to Lecture 24">CMU 15-213 Intro to Computer Systems Lecture 23 to Lecture 24</a><time datetime="2021-10-17T09:41:00.000Z" title="发表于 2021-10-17 17:41:00">2021-10-17</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/10/16/2021-10-16-CMU-15-213-Intro-to-Computer-Systems-Lecture-21-to-Lecture-22/" title="CMU 15-213 Intro to Computer Systems Lecture 21 to Lecture 22"><img src= "/img/loading.gif" data-lazy-src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="CMU 15-213 Intro to Computer Systems Lecture 21 to Lecture 22"/></a><div class="content"><a class="title" href="/2021/10/16/2021-10-16-CMU-15-213-Intro-to-Computer-Systems-Lecture-21-to-Lecture-22/" title="CMU 15-213 Intro to Computer Systems Lecture 21 to Lecture 22">CMU 15-213 Intro to Computer Systems Lecture 21 to Lecture 22</a><time datetime="2021-10-16T08:04:00.000Z" title="发表于 2021-10-16 16:04:00">2021-10-16</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/10/15/2021-10-15-CMU-15-213-Intro-to-Computer-Systems-Lecture-18-to-Lecture-20/" title="CMU 15-213 Intro to Computer Systems Lecture 18 to Lecture 20"><img src= "/img/loading.gif" data-lazy-src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="CMU 15-213 Intro to Computer Systems Lecture 18 to Lecture 20"/></a><div class="content"><a class="title" href="/2021/10/15/2021-10-15-CMU-15-213-Intro-to-Computer-Systems-Lecture-18-to-Lecture-20/" title="CMU 15-213 Intro to Computer Systems Lecture 18 to Lecture 20">CMU 15-213 Intro to Computer Systems Lecture 18 to Lecture 20</a><time datetime="2021-10-15T14:55:00.000Z" title="发表于 2021-10-15 22:55:00">2021-10-15</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/09/22/2021-9-22-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E7%AC%AC11%E7%AB%A0-%E4%B9%A0%E9%A2%98%E8%A7%A3%E6%9E%90/" title="深入理解计算机系统 第11章 习题解析"><img src= "/img/loading.gif" data-lazy-src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="深入理解计算机系统 第11章 习题解析"/></a><div class="content"><a class="title" href="/2021/09/22/2021-9-22-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E7%AC%AC11%E7%AB%A0-%E4%B9%A0%E9%A2%98%E8%A7%A3%E6%9E%90/" title="深入理解计算机系统 第11章 习题解析">深入理解计算机系统 第11章 习题解析</a><time datetime="2021-09-22T15:10:00.000Z" title="发表于 2021-09-22 23:10:00">2021-09-22</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2018 - 2021 By Doraemonzzz</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="font-plus" type="button" title="放大字体"><i class="fas fa-plus"></i></button><button id="font-minus" type="button" title="缩小字体"><i class="fas fa-minus"></i></button><button id="translateLink" type="button" title="简繁转换">简</button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div id="local-search"><div class="search-dialog"><div class="search-dialog__title" id="local-search-title">本地搜索</div><div id="local-input-panel"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div></div><hr/><div id="local-search-results"></div><span class="search-close-button"><i class="fas fa-times"></i></span></div><div id="search-mask"></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="/js/tw_cn.js"></script><script src="https://cdn.jsdelivr.net/npm/vanilla-lazyload/dist/lazyload.iife.min.js"></script><script src="/js/search/local-search.js"></script><script>var preloader = {
+  endLoading: () => {
+    document.body.style.overflow = 'auto';
+    document.getElementById('loading-box').classList.add("loaded")
+  },
+  initLoading: () => {
+    document.body.style.overflow = '';
+    document.getElementById('loading-box').classList.remove("loaded")
+
+  }
+}
+window.addEventListener('load',preloader.endLoading())</script><div class="js-pjax"><script>if (!window.MathJax) {
+  window.MathJax = {
+    tex: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]],
+      tags: 'ams'
+    },
+    chtml: {
+      scale: 1.25
+    },
+    options: {
+      renderActions: {
+        findScript: [10, doc => {
+          for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+            const display = !!node.type.match(/; *mode=display/)
+            const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+            const text = document.createTextNode('')
+            node.parentNode.replaceChild(text, node)
+            math.start = {node: text, delim: '', n: 0}
+            math.end = {node: text, delim: '', n: 0}
+            doc.math.push(math)
+          }
+        }, '']
+      }
+    }
+  }
+  
+  const script = document.createElement('script')
+  script.src = 'https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js'
+  script.id = 'MathJax-script'
+  script.async = true
+  document.head.appendChild(script)
+} else {
+  MathJax.startup.document.state(0)
+  MathJax.texReset()
+  MathJax.typeset()
+}</script><script>function loadValine () {
+  function initValine () {
+    const valine = new Valine(Object.assign({
+      el: '#vcomment',
+      appId: 'IpnmxCW9CvYWIXbol5QXsegX-MdYXbMMI',
+      appKey: 'w57DVCdbxcyB1TYYagMIMJIU',
+      placeholder: 'Please leave your footprints',
+      avatar: 'monsterid',
+      meta: 'nick,mail,link'.split(','),
+      pageSize: '10',
+      lang: 'en',
+      recordIP: false,
+      serverURLs: '',
+      emojiCDN: '',
+      emojiMaps: "",
+      enableQQ: false,
+      path: window.location.pathname,
+      requiredFields: ["nick,mail"],
+      visitor: true
+    }, null))
+  }
+
+  if (typeof Valine === 'function') initValine() 
+  else getScript('https://cdn.jsdelivr.net/npm/valine/dist/Valine.min.js').then(initValine)
+}
+
+if ('Valine' === 'Valine' || !false) {
+  if (false) btf.loadComment(document.getElementById('vcomment'),loadValine)
+  else setTimeout(loadValine, 0)
+} else {
+  function loadOtherComment () {
+    loadValine()
+  }
+}</script><script>function loadLivere () {
+  if (typeof LivereTower === 'object') {
+    window.LivereTower.init()
+  }
+  else {
+    (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+    })(document, 'script');
+  }
+}
+
+if ('Valine' === 'Livere' || !false) {
+  if (false) btf.loadComment(document.getElementById('lv-container'), loadLivere)
+  else loadLivere()
+}
+else {
+  function loadOtherComment () {
+    loadLivere()
+  }
+}</script></div><script defer="defer" id="fluttering_ribbon" mobile="false" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/canvas-fluttering-ribbon.min.js"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
