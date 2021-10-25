@@ -1,0 +1,519 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Hybrid Random Features：利用Bagging的思路降低Kernel法的误差 | Doraemonzzz</title><meta name="keywords" content="transformer优化,attention"><meta name="author" content="Doraemonzzz"><meta name="copyright" content="Doraemonzzz"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="论文地址： Hybrid Random Features">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Hybrid Random Features：利用Bagging的思路降低Kernel法的误差">
+<meta property="og:url" content="http://www.doraemonzzz.com/2021/10/24/2021-10-24-Hybrid-Random-Features%EF%BC%9A%E5%88%A9%E7%94%A8Bagging%E7%9A%84%E6%80%9D%E8%B7%AF%E9%99%8D%E4%BD%8EKernel%E6%B3%95%E7%9A%84%E8%AF%AF%E5%B7%AE/index.html">
+<meta property="og:site_name" content="Doraemonzzz">
+<meta property="og:description" content="论文地址： Hybrid Random Features">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg">
+<meta property="article:published_time" content="2021-10-24T07:40:00.000Z">
+<meta property="article:modified_time" content="2021-10-25T15:37:50.213Z">
+<meta property="article:author" content="Doraemonzzz">
+<meta property="article:tag" content="transformer优化">
+<meta property="article:tag" content="attention">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg"><link rel="shortcut icon" href="https://github.com/Doraemonzzz/md-photo/blob/master/%E5%A4%B4%E5%83%8F.jpg?raw=true"><link rel="canonical" href="http://www.doraemonzzz.com/2021/10/24/2021-10-24-Hybrid-Random-Features%EF%BC%9A%E5%88%A9%E7%94%A8Bagging%E7%9A%84%E6%80%9D%E8%B7%AF%E9%99%8D%E4%BD%8EKernel%E6%B3%95%E7%9A%84%E8%AF%AF%E5%B7%AE/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//www.google-analytics.com" crossorigin=""/><link rel="preconnect" href="//hm.baidu.com"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><script>var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?6f00f37f957f0608abb8c571105456f0";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script><script async="async" src="https://www.googletagmanager.com/gtag/js?id=UA-G-RE4B1LKRZD"></script><script>window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'UA-G-RE4B1LKRZD');
+</script><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"search.xml","languages":{"hits_empty":"找不到您查询的内容：${query}"}},
+  translate: {"defaultEncoding":2,"translateDelay":0,"msgToTraditionalChinese":"繁","msgToSimplifiedChinese":"簡"},
+  noticeOutdate: {"limitDay":500,"position":"top","messagePrev":"距离上次更新已经","messageNext":"天了，文章内容可能已经过时。"},
+  highlight: {"plugin":"prismjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":200},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    jQuery: 'https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js',
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+    },
+    fancybox: {
+      js: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css'
+    }
+  },
+  isPhotoFigcaption: true,
+  islazyload: true,
+  isanchor: true
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'Hybrid Random Features：利用Bagging的思路降低Kernel法的误差',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2021-10-25 23:37:50'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const fontSizeVal = saveToLocal.get('global-font-size')
+    if (fontSizeVal !== undefined) {
+      document.documentElement.style.setProperty('--global-font-size', fontSizeVal + 'px')
+    }
+    })(window)</script><link rel="stylesheet" href="/css/bilibili.css" media="defer" onload="this.media='all'"><meta name="google-site-verification" content="c4v-NmuUZRgl3cvtg9GKswryK1YLaPztd_5M-df5VNI" /><meta name="generator" content="Hexo 5.4.0"><link rel="alternate" href="/atom.xml" title="Doraemonzzz" type="application/atom+xml">
+</head><body><div id="loading-box"><div class="loading-left-bg"></div><div class="loading-right-bg"></div><div class="spinner-box"><div class="configure-border-1"><div class="configure-core"></div></div><div class="configure-border-2"><div class="configure-core"></div></div><div class="loading-word">加载中...</div></div></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="author-avatar"><img class="avatar-img" src= "/img/loading.gif" data-lazy-src="https://github.com/Doraemonzzz/md-photo/blob/master/%E5%A4%B4%E5%83%8F.jpg?raw=true" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">文章</div><div class="length-num">669</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">标签</div><div class="length-num">69</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/categories/"><div class="headline">分类</div><div class="length-num">27</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-chart-pie"></i><span> 博客统计</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/charts/"><i class="fa-fw far fa-chart-bar"></i><span> 文章统计</span></a></li><li><a class="site-page child" href="/census/"><i class="fa-fw fas fa-chart-area"></i><span> 访问统计</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/top/"><i class="fa-fw fab fa-hotjar"></i><span> 阅读排行榜</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fa fa-heartbeat"></i><span> 娱乐</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于我</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">Doraemonzzz</a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-chart-pie"></i><span> 博客统计</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/charts/"><i class="fa-fw far fa-chart-bar"></i><span> 文章统计</span></a></li><li><a class="site-page child" href="/census/"><i class="fa-fw fas fa-chart-area"></i><span> 访问统计</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/top/"><i class="fa-fw fab fa-hotjar"></i><span> 阅读排行榜</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fa fa-heartbeat"></i><span> 娱乐</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于我</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">Hybrid Random Features：利用Bagging的思路降低Kernel法的误差</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2021-10-24T07:40:00.000Z" title="发表于 2021-10-24 15:40:00">2021-10-24</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2021-10-25T15:37:50.213Z" title="更新于 2021-10-25 23:37:50">2021-10-25</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/">深度学习</a><i class="fas fa-angle-right post-meta-separator"></i><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E8%AE%BA%E6%96%87%E8%A7%A3%E8%AF%BB/">论文解读</a></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-tag"></i><a class="article-meta__tags" href="/tags/transformer%E4%BC%98%E5%8C%96/">transformer优化</a><span class="article-meta__link">•</span><a class="article-meta__tags" href="/tags/attention/">attention</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">2.7k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>12分钟</span></span><span class="post-meta-separator">|</span><span class="leancloud_visitors" id="/2021/10/24/2021-10-24-Hybrid-Random-Features%EF%BC%9A%E5%88%A9%E7%94%A8Bagging%E7%9A%84%E6%80%9D%E8%B7%AF%E9%99%8D%E4%BD%8EKernel%E6%B3%95%E7%9A%84%E8%AF%AF%E5%B7%AE/" data-flag-title="Hybrid Random Features：利用Bagging的思路降低Kernel法的误差"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span class="leancloud-visitors-count"></span></span><span class="post-meta-separator">|</span><span class="post-meta-commentcount"><i class="far fa-comments fa-fw post-meta-icon"></i><span class="post-meta-label">评论数:</span><a href="/2021/10/24/2021-10-24-Hybrid-Random-Features%EF%BC%9A%E5%88%A9%E7%94%A8Bagging%E7%9A%84%E6%80%9D%E8%B7%AF%E9%99%8D%E4%BD%8EKernel%E6%B3%95%E7%9A%84%E8%AF%AF%E5%B7%AE/#post-comment" itemprop="discussionUrl"><span class="valine-comment-count" data-xid="/2021/10/24/2021-10-24-Hybrid-Random-Features%EF%BC%9A%E5%88%A9%E7%94%A8Bagging%E7%9A%84%E6%80%9D%E8%B7%AF%E9%99%8D%E4%BD%8EKernel%E6%B3%95%E7%9A%84%E8%AF%AF%E5%B7%AE/" itemprop="commentCount"></span></a></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p>论文地址：</p>
+<p><a target="_blank" rel="noopener" href="https://arxiv.org/abs/2110.04367">Hybrid Random Features</a></p>
+<span id="more"></span>
+<h1 id="说明"><a href="#说明" class="headerlink" title="说明"></a>说明</h1><p>由于工作的原因平时要看不少论文，加上经常看苏神对论文的解析，所以决定自己也开始写论文解析，每篇解析主要分为以下几个部分：</p>
+<ul>
+<li>论文的整体思想概述；</li>
+<li>背景知识（可选）；</li>
+<li>论文的主体思想，忽略不必要的细节；</li>
+<li>对该方法的分析和讨论（可选）；</li>
+</ul>
+<h1 id="整体概述"><a href="#整体概述" class="headerlink" title="整体概述"></a>整体概述</h1><p>Hybrid Random Features是<a target="_blank" rel="noopener" href="https://arxiv.org/abs/2009.14794">Rethinking Attention with Performers</a>的续作，其主要思想是：</p>
+<p><strong>基于蒙特卡洛的Kernel法对Softmax的近似是有误差的，利用Bagging可以减少这个误差。</strong></p>
+<h1 id="背景知识"><a href="#背景知识" class="headerlink" title="背景知识"></a>背景知识</h1><p>这部分对所需要的背景知识进行介绍。</p>
+<h2 id="Attention回顾"><a href="#Attention回顾" class="headerlink" title="Attention回顾"></a>Attention回顾</h2><p>首先回顾attention的核心计算公式：</p>
+<p>输入：</p>
+<script type="math/tex; mode=display">
+Q\in \mathbb R^{n\times d},K \in \mathbb R^{n\times d} ,V \in \mathbb R^{n\times d}</script><p>输出：</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+O&= \mathrm{SoftMax}\left(Q K^\top \right) V
+
+\end{aligned}</script><p>备注：</p>
+<ul>
+<li>为了方便讨论，这里忽略了多头的部分；</li>
+<li>SoftMax部分没有除以$\sqrt{d_1}$；</li>
+<li>只考虑SelfAttention的情形；</li>
+</ul>
+<p>时间复杂度分析：</p>
+<ul>
+<li>$Q K^\top :(n, d) ,(d , n) \to (n, n)  $<ul>
+<li>时间复杂度为$O(n^2d)$</li>
+</ul>
+</li>
+<li>$\mathrm{SoftMax}\left(Q K^\top \right) : (n, n) \to  (n, n)$<ul>
+<li>时间复杂度为$O(n^2)$</li>
+</ul>
+</li>
+<li>$\mathrm{SoftMax}\left(Q K^\top \right) V : (n, n), (n, d)\to (n, d)$<ul>
+<li>时间复杂度为$O(n^2 d)$</li>
+</ul>
+</li>
+<li>总时间复杂度为：<ul>
+<li>$O(n^2 d)$</li>
+</ul>
+</li>
+</ul>
+<p>可以看到，关于序列长度的二次复杂度成为速度的主要瓶颈，所以一个主要问题就是如何解决这点。</p>
+<h2 id="左乘变右乘"><a href="#左乘变右乘" class="headerlink" title="左乘变右乘"></a>左乘变右乘</h2><p>现在换个计算方式，假设利用映射$f$将$Q,K$变换为：</p>
+<script type="math/tex; mode=display">
+Q \overset \phi\to Q_1 \in \mathbb R^{n\times d_1}, K\overset \phi \to K_1 \in \mathbb R^{n\times d_1}</script><p>然后在该变换下，有下式成立：</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+O&= \mathrm{SoftMax}\left(Q K^\top \right) V \\
+& \approx M Q_1 K_1 ^{\top} V\\
+&=M (Q_1 (K_1^{\top} V))
+\end{aligned}</script><p>其中</p>
+<script type="math/tex; mode=display">
+M= \mathrm{diag}\left( 1_n^{\top} Q_1 K_1^T\right)^{-1} \in \mathbb R^{n\times n}</script><p>为归一化矩阵，类似于SoftMax中的分母部分，注意该矩阵为对角矩阵。</p>
+<p>那么此时的时间复杂度为：</p>
+<ul>
+<li>$ K_1^\top  V:(d_1 , n), (n, d_1) \to (d_1, d_1)  $<ul>
+<li>时间复杂度为$O(d_1^2n)$</li>
+</ul>
+</li>
+<li>$(Q_1 (K_1^{\top} V)) : (n, d_1), (d_1, d_1) \to  (n, d_1)$<ul>
+<li>时间复杂度为$O(d_1^2 n)$</li>
+</ul>
+</li>
+<li>$ 1_n^{\top} Q_1  : (1,n),(n, d_1)\to (1, d_1)$<ul>
+<li>时间复杂度为$O(d_1 n)$</li>
+</ul>
+</li>
+<li>$ 1_n^{\top} Q_1 K_1^{\top}  : (1, d_1),(d_1, n)\to (1,n)$<ul>
+<li>时间复杂度为$O(d_1 n)$</li>
+</ul>
+</li>
+<li>$M (Q_1 (K_1^{\top} V)): (n,n), (n, d_1)\to (n,d_1)$<ul>
+<li>注意尽管$M$为对角矩阵，所以该操作只要对$(Q_1 (K_1^{\top} V))$的第$i$行乘以$M_{ii}$即可，从而时间复杂度为$O(d_1n)$</li>
+</ul>
+</li>
+<li>总时间复杂度为：<ul>
+<li>$O(d_1^2 n)$</li>
+</ul>
+</li>
+</ul>
+<p>所以，利用该方法可以将关于序列长度的二次复杂度降低到一次，所以问题的关键是选择怎样的映射$\phi$。</p>
+<p>注意到如果</p>
+<script type="math/tex; mode=display">
+\begin{equation}
+\phi(Q)^{\top} \phi(K) =Q_1^{\top} K_1\approx  \exp\left(Q^{\top } K \right) 
+\tag 1
+\end{equation}</script><p>那么显然就有</p>
+<script type="math/tex; mode=display">
+M (Q_1 (K_1^{\top} V)) \approx \mathrm{SoftMax}\left(Q K^\top \right) V</script><p>所以一个常见的思路就是找到$f$，使得公式(1)成立。</p>
+<p>备注：这种方法也被称为<strong>Kernel法</strong>。</p>
+<h2 id="Performer"><a href="#Performer" class="headerlink" title="Performer"></a>Performer</h2><p>Performer的思路就是基于公式(1)，其选择的映射为：</p>
+<script type="math/tex; mode=display">
+\phi(u) = \frac{1}{\sqrt{2 m}} \exp \left(-\frac{\|{u}\|^{2}}{2}\right)\left(\exp \left(\omega_{1}^{\top} {u}\right), \ldots, \exp \left(\omega_{m}^{\top} {u}\right), \exp \left(-\omega_{1}^{\top} {u}\right), \ldots, \exp \left(-\omega_{m}^{\top} {u}\right)\right)^{\top}</script><p>其中$w_i\sim \mathcal N(0, I_d)$，为iid的多维标准正态分布。</p>
+<p>在该论文中，作者证明了<strong>无偏估计性</strong></p>
+<script type="math/tex; mode=display">
+\mathbb E_{w\sim\mathcal N(0, I_d)} \left[\phi(Q)^{\top}\phi(K) \right] =\exp\left( Q^{\top } K\right)  \tag 2</script><p>所以利用蒙特卡洛的思想，可以选择适当的$m$，那么就有</p>
+<script type="math/tex; mode=display">
+\phi(Q)^{\top} \phi(K)  \approx \exp\left( Q^{\top } K\right)</script><p>该方法的一个问题是，由于是蒙特卡洛模拟，所以必然有误差，因此一个核心的问题是如何减少<strong>误差</strong>，原始论文中给出一个方法，在Hybrid Random Features中作者又给出另一个方法——即Bagging。</p>
+<h1 id="主体思想"><a href="#主体思想" class="headerlink" title="主体思想"></a>主体思想</h1><h2 id="三个核心点"><a href="#三个核心点" class="headerlink" title="三个核心点"></a>三个核心点</h2><p>这篇论文有三个核心点：</p>
+<ul>
+<li>Bagging后依然是无偏估计；</li>
+<li>Bagging后的结果依然可以用内积表示；</li>
+<li>Bagging后的结果某种程度上的误差要降低；</li>
+</ul>
+<h2 id="细节"><a href="#细节" class="headerlink" title="细节"></a>细节</h2><h3 id="无偏估计"><a href="#无偏估计" class="headerlink" title="无偏估计"></a>无偏估计</h3><p>由于是使用Bagging的思路，所以必然是许多映射的集成，假设基映射$\mathrm{SM}_k$为</p>
+<script type="math/tex; mode=display">
+\mathrm{SM}_k: \mathbb R^{d} \times \mathbb R^{d} \to \mathbb R, i=1,\ldots ,p+1</script><p>Bagging的映射为</p>
+<script type="math/tex; mode=display">
+\begin{equation}
+
+{\mathrm{ SM}}(x,y) = \sum_{k=1}^p \lambda_k (x,y) \mathrm{SM}_k (x,y)
++ \left(1-  \sum_{k=1}^p  \lambda_k (x,y)\right) \mathrm{SM}_{p+1} (x,y)
+
+\end{equation}</script><p>其中$\lambda_k(x,y)$为系数，形式如下</p>
+<script type="math/tex; mode=display">
+\lambda_k: \mathbb R^{d} \times \mathbb R^{d} \to \mathbb R, k=1,\ldots ,p+1</script><p>现在假设$\mathrm{SM}_k (x,y)$可以写成内积的期望（无偏估计），即</p>
+<script type="math/tex; mode=display">
+\mathrm{SM}_k (x,y) 
+=\mathbb E_{w \sim \mathcal D} \left[\phi_k (x)^{\top} \phi_k (y) \right]
+\tag 3</script><p>记</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+\widehat {\mathrm{SM}}_i (x,y) &= \phi_i (x)^{\top} \phi_i (y) \\
+{\mathrm{SM}_1}(x,y) &=  \sum_{k=1}^p \lambda_k (x,y)\widehat {\mathrm{SM}}_k (x,y)
++ \left(1-  \sum_{k=1}^p  \lambda_k (x,y)\right)\widehat {\mathrm{SM}}_{p+1} (x,y)
+\end{aligned} \tag 4</script><p>那么</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+\mathbb E_{w\sim \mathcal D}[{\mathrm{SM}_1}(x,y)]
+&=  \sum_{k=1}^p \lambda_k (x,y)\mathbb E_{w\sim \mathcal D}
+\left[\widehat {\mathrm{SM}}_k (x,y) \right]
++ \left(1-  \sum_{k=1}^p  \lambda_k (x,y)\right)\mathbb E_{w\sim \mathcal D}\left[\widehat {\mathrm{SM}}_{p+1} (x,y)\right]\\
+&\overset{(3),(4)} = \sum_{k=1}^p \lambda_k (x,y) \mathrm{SM}_k (x,y)
++ \left(1-  \sum_{k=1}^p  \lambda_k (x,y)\right) \mathrm{SM}_{p+1} (x,y)\\
+&={\mathrm{ SM}}(x,y)
+
+\end{aligned}</script><p>因此${\mathrm{SM}_1}(x,y)$是$\mathrm {SM}(x,y)$的无偏估计。</p>
+<h3 id="内积表示"><a href="#内积表示" class="headerlink" title="内积表示"></a>内积表示</h3><p>现在无偏性解决了，那么问题就来到是否可以用内积表示？对于一些特殊的$\lambda_k$，这点是可以满足的，比如</p>
+<script type="math/tex; mode=display">
+\lambda_k (x,y) =\frac{1}{p+1} ,k=1,\ldots, p</script><p>那么此时</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+\Phi(x)&\triangleq\frac{1}{\sqrt{p+1}}[\phi_1(x)^{\top}, \phi_2(x)^{\top},\ldots, \phi_{p+1}(x)^{\top}]^{\top} \\
+\Phi(x)^{\top} \Phi(y)
+&= \frac 1 {p+1}\sum_{k=1}^{p+1} \phi_k(x)^{\top } \phi_k(y)\\
+&= {\mathrm{SM}_1}(x,y)
+\end{aligned}</script><p>这个例子显然太特殊了，在论文中作者给出了一个充分条件（这里忽略了常数）：</p>
+<script type="math/tex; mode=display">
+\lambda_k(x,y) =\mathbb E_{w'\sim \mathcal D'} \left[\xi_k (x)^{\top} \eta_k(y) \right] \tag 5</script><p>记</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+\widehat \lambda_k(x,y) &= \xi_k (x)^{\top} \eta_k(y) \\
+\widehat{\mathrm{SM}}(x,y) &=  \sum_{k=1}^p \widehat \lambda_k(x,y)\widehat {\mathrm{SM}}_k(x,y)
++ \left(1-  \sum_{k=1}^p  \widehat \lambda_k(x,y)\right)\widehat {\mathrm{SM}}_{p+1} (x,y)
+\end{aligned} \tag 6</script><p>那么</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+\mathbb E_{w\sim \mathcal D,w'\sim \mathcal D'}[\widehat{ \mathrm{SM}}(x,y)]
+&=  \sum_{k=1}^p \mathbb E_{w'\sim \mathcal D'}
+\left[\widehat \lambda_k(x,y) \right]
+\mathbb E_{w\sim \mathcal D}
+\left[\widehat {\mathrm{SM}}_k (x,y) \right]
++ \left(1-   \sum_{k=1}^p \mathbb E_{w'\sim \mathcal D'}
+\left[\widehat \lambda_k(x,y) \right]\right)\mathbb E_{w\sim \mathcal D}\left[\widehat {\mathrm{SM}}_{p+1} (x,y)\right]\\
+&\overset{(3)\sim(6)} = \sum_{k=1}^p \lambda_k (x,y) \mathrm{SM}_k (x,y)
++ \left(1-  \sum_{k=1}^p  \lambda_k (x,y)\right) \mathrm{SM}_{p+1} (x,y)\\
+&={\mathrm{ SM}}(x,y)
+
+\end{aligned}</script><p>所以这种情形依然保持了无偏估计的特性，下一步只要说明可以用内积表示即可，证明分为两步：</p>
+<ul>
+<li>第一步，证明$\widehat \lambda_k(x,y)\widehat {\mathrm{SM}}_k(x,y)$可以用内积表示；</li>
+<li>第二步，证明$\widehat{\mathrm{SM}}(x,y)$可以用内积表示；</li>
+</ul>
+<h4 id="第一步"><a href="#第一步" class="headerlink" title="第一步"></a>第一步</h4><p>这里通过两个引理的方式给出证明。</p>
+<h5 id="引理1"><a href="#引理1" class="headerlink" title="引理1"></a>引理1</h5><p>假设$A,B\in \mathbb R^{m\times n}$，那么存在映射</p>
+<script type="math/tex; mode=display">
+f: \mathbb R^{m\times n} \to \mathbb R^{l}</script><p>满足</p>
+<script type="math/tex; mode=display">
+f(A)^{\top} f(B)=\mathrm{trace}\left(B^{\top} A\right)</script><p>证明：</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+\mathrm{trace}\left(B^{T} A\right)
+&= \sum_{i=1}^m \sum_{j=1}^n B_{ij} A_{ij}
+\end{aligned}</script><p>那么</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+l &=mn\\
+f(A)_i &= A_{[i/m] [i\%m]}
+\end{aligned}</script><p>即$f$是将$A$按行拼接为一个长向量。</p>
+<h5 id="引理2"><a href="#引理2" class="headerlink" title="引理2"></a>引理2</h5><p>对于映射</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+\eta_i :\mathbb R^{d} &\to \mathbb R^{d_1}, i =1,2\\
+
+\phi_i :\mathbb R^{d} &\to \mathbb R^{d_2}, i =1,2
+\end{aligned}</script><p>存在映射</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+\psi_i :\mathbb R^{d} &\to \mathbb R^{d_3}, i =1,2
+\end{aligned}</script><p>满足</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+\left(\eta_1(x)^\top \eta_2(y) \right)\left( \phi_1 (x)^\top \phi_2(y) \right)
+&=\psi_1(x)^\top \psi_2(y)
+\end{aligned}</script><p>证明：</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+\left(\eta_1(x)^\top \eta_2(y) \right)\left( \phi_1 (x)^\top \phi_2(y) \right)
+&=\left(\eta_1(y)^\top \eta_2(x) \right)\left( \phi_1 (x)^\top \phi_2(y) \right)\\
+&=\mathrm{Trace} \left(\eta_1(y)^\top \eta_2(x) \phi_1 (x)^\top \phi_2(y) \right)\\
+&= \mathrm{Trace} \left( \left(\phi_2(y)\eta_1(y)^\top\right) \left(\eta_2(x) \phi_1 (x)^\top \right) \right) \\
+&\overset{引理1}= f(x)^\top f(y)
+\end{aligned}</script><h5 id="完整证明"><a href="#完整证明" class="headerlink" title="完整证明"></a>完整证明</h5><p>注意到</p>
+<script type="math/tex; mode=display">
+\widehat \lambda_k(x,y)\widehat {\mathrm{SM}}_k(x,y) = \xi_k (x)^{\top} \eta_k(y) \phi_k(x)^{\top} \phi_k (y)</script><p>所以根据引理2，存在$f_k$，使得</p>
+<script type="math/tex; mode=display">
+\widehat \lambda_k(x,y)\widehat {\mathrm{SM}}_k(x,y) = f_k(x)^{\top} f_k(y) \tag 7</script><h4 id="第二步"><a href="#第二步" class="headerlink" title="第二步"></a>第二步</h4><p>根据(7)，我们有</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+\widehat{\mathrm{SM}}(x,y) 
+&=  \sum_{k=1}^p \widehat \lambda_k(x,y)\widehat {\mathrm{SM}}_k(x,y)
++ \left(1-  \sum_{k=1}^p  \widehat \lambda_k(x,y)\right)\widehat {\mathrm{SM}}_{p+1} (x,y)\\
+ &= \sum_{k=1}^p \widehat \lambda_k(x,y)\widehat {\mathrm{SM}}_k(x,y)-\sum_{k=1}^p  \widehat \lambda_k(x,y)\widehat {\mathrm{SM}}_{p+1} (x,y) +  \widehat {\mathrm{SM}}_{p+1} (x,y)\\
+&= \sum_{k=1}^p f_k(x)^{\top} f_k(y) -
+ \sum_{k=1}^p   f_{k,p+1}(x)^{\top}f_{k,p+1}(y)  +  \phi_{p+1} (x)^{\top} \phi_{p+1} (y)
+\end{aligned}</script><p>记</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+\Psi(x)&=[f_1(x)^{\top},\ldots,f_p(x)^{\top},if_{1,p+1}(x)^{\top},\ldots,if_{p,p+1}(x)^{\top}, \phi_{p+1}(x)^{\top}]^{\top}
+
+\end{aligned}</script><p>那么</p>
+<script type="math/tex; mode=display">
+\widehat{\mathrm{SM}}(x,y)  = \Psi(x)^{\top} \Psi(y)</script><p>其中</p>
+<script type="math/tex; mode=display">
+i^2=-1</script><h3 id="降低误差"><a href="#降低误差" class="headerlink" title="降低误差"></a>降低误差</h3><p>对于一般的情形，是很难分析出误差的，所以这里作者给了一个特殊的例子，此处$p=1$，两个基本映射为：</p>
+<script type="math/tex; mode=display">
+\begin{equation}
+\begin{aligned}
+\phi_{m}^{\mathrm{trig}}({u})&=
+\frac{1}{\sqrt{m}} \exp \left(\frac{\|{u}\|^{2}}{2}\right)\left(\sin \left(\omega_{1}^{\top} {u}\right), \ldots, \sin \left(\omega_{m}^{\top} {u}\right), \cos \left(\omega_{1}^{\top} {u}\right), \ldots, \cos \left(\omega_{m}^{\top} {u}\right)\right)^{\top}  \\
+\phi_{m}^{++}({u}) &= \frac{1}{\sqrt{2 m}} \exp \left(-\frac{\|{u}\|^{2}}{2}\right)\left(\exp \left(\omega_{1}^{\top} {u}\right), \ldots, \exp \left(\omega_{m}^{\top} {u}\right), \exp \left(-\omega_{1}^{\top} {u}\right), \ldots, \exp \left(-\omega_{m}^{\top} {u}\right)\right)^{\top}
+\end{aligned} \tag 8
+\end{equation}</script><p>相应的</p>
+<script type="math/tex; mode=display">
+\xi (z)= \eta(z) =\frac{\sqrt{2 n}}\left(\operatorname{sgn}\left(\tau_{1}^{\top} {z}\right), \ldots, \operatorname{sgn}\left(\tau_{n}^{\top} {z}\right)\right)^{\top}</script><p>其中</p>
+<script type="math/tex; mode=display">
+\tau_k \sim \mathcal N(0, I_d),k=1,\ldots, d\\
+i^2 =-1</script><p>作者证明了，在这种情形下，Bagging后方法的<strong>最大相对误差</strong>比单用$\phi_{m}^{\mathrm{trig}}$和$\phi_{m}^{++}$的最大相对误差要低，这也提供了理论保证，这部分见论文第三节。</p>
+<h1 id="分析和讨论"><a href="#分析和讨论" class="headerlink" title="分析和讨论"></a>分析和讨论</h1><p>这个方法整体来说还是比较清晰，但是作者书写的时候公式符号不太好理解，所以对阅读带来了一定的困难。</p>
+<p>还有就是$\xi,\eta$的选择似乎是凑的，不知道是否有更好的方式来选择。</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">Doraemonzzz</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="http://www.doraemonzzz.com/2021/10/24/2021-10-24-Hybrid-Random-Features%EF%BC%9A%E5%88%A9%E7%94%A8Bagging%E7%9A%84%E6%80%9D%E8%B7%AF%E9%99%8D%E4%BD%8EKernel%E6%B3%95%E7%9A%84%E8%AF%AF%E5%B7%AE/">http://www.doraemonzzz.com/2021/10/24/2021-10-24-Hybrid-Random-Features%EF%BC%9A%E5%88%A9%E7%94%A8Bagging%E7%9A%84%E6%80%9D%E8%B7%AF%E9%99%8D%E4%BD%8EKernel%E6%B3%95%E7%9A%84%E8%AF%AF%E5%B7%AE/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://www.doraemonzzz.com" target="_blank">Doraemonzzz</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/transformer%E4%BC%98%E5%8C%96/">transformer优化</a><a class="post-meta__tags" href="/tags/attention/">attention</a></div><div class="post_share"><div class="social-share" data-image="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2021/10/25/2021-10-25-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E7%AC%AC12%E7%AB%A0-%E4%B9%A0%E9%A2%98%E8%A7%A3%E6%9E%90/"><img class="prev-cover" src= "/img/loading.gif" data-lazy-src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">深入理解计算机系统 第12章 习题解析</div></div></a></div><div class="next-post pull-right"><a href="/2021/10/24/2021-10-24-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E7%AC%AC12%E7%AB%A0-%E7%AC%94%E8%AE%B0%E6%95%B4%E7%90%86/"><img class="next-cover" src= "/img/loading.gif" data-lazy-src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">深入理解计算机系统 第12章 笔记整理</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span> 相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2021/07/30/2021-7-30-关于SelfAttention时间空间复杂度的思考/" title="关于SelfAttention时间空间复杂度的思考"><img class="cover" src= "/img/loading.gif" data-lazy-src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-07-30</div><div class="title">关于SelfAttention时间空间复杂度的思考</div></div></a></div></div></div><hr/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div><div id="comment-switch"><span class="first-comment">Valine</span><span class="switch-btn"></span><span class="second-comment">Livere</span></div></div><div class="comment-wrap"><div><div class="vcomment" id="vcomment"></div></div><div><div id="lv-container" data-id="city" data-uid="MTAyMC8zNDcxOS8xMTI1Ng=="></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="card-info-avatar is-center"><img class="avatar-img" src= "/img/loading.gif" data-lazy-src="https://github.com/Doraemonzzz/md-photo/blob/master/%E5%A4%B4%E5%83%8F.jpg?raw=true" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/><div class="author-info__name">Doraemonzzz</div><div class="author-info__description">个人博客，主要记录有关机器学习，数学以及计算机科学的笔记</div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">669</div></a></div><div class="card-info-data-item is-center"><a href="/tags/"><div class="headline">标签</div><div class="length-num">69</div></a></div><div class="card-info-data-item is-center"><a href="/categories/"><div class="headline">分类</div><div class="length-num">27</div></a></div></div><a class="button--animated" id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/Doraemonzzz"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/Doraemonzzz" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="/doraemon_zzz@163.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a><a class="social-icon" href="https://space.bilibili.com/291079982" target="_blank" title="Bilibili"><i class="iconfont icon-bilibili"></i></a><a class="social-icon" href="/atom.xml" target="_blank" title=""><i class="fa fa-rss"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn card-announcement-animation"></i><span>公告</span></div><div class="announcement_content">暂无公告</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E8%AF%B4%E6%98%8E"><span class="toc-number">1.</span> <span class="toc-text">说明</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%95%B4%E4%BD%93%E6%A6%82%E8%BF%B0"><span class="toc-number">2.</span> <span class="toc-text">整体概述</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E8%83%8C%E6%99%AF%E7%9F%A5%E8%AF%86"><span class="toc-number">3.</span> <span class="toc-text">背景知识</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Attention%E5%9B%9E%E9%A1%BE"><span class="toc-number">3.1.</span> <span class="toc-text">Attention回顾</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B7%A6%E4%B9%98%E5%8F%98%E5%8F%B3%E4%B9%98"><span class="toc-number">3.2.</span> <span class="toc-text">左乘变右乘</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Performer"><span class="toc-number">3.3.</span> <span class="toc-text">Performer</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%B8%BB%E4%BD%93%E6%80%9D%E6%83%B3"><span class="toc-number">4.</span> <span class="toc-text">主体思想</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E4%B8%AA%E6%A0%B8%E5%BF%83%E7%82%B9"><span class="toc-number">4.1.</span> <span class="toc-text">三个核心点</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BB%86%E8%8A%82"><span class="toc-number">4.2.</span> <span class="toc-text">细节</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%97%A0%E5%81%8F%E4%BC%B0%E8%AE%A1"><span class="toc-number">4.2.1.</span> <span class="toc-text">无偏估计</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%86%85%E7%A7%AF%E8%A1%A8%E7%A4%BA"><span class="toc-number">4.2.2.</span> <span class="toc-text">内积表示</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%AC%AC%E4%B8%80%E6%AD%A5"><span class="toc-number">4.2.2.1.</span> <span class="toc-text">第一步</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%BC%95%E7%90%861"><span class="toc-number">4.2.2.1.1.</span> <span class="toc-text">引理1</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%BC%95%E7%90%862"><span class="toc-number">4.2.2.1.2.</span> <span class="toc-text">引理2</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%AE%8C%E6%95%B4%E8%AF%81%E6%98%8E"><span class="toc-number">4.2.2.1.3.</span> <span class="toc-text">完整证明</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%AC%AC%E4%BA%8C%E6%AD%A5"><span class="toc-number">4.2.2.2.</span> <span class="toc-text">第二步</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%99%8D%E4%BD%8E%E8%AF%AF%E5%B7%AE"><span class="toc-number">4.2.3.</span> <span class="toc-text">降低误差</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%88%86%E6%9E%90%E5%92%8C%E8%AE%A8%E8%AE%BA"><span class="toc-number">5.</span> <span class="toc-text">分析和讨论</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2021/10/25/2021-10-25-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E7%AC%AC12%E7%AB%A0-%E4%B9%A0%E9%A2%98%E8%A7%A3%E6%9E%90/" title="深入理解计算机系统 第12章 习题解析"><img src= "/img/loading.gif" data-lazy-src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="深入理解计算机系统 第12章 习题解析"/></a><div class="content"><a class="title" href="/2021/10/25/2021-10-25-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E7%AC%AC12%E7%AB%A0-%E4%B9%A0%E9%A2%98%E8%A7%A3%E6%9E%90/" title="深入理解计算机系统 第12章 习题解析">深入理解计算机系统 第12章 习题解析</a><time datetime="2021-10-25T15:19:00.000Z" title="发表于 2021-10-25 23:19:00">2021-10-25</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/10/24/2021-10-24-Hybrid-Random-Features%EF%BC%9A%E5%88%A9%E7%94%A8Bagging%E7%9A%84%E6%80%9D%E8%B7%AF%E9%99%8D%E4%BD%8EKernel%E6%B3%95%E7%9A%84%E8%AF%AF%E5%B7%AE/" title="Hybrid Random Features：利用Bagging的思路降低Kernel法的误差"><img src= "/img/loading.gif" data-lazy-src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Hybrid Random Features：利用Bagging的思路降低Kernel法的误差"/></a><div class="content"><a class="title" href="/2021/10/24/2021-10-24-Hybrid-Random-Features%EF%BC%9A%E5%88%A9%E7%94%A8Bagging%E7%9A%84%E6%80%9D%E8%B7%AF%E9%99%8D%E4%BD%8EKernel%E6%B3%95%E7%9A%84%E8%AF%AF%E5%B7%AE/" title="Hybrid Random Features：利用Bagging的思路降低Kernel法的误差">Hybrid Random Features：利用Bagging的思路降低Kernel法的误差</a><time datetime="2021-10-24T07:40:00.000Z" title="发表于 2021-10-24 15:40:00">2021-10-24</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/10/24/2021-10-24-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E7%AC%AC12%E7%AB%A0-%E7%AC%94%E8%AE%B0%E6%95%B4%E7%90%86/" title="深入理解计算机系统 第12章 笔记整理"><img src= "/img/loading.gif" data-lazy-src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="深入理解计算机系统 第12章 笔记整理"/></a><div class="content"><a class="title" href="/2021/10/24/2021-10-24-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E7%AC%AC12%E7%AB%A0-%E7%AC%94%E8%AE%B0%E6%95%B4%E7%90%86/" title="深入理解计算机系统 第12章 笔记整理">深入理解计算机系统 第12章 笔记整理</a><time datetime="2021-10-24T02:40:00.000Z" title="发表于 2021-10-24 10:40:00">2021-10-24</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/10/17/2021-10-17-CMU-15-213-Intro-to-Computer-Systems-Lecture-23-to-Lecture-24/" title="CMU 15-213 Intro to Computer Systems Lecture 23 to Lecture 24"><img src= "/img/loading.gif" data-lazy-src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="CMU 15-213 Intro to Computer Systems Lecture 23 to Lecture 24"/></a><div class="content"><a class="title" href="/2021/10/17/2021-10-17-CMU-15-213-Intro-to-Computer-Systems-Lecture-23-to-Lecture-24/" title="CMU 15-213 Intro to Computer Systems Lecture 23 to Lecture 24">CMU 15-213 Intro to Computer Systems Lecture 23 to Lecture 24</a><time datetime="2021-10-17T09:41:00.000Z" title="发表于 2021-10-17 17:41:00">2021-10-17</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/10/16/2021-10-16-CMU-15-213-Intro-to-Computer-Systems-Lecture-21-to-Lecture-22/" title="CMU 15-213 Intro to Computer Systems Lecture 21 to Lecture 22"><img src= "/img/loading.gif" data-lazy-src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="CMU 15-213 Intro to Computer Systems Lecture 21 to Lecture 22"/></a><div class="content"><a class="title" href="/2021/10/16/2021-10-16-CMU-15-213-Intro-to-Computer-Systems-Lecture-21-to-Lecture-22/" title="CMU 15-213 Intro to Computer Systems Lecture 21 to Lecture 22">CMU 15-213 Intro to Computer Systems Lecture 21 to Lecture 22</a><time datetime="2021-10-16T08:04:00.000Z" title="发表于 2021-10-16 16:04:00">2021-10-16</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2018 - 2021 By Doraemonzzz</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="font-plus" type="button" title="放大字体"><i class="fas fa-plus"></i></button><button id="font-minus" type="button" title="缩小字体"><i class="fas fa-minus"></i></button><button id="translateLink" type="button" title="简繁转换">简</button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div id="local-search"><div class="search-dialog"><div class="search-dialog__title" id="local-search-title">本地搜索</div><div id="local-input-panel"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div></div><hr/><div id="local-search-results"></div><span class="search-close-button"><i class="fas fa-times"></i></span></div><div id="search-mask"></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="/js/tw_cn.js"></script><script src="https://cdn.jsdelivr.net/npm/vanilla-lazyload/dist/lazyload.iife.min.js"></script><script src="/js/search/local-search.js"></script><script>var preloader = {
+  endLoading: () => {
+    document.body.style.overflow = 'auto';
+    document.getElementById('loading-box').classList.add("loaded")
+  },
+  initLoading: () => {
+    document.body.style.overflow = '';
+    document.getElementById('loading-box').classList.remove("loaded")
+
+  }
+}
+window.addEventListener('load',preloader.endLoading())</script><div class="js-pjax"><script>if (!window.MathJax) {
+  window.MathJax = {
+    tex: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]],
+      tags: 'ams'
+    },
+    chtml: {
+      scale: 1.25
+    },
+    options: {
+      renderActions: {
+        findScript: [10, doc => {
+          for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+            const display = !!node.type.match(/; *mode=display/)
+            const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+            const text = document.createTextNode('')
+            node.parentNode.replaceChild(text, node)
+            math.start = {node: text, delim: '', n: 0}
+            math.end = {node: text, delim: '', n: 0}
+            doc.math.push(math)
+          }
+        }, '']
+      }
+    }
+  }
+  
+  const script = document.createElement('script')
+  script.src = 'https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js'
+  script.id = 'MathJax-script'
+  script.async = true
+  document.head.appendChild(script)
+} else {
+  MathJax.startup.document.state(0)
+  MathJax.texReset()
+  MathJax.typeset()
+}</script><script>function loadValine () {
+  function initValine () {
+    const valine = new Valine(Object.assign({
+      el: '#vcomment',
+      appId: 'IpnmxCW9CvYWIXbol5QXsegX-MdYXbMMI',
+      appKey: 'w57DVCdbxcyB1TYYagMIMJIU',
+      placeholder: 'Please leave your footprints',
+      avatar: 'monsterid',
+      meta: 'nick,mail,link'.split(','),
+      pageSize: '10',
+      lang: 'en',
+      recordIP: false,
+      serverURLs: '',
+      emojiCDN: '',
+      emojiMaps: "",
+      enableQQ: false,
+      path: window.location.pathname,
+      requiredFields: ["nick,mail"],
+      visitor: true
+    }, null))
+  }
+
+  if (typeof Valine === 'function') initValine() 
+  else getScript('https://cdn.jsdelivr.net/npm/valine/dist/Valine.min.js').then(initValine)
+}
+
+if ('Valine' === 'Valine' || !false) {
+  if (false) btf.loadComment(document.getElementById('vcomment'),loadValine)
+  else setTimeout(loadValine, 0)
+} else {
+  function loadOtherComment () {
+    loadValine()
+  }
+}</script><script>function loadLivere () {
+  if (typeof LivereTower === 'object') {
+    window.LivereTower.init()
+  }
+  else {
+    (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+    })(document, 'script');
+  }
+}
+
+if ('Valine' === 'Livere' || !false) {
+  if (false) btf.loadComment(document.getElementById('lv-container'), loadLivere)
+  else loadLivere()
+}
+else {
+  function loadOtherComment () {
+    loadLivere()
+  }
+}</script></div><script defer="defer" id="fluttering_ribbon" mobile="false" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/canvas-fluttering-ribbon.min.js"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
