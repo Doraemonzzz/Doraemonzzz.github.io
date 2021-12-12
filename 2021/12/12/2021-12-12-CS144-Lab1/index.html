@@ -1,0 +1,748 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>CS144 Lab1 | Doraemonzzz</title><meta name="keywords" content="CS144"><meta name="author" content="Doraemonzzz"><meta name="copyright" content="Doraemonzzz"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="这里给出CS 144 Lab 1: stitching substrings into a byte stream。 实验资料：  https:&#x2F;&#x2F;www.cnblogs.com&#x2F;kangyupl&#x2F;p&#x2F;stanford_cs144_labs.html https:&#x2F;&#x2F;kangyupl.gitee.io&#x2F;cs144.github.io&#x2F; https:&#x2F;&#x2F;gitee.com&#x2F;kangyupl&#x2F;spon">
+<meta property="og:type" content="article">
+<meta property="og:title" content="CS144 Lab1">
+<meta property="og:url" content="http://www.doraemonzzz.com/2021/12/12/2021-12-12-CS144-Lab1/index.html">
+<meta property="og:site_name" content="Doraemonzzz">
+<meta property="og:description" content="这里给出CS 144 Lab 1: stitching substrings into a byte stream。 实验资料：  https:&#x2F;&#x2F;www.cnblogs.com&#x2F;kangyupl&#x2F;p&#x2F;stanford_cs144_labs.html https:&#x2F;&#x2F;kangyupl.gitee.io&#x2F;cs144.github.io&#x2F; https:&#x2F;&#x2F;gitee.com&#x2F;kangyupl&#x2F;spon">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg">
+<meta property="article:published_time" content="2021-12-12T08:20:00.000Z">
+<meta property="article:modified_time" content="2021-12-12T08:20:02.276Z">
+<meta property="article:author" content="Doraemonzzz">
+<meta property="article:tag" content="CS144">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg"><link rel="shortcut icon" href="https://github.com/Doraemonzzz/md-photo/blob/master/%E5%A4%B4%E5%83%8F.jpg?raw=true"><link rel="canonical" href="http://www.doraemonzzz.com/2021/12/12/2021-12-12-CS144-Lab1/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//www.google-analytics.com" crossorigin=""/><link rel="preconnect" href="//hm.baidu.com"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><script>var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?6f00f37f957f0608abb8c571105456f0";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script><script async="async" src="https://www.googletagmanager.com/gtag/js?id=UA-G-RE4B1LKRZD"></script><script>window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'UA-G-RE4B1LKRZD');
+</script><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"search.xml","languages":{"hits_empty":"找不到您查询的内容：${query}"}},
+  translate: {"defaultEncoding":2,"translateDelay":0,"msgToTraditionalChinese":"繁","msgToSimplifiedChinese":"簡"},
+  noticeOutdate: {"limitDay":500,"position":"top","messagePrev":"距离上次更新已经","messageNext":"天了，文章内容可能已经过时。"},
+  highlight: {"plugin":"prismjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":200},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    jQuery: 'https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js',
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+    },
+    fancybox: {
+      js: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css'
+    }
+  },
+  isPhotoFigcaption: true,
+  islazyload: true,
+  isanchor: true
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'CS144 Lab1',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2021-12-12 16:20:02'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const fontSizeVal = saveToLocal.get('global-font-size')
+    if (fontSizeVal !== undefined) {
+      document.documentElement.style.setProperty('--global-font-size', fontSizeVal + 'px')
+    }
+    })(window)</script><link rel="stylesheet" href="/css/bilibili.css" media="defer" onload="this.media='all'"><meta name="google-site-verification" content="c4v-NmuUZRgl3cvtg9GKswryK1YLaPztd_5M-df5VNI" /><meta name="generator" content="Hexo 5.4.0"><link rel="alternate" href="/atom.xml" title="Doraemonzzz" type="application/atom+xml">
+</head><body><div id="loading-box"><div class="loading-left-bg"></div><div class="loading-right-bg"></div><div class="spinner-box"><div class="configure-border-1"><div class="configure-core"></div></div><div class="configure-border-2"><div class="configure-core"></div></div><div class="loading-word">加载中...</div></div></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="author-avatar"><img class="avatar-img" src= "/img/loading.gif" data-lazy-src="https://github.com/Doraemonzzz/md-photo/blob/master/%E5%A4%B4%E5%83%8F.jpg?raw=true" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">文章</div><div class="length-num">674</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">标签</div><div class="length-num">70</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/categories/"><div class="headline">分类</div><div class="length-num">27</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-chart-pie"></i><span> 博客统计</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/charts/"><i class="fa-fw far fa-chart-bar"></i><span> 文章统计</span></a></li><li><a class="site-page child" href="/census/"><i class="fa-fw fas fa-chart-area"></i><span> 访问统计</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/top/"><i class="fa-fw fab fa-hotjar"></i><span> 阅读排行榜</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fa fa-heartbeat"></i><span> 娱乐</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于我</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">Doraemonzzz</a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-chart-pie"></i><span> 博客统计</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/charts/"><i class="fa-fw far fa-chart-bar"></i><span> 文章统计</span></a></li><li><a class="site-page child" href="/census/"><i class="fa-fw fas fa-chart-area"></i><span> 访问统计</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/top/"><i class="fa-fw fab fa-hotjar"></i><span> 阅读排行榜</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fa fa-heartbeat"></i><span> 娱乐</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于我</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">CS144 Lab1</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2021-12-12T08:20:00.000Z" title="发表于 2021-12-12 16:20:00">2021-12-12</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2021-12-12T08:20:02.276Z" title="更新于 2021-12-12 16:20:02">2021-12-12</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/">计算机网络</a></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-tag"></i><a class="article-meta__tags" href="/tags/CS144/">CS144</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">2.5k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>12分钟</span></span><span class="post-meta-separator">|</span><span class="leancloud_visitors" id="/2021/12/12/2021-12-12-CS144-Lab1/" data-flag-title="CS144 Lab1"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span class="leancloud-visitors-count"></span></span><span class="post-meta-separator">|</span><span class="post-meta-commentcount"><i class="far fa-comments fa-fw post-meta-icon"></i><span class="post-meta-label">评论数:</span><a href="/2021/12/12/2021-12-12-CS144-Lab1/#post-comment" itemprop="discussionUrl"><span class="valine-comment-count" data-xid="/2021/12/12/2021-12-12-CS144-Lab1/" itemprop="commentCount"></span></a></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p>这里给出CS 144 Lab 1: stitching substrings into a byte stream。</p>
+<p>实验资料：</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://www.cnblogs.com/kangyupl/p/stanford_cs144_labs.html">https://www.cnblogs.com/kangyupl/p/stanford_cs144_labs.html</a></li>
+<li><a target="_blank" rel="noopener" href="https://kangyupl.gitee.io/cs144.github.io/">https://kangyupl.gitee.io/cs144.github.io/</a></li>
+<li><a target="_blank" rel="noopener" href="https://gitee.com/kangyupl/sponge">https://gitee.com/kangyupl/sponge</a></li>
+</ul>
+<p>参考资料：</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/zztiger123/article/details/105544640">https://blog.csdn.net/zztiger123/article/details/105544640</a></li>
+</ul>
+<span id="more"></span>
+<h1 id="Lab-1-stitching-substrings-into-a-byte-stream"><a href="#Lab-1-stitching-substrings-into-a-byte-stream" class="headerlink" title="Lab 1: stitching substrings into a byte stream"></a>Lab 1: stitching substrings into a byte stream</h1><p>在该实验中：我们将实现一个流重组器——一个将字节流的小片段（称为子串，或段）按正确的顺序缝合成连续的字节流的模块。</p>
+<h2 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h2><h3 id="下载代码以及跑通流程"><a href="#下载代码以及跑通流程" class="headerlink" title="下载代码以及跑通流程"></a>下载代码以及跑通流程</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">git</span> clone https://gitee.com/kangyupl/sponge
+<span class="token function">git</span> checkout -b lab1-startercode origin/lab1-startercode
+<span class="token function">mkdir</span> build <span class="token operator">&amp;&amp;</span> <span class="token builtin class-name">cd</span> build
+cmake <span class="token punctuation">..</span>
+<span class="token function">make</span> <span class="token function">format</span>
+<span class="token function">make</span> -j4 <span class="token operator">&amp;&amp;</span> <span class="token function">make</span> check_lab1 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h3 id="接口"><a href="#接口" class="headerlink" title="接口"></a>接口</h3><pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token comment">// Construct a `StreamReassembler` that will store up to `capacity` bytes.</span>
+<span class="token function">StreamReassembler</span><span class="token punctuation">(</span><span class="token keyword">const</span> <span class="token class-name">size_t</span> capacity<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token comment">// Receive a substring and write any newly contiguous bytes into the stream.</span>
+<span class="token comment">//</span>
+<span class="token comment">// `data`: the segment</span>
+<span class="token comment">// `index` indicates the index (place in sequence) of the first byte in `data`</span>
+<span class="token comment">// `eof`: the last byte of this segment is the last byte in the entire stream</span>
+<span class="token keyword">void</span> <span class="token function">push_substring</span><span class="token punctuation">(</span><span class="token keyword">const</span> string <span class="token operator">&amp;</span>data<span class="token punctuation">,</span> <span class="token keyword">const</span> <span class="token class-name">uint64_t</span> index<span class="token punctuation">,</span> <span class="token keyword">const</span> bool eof<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token comment">// Access the reassembled byte stream</span>
+ByteStream <span class="token operator">&amp;</span><span class="token function">stream_out</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token comment">// The number of bytes in the substrings stored but not yet reassembled</span>
+<span class="token class-name">size_t</span> <span class="token function">unassembled_bytes</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">const</span><span class="token punctuation">;</span>
+<span class="token comment">// Is the internal state empty (other than the output stream)?</span>
+bool <span class="token function">empty</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">const</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h3 id="说明"><a href="#说明" class="headerlink" title="说明"></a>说明</h3><ul>
+<li>整个数据流中第一个字节的索引是什么？<ul>
+<li>0。</li>
+</ul>
+</li>
+<li>我的实现应该有多大的效率？<ul>
+<li>我们还不打算指定一个效率的概念，但请不要建立一个严重影响空间或时间的数据结构——这个数据结构将是你的TCP实现的基础。</li>
+</ul>
+</li>
+<li>应该如何处理不一致的子串？<ul>
+<li>你可以假设它们不存在。也就是说，你可以假设有一个唯一的底层字节流，而所有的子串都是它的（精确）片段。</li>
+</ul>
+</li>
+<li>我可以使用什么？<ul>
+<li>你可以使用你认为有用的标准库的任何部分。特别是，我们希望你至少要使用一个数据结构。</li>
+</ul>
+</li>
+<li>字节什么时候应该被写入流中？<ul>
+<li>越快越好。一个字节不应该出现在流中的唯一情况是，在它之前有一个字节还没有被”push”。</li>
+</ul>
+</li>
+<li>子串可能重叠吗？<ul>
+<li>可能。</li>
+</ul>
+</li>
+<li>我是否需要向StreamReassembler添加私有成员？<ul>
+<li>是的。由于段可能以任何顺序到达，你的数据结构将不得不记住子串，直到它们准备好被放入流中，也就是说，直到它们之前的所有索引都已填充。</li>
+</ul>
+</li>
+</ul>
+<h2 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h2><p>说明：</p>
+<ul>
+<li>使用双向链表作为缓存区，链表中的元素根据index递增的顺序排列；</li>
+<li>任意两个缓存块之间没有重合；</li>
+</ul>
+<p>代码：</p>
+<p>stream_reassembler.hh：</p>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">ifndef</span> <span class="token expression">SPONGE_LIBSPONGE_STREAM_REASSEMBLER_HH</span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">define</span> <span class="token macro-name">SPONGE_LIBSPONGE_STREAM_REASSEMBLER_HH</span></span>
+
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">"byte_stream.hh"</span></span>
+
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;cstdint></span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;string></span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;vector></span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;list></span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;utility></span> </span>
+
+<span class="token comment">//! \brief A class that assembles a series of excerpts from a byte stream (possibly out of order,</span>
+<span class="token comment">//! possibly overlapping) into an in-order byte stream.</span>
+<span class="token comment">/**
+ * Buffer数据结构, 用来缓存已到达, 但没有被push的部分, 
+ * 每个部分为(string, index), 利用list存储, 按照index递增的顺序存储。
+ */</span>
+class Buffer <span class="token punctuation">&#123;</span>
+  private<span class="token operator">:</span>
+    std<span class="token operator">::</span>list<span class="token operator">&lt;</span>std<span class="token operator">::</span>pair<span class="token operator">&lt;</span>std<span class="token operator">::</span>string<span class="token punctuation">,</span> <span class="token class-name">uint64_t</span><span class="token operator">>></span> buf <span class="token operator">=</span> <span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
+    <span class="token class-name">size_t</span> size <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+  public<span class="token operator">:</span>
+    <span class="token comment">// 获得缓存大小</span>
+    <span class="token class-name">size_t</span> <span class="token function">get_size</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">const</span><span class="token punctuation">;</span>
+    <span class="token comment">// 插入</span>
+    <span class="token keyword">void</span> <span class="token function">insert</span><span class="token punctuation">(</span><span class="token keyword">const</span> std<span class="token operator">::</span>string <span class="token operator">&amp;</span>data<span class="token punctuation">,</span> <span class="token keyword">const</span> <span class="token class-name">uint64_t</span> index<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token comment">// 合并list中重叠部分</span>
+    <span class="token keyword">void</span> <span class="token function">merge</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token comment">// 返回index最小的元素</span>
+    std<span class="token operator">::</span>pair<span class="token operator">&lt;</span>std<span class="token operator">::</span>string<span class="token punctuation">,</span> <span class="token class-name">uint64_t</span><span class="token operator">></span> <span class="token function">front</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token comment">// 弹出元素, 如果flag为true, 则更新大小</span>
+    <span class="token keyword">void</span> <span class="token function">pop</span><span class="token punctuation">(</span>bool flag<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token comment">// 判断buffer是否为空</span>
+    bool <span class="token function">is_empty</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token comment">// 打印</span>
+    <span class="token keyword">void</span> <span class="token function">print_buffer</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
+
+class StreamReassembler <span class="token punctuation">&#123;</span>
+  private<span class="token operator">:</span>
+    <span class="token comment">// Your code here -- add private members as necessary.</span>
+    Buffer buf<span class="token punctuation">;</span>
+    <span class="token comment">// 是否为eof</span>
+    bool eof_flag <span class="token operator">=</span> false<span class="token punctuation">;</span>
+    <span class="token comment">// 下一个被push的字符索引</span>
+    <span class="token class-name">uint64_t</span> _index <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+    <span class="token comment">// 最后一个被push的字符</span>
+    std<span class="token operator">::</span>string last_str <span class="token operator">=</span> <span class="token string">""</span><span class="token punctuation">;</span>
+    ByteStream _output<span class="token punctuation">;</span>  <span class="token comment">//!&lt; The reassembled in-order byte stream</span>
+    <span class="token class-name">size_t</span> _capacity<span class="token punctuation">;</span>    <span class="token comment">//!&lt; The maximum number of bytes</span>
+
+  public<span class="token operator">:</span>
+    <span class="token comment">//! \brief Construct a `StreamReassembler` that will store up to `capacity` bytes.</span>
+    <span class="token comment">//! \note This capacity limits both the bytes that have been reassembled,</span>
+    <span class="token comment">//! and those that have not yet been reassembled.</span>
+    <span class="token function">StreamReassembler</span><span class="token punctuation">(</span><span class="token keyword">const</span> <span class="token class-name">size_t</span> capacity<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token comment">//! \brief Receives a substring and writes any newly contiguous bytes into the stream.</span>
+    <span class="token comment">//!</span>
+    <span class="token comment">//! If accepting all the data would overflow the `capacity` of this</span>
+    <span class="token comment">//! `StreamReassembler`, then only the part of the data that fits will be</span>
+    <span class="token comment">//! accepted. If the substring is only partially accepted, then the `eof`</span>
+    <span class="token comment">//! will be disregarded.</span>
+    <span class="token comment">//!</span>
+    <span class="token comment">//! \param data the string being added</span>
+    <span class="token comment">//! \param index the index of the first byte in `data`</span>
+    <span class="token comment">//! \param eof whether or not this segment ends with the end of the stream</span>
+    <span class="token keyword">void</span> <span class="token function">push_substring</span><span class="token punctuation">(</span><span class="token keyword">const</span> std<span class="token operator">::</span>string <span class="token operator">&amp;</span>data<span class="token punctuation">,</span> <span class="token keyword">const</span> <span class="token class-name">uint64_t</span> index<span class="token punctuation">,</span> <span class="token keyword">const</span> bool eof<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    bool <span class="token function">push_substring</span><span class="token punctuation">(</span><span class="token keyword">const</span> std<span class="token operator">::</span>string <span class="token operator">&amp;</span>data<span class="token punctuation">,</span> <span class="token keyword">const</span> <span class="token class-name">uint64_t</span> index<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token comment">//! \name Access the reassembled byte stream</span>
+    <span class="token comment">//!@&#123;</span>
+    <span class="token keyword">const</span> ByteStream <span class="token operator">&amp;</span><span class="token function">stream_out</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">const</span> <span class="token punctuation">&#123;</span> <span class="token keyword">return</span> _output<span class="token punctuation">;</span> <span class="token punctuation">&#125;</span>
+    ByteStream <span class="token operator">&amp;</span><span class="token function">stream_out</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span> <span class="token keyword">return</span> _output<span class="token punctuation">;</span> <span class="token punctuation">&#125;</span>
+    <span class="token comment">//!@&#125;</span>
+
+    Buffer <span class="token operator">&amp;</span><span class="token function">buffer_out</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span> <span class="token keyword">return</span> buf<span class="token punctuation">;</span> <span class="token punctuation">&#125;</span>
+
+    <span class="token comment">//! The number of bytes in the substrings stored but not yet reassembled</span>
+    <span class="token comment">//!</span>
+    <span class="token comment">//! \note If the byte at a particular index has been submitted twice, it</span>
+    <span class="token comment">//! should only be counted once for the purpose of this function.</span>
+    <span class="token comment">// 缓存的字符串数量</span>
+    <span class="token class-name">size_t</span> <span class="token function">unassembled_bytes</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">const</span><span class="token punctuation">;</span>
+
+    <span class="token comment">//! \brief Is the internal state empty (other than the output stream)?</span>
+    <span class="token comment">//! \returns `true` if no substrings are waiting to be assembled</span>
+    bool <span class="token function">empty</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">const</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">int</span> <span class="token function">get_index</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span> <span class="token keyword">return</span> _index<span class="token punctuation">;</span> <span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
+
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">endif</span>  <span class="token comment">// SPONGE_LIBSPONGE_STREAM_REASSEMBLER_HH</span></span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>stream_reassembler.cc：</p>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">"stream_reassembler.hh"</span></span>
+
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;iostream></span></span>
+<span class="token comment">// Dummy implementation of a stream reassembler.</span>
+
+<span class="token comment">// For Lab 1, please replace with a real implementation that passes the</span>
+<span class="token comment">// automated checks run by `make check_lab1`.</span>
+
+<span class="token comment">// You will need to add private members to the class declaration in `stream_reassembler.hh`</span>
+
+template <span class="token operator">&lt;</span>typename<span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span> Targs<span class="token operator">></span>
+<span class="token keyword">void</span> <span class="token function">DUMMY_CODE</span><span class="token punctuation">(</span>Targs <span class="token operator">&amp;&amp;</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span> <span class="token comment">/* unused */</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span>
+
+using namespace std<span class="token punctuation">;</span>
+
+<span class="token comment">// s1, s2有重叠, 则将其拼接, 存储至str, l为公共长度</span>
+<span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">get_inter</span><span class="token punctuation">(</span><span class="token keyword">int</span> <span class="token operator">&amp;</span>l<span class="token punctuation">,</span>
+                      <span class="token keyword">const</span> <span class="token keyword">int</span> l1<span class="token punctuation">,</span>
+                      <span class="token keyword">const</span> <span class="token keyword">int</span> l2<span class="token punctuation">,</span>
+                      <span class="token keyword">const</span> std<span class="token operator">::</span>string <span class="token operator">&amp;</span>s1<span class="token punctuation">,</span>
+                      <span class="token keyword">const</span> std<span class="token operator">::</span>string <span class="token operator">&amp;</span>s2<span class="token punctuation">,</span>
+                      std<span class="token operator">::</span>string <span class="token operator">&amp;</span>str<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token comment">// 查看子串是否有重叠</span>
+    <span class="token keyword">int</span> len <span class="token operator">=</span> <span class="token function">min</span><span class="token punctuation">(</span>l1<span class="token punctuation">,</span> l2<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">for</span> <span class="token punctuation">(</span>l <span class="token operator">=</span> len<span class="token punctuation">;</span> l <span class="token operator">>=</span> <span class="token number">1</span><span class="token punctuation">;</span> l<span class="token operator">--</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">int</span> i <span class="token operator">=</span> l1 <span class="token operator">-</span> l<span class="token punctuation">;</span>
+        <span class="token keyword">int</span> j<span class="token punctuation">;</span>
+        <span class="token comment">// 比较子串是否相等</span>
+        <span class="token keyword">for</span> <span class="token punctuation">(</span>j <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> j <span class="token operator">&lt;</span> l<span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">,</span> j<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+            <span class="token keyword">if</span> <span class="token punctuation">(</span>s1<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">!=</span> s2<span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+                <span class="token keyword">break</span><span class="token punctuation">;</span>
+            <span class="token punctuation">&#125;</span>
+        <span class="token punctuation">&#125;</span>
+
+        <span class="token comment">// j = l表示没有重叠</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>j <span class="token operator">==</span> l<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+            <span class="token keyword">break</span><span class="token punctuation">;</span>
+        <span class="token punctuation">&#125;</span>
+    <span class="token punctuation">&#125;</span>
+
+    str <span class="token operator">=</span> s1 <span class="token operator">+</span> s2<span class="token punctuation">.</span><span class="token function">substr</span><span class="token punctuation">(</span>l2 <span class="token operator">-</span> l<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+
+StreamReassembler<span class="token operator">::</span><span class="token function">StreamReassembler</span><span class="token punctuation">(</span><span class="token keyword">const</span> <span class="token class-name">size_t</span> capacity<span class="token punctuation">)</span> <span class="token operator">:</span> <span class="token function">buf</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token function">_output</span><span class="token punctuation">(</span>capacity<span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token function">_capacity</span><span class="token punctuation">(</span>capacity<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span><span class="token punctuation">&#125;</span>
+
+<span class="token comment">//! \details This function accepts a substring (aka a segment) of bytes,</span>
+<span class="token comment">//! possibly out-of-order, from the logical stream, and assembles any newly</span>
+<span class="token comment">//! contiguous substrings and writes them into the output stream in order.</span>
+<span class="token comment">// push字符串, 要求为index &lt;= _index &lt; index + data.size(), 此处不考虑缓存的问题</span>
+bool StreamReassembler<span class="token operator">::</span><span class="token function">push_substring</span><span class="token punctuation">(</span><span class="token keyword">const</span> std<span class="token operator">::</span>string <span class="token operator">&amp;</span>data<span class="token punctuation">,</span> <span class="token keyword">const</span> <span class="token class-name">uint64_t</span> index<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token comment">// 有重叠</span>
+    <span class="token keyword">int</span> l1 <span class="token operator">=</span> last_str<span class="token punctuation">.</span><span class="token function">size</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">int</span> l2 <span class="token operator">=</span> data<span class="token punctuation">.</span><span class="token function">size</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token comment">// 忽略空字符</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>l2 <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">return</span> false<span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+    <span class="token comment">// 新数据和旧数据没有重合</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>index <span class="token operator">></span> _index<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">return</span> false<span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+    <span class="token comment">// 新数据包含在之前的数据中</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>_index <span class="token operator">>=</span> index <span class="token operator">+</span> l2<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">return</span> false<span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+    <span class="token comment">// 特殊情况, 第一次insert或者相邻</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token punctuation">(</span>l1 <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token operator">||</span> <span class="token punctuation">(</span>_index <span class="token operator">==</span> index<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token comment">// 拼接</span>
+        last_str <span class="token operator">+=</span> data<span class="token punctuation">;</span>
+        _index <span class="token operator">+=</span> l2<span class="token punctuation">;</span>
+        std<span class="token operator">::</span>string new_data <span class="token operator">=</span> data<span class="token punctuation">;</span>
+        _output<span class="token punctuation">.</span><span class="token function">write</span><span class="token punctuation">(</span>new_data<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">return</span> true<span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+
+    <span class="token keyword">int</span> l<span class="token punctuation">;</span>
+    <span class="token comment">// 一般情形, 此时一定有重叠</span>
+    <span class="token comment">// ____</span>
+    <span class="token comment">//   _____</span>
+    <span class="token comment">// 找到重叠位置</span>
+    std<span class="token operator">::</span>string res_data<span class="token punctuation">;</span>
+    <span class="token function">get_inter</span><span class="token punctuation">(</span>l<span class="token punctuation">,</span> l1<span class="token punctuation">,</span> l2<span class="token punctuation">,</span> last_str<span class="token punctuation">,</span> data<span class="token punctuation">,</span> res_data<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token comment">// 重叠的后续部分</span>
+    std<span class="token operator">::</span>string new_data <span class="token operator">=</span> data<span class="token punctuation">.</span><span class="token function">substr</span><span class="token punctuation">(</span>l<span class="token punctuation">,</span> l2 <span class="token operator">-</span> l<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token comment">// 更新last_str和_index</span>
+    last_str <span class="token operator">+=</span> new_data<span class="token punctuation">;</span>
+    _index <span class="token operator">+=</span> l2 <span class="token operator">-</span> l<span class="token punctuation">;</span>
+    <span class="token comment">// push</span>
+    _output<span class="token punctuation">.</span><span class="token function">write</span><span class="token punctuation">(</span>new_data<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">return</span> true<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token comment">// push字符串, 此处考虑缓存的问题</span>
+<span class="token keyword">void</span> StreamReassembler<span class="token operator">::</span><span class="token function">push_substring</span><span class="token punctuation">(</span><span class="token keyword">const</span> string <span class="token operator">&amp;</span>data<span class="token punctuation">,</span> <span class="token keyword">const</span> <span class="token class-name">size_t</span> index<span class="token punctuation">,</span> <span class="token keyword">const</span> bool eof<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>_index <span class="token operator">>=</span> index<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token comment">// 如果有交集, 则push</span>
+        <span class="token comment">// ____</span>
+        <span class="token comment">//   _____</span>
+        <span class="token function">push_substring</span><span class="token punctuation">(</span>data<span class="token punctuation">,</span> index<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span> <span class="token keyword">else</span> <span class="token punctuation">&#123;</span>
+        <span class="token comment">// 如果没有交集, 则缓存到buffer中</span>
+        <span class="token comment">// ____</span>
+        <span class="token comment">//      _____</span>
+        buf<span class="token punctuation">.</span><span class="token function">insert</span><span class="token punctuation">(</span>data<span class="token punctuation">,</span> index<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        buf<span class="token punctuation">.</span><span class="token function">merge</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+
+    <span class="token comment">// 此时buf单调递增, 没有交集</span>
+    <span class="token keyword">while</span> <span class="token punctuation">(</span><span class="token operator">!</span>buf<span class="token punctuation">.</span><span class="token function">is_empty</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">auto</span> pair <span class="token operator">=</span> buf<span class="token punctuation">.</span><span class="token function">front</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        std<span class="token operator">::</span>string data1 <span class="token operator">=</span> pair<span class="token punctuation">.</span>first<span class="token punctuation">;</span>
+        <span class="token class-name">uint64_t</span> index1 <span class="token operator">=</span> pair<span class="token punctuation">.</span>second<span class="token punctuation">;</span>
+        <span class="token comment">// 还有数据未到达</span>
+        <span class="token comment">// ____</span>
+        <span class="token comment">//      _____</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>index1 <span class="token operator">></span> _index<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+            <span class="token keyword">break</span><span class="token punctuation">;</span>
+        <span class="token punctuation">&#125;</span>
+        <span class="token comment">// 否则push string</span>
+        <span class="token function">push_substring</span><span class="token punctuation">(</span>data1<span class="token punctuation">,</span> index1<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token comment">// 弹出字符, 并更新大小</span>
+        buf<span class="token punctuation">.</span><span class="token function">pop</span><span class="token punctuation">(</span>true<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+
+    <span class="token comment">// 记录eof是否到达</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>eof<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        eof_flag <span class="token operator">=</span> true<span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+    <span class="token comment">// eof并且没有待处理, 则结束</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>eof_flag <span class="token operator">&amp;&amp;</span> <span class="token function">empty</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        _output<span class="token punctuation">.</span><span class="token function">end_input</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token comment">// 缓存的字符串数量</span>
+<span class="token class-name">size_t</span> StreamReassembler<span class="token operator">::</span><span class="token function">unassembled_bytes</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">const</span> <span class="token punctuation">&#123;</span> <span class="token keyword">return</span> buf<span class="token punctuation">.</span><span class="token function">get_size</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token punctuation">&#125;</span>
+
+<span class="token comment">// 缓存是否为空</span>
+bool StreamReassembler<span class="token operator">::</span><span class="token function">empty</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">const</span> <span class="token punctuation">&#123;</span> <span class="token keyword">return</span> <span class="token function">unassembled_bytes</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">;</span> <span class="token punctuation">&#125;</span>
+
+<span class="token comment">// Buffer</span>
+<span class="token comment">// 获得buffer的大小</span>
+<span class="token class-name">size_t</span> Buffer<span class="token operator">::</span><span class="token function">get_size</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">const</span> <span class="token punctuation">&#123;</span> <span class="token keyword">return</span> size<span class="token punctuation">;</span> <span class="token punctuation">&#125;</span>
+
+<span class="token comment">// 插入</span>
+<span class="token keyword">void</span> Buffer<span class="token operator">::</span><span class="token function">insert</span><span class="token punctuation">(</span><span class="token keyword">const</span> std<span class="token operator">::</span>string <span class="token operator">&amp;</span>data<span class="token punctuation">,</span> <span class="token keyword">const</span> <span class="token class-name">uint64_t</span> index<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token comment">// 数据为空则直接返回</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>data<span class="token punctuation">.</span><span class="token function">size</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">return</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>buf<span class="token punctuation">.</span><span class="token function">size</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token comment">// buf为空则直接插入</span>
+        buf<span class="token punctuation">.</span><span class="token function">push_back</span><span class="token punctuation">(</span>std<span class="token operator">::</span><span class="token function">make_pair</span><span class="token punctuation">(</span>data<span class="token punctuation">,</span> index<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        size <span class="token operator">+=</span> data<span class="token punctuation">.</span><span class="token function">size</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">return</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span> <span class="token keyword">else</span> <span class="token punctuation">&#123;</span>
+        <span class="token comment">// 否则找到第一个it->second >= index的位置</span>
+        <span class="token keyword">auto</span> it <span class="token operator">=</span> buf<span class="token punctuation">.</span><span class="token function">begin</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token punctuation">;</span> it <span class="token operator">!=</span> buf<span class="token punctuation">.</span><span class="token function">end</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> it<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+            <span class="token keyword">if</span> <span class="token punctuation">(</span>it<span class="token operator">-></span>second <span class="token operator">>=</span> index<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+                <span class="token keyword">break</span><span class="token punctuation">;</span>
+            <span class="token punctuation">&#125;</span>
+        <span class="token punctuation">&#125;</span>
+
+        <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token punctuation">(</span>it <span class="token operator">==</span> buf<span class="token punctuation">.</span><span class="token function">end</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token operator">||</span> <span class="token punctuation">(</span>it<span class="token operator">-></span>second <span class="token operator">></span> index<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+            <span class="token comment">/**
+             * 如果不存在, 则直接插入即可, 此时it->second &lt; index;
+             * 如果it->second > index, 则直接插入, 这种情况对应于有间隔;
+             */</span>
+            buf<span class="token punctuation">.</span><span class="token function">insert</span><span class="token punctuation">(</span>it<span class="token punctuation">,</span> std<span class="token operator">::</span><span class="token function">make_pair</span><span class="token punctuation">(</span>data<span class="token punctuation">,</span> index<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            size <span class="token operator">+=</span> data<span class="token punctuation">.</span><span class="token function">size</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token keyword">return</span><span class="token punctuation">;</span>
+        <span class="token punctuation">&#125;</span> <span class="token keyword">else</span> <span class="token punctuation">&#123;</span>
+            <span class="token comment">// 如果相等则比较大小, 保留长度较大的部分</span>
+            <span class="token keyword">int</span> d1 <span class="token operator">=</span> data<span class="token punctuation">.</span><span class="token function">size</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token keyword">int</span> d2 <span class="token operator">=</span> <span class="token punctuation">(</span>it<span class="token operator">-></span>first<span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">size</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token keyword">if</span> <span class="token punctuation">(</span>d1 <span class="token operator">></span> d2<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+                size <span class="token operator">-=</span> d2<span class="token punctuation">;</span>
+                <span class="token comment">// 先删除后插入</span>
+                <span class="token keyword">auto</span> it1 <span class="token operator">=</span> it<span class="token punctuation">;</span>
+                it1<span class="token operator">++</span><span class="token punctuation">;</span>
+                buf<span class="token punctuation">.</span><span class="token function">erase</span><span class="token punctuation">(</span>it<span class="token punctuation">)</span><span class="token punctuation">;</span>
+                buf<span class="token punctuation">.</span><span class="token function">insert</span><span class="token punctuation">(</span>it1<span class="token punctuation">,</span> std<span class="token operator">::</span><span class="token function">make_pair</span><span class="token punctuation">(</span>data<span class="token punctuation">,</span> index<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                <span class="token comment">// 后插入</span>
+                size <span class="token operator">+=</span> d1<span class="token punctuation">;</span>
+            <span class="token punctuation">&#125;</span>
+        <span class="token punctuation">&#125;</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token comment">// 返回index最小的元素</span>
+std<span class="token operator">::</span>pair<span class="token operator">&lt;</span>std<span class="token operator">::</span>string<span class="token punctuation">,</span> <span class="token class-name">uint64_t</span><span class="token operator">></span> Buffer<span class="token operator">::</span><span class="token function">front</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span> <span class="token keyword">return</span> <span class="token operator">*</span><span class="token punctuation">(</span>buf<span class="token punctuation">.</span><span class="token function">begin</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token punctuation">&#125;</span>
+
+<span class="token comment">// 弹出元素, 如果flag为true, 则更新大小</span>
+<span class="token keyword">void</span> Buffer<span class="token operator">::</span><span class="token function">pop</span><span class="token punctuation">(</span>bool flag<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">auto</span> it <span class="token operator">=</span> buf<span class="token punctuation">.</span><span class="token function">begin</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>flag<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        size <span class="token operator">-=</span> <span class="token punctuation">(</span>it<span class="token operator">-></span>first<span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">size</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+    buf<span class="token punctuation">.</span><span class="token function">pop_front</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token comment">// 判断buffer是否为空</span>
+bool Buffer<span class="token operator">::</span><span class="token function">is_empty</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span> <span class="token keyword">return</span> size <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">;</span> <span class="token punctuation">&#125;</span>
+
+<span class="token comment">// 合并list中重叠部分</span>
+<span class="token keyword">void</span> Buffer<span class="token operator">::</span><span class="token function">merge</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">auto</span> it1 <span class="token operator">=</span> buf<span class="token punctuation">.</span><span class="token function">begin</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">auto</span> it2 <span class="token operator">=</span> it1<span class="token punctuation">;</span>
+    it2<span class="token operator">++</span><span class="token punctuation">;</span>
+    <span class="token comment">// buf大小</span>
+    <span class="token keyword">int</span> m <span class="token operator">=</span> buf<span class="token punctuation">.</span><span class="token function">size</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">while</span> <span class="token punctuation">(</span>it1 <span class="token operator">!=</span> buf<span class="token punctuation">.</span><span class="token function">end</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        it2 <span class="token operator">=</span> it1<span class="token punctuation">;</span>
+        it2<span class="token operator">++</span><span class="token punctuation">;</span>
+        <span class="token comment">// bool flag = false;</span>
+        <span class="token keyword">while</span> <span class="token punctuation">(</span>it2 <span class="token operator">!=</span> buf<span class="token punctuation">.</span><span class="token function">end</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+            <span class="token keyword">auto</span> str1 <span class="token operator">=</span> it1<span class="token operator">-></span>first<span class="token punctuation">;</span>
+            <span class="token keyword">auto</span> str2 <span class="token operator">=</span> it2<span class="token operator">-></span>first<span class="token punctuation">;</span>
+            <span class="token class-name">uint64_t</span> l1 <span class="token operator">=</span> str1<span class="token punctuation">.</span><span class="token function">size</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token class-name">uint64_t</span> l2 <span class="token operator">=</span> str2<span class="token punctuation">.</span><span class="token function">size</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token comment">// 起始位置</span>
+            <span class="token class-name">uint64_t</span> s1 <span class="token operator">=</span> it1<span class="token operator">-></span>second<span class="token punctuation">;</span>
+            <span class="token class-name">uint64_t</span> s2 <span class="token operator">=</span> it2<span class="token operator">-></span>second<span class="token punctuation">;</span>
+            <span class="token comment">// 结束位置(不包括)</span>
+            <span class="token class-name">uint64_t</span> e1 <span class="token operator">=</span> s1 <span class="token operator">+</span> l1<span class="token punctuation">;</span>
+            <span class="token class-name">uint64_t</span> e2 <span class="token operator">=</span> s2 <span class="token operator">+</span> l2<span class="token punctuation">;</span>
+            <span class="token comment">// [s1, e1), [s2, e2)</span>
+            <span class="token comment">// 无交集</span>
+            <span class="token keyword">if</span> <span class="token punctuation">(</span>s2 <span class="token operator">>=</span> e1<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+                it1 <span class="token operator">=</span> it2<span class="token punctuation">;</span>
+                <span class="token keyword">break</span><span class="token punctuation">;</span>
+            <span class="token punctuation">&#125;</span>
+            <span class="token keyword">if</span> <span class="token punctuation">(</span>e2 <span class="token operator">&lt;=</span> e1<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+                <span class="token comment">// [s2, e2)在[s1, e1)内部</span>
+                size <span class="token operator">-=</span> l2<span class="token punctuation">;</span>
+                <span class="token keyword">auto</span> it <span class="token operator">=</span> it2<span class="token punctuation">;</span>
+                it2<span class="token operator">++</span><span class="token punctuation">;</span>
+                buf<span class="token punctuation">.</span><span class="token function">erase</span><span class="token punctuation">(</span>it<span class="token punctuation">)</span><span class="token punctuation">;</span>
+                <span class="token comment">// break;</span>
+            <span class="token punctuation">&#125;</span> <span class="token keyword">else</span> <span class="token punctuation">&#123;</span>
+                <span class="token comment">// 有交集</span>
+                <span class="token comment">// s1, s2, e1, e2</span>
+                <span class="token comment">// s1 ____ e1</span>
+                <span class="token comment">//    s2 _____ e2</span>
+                <span class="token keyword">int</span> l <span class="token operator">=</span> e2 <span class="token operator">-</span> e1<span class="token punctuation">;</span>
+                <span class="token keyword">int</span> s <span class="token operator">=</span> l2 <span class="token operator">-</span> l<span class="token punctuation">;</span>
+                <span class="token comment">// 更新字符串</span>
+                it1<span class="token operator">-></span>first <span class="token operator">+=</span> str2<span class="token punctuation">.</span><span class="token function">substr</span><span class="token punctuation">(</span>s<span class="token punctuation">,</span> l<span class="token punctuation">)</span><span class="token punctuation">;</span>
+                <span class="token comment">// 更新大小</span>
+                size <span class="token operator">-=</span> s<span class="token punctuation">;</span>
+                <span class="token keyword">auto</span> it <span class="token operator">=</span> it2<span class="token punctuation">;</span>
+                it2<span class="token operator">++</span><span class="token punctuation">;</span>
+                buf<span class="token punctuation">.</span><span class="token function">erase</span><span class="token punctuation">(</span>it<span class="token punctuation">)</span><span class="token punctuation">;</span>
+                <span class="token comment">// break;</span>
+            <span class="token punctuation">&#125;</span>
+        <span class="token punctuation">&#125;</span>
+        <span class="token comment">// 判断长度是否变化</span>
+        <span class="token keyword">int</span> m1 <span class="token operator">=</span> buf<span class="token punctuation">.</span><span class="token function">size</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token comment">// 如果长度没有变化, 则更新it1</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>m <span class="token operator">==</span> m1<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+            it1 <span class="token operator">=</span> it2<span class="token punctuation">;</span>
+        <span class="token punctuation">&#125;</span>
+        m <span class="token operator">=</span> m1<span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token comment">// 打印</span>
+<span class="token keyword">void</span> Buffer<span class="token operator">::</span><span class="token function">print_buffer</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    cout <span class="token operator">&lt;&lt;</span> <span class="token string">"Print buffer start"</span> <span class="token operator">&lt;&lt;</span> endl<span class="token punctuation">;</span>
+    <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">auto</span> it <span class="token operator">=</span> buf<span class="token punctuation">.</span><span class="token function">begin</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> it <span class="token operator">!=</span> buf<span class="token punctuation">.</span><span class="token function">end</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> it<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        cout <span class="token operator">&lt;&lt;</span> it<span class="token operator">-></span>second <span class="token operator">&lt;&lt;</span> <span class="token string">" "</span> <span class="token operator">&lt;&lt;</span> it<span class="token operator">-></span>second <span class="token operator">+</span> it<span class="token operator">-></span>first<span class="token punctuation">.</span><span class="token function">size</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">&lt;&lt;</span> endl<span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+    cout <span class="token operator">&lt;&lt;</span> <span class="token string">"Print buffer end"</span> <span class="token operator">&lt;&lt;</span> endl<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>测试：</p>
+<pre class="line-numbers language-none"><code class="language-none">make format
+make -j4 &amp;&amp; make check_lab1 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<p>结果：</p>
+<pre class="line-numbers language-none"><code class="language-none">Test project &#x2F;home&#x2F;cs144&#x2F;sponge&#x2F;build
+      Start 15: t_strm_reassem_single
+ 1&#x2F;16 Test #15: t_strm_reassem_single ............   Passed    0.00 sec
+      Start 16: t_strm_reassem_seq
+ 2&#x2F;16 Test #16: t_strm_reassem_seq ...............   Passed    0.00 sec
+      Start 17: t_strm_reassem_dup
+ 3&#x2F;16 Test #17: t_strm_reassem_dup ...............   Passed    0.00 sec
+      Start 18: t_strm_reassem_holes
+ 4&#x2F;16 Test #18: t_strm_reassem_holes .............   Passed    0.00 sec
+      Start 19: t_strm_reassem_many
+ 5&#x2F;16 Test #19: t_strm_reassem_many ..............   Passed    0.24 sec
+      Start 20: t_strm_reassem_overlapping
+ 6&#x2F;16 Test #20: t_strm_reassem_overlapping .......   Passed    0.00 sec
+      Start 21: t_strm_reassem_win
+ 7&#x2F;16 Test #21: t_strm_reassem_win ...............   Passed    0.36 sec
+      Start 22: t_byte_stream_construction
+ 8&#x2F;16 Test #22: t_byte_stream_construction .......   Passed    0.00 sec
+      Start 23: t_byte_stream_one_write
+ 9&#x2F;16 Test #23: t_byte_stream_one_write ..........   Passed    0.00 sec
+      Start 24: t_byte_stream_two_writes
+10&#x2F;16 Test #24: t_byte_stream_two_writes .........   Passed    0.00 sec
+      Start 25: t_byte_stream_capacity
+11&#x2F;16 Test #25: t_byte_stream_capacity ...........   Passed    0.00 sec
+      Start 26: t_byte_stream_many_writes
+12&#x2F;16 Test #26: t_byte_stream_many_writes ........   Passed    0.01 sec
+      Start 27: t_webget
+13&#x2F;16 Test #27: t_webget .........................   Passed    0.45 sec
+      Start 47: t_address_dt
+14&#x2F;16 Test #47: t_address_dt .....................   Passed    0.01 sec
+      Start 48: t_parser_dt
+15&#x2F;16 Test #48: t_parser_dt ......................   Passed    0.00 sec
+      Start 49: t_socket_dt
+16&#x2F;16 Test #49: t_socket_dt ......................   Passed    0.00 sec
+
+100% tests passed, 0 tests failed out of 16
+
+Total Test time (real) &#x3D;   1.11 sec
+[100%] Built target check_lab1<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">Doraemonzzz</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="http://www.doraemonzzz.com/2021/12/12/2021-12-12-CS144-Lab1/">http://www.doraemonzzz.com/2021/12/12/2021-12-12-CS144-Lab1/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://www.doraemonzzz.com" target="_blank">Doraemonzzz</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/CS144/">CS144</a></div><div class="post_share"><div class="social-share" data-image="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="next-post pull-full"><a href="/2021/12/12/2021-12-12-CS144-Lab0/"><img class="next-cover" src= "/img/loading.gif" data-lazy-src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">CS144 Lab0</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span> 相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2021/12/12/2021-12-12-CS144-Lab0/" title="CS144 Lab0"><img class="cover" src= "/img/loading.gif" data-lazy-src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-12-12</div><div class="title">CS144 Lab0</div></div></a></div><div><a href="/2021/12/12/2021-12-12-CS144-实验环境配置/" title="CS144 实验环境配置"><img class="cover" src= "/img/loading.gif" data-lazy-src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-12-12</div><div class="title">CS144 实验环境配置</div></div></a></div></div></div><hr/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div><div id="comment-switch"><span class="first-comment">Valine</span><span class="switch-btn"></span><span class="second-comment">Livere</span></div></div><div class="comment-wrap"><div><div class="vcomment" id="vcomment"></div></div><div><div id="lv-container" data-id="city" data-uid="MTAyMC8zNDcxOS8xMTI1Ng=="></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="card-info-avatar is-center"><img class="avatar-img" src= "/img/loading.gif" data-lazy-src="https://github.com/Doraemonzzz/md-photo/blob/master/%E5%A4%B4%E5%83%8F.jpg?raw=true" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/><div class="author-info__name">Doraemonzzz</div><div class="author-info__description">个人博客，主要记录有关机器学习，数学以及计算机科学的笔记</div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">674</div></a></div><div class="card-info-data-item is-center"><a href="/tags/"><div class="headline">标签</div><div class="length-num">70</div></a></div><div class="card-info-data-item is-center"><a href="/categories/"><div class="headline">分类</div><div class="length-num">27</div></a></div></div><a class="button--animated" id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/Doraemonzzz"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/Doraemonzzz" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="/doraemon_zzz@163.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a><a class="social-icon" href="https://space.bilibili.com/291079982" target="_blank" title="Bilibili"><i class="iconfont icon-bilibili"></i></a><a class="social-icon" href="/atom.xml" target="_blank" title=""><i class="fa fa-rss"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn card-announcement-animation"></i><span>公告</span></div><div class="announcement_content">暂无公告</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Lab-1-stitching-substrings-into-a-byte-stream"><span class="toc-number">1.</span> <span class="toc-text">Lab 1: stitching substrings into a byte stream</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%87%86%E5%A4%87%E5%B7%A5%E4%BD%9C"><span class="toc-number">1.1.</span> <span class="toc-text">准备工作</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%8B%E8%BD%BD%E4%BB%A3%E7%A0%81%E4%BB%A5%E5%8F%8A%E8%B7%91%E9%80%9A%E6%B5%81%E7%A8%8B"><span class="toc-number">1.1.1.</span> <span class="toc-text">下载代码以及跑通流程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8E%A5%E5%8F%A3"><span class="toc-number">1.1.2.</span> <span class="toc-text">接口</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AF%B4%E6%98%8E"><span class="toc-number">1.1.3.</span> <span class="toc-text">说明</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%A3%E7%A0%81"><span class="toc-number">1.2.</span> <span class="toc-text">代码</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2021/12/12/2021-12-12-CS144-Lab1/" title="CS144 Lab1"><img src= "/img/loading.gif" data-lazy-src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="CS144 Lab1"/></a><div class="content"><a class="title" href="/2021/12/12/2021-12-12-CS144-Lab1/" title="CS144 Lab1">CS144 Lab1</a><time datetime="2021-12-12T08:20:00.000Z" title="发表于 2021-12-12 16:20:00">2021-12-12</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/12/12/2021-12-12-CS144-Lab0/" title="CS144 Lab0"><img src= "/img/loading.gif" data-lazy-src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="CS144 Lab0"/></a><div class="content"><a class="title" href="/2021/12/12/2021-12-12-CS144-Lab0/" title="CS144 Lab0">CS144 Lab0</a><time datetime="2021-12-12T08:17:00.000Z" title="发表于 2021-12-12 16:17:00">2021-12-12</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/12/12/2021-12-12-CS144-%E5%AE%9E%E9%AA%8C%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/" title="CS144 实验环境配置"><img src= "/img/loading.gif" data-lazy-src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="CS144 实验环境配置"/></a><div class="content"><a class="title" href="/2021/12/12/2021-12-12-CS144-%E5%AE%9E%E9%AA%8C%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/" title="CS144 实验环境配置">CS144 实验环境配置</a><time datetime="2021-12-12T08:14:00.000Z" title="发表于 2021-12-12 16:14:00">2021-12-12</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/12/12/2021-12-12-MIT-6.S081-Operating-System-Enginerring-Lab3-page-tables/" title="MIT 6.S081 Operating System Enginerring Lab3 page tables"><img src= "/img/loading.gif" data-lazy-src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="MIT 6.S081 Operating System Enginerring Lab3 page tables"/></a><div class="content"><a class="title" href="/2021/12/12/2021-12-12-MIT-6.S081-Operating-System-Enginerring-Lab3-page-tables/" title="MIT 6.S081 Operating System Enginerring Lab3 page tables">MIT 6.S081 Operating System Enginerring Lab3 page tables</a><time datetime="2021-12-12T04:01:00.000Z" title="发表于 2021-12-12 12:01:00">2021-12-12</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/11/10/2021-11-10-CMU-15-213-Lab6-Proxy-Lab/" title="CMU 15-213 Lab6 Proxy Lab"><img src= "/img/loading.gif" data-lazy-src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="CMU 15-213 Lab6 Proxy Lab"/></a><div class="content"><a class="title" href="/2021/11/10/2021-11-10-CMU-15-213-Lab6-Proxy-Lab/" title="CMU 15-213 Lab6 Proxy Lab">CMU 15-213 Lab6 Proxy Lab</a><time datetime="2021-11-10T14:44:00.000Z" title="发表于 2021-11-10 22:44:00">2021-11-10</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2018 - 2021 By Doraemonzzz</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="font-plus" type="button" title="放大字体"><i class="fas fa-plus"></i></button><button id="font-minus" type="button" title="缩小字体"><i class="fas fa-minus"></i></button><button id="translateLink" type="button" title="简繁转换">简</button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div id="local-search"><div class="search-dialog"><div class="search-dialog__title" id="local-search-title">本地搜索</div><div id="local-input-panel"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div></div><hr/><div id="local-search-results"></div><span class="search-close-button"><i class="fas fa-times"></i></span></div><div id="search-mask"></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="/js/tw_cn.js"></script><script src="https://cdn.jsdelivr.net/npm/vanilla-lazyload/dist/lazyload.iife.min.js"></script><script src="/js/search/local-search.js"></script><script>var preloader = {
+  endLoading: () => {
+    document.body.style.overflow = 'auto';
+    document.getElementById('loading-box').classList.add("loaded")
+  },
+  initLoading: () => {
+    document.body.style.overflow = '';
+    document.getElementById('loading-box').classList.remove("loaded")
+
+  }
+}
+window.addEventListener('load',preloader.endLoading())</script><div class="js-pjax"><script>if (!window.MathJax) {
+  window.MathJax = {
+    tex: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]],
+      tags: 'ams'
+    },
+    chtml: {
+      scale: 1.25
+    },
+    options: {
+      renderActions: {
+        findScript: [10, doc => {
+          for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+            const display = !!node.type.match(/; *mode=display/)
+            const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+            const text = document.createTextNode('')
+            node.parentNode.replaceChild(text, node)
+            math.start = {node: text, delim: '', n: 0}
+            math.end = {node: text, delim: '', n: 0}
+            doc.math.push(math)
+          }
+        }, '']
+      }
+    }
+  }
+  
+  const script = document.createElement('script')
+  script.src = 'https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js'
+  script.id = 'MathJax-script'
+  script.async = true
+  document.head.appendChild(script)
+} else {
+  MathJax.startup.document.state(0)
+  MathJax.texReset()
+  MathJax.typeset()
+}</script><script>function loadValine () {
+  function initValine () {
+    const valine = new Valine(Object.assign({
+      el: '#vcomment',
+      appId: 'IpnmxCW9CvYWIXbol5QXsegX-MdYXbMMI',
+      appKey: 'w57DVCdbxcyB1TYYagMIMJIU',
+      placeholder: 'Please leave your footprints',
+      avatar: 'monsterid',
+      meta: 'nick,mail,link'.split(','),
+      pageSize: '10',
+      lang: 'en',
+      recordIP: false,
+      serverURLs: '',
+      emojiCDN: '',
+      emojiMaps: "",
+      enableQQ: false,
+      path: window.location.pathname,
+      requiredFields: ["nick,mail"],
+      visitor: true
+    }, null))
+  }
+
+  if (typeof Valine === 'function') initValine() 
+  else getScript('https://cdn.jsdelivr.net/npm/valine/dist/Valine.min.js').then(initValine)
+}
+
+if ('Valine' === 'Valine' || !false) {
+  if (false) btf.loadComment(document.getElementById('vcomment'),loadValine)
+  else setTimeout(loadValine, 0)
+} else {
+  function loadOtherComment () {
+    loadValine()
+  }
+}</script><script>function loadLivere () {
+  if (typeof LivereTower === 'object') {
+    window.LivereTower.init()
+  }
+  else {
+    (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+    })(document, 'script');
+  }
+}
+
+if ('Valine' === 'Livere' || !false) {
+  if (false) btf.loadComment(document.getElementById('lv-container'), loadLivere)
+  else loadLivere()
+}
+else {
+  function loadOtherComment () {
+    loadLivere()
+  }
+}</script></div><script defer="defer" id="fluttering_ribbon" mobile="false" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/canvas-fluttering-ribbon.min.js"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

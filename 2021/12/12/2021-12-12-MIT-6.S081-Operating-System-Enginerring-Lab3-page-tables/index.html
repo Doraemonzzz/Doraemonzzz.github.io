@@ -1,0 +1,874 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>MIT 6.S081 Operating System Enginerring Lab3 page tables | Doraemonzzz</title><meta name="keywords" content="6.S081"><meta name="author" content="Doraemonzzz"><meta name="copyright" content="Doraemonzzz"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="这里给出Lab3 page tables的解析。 学习资料：  https:&#x2F;&#x2F;pdos.csail.mit.edu&#x2F;6.828&#x2F;2020&#x2F;schedule.html https:&#x2F;&#x2F;mit-public-courses-cn-translatio.gitbook.io&#x2F;mit6-s081&#x2F; https:&#x2F;&#x2F;th0ar.gitbooks.io&#x2F;xv6-chinese&#x2F;content&#x2F; https:">
+<meta property="og:type" content="article">
+<meta property="og:title" content="MIT 6.S081 Operating System Enginerring Lab3 page tables">
+<meta property="og:url" content="http://www.doraemonzzz.com/2021/12/12/2021-12-12-MIT-6.S081-Operating-System-Enginerring-Lab3-page-tables/index.html">
+<meta property="og:site_name" content="Doraemonzzz">
+<meta property="og:description" content="这里给出Lab3 page tables的解析。 学习资料：  https:&#x2F;&#x2F;pdos.csail.mit.edu&#x2F;6.828&#x2F;2020&#x2F;schedule.html https:&#x2F;&#x2F;mit-public-courses-cn-translatio.gitbook.io&#x2F;mit6-s081&#x2F; https:&#x2F;&#x2F;th0ar.gitbooks.io&#x2F;xv6-chinese&#x2F;content&#x2F; https:">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg">
+<meta property="article:published_time" content="2021-12-12T04:01:00.000Z">
+<meta property="article:modified_time" content="2021-12-12T04:02:28.154Z">
+<meta property="article:author" content="Doraemonzzz">
+<meta property="article:tag" content="6.S081">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg"><link rel="shortcut icon" href="https://github.com/Doraemonzzz/md-photo/blob/master/%E5%A4%B4%E5%83%8F.jpg?raw=true"><link rel="canonical" href="http://www.doraemonzzz.com/2021/12/12/2021-12-12-MIT-6.S081-Operating-System-Enginerring-Lab3-page-tables/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//www.google-analytics.com" crossorigin=""/><link rel="preconnect" href="//hm.baidu.com"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><script>var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?6f00f37f957f0608abb8c571105456f0";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script><script async="async" src="https://www.googletagmanager.com/gtag/js?id=UA-G-RE4B1LKRZD"></script><script>window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'UA-G-RE4B1LKRZD');
+</script><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"search.xml","languages":{"hits_empty":"找不到您查询的内容：${query}"}},
+  translate: {"defaultEncoding":2,"translateDelay":0,"msgToTraditionalChinese":"繁","msgToSimplifiedChinese":"簡"},
+  noticeOutdate: {"limitDay":500,"position":"top","messagePrev":"距离上次更新已经","messageNext":"天了，文章内容可能已经过时。"},
+  highlight: {"plugin":"prismjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":200},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    jQuery: 'https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js',
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+    },
+    fancybox: {
+      js: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css'
+    }
+  },
+  isPhotoFigcaption: true,
+  islazyload: true,
+  isanchor: true
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'MIT 6.S081 Operating System Enginerring Lab3 page tables',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2021-12-12 12:02:28'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const fontSizeVal = saveToLocal.get('global-font-size')
+    if (fontSizeVal !== undefined) {
+      document.documentElement.style.setProperty('--global-font-size', fontSizeVal + 'px')
+    }
+    })(window)</script><link rel="stylesheet" href="/css/bilibili.css" media="defer" onload="this.media='all'"><meta name="google-site-verification" content="c4v-NmuUZRgl3cvtg9GKswryK1YLaPztd_5M-df5VNI" /><meta name="generator" content="Hexo 5.4.0"><link rel="alternate" href="/atom.xml" title="Doraemonzzz" type="application/atom+xml">
+</head><body><div id="loading-box"><div class="loading-left-bg"></div><div class="loading-right-bg"></div><div class="spinner-box"><div class="configure-border-1"><div class="configure-core"></div></div><div class="configure-border-2"><div class="configure-core"></div></div><div class="loading-word">加载中...</div></div></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="author-avatar"><img class="avatar-img" src= "/img/loading.gif" data-lazy-src="https://github.com/Doraemonzzz/md-photo/blob/master/%E5%A4%B4%E5%83%8F.jpg?raw=true" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">文章</div><div class="length-num">674</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">标签</div><div class="length-num">70</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/categories/"><div class="headline">分类</div><div class="length-num">27</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-chart-pie"></i><span> 博客统计</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/charts/"><i class="fa-fw far fa-chart-bar"></i><span> 文章统计</span></a></li><li><a class="site-page child" href="/census/"><i class="fa-fw fas fa-chart-area"></i><span> 访问统计</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/top/"><i class="fa-fw fab fa-hotjar"></i><span> 阅读排行榜</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fa fa-heartbeat"></i><span> 娱乐</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于我</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">Doraemonzzz</a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-chart-pie"></i><span> 博客统计</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/charts/"><i class="fa-fw far fa-chart-bar"></i><span> 文章统计</span></a></li><li><a class="site-page child" href="/census/"><i class="fa-fw fas fa-chart-area"></i><span> 访问统计</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/top/"><i class="fa-fw fab fa-hotjar"></i><span> 阅读排行榜</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fa fa-heartbeat"></i><span> 娱乐</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于我</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">MIT 6.S081 Operating System Enginerring Lab3 page tables</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2021-12-12T04:01:00.000Z" title="发表于 2021-12-12 12:01:00">2021-12-12</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2021-12-12T04:02:28.154Z" title="更新于 2021-12-12 12:02:28">2021-12-12</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/">操作系统</a></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-tag"></i><a class="article-meta__tags" href="/tags/6-S081/">6.S081</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">2.9k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>17分钟</span></span><span class="post-meta-separator">|</span><span class="leancloud_visitors" id="/2021/12/12/2021-12-12-MIT-6.S081-Operating-System-Enginerring-Lab3-page-tables/" data-flag-title="MIT 6.S081 Operating System Enginerring Lab3 page tables"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span class="leancloud-visitors-count"></span></span><span class="post-meta-separator">|</span><span class="post-meta-commentcount"><i class="far fa-comments fa-fw post-meta-icon"></i><span class="post-meta-label">评论数:</span><a href="/2021/12/12/2021-12-12-MIT-6.S081-Operating-System-Enginerring-Lab3-page-tables/#post-comment" itemprop="discussionUrl"><span class="valine-comment-count" data-xid="/2021/12/12/2021-12-12-MIT-6.S081-Operating-System-Enginerring-Lab3-page-tables/" itemprop="commentCount"></span></a></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p>这里给出Lab3 page tables的解析。</p>
+<p>学习资料：</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://pdos.csail.mit.edu/6.828/2020/schedule.html">https://pdos.csail.mit.edu/6.828/2020/schedule.html</a></li>
+<li><a target="_blank" rel="noopener" href="https://mit-public-courses-cn-translatio.gitbook.io/mit6-s081/">https://mit-public-courses-cn-translatio.gitbook.io/mit6-s081/</a></li>
+<li><a target="_blank" rel="noopener" href="https://th0ar.gitbooks.io/xv6-chinese/content/">https://th0ar.gitbooks.io/xv6-chinese/content/</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV19k4y1C7kA?p=6">https://www.bilibili.com/video/BV19k4y1C7kA?p=6</a></li>
+</ul>
+<p>参考资料：</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/PKUFlyingPig/MIT6.S081-2020fall/tree/master/reports">https://github.com/PKUFlyingPig/MIT6.S081-2020fall/tree/master/reports</a></li>
+<li><a target="_blank" rel="noopener" href="https://fanxiao.tech/posts/MIT-6S081-notes/#38-lab-3-pgtbl">https://fanxiao.tech/posts/MIT-6S081-notes/#38-lab-3-pgtbl</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV19k4y1C7kA?p=6">https://www.bilibili.com/video/BV19k4y1C7kA?p=6</a></li>
+</ul>
+<span id="more"></span>
+<h2 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h2><p>修改测评脚本：</p>
+<p>将</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token comment">#!/usr/bin/env python</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>修改为：</p>
+<pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token comment">#!/usr/bin/env python3</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>测试为：</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">./grade-lab-pgtbl pte<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<h2 id="Print-a-page-table-easy"><a href="#Print-a-page-table-easy" class="headerlink" title="Print a page table (easy)"></a>Print a page table (<a target="_blank" rel="noopener" href="https://pdos.csail.mit.edu/6.828/2020/labs/guidance.html">easy</a>)</h2><p>利用递归遍历即可，代码如下：</p>
+<p>vm.c：</p>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token comment">// part 1 begin</span>
+<span class="token comment">// print page tage</span>
+<span class="token keyword">static</span> <span class="token keyword">char</span><span class="token operator">*</span> prefix<span class="token punctuation">[</span><span class="token number">3</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token punctuation">&#123;</span><span class="token string">".."</span><span class="token punctuation">,</span> <span class="token string">".. .."</span><span class="token punctuation">,</span> <span class="token string">".. .. .."</span><span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
+<span class="token keyword">void</span> <span class="token function">vmprint</span><span class="token punctuation">(</span><span class="token class-name">pagetable_t</span> pagetable<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+  <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"page table %p\n"</span><span class="token punctuation">,</span> pagetable<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token function">vmprint_rec</span><span class="token punctuation">(</span>pagetable<span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token keyword">void</span> <span class="token function">vmprint_rec</span><span class="token punctuation">(</span><span class="token class-name">pagetable_t</span> pagetable<span class="token punctuation">,</span> <span class="token keyword">int</span> l<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+  <span class="token keyword">if</span> <span class="token punctuation">(</span>l <span class="token operator">></span> <span class="token number">2</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">return</span><span class="token punctuation">;</span>
+  <span class="token punctuation">&#125;</span>
+  <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> <span class="token number">512</span><span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token class-name">pte_t</span> pte <span class="token operator">=</span> pagetable<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">;</span>
+    <span class="token comment">// 合法则继续遍历</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>pte <span class="token operator">&amp;</span> PTE_V<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+      uint64 pa <span class="token operator">=</span> <span class="token function">PTE2PA</span><span class="token punctuation">(</span>pte<span class="token punctuation">)</span><span class="token punctuation">;</span>
+      <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"%s%d: pte %p pa %p\n"</span><span class="token punctuation">,</span> prefix<span class="token punctuation">[</span>l<span class="token punctuation">]</span><span class="token punctuation">,</span> i<span class="token punctuation">,</span> pte<span class="token punctuation">,</span> pa<span class="token punctuation">)</span><span class="token punctuation">;</span>
+      <span class="token function">vmprint_rec</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token class-name">pagetable_t</span><span class="token punctuation">)</span>pa<span class="token punctuation">,</span> l <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+  <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span>
+<span class="token comment">// part 1 end</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>测试：</p>
+<pre class="line-numbers language-none"><code class="language-none">.&#x2F;grade-lab-pgtbl pte
+make: &#39;kernel&#x2F;kernel&#39; is up to date.
+&#x3D;&#x3D; Test pte printout &#x3D;&#x3D; pte printout: OK (3.0s) <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+<h2 id="A-kernel-page-table-per-process-hard"><a href="#A-kernel-page-table-per-process-hard" class="headerlink" title="A kernel page table per process (hard)"></a>A kernel page table per process (<a target="_blank" rel="noopener" href="https://pdos.csail.mit.edu/6.828/2020/labs/guidance.html">hard</a>)</h2><p>目标：进程中添加内核页表。</p>
+<p>这里使用的思路是共享内核页表，代码如下：</p>
+<p>proc.h：</p>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token comment">// Per-process state</span>
+<span class="token keyword">struct</span> <span class="token class-name">proc</span> <span class="token punctuation">&#123;</span>
+  <span class="token keyword">struct</span> <span class="token class-name">spinlock</span> lock<span class="token punctuation">;</span>
+
+  <span class="token comment">// p->lock must be held when using these:</span>
+  <span class="token keyword">enum</span> <span class="token class-name">procstate</span> state<span class="token punctuation">;</span>        <span class="token comment">// Process state</span>
+  <span class="token keyword">struct</span> <span class="token class-name">proc</span> <span class="token operator">*</span>parent<span class="token punctuation">;</span>         <span class="token comment">// Parent process</span>
+  <span class="token keyword">void</span> <span class="token operator">*</span>chan<span class="token punctuation">;</span>                  <span class="token comment">// If non-zero, sleeping on chan</span>
+  <span class="token keyword">int</span> killed<span class="token punctuation">;</span>                  <span class="token comment">// If non-zero, have been killed</span>
+  <span class="token keyword">int</span> xstate<span class="token punctuation">;</span>                  <span class="token comment">// Exit status to be returned to parent's wait</span>
+  <span class="token keyword">int</span> pid<span class="token punctuation">;</span>                     <span class="token comment">// Process ID</span>
+
+  <span class="token comment">// these are private to the process, so p->lock need not be held.</span>
+  uint64 kstack<span class="token punctuation">;</span>               <span class="token comment">// Virtual address of kernel stack</span>
+  uint64 sz<span class="token punctuation">;</span>                   <span class="token comment">// Size of process memory (bytes)</span>
+  <span class="token class-name">pagetable_t</span> pagetable<span class="token punctuation">;</span>       <span class="token comment">// User page table</span>
+  <span class="token keyword">struct</span> <span class="token class-name">trapframe</span> <span class="token operator">*</span>trapframe<span class="token punctuation">;</span> <span class="token comment">// data page for trampoline.S</span>
+  <span class="token keyword">struct</span> <span class="token class-name">context</span> context<span class="token punctuation">;</span>      <span class="token comment">// swtch() here to run process</span>
+  <span class="token keyword">struct</span> <span class="token class-name">file</span> <span class="token operator">*</span>ofile<span class="token punctuation">[</span>NOFILE<span class="token punctuation">]</span><span class="token punctuation">;</span>  <span class="token comment">// Open files</span>
+  <span class="token keyword">struct</span> <span class="token class-name">inode</span> <span class="token operator">*</span>cwd<span class="token punctuation">;</span>           <span class="token comment">// Current directory</span>
+  <span class="token keyword">char</span> name<span class="token punctuation">[</span><span class="token number">16</span><span class="token punctuation">]</span><span class="token punctuation">;</span>               <span class="token comment">// Process name (debugging)</span>
+  <span class="token comment">// part 2 begin</span>
+  <span class="token class-name">pagetable_t</span> kernel_pagetable<span class="token punctuation">;</span>
+  <span class="token comment">// part 2 end</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>vm.c：</p>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token comment">// part 2 begin</span>
+<span class="token class-name">pagetable_t</span>
+<span class="token function">proc_kvminit</span><span class="token punctuation">(</span><span class="token keyword">void</span><span class="token punctuation">)</span>
+<span class="token punctuation">&#123;</span>
+  <span class="token class-name">pagetable_t</span> pagetable <span class="token operator">=</span> <span class="token function">uvmcreate</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token comment">/** 
+   * 复制L2页表, kernel_pagetable[0] >= 0x0, &lt; 0x4,0000,000,
+   * 包含UART0, VIRTIO0, CLINT, PLIC，这部分不和kernel共享, 其余部分和kernel共享。
+  **/</span>
+  <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> <span class="token number">512</span><span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    pagetable<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">=</span> kernel_pagetable<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">;</span>
+  <span class="token punctuation">&#125;</span>
+
+  <span class="token comment">// uart registers</span>
+  <span class="token function">kvmmap_</span><span class="token punctuation">(</span>pagetable<span class="token punctuation">,</span> UART0<span class="token punctuation">,</span> UART0<span class="token punctuation">,</span> PGSIZE<span class="token punctuation">,</span> PTE_R <span class="token operator">|</span> PTE_W<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+  <span class="token comment">// virtio mmio disk interface</span>
+  <span class="token function">kvmmap_</span><span class="token punctuation">(</span>pagetable<span class="token punctuation">,</span> VIRTIO0<span class="token punctuation">,</span> VIRTIO0<span class="token punctuation">,</span> PGSIZE<span class="token punctuation">,</span> PTE_R <span class="token operator">|</span> PTE_W<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+  <span class="token comment">// CLINT</span>
+  <span class="token function">kvmmap_</span><span class="token punctuation">(</span>pagetable<span class="token punctuation">,</span> CLINT<span class="token punctuation">,</span> CLINT<span class="token punctuation">,</span> <span class="token number">0x10000</span><span class="token punctuation">,</span> PTE_R <span class="token operator">|</span> PTE_W<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+  <span class="token comment">// PLIC</span>
+  <span class="token function">kvmmap_</span><span class="token punctuation">(</span>pagetable<span class="token punctuation">,</span> PLIC<span class="token punctuation">,</span> PLIC<span class="token punctuation">,</span> <span class="token number">0x400000</span><span class="token punctuation">,</span> PTE_R <span class="token operator">|</span> PTE_W<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+  <span class="token keyword">return</span> pagetable<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+<span class="token comment">// part 2 end</span>
+
+<span class="token comment">// part 2 begin</span>
+<span class="token keyword">void</span>
+<span class="token function">kvminithart_</span><span class="token punctuation">(</span><span class="token class-name">pagetable_t</span> pagetable<span class="token punctuation">)</span>
+<span class="token punctuation">&#123;</span>
+  <span class="token function">w_satp</span><span class="token punctuation">(</span><span class="token function">MAKE_SATP</span><span class="token punctuation">(</span>pagetable<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token function">sfence_vma</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+<span class="token comment">// part 2 end</span>
+
+<span class="token comment">// part 2 begin</span>
+<span class="token keyword">void</span>
+<span class="token function">free_no_leaf</span><span class="token punctuation">(</span><span class="token class-name">pagetable_t</span> pagetable<span class="token punctuation">,</span> <span class="token keyword">int</span> l<span class="token punctuation">)</span>
+<span class="token punctuation">&#123;</span>
+  <span class="token comment">// 只处理到L1</span>
+  <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> <span class="token number">1</span><span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token class-name">pte_t</span> pte <span class="token operator">=</span> pagetable<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">;</span>
+    <span class="token class-name">pagetable_t</span> level1 <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token class-name">pagetable_t</span><span class="token punctuation">)</span><span class="token function">PTE2PA</span><span class="token punctuation">(</span>pte<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> j <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> j <span class="token operator">&lt;</span> <span class="token number">512</span><span class="token punctuation">;</span> j<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+      <span class="token class-name">pte_t</span> pte <span class="token operator">=</span> level1<span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token punctuation">;</span>
+      <span class="token keyword">if</span> <span class="token punctuation">(</span>pte <span class="token operator">&amp;</span> PTE_V<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token class-name">pagetable_t</span> level2 <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token class-name">pagetable_t</span><span class="token punctuation">)</span><span class="token function">PTE2PA</span><span class="token punctuation">(</span>pte<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token function">kfree</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token keyword">void</span> <span class="token operator">*</span><span class="token punctuation">)</span> level2<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        level1<span class="token punctuation">[</span>j<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+      <span class="token punctuation">&#125;</span>
+    <span class="token punctuation">&#125;</span>
+    <span class="token function">kfree</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token keyword">void</span> <span class="token operator">*</span><span class="token punctuation">)</span> level1<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">&#125;</span>
+  
+  <span class="token function">kfree</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token keyword">void</span><span class="token operator">*</span><span class="token punctuation">)</span>pagetable<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+<span class="token comment">// part 2 end</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>proc.c：</p>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token comment">// Look in the process table for an UNUSED proc.</span>
+<span class="token comment">// If found, initialize state required to run in the kernel,</span>
+<span class="token comment">// and return with p->lock held.</span>
+<span class="token comment">// If there are no free procs, or a memory allocation fails, return 0.</span>
+<span class="token keyword">static</span> <span class="token keyword">struct</span> <span class="token class-name">proc</span><span class="token operator">*</span>
+<span class="token function">allocproc</span><span class="token punctuation">(</span><span class="token keyword">void</span><span class="token punctuation">)</span>
+<span class="token punctuation">&#123;</span>
+  <span class="token keyword">struct</span> <span class="token class-name">proc</span> <span class="token operator">*</span>p<span class="token punctuation">;</span>
+
+  <span class="token keyword">for</span><span class="token punctuation">(</span>p <span class="token operator">=</span> proc<span class="token punctuation">;</span> p <span class="token operator">&lt;</span> <span class="token operator">&amp;</span>proc<span class="token punctuation">[</span>NPROC<span class="token punctuation">]</span><span class="token punctuation">;</span> p<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token function">acquire</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>p<span class="token operator">-></span>lock<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">if</span><span class="token punctuation">(</span>p<span class="token operator">-></span>state <span class="token operator">==</span> UNUSED<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+      <span class="token keyword">goto</span> found<span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span> <span class="token keyword">else</span> <span class="token punctuation">&#123;</span>
+      <span class="token function">release</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>p<span class="token operator">-></span>lock<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+  <span class="token punctuation">&#125;</span>
+
+
+  <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+
+found<span class="token operator">:</span>
+  p<span class="token operator">-></span>pid <span class="token operator">=</span> <span class="token function">allocpid</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+  <span class="token comment">// Allocate a trapframe page.</span>
+  <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token punctuation">(</span>p<span class="token operator">-></span>trapframe <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token keyword">struct</span> <span class="token class-name">trapframe</span> <span class="token operator">*</span><span class="token punctuation">)</span><span class="token function">kalloc</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+    <span class="token function">release</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>p<span class="token operator">-></span>lock<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+  <span class="token punctuation">&#125;</span>
+
+  <span class="token comment">// An empty user page table.</span>
+  p<span class="token operator">-></span>pagetable <span class="token operator">=</span> <span class="token function">proc_pagetable</span><span class="token punctuation">(</span>p<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token keyword">if</span><span class="token punctuation">(</span>p<span class="token operator">-></span>pagetable <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+    <span class="token function">freeproc</span><span class="token punctuation">(</span>p<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">release</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>p<span class="token operator">-></span>lock<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+  <span class="token punctuation">&#125;</span>
+
+  <span class="token comment">// part 2 begin</span>
+  <span class="token comment">// init</span>
+  p<span class="token operator">-></span>kernel_pagetable <span class="token operator">=</span> <span class="token function">proc_kvminit</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token keyword">if</span><span class="token punctuation">(</span>p<span class="token operator">-></span>kernel_pagetable <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+    <span class="token function">freeproc</span><span class="token punctuation">(</span>p<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">release</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>p<span class="token operator">-></span>lock<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+  <span class="token punctuation">&#125;</span>
+  <span class="token comment">// part 2 end</span>
+
+  <span class="token comment">// Set up new context to start executing at forkret,</span>
+  <span class="token comment">// which returns to user space.</span>
+  <span class="token function">memset</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>p<span class="token operator">-></span>context<span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token keyword">sizeof</span><span class="token punctuation">(</span>p<span class="token operator">-></span>context<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  p<span class="token operator">-></span>context<span class="token punctuation">.</span>ra <span class="token operator">=</span> <span class="token punctuation">(</span>uint64<span class="token punctuation">)</span>forkret<span class="token punctuation">;</span>
+  p<span class="token operator">-></span>context<span class="token punctuation">.</span>sp <span class="token operator">=</span> p<span class="token operator">-></span>kstack <span class="token operator">+</span> PGSIZE<span class="token punctuation">;</span>
+
+  <span class="token keyword">return</span> p<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token comment">// free a proc structure and the data hanging from it,</span>
+<span class="token comment">// including user pages.</span>
+<span class="token comment">// p->lock must be held.</span>
+<span class="token keyword">static</span> <span class="token keyword">void</span>
+<span class="token function">freeproc</span><span class="token punctuation">(</span><span class="token keyword">struct</span> <span class="token class-name">proc</span> <span class="token operator">*</span>p<span class="token punctuation">)</span>
+<span class="token punctuation">&#123;</span>
+  <span class="token keyword">if</span><span class="token punctuation">(</span>p<span class="token operator">-></span>trapframe<span class="token punctuation">)</span>
+    <span class="token function">kfree</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token keyword">void</span><span class="token operator">*</span><span class="token punctuation">)</span>p<span class="token operator">-></span>trapframe<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  p<span class="token operator">-></span>trapframe <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+  <span class="token keyword">if</span><span class="token punctuation">(</span>p<span class="token operator">-></span>pagetable<span class="token punctuation">)</span>
+    <span class="token function">proc_freepagetable</span><span class="token punctuation">(</span>p<span class="token operator">-></span>pagetable<span class="token punctuation">,</span> p<span class="token operator">-></span>sz<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token comment">// part 2 begin</span>
+  <span class="token comment">// 只删除到第二层</span>
+  <span class="token keyword">if</span> <span class="token punctuation">(</span>p<span class="token operator">-></span>kernel_pagetable<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token function">free_no_leaf</span><span class="token punctuation">(</span>p<span class="token operator">-></span>kernel_pagetable<span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">&#125;</span>
+  <span class="token comment">// part 2 end</span>
+
+  p<span class="token operator">-></span>pagetable <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+  p<span class="token operator">-></span>sz <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+  p<span class="token operator">-></span>pid <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+  p<span class="token operator">-></span>parent <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+  p<span class="token operator">-></span>name<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+  p<span class="token operator">-></span>chan <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+  p<span class="token operator">-></span>killed <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+  p<span class="token operator">-></span>xstate <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+  p<span class="token operator">-></span>state <span class="token operator">=</span> UNUSED<span class="token punctuation">;</span>
+
+<span class="token punctuation">&#125;</span>
+
+<span class="token comment">// Per-CPU process scheduler.</span>
+<span class="token comment">// Each CPU calls scheduler() after setting itself up.</span>
+<span class="token comment">// Scheduler never returns.  It loops, doing:</span>
+<span class="token comment">//  - choose a process to run.</span>
+<span class="token comment">//  - swtch to start running that process.</span>
+<span class="token comment">//  - eventually that process transfers control</span>
+<span class="token comment">//    via swtch back to the scheduler.</span>
+<span class="token keyword">void</span>
+<span class="token function">scheduler</span><span class="token punctuation">(</span><span class="token keyword">void</span><span class="token punctuation">)</span>
+<span class="token punctuation">&#123;</span>
+  <span class="token keyword">struct</span> <span class="token class-name">proc</span> <span class="token operator">*</span>p<span class="token punctuation">;</span>
+  <span class="token keyword">struct</span> <span class="token class-name">cpu</span> <span class="token operator">*</span>c <span class="token operator">=</span> <span class="token function">mycpu</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  
+  c<span class="token operator">-></span>proc <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+  <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token punctuation">;</span><span class="token punctuation">;</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+    <span class="token comment">// Avoid deadlock by ensuring that devices can interrupt.</span>
+    <span class="token function">intr_on</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    
+    <span class="token keyword">int</span> found <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+    <span class="token keyword">for</span><span class="token punctuation">(</span>p <span class="token operator">=</span> proc<span class="token punctuation">;</span> p <span class="token operator">&lt;</span> <span class="token operator">&amp;</span>proc<span class="token punctuation">[</span>NPROC<span class="token punctuation">]</span><span class="token punctuation">;</span> p<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+      <span class="token function">acquire</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>p<span class="token operator">-></span>lock<span class="token punctuation">)</span><span class="token punctuation">;</span>
+      <span class="token keyword">if</span><span class="token punctuation">(</span>p<span class="token operator">-></span>state <span class="token operator">==</span> RUNNABLE<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token comment">// Switch to chosen process.  It is the process's job</span>
+        <span class="token comment">// to release its lock and then reacquire it</span>
+        <span class="token comment">// before jumping back to us.</span>
+        p<span class="token operator">-></span>state <span class="token operator">=</span> RUNNING<span class="token punctuation">;</span>
+        c<span class="token operator">-></span>proc <span class="token operator">=</span> p<span class="token punctuation">;</span>
+
+        <span class="token comment">// part 2 begin</span>
+        <span class="token comment">// change to p->kernel_pagetable</span>
+        <span class="token function">w_satp</span><span class="token punctuation">(</span><span class="token function">MAKE_SATP</span><span class="token punctuation">(</span>p<span class="token operator">-></span>kernel_pagetable<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token function">sfence_vma</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token comment">// part 2 end</span>
+
+        <span class="token function">swtch</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>c<span class="token operator">-></span>context<span class="token punctuation">,</span> <span class="token operator">&amp;</span>p<span class="token operator">-></span>context<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token comment">// Process is done running for now.</span>
+        <span class="token comment">// It should have changed its p->state before coming back.</span>
+        c<span class="token operator">-></span>proc <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+
+        <span class="token comment">// part 2 begin</span>
+        <span class="token comment">// change to kernel_pagetable</span>
+        <span class="token function">kvminithart</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token comment">// part 2 end</span>
+
+        found <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>
+      <span class="token punctuation">&#125;</span>
+      <span class="token function">release</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>p<span class="token operator">-></span>lock<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">if</span> <span class="token expression"><span class="token operator">!</span><span class="token function">defined</span> <span class="token punctuation">(</span>LAB_FS<span class="token punctuation">)</span></span></span>
+    <span class="token keyword">if</span><span class="token punctuation">(</span>found <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+      <span class="token function">intr_on</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+      <span class="token keyword">asm</span> <span class="token keyword">volatile</span><span class="token punctuation">(</span><span class="token string">"wfi"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">else</span></span>
+    <span class="token punctuation">;</span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">endif</span></span>
+  <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span>
+
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>测试：</p>
+<pre class="line-numbers language-none"><code class="language-none">.&#x2F;grade-lab-pgtbl usertests
+riscv64-unknown-elf-gcc -Wall -Werror -O -fno-omit-frame-pointer -ggdb -DSOL_PGTBL -DLAB_PGTBL -MD -mcmodel&#x3D;medany -ffreestanding -fno-common -nostdlib -mno-relax -I. -fno-stack-protector -fno-pie -no-pie   -c -o kernel&#x2F;vm.o kernel&#x2F;vm.c
+riscv64-unknown-elf-gcc -Wall -Werror -O -fno-omit-frame-pointer -ggdb -DSOL_PGTBL -DLAB_PGTBL -MD -mcmodel&#x3D;medany -ffreestanding -fno-common -nostdlib -mno-relax -I. -fno-stack-protector -fno-pie -no-pie   -c -o kernel&#x2F;proc.o kernel&#x2F;proc.c
+riscv64-unknown-elf-ld -z max-page-size&#x3D;4096 -T kernel&#x2F;kernel.ld -o kernel&#x2F;kernel kernel&#x2F;entry.o kernel&#x2F;start.o kernel&#x2F;console.o kernel&#x2F;printf.o kernel&#x2F;uart.o kernel&#x2F;kalloc.o kernel&#x2F;spinlock.o kernel&#x2F;string.o kernel&#x2F;main.o kernel&#x2F;vm.o kernel&#x2F;proc.o kernel&#x2F;swtch.o kernel&#x2F;trampoline.o kernel&#x2F;trap.o kernel&#x2F;syscall.o kernel&#x2F;sysproc.o kernel&#x2F;bio.o kernel&#x2F;fs.o kernel&#x2F;log.o kernel&#x2F;sleeplock.o kernel&#x2F;file.o kernel&#x2F;pipe.o kernel&#x2F;exec.o kernel&#x2F;sysfile.o kernel&#x2F;kernelvec.o kernel&#x2F;plic.o kernel&#x2F;virtio_disk.o kernel&#x2F;vmcopyin.o kernel&#x2F;stats.o kernel&#x2F;sprintf.o 
+riscv64-unknown-elf-ld: warning: cannot find entry symbol _entry; defaulting to 0000000080000000
+riscv64-unknown-elf-objdump -S kernel&#x2F;kernel &gt; kernel&#x2F;kernel.asm
+riscv64-unknown-elf-objdump -t kernel&#x2F;kernel | sed &#39;1,&#x2F;SYMBOL TABLE&#x2F;d; s&#x2F; .* &#x2F; &#x2F;; &#x2F;^$&#x2F;d&#39; &gt; kernel&#x2F;kernel.sym
+&#x3D;&#x3D; Test usertests &#x3D;&#x3D; (177.0s) 
+&#x3D;&#x3D; Test   usertests: copyin &#x3D;&#x3D; 
+  usertests: copyin: OK 
+&#x3D;&#x3D; Test   usertests: copyinstr1 &#x3D;&#x3D; 
+  usertests: copyinstr1: OK 
+&#x3D;&#x3D; Test   usertests: copyinstr2 &#x3D;&#x3D; 
+  usertests: copyinstr2: OK 
+&#x3D;&#x3D; Test   usertests: copyinstr3 &#x3D;&#x3D; 
+  usertests: copyinstr3: OK 
+&#x3D;&#x3D; Test   usertests: sbrkmuch &#x3D;&#x3D; 
+  usertests: sbrkmuch: OK 
+&#x3D;&#x3D; Test   usertests: all tests &#x3D;&#x3D; 
+  usertests: all tests: OK (0.6s)<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h2 id="Simplify-copyin-copyinstr-hard"><a href="#Simplify-copyin-copyinstr-hard" class="headerlink" title="Simplify copyin/copyinstr (hard)"></a>Simplify <code>copyin/copyinstr</code> (<a target="_blank" rel="noopener" href="https://pdos.csail.mit.edu/6.828/2020/labs/guidance.html">hard</a>)</h2><p>将用户映射添加到每个进程的内核页表，区别：</p>
+<p>copyin在用户进程使用，va != pa，copyin_new在kernel中使用，va = pa。</p>
+<p>代码：</p>
+<p>defs.h：</p>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token comment">// part 3 begin</span>
+<span class="token keyword">int</span>             <span class="token function">copyin_new</span><span class="token punctuation">(</span><span class="token class-name">pagetable_t</span><span class="token punctuation">,</span> <span class="token keyword">char</span><span class="token operator">*</span><span class="token punctuation">,</span> uint64<span class="token punctuation">,</span> uint64<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">int</span>             <span class="token function">copyinstr_new</span><span class="token punctuation">(</span><span class="token class-name">pagetable_t</span><span class="token punctuation">,</span> <span class="token keyword">char</span><span class="token operator">*</span><span class="token punctuation">,</span> uint64<span class="token punctuation">,</span> uint64<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">void</span>            <span class="token function">copy_proc_to_kernel</span><span class="token punctuation">(</span><span class="token class-name">pagetable_t</span><span class="token punctuation">,</span> <span class="token class-name">pagetable_t</span><span class="token punctuation">,</span> uint64<span class="token punctuation">,</span> uint64<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token comment">// part 3 end</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>exec.c：</p>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">int</span>
+<span class="token function">exec</span><span class="token punctuation">(</span><span class="token keyword">char</span> <span class="token operator">*</span>path<span class="token punctuation">,</span> <span class="token keyword">char</span> <span class="token operator">*</span><span class="token operator">*</span>argv<span class="token punctuation">)</span>
+<span class="token punctuation">&#123;</span>
+  <span class="token keyword">char</span> <span class="token operator">*</span>s<span class="token punctuation">,</span> <span class="token operator">*</span>last<span class="token punctuation">;</span>
+  <span class="token keyword">int</span> i<span class="token punctuation">,</span> off<span class="token punctuation">;</span>
+  uint64 argc<span class="token punctuation">,</span> sz <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">,</span> sp<span class="token punctuation">,</span> ustack<span class="token punctuation">[</span>MAXARG<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">,</span> stackbase<span class="token punctuation">;</span>
+  <span class="token keyword">struct</span> <span class="token class-name">elfhdr</span> elf<span class="token punctuation">;</span>
+  <span class="token keyword">struct</span> <span class="token class-name">inode</span> <span class="token operator">*</span>ip<span class="token punctuation">;</span>
+  <span class="token keyword">struct</span> <span class="token class-name">proghdr</span> ph<span class="token punctuation">;</span>
+  <span class="token class-name">pagetable_t</span> pagetable <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">,</span> oldpagetable<span class="token punctuation">;</span>
+  <span class="token keyword">struct</span> <span class="token class-name">proc</span> <span class="token operator">*</span>p <span class="token operator">=</span> <span class="token function">myproc</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+  <span class="token function">begin_op</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+  <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token punctuation">(</span>ip <span class="token operator">=</span> <span class="token function">namei</span><span class="token punctuation">(</span>path<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+    <span class="token function">end_op</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">return</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">;</span>
+  <span class="token punctuation">&#125;</span>
+  <span class="token function">ilock</span><span class="token punctuation">(</span>ip<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+  <span class="token comment">// Check ELF header</span>
+  <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token function">readi</span><span class="token punctuation">(</span>ip<span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token punctuation">(</span>uint64<span class="token punctuation">)</span><span class="token operator">&amp;</span>elf<span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token keyword">sizeof</span><span class="token punctuation">(</span>elf<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token operator">!=</span> <span class="token keyword">sizeof</span><span class="token punctuation">(</span>elf<span class="token punctuation">)</span><span class="token punctuation">)</span>
+    <span class="token keyword">goto</span> bad<span class="token punctuation">;</span>
+  <span class="token keyword">if</span><span class="token punctuation">(</span>elf<span class="token punctuation">.</span>magic <span class="token operator">!=</span> ELF_MAGIC<span class="token punctuation">)</span>
+    <span class="token keyword">goto</span> bad<span class="token punctuation">;</span>
+
+  <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token punctuation">(</span>pagetable <span class="token operator">=</span> <span class="token function">proc_pagetable</span><span class="token punctuation">(</span>p<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">)</span>
+    <span class="token keyword">goto</span> bad<span class="token punctuation">;</span>
+
+  <span class="token comment">// Load program into memory.</span>
+  <span class="token keyword">for</span><span class="token punctuation">(</span>i<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">,</span> off<span class="token operator">=</span>elf<span class="token punctuation">.</span>phoff<span class="token punctuation">;</span> i<span class="token operator">&lt;</span>elf<span class="token punctuation">.</span>phnum<span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">,</span> off<span class="token operator">+=</span><span class="token keyword">sizeof</span><span class="token punctuation">(</span>ph<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+    <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token function">readi</span><span class="token punctuation">(</span>ip<span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token punctuation">(</span>uint64<span class="token punctuation">)</span><span class="token operator">&amp;</span>ph<span class="token punctuation">,</span> off<span class="token punctuation">,</span> <span class="token keyword">sizeof</span><span class="token punctuation">(</span>ph<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token operator">!=</span> <span class="token keyword">sizeof</span><span class="token punctuation">(</span>ph<span class="token punctuation">)</span><span class="token punctuation">)</span>
+      <span class="token keyword">goto</span> bad<span class="token punctuation">;</span>
+    <span class="token keyword">if</span><span class="token punctuation">(</span>ph<span class="token punctuation">.</span>type <span class="token operator">!=</span> ELF_PROG_LOAD<span class="token punctuation">)</span>
+      <span class="token keyword">continue</span><span class="token punctuation">;</span>
+    <span class="token keyword">if</span><span class="token punctuation">(</span>ph<span class="token punctuation">.</span>memsz <span class="token operator">&lt;</span> ph<span class="token punctuation">.</span>filesz<span class="token punctuation">)</span>
+      <span class="token keyword">goto</span> bad<span class="token punctuation">;</span>
+    <span class="token keyword">if</span><span class="token punctuation">(</span>ph<span class="token punctuation">.</span>vaddr <span class="token operator">+</span> ph<span class="token punctuation">.</span>memsz <span class="token operator">&lt;</span> ph<span class="token punctuation">.</span>vaddr<span class="token punctuation">)</span>
+      <span class="token keyword">goto</span> bad<span class="token punctuation">;</span>
+    uint64 sz1<span class="token punctuation">;</span>
+    <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token punctuation">(</span>sz1 <span class="token operator">=</span> <span class="token function">uvmalloc</span><span class="token punctuation">(</span>pagetable<span class="token punctuation">,</span> sz<span class="token punctuation">,</span> ph<span class="token punctuation">.</span>vaddr <span class="token operator">+</span> ph<span class="token punctuation">.</span>memsz<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">)</span>
+      <span class="token keyword">goto</span> bad<span class="token punctuation">;</span>
+    sz <span class="token operator">=</span> sz1<span class="token punctuation">;</span>
+    <span class="token keyword">if</span><span class="token punctuation">(</span>ph<span class="token punctuation">.</span>vaddr <span class="token operator">%</span> PGSIZE <span class="token operator">!=</span> <span class="token number">0</span><span class="token punctuation">)</span>
+      <span class="token keyword">goto</span> bad<span class="token punctuation">;</span>
+    <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token function">loadseg</span><span class="token punctuation">(</span>pagetable<span class="token punctuation">,</span> ph<span class="token punctuation">.</span>vaddr<span class="token punctuation">,</span> ip<span class="token punctuation">,</span> ph<span class="token punctuation">.</span>off<span class="token punctuation">,</span> ph<span class="token punctuation">.</span>filesz<span class="token punctuation">)</span> <span class="token operator">&lt;</span> <span class="token number">0</span><span class="token punctuation">)</span>
+      <span class="token keyword">goto</span> bad<span class="token punctuation">;</span>
+  <span class="token punctuation">&#125;</span>
+  <span class="token function">iunlockput</span><span class="token punctuation">(</span>ip<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token function">end_op</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  ip <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+
+  p <span class="token operator">=</span> <span class="token function">myproc</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  uint64 oldsz <span class="token operator">=</span> p<span class="token operator">-></span>sz<span class="token punctuation">;</span>
+
+  <span class="token comment">// Allocate two pages at the next page boundary.</span>
+  <span class="token comment">// Use the second as the user stack.</span>
+  sz <span class="token operator">=</span> <span class="token function">PGROUNDUP</span><span class="token punctuation">(</span>sz<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  uint64 sz1<span class="token punctuation">;</span>
+  <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token punctuation">(</span>sz1 <span class="token operator">=</span> <span class="token function">uvmalloc</span><span class="token punctuation">(</span>pagetable<span class="token punctuation">,</span> sz<span class="token punctuation">,</span> sz <span class="token operator">+</span> <span class="token number">2</span><span class="token operator">*</span>PGSIZE<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">)</span>
+    <span class="token keyword">goto</span> bad<span class="token punctuation">;</span>
+  sz <span class="token operator">=</span> sz1<span class="token punctuation">;</span>
+  <span class="token function">uvmclear</span><span class="token punctuation">(</span>pagetable<span class="token punctuation">,</span> sz<span class="token operator">-</span><span class="token number">2</span><span class="token operator">*</span>PGSIZE<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  sp <span class="token operator">=</span> sz<span class="token punctuation">;</span>
+  stackbase <span class="token operator">=</span> sp <span class="token operator">-</span> PGSIZE<span class="token punctuation">;</span>
+
+  <span class="token comment">// Push argument strings, prepare rest of stack in ustack.</span>
+  <span class="token keyword">for</span><span class="token punctuation">(</span>argc <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> argv<span class="token punctuation">[</span>argc<span class="token punctuation">]</span><span class="token punctuation">;</span> argc<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">if</span><span class="token punctuation">(</span>argc <span class="token operator">>=</span> MAXARG<span class="token punctuation">)</span>
+      <span class="token keyword">goto</span> bad<span class="token punctuation">;</span>
+    sp <span class="token operator">-=</span> <span class="token function">strlen</span><span class="token punctuation">(</span>argv<span class="token punctuation">[</span>argc<span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">;</span>
+    sp <span class="token operator">-=</span> sp <span class="token operator">%</span> <span class="token number">16</span><span class="token punctuation">;</span> <span class="token comment">// riscv sp must be 16-byte aligned</span>
+    <span class="token keyword">if</span><span class="token punctuation">(</span>sp <span class="token operator">&lt;</span> stackbase<span class="token punctuation">)</span>
+      <span class="token keyword">goto</span> bad<span class="token punctuation">;</span>
+    <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token function">copyout</span><span class="token punctuation">(</span>pagetable<span class="token punctuation">,</span> sp<span class="token punctuation">,</span> argv<span class="token punctuation">[</span>argc<span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token function">strlen</span><span class="token punctuation">(</span>argv<span class="token punctuation">[</span>argc<span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">)</span> <span class="token operator">&lt;</span> <span class="token number">0</span><span class="token punctuation">)</span>
+      <span class="token keyword">goto</span> bad<span class="token punctuation">;</span>
+    ustack<span class="token punctuation">[</span>argc<span class="token punctuation">]</span> <span class="token operator">=</span> sp<span class="token punctuation">;</span>
+  <span class="token punctuation">&#125;</span>
+  ustack<span class="token punctuation">[</span>argc<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+
+  <span class="token comment">// push the array of argv[] pointers.</span>
+  sp <span class="token operator">-=</span> <span class="token punctuation">(</span>argc<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">)</span> <span class="token operator">*</span> <span class="token keyword">sizeof</span><span class="token punctuation">(</span>uint64<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  sp <span class="token operator">-=</span> sp <span class="token operator">%</span> <span class="token number">16</span><span class="token punctuation">;</span>
+  <span class="token keyword">if</span><span class="token punctuation">(</span>sp <span class="token operator">&lt;</span> stackbase<span class="token punctuation">)</span>
+    <span class="token keyword">goto</span> bad<span class="token punctuation">;</span>
+  <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token function">copyout</span><span class="token punctuation">(</span>pagetable<span class="token punctuation">,</span> sp<span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token keyword">char</span> <span class="token operator">*</span><span class="token punctuation">)</span>ustack<span class="token punctuation">,</span> <span class="token punctuation">(</span>argc<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token operator">*</span><span class="token keyword">sizeof</span><span class="token punctuation">(</span>uint64<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token operator">&lt;</span> <span class="token number">0</span><span class="token punctuation">)</span>
+    <span class="token keyword">goto</span> bad<span class="token punctuation">;</span>
+
+  <span class="token comment">// arguments to user main(argc, argv)</span>
+  <span class="token comment">// argc is returned via the system call return</span>
+  <span class="token comment">// value, which goes in a0.</span>
+  p<span class="token operator">-></span>trapframe<span class="token operator">-></span>a1 <span class="token operator">=</span> sp<span class="token punctuation">;</span>
+
+  <span class="token comment">// Save program name for debugging.</span>
+  <span class="token keyword">for</span><span class="token punctuation">(</span>last<span class="token operator">=</span>s<span class="token operator">=</span>path<span class="token punctuation">;</span> <span class="token operator">*</span>s<span class="token punctuation">;</span> s<span class="token operator">++</span><span class="token punctuation">)</span>
+    <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token operator">*</span>s <span class="token operator">==</span> <span class="token string">'/'</span><span class="token punctuation">)</span>
+      last <span class="token operator">=</span> s<span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">;</span>
+  <span class="token function">safestrcpy</span><span class="token punctuation">(</span>p<span class="token operator">-></span>name<span class="token punctuation">,</span> last<span class="token punctuation">,</span> <span class="token keyword">sizeof</span><span class="token punctuation">(</span>p<span class="token operator">-></span>name<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    
+  <span class="token comment">// Commit to the user image.</span>
+  oldpagetable <span class="token operator">=</span> p<span class="token operator">-></span>pagetable<span class="token punctuation">;</span>
+  p<span class="token operator">-></span>pagetable <span class="token operator">=</span> pagetable<span class="token punctuation">;</span>
+  p<span class="token operator">-></span>sz <span class="token operator">=</span> sz<span class="token punctuation">;</span>
+  p<span class="token operator">-></span>trapframe<span class="token operator">-></span>epc <span class="token operator">=</span> elf<span class="token punctuation">.</span>entry<span class="token punctuation">;</span>  <span class="token comment">// initial program counter = main</span>
+  p<span class="token operator">-></span>trapframe<span class="token operator">-></span>sp <span class="token operator">=</span> sp<span class="token punctuation">;</span> <span class="token comment">// initial stack pointer</span>
+  <span class="token function">proc_freepagetable</span><span class="token punctuation">(</span>oldpagetable<span class="token punctuation">,</span> oldsz<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+  <span class="token comment">// part 1 begin</span>
+  <span class="token keyword">if</span><span class="token punctuation">(</span>p<span class="token operator">-></span>pid<span class="token operator">==</span><span class="token number">1</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token function">vmprint</span><span class="token punctuation">(</span>p<span class="token operator">-></span>pagetable<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">&#125;</span>
+  <span class="token comment">// part 1 end</span>
+
+  <span class="token comment">// part 3 begin</span>
+  <span class="token function">copy_proc_to_kernel</span><span class="token punctuation">(</span>p<span class="token operator">-></span>pagetable<span class="token punctuation">,</span> p<span class="token operator">-></span>kernel_pagetable<span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> sz<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token comment">// part 3 end</span>
+
+  <span class="token keyword">return</span> argc<span class="token punctuation">;</span> <span class="token comment">// this ends up in a0, the first argument to main(argc, argv)</span>
+
+ bad<span class="token operator">:</span>
+  <span class="token keyword">if</span><span class="token punctuation">(</span>pagetable<span class="token punctuation">)</span>
+    <span class="token function">proc_freepagetable</span><span class="token punctuation">(</span>pagetable<span class="token punctuation">,</span> sz<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token keyword">if</span><span class="token punctuation">(</span>ip<span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+    <span class="token function">iunlockput</span><span class="token punctuation">(</span>ip<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">end_op</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">&#125;</span>
+  <span class="token keyword">return</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>proc.c：</p>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token comment">// Set up first user process.</span>
+<span class="token keyword">void</span>
+<span class="token function">userinit</span><span class="token punctuation">(</span><span class="token keyword">void</span><span class="token punctuation">)</span>
+<span class="token punctuation">&#123;</span>
+  <span class="token keyword">struct</span> <span class="token class-name">proc</span> <span class="token operator">*</span>p<span class="token punctuation">;</span>
+
+  p <span class="token operator">=</span> <span class="token function">allocproc</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  initproc <span class="token operator">=</span> p<span class="token punctuation">;</span>
+  
+  <span class="token comment">// allocate one user page and copy init's instructions</span>
+  <span class="token comment">// and data into it.</span>
+  <span class="token function">uvminit</span><span class="token punctuation">(</span>p<span class="token operator">-></span>pagetable<span class="token punctuation">,</span> initcode<span class="token punctuation">,</span> <span class="token keyword">sizeof</span><span class="token punctuation">(</span>initcode<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  p<span class="token operator">-></span>sz <span class="token operator">=</span> PGSIZE<span class="token punctuation">;</span>
+
+  <span class="token comment">// prepare for the very first "return" from kernel to user.</span>
+  p<span class="token operator">-></span>trapframe<span class="token operator">-></span>epc <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>      <span class="token comment">// user program counter</span>
+  p<span class="token operator">-></span>trapframe<span class="token operator">-></span>sp <span class="token operator">=</span> PGSIZE<span class="token punctuation">;</span>  <span class="token comment">// user stack pointer</span>
+
+  <span class="token function">safestrcpy</span><span class="token punctuation">(</span>p<span class="token operator">-></span>name<span class="token punctuation">,</span> <span class="token string">"initcode"</span><span class="token punctuation">,</span> <span class="token keyword">sizeof</span><span class="token punctuation">(</span>p<span class="token operator">-></span>name<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  p<span class="token operator">-></span>cwd <span class="token operator">=</span> <span class="token function">namei</span><span class="token punctuation">(</span><span class="token string">"/"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+  p<span class="token operator">-></span>state <span class="token operator">=</span> RUNNABLE<span class="token punctuation">;</span>
+
+  <span class="token comment">// part 3 begin</span>
+  <span class="token function">copy_proc_to_kernel</span><span class="token punctuation">(</span>p<span class="token operator">-></span>pagetable<span class="token punctuation">,</span> p<span class="token operator">-></span>kernel_pagetable<span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> p<span class="token operator">-></span>sz<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token comment">// part 3 end</span>
+
+  <span class="token function">release</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>p<span class="token operator">-></span>lock<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token comment">// Grow or shrink user memory by n bytes.</span>
+<span class="token comment">// Return 0 on success, -1 on failure.</span>
+<span class="token keyword">int</span>
+<span class="token function">growproc</span><span class="token punctuation">(</span><span class="token keyword">int</span> n<span class="token punctuation">)</span>
+<span class="token punctuation">&#123;</span>
+  uint sz<span class="token punctuation">;</span>
+  <span class="token keyword">struct</span> <span class="token class-name">proc</span> <span class="token operator">*</span>p <span class="token operator">=</span> <span class="token function">myproc</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+  sz <span class="token operator">=</span> p<span class="token operator">-></span>sz<span class="token punctuation">;</span>
+  <span class="token keyword">if</span><span class="token punctuation">(</span>n <span class="token operator">></span> <span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+    <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token punctuation">(</span>sz <span class="token operator">=</span> <span class="token function">uvmalloc</span><span class="token punctuation">(</span>p<span class="token operator">-></span>pagetable<span class="token punctuation">,</span> sz<span class="token punctuation">,</span> sz <span class="token operator">+</span> n<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+      <span class="token keyword">return</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+  <span class="token punctuation">&#125;</span> <span class="token keyword">else</span> <span class="token keyword">if</span><span class="token punctuation">(</span>n <span class="token operator">&lt;</span> <span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+    sz <span class="token operator">=</span> <span class="token function">uvmdealloc</span><span class="token punctuation">(</span>p<span class="token operator">-></span>pagetable<span class="token punctuation">,</span> sz<span class="token punctuation">,</span> sz <span class="token operator">+</span> n<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">&#125;</span>
+  <span class="token comment">// part 3 begin</span>
+  <span class="token function">copy_proc_to_kernel</span><span class="token punctuation">(</span>p<span class="token operator">-></span>pagetable<span class="token punctuation">,</span> p<span class="token operator">-></span>kernel_pagetable<span class="token punctuation">,</span> p<span class="token operator">-></span>sz<span class="token punctuation">,</span> sz<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token comment">// part 3 end</span>
+  p<span class="token operator">-></span>sz <span class="token operator">=</span> sz<span class="token punctuation">;</span>
+
+  <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token comment">// Create a new process, copying the parent.</span>
+<span class="token comment">// Sets up child kernel stack to return as if from fork() system call.</span>
+<span class="token keyword">int</span>
+<span class="token function">fork</span><span class="token punctuation">(</span><span class="token keyword">void</span><span class="token punctuation">)</span>
+<span class="token punctuation">&#123;</span>
+  <span class="token keyword">int</span> i<span class="token punctuation">,</span> pid<span class="token punctuation">;</span>
+  <span class="token keyword">struct</span> <span class="token class-name">proc</span> <span class="token operator">*</span>np<span class="token punctuation">;</span>
+  <span class="token keyword">struct</span> <span class="token class-name">proc</span> <span class="token operator">*</span>p <span class="token operator">=</span> <span class="token function">myproc</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+  <span class="token comment">// Allocate process.</span>
+  <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token punctuation">(</span>np <span class="token operator">=</span> <span class="token function">allocproc</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+    <span class="token keyword">return</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">;</span>
+  <span class="token punctuation">&#125;</span>
+
+  <span class="token comment">// Copy user memory from parent to child.</span>
+  <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token function">uvmcopy</span><span class="token punctuation">(</span>p<span class="token operator">-></span>pagetable<span class="token punctuation">,</span> np<span class="token operator">-></span>pagetable<span class="token punctuation">,</span> p<span class="token operator">-></span>sz<span class="token punctuation">)</span> <span class="token operator">&lt;</span> <span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+    <span class="token function">freeproc</span><span class="token punctuation">(</span>np<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">release</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>np<span class="token operator">-></span>lock<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">return</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">;</span>
+  <span class="token punctuation">&#125;</span>
+  np<span class="token operator">-></span>sz <span class="token operator">=</span> p<span class="token operator">-></span>sz<span class="token punctuation">;</span>
+
+  np<span class="token operator">-></span>parent <span class="token operator">=</span> p<span class="token punctuation">;</span>
+
+  <span class="token comment">// copy saved user registers.</span>
+  <span class="token operator">*</span><span class="token punctuation">(</span>np<span class="token operator">-></span>trapframe<span class="token punctuation">)</span> <span class="token operator">=</span> <span class="token operator">*</span><span class="token punctuation">(</span>p<span class="token operator">-></span>trapframe<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+  <span class="token comment">// Cause fork to return 0 in the child.</span>
+  np<span class="token operator">-></span>trapframe<span class="token operator">-></span>a0 <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+
+  <span class="token comment">// increment reference counts on open file descriptors.</span>
+  <span class="token keyword">for</span><span class="token punctuation">(</span>i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> NOFILE<span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span>
+    <span class="token keyword">if</span><span class="token punctuation">(</span>p<span class="token operator">-></span>ofile<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">)</span>
+      np<span class="token operator">-></span>ofile<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token function">filedup</span><span class="token punctuation">(</span>p<span class="token operator">-></span>ofile<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  np<span class="token operator">-></span>cwd <span class="token operator">=</span> <span class="token function">idup</span><span class="token punctuation">(</span>p<span class="token operator">-></span>cwd<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+  <span class="token function">safestrcpy</span><span class="token punctuation">(</span>np<span class="token operator">-></span>name<span class="token punctuation">,</span> p<span class="token operator">-></span>name<span class="token punctuation">,</span> <span class="token keyword">sizeof</span><span class="token punctuation">(</span>p<span class="token operator">-></span>name<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+  pid <span class="token operator">=</span> np<span class="token operator">-></span>pid<span class="token punctuation">;</span>
+
+  np<span class="token operator">-></span>state <span class="token operator">=</span> RUNNABLE<span class="token punctuation">;</span>
+
+  <span class="token comment">// part 3 begin</span>
+  <span class="token comment">// 复制np</span>
+  <span class="token function">copy_proc_to_kernel</span><span class="token punctuation">(</span>np<span class="token operator">-></span>pagetable<span class="token punctuation">,</span> np<span class="token operator">-></span>kernel_pagetable<span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> np<span class="token operator">-></span>sz<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token comment">// part 3 end</span>
+
+  <span class="token function">release</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>np<span class="token operator">-></span>lock<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+  <span class="token keyword">return</span> pid<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>vm.c：</p>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token comment">// part 3 begin</span>
+<span class="token keyword">int</span>
+<span class="token function">copyin</span><span class="token punctuation">(</span><span class="token class-name">pagetable_t</span> pagetable<span class="token punctuation">,</span> <span class="token keyword">char</span> <span class="token operator">*</span>dst<span class="token punctuation">,</span> uint64 srcva<span class="token punctuation">,</span> uint64 len<span class="token punctuation">)</span>
+<span class="token punctuation">&#123;</span>
+  <span class="token keyword">return</span> <span class="token function">copyin_new</span><span class="token punctuation">(</span>pagetable<span class="token punctuation">,</span> dst<span class="token punctuation">,</span> srcva<span class="token punctuation">,</span> len<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+<span class="token comment">// part 3 end</span>
+
+<span class="token comment">// part 3 begin</span>
+<span class="token keyword">void</span> <span class="token function">copy_proc_to_kernel</span><span class="token punctuation">(</span><span class="token class-name">pagetable_t</span> proc_pt<span class="token punctuation">,</span> <span class="token class-name">pagetable_t</span> kernel_pt<span class="token punctuation">,</span> uint64 oldsz<span class="token punctuation">,</span> uint64 newsz<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+  uint64 a<span class="token punctuation">;</span>
+
+  <span class="token keyword">if</span> <span class="token punctuation">(</span>newsz <span class="token operator">>=</span> PLIC<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token function">panic</span><span class="token punctuation">(</span><span class="token string">"user processes exceed PLIC"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">&#125;</span>
+
+  <span class="token keyword">for</span><span class="token punctuation">(</span>a <span class="token operator">=</span> oldsz<span class="token punctuation">;</span> a <span class="token operator">&lt;</span> newsz<span class="token punctuation">;</span> a <span class="token operator">+=</span> PGSIZE<span class="token punctuation">)</span><span class="token punctuation">&#123;</span>
+    <span class="token class-name">pte_t</span> <span class="token operator">*</span>pte1 <span class="token operator">=</span> <span class="token function">walk</span><span class="token punctuation">(</span>proc_pt<span class="token punctuation">,</span> a<span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>pte1 <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+      <span class="token function">panic</span><span class="token punctuation">(</span><span class="token string">"no user pte"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token operator">*</span>pte1 <span class="token operator">&amp;</span> PTE_V<span class="token punctuation">)</span> <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+      <span class="token function">panic</span><span class="token punctuation">(</span><span class="token string">"no valid user pte"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+    <span class="token class-name">pte_t</span> <span class="token operator">*</span>pte2 <span class="token operator">=</span> <span class="token function">walk</span><span class="token punctuation">(</span>kernel_pt<span class="token punctuation">,</span> a<span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>pte2 <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+      <span class="token function">panic</span><span class="token punctuation">(</span><span class="token string">"no kernel pte"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+    
+    <span class="token comment">// 复制</span>
+    <span class="token operator">*</span>pte2 <span class="token operator">=</span> <span class="token operator">*</span>pte1<span class="token punctuation">;</span>
+    <span class="token comment">// 关闭读写权限, 关闭用户权限, 否则kernel无法使用</span>
+    <span class="token operator">*</span>pte2 <span class="token operator">&amp;=</span> <span class="token operator">~</span><span class="token punctuation">(</span>PTE_U<span class="token operator">|</span>PTE_W<span class="token operator">|</span>PTE_X<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span>
+<span class="token comment">// part 3 end</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>测试：</p>
+<pre class="line-numbers language-none"><code class="language-none">.&#x2F;grade-lab-pgtbl usertests
+riscv64-unknown-elf-gcc -Wall -Werror -O -fno-omit-frame-pointer -ggdb -DSOL_PGTBL -DLAB_PGTBL -MD -mcmodel&#x3D;medany -ffreestanding -fno-common -nostdlib -mno-relax -I. -fno-stack-protector -fno-pie -no-pie   -c -o kernel&#x2F;vm.o kernel&#x2F;vm.c
+riscv64-unknown-elf-gcc -Wall -Werror -O -fno-omit-frame-pointer -ggdb -DSOL_PGTBL -DLAB_PGTBL -MD -mcmodel&#x3D;medany -ffreestanding -fno-common -nostdlib -mno-relax -I. -fno-stack-protector -fno-pie -no-pie   -c -o kernel&#x2F;proc.o kernel&#x2F;proc.c
+riscv64-unknown-elf-gcc -Wall -Werror -O -fno-omit-frame-pointer -ggdb -DSOL_PGTBL -DLAB_PGTBL -MD -mcmodel&#x3D;medany -ffreestanding -fno-common -nostdlib -mno-relax -I. -fno-stack-protector -fno-pie -no-pie   -c -o kernel&#x2F;exec.o kernel&#x2F;exec.c
+riscv64-unknown-elf-ld -z max-page-size&#x3D;4096 -T kernel&#x2F;kernel.ld -o kernel&#x2F;kernel kernel&#x2F;entry.o kernel&#x2F;start.o kernel&#x2F;console.o kernel&#x2F;printf.o kernel&#x2F;uart.o kernel&#x2F;kalloc.o kernel&#x2F;spinlock.o kernel&#x2F;string.o kernel&#x2F;main.o kernel&#x2F;vm.o kernel&#x2F;proc.o kernel&#x2F;swtch.o kernel&#x2F;trampoline.o kernel&#x2F;trap.o kernel&#x2F;syscall.o kernel&#x2F;sysproc.o kernel&#x2F;bio.o kernel&#x2F;fs.o kernel&#x2F;log.o kernel&#x2F;sleeplock.o kernel&#x2F;file.o kernel&#x2F;pipe.o kernel&#x2F;exec.o kernel&#x2F;sysfile.o kernel&#x2F;kernelvec.o kernel&#x2F;plic.o kernel&#x2F;virtio_disk.o kernel&#x2F;vmcopyin.o kernel&#x2F;stats.o kernel&#x2F;sprintf.o 
+riscv64-unknown-elf-ld: warning: cannot find entry symbol _entry; defaulting to 0000000080000000
+riscv64-unknown-elf-objdump -S kernel&#x2F;kernel &gt; kernel&#x2F;kernel.asm
+riscv64-unknown-elf-objdump -t kernel&#x2F;kernel | sed &#39;1,&#x2F;SYMBOL TABLE&#x2F;d; s&#x2F; .* &#x2F; &#x2F;; &#x2F;^$&#x2F;d&#39; &gt; kernel&#x2F;kernel.sym
+&#x3D;&#x3D; Test usertests &#x3D;&#x3D; (110.7s) 
+&#x3D;&#x3D; Test   usertests: copyin &#x3D;&#x3D; 
+  usertests: copyin: OK 
+&#x3D;&#x3D; Test   usertests: copyinstr1 &#x3D;&#x3D; 
+  usertests: copyinstr1: OK 
+&#x3D;&#x3D; Test   usertests: copyinstr2 &#x3D;&#x3D; 
+  usertests: copyinstr2: OK 
+&#x3D;&#x3D; Test   usertests: copyinstr3 &#x3D;&#x3D; 
+  usertests: copyinstr3: OK 
+&#x3D;&#x3D; Test   usertests: sbrkmuch &#x3D;&#x3D; 
+  usertests: sbrkmuch: OK 
+&#x3D;&#x3D; Test   usertests: all tests &#x3D;&#x3D; 
+  usertests: all tests: OK <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">Doraemonzzz</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="http://www.doraemonzzz.com/2021/12/12/2021-12-12-MIT-6.S081-Operating-System-Enginerring-Lab3-page-tables/">http://www.doraemonzzz.com/2021/12/12/2021-12-12-MIT-6.S081-Operating-System-Enginerring-Lab3-page-tables/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://www.doraemonzzz.com" target="_blank">Doraemonzzz</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/6-S081/">6.S081</a></div><div class="post_share"><div class="social-share" data-image="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2021/12/12/2021-12-12-CS144-%E5%AE%9E%E9%AA%8C%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/"><img class="prev-cover" src= "/img/loading.gif" data-lazy-src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">CS144 实验环境配置</div></div></a></div><div class="next-post pull-right"><a href="/2021/11/10/2021-11-10-CMU-15-213-Lab6-Proxy-Lab/"><img class="next-cover" src= "/img/loading.gif" data-lazy-src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">CMU 15-213 Lab6 Proxy Lab</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span> 相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2021/07/20/2021-7-20-MIT-6.S081-Operating-System-Enginerring-Lab1-Utilities/" title="MIT 6.S081 Operating System Enginerring Lab1 Utilities"><img class="cover" src= "/img/loading.gif" data-lazy-src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-07-20</div><div class="title">MIT 6.S081 Operating System Enginerring Lab1 Utilities</div></div></a></div><div><a href="/2021/07/20/2021-7-20-MIT-6.S081-Operating-System-Enginerring-实验环境配置/" title="MIT 6.S081 Operating System Enginerring 实验环境配置"><img class="cover" src= "/img/loading.gif" data-lazy-src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-07-20</div><div class="title">MIT 6.S081 Operating System Enginerring 实验环境配置</div></div></a></div><div><a href="/2021/08/01/2021-8-1-MIT-6.S081-Operating-System-Enginerring-Lab2-System-calls/" title="MIT 6.S081 Operating System Enginerring Lab2 System calls"><img class="cover" src= "/img/loading.gif" data-lazy-src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-08-01</div><div class="title">MIT 6.S081 Operating System Enginerring Lab2 System calls</div></div></a></div></div></div><hr/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div><div id="comment-switch"><span class="first-comment">Valine</span><span class="switch-btn"></span><span class="second-comment">Livere</span></div></div><div class="comment-wrap"><div><div class="vcomment" id="vcomment"></div></div><div><div id="lv-container" data-id="city" data-uid="MTAyMC8zNDcxOS8xMTI1Ng=="></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="card-info-avatar is-center"><img class="avatar-img" src= "/img/loading.gif" data-lazy-src="https://github.com/Doraemonzzz/md-photo/blob/master/%E5%A4%B4%E5%83%8F.jpg?raw=true" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/><div class="author-info__name">Doraemonzzz</div><div class="author-info__description">个人博客，主要记录有关机器学习，数学以及计算机科学的笔记</div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">674</div></a></div><div class="card-info-data-item is-center"><a href="/tags/"><div class="headline">标签</div><div class="length-num">70</div></a></div><div class="card-info-data-item is-center"><a href="/categories/"><div class="headline">分类</div><div class="length-num">27</div></a></div></div><a class="button--animated" id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/Doraemonzzz"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/Doraemonzzz" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="/doraemon_zzz@163.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a><a class="social-icon" href="https://space.bilibili.com/291079982" target="_blank" title="Bilibili"><i class="iconfont icon-bilibili"></i></a><a class="social-icon" href="/atom.xml" target="_blank" title=""><i class="fa fa-rss"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn card-announcement-animation"></i><span>公告</span></div><div class="announcement_content">暂无公告</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%87%86%E5%A4%87%E5%B7%A5%E4%BD%9C"><span class="toc-number">1.</span> <span class="toc-text">准备工作</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Print-a-page-table-easy"><span class="toc-number">2.</span> <span class="toc-text">Print a page table (easy)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#A-kernel-page-table-per-process-hard"><span class="toc-number">3.</span> <span class="toc-text">A kernel page table per process (hard)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Simplify-copyin-copyinstr-hard"><span class="toc-number">4.</span> <span class="toc-text">Simplify copyin&#x2F;copyinstr (hard)</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2021/12/12/2021-12-12-CS144-Lab1/" title="CS144 Lab1"><img src= "/img/loading.gif" data-lazy-src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="CS144 Lab1"/></a><div class="content"><a class="title" href="/2021/12/12/2021-12-12-CS144-Lab1/" title="CS144 Lab1">CS144 Lab1</a><time datetime="2021-12-12T08:20:00.000Z" title="发表于 2021-12-12 16:20:00">2021-12-12</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/12/12/2021-12-12-CS144-Lab0/" title="CS144 Lab0"><img src= "/img/loading.gif" data-lazy-src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="CS144 Lab0"/></a><div class="content"><a class="title" href="/2021/12/12/2021-12-12-CS144-Lab0/" title="CS144 Lab0">CS144 Lab0</a><time datetime="2021-12-12T08:17:00.000Z" title="发表于 2021-12-12 16:17:00">2021-12-12</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/12/12/2021-12-12-CS144-%E5%AE%9E%E9%AA%8C%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/" title="CS144 实验环境配置"><img src= "/img/loading.gif" data-lazy-src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="CS144 实验环境配置"/></a><div class="content"><a class="title" href="/2021/12/12/2021-12-12-CS144-%E5%AE%9E%E9%AA%8C%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/" title="CS144 实验环境配置">CS144 实验环境配置</a><time datetime="2021-12-12T08:14:00.000Z" title="发表于 2021-12-12 16:14:00">2021-12-12</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/12/12/2021-12-12-MIT-6.S081-Operating-System-Enginerring-Lab3-page-tables/" title="MIT 6.S081 Operating System Enginerring Lab3 page tables"><img src= "/img/loading.gif" data-lazy-src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="MIT 6.S081 Operating System Enginerring Lab3 page tables"/></a><div class="content"><a class="title" href="/2021/12/12/2021-12-12-MIT-6.S081-Operating-System-Enginerring-Lab3-page-tables/" title="MIT 6.S081 Operating System Enginerring Lab3 page tables">MIT 6.S081 Operating System Enginerring Lab3 page tables</a><time datetime="2021-12-12T04:01:00.000Z" title="发表于 2021-12-12 12:01:00">2021-12-12</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2021/11/10/2021-11-10-CMU-15-213-Lab6-Proxy-Lab/" title="CMU 15-213 Lab6 Proxy Lab"><img src= "/img/loading.gif" data-lazy-src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="CMU 15-213 Lab6 Proxy Lab"/></a><div class="content"><a class="title" href="/2021/11/10/2021-11-10-CMU-15-213-Lab6-Proxy-Lab/" title="CMU 15-213 Lab6 Proxy Lab">CMU 15-213 Lab6 Proxy Lab</a><time datetime="2021-11-10T14:44:00.000Z" title="发表于 2021-11-10 22:44:00">2021-11-10</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2018 - 2021 By Doraemonzzz</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="font-plus" type="button" title="放大字体"><i class="fas fa-plus"></i></button><button id="font-minus" type="button" title="缩小字体"><i class="fas fa-minus"></i></button><button id="translateLink" type="button" title="简繁转换">简</button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div id="local-search"><div class="search-dialog"><div class="search-dialog__title" id="local-search-title">本地搜索</div><div id="local-input-panel"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div></div><hr/><div id="local-search-results"></div><span class="search-close-button"><i class="fas fa-times"></i></span></div><div id="search-mask"></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="/js/tw_cn.js"></script><script src="https://cdn.jsdelivr.net/npm/vanilla-lazyload/dist/lazyload.iife.min.js"></script><script src="/js/search/local-search.js"></script><script>var preloader = {
+  endLoading: () => {
+    document.body.style.overflow = 'auto';
+    document.getElementById('loading-box').classList.add("loaded")
+  },
+  initLoading: () => {
+    document.body.style.overflow = '';
+    document.getElementById('loading-box').classList.remove("loaded")
+
+  }
+}
+window.addEventListener('load',preloader.endLoading())</script><div class="js-pjax"><script>if (!window.MathJax) {
+  window.MathJax = {
+    tex: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]],
+      tags: 'ams'
+    },
+    chtml: {
+      scale: 1.25
+    },
+    options: {
+      renderActions: {
+        findScript: [10, doc => {
+          for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+            const display = !!node.type.match(/; *mode=display/)
+            const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+            const text = document.createTextNode('')
+            node.parentNode.replaceChild(text, node)
+            math.start = {node: text, delim: '', n: 0}
+            math.end = {node: text, delim: '', n: 0}
+            doc.math.push(math)
+          }
+        }, '']
+      }
+    }
+  }
+  
+  const script = document.createElement('script')
+  script.src = 'https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js'
+  script.id = 'MathJax-script'
+  script.async = true
+  document.head.appendChild(script)
+} else {
+  MathJax.startup.document.state(0)
+  MathJax.texReset()
+  MathJax.typeset()
+}</script><script>function loadValine () {
+  function initValine () {
+    const valine = new Valine(Object.assign({
+      el: '#vcomment',
+      appId: 'IpnmxCW9CvYWIXbol5QXsegX-MdYXbMMI',
+      appKey: 'w57DVCdbxcyB1TYYagMIMJIU',
+      placeholder: 'Please leave your footprints',
+      avatar: 'monsterid',
+      meta: 'nick,mail,link'.split(','),
+      pageSize: '10',
+      lang: 'en',
+      recordIP: false,
+      serverURLs: '',
+      emojiCDN: '',
+      emojiMaps: "",
+      enableQQ: false,
+      path: window.location.pathname,
+      requiredFields: ["nick,mail"],
+      visitor: true
+    }, null))
+  }
+
+  if (typeof Valine === 'function') initValine() 
+  else getScript('https://cdn.jsdelivr.net/npm/valine/dist/Valine.min.js').then(initValine)
+}
+
+if ('Valine' === 'Valine' || !false) {
+  if (false) btf.loadComment(document.getElementById('vcomment'),loadValine)
+  else setTimeout(loadValine, 0)
+} else {
+  function loadOtherComment () {
+    loadValine()
+  }
+}</script><script>function loadLivere () {
+  if (typeof LivereTower === 'object') {
+    window.LivereTower.init()
+  }
+  else {
+    (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+    })(document, 'script');
+  }
+}
+
+if ('Valine' === 'Livere' || !false) {
+  if (false) btf.loadComment(document.getElementById('lv-container'), loadLivere)
+  else loadLivere()
+}
+else {
+  function loadOtherComment () {
+    loadLivere()
+  }
+}</script></div><script defer="defer" id="fluttering_ribbon" mobile="false" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/canvas-fluttering-ribbon.min.js"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
