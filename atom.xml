@@ -6,7 +6,7 @@
   <link href="http://www.doraemonzzz.com/atom.xml" rel="self"/>
   
   <link href="http://www.doraemonzzz.com/"/>
-  <updated>2021-12-12T08:34:28.454Z</updated>
+  <updated>2021-12-21T15:22:18.586Z</updated>
   <id>http://www.doraemonzzz.com/</id>
   
   <author>
@@ -15,6 +15,70 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>MIT 6.S081 Operating System Enginerring Lab5 Copy-on-Write</title>
+    <link href="http://www.doraemonzzz.com/2021/12/21/2021-12-21-MIT-6.S081-Operating-System-Enginerring-Lab5-Copy-on-Write/"/>
+    <id>http://www.doraemonzzz.com/2021/12/21/2021-12-21-MIT-6.S081-Operating-System-Enginerring-Lab5-Copy-on-Write/</id>
+    <published>2021-12-21T15:21:00.000Z</published>
+    <updated>2021-12-21T15:22:18.586Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;这里给出Lab5 Copy-on-Write的解析。&lt;/p&gt;
+&lt;p&gt;学习资料：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;https://pdos.csail.mit.edu/6.828/2020/schedule.html&quot;&gt;https://pdos.csail.mit.edu/6.828/2020/schedule.html&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://mit-public-courses-cn-translatio.gitbook.io/mit6-s081/&quot;&gt;https://mit-public-courses-cn-translatio.gitbook.io/mit6-s081/&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://th0ar.gitbooks.io/xv6-chinese/content/&quot;&gt;https://th0ar.gitbooks.io/xv6-chinese/content/&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://www.bilibili.com/video/BV19k4y1C7kA?p=6&quot;&gt;https://www.bilibili.com/video/BV19k4y1C7kA?p=6&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;参考资料：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;https://github.com/PKUFlyingPig/MIT6.S081-2020fall/tree/master/reports&quot;&gt;https://github.com/PKUFlyingPig/MIT6.S081-2020fall/tree/master/reports&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://fanxiao.tech/posts/MIT-6S081-notes/&quot;&gt;https://fanxiao.tech/posts/MIT-6S081-notes/&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://www.bilibili.com/video/BV19k4y1C7kA?p=6&quot;&gt;https://www.bilibili.com/video/BV19k4y1C7kA?p=6&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</summary>
+    
+    
+    
+    <category term="操作系统" scheme="http://www.doraemonzzz.com/categories/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/"/>
+    
+    
+    <category term="6.S081" scheme="http://www.doraemonzzz.com/tags/6-S081/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>MIT 6.S081 Operating System Enginerring Lab4 Traps</title>
+    <link href="http://www.doraemonzzz.com/2021/12/21/2021-12-21-MIT-6.S081-Operating-System-Enginerring-Lab4-Traps/"/>
+    <id>http://www.doraemonzzz.com/2021/12/21/2021-12-21-MIT-6.S081-Operating-System-Enginerring-Lab4-Traps/</id>
+    <published>2021-12-21T15:16:00.000Z</published>
+    <updated>2021-12-21T15:17:35.137Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;这里给出Lab4 Traps的解析。&lt;/p&gt;
+&lt;p&gt;学习资料：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;https://pdos.csail.mit.edu/6.828/2020/schedule.html&quot;&gt;https://pdos.csail.mit.edu/6.828/2020/schedule.html&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://mit-public-courses-cn-translatio.gitbook.io/mit6-s081/&quot;&gt;https://mit-public-courses-cn-translatio.gitbook.io/mit6-s081/&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://th0ar.gitbooks.io/xv6-chinese/content/&quot;&gt;https://th0ar.gitbooks.io/xv6-chinese/content/&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://www.bilibili.com/video/BV19k4y1C7kA?p=6&quot;&gt;https://www.bilibili.com/video/BV19k4y1C7kA?p=6&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;参考资料：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;https://github.com/PKUFlyingPig/MIT6.S081-2020fall/tree/master/reports&quot;&gt;https://github.com/PKUFlyingPig/MIT6.S081-2020fall/tree/master/reports&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://fanxiao.tech/posts/MIT-6S081-notes/&quot;&gt;https://fanxiao.tech/posts/MIT-6S081-notes/&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://www.bilibili.com/video/BV19k4y1C7kA?p=6&quot;&gt;https://www.bilibili.com/video/BV19k4y1C7kA?p=6&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</summary>
+    
+    
+    
+    <category term="操作系统" scheme="http://www.doraemonzzz.com/categories/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/"/>
+    
+    
+    <category term="6.S081" scheme="http://www.doraemonzzz.com/tags/6-S081/"/>
+    
+  </entry>
   
   <entry>
     <title>CS144 Lab1</title>
@@ -105,14 +169,14 @@
   </entry>
   
   <entry>
-    <title>MIT 6.S081 Operating System Enginerring Lab3 page tables</title>
-    <link href="http://www.doraemonzzz.com/2021/12/12/2021-12-12-MIT-6.S081-Operating-System-Enginerring-Lab3-page-tables/"/>
-    <id>http://www.doraemonzzz.com/2021/12/12/2021-12-12-MIT-6.S081-Operating-System-Enginerring-Lab3-page-tables/</id>
+    <title>MIT 6.S081 Operating System Enginerring Lab3 Page Tables</title>
+    <link href="http://www.doraemonzzz.com/2021/12/12/2021-12-12-MIT-6.S081-Operating-System-Enginerring-Lab3-Page-Tables/"/>
+    <id>http://www.doraemonzzz.com/2021/12/12/2021-12-12-MIT-6.S081-Operating-System-Enginerring-Lab3-Page-Tables/</id>
     <published>2021-12-12T04:01:00.000Z</published>
-    <updated>2021-12-12T04:02:28.154Z</updated>
+    <updated>2021-12-21T15:17:01.389Z</updated>
     
     
-    <summary type="html">&lt;p&gt;这里给出Lab3 page tables的解析。&lt;/p&gt;
+    <summary type="html">&lt;p&gt;这里给出Lab3 Page Tables的解析。&lt;/p&gt;
 &lt;p&gt;学习资料：&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;a href=&quot;https://pdos.csail.mit.edu/6.828/2020/schedule.html&quot;&gt;https://pdos.csail.mit.edu/6.828/2020/schedule.html&lt;/a&gt;&lt;/li&gt;
@@ -478,55 +542,6 @@
     
     
     <category term="CMU 15-213" scheme="http://www.doraemonzzz.com/tags/CMU-15-213/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>深入理解计算机系统 第9章 习题解析</title>
-    <link href="http://www.doraemonzzz.com/2021/09/14/2021-9-14-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E7%AC%AC9%E7%AB%A0-%E4%B9%A0%E9%A2%98%E8%A7%A3%E6%9E%90/"/>
-    <id>http://www.doraemonzzz.com/2021/09/14/2021-9-14-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E7%AC%AC9%E7%AB%A0-%E4%B9%A0%E9%A2%98%E8%A7%A3%E6%9E%90/</id>
-    <published>2021-09-14T14:44:00.000Z</published>
-    <updated>2021-09-14T16:38:14.417Z</updated>
-    
-    
-    <summary type="html">&lt;p&gt;这次更新第9章习题。&lt;/p&gt;
-&lt;p&gt;参考资料：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&quot;https://blog.csdn.net/qq_21792169/article/details/50454475&quot;&gt;https://blog.csdn.net/qq_21792169/article/details/50454475&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;https://dreamanddead.github.io/CSAPP-3e-Solutions/chapter8/&quot;&gt;https://dreamanddead.github.io/CSAPP-3e-Solutions/chapter8/&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;</summary>
-    
-    
-    
-    <category term="计算机原理" scheme="http://www.doraemonzzz.com/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%8E%9F%E7%90%86/"/>
-    
-    
-    <category term="深入理解计算机系统" scheme="http://www.doraemonzzz.com/tags/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>深度学习中batch size, update freq以及多卡的关系</title>
-    <link href="http://www.doraemonzzz.com/2021/09/12/2021-9-12-%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E4%B8%ADbatch-size,-update-freq%E4%BB%A5%E5%8F%8A%E5%A4%9A%E5%8D%A1%E7%9A%84%E5%85%B3%E7%B3%BB/"/>
-    <id>http://www.doraemonzzz.com/2021/09/12/2021-9-12-%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E4%B8%ADbatch-size,-update-freq%E4%BB%A5%E5%8F%8A%E5%A4%9A%E5%8D%A1%E7%9A%84%E5%85%B3%E7%B3%BB/</id>
-    <published>2021-09-12T02:11:00.000Z</published>
-    <updated>2021-09-12T03:10:44.911Z</updated>
-    
-    
-    <summary type="html">&lt;p&gt;最近训练模型时一直被batsh size, number updates以及多卡的关系搞混，这里对其进行总结。&lt;/p&gt;
-&lt;p&gt;参考资料：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&quot;https://stackoverflow.com/questions/4752626/epoch-vs-iteration-when-training-neural-networks&quot;&gt;https://stackoverflow.com/questions/4752626/epoch-vs-iteration-when-training-neural-networks&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;https://github.com/pytorch/fairseq/issues/979&quot;&gt;https://github.com/pytorch/fairseq/issues/979&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;http://www.linzehui.me/2019/01/28/%E7%A2%8E%E7%89%87%E7%9F%A5%E8%AF%86/%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8fairseq%E5%A4%8D%E7%8E%B0Transformer%20NMT/&quot;&gt;http://www.linzehui.me/2019/01/28/%E7%A2%8E%E7%89%87%E7%9F%A5%E8%AF%86/%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8fairseq%E5%A4%8D%E7%8E%B0Transformer%20NMT/&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;</summary>
-    
-    
-    
-    <category term="深度学习" scheme="http://www.doraemonzzz.com/categories/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/"/>
-    
-    
-    <category term="深度学习基本知识" scheme="http://www.doraemonzzz.com/tags/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E5%9F%BA%E6%9C%AC%E7%9F%A5%E8%AF%86/"/>
     
   </entry>
   
