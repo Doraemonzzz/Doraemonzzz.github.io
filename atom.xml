@@ -67,6 +67,38 @@
   </entry>
   
   <entry>
+    <title>MIT 6.S081 Operating System Enginerring Lab5 Lazy allocation</title>
+    <link href="http://www.doraemonzzz.com/2021/12/21/2021-12-21-MIT-6.S081-Operating-System-Enginerring-Lab5-Lazy-allocation/"/>
+    <id>http://www.doraemonzzz.com/2021/12/21/2021-12-21-MIT-6.S081-Operating-System-Enginerring-Lab5-Lazy-allocation/</id>
+    <published>2021-12-21T15:21:00.000Z</published>
+    <updated>2021-12-27T15:22:53.913Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;这里给出Lab5 Lazy allocation的解析。&lt;/p&gt;
+&lt;p&gt;学习资料：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;https://pdos.csail.mit.edu/6.828/2020/schedule.html&quot;&gt;https://pdos.csail.mit.edu/6.828/2020/schedule.html&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://mit-public-courses-cn-translatio.gitbook.io/mit6-s081/&quot;&gt;https://mit-public-courses-cn-translatio.gitbook.io/mit6-s081/&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://th0ar.gitbooks.io/xv6-chinese/content/&quot;&gt;https://th0ar.gitbooks.io/xv6-chinese/content/&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://www.bilibili.com/video/BV19k4y1C7kA?p=6&quot;&gt;https://www.bilibili.com/video/BV19k4y1C7kA?p=6&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;参考资料：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;https://github.com/PKUFlyingPig/MIT6.S081-2020fall/tree/master/reports&quot;&gt;https://github.com/PKUFlyingPig/MIT6.S081-2020fall/tree/master/reports&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://fanxiao.tech/posts/MIT-6S081-notes/&quot;&gt;https://fanxiao.tech/posts/MIT-6S081-notes/&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://www.bilibili.com/video/BV19k4y1C7kA?p=6&quot;&gt;https://www.bilibili.com/video/BV19k4y1C7kA?p=6&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</summary>
+    
+    
+    
+    <category term="操作系统" scheme="http://www.doraemonzzz.com/categories/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/"/>
+    
+    
+    <category term="6.S081" scheme="http://www.doraemonzzz.com/tags/6-S081/"/>
+    
+  </entry>
+  
+  <entry>
     <title>MIT 6.S081 Operating System Enginerring Lab4 Traps</title>
     <link href="http://www.doraemonzzz.com/2021/12/21/2021-12-21-MIT-6.S081-Operating-System-Enginerring-Lab4-Traps/"/>
     <id>http://www.doraemonzzz.com/2021/12/21/2021-12-21-MIT-6.S081-Operating-System-Enginerring-Lab4-Traps/</id>
@@ -497,28 +529,6 @@
     
     
     <summary type="html">&lt;p&gt;这次回顾深入理解计算机系统第9章动态内存分配部分。&lt;/p&gt;
-&lt;p&gt;电子书地址：&lt;/p&gt;
-&lt;p&gt;&lt;a href=&quot;http://eol.bnuz.edu.cn/meol/common/script/preview/download_preview.jsp?fileid=2169600&amp;amp;resid=242120&amp;amp;lid=28605&quot;&gt;http://eol.bnuz.edu.cn/meol/common/script/preview/download_preview.jsp?fileid=2169600&amp;amp;resid=242120&amp;amp;lid=28605&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;备注：图片和总结内容均来自于电子书。&lt;/p&gt;</summary>
-    
-    
-    
-    <category term="计算机原理" scheme="http://www.doraemonzzz.com/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%8E%9F%E7%90%86/"/>
-    
-    
-    <category term="深入理解计算机系统" scheme="http://www.doraemonzzz.com/tags/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>深入理解计算机系统 第9章 笔记整理 p1</title>
-    <link href="http://www.doraemonzzz.com/2021/09/16/2021-9-16-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E7%AC%AC9%E7%AB%A0-%E7%AC%94%E8%AE%B0%E6%95%B4%E7%90%86-p1/"/>
-    <id>http://www.doraemonzzz.com/2021/09/16/2021-9-16-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F-%E7%AC%AC9%E7%AB%A0-%E7%AC%94%E8%AE%B0%E6%95%B4%E7%90%86-p1/</id>
-    <published>2021-09-15T16:34:00.000Z</published>
-    <updated>2021-09-15T16:37:01.288Z</updated>
-    
-    
-    <summary type="html">&lt;p&gt;这次回顾深入理解计算机系统第9章虚拟内存部分。&lt;/p&gt;
 &lt;p&gt;电子书地址：&lt;/p&gt;
 &lt;p&gt;&lt;a href=&quot;http://eol.bnuz.edu.cn/meol/common/script/preview/download_preview.jsp?fileid=2169600&amp;amp;resid=242120&amp;amp;lid=28605&quot;&gt;http://eol.bnuz.edu.cn/meol/common/script/preview/download_preview.jsp?fileid=2169600&amp;amp;resid=242120&amp;amp;lid=28605&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;备注：图片和总结内容均来自于电子书。&lt;/p&gt;</summary>
