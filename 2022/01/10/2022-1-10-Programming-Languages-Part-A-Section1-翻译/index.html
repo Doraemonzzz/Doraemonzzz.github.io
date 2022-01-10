@@ -1,0 +1,592 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Programming Languages Part A Section1 翻译 | Doraemonzzz</title><meta name="keywords" content="Coursera Programming Languages"><meta name="author" content="Doraemonzzz"><meta name="copyright" content="Doraemonzzz"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="这里对Section 1进行翻译。 课程主页： https:&#x2F;&#x2F;www.coursera.org&#x2F;learn&#x2F;programming-languages&#x2F;home B站搬运： https:&#x2F;&#x2F;www.bilibili.com&#x2F;video&#x2F;BV1dL411j7L7">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Programming Languages Part A Section1 翻译">
+<meta property="og:url" content="http://www.doraemonzzz.com/2022/01/10/2022-1-10-Programming-Languages-Part-A-Section1-%E7%BF%BB%E8%AF%91/index.html">
+<meta property="og:site_name" content="Doraemonzzz">
+<meta property="og:description" content="这里对Section 1进行翻译。 课程主页： https:&#x2F;&#x2F;www.coursera.org&#x2F;learn&#x2F;programming-languages&#x2F;home B站搬运： https:&#x2F;&#x2F;www.bilibili.com&#x2F;video&#x2F;BV1dL411j7L7">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg">
+<meta property="article:published_time" content="2022-01-10T13:15:00.000Z">
+<meta property="article:modified_time" content="2022-01-10T14:15:36.109Z">
+<meta property="article:author" content="Doraemonzzz">
+<meta property="article:tag" content="Coursera Programming Languages">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg"><link rel="shortcut icon" href="https://github.com/Doraemonzzz/md-photo/blob/master/%E5%A4%B4%E5%83%8F.jpg?raw=true"><link rel="canonical" href="http://www.doraemonzzz.com/2022/01/10/2022-1-10-Programming-Languages-Part-A-Section1-%E7%BF%BB%E8%AF%91/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//www.google-analytics.com" crossorigin=""/><link rel="preconnect" href="//hm.baidu.com"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><script>var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?6f00f37f957f0608abb8c571105456f0";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script><script async="async" src="https://www.googletagmanager.com/gtag/js?id=UA-G-RE4B1LKRZD"></script><script>window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'UA-G-RE4B1LKRZD');
+</script><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"search.xml","languages":{"hits_empty":"找不到您查询的内容：${query}"}},
+  translate: {"defaultEncoding":2,"translateDelay":0,"msgToTraditionalChinese":"繁","msgToSimplifiedChinese":"簡"},
+  noticeOutdate: {"limitDay":500,"position":"top","messagePrev":"距离上次更新已经","messageNext":"天了，文章内容可能已经过时。"},
+  highlight: {"plugin":"prismjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":200},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    jQuery: 'https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js',
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+    },
+    fancybox: {
+      js: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css'
+    }
+  },
+  isPhotoFigcaption: true,
+  islazyload: true,
+  isanchor: true
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'Programming Languages Part A Section1 翻译',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2022-01-10 22:15:36'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const fontSizeVal = saveToLocal.get('global-font-size')
+    if (fontSizeVal !== undefined) {
+      document.documentElement.style.setProperty('--global-font-size', fontSizeVal + 'px')
+    }
+    })(window)</script><link rel="stylesheet" href="/css/bilibili.css" media="defer" onload="this.media='all'"><meta name="google-site-verification" content="c4v-NmuUZRgl3cvtg9GKswryK1YLaPztd_5M-df5VNI" /><meta name="generator" content="Hexo 5.4.0"><link rel="alternate" href="/atom.xml" title="Doraemonzzz" type="application/atom+xml">
+</head><body><div id="loading-box"><div class="loading-left-bg"></div><div class="loading-right-bg"></div><div class="spinner-box"><div class="configure-border-1"><div class="configure-core"></div></div><div class="configure-border-2"><div class="configure-core"></div></div><div class="loading-word">加载中...</div></div></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="author-avatar"><img class="avatar-img" src= "/img/loading.gif" data-lazy-src="https://github.com/Doraemonzzz/md-photo/blob/master/%E5%A4%B4%E5%83%8F.jpg?raw=true" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">文章</div><div class="length-num">686</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">标签</div><div class="length-num">71</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/categories/"><div class="headline">分类</div><div class="length-num">28</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-chart-pie"></i><span> 博客统计</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/charts/"><i class="fa-fw far fa-chart-bar"></i><span> 文章统计</span></a></li><li><a class="site-page child" href="/census/"><i class="fa-fw fas fa-chart-area"></i><span> 访问统计</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/top/"><i class="fa-fw fab fa-hotjar"></i><span> 阅读排行榜</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fa fa-heartbeat"></i><span> 娱乐</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于我</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">Doraemonzzz</a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-chart-pie"></i><span> 博客统计</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/charts/"><i class="fa-fw far fa-chart-bar"></i><span> 文章统计</span></a></li><li><a class="site-page child" href="/census/"><i class="fa-fw fas fa-chart-area"></i><span> 访问统计</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/top/"><i class="fa-fw fab fa-hotjar"></i><span> 阅读排行榜</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fa fa-heartbeat"></i><span> 娱乐</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于我</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">Programming Languages Part A Section1 翻译</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2022-01-10T13:15:00.000Z" title="发表于 2022-01-10 21:15:00">2022-01-10</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2022-01-10T14:15:36.109Z" title="更新于 2022-01-10 22:15:36">2022-01-10</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B/">函数式编程</a></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-tag"></i><a class="article-meta__tags" href="/tags/Coursera-Programming-Languages/">Coursera Programming Languages</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">9.8k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>32分钟</span></span><span class="post-meta-separator">|</span><span class="leancloud_visitors" id="/2022/01/10/2022-1-10-Programming-Languages-Part-A-Section1-%E7%BF%BB%E8%AF%91/" data-flag-title="Programming Languages Part A Section1 翻译"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span class="leancloud-visitors-count"></span></span><span class="post-meta-separator">|</span><span class="post-meta-commentcount"><i class="far fa-comments fa-fw post-meta-icon"></i><span class="post-meta-label">评论数:</span><a href="/2022/01/10/2022-1-10-Programming-Languages-Part-A-Section1-%E7%BF%BB%E8%AF%91/#post-comment" itemprop="discussionUrl"><span class="valine-comment-count" data-xid="/2022/01/10/2022-1-10-Programming-Languages-Part-A-Section1-%E7%BF%BB%E8%AF%91/" itemprop="commentCount"></span></a></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p>这里对Section 1进行翻译。</p>
+<p>课程主页：</p>
+<p><a target="_blank" rel="noopener" href="https://www.coursera.org/learn/programming-languages/home">https://www.coursera.org/learn/programming-languages/home</a></p>
+<p>B站搬运：</p>
+<p><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1dL411j7L7">https://www.bilibili.com/video/BV1dL411j7L7</a></p>
+<span id="more"></span>
+<h1 id="Coursera编程语言课程-第1节总结"><a href="#Coursera编程语言课程-第1节总结" class="headerlink" title="Coursera编程语言课程 第1节总结"></a>Coursera编程语言课程 第1节总结</h1><p>标准说明：本总结涵盖的材料与课堂视频以及随视频发布的材料（幻灯片、代码）大致相同。它有助于以叙述的方式阅读材料，并将整个课程部分的材料放在一份文件中，特别是在以后复习材料时。请在讨论区上报告这些笔记中的错误。</p>
+<h2 id="内容"><a href="#内容" class="headerlink" title="内容"></a>内容</h2><ul>
+<li>欢迎使用编程语言</li>
+<li>ML表达式和变量绑定</li>
+<li>使用use</li>
+<li>变量是不可改变的(Immutable)</li>
+<li>函数绑定</li>
+<li>Pairs和其他元组</li>
+<li>列表</li>
+<li>Let表达式</li>
+<li>Options</li>
+<li>一些其他表达式和运算符</li>
+<li>缺乏突变(Mutation)和突变的好处</li>
+<li>程序设计语言的各个部分</li>
+</ul>
+<h2 id="欢迎来到《程序设计语言》"><a href="#欢迎来到《程序设计语言》" class="headerlink" title="欢迎来到《程序设计语言》"></a>欢迎来到《程序设计语言》</h2><p>（也可参见课程网页上关于课程结构、作业、评分、软件安装等的介绍性材料。这些材料在此不再重复。）</p>
+<p>一门名为”编程语言”的课程可能意味着许多不同的事情。对我们来说，这意味着有机会学习几乎每种编程语言中以某种形式出现的基本概念。我们还将了解这些概念是如何”结合”在一起的，以提供程序员在语言中所需要的东西。我们将使用不同的语言，看看它们如何采取互补的方法来表示这些概念。所有这些都是为了使你成为一个更好的软件开发者，无论使用何种语言。</p>
+<p>很多人会说这门课程“教授”了3种语言ML（在A部分）、Racket（在B部分）和Ruby（在C部分），但这是一个糟糕的描述。我们将使用这些语言来学习各种范式和概念，因为它们很适合这样做。如果我们的目标只是让你在这三种语言中尽可能地提高工作效率，那么课程材料将非常不同。也就是说，能够学习新的语言并认识到不同语言之间的差异，是一个重要的目标。</p>
+<p>本课程的大部分内容将使用<strong>函数式编程</strong>（ML和Racket都是函数式语言），它强调不可变的数据（无赋值语句）和函数，特别是接受和返回其他函数的函数。正如我们将在后面的C部分讨论的那样，函数式编程在某些方面与面向对象编程完全相反，但也有许多相似之处。函数式编程不仅是一种非常强大和优雅的方法，而且学习它有助于你更好地理解所有的编程风格。</p>
+<p>在课程的最开始，传统的做法是介绍设置课程的动机，在这种情况下，会解释为什么你应该学习函数式编程，以及更普遍的为什么值得学习不同的语言、范式和语言概念。我们基本上会把这个讨论推迟到第三次作业之后。当大多数学生更关心如何理解课程中的工作时，这一点就太重要了，而且更重要的是，在我们建立了共同的术语和经验之后，讨论这个问题要容易得多。动机确实很重要；让我们接受一张“改天支票”，并承诺这将是非常值得的。</p>
+<h2 id="ML表达式和变量绑定"><a href="#ML表达式和变量绑定" class="headerlink" title="ML表达式和变量绑定"></a>ML表达式和变量绑定</h2><p>所以让我们开始”学习ML”，但要以教授核心编程语言概念的方式，而不仅仅是”写下一些能用的代码”。因此，请特别注意用于描述我们开始时非常简单的代码的词语。我们正在建立一个基础，在本周和下周，我们将迅速扩展这个基础。不要试图将你所看到的东西与你在其他语言中已经知道的东西联系起来，因为这很可能会很挣扎。</p>
+<p>一个ML程序是一系列绑定。每个绑定都要进行类型检查，然后（假设它进行了类型检查）进行计算。一个绑定的类型（如果有的话）取决于静态环境（这里的静态一词与它在Java/C/C++中的使用有着微妙的联系，但在这一点上难以解释。），大致是文件中前面的绑定的类型。一个绑定如何被评估取决于动态环境，大致是文件中前面的绑定的值。当我们只说环境(environment)时，我们通常指的是动态环境。有时上下文(cotext)被用作静态环境的同义词。</p>
+<p>绑定有好几种，但现在我们只考虑变量绑定，在ML中有这样的语法：</p>
+<pre class="line-numbers language-none"><code class="language-none">val x &#x3D; e;<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>这里，<code>val</code>是一个关键字，<code>x</code>可以是任何变量，<code>e</code>可以是任何表达式。我们将学习许多写表达式的方法。分号在文件中是可选的，但在read-eval-print循环中是必要的，以便让解释器知道你已经完成了输入绑定。</p>
+<p>我们现在知道了一个变量绑定的语法（如何写），但是我们仍然需要知道它的语义（它如何进行类型检查和评估）。为了对一个变量绑定进行类型检查，我们使用”当前的静态环境”（之前绑定的类型）对<code>e</code>进行类型检查（这将取决于它是什么样的表达式），并产生一个”新的静态环境”，它是当前的静态环境，但<code>x</code>的类型为<code>t</code>，其中<code>t</code>是<code>e</code>的类型。评估是类似的：为了评估一个变量绑定，我们使用”当前的动态环境”（前面的绑定的值）来评估<code>e</code>（这将取决于它是什么类型的表达式），并产生一个”新的动态环境”，它是当前的环境，除了<code>x</code>具有值<code>v</code>，其中<code>v</code>是评估<code>e</code>的结果。</p>
+<p>值是一个表达式，它”没有更多的计算要做”，也就是说，没有办法简化它。正如下面所描述的，<code>17</code>是一个值，但<code>8+9</code>不是。所有的值都是表达式，但不是所有的表达式都是值。</p>
+<p>这整个关于ML程序含义的描述（绑定、表达式、类型、值、环境）可能看起来非常理论化或深奥，但这正是我们为几种不同类型的表达式给出精确和简洁的定义所需要的基础。下面是几个这样的定义：</p>
+<ul>
+<li>整数常量： <ul>
+<li>语法：一串数字 </li>
+<li>类型检查：在任何静态环境下都是<code>int</code>类型</li>
+<li>评估：在任何动态环境下都是其本身（它是一个值）</li>
+</ul>
+</li>
+<li>加法： <ul>
+<li>语法：<code>e1+e2</code>，其中<code>e1</code>和<code>e2</code>是表达式</li>
+<li>类型检查：当<code>e1</code>和<code>e2</code>在同一静态环境中且具有<code>int</code>类型时，类型为<code>int</code>，否则不进行类型检查 </li>
+<li>评估：在同一动态环境中将<code>e1</code>评估为<code>v1</code>，将<code>e2</code>评估为<code>v2</code>，然后产生<code>v1</code>和<code>v2</code>的和</li>
+</ul>
+</li>
+<li>变量：<ul>
+<li>语法：一串字母、下划线，等等</li>
+<li>类型检查：在当前静态环境中查找变量并使用该类型</li>
+<li>评估：在当前动态环境中查找变量并使用该值</li>
+</ul>
+</li>
+<li>条件表达式：<ul>
+<li>语法是<code>if e1 then e2 else e3</code>，其中<code>e1</code>、<code>e2</code>和<code>e3</code>是表达式</li>
+<li>类型检查：使用当前的静态环境，条件的类型检查只有如下条件满足时才进行：<ul>
+<li>(a) <code>e1</code>有bool类型和</li>
+<li>(b) <code>e2</code>和<code>e3</code>有相同的类型。</li>
+<li>整个表达式的类型是<code>e2</code>和<code>e3</code>的类型。</li>
+</ul>
+</li>
+<li>评估：在当前的动态环境下，评估<code>e1</code>。如果结果为<code>true</code>，在当前动态环境下评估<code>e2</code>的结果就是整体结果。如果结果是<code>false</code>，则在当前动态环境下评估<code>e3</code>的结果就是整体结果。</li>
+</ul>
+</li>
+<li>布尔常量： <ul>
+<li>语法：要么是<code>true</code>，要么是<code>false</code> </li>
+<li>类型检查：在任何静态环境下都是<code>bool</code>类型</li>
+<li>评估：在任何动态环境下就是其本身（它是一个值） </li>
+</ul>
+</li>
+<li>小于比较： <ul>
+<li>语法：<code>e1 &lt; e2</code>，其中<code>e1</code>和<code>e2</code>是表达式</li>
+<li>类型检查：当<code>e1</code>和<code>e2</code>在同一静态环境中具有<code>int</code>类型时类型为<code>bool</code>，否则不进行类型检查</li>
+<li>评估：在同一动态环境中，将<code>e1</code>评估为<code>v1</code>，将<code>e2</code>评估为<code>v2</code>，然后如果<code>v1</code>小于<code>v2</code>，则产生<code>true</code>，否则产生<code>false</code></li>
+</ul>
+</li>
+</ul>
+<p><strong>当你学习一种编程语言的新结构时，你应该问这三个问题。语法是什么？类型检查规则是什么？评估规则是什么？</strong></p>
+<h2 id="使用use"><a href="#使用use" class="headerlink" title="使用use"></a>使用use</h2><p>当使用read-eval-print循环时，从一个文件中添加一连串的绑定是非常方便的。</p>
+<pre class="line-numbers language-none"><code class="language-none">use &quot;foo.sml&quot;; <span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>就是这样做的。它的类型是<code>unit</code>，其结果是<code>()</code>（<code>unit</code>类型的唯一值），但它的效果是包括文件”foo.sml”中的所有绑定。</p>
+<h2 id="变量是不可改变的"><a href="#变量是不可改变的" class="headerlink" title="变量是不可改变的"></a>变量是不可改变的</h2><p>绑定是不可改变的。给定<code>val x=8+9;</code> 我们产生一个动态环境，<code>x</code>映射到<code>17</code>。在这个环境中，<code>x</code>总是映射到<code>17</code>；在ML中没有”赋值语句”来改变<code>x</code>映射到什么。如果你正在使用<code>x</code>，这就非常有用了。你可以在以后有另一个绑定，比如说<code>val x = 19;</code>，但这只是创造了一个不同的环境，在这个环境中，后来的``x的绑定会覆盖(shadow)先前的那个。当我们定义使用变量的函数时，这种区别将是非常重要的。</p>
+<h2 id="函数绑定"><a href="#函数绑定" class="headerlink" title="函数绑定"></a>函数绑定</h2><p>回顾一下，一个ML程序是一连串的绑定。每个绑定都增加了静态环境（用于类型检查后续绑定）和动态环境（用于评估后续绑定）。我们已经介绍了变量绑定；现在我们介绍函数绑定，即如何定义和使用函数。然后，我们将学习如何使用pair和列表从较小的数据中建立和使用较大的数据块。</p>
+<p>函数有点像Java等语言中的方法——它是用参数调用的，并且有一个生成结果的主体。与方法不同，没有类、this等概念。我们也没有像返回语句这样的东西。一个简单的例子是这个假设$y\ge 0$的计算$x^y$的函数：</p>
+<pre class="line-numbers language-none"><code class="language-none">fun pow (x:int, y:int) &#x3D; (* correct only for y &gt;&#x3D; 0 *)
+    if y&#x3D;0
+    then 1
+    else x * pow(x,y-1)<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+<p><strong>语法</strong>：</p>
+<p>函数绑定的语法是这样的（我们将在课程的后面对这个定义进行概括）：</p>
+<pre class="line-numbers language-none"><code class="language-none">fun x0 (x1 : t1, ..., xn : tn) &#x3D; e<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>这是一个名为<code>x0</code>的函数的绑定。它接受$n$个类型为<code>t1, ..., tn</code>的参数<code>x1, ... xn</code>，并有一个表达式<code>e</code>作为其主体。一如既往，语法只是语法——我们必须为函数绑定定义类型规则和评估规则。但大致上说，在<code>e</code>中，参数被绑定为<code>x1, ... xn</code>，调用<code>x0</code>的结果是<code>e</code>的评估结果。</p>
+<p><strong>类型检查</strong>：</p>
+<p>为了对一个函数绑定进行类型检查，我们在一个静态环境中对主体<code>e</code>进行类型检查，（除了所有先前的绑定之外）映射<code>x1</code>到<code>t1</code>，…，<code>xn</code>到<code>tn</code>，<code>x0</code>到<code>t1 * … * tn -&gt; t</code>。由于<code>x0</code>在环境中，所以我们可以进行递归函数调用，也就是说，一个函数定义可以使用自己。函数类型的语法是”参数类型”-&gt;”结果类型”，其中参数类型用<code>*</code>（恰好与表达式中用于乘法的字符相同）分隔。为了使函数绑定进行类型检查，主体<code>e</code>必须具有<code>t</code>类型，即<code>x0</code>的结果类型。考虑到下面的评估规则，这是有道理的，因为函数调用的结果就是评估<code>e</code>的结果。</p>
+<p>但是，<code>t</code>到底是什么——我们从来没有把它写下来？它可以是任何类型，由类型检查器（语言实现的一部分）来找出<code>t</code>应该是什么，以便将它用于<code>x0</code>的结果类型，使”一切顺利”。现在，我们将把它看作是神奇的，但类型推理（弄清没有写下来的类型）是ML的一个非常酷的特征，在课程的后面会讨论。事实证明，在ML中你几乎不需要写下类型。很快，参数类型<code>t1, ..., tn</code>也将是可选的，但要等到我们稍后学习模式匹配时才会出现（我们在本讲座和家庭作业1中使用像<code>#1</code>这样的pair-reading结构的方式需要这些明确的类型。）。</p>
+<p>在函数绑定后，<code>x</code>0被添加到静态环境中，并带有其类型。参数不被添加到顶层静态环境中——它们只能在函数主体中使用。</p>
+<p><strong>评估</strong>：</p>
+<p>函数绑定的评估规则很简单：一个函数是一个值——我们只需将<code>x0作</code>为一个函数添加到环境中，以便以后可以调用它。正如递归所预期的那样，<code>x0</code>在函数主体和后续绑定的动态环境中（但不像Java中那样，对于前面的绑定，定义函数的顺序非常重要）。</p>
+<p><strong>函数调用</strong>：</p>
+<p>函数绑定只对函数调用有用，这是一种新的表达方式。语法是<code>e0 (e1,...,en)</code>，如果正好有一个参数，圆括号是可选的。类型规则要求<code>e0</code>的类型看起来像<code>t1*...*tn-&gt;t</code>，对于$1≤i≤n$，<code>ei</code>的类型是<code>ti</code>。那么整个调用的类型为<code>t</code>。希望这不会太令人惊讶。对于评估规则，我们使用调用点的环境来评估<code>e0</code>为<code>v0</code>，<code>e1</code>为<code>v1</code>，…，<code>en</code>为<code>vn</code>。然后<code>v0</code>必须是一个函数（它将被假设为调用类型检查），我们在一个扩展的环境中评估函数的主体，使函数参数映射到<code>v1, ..., vn</code>。</p>
+<p>究竟我们用参数扩展的是哪个环境？是定义函数时的”当前”环境，而不是正在被调用的环境。这个区别现在不会出现，但我们以后会详细讨论。</p>
+<p>把所有这些放在一起，我们可以确定这段代码将产生一个Ans为64的环境：</p>
+<pre class="line-numbers language-none"><code class="language-none">fun pow (x:int, y:int) &#x3D; (* correct only for y &gt;&#x3D; 0 *)
+    if y&#x3D;0
+    then 1
+    else x * pow(x,y-1)
+fun cube (x:int) &#x3D;
+    pow(x,3)
+val ans &#x3D; cube(4)<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h2 id="Pairs和其他元组"><a href="#Pairs和其他元组" class="headerlink" title="Pairs和其他元组"></a>Pairs和其他元组</h2><p>编程语言需要从较简单的数据中建立复合数据的方法。我们将在ML中学习的第一个方法是pairs。建立一个pair的语法是<code>(e1,e2)</code>，它将<code>e1</code>评估为<code>v1</code>，<code>e2</code>评估为<code>v2</code>，形成一对值<code>(v1,v2)</code>，它本身就是一个值。由于<code>v1</code>和/或<code>v2</code>本身可以是pair（可能持有其他pair，等等），因此我们可以用几个“基本”值构建数据，而不仅仅是两个（比如）整数。一个pair的类型是<code>t1*t2</code>，其中<code>t1</code>是第一部分的类型，<code>t2</code>是第二部分的类型。</p>
+<p>就像生成函数只有在我们能够调用它们时才有用一样，生成pairs也只有在我们以后能够检索这些片段时才有用。在我们学习模式匹配之前，我们将使用<code>#1</code>和<code>#2</code>来访问第一和第二部分。<code>#1 e</code>或<code>#2 e</code>的类型规则不应令人惊讶：<code>e</code>必须有某种类型，看起来像<code>ta * tb</code>，那么<code>#1 e</code>有类型<code>ta</code>，<code>#2</code>有类型<code>tb</code>。</p>
+<p>这里有几个使用pair的函数例子。 <code>div_mod</code>也许是最有趣的，因为它使用pair来返回一个有两部分的答案。这在ML中是相当令人愉快的，而在Java中（例如）从一个函数中返回两个整数需要定义一个类，写一个构造函数，创建一个新对象，初始化它的字段，并编写返回语句。</p>
+<pre class="line-numbers language-none"><code class="language-none">
+fun swap (pr : int*bool) &#x3D;
+    (#2 pr, #1 pr)
+    
+fun sum_two_pairs (pr1 : int*int, pr2 : int*int) &#x3D;
+    (#1 pr1) + (#2 pr1) + (#1 pr2) + (#2 pr2)
+    
+fun div_mod (x : int, y : int) &#x3D;  (* note: returning a pair is a real pain in Java *)
+    (x div y, x mod y)
+    
+fun sort_pair (pr : int*int) &#x3D;
+    if (#1 pr) &lt; (#2 pr)
+    then pr
+    else ((#2 pr),(#1 pr))<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>事实上，ML通过允许任意数量的部分来支持元组。例如，一个整数的3元组的类型是<code>int*int*int</code>。一个例子是<code>(7,9,11)</code>，你用<code>#1 e, #2 e, #3 e</code>来检索这些部分，其中<code>e</code>是一个表达式，可以评估为一个三元组。</p>
+<p>pair和元组可以随你的意愿进行嵌套。例如，<code>(7,(true,9))</code>是一个<code>int * (bool * int)</code>类型的值，这与<code>((7,true),9)</code>不同，后者的类型是<code>(int * bool) * int</code>，又例如<code>(7,true,9)</code>的类型是<code>int * bool * int</code>。</p>
+<h2 id="列表"><a href="#列表" class="headerlink" title="列表"></a>列表</h2><p>虽然我们可以随心所欲地嵌套pair（或元组），但对于任何有pair的变量、任何返回pair的函数等，都必须有一个pair的类型，而这个类型将决定”真实数据”的数量。即使是元组，类型也指定了它有多少部分。这往往是过于严格的；我们可能需要一个数据列表（例如整数），而当我们进行类型检查时，列表的长度还不知道（它可能取决于一个函数参数）。ML有列表，它在长度方面比pair更灵活，因为它们可以有任何长度，但在类型方面更不灵活，因为任何特定列表的所有元素必须有相同的类型。</p>
+<p>空列表，其语法为<code>[]</code>，有0个元素。它是一个值，所以像所有的值一样，它立即对自己进行评估。对于任意类型<code>t</code>，有类型<code>t list</code>，ML将其写成<code>&#39;a list</code>（读作”quote a list”或”alpha list”）。一般来说，类型<code>t list</code>的描述的是列表中的所有元素都具有<code>t</code>类型的列表，这对<code>[]</code>来说是成立的，不管<code>t</code>是什么。</p>
+<p>一个有$n$个值的非空列表被写成<code>[v1,v2,...,vn]</code>。你可以用<code>[e1,...,en]</code>创建一个列表，其中每个表达式都被评估为一个值。更常见的是用 <code>e1 :: e2</code> 来创建一个列表，读作”e1 consed onto e2”。这里<code>e1</code>被评估为一个 “<code>t</code>类型的项”，<code>e2</code>被评估为一个 “<code>t</code>值的列表”，结果是一个新的列表，以<code>e1</code>的结果开始，然后是<code>e2</code>中的所有元素。</p>
+<p>与函数和pair一样，只有当我们能用它们做一些事情时，创建列表才是有用的。就像pair一样，在我们学习了模式匹配之后，我们将改变我们使用列表的方式，但现在我们将使用ML提供的三个函数。每个函数都需要一个列表作为参数。</p>
+<ul>
+<li><code>null</code> 对空的列表评估为真，对非空的列表评估为假。</li>
+<li><code>hd</code> 返回一个列表的第一个元素，如果列表是空的，则引发一个异常。</li>
+<li><code>tl</code> 返回一个列表的尾部（一个类似其参数但没有第一个元素的列表），如果该列表为空，则引发异常。</li>
+</ul>
+<p>下面是一些接受或返回列表的函数的简单例子：</p>
+<pre class="line-numbers language-none"><code class="language-none">fun sum_list (xs : int list) &#x3D;
+    if null xs
+    then 0
+    else hd(xs) + sum_list(tl xs)
+    
+fun countdown (x : int) &#x3D;
+    if x&#x3D;0
+    then []
+    else x :: countdown(x-1)
+    
+fun append (xs : int list, ys : int list) &#x3D;
+    if null xs
+    then ys
+    else (hd xs) :: append(tl xs, ys)<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>创建和使用列表的函数几乎都是递归的，因为列表有一个未知的长度。要编写递归函数，思考过程包括考虑基本情况——例如，空列表的答案应该是什么——以及递归情况——如何用列表其余部分的答案来表示答案。</p>
+<p>当你这样思考时，许多问题就变得简单多了，这让那些习惯于思考while循环和赋值语句的人感到惊讶。一个很好的例子是上面的append函数，它接收两个列表并产生一个列表，即一个列表附加到另一个列表上。这段代码实现了一个优雅的递归算法。如果第一个列表是空的，那么我们可以通过对第二个列表进行评估来进行追加。否则，我们可以将第一个列表的尾部追加到第二个列表中。这几乎是正确的答案，但是我们需要对第一个列表的第一个元素进行”运算”（使用 <code>::</code> 已经有几十年的历史了）。这里没有什么神奇的地方——我们用越来越短的第一个列表不断地进行递归调用，然后随着递归调用的完成，我们再把递归调用所删除的列表元素添加回去。</p>
+<p>最后，我们可以随心所欲地组合pair和列表，而不必在语言中添加任何新特性。例如，这里有几个函数，它们接收一个整数对的列表。请注意最后一个函数是如何重用先前的函数以实现一个非常简短的解决方案的。这在函数式编程中是非常常见的。事实上，应该困扰我们的是，<code>firsts</code>和<code>seconds</code>如此相似，但我们却没有让它们共享任何代码。我们将在后面学习如何解决这个问题。</p>
+<pre class="line-numbers language-none"><code class="language-none">fun sum_pair_list (xs : (int * int) list) &#x3D;
+    if null xs
+    then 0
+    else #1 (hd xs) + #2 (hd xs) + sum_pair_list(tl xs)
+    
+fun firsts (xs : (int * int) list) &#x3D;
+    if null xs
+    then []
+    else (#1 (hd xs))::(firsts(tl xs))
+    
+fun seconds (xs : (int * int) list) &#x3D;
+    if null xs
+        then []
+        else (#2 (hd xs))::(seconds(tl xs))
+        
+fun sum_pair_list2 (xs : (int * int) list) &#x3D;
+    (sum_list (firsts xs)) + (sum_list (seconds xs))<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h2 id="Let表达式"><a href="#Let表达式" class="headerlink" title="Let表达式"></a>Let表达式</h2><p>Let表达式是一个绝对重要的特性，它允许以一种非常简单、通用和灵活的方式使用局部变量。Let表达式对于风格和效率都是至关重要的。Let表达式让我们拥有局部变量。事实上，它允许我们拥有任何类型的局部绑定，包括函数绑定。因为它是表达式的一种，所以它可以出现在表达式可以出现的任何地方。</p>
+<p>从语法上讲，let-expression是：</p>
+<pre class="line-numbers language-none"><code class="language-none">let b1 b2 ... bn in e end<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>其中每个<code>bi</code>是一个绑定，<code>e</code>是一个表达式。</p>
+<p>let-表达式的类型检查和语义很像我们ML程序中顶级绑定的语义。我们依次评估每个绑定，为后续的绑定创造一个更大的环境。我们把一个绑定的范围称为 “它可以被使用的地方”，所以一个let表达式中的绑定的范围是该let表达式中后来的绑定和该<code>let</code>表达式的 “主体”（<code>e</code>）。<code>e</code>的评估值是整个let表达式的值，而且，不出所料，<code>e</code>的类型是整个let表达式的类型。</p>
+<p>例如，这个表达式评估为7；注意x的一个内部绑定是如何影射一个外部绑定的。</p>
+<pre class="line-numbers language-none"><code class="language-none">let val x &#x3D; 1 
+in
+       (let val x &#x3D; 2 in x+1 end) + (let val y &#x3D; x+2 in y+1 end)
+end<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+<p>还注意到let表达式是表达式，所以它们可以作为加法中的子表达式出现（尽管这个例子很傻，风格不好，因为它很难读）。</p>
+<p>Let表达式也可以绑定函数，因为函数只是另一种绑定方式。如果一个辅助函数只被一个其他函数所需要，并且不太可能在其他地方发挥作用，那么将其绑定在本地是一种很好的风格。例如，这里我们使用一个本地辅助函数来帮助产生列表<code>[1,2,...,x]</code>:</p>
+<pre class="line-numbers language-none"><code class="language-none">fun countup_from1 (x:int) &#x3D;
+    let fun count (from:int, to:int) &#x3D;
+            if from&#x3D;to
+            then to::[]
+            else from :: count(from+1,to)
+    in
+        count(1,x)
+end<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>不过，我们可以做得更好。当我们评估对<code>count</code>的调用时，我们在一个动态环境中评估<code>count</code>的主体，该环境是定义<code>count</code>的环境，并为<code>count</code>的参数扩展了绑定。上面的代码并没有真正利用这一点：<code>count</code>的主体只使用<code>from</code>、<code>to</code>和<code>count</code>（用于递归）。它也可以使用<code>x</code>，因为当<code>count</code>被定义时，它就在环境中。那么我们就完全不需要<code>to</code>了，因为在上面的代码中，它的值总是和<code>x</code>一样的。 所以这是更好的风格：</p>
+<pre class="line-numbers language-none"><code class="language-none">fun countup_from1_better (x:int) &#x3D;
+    let fun count (from:int) &#x3D;
+            if from&#x3D;x
+            then x::[]
+            else from :: count(from+1)
+    in
+    	count 1
+    end<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>这种技术，定义一个在作用域中使用其他变量的局部函数，是函数编程中非常常见和方便的事情。遗憾的是，许多非函数式语言很少或根本不支持这样做。</p>
+<p>局部变量通常是保持代码可读性的良好风格。当它们与潜在的昂贵的计算结果绑定时，它们可能会比这更重要。例如，考虑一下这段没有使用let-expressions的代码。</p>
+<pre class="line-numbers language-none"><code class="language-none">fun bad_max (xs : int list) &#x3D;
+    if null xs
+    then 0 (* note: bad style; see below *)
+    else if null (tl xs)
+    then hd xs
+    else if hd xs &gt; bad_max(tl xs)
+    then hd xs
+    else bad_max(tl xs)
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>如果你用<code>countup_from 1 30</code>调用<code>bad_max</code>，它将对自己进行大约$2^{30}$次（超过10亿）递归调用。原因是 “指数爆炸”——代码调用<code>bad_max(tl xs)</code>两次，每一次调用都会再调用<code>bad_max</code>两次（所以总共有4次），以此类推。这种编程”错误”可能很难发现，因为它可能取决于你的测试数据（如果列表递减，算法只进行30次递归调用而不是$2^{30}$次）。</p>
+<p>我们可以使用let表达式来避免重复计算。这个版本计算了一次列表尾部的最大值，并将结果值存储在<code>tl_ans</code>中。</p>
+<pre class="line-numbers language-none"><code class="language-none">fun good_max (xs : int list) &#x3D;
+    if null xs
+    then 0 (* note: bad style; see below *)
+    else if null (tl xs)
+    then hd xs
+    else
+        (* for style, could also use a let-binding for hd xs *)
+        let val tl_ans &#x3D; good_max(tl xs)
+        in
+            if hd xs &gt; tl_ans
+            then hd xs
+            else tl_ans
+		end<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h2 id="Options"><a href="#Options" class="headerlink" title="Options"></a>Options</h2><p>前面的例子没有正确处理空列表——它返回0。这是不好的风格，因为0确实不是0个数字的最大值。尽管没有好的答案，但我们应该合理地处理这种情况。一种可能性是引发一个异常；如果你有兴趣，你可以在我们以后的课程中讨论它们之前，自己学习一下ML异常。相反，让我们改变返回类型，要么返回最大数，要么表明输入列表是空的，所以没有最大数。根据我们已有的结构，我们可以通过返回一个int list来 “编码”，如果输入的是空列表，则使用[]，如果输入的列表不是空的，则使用一个带有整数（最大值）的列表。</p>
+<p>虽然这个方法可行，但是列表是”多余”的——我们将总是返回一个有0或1个元素的列表。所以一个列表并不是对我们要返回的东西的精确描述。ML库有”options”，这是一个精确的描述：一个选option值有0或1个值：<code>NONE</code>是一个”不携带任何东西”的option值，而<code>SOME e</code>将<code>e</code>评估为一个值<code>v</code>，成为携带值<code>v</code>的option。<code>NONE</code>的类型是<code>’a option</code>，如果<code>e</code>的类型是<code>t</code>，<code>SOME e</code>的类型是<code>t option</code>。</p>
+<p>给定一个值，你如何使用它？就像我们有<code>null</code>来判断一个列表是否为空一样，我们有<code>isSome</code>，如果它的参数是<code>NONE</code>，它的评估结果为<code>false</code>。就像我们<code>hd</code>和<code>tl</code>来获取列表的一部分（对空列表引发异常），我们有<code>valOf</code>来获取<code>SOME</code>所带的值（对<code>NONE</code>引发异常）。</p>
+<p>使用option，这里有一个更好版本的<code>max</code>，带有返回类型<code>int option</code>：</p>
+<pre class="line-numbers language-none"><code class="language-none">fun better_max (xs : int list) &#x3D;
+    if null xs
+    then NONE
+    else
+        let val tl_ans &#x3D; better_max(tl xs)
+        in if isSome tl_ans andalso valOf tl_ans &gt; hd xs
+			then tl_ans
+        	 else SOME (hd xs)
+        end<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>上面的版本工作得很好，是一个合理的递归函数，因为它没有重复任何潜在的昂贵计算。但是让每个递归调用（除了最后一个）都创建一个带有<code>SOME</code>的选项，以便让其调用者访问下面的值，这既笨拙又有点低效。这里有一个替代方法，我们使用一个本地辅助函数来处理非空列表，然后只让外层函数返回一个option。注意，如果用<code>[]</code>调用，辅助函数会引发一个异常，但由于它是本地定义的，我们可以确定这不会发生。</p>
+<pre class="line-numbers language-none"><code class="language-none">fun better_max2 (xs : int list) &#x3D;
+    if null xs
+    then NONE
+    else let (* fine to assume argument nonempty because it is local *)
+        fun max_nonempty (xs : int list) &#x3D;
+            if null (tl xs) (* xs better not be [] *)
+            then hd xs
+            else let val tl_ans &#x3D; max_nonempty(tl xs)
+                 in
+                 if hd xs &gt; tl_ans
+                 then hd xs
+                 else tl_ans
+                 end
+        in
+            SOME (max_nonempty xs)
+        end<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h2 id="一些其他的表达式和运算符"><a href="#一些其他的表达式和运算符" class="headerlink" title="一些其他的表达式和运算符"></a>一些其他的表达式和运算符</h2><p>ML有你需要的所有算术和逻辑运算符，但其语法有时与大多数语言不同。下面是一些我们会发现有用的额外形式的表达式的简要列表:</p>
+<ul>
+<li><p><code>e1 andalso e2</code>是逻辑与：只有当<code>e1</code>的评估为真时，它才会评估<code>e2</code>。如果<code>e1</code>和<code>e2</code>评估为真，结果就是真。当然，<code>e1</code>和<code>e2</code>必须都有<code>bool</code>类型，整个表达式也有<code>bool</code>类型。在许多语言中，这样的表达式被写成<code>e1 &amp;&amp; e2</code>，但这不是ML的语法，<code>e1 and e2</code>也不是（但<code>and</code>是我们以后会遇到的一个关键词，有不同的用途）。使用<code>e1 andalso e2</code>通常比等价的<code>if e1 then e2 else false</code>的风格更好。</p>
+</li>
+<li><p><code>e1 orelse e2</code>是逻辑或：只有当<code>e1</code>评估为<code>false</code>时，它才会评估<code>e2</code>。如果<code>e1</code>或<code>e2</code>评估为<code>true</code>，则结果为<code>true</code>。当然，<code>e1</code>和<code>e2</code>必须都有<code>bool</code>类型，整个表达式也有<code>bool</code>类型。在许多语言中，这样的表达式被写成<code>e1 || e2</code>，但这不是ML的语法，<code>e1 or e2</code>也不是。使用<code>e1 orelse e2</code>通常比等价的<code>if e1 then true else e2</code>的风格更好。</p>
+</li>
+<li><code>not e</code>是逻辑否定：<code>not</code>只是一个提供的<code>bool-&gt;bool</code>类型的函数，我们可以自己定义为<code>fun not x = if x then false else true</code>。在许多语言中，这样的表达式被写成<code>!e</code>，但在ML中，<code>!</code>操作符意味着其他的东西（与可变变量有关，我们将不使用）。</li>
+<li>你可以用<code>e1 = e2</code>来比较许多数值，包括整数，以确定是否相等。</li>
+<li>不要用<code>not (e1 = e2)</code>来查看两个数字是否不同，更好的样式是<code>e1&lt;&gt;e2</code>。在许多语言中，语法是<code>e1!= e2</code>，而ML的<code>&lt;&gt;</code>可以被记为，”小于或大于”。</li>
+<li>其他算术比较的语法与大多数语言中相同：<code>&gt;, &lt;, &gt;=, &lt;=</code>。</li>
+<li>减法写成<code>e1 - e2</code>，但它必须有两个操作数，所以不能通过<code>-e</code>求相反数。对于求相反数，正确的语法是<code>~e</code>，特别是负数要写成<code>~7</code>，而不是<code>-7</code>。使用<code>~e</code>比使用<code>0-e</code>更好，但对于整数是等效的。</li>
+</ul>
+<h2 id="缺少突变及其好处"><a href="#缺少突变及其好处" class="headerlink" title="缺少突变及其好处"></a>缺少突变及其好处</h2><p>在ML中，没有办法改变一个绑定、一个元组或一个列表的内容。如果<code>x</code>在某个环境中映射到某个值，如pair列表<code>[(3,4),(7,9)]</code>，那么<code>x</code>将永远在那个环境中映射到该列表。没有任何赋值语句可以将<code>x</code>改为映射到不同的列表。(你可以引入一个新的绑定来shadow x，但这不会影响任何在环境中查找”原始”<code>x</code>的代码。) 没有赋值语句可以让你改变列表的头或尾。也没有赋值语句可以让你改变一个元组的内容。所以我们有构建复合数据和访问片段的结构，但没有结构来改变我们所构建的数据。</p>
+<p>这是一个非常强大的功能！这可能会让你感到惊讶：一种语言没有某种东西怎么会是一种特性呢？因为如果没有这样的特性，那么当你写代码的时候，你就不能假设其他的代码不会做一些让你的代码出错、不完整或难以使用的事情。拥有不可变的数据可能是一种语言所能拥有的最重要的”非特性”，它也是函数式编程的主要贡献之一。</p>
+<p>虽然不可变的数据有各种优点，但在这里我们将重点讨论一个重要的优点：它使共享和别名变得不重要。在选择Java之前，让我们再考虑上面的两个例子（以及其他语言，在这些语言中，可变数据是常态，赋值语句非常流行）。</p>
+<pre class="line-numbers language-none"><code class="language-none">fun sort_pair (pr : int*int) &#x3D;
+    if (#1 pr) &lt; (#2 pr)
+    then pr
+    else ((#2 pr),(#1 pr))<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+<p>在<code>sort_pair</code>中，我们显然在else-branch中建立并返回一个新的pair，但在then-branch中，我们是返回pr所指的pair的副本，还是返回一个别名是一个问题，其中调用如下：</p>
+<pre class="line-numbers language-none"><code class="language-none">val x &#x3D; (3,4)
+val y &#x3D; sort_pair x<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<p>现在，<code>x</code>和<code>y</code>会是同一pair的别名吗？答案是你无法判断——在ML中没有任何结构可以弄清<code>x</code>和<code>y</code>是否是别名，也没有理由担心它们可能是别名。如果我们有突变，情况就会不同。假设我们可以说，”改变<code>x</code>被绑定的第二部分，使其持有5而不是4”。那么我们就不得不想，<code>y</code>的第2个元素会是4还是5。</p>
+<p>如果你感到好奇，我们希望上面的代码会产生别名：通过返回<code>pr</code>，<code>sort_pair</code>函数会返回其参数的一个别名。这比这个版本更有效，因为它将创建另一个内容完全相同的pair：</p>
+<pre class="line-numbers language-none"><code class="language-none">fun sort_pair (pr : int*int) &#x3D;
+    if (#1 pr) &lt; (#2 pr)
+    then (#1 pr, #2 pr)
+    else ((#2 pr),(#1 pr))<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+<p>生成新的对<code>(#1 pr, #2 pr)</code>是不好的风格，因为pr更简单，效果也一样。然而在有突变的语言中，程序员一直在做这样的拷贝，正是为了防止别名，即使用一个变量（如<code>x</code>）进行赋值会导致使用另一个变量（如<code>y</code>）的意外变化。 在ML中，sort_pair的用户永远不会知道我们是否返回一个新pair。</p>
+<p>我们的第二个例子是我们用于list append的优雅函数：</p>
+<pre class="line-numbers language-none"><code class="language-none">fun append (xs : int list, ys : int list) &#x3D;
+    if null xs
+    then ys
+    else (hd xs) :: append(tl xs, ys)<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+<p>我们可以问一个类似的问题。返回的列表是否与参数共享任何元素？同样，答案并不重要，因为没有调用者可以知道。同样，答案也是肯定的：我们建立一个新的列表，”重用”<code>ys</code>的所有元素。这节省了空间，但如果有人后来对<code>ys</code>进行改变，就会非常混乱。节省空间是不可变数据的一个很好的优点，但在编写优雅的算法时，不必担心是否存在别名。</p>
+<p>事实上，<code>tl</code>本身就引入了别名（虽然你看不出来）：它返回（别名）列表的尾部，这比复制一个列表的尾部代价更低，因为复制操作对长列表来说代价很高。</p>
+<p><code>append</code>的例子与<code>sort_pair</code>的例子非常相似，但它更有说服力，因为如果你有许多潜在的长度较大的列表，就很难跟踪潜在的别名。如果我把<code>[1,2]</code>追加到<code>[3,4,5]</code>，我将得到列表<code>[1,2,3,4,5]</code>，但是如果后来有人可以把<code>[3,4,5]</code>列表改为<code>[3,7,5]</code>，那么追加的列表还是<code>[1,2,3,4,5]</code>，还是现在的<code>[1,2,3,7,5]</code>？</p>
+<p>在类似的Java程序中，这是一个关键问题，这就是为什么Java程序员必须纠结于何时使用旧对象的引用，何时创建新对象。有些时候，纠结别名是正确的，有些时候，避免突变是正确的——函数式编程会帮助你在后者方面做得更好。</p>
+<p>最后一个例子，下面的Java是一个重要的（后来被修复的）Java库的实际安全漏洞背后的关键思想。假设我们正在为允许访问磁盘上的文件之类的内容的人维护权限。让每个人都看到谁拥有权限是可以的，但显然只有那些有权限的人才能真正使用该资源。考虑一下这个错误的代码（如果不相关，有些部分省略）。</p>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">class</span> <span class="token class-name">ProtectedResource</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">private</span> <span class="token class-name">Resource</span> theResource <span class="token operator">=</span> <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">;</span>
+    <span class="token keyword">private</span> <span class="token class-name">String</span><span class="token punctuation">[</span><span class="token punctuation">]</span> allowedUsers <span class="token operator">=</span> <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">;</span>
+    <span class="token keyword">public</span> <span class="token class-name">String</span><span class="token punctuation">[</span><span class="token punctuation">]</span> <span class="token function">getAllowedUsers</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    	<span class="token keyword">return</span> allowedUsers<span class="token punctuation">;</span>
+	<span class="token punctuation">&#125;</span>
+    <span class="token keyword">public</span> <span class="token class-name">String</span> <span class="token function">currentUser</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span> <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span> <span class="token punctuation">&#125;</span>
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">useTheResource</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> i<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> allowedUsers<span class="token punctuation">.</span>length<span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+            <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token function">currentUser</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">equals</span><span class="token punctuation">(</span>allowedUsers<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+            <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span> <span class="token comment">// access allowed: use it</span>
+            <span class="token keyword">return</span><span class="token punctuation">;</span>
+    	<span class="token punctuation">&#125;</span>
+	<span class="token punctuation">&#125;</span>
+	<span class="token keyword">throw</span> <span class="token keyword">new</span> <span class="token class-name">IllegalAccessException</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>你能找到问题所在吗？在这里：<code>getAllowedUsers</code>返回<code>allowedUsers</code>数组的别名，所以任何用户都可以通过执行<code>getAllowedUsers()[0] = currentUser()</code>获得访问权。如果Java中有某种不允许更新其内容的数组，那么这是不可能发生的。相反，在Java中，我们经常要记住生成一个副本。下面的修正显示了一个显式循环，以详细说明必须做什么，但更好的风格是使用<code>System.arraycopy</code>这样的库方法或<code>Arrays</code>类中的类似方法——这些库方法的存在是因为数组复制必然很常见，部分原因是突变的。</p>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token class-name">String</span><span class="token punctuation">[</span><span class="token punctuation">]</span> <span class="token function">getAllowedUsers</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+   <span class="token class-name">String</span><span class="token punctuation">[</span><span class="token punctuation">]</span> copy <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">String</span><span class="token punctuation">[</span>allowedUsers<span class="token punctuation">.</span>length<span class="token punctuation">]</span><span class="token punctuation">;</span>
+   <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">int</span> i<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> allowedUsers<span class="token punctuation">.</span>length<span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span>
+      copy<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">=</span> allowedUsers<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">;</span>
+   <span class="token keyword">return</span> copy<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h2 id="编程语言的各个部分"><a href="#编程语言的各个部分" class="headerlink" title="编程语言的各个部分"></a>编程语言的各个部分</h2><p>现在我们已经学了足够的ML，可以用它来编写一些简单的函数和程序，我们可以列出定义和学习任何编程语言所必需的基本”组成部分”。</p>
+<ul>
+<li>语法：你如何编写语言的各个部分？</li>
+<li>语义：各种语言特征是什么意思？例如，表达式是如何被评估的？</li>
+<li>习语：使用语言特征来表达计算的常见方法是什么？</li>
+<li>库：哪些东西已经为你写好了？你如何做没有库支持就不能做的事情（比如访问文件）？</li>
+<li>工具：可用于操作语言程序的工具（编译器、读取-评估打印循环、调试器等）</li>
+</ul>
+<p>虽然库和工具对于成为一个有效的程序员来说是必不可少的（避免重新发明可用的解决方案或不必要的手动操作），但本课程并没有过多关注它们。这可能会给人留下错误的印象，认为我们使用的是”愚蠢的”或”不实用的”语言，但在一门关于编程语言概念上的相似性和差异的课程中，库和工具就不那么重要了。</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">Doraemonzzz</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="http://www.doraemonzzz.com/2022/01/10/2022-1-10-Programming-Languages-Part-A-Section1-%E7%BF%BB%E8%AF%91/">http://www.doraemonzzz.com/2022/01/10/2022-1-10-Programming-Languages-Part-A-Section1-%E7%BF%BB%E8%AF%91/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://www.doraemonzzz.com" target="_blank">Doraemonzzz</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/Coursera-Programming-Languages/">Coursera Programming Languages</a></div><div class="post_share"><div class="social-share" data-image="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2022/01/10/2022-1-10-Programming-Languages-Part-A-Week-1%E7%AC%94%E8%AE%B0/"><img class="prev-cover" src= "/img/loading.gif" data-lazy-src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">Programming Languages Part A Week 1笔记</div></div></a></div><div class="next-post pull-right"><a href="/2022/01/08/2022-1-8-CS144-Lab3/"><img class="next-cover" src= "/img/loading.gif" data-lazy-src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">CS144 Lab3</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span> 相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2022/01/10/2022-1-10-Programming-Languages-Part-A-HW0/" title="Programming Languages Part A HW0"><img class="cover" src= "/img/loading.gif" data-lazy-src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-01-10</div><div class="title">Programming Languages Part A HW0</div></div></a></div><div><a href="/2022/01/10/2022-1-10-Programming-Languages-Part-A-HW1/" title="Programming Languages Part A HW1"><img class="cover" src= "/img/loading.gif" data-lazy-src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-01-10</div><div class="title">Programming Languages Part A HW1</div></div></a></div><div><a href="/2022/01/10/2022-1-10-Programming-Languages-Part-A-Week-1笔记/" title="Programming Languages Part A Week 1笔记"><img class="cover" src= "/img/loading.gif" data-lazy-src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-01-10</div><div class="title">Programming Languages Part A Week 1笔记</div></div></a></div><div><a href="/2022/01/10/2022-1-10-Programming-Languages-Part-A-Week-2笔记/" title="Programming Languages Part A Week 2笔记"><img class="cover" src= "/img/loading.gif" data-lazy-src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-01-10</div><div class="title">Programming Languages Part A Week 2笔记</div></div></a></div></div></div><hr/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div><div id="comment-switch"><span class="first-comment">Valine</span><span class="switch-btn"></span><span class="second-comment">Livere</span></div></div><div class="comment-wrap"><div><div class="vcomment" id="vcomment"></div></div><div><div id="lv-container" data-id="city" data-uid="MTAyMC8zNDcxOS8xMTI1Ng=="></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="card-info-avatar is-center"><img class="avatar-img" src= "/img/loading.gif" data-lazy-src="https://github.com/Doraemonzzz/md-photo/blob/master/%E5%A4%B4%E5%83%8F.jpg?raw=true" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/><div class="author-info__name">Doraemonzzz</div><div class="author-info__description">个人博客，主要记录有关机器学习，数学以及计算机科学的笔记</div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">686</div></a></div><div class="card-info-data-item is-center"><a href="/tags/"><div class="headline">标签</div><div class="length-num">71</div></a></div><div class="card-info-data-item is-center"><a href="/categories/"><div class="headline">分类</div><div class="length-num">28</div></a></div></div><a class="button--animated" id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/Doraemonzzz"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/Doraemonzzz" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="/doraemon_zzz@163.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a><a class="social-icon" href="https://space.bilibili.com/291079982" target="_blank" title="Bilibili"><i class="iconfont icon-bilibili"></i></a><a class="social-icon" href="/atom.xml" target="_blank" title=""><i class="fa fa-rss"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn card-announcement-animation"></i><span>公告</span></div><div class="announcement_content">暂无公告</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Coursera%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC1%E8%8A%82%E6%80%BB%E7%BB%93"><span class="toc-number">1.</span> <span class="toc-text">Coursera编程语言课程 第1节总结</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%86%85%E5%AE%B9"><span class="toc-number">1.1.</span> <span class="toc-text">内容</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%AC%A2%E8%BF%8E%E6%9D%A5%E5%88%B0%E3%80%8A%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E8%AF%AD%E8%A8%80%E3%80%8B"><span class="toc-number">1.2.</span> <span class="toc-text">欢迎来到《程序设计语言》</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ML%E8%A1%A8%E8%BE%BE%E5%BC%8F%E5%92%8C%E5%8F%98%E9%87%8F%E7%BB%91%E5%AE%9A"><span class="toc-number">1.3.</span> <span class="toc-text">ML表达式和变量绑定</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8use"><span class="toc-number">1.4.</span> <span class="toc-text">使用use</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%98%E9%87%8F%E6%98%AF%E4%B8%8D%E5%8F%AF%E6%94%B9%E5%8F%98%E7%9A%84"><span class="toc-number">1.5.</span> <span class="toc-text">变量是不可改变的</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%87%BD%E6%95%B0%E7%BB%91%E5%AE%9A"><span class="toc-number">1.6.</span> <span class="toc-text">函数绑定</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Pairs%E5%92%8C%E5%85%B6%E4%BB%96%E5%85%83%E7%BB%84"><span class="toc-number">1.7.</span> <span class="toc-text">Pairs和其他元组</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%97%E8%A1%A8"><span class="toc-number">1.8.</span> <span class="toc-text">列表</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Let%E8%A1%A8%E8%BE%BE%E5%BC%8F"><span class="toc-number">1.9.</span> <span class="toc-text">Let表达式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Options"><span class="toc-number">1.10.</span> <span class="toc-text">Options</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E4%BA%9B%E5%85%B6%E4%BB%96%E7%9A%84%E8%A1%A8%E8%BE%BE%E5%BC%8F%E5%92%8C%E8%BF%90%E7%AE%97%E7%AC%A6"><span class="toc-number">1.11.</span> <span class="toc-text">一些其他的表达式和运算符</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BC%BA%E5%B0%91%E7%AA%81%E5%8F%98%E5%8F%8A%E5%85%B6%E5%A5%BD%E5%A4%84"><span class="toc-number">1.12.</span> <span class="toc-text">缺少突变及其好处</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80%E7%9A%84%E5%90%84%E4%B8%AA%E9%83%A8%E5%88%86"><span class="toc-number">1.13.</span> <span class="toc-text">编程语言的各个部分</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2022/01/10/2022-1-10-Programming-Languages-Part-A-HW1/" title="Programming Languages Part A HW1"><img src= "/img/loading.gif" data-lazy-src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Programming Languages Part A HW1"/></a><div class="content"><a class="title" href="/2022/01/10/2022-1-10-Programming-Languages-Part-A-HW1/" title="Programming Languages Part A HW1">Programming Languages Part A HW1</a><time datetime="2022-01-10T14:11:00.000Z" title="发表于 2022-01-10 22:11:00">2022-01-10</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/01/10/2022-1-10-Programming-Languages-Part-A-HW0/" title="Programming Languages Part A HW0"><img src= "/img/loading.gif" data-lazy-src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Programming Languages Part A HW0"/></a><div class="content"><a class="title" href="/2022/01/10/2022-1-10-Programming-Languages-Part-A-HW0/" title="Programming Languages Part A HW0">Programming Languages Part A HW0</a><time datetime="2022-01-10T14:09:00.000Z" title="发表于 2022-01-10 22:09:00">2022-01-10</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/01/10/2022-1-10-Programming-Languages-Part-A-Week-2%E7%AC%94%E8%AE%B0/" title="Programming Languages Part A Week 2笔记"><img src= "/img/loading.gif" data-lazy-src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Programming Languages Part A Week 2笔记"/></a><div class="content"><a class="title" href="/2022/01/10/2022-1-10-Programming-Languages-Part-A-Week-2%E7%AC%94%E8%AE%B0/" title="Programming Languages Part A Week 2笔记">Programming Languages Part A Week 2笔记</a><time datetime="2022-01-10T14:05:00.000Z" title="发表于 2022-01-10 22:05:00">2022-01-10</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/01/10/2022-1-10-Programming-Languages-Part-A-Week-1%E7%AC%94%E8%AE%B0/" title="Programming Languages Part A Week 1笔记"><img src= "/img/loading.gif" data-lazy-src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Programming Languages Part A Week 1笔记"/></a><div class="content"><a class="title" href="/2022/01/10/2022-1-10-Programming-Languages-Part-A-Week-1%E7%AC%94%E8%AE%B0/" title="Programming Languages Part A Week 1笔记">Programming Languages Part A Week 1笔记</a><time datetime="2022-01-10T13:58:00.000Z" title="发表于 2022-01-10 21:58:00">2022-01-10</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/01/10/2022-1-10-Programming-Languages-Part-A-Section1-%E7%BF%BB%E8%AF%91/" title="Programming Languages Part A Section1 翻译"><img src= "/img/loading.gif" data-lazy-src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Programming Languages Part A Section1 翻译"/></a><div class="content"><a class="title" href="/2022/01/10/2022-1-10-Programming-Languages-Part-A-Section1-%E7%BF%BB%E8%AF%91/" title="Programming Languages Part A Section1 翻译">Programming Languages Part A Section1 翻译</a><time datetime="2022-01-10T13:15:00.000Z" title="发表于 2022-01-10 21:15:00">2022-01-10</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2018 - 2022 By Doraemonzzz</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="font-plus" type="button" title="放大字体"><i class="fas fa-plus"></i></button><button id="font-minus" type="button" title="缩小字体"><i class="fas fa-minus"></i></button><button id="translateLink" type="button" title="简繁转换">简</button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div id="local-search"><div class="search-dialog"><div class="search-dialog__title" id="local-search-title">本地搜索</div><div id="local-input-panel"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div></div><hr/><div id="local-search-results"></div><span class="search-close-button"><i class="fas fa-times"></i></span></div><div id="search-mask"></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="/js/tw_cn.js"></script><script src="https://cdn.jsdelivr.net/npm/vanilla-lazyload/dist/lazyload.iife.min.js"></script><script src="/js/search/local-search.js"></script><script>var preloader = {
+  endLoading: () => {
+    document.body.style.overflow = 'auto';
+    document.getElementById('loading-box').classList.add("loaded")
+  },
+  initLoading: () => {
+    document.body.style.overflow = '';
+    document.getElementById('loading-box').classList.remove("loaded")
+
+  }
+}
+window.addEventListener('load',preloader.endLoading())</script><div class="js-pjax"><script>if (!window.MathJax) {
+  window.MathJax = {
+    tex: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]],
+      tags: 'ams'
+    },
+    chtml: {
+      scale: 1.25
+    },
+    options: {
+      renderActions: {
+        findScript: [10, doc => {
+          for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+            const display = !!node.type.match(/; *mode=display/)
+            const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+            const text = document.createTextNode('')
+            node.parentNode.replaceChild(text, node)
+            math.start = {node: text, delim: '', n: 0}
+            math.end = {node: text, delim: '', n: 0}
+            doc.math.push(math)
+          }
+        }, '']
+      }
+    }
+  }
+  
+  const script = document.createElement('script')
+  script.src = 'https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js'
+  script.id = 'MathJax-script'
+  script.async = true
+  document.head.appendChild(script)
+} else {
+  MathJax.startup.document.state(0)
+  MathJax.texReset()
+  MathJax.typeset()
+}</script><script>function loadValine () {
+  function initValine () {
+    const valine = new Valine(Object.assign({
+      el: '#vcomment',
+      appId: 'IpnmxCW9CvYWIXbol5QXsegX-MdYXbMMI',
+      appKey: 'w57DVCdbxcyB1TYYagMIMJIU',
+      placeholder: 'Please leave your footprints',
+      avatar: 'monsterid',
+      meta: 'nick,mail,link'.split(','),
+      pageSize: '10',
+      lang: 'en',
+      recordIP: false,
+      serverURLs: '',
+      emojiCDN: '',
+      emojiMaps: "",
+      enableQQ: false,
+      path: window.location.pathname,
+      requiredFields: ["nick,mail"],
+      visitor: true
+    }, null))
+  }
+
+  if (typeof Valine === 'function') initValine() 
+  else getScript('https://cdn.jsdelivr.net/npm/valine/dist/Valine.min.js').then(initValine)
+}
+
+if ('Valine' === 'Valine' || !false) {
+  if (false) btf.loadComment(document.getElementById('vcomment'),loadValine)
+  else setTimeout(loadValine, 0)
+} else {
+  function loadOtherComment () {
+    loadValine()
+  }
+}</script><script>function loadLivere () {
+  if (typeof LivereTower === 'object') {
+    window.LivereTower.init()
+  }
+  else {
+    (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+    })(document, 'script');
+  }
+}
+
+if ('Valine' === 'Livere' || !false) {
+  if (false) btf.loadComment(document.getElementById('lv-container'), loadLivere)
+  else loadLivere()
+}
+else {
+  function loadOtherComment () {
+    loadLivere()
+  }
+}</script></div><script defer="defer" id="fluttering_ribbon" mobile="false" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/canvas-fluttering-ribbon.min.js"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
