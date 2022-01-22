@@ -1,0 +1,373 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>CS144 Lab6翻译 | Doraemonzzz</title><meta name="keywords" content="CS144"><meta name="author" content="Doraemonzzz"><meta name="copyright" content="Doraemonzzz"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="这里给出CS 144 Lab 6: building an IP router的翻译。 实验资料：  https:&#x2F;&#x2F;www.cnblogs.com&#x2F;kangyupl&#x2F;p&#x2F;stanford_cs144_labs.html https:&#x2F;&#x2F;kangyupl.gitee.io&#x2F;cs144.github.io&#x2F; https:&#x2F;&#x2F;gitee.com&#x2F;kangyupl&#x2F;sponge">
+<meta property="og:type" content="article">
+<meta property="og:title" content="CS144 Lab6翻译">
+<meta property="og:url" content="http://www.doraemonzzz.com/2022/01/22/2022-1-22-CS144-Lab6%E7%BF%BB%E8%AF%91/index.html">
+<meta property="og:site_name" content="Doraemonzzz">
+<meta property="og:description" content="这里给出CS 144 Lab 6: building an IP router的翻译。 实验资料：  https:&#x2F;&#x2F;www.cnblogs.com&#x2F;kangyupl&#x2F;p&#x2F;stanford_cs144_labs.html https:&#x2F;&#x2F;kangyupl.gitee.io&#x2F;cs144.github.io&#x2F; https:&#x2F;&#x2F;gitee.com&#x2F;kangyupl&#x2F;sponge">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg">
+<meta property="article:published_time" content="2022-01-22T14:03:00.000Z">
+<meta property="article:modified_time" content="2022-01-22T15:26:44.975Z">
+<meta property="article:author" content="Doraemonzzz">
+<meta property="article:tag" content="CS144">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg"><link rel="shortcut icon" href="https://github.com/Doraemonzzz/md-photo/blob/master/%E5%A4%B4%E5%83%8F.jpg?raw=true"><link rel="canonical" href="http://www.doraemonzzz.com/2022/01/22/2022-1-22-CS144-Lab6%E7%BF%BB%E8%AF%91/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//www.google-analytics.com" crossorigin=""/><link rel="preconnect" href="//hm.baidu.com"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><script>var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?6f00f37f957f0608abb8c571105456f0";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script><script async="async" src="https://www.googletagmanager.com/gtag/js?id=UA-G-RE4B1LKRZD"></script><script>window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'UA-G-RE4B1LKRZD');
+</script><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"search.xml","languages":{"hits_empty":"找不到您查询的内容：${query}"}},
+  translate: {"defaultEncoding":2,"translateDelay":0,"msgToTraditionalChinese":"繁","msgToSimplifiedChinese":"簡"},
+  noticeOutdate: {"limitDay":500,"position":"top","messagePrev":"距离上次更新已经","messageNext":"天了，文章内容可能已经过时。"},
+  highlight: {"plugin":"prismjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":200},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    jQuery: 'https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js',
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+    },
+    fancybox: {
+      js: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css'
+    }
+  },
+  isPhotoFigcaption: true,
+  islazyload: true,
+  isanchor: true
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'CS144 Lab6翻译',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2022-01-22 23:26:44'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const fontSizeVal = saveToLocal.get('global-font-size')
+    if (fontSizeVal !== undefined) {
+      document.documentElement.style.setProperty('--global-font-size', fontSizeVal + 'px')
+    }
+    })(window)</script><link rel="stylesheet" href="/css/bilibili.css" media="defer" onload="this.media='all'"><meta name="google-site-verification" content="c4v-NmuUZRgl3cvtg9GKswryK1YLaPztd_5M-df5VNI" /><meta name="generator" content="Hexo 5.4.0"><link rel="alternate" href="/atom.xml" title="Doraemonzzz" type="application/atom+xml">
+</head><body><div id="loading-box"><div class="loading-left-bg"></div><div class="loading-right-bg"></div><div class="spinner-box"><div class="configure-border-1"><div class="configure-core"></div></div><div class="configure-border-2"><div class="configure-core"></div></div><div class="loading-word">加载中...</div></div></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="author-avatar"><img class="avatar-img" src= "/img/loading.gif" data-lazy-src="https://github.com/Doraemonzzz/md-photo/blob/master/%E5%A4%B4%E5%83%8F.jpg?raw=true" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">文章</div><div class="length-num">692</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">标签</div><div class="length-num">71</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/categories/"><div class="headline">分类</div><div class="length-num">28</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-chart-pie"></i><span> 博客统计</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/charts/"><i class="fa-fw far fa-chart-bar"></i><span> 文章统计</span></a></li><li><a class="site-page child" href="/census/"><i class="fa-fw fas fa-chart-area"></i><span> 访问统计</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/top/"><i class="fa-fw fab fa-hotjar"></i><span> 阅读排行榜</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fa fa-heartbeat"></i><span> 娱乐</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于我</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">Doraemonzzz</a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-chart-pie"></i><span> 博客统计</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/charts/"><i class="fa-fw far fa-chart-bar"></i><span> 文章统计</span></a></li><li><a class="site-page child" href="/census/"><i class="fa-fw fas fa-chart-area"></i><span> 访问统计</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/top/"><i class="fa-fw fab fa-hotjar"></i><span> 阅读排行榜</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fa fa-heartbeat"></i><span> 娱乐</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于我</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">CS144 Lab6翻译</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2022-01-22T14:03:00.000Z" title="发表于 2022-01-22 22:03:00">2022-01-22</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2022-01-22T15:26:44.975Z" title="更新于 2022-01-22 23:26:44">2022-01-22</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/">计算机网络</a></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-tag"></i><a class="article-meta__tags" href="/tags/CS144/">CS144</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">3.3k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>10分钟</span></span><span class="post-meta-separator">|</span><span class="leancloud_visitors" id="/2022/01/22/2022-1-22-CS144-Lab6%E7%BF%BB%E8%AF%91/" data-flag-title="CS144 Lab6翻译"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span class="leancloud-visitors-count"></span></span><span class="post-meta-separator">|</span><span class="post-meta-commentcount"><i class="far fa-comments fa-fw post-meta-icon"></i><span class="post-meta-label">评论数:</span><a href="/2022/01/22/2022-1-22-CS144-Lab6%E7%BF%BB%E8%AF%91/#post-comment" itemprop="discussionUrl"><span class="valine-comment-count" data-xid="/2022/01/22/2022-1-22-CS144-Lab6%E7%BF%BB%E8%AF%91/" itemprop="commentCount"></span></a></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p>这里给出CS 144 Lab 6: building an IP router的翻译。</p>
+<p>实验资料：</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://www.cnblogs.com/kangyupl/p/stanford_cs144_labs.html">https://www.cnblogs.com/kangyupl/p/stanford_cs144_labs.html</a></li>
+<li><a target="_blank" rel="noopener" href="https://kangyupl.gitee.io/cs144.github.io/">https://kangyupl.gitee.io/cs144.github.io/</a></li>
+<li><a target="_blank" rel="noopener" href="https://gitee.com/kangyupl/sponge">https://gitee.com/kangyupl/sponge</a></li>
+</ul>
+<span id="more"></span>
+<h1 id="实验6：构建IP路由器"><a href="#实验6：构建IP路由器" class="headerlink" title="实验6：构建IP路由器"></a>实验6：构建IP路由器</h1><h2 id="0-合作政策"><a href="#0-合作政策" class="headerlink" title="0. 合作政策"></a>0. 合作政策</h2><p><strong>编程作业必须是你自己的工作</strong>：你必须编写你为编程作业提交的所有代码，但我们作为作业的一部分提供给你的代码除外。请不要复制和粘贴来自StackOverflow，GitHub或其他来源的代码。如果你的代码基于你在网上或其他地方找到的样例，请在提交的源代码中的注释中引用URL。</p>
+<p><strong>与他人合作</strong>：你不能把你的代码给别人看，也不能看别人的代码，更不能看往年的解决方案。你可以与其他学生讨论作业，但不要抄袭任何人的代码。如果你与其他学生讨论作业，请在你提交的源代码中的注释中列出他们的姓名。请参阅课程管理讲义了解更多详细信息，如果有任何不清楚的地方，请在Piazza上询问。</p>
+<p><strong>Piazza</strong>：请随时在Piazza上提问，但请不要发布任何源代码。</p>
+<h2 id="1-概述"><a href="#1-概述" class="headerlink" title="1. 概述"></a>1. 概述</h2><p>在本周的实验中，你将在现有的<code>NetworkInterface</code>基础上实现一个IP路由器，从而结束本课程。路由器有几个网络接口，可以在其中任何一个接口上接收互联网数据报。路由器的工作是根据<strong>路由表</strong>转发它得到的数据报：一个规则列表，它告诉路由器，对于任何给定的数据报：</p>
+<ul>
+<li>发送到哪个接口；</li>
+<li>下一跳的IP地址 ；</li>
+</ul>
+<p>你的工作是实现一个路由器，它可以为任何给定的数据报计算出这两件事。(你不需要实现设置路由表的算法，例如RIP、OSPF、BGP或SDN控制器，只需要实现跟随路由表的算法)。</p>
+<p>你对路由器的实现将使用带有新的<code>Router</code>类的Sponge库，以及在模拟网络中检查你的路由器功能的测试。实验6建立在你在实验5中对<code>NetworkInterface</code>的实现之上，但不使用你在实验0-4中实现的TCP栈。IP路由器不需要知道任何关于TCP、ARP或以太网的信息(仅限IP)。我们希望你的实现将需要大约25-30行的代码。</p>
+<p><img src= "/img/loading.gif" data-lazy-src="https://github.com/Doraemonzzz/md-photo/blob/master/CS144/Lab/Lab6/1.jpg?raw=true" alt=""></p>
+<p>图1：路由器包含多个网络接口，可以在其中任何一个接口上接收IP数据报。路由器将接收到的任何数据报转发到相应出站接口上的下一跳，路由表告诉路由器如何做出这个决定。</p>
+<h2 id="2-开始"><a href="#2-开始" class="headerlink" title="2. 开始"></a>2. 开始</h2><ol>
+<li>请确保你已经提交了你在实验5中的所有解决方案。请不要修改<code>libsponge</code>目录顶层以外的任何文件，或者<code>webget.cc</code>。(请不要添加代码所依赖的额外文件。)否则，你可能会在合并实验6的启动代码时遇到麻烦。</li>
+<li>在实验作业的存储库中，运行<code>git fetch</code>来检索实验作业的最新版本。</li>
+<li>通过运行<code>git merge origin/lab6-startercode</code>，下载实验6的启动代码。</li>
+<li>在<code>build</code>目录中，编译源代码：<code>make</code>(编译时可以运行<code>make -j4</code>以使用四个处理器)。</li>
+<li>在<code>build</code>目录外，打开并开始编辑<code>writeups/lab6.md</code>文件。这是你实验报告的模板，将包含在你提交的内容中。</li>
+</ol>
+<h2 id="3-实现路由器"><a href="#3-实现路由器" class="headerlink" title="3. 实现路由器"></a>3. 实现路由器</h2><p>在本实验中，你将实现一个Router类，它可以：</p>
+<ul>
+<li>跟踪路由表(转发规则或路由列表)，并 </li>
+<li>转发它收到的每个数据报：<ul>
+<li>转发到正确的下一跳</li>
+<li>在正确的出站<code>NetworkInterface</code>上</li>
+</ul>
+</li>
+</ul>
+<p>你的实现将被添加到<a target="_blank" rel="noopener" href="https://github.com/CS144/sponge/blob/lab6-startercode/libsponge/router.hh">router.hh</a>和<a target="_blank" rel="noopener" href="https://github.com/CS144/sponge/blob/lab6-startercode/libsponge/router.cc">router.cc</a>骨架文件中。在你开始编码之前，请查看<a target="_blank" rel="noopener" href="https://cs144.github.io/doc/lab6/class_router.html">新的Router类的文档</a>。</p>
+<p>下面是你要实现的两个方法，以及我们对每个方法的期望：</p>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">void</span> <span class="token function">add_route</span><span class="token punctuation">(</span><span class="token keyword">const</span> <span class="token class-name">uint32_t</span> route_prefix<span class="token punctuation">,</span>
+               <span class="token keyword">const</span> <span class="token class-name">uint8_t</span> prefix_length<span class="token punctuation">,</span>
+               <span class="token keyword">const</span> optional<span class="token operator">&lt;</span>Address<span class="token operator">></span> next_hop<span class="token punctuation">,</span>
+               <span class="token keyword">const</span> <span class="token class-name">size_t</span> interface_num<span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+<p>这个方法将一条路由添加到路由表中。你要在Router类中添加一个数据结构作为私有成员来存储这些信息。这个方法所要做的就是保存路由，以供以后使用。</p>
+<blockquote>
+<p><strong>路由的各个部分是什么意思？</strong></p>
+<p>路由是一个”匹配——行动”规则：它告诉路由器，如果一个数据报前往一个特定的网络(一个IP地址范围)，并且如果该路由被选为最具体的匹配路由，那么路由器应该把数据报转发到特定接口上的特定下一跳。</p>
+<p><strong>“匹配”：数据报是前往这个网络的吗?</strong><code>route_prefix</code>和<code>prefix_length</code>共同指定了一个可能包括数据报目的地的IP地址范围(一个网络)。<code>route_prefix</code>是一个32位数字的IP地址。<code>prefix_length</code>是一个介于0和32(包括32)之间的数字；它告诉路由器路由前缀中有多少最高有效位是有效的。例如，要表达一个到网络”18.47.0.0/16”的路由(这与前两个字节为18和47的任何32位IP地址匹配)，路由前缀将是305070080($18×2^{24}+47×2^{16}$)，前缀长度是16。任何以”18.47.x.y”为目的地的数据报都会匹配。</p>
+<p><strong>“行动”：如果路由匹配并被选中，该怎么做。</strong>如果路由器直接连接到有关的网络，<code>next_hop</code>将是一个空的可选项；在这种情况下，<code>next_hop</code>是数据报的目标地址。但如果路由器是通过其他路由器连接到有关网络的，则<code>next_hop</code>将包含路径中下一路由器的IP地址。<code>interface_num</code>给出了路由器<code>NetworkInterface</code>的索引，它用来将数据报发送到下一跳。你可以用<code>interface(interface_num)</code>方法访问这个接口。</p>
+</blockquote>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">void</span> <span class="token function">route_one_datagram</span><span class="token punctuation">(</span>InternetDatagram <span class="token operator">&amp;</span>dgram<span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>这里是橡胶与道路的交汇处。这个方法需要将数据报路由到下一跳，从适当的接口传出。它需要实现IP路由器的”最长前缀匹配”逻辑，以找到最佳路由，这意味着：</p>
+<ul>
+<li>路由器搜索路由表，以找到与数据报的目的地址相匹配的路由。我们所说的”匹配”是指目的地址的最高有效<code>prefix_length</code>比特与<code>route_prefix</code>的最高有效<code>prefix_length</code>比特相同的。</li>
+<li>在匹配的路由中，路由器选择具有最大<code>prefix_length</code>的路由，这就是<strong>最长前缀匹配</strong>路由。</li>
+<li>如果没有匹配的路由，路由器会丢弃数据报。</li>
+<li>路由器会递减数据报的TTL(生存时间)。如果TTL已经为零，或在递减后为零，路由器应该放弃该数据报。</li>
+<li>否则，路由器将修改后的数据报通过适当的接口(<code>interface(interface_num).send_datagram()</code>)发送到适当的下一跳。</li>
+</ul>
+<blockquote>
+<p>在这个互联网的设计中，有个优点(或至少是一种成功的抽象)：路由器从不考虑TCP、ARP或以太网帧。路由器甚至不知道链路层是什么样子的。路由器只考虑互联网数据包，并且只通过<code>NetworkInterface</code>抽象与链路层进行交互。当涉及到”链路层地址是如何解决的？”或”链路层是否有自己的不同于IP的寻址方案？”或”链路层帧的格式是什么？”或”数据报的有效载荷是什么意思？”等问题时，路由器根本不关心。</p>
+</blockquote>
+<h2 id="4-测试"><a href="#4-测试" class="headerlink" title="4. 测试"></a>4. 测试</h2><p>你可以通过运行<code>make checklab6</code>来测试你的实现。这将在特定的模拟网络中测试路由器，如图2所示。</p>
+<p><img src= "/img/loading.gif" data-lazy-src="https://github.com/Doraemonzzz/md-photo/blob/master/CS144/Lab/Lab6/2.jpg?raw=true" alt=""></p>
+<p>图2：应用/网络模拟器工具中使用的模拟测试网络，也是由<code>make check lab6</code>运行的。 (有趣的事实：uun网络是<a target="_blank" rel="noopener" href="https://whois.arin.net/rest/net/NET-198-178-229-0-1">David Mazieres的互联网切片，于1993年分配</a>。<code>whois</code>工具或链接的网站可以用来查询谁控制了每个IP地址的分配)。</p>
+<h2 id="5-Q-amp-A"><a href="#5-Q-amp-A" class="headerlink" title="5. Q &amp; A"></a>5. Q &amp; A</h2><ul>
+<li><p>我应该用什么数据结构来记录路由表？</p>
+<p>由你决定! 但不需要太过疯狂。每个数据报需要做$O(N)$个工作是完全可以接受的，其中$N$是路由表的条目数。如果你想做一些更有效的事情，我们鼓励你在优化之前先得到一个有效的实现，并仔细记录和评论你选择的任何实现。</p>
+</li>
+<li><p>如何将以地址对象形式出现的IP地址转换为可以写入ARP消息的32位原始整数？</p>
+<p>使用<code>Address::ipv4_numeric()</code>方法。</p>
+</li>
+<li><p>如何将一个以原始32位整数形式出现的IP地址转换为一个地址对象？</p>
+<p>使用 <code>Address::from_ipv4_numeric()</code>方法。</p>
+</li>
+<li><p>如何将一个$32$位IP地址的最高$N$位(其中$0\le N\le 32$) 与另一个32位IP地址的最重要的$N$位进行比较？</p>
+<p>这可能是这项任务中”最棘手”的部分，因为要让逻辑正确。也许值得在C++中写一个小的测试程序(一个简短的独立程序)或者在Sponge中添加一个测试，以验证你对相关的C++操作符的理解，并仔细检查你的逻辑。</p>
+<p>回顾一下，在C和C++中，将一个32位整数移位32位，可能会产生未定义行为。使用<code>make_clean</code>，然后在编译代码时打开sanitizer(<code>cmake -DCMAKE_BUILD_TYPE=RelASan</code>)以便在你提交之前尝试捕捉你的代码中任何未定义的行为。</p>
+<p>你可以通过在<code>build</code>目录中运行<code>./apps/network simulator</code>来直接运行路由器测试。</p>
+</li>
+<li><p>如果路由器没有到目的地的路由，或者TTL为零，它是不是应该向数据报的源头发送一个ICMP错误信息？</p>
+<p>在现实生活中，是的，这将是有帮助的。但在这个实验里没有必要——丢弃数据报就足够了。(即使在现实生活中，也不是每个路由器都会在这些情况下向源头发送ICMP消息)。</p>
+</li>
+<li><p>我如何运行本实验的测试套件？</p>
+<p><code>make check_lab6</code>(两个测试)。或者你可以用<code>make check</code>运行整个测试套件(161个测试)。</p>
+</li>
+<li><p>如果这个PDF出来后还有更多的FAQ，我在哪里可以看到？</p>
+<p>请定期查看网站(<a target="_blank" rel="noopener" href="https://cs144.github.io/lab_faq.html">https://cs144.github.io/lab_faq.html</a>)和Piazza。</p>
+</li>
+</ul>
+<h2 id="6-提交"><a href="#6-提交" class="headerlink" title="6. 提交"></a>6. 提交</h2><ol>
+<li>在你的提交中，请只对<code>libsponge</code>顶层的<code>.hh</code>和<code>.cc</code>文件进行修改。在这些文件中，请随意添加必要的私有成员，但请不要改变任何类的公共接口。</li>
+<li>请不要添加额外的文件，自动打分器不会查看这些文件，你的代码可能无法编译。</li>
+<li>在提交任何作业之前，请按顺序运行这些。<ul>
+<li>(a) <code>make format</code>(使编码风格正常化)</li>
+<li>(b) <code>git status</code>(检查是否有未提交的修改，如果有，请提交！)</li>
+<li>(c) <code>make</code>(确保代码可以编译)</li>
+<li>(d) <code>make check_lab6</code>(确保自动测试通过)</li>
+</ul>
+</li>
+<li>在<code>writeups/lab6.md</code>中写一份报告。这个文件应该是一个大约20到50行的文件，每行不超过80个字符，以使其更容易阅读。该报告应包含以下部分。<ul>
+<li>(a) <strong>程序结构和设计。</strong>描述你的代码中所体现的高层次结构和设计选择。你不需要详细讨论你从启动代码中继承了什么。借此机会突出重要的设计方面，并在这些方面提供更多的细节，以便你的评分助教理解。我们强烈建议你通过使用小标题和提纲，使这篇报告尽可能可读。请不要简单地将你的程序翻译成一段英文。</li>
+<li>(b) <strong>实现方面的挑战。</strong>描述你认为最麻烦的代码部分，并解释原因。反思一下你是如何克服这些挑战的，以及是什么帮助你最终理解了给你带来麻烦的概念。你是如何试图确保你的代码维护你的假设、不变式和先决条件的，你在哪些方面发现这很容易或很困难？你是如何调试和测试你的代码的？</li>
+<li>(c) <strong>剩余的错误。</strong>尽量指出并解释代码中仍然存在的任何错误(或未处理的边缘情况)。</li>
+</ul>
+</li>
+<li>在你的报告中，请同时填写这项任务花了你多少时间以及任何其他评论。</li>
+<li>当准备提交时，请按照<a target="_blank" rel="noopener" href="https://cs144.github.io/submit">https://cs144.github.io/submit</a>。在提交之前，请确保你已经提交了所有你想要的东西。</li>
+<li>如果有任何问题，请尽快在周二晚上的实验课上告诉课程组成员，或者在Piazza上发帖提问。祝您好运!</li>
+<li>还有：拍拍你们的肩膀。你们是第一个通过新的”模块化”CS144实验的班级，我们非常感谢你们对实验的耐心和所有有用的反馈。未来的学生将从你们的经验中受益。谢谢你们，祝你们有一个愉快的寒假! ——Keith, Nick, Sarah, Nick, Will, Alex, Emily, and Sadjad</li>
+</ol>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">Doraemonzzz</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="http://www.doraemonzzz.com/2022/01/22/2022-1-22-CS144-Lab6%E7%BF%BB%E8%AF%91/">http://www.doraemonzzz.com/2022/01/22/2022-1-22-CS144-Lab6%E7%BF%BB%E8%AF%91/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://www.doraemonzzz.com" target="_blank">Doraemonzzz</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/CS144/">CS144</a></div><div class="post_share"><div class="social-share" data-image="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2022/01/22/2022-1-22-CS144-Lab4/"><img class="prev-cover" src= "/img/loading.gif" data-lazy-src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">CS144 Lab4</div></div></a></div><div class="next-post pull-right"><a href="/2022/01/22/2022-1-22-CS144-Lab5%E7%BF%BB%E8%AF%91/"><img class="next-cover" src= "/img/loading.gif" data-lazy-src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">CS144 Lab5翻译</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span> 相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2021/12/12/2021-12-12-CS144-Lab0/" title="CS144 Lab0"><img class="cover" src= "/img/loading.gif" data-lazy-src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-12-12</div><div class="title">CS144 Lab0</div></div></a></div><div><a href="/2021/12/12/2021-12-12-CS144-实验环境配置/" title="CS144 实验环境配置"><img class="cover" src= "/img/loading.gif" data-lazy-src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-12-12</div><div class="title">CS144 实验环境配置</div></div></a></div><div><a href="/2021/12/27/2021-12-27-CS144-Lab2/" title="CS144 Lab2"><img class="cover" src= "/img/loading.gif" data-lazy-src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-12-27</div><div class="title">CS144 Lab2</div></div></a></div><div><a href="/2022/01/22/2022-1-22-CS144-Lab4/" title="CS144 Lab4"><img class="cover" src= "/img/loading.gif" data-lazy-src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-01-22</div><div class="title">CS144 Lab4</div></div></a></div><div><a href="/2022/01/22/2022-1-22-CS144-Lab5/" title="CS144 Lab5"><img class="cover" src= "/img/loading.gif" data-lazy-src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-01-22</div><div class="title">CS144 Lab5</div></div></a></div><div><a href="/2022/01/22/2022-1-22-CS144-Lab5翻译/" title="CS144 Lab5翻译"><img class="cover" src= "/img/loading.gif" data-lazy-src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-01-22</div><div class="title">CS144 Lab5翻译</div></div></a></div></div></div><hr/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div><div id="comment-switch"><span class="first-comment">Valine</span><span class="switch-btn"></span><span class="second-comment">Livere</span></div></div><div class="comment-wrap"><div><div class="vcomment" id="vcomment"></div></div><div><div id="lv-container" data-id="city" data-uid="MTAyMC8zNDcxOS8xMTI1Ng=="></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="card-info-avatar is-center"><img class="avatar-img" src= "/img/loading.gif" data-lazy-src="https://github.com/Doraemonzzz/md-photo/blob/master/%E5%A4%B4%E5%83%8F.jpg?raw=true" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/><div class="author-info__name">Doraemonzzz</div><div class="author-info__description">个人博客，主要记录有关机器学习，数学以及计算机科学的笔记</div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">692</div></a></div><div class="card-info-data-item is-center"><a href="/tags/"><div class="headline">标签</div><div class="length-num">71</div></a></div><div class="card-info-data-item is-center"><a href="/categories/"><div class="headline">分类</div><div class="length-num">28</div></a></div></div><a class="button--animated" id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/Doraemonzzz"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/Doraemonzzz" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="/doraemon_zzz@163.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a><a class="social-icon" href="https://space.bilibili.com/291079982" target="_blank" title="Bilibili"><i class="iconfont icon-bilibili"></i></a><a class="social-icon" href="/atom.xml" target="_blank" title=""><i class="fa fa-rss"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn card-announcement-animation"></i><span>公告</span></div><div class="announcement_content">暂无公告</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%AE%9E%E9%AA%8C6%EF%BC%9A%E6%9E%84%E5%BB%BAIP%E8%B7%AF%E7%94%B1%E5%99%A8"><span class="toc-number">1.</span> <span class="toc-text">实验6：构建IP路由器</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#0-%E5%90%88%E4%BD%9C%E6%94%BF%E7%AD%96"><span class="toc-number">1.1.</span> <span class="toc-text">0. 合作政策</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-%E6%A6%82%E8%BF%B0"><span class="toc-number">1.2.</span> <span class="toc-text">1. 概述</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-%E5%BC%80%E5%A7%8B"><span class="toc-number">1.3.</span> <span class="toc-text">2. 开始</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-%E5%AE%9E%E7%8E%B0%E8%B7%AF%E7%94%B1%E5%99%A8"><span class="toc-number">1.4.</span> <span class="toc-text">3. 实现路由器</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-%E6%B5%8B%E8%AF%95"><span class="toc-number">1.5.</span> <span class="toc-text">4. 测试</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-Q-amp-A"><span class="toc-number">1.6.</span> <span class="toc-text">5. Q &amp; A</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6-%E6%8F%90%E4%BA%A4"><span class="toc-number">1.7.</span> <span class="toc-text">6. 提交</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2022/01/22/2022-1-22-CS144-Lab6/" title="CS144 Lab6"><img src= "/img/loading.gif" data-lazy-src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="CS144 Lab6"/></a><div class="content"><a class="title" href="/2022/01/22/2022-1-22-CS144-Lab6/" title="CS144 Lab6">CS144 Lab6</a><time datetime="2022-01-22T15:26:00.000Z" title="发表于 2022-01-22 23:26:00">2022-01-22</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/01/22/2022-1-22-CS144-Lab5/" title="CS144 Lab5"><img src= "/img/loading.gif" data-lazy-src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="CS144 Lab5"/></a><div class="content"><a class="title" href="/2022/01/22/2022-1-22-CS144-Lab5/" title="CS144 Lab5">CS144 Lab5</a><time datetime="2022-01-22T15:24:00.000Z" title="发表于 2022-01-22 23:24:00">2022-01-22</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/01/22/2022-1-22-CS144-Lab4/" title="CS144 Lab4"><img src= "/img/loading.gif" data-lazy-src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="CS144 Lab4"/></a><div class="content"><a class="title" href="/2022/01/22/2022-1-22-CS144-Lab4/" title="CS144 Lab4">CS144 Lab4</a><time datetime="2022-01-22T15:22:00.000Z" title="发表于 2022-01-22 23:22:00">2022-01-22</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/01/22/2022-1-22-CS144-Lab6%E7%BF%BB%E8%AF%91/" title="CS144 Lab6翻译"><img src= "/img/loading.gif" data-lazy-src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="CS144 Lab6翻译"/></a><div class="content"><a class="title" href="/2022/01/22/2022-1-22-CS144-Lab6%E7%BF%BB%E8%AF%91/" title="CS144 Lab6翻译">CS144 Lab6翻译</a><time datetime="2022-01-22T14:03:00.000Z" title="发表于 2022-01-22 22:03:00">2022-01-22</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/01/22/2022-1-22-CS144-Lab5%E7%BF%BB%E8%AF%91/" title="CS144 Lab5翻译"><img src= "/img/loading.gif" data-lazy-src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="CS144 Lab5翻译"/></a><div class="content"><a class="title" href="/2022/01/22/2022-1-22-CS144-Lab5%E7%BF%BB%E8%AF%91/" title="CS144 Lab5翻译">CS144 Lab5翻译</a><time datetime="2022-01-22T14:00:00.000Z" title="发表于 2022-01-22 22:00:00">2022-01-22</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2018 - 2022 By Doraemonzzz</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="font-plus" type="button" title="放大字体"><i class="fas fa-plus"></i></button><button id="font-minus" type="button" title="缩小字体"><i class="fas fa-minus"></i></button><button id="translateLink" type="button" title="简繁转换">简</button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div id="local-search"><div class="search-dialog"><div class="search-dialog__title" id="local-search-title">本地搜索</div><div id="local-input-panel"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div></div><hr/><div id="local-search-results"></div><span class="search-close-button"><i class="fas fa-times"></i></span></div><div id="search-mask"></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="/js/tw_cn.js"></script><script src="https://cdn.jsdelivr.net/npm/vanilla-lazyload/dist/lazyload.iife.min.js"></script><script src="/js/search/local-search.js"></script><script>var preloader = {
+  endLoading: () => {
+    document.body.style.overflow = 'auto';
+    document.getElementById('loading-box').classList.add("loaded")
+  },
+  initLoading: () => {
+    document.body.style.overflow = '';
+    document.getElementById('loading-box').classList.remove("loaded")
+
+  }
+}
+window.addEventListener('load',preloader.endLoading())</script><div class="js-pjax"><script>if (!window.MathJax) {
+  window.MathJax = {
+    tex: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]],
+      tags: 'ams'
+    },
+    chtml: {
+      scale: 1.25
+    },
+    options: {
+      renderActions: {
+        findScript: [10, doc => {
+          for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+            const display = !!node.type.match(/; *mode=display/)
+            const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+            const text = document.createTextNode('')
+            node.parentNode.replaceChild(text, node)
+            math.start = {node: text, delim: '', n: 0}
+            math.end = {node: text, delim: '', n: 0}
+            doc.math.push(math)
+          }
+        }, '']
+      }
+    }
+  }
+  
+  const script = document.createElement('script')
+  script.src = 'https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js'
+  script.id = 'MathJax-script'
+  script.async = true
+  document.head.appendChild(script)
+} else {
+  MathJax.startup.document.state(0)
+  MathJax.texReset()
+  MathJax.typeset()
+}</script><script>function loadValine () {
+  function initValine () {
+    const valine = new Valine(Object.assign({
+      el: '#vcomment',
+      appId: 'IpnmxCW9CvYWIXbol5QXsegX-MdYXbMMI',
+      appKey: 'w57DVCdbxcyB1TYYagMIMJIU',
+      placeholder: 'Please leave your footprints',
+      avatar: 'monsterid',
+      meta: 'nick,mail,link'.split(','),
+      pageSize: '10',
+      lang: 'en',
+      recordIP: false,
+      serverURLs: '',
+      emojiCDN: '',
+      emojiMaps: "",
+      enableQQ: false,
+      path: window.location.pathname,
+      requiredFields: ["nick,mail"],
+      visitor: true
+    }, null))
+  }
+
+  if (typeof Valine === 'function') initValine() 
+  else getScript('https://cdn.jsdelivr.net/npm/valine/dist/Valine.min.js').then(initValine)
+}
+
+if ('Valine' === 'Valine' || !false) {
+  if (false) btf.loadComment(document.getElementById('vcomment'),loadValine)
+  else setTimeout(loadValine, 0)
+} else {
+  function loadOtherComment () {
+    loadValine()
+  }
+}</script><script>function loadLivere () {
+  if (typeof LivereTower === 'object') {
+    window.LivereTower.init()
+  }
+  else {
+    (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+    })(document, 'script');
+  }
+}
+
+if ('Valine' === 'Livere' || !false) {
+  if (false) btf.loadComment(document.getElementById('lv-container'), loadLivere)
+  else loadLivere()
+}
+else {
+  function loadOtherComment () {
+    loadLivere()
+  }
+}</script></div><script defer="defer" id="fluttering_ribbon" mobile="false" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/canvas-fluttering-ribbon.min.js"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
