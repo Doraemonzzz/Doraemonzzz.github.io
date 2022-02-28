@@ -1,0 +1,807 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Programming Languages Part A HW2 | Doraemonzzz</title><meta name="keywords" content="Coursera Programming Languages"><meta name="author" content="Doraemonzzz"><meta name="copyright" content="Doraemonzzz"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="这次回顾HW2，主要是Standard ML的模式匹配使用。 课程主页： https:&#x2F;&#x2F;www.coursera.org&#x2F;learn&#x2F;programming-languages&#x2F;home B站搬运： https:&#x2F;&#x2F;www.bilibili.com&#x2F;video&#x2F;BV1dL411j7L7 参考资料：  https:&#x2F;&#x2F;www.coursera.org&#x2F;learn&#x2F;programming-langu">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Programming Languages Part A HW2">
+<meta property="og:url" content="http://www.doraemonzzz.com/2022/02/28/2022-2-28-Programming-Languages-Part-A-HW2/index.html">
+<meta property="og:site_name" content="Doraemonzzz">
+<meta property="og:description" content="这次回顾HW2，主要是Standard ML的模式匹配使用。 课程主页： https:&#x2F;&#x2F;www.coursera.org&#x2F;learn&#x2F;programming-languages&#x2F;home B站搬运： https:&#x2F;&#x2F;www.bilibili.com&#x2F;video&#x2F;BV1dL411j7L7 参考资料：  https:&#x2F;&#x2F;www.coursera.org&#x2F;learn&#x2F;programming-langu">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg">
+<meta property="article:published_time" content="2022-02-28T00:06:00.000Z">
+<meta property="article:modified_time" content="2022-02-28T00:09:40.750Z">
+<meta property="article:author" content="Doraemonzzz">
+<meta property="article:tag" content="Coursera Programming Languages">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg"><link rel="shortcut icon" href="https://github.com/Doraemonzzz/md-photo/blob/master/%E5%A4%B4%E5%83%8F.jpg?raw=true"><link rel="canonical" href="http://www.doraemonzzz.com/2022/02/28/2022-2-28-Programming-Languages-Part-A-HW2/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//www.google-analytics.com" crossorigin=""/><link rel="preconnect" href="//hm.baidu.com"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><script>var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?6f00f37f957f0608abb8c571105456f0";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script><script async="async" src="https://www.googletagmanager.com/gtag/js?id=UA-G-RE4B1LKRZD"></script><script>window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'UA-G-RE4B1LKRZD');
+</script><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"search.xml","languages":{"hits_empty":"找不到您查询的内容：${query}"}},
+  translate: {"defaultEncoding":2,"translateDelay":0,"msgToTraditionalChinese":"繁","msgToSimplifiedChinese":"簡"},
+  noticeOutdate: {"limitDay":500,"position":"top","messagePrev":"距离上次更新已经","messageNext":"天了，文章内容可能已经过时。"},
+  highlight: {"plugin":"prismjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":200},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    jQuery: 'https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js',
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+    },
+    fancybox: {
+      js: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css'
+    }
+  },
+  isPhotoFigcaption: true,
+  islazyload: true,
+  isanchor: true
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'Programming Languages Part A HW2',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2022-02-28 08:09:40'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const fontSizeVal = saveToLocal.get('global-font-size')
+    if (fontSizeVal !== undefined) {
+      document.documentElement.style.setProperty('--global-font-size', fontSizeVal + 'px')
+    }
+    })(window)</script><link rel="stylesheet" href="/css/bilibili.css" media="defer" onload="this.media='all'"><meta name="google-site-verification" content="c4v-NmuUZRgl3cvtg9GKswryK1YLaPztd_5M-df5VNI" /><meta name="generator" content="Hexo 5.4.0"><link rel="alternate" href="/atom.xml" title="Doraemonzzz" type="application/atom+xml">
+</head><body><div id="loading-box"><div class="loading-left-bg"></div><div class="loading-right-bg"></div><div class="spinner-box"><div class="configure-border-1"><div class="configure-core"></div></div><div class="configure-border-2"><div class="configure-core"></div></div><div class="loading-word">加载中...</div></div></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="author-avatar"><img class="avatar-img" src= "/img/loading.gif" data-lazy-src="https://github.com/Doraemonzzz/md-photo/blob/master/%E5%A4%B4%E5%83%8F.jpg?raw=true" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">文章</div><div class="length-num">700</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">标签</div><div class="length-num">71</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/categories/"><div class="headline">分类</div><div class="length-num">28</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-chart-pie"></i><span> 博客统计</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/charts/"><i class="fa-fw far fa-chart-bar"></i><span> 文章统计</span></a></li><li><a class="site-page child" href="/census/"><i class="fa-fw fas fa-chart-area"></i><span> 访问统计</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/top/"><i class="fa-fw fab fa-hotjar"></i><span> 阅读排行榜</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fa fa-heartbeat"></i><span> 娱乐</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于我</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">Doraemonzzz</a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-chart-pie"></i><span> 博客统计</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/charts/"><i class="fa-fw far fa-chart-bar"></i><span> 文章统计</span></a></li><li><a class="site-page child" href="/census/"><i class="fa-fw fas fa-chart-area"></i><span> 访问统计</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/top/"><i class="fa-fw fab fa-hotjar"></i><span> 阅读排行榜</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fa fa-heartbeat"></i><span> 娱乐</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于我</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">Programming Languages Part A HW2</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2022-02-28T00:06:00.000Z" title="发表于 2022-02-28 08:06:00">2022-02-28</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2022-02-28T00:09:40.750Z" title="更新于 2022-02-28 08:09:40">2022-02-28</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B/">函数式编程</a></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-tag"></i><a class="article-meta__tags" href="/tags/Coursera-Programming-Languages/">Coursera Programming Languages</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">4k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>24分钟</span></span><span class="post-meta-separator">|</span><span class="leancloud_visitors" id="/2022/02/28/2022-2-28-Programming-Languages-Part-A-HW2/" data-flag-title="Programming Languages Part A HW2"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span class="leancloud-visitors-count"></span></span><span class="post-meta-separator">|</span><span class="post-meta-commentcount"><i class="far fa-comments fa-fw post-meta-icon"></i><span class="post-meta-label">评论数:</span><a href="/2022/02/28/2022-2-28-Programming-Languages-Part-A-HW2/#post-comment" itemprop="discussionUrl"><span class="valine-comment-count" data-xid="/2022/02/28/2022-2-28-Programming-Languages-Part-A-HW2/" itemprop="commentCount"></span></a></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p>这次回顾HW2，主要是Standard ML的模式匹配使用。</p>
+<p>课程主页：</p>
+<p><a target="_blank" rel="noopener" href="https://www.coursera.org/learn/programming-languages/home">https://www.coursera.org/learn/programming-languages/home</a></p>
+<p>B站搬运：</p>
+<p><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1dL411j7L7">https://www.bilibili.com/video/BV1dL411j7L7</a></p>
+<p>参考资料：</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://www.coursera.org/learn/programming-languages/discussions/weeks/3/threads/Ar4KF5_jEeaeFgp1HJGIrg">https://www.coursera.org/learn/programming-languages/discussions/weeks/3/threads/Ar4KF5_jEeaeFgp1HJGIrg</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.coursera.org/learn/programming-languages/discussions/weeks/3/threads/0WNdrHcGEemcmw7X3MnCag">https://www.coursera.org/learn/programming-languages/discussions/weeks/3/threads/0WNdrHcGEemcmw7X3MnCag</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.coursera.org/learn/programming-languages/discussions/weeks/3/threads/hpc-WA3EEeivSw79CbecQA">https://www.coursera.org/learn/programming-languages/discussions/weeks/3/threads/hpc-WA3EEeivSw79CbecQA</a></li>
+<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/mdzzname/article/details/83004788">https://blog.csdn.net/mdzzname/article/details/83004788</a></li>
+</ul>
+<span id="more"></span>
+<h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><pre class="line-numbers language-none"><code class="language-none">(* Dan Grossman, Coursera PL, HW2 Provided Code *)
+
+(* if you use this function to compare two strings (returns true if the same
+   string), then you avoid several of the functions in problem 1 having
+   polymorphic types that may be confusing *)
+fun same_string(s1 : string, s2 : string) &#x3D;
+    s1 &#x3D; s2
+
+(* put your solutions for problem 1 here *)
+
+(* you may assume that Num is always used with values 2, 3, ..., 10
+   though it will not really come up *)
+datatype suit &#x3D; Clubs | Diamonds | Hearts | Spades
+datatype rank &#x3D; Jack | Queen | King | Ace | Num of int 
+type card &#x3D; suit * rank
+
+datatype color &#x3D; Red | Black
+datatype move &#x3D; Discard of card | Draw 
+
+exception IllegalMove
+
+(* put your solutions for problem 2 here *)
+(* problem 1.a *)
+fun all_except_option(str: string, str_list: string list) &#x3D; 
+   let
+      (* 从str_list中删除str, 然后据此判断是否输出NONE *)
+      fun filter(str_list) &#x3D; 
+         case str_list of
+            [] &#x3D;&gt; []
+            | str1::str_list1 &#x3D;&gt; 
+               (if same_string(str, str1)
+               then
+                  str_list1
+               else
+                  str1::filter(str_list1))
+     val res &#x3D; filter(str_list)
+   in
+     if res &#x3D; str_list then NONE else SOME res
+   end
+
+(* problem 1.b *)
+fun get_substitutions1(strll, str) &#x3D; 
+   case strll of
+      [] &#x3D;&gt; []
+      | strl::strll_rest &#x3D;&gt;
+         (case all_except_option(str, strl) of
+            NONE &#x3D;&gt; [] @ get_substitutions1(strll_rest, str)
+            | SOME list &#x3D;&gt; list @ get_substitutions1(strll_rest, str)
+         )
+
+(* problem 1.c *)
+fun get_substitutions2(strll, str) &#x3D; 
+   let
+     fun helper(strll, res) &#x3D; 
+      case strll of
+         [] &#x3D;&gt; res
+         | strl::strll_rest &#x3D;&gt;
+            (case all_except_option(str, strl) of
+               NONE &#x3D;&gt; helper(strll_rest, res)
+               | SOME list &#x3D;&gt; helper(strll_rest, res @ list)
+            )
+   in
+     helper(strll, [])
+   end
+
+(* problem 1.d *)
+fun similar_names(strll, full_name) &#x3D; 
+   let
+     val first_name &#x3D; case full_name of &#123;first&#x3D;fir, middle&#x3D;mid, last&#x3D;las&#125; &#x3D;&gt; fir
+     val middle_name &#x3D; case full_name of &#123;first&#x3D;fir, middle&#x3D;mid, last&#x3D;las&#125; &#x3D;&gt; mid
+     val last_name &#x3D; case full_name of &#123;first&#x3D;fir, middle&#x3D;mid, last&#x3D;las&#125; &#x3D;&gt; las
+     val names &#x3D; get_substitutions2(strll, first_name)
+     fun helper(names, res) &#x3D;
+      case names of
+         [] &#x3D;&gt; res
+         | name::rst &#x3D;&gt; helper(rst, res @ [&#123;first&#x3D;name, middle&#x3D;middle_name, last&#x3D;last_name&#125;])
+   in
+     helper(names, [full_name])
+   end
+
+(* problem 2.a *)
+fun card_color(card) &#x3D; 
+   case card of
+      (Clubs, rank) &#x3D;&gt; Black
+      | (Diamonds, rank) &#x3D;&gt; Red
+      | (Hearts, rank) &#x3D;&gt; Red
+      | (Spades, rank) &#x3D;&gt; Black
+
+(* problem 2.b *)
+fun card_value(card) &#x3D; 
+   case card of
+      (_, Num i) &#x3D;&gt; i
+      | (_, Ace) &#x3D;&gt; 11
+      | (_, _) &#x3D;&gt; 10
+
+(* problem 2.c *)
+fun remove_card(cs, c, e) &#x3D; 
+   let
+      fun helper(cs, res) &#x3D; 
+         case cs of
+            [] &#x3D;&gt; res
+            | c1::cs_rest &#x3D;&gt;
+               if c1 &#x3D; c
+               then res @ cs_rest
+               else helper(cs_rest, res @ [c1])
+      val res &#x3D; helper(cs, [])
+   in
+     (* 没有改变表示没有c *)
+     if res &#x3D; cs
+     then raise e
+     else res
+   end
+
+(* problem 2.d *)
+fun all_same_color(cards) &#x3D; 
+   case cards of
+      [] &#x3D;&gt; true
+      | card::[] &#x3D;&gt; true
+      | card1::(card2::cards_rst) &#x3D;&gt; (card_color(card1) &#x3D; card_color(card2)) andalso all_same_color(card2::cards_rst)
+
+(* problem 2.e *)
+fun sum_cards(cards) &#x3D; 
+   let
+     fun helper(cards, res) &#x3D; 
+      case cards of 
+         [] &#x3D;&gt; res
+         | card::cards_rst &#x3D;&gt; helper(cards_rst, card_value(card) + res)
+   in
+     helper(cards, 0)
+   end
+
+(* problem 2.f *)
+fun score(held_cards, goal) &#x3D; 
+   let
+     val sum &#x3D; sum_cards(held_cards)
+     val pre_score &#x3D;
+      if sum &gt; goal
+      then 
+         (sum - goal) * 3
+      else 
+         goal - sum
+   in
+     if all_same_color(held_cards)
+     then
+      pre_score div 2 
+     else
+      pre_score
+   end
+
+(* problem 2.g *)
+fun officiate(card_list, move_list, goal) &#x3D; 
+   let
+     fun helper(card_list, held_list, move_list, sum) &#x3D; 
+      if sum &gt; goal
+      then
+         score(held_list, goal)
+      else
+         case move_list of
+            [] &#x3D;&gt; score(held_list, goal)
+            (* 丢弃card *)
+            | (Discard card)::move_list_rst &#x3D;&gt; 
+               helper(card_list, remove_card(held_list, card, IllegalMove), move_list_rst, sum -  card_value(card))
+            | Draw::move_list_rst &#x3D;&gt;
+               case card_list of 
+                  [] &#x3D;&gt; score(held_list, goal)
+                  | card::card_list_rst &#x3D;&gt; 
+                     helper(card_list_rst, held_list @ [card], move_list_rst, sum + card_value(card))
+   in
+     helper(card_list, [], move_list, 0)
+   end
+
+(* problem 3.a *)
+fun sum_cards_challenge(cards) &#x3D; 
+   let
+     (* for a in arr, get a + num *)
+     fun add_list(arr, num) &#x3D; 
+      case arr of 
+         [] &#x3D;&gt; []
+         | a::arr_rst &#x3D;&gt; (a + num)::add_list(arr_rst, num)
+     (* ace &#x3D; 1 or 11 *)
+     fun helper(cards, res) &#x3D; 
+      case cards of 
+         [] &#x3D;&gt; res
+         | (suit, Ace)::cards_rst &#x3D;&gt; helper(cards_rst, add_list(res, 1) @ add_list(res, 11))
+         | card::cards_rst &#x3D;&gt; helper(cards_rst, add_list(res, card_value(card)))
+   in
+     helper(cards, [0])
+   end
+
+fun score_challenge(held_cards, goal) &#x3D; 
+   let
+     fun helper1(sum, goal) &#x3D; 
+      if sum &gt; goal
+      then 
+         (sum - goal) * 3
+      else 
+         goal - sum
+      fun helper2(sum_arr, res) &#x3D; 
+         case sum_arr of
+            [] &#x3D;&gt; res
+            | sum::sum_arr_rst &#x3D;&gt; helper2(sum_arr_rst, Int.min(helper1(sum, goal), res))
+      val flag &#x3D; all_same_color(held_cards)
+      val sum_arr &#x3D; sum_cards_challenge(held_cards)
+      val res &#x3D; helper2(sum_arr, 100000)
+   in
+     if flag
+     then 
+      res div 2 
+     else 
+      res
+   end
+
+fun officiate_challenge(card_list, move_list, goal) &#x3D; 
+   let
+     fun helper1(sum) &#x3D; 
+      if sum &gt; goal
+      then 
+         (sum - goal) * 3
+      else 
+         goal - sum
+     fun helper2(held_list, sum) &#x3D; 
+      let
+        val res &#x3D; helper1(sum)
+      in
+        if all_same_color(held_list)
+        then
+         res div 2 
+        else
+         res
+      end
+     fun helper3(card_list, held_list, move_list, sum) &#x3D; 
+         if sum &gt; goal
+         then
+            helper2(held_list, sum)
+         else
+            case move_list of
+               [] &#x3D;&gt; helper2(held_list, sum)
+               (* 丢弃card *)
+               | (Discard card)::move_list_rst &#x3D;&gt; 
+                  helper3(card_list, remove_card(held_list, card, IllegalMove), move_list_rst, sum - card_value(card))
+               (* 抽卡 *)
+               | Draw::move_list_rst &#x3D;&gt;
+                  case card_list of 
+                     [] &#x3D;&gt; helper2(held_list, sum)
+                     | card::card_list_rst &#x3D;&gt; 
+                        case card of
+                          (suit, Ace) &#x3D;&gt; Int.min(helper3(card_list_rst, held_list @ [(suit, Ace)], move_list_rst, sum + 1), helper3(card_list_rst, held_list @ [(suit, Ace)], move_list_rst, sum + 11))
+                        | card1 &#x3D;&gt; helper3(card_list_rst, held_list @ [card1], move_list_rst, sum + card_value(card1))
+
+   in
+     helper3(card_list, [], move_list, 0)
+   end
+
+(* problem 3.b *)
+fun careful_player(card_list, goal) &#x3D; 
+   let
+     (* 找到值为v的card *)
+     fun find_card(card_list, v) &#x3D; 
+      case card_list of
+         [] &#x3D;&gt; NONE
+       | card::card_list_rst &#x3D;&gt;
+         if card_value(card) &#x3D; v
+         then
+            SOME card
+         else
+            find_card(card_list_rst, v)
+     fun helper(card_list, held_list, move_list, sum) &#x3D; 
+      if sum - goal &#x3D; 0
+      then
+         move_list
+      else
+         (* 超过10则直接丢弃, 否则判断是否应该先丢弃再拿 *)
+         if goal - sum &gt; 10
+         then
+            (* 判断是否可以丢弃 *)
+            case card_list of 
+               [] &#x3D;&gt; move_list @ [Draw]
+               | card::card_list_rst &#x3D;&gt; 
+                  helper(card_list_rst, card::held_list, move_list @ [Draw], sum + card_value(card))
+         else
+            case card_list of
+               [] &#x3D;&gt; move_list
+             | card::card_list_rst &#x3D;&gt; 
+               let
+                  (* 应该丢弃的卡片value *)
+                  (* sum - v + card_value(card) &#x3D; goal *)
+                  val v &#x3D; sum - goal + card_value(card)
+                  (* 可以丢弃的卡片 *)
+                  val card_discard &#x3D; find_card(card_list, v)
+               in
+                  (* 如果可以得到0, 则直接返回, 否则丢弃卡片 *)
+                  if v &#x3D; 0
+                  then
+                     move_list @ [Draw]
+                  else
+                     (* 如果没有可以删除的卡片, 则判断能否丢弃, 不能丢弃则直接返回; 否则先丢弃, 然后再拿 *)
+                     case card_discard of
+                        NONE &#x3D;&gt;
+                           (* 如果有卡片丢弃, 则直接丢弃, 否则判断是否可拿 *)
+                           (case held_list of
+                              card1::held_list_rst &#x3D;&gt; helper(card_list, held_list_rst, move_list @ [Discard card1], sum - card_value(card1))
+                            | [] &#x3D;&gt; 
+                                 (* 如果超过goal, 则不拿, 否则拿 *)
+                                 (if sum + card_value(card) &gt; goal
+                                 then
+                                    move_list
+                                 else
+                                    helper(card_list_rst, [card], move_list @ [Draw], sum + card_value(card))))
+                      | SOME card2 &#x3D;&gt; move_list @ [Discard card2, Draw]
+               end
+   in
+     helper(card_list, [], [], 0)
+   end<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h3 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h3><pre class="line-numbers language-none"><code class="language-none">(* https:&#x2F;&#x2F;www.coursera.org&#x2F;learn&#x2F;programming-languages&#x2F;discussions&#x2F;forums&#x2F;c6s06Cj0Eea7jBLLHPwd0w&#x2F;threads&#x2F;tyxdzFi9Eeap3RLIDpHs4Q *)
+(* All tests should evaluate to true. *)
+
+(* NOTE: None of the tests in this test suite verify that your solutions *)
+(* use pattern matching instead of list &#x2F; option functions. *)
+(* You should check that yourself! *)
+
+(** 38 Cons Cells **)
+
+(* NOTE: These tests do not verify that your solution is tail-recursive. *)
+(* You should check that yourself! *)
+use &quot;hw2_extra.sml&quot;;
+
+val test_length_of_a_list_1 &#x3D; length_of_a_list [1] &#x3D; 1
+val test_length_of_a_list_2 &#x3D; length_of_a_list [] &#x3D; 0
+val test_length_of_a_list_3 &#x3D; length_of_a_list [[], [], [1, 2]] &#x3D; 3
+val test_length_of_a_list_4 &#x3D; length_of_a_list [(1, &quot;hi&quot;), (2, &quot;there&quot;)] &#x3D; 2
+val test_length_of_a_list_5 &#x3D; length_of_a_list [&quot;a&quot;, &quot;quick&quot;, &quot;brown&quot;, &quot;fox&quot;] &#x3D; 4
+
+(** Pass&#x2F;Fail **)
+
+(* Pass&#x2F;Fail -- 1 *)
+val test_pass_or_fail_1 &#x3D; pass_or_fail &#123; id &#x3D; 1023, grade &#x3D; SOME 73 &#125; &#x3D; fail
+val test_pass_or_fail_2 &#x3D; pass_or_fail &#123; id &#x3D; 1, grade &#x3D; SOME 48 &#125; &#x3D; fail
+val test_pass_or_fail_3 &#x3D; pass_or_fail &#123; id &#x3D; 10231023, grade &#x3D; SOME 0 &#125; &#x3D; fail
+val test_pass_or_fail_4 &#x3D; pass_or_fail &#123; id &#x3D; 1729, grade &#x3D; NONE &#125; &#x3D; fail
+val test_pass_or_fail_5 &#x3D; pass_or_fail &#123; id &#x3D; 432, grade &#x3D; SOME 74 &#125; &#x3D; fail
+val test_pass_or_fail_6 &#x3D; pass_or_fail &#123; id &#x3D; 2, grade &#x3D; SOME 75 &#125; &#x3D; pass
+val test_pass_or_fail_7 &#x3D; pass_or_fail &#123; id &#x3D; 13, grade &#x3D; SOME 100 &#125; &#x3D; pass
+val test_pass_or_fail_8 &#x3D; pass_or_fail &#123; id &#x3D; 15, grade &#x3D; SOME 86 &#125; &#x3D; pass
+
+(* Pass&#x2F;Fail -- 2 *)
+val test_has_passed_1 &#x3D; has_passed &#123; id &#x3D; 1023, grade &#x3D; SOME 73 &#125; &#x3D; false
+val test_has_passed_2 &#x3D; has_passed &#123; id &#x3D; 1, grade &#x3D; SOME 48 &#125; &#x3D; false
+val test_has_passed_3 &#x3D; has_passed &#123; id &#x3D; 10231023, grade &#x3D; SOME 0 &#125; &#x3D; false
+val test_has_passed_4 &#x3D; has_passed &#123; id &#x3D; 1729, grade &#x3D; NONE &#125; &#x3D; false
+val test_has_passed_5 &#x3D; has_passed &#123; id &#x3D; 432, grade &#x3D; SOME 74 &#125; &#x3D; false
+val test_has_passed_6 &#x3D; has_passed &#123; id &#x3D; 2, grade &#x3D; SOME 75 &#125; &#x3D; true
+val test_has_passed_7 &#x3D; has_passed &#123; id &#x3D; 13, grade &#x3D; SOME 100 &#125; &#x3D; true
+val test_has_passed_8 &#x3D; has_passed &#123; id &#x3D; 15, grade &#x3D; SOME 86 &#125; &#x3D; true
+
+(* Pass&#x2F;Fail -- 3 *)
+val test_number_passed_1 &#x3D; number_passed [&#123; id &#x3D; 1, grade &#x3D; SOME 65 &#125;, &#123; id &#x3D; 2, grade &#x3D; SOME 82 &#125;,
+    &#123; id &#x3D; 3, grade &#x3D; NONE &#125;, &#123; id &#x3D; 5, grade &#x3D; SOME 96 &#125;] &#x3D; 2
+val test_number_passed_2 &#x3D; number_passed [] &#x3D; 0
+val test_number_passed_3 &#x3D; number_passed [&#123; id &#x3D; 12, grade &#x3D; SOME 100 &#125;, &#123; id &#x3D; 14, grade &#x3D; SOME 0 &#125;,
+    &#123; id &#x3D; 9, grade &#x3D; NONE &#125;, &#123; id &#x3D; 2, grade &#x3D; NONE &#125;] &#x3D; 1
+val test_number_passed_4 &#x3D; number_passed [&#123; id &#x3D; 1, grade &#x3D; SOME 76 &#125;, &#123; id &#x3D; 2, grade &#x3D; SOME 82 &#125;,
+    &#123; id &#x3D; 5, grade &#x3D; SOME 96 &#125;] &#x3D; 3
+
+(* Pass&#x2F;Fail -- 4 *)
+val test_number_misgraded_1 &#x3D; number_misgraded [(pass, &#123; id &#x3D; 2, grade &#x3D; SOME 75 &#125;), (pass, &#123; id &#x3D; 1023, grade &#x3D; SOME 73 &#125;), (fail, &#123; id &#x3D; 1, grade &#x3D; SOME 48 &#125;)] &#x3D; 1
+val test_number_misgraded_2 &#x3D; number_misgraded [(pass, &#123; id &#x3D; 2, grade &#x3D; SOME 75 &#125;), (pass, &#123; id &#x3D; 1023, grade &#x3D; SOME 73 &#125;), (pass, &#123; id &#x3D; 15, grade &#x3D; SOME 86 &#125;)] &#x3D; 1
+val test_number_misgraded_3 &#x3D; number_misgraded [(fail, &#123; id &#x3D; 2, grade &#x3D; SOME 75 &#125;), (fail, &#123; id &#x3D; 1023, grade &#x3D; SOME 73 &#125;), (fail, &#123; id &#x3D; 1, grade &#x3D; SOME 48 &#125;)] &#x3D; 1
+val test_number_misgraded_4 &#x3D; number_misgraded [] &#x3D; 0
+
+(** Forest For The Trees **)
+
+(* Forest For The Trees -- 1 *)
+val test_tree_height_1 &#x3D; tree_height (node &#123; value &#x3D; 0, left &#x3D; node &#123; value &#x3D; 0,
+    left &#x3D; node &#123; value &#x3D; 0, left &#x3D; leaf, right &#x3D; leaf &#125;, right &#x3D; leaf &#125;,
+    right &#x3D; node &#123; value &#x3D; 0, left &#x3D; leaf, right &#x3D; leaf &#125; &#125;) &#x3D; 3
+val test_tree_height_2 &#x3D; tree_height leaf &#x3D; 0
+val test_tree_height_3 &#x3D; tree_height (node &#123; value &#x3D; &quot;abcde&quot;, left &#x3D; leaf, right &#x3D; leaf &#125;) &#x3D; 1
+val test_tree_height_4 &#x3D; tree_height (node &#123; value &#x3D; true, left &#x3D; leaf, right &#x3D; leaf &#125;) &#x3D; 1
+val test_tree_height_5 &#x3D; tree_height (node &#123; value &#x3D; 0, left &#x3D; leaf,
+    right &#x3D; node &#123; value &#x3D; 0, left &#x3D; node &#123; value &#x3D; 0, left &#x3D; leaf, right &#x3D; leaf &#125;, right &#x3D; leaf &#125; &#125;) &#x3D; 3
+
+(* Forest For The Trees -- 2 *)
+val test_sum_tree_1 &#x3D; sum_tree (node &#123; value &#x3D; 1, left &#x3D; node &#123; value &#x3D; 2,
+    left &#x3D; node &#123; value &#x3D; 3, left &#x3D; leaf, right &#x3D; leaf &#125;, right &#x3D; leaf &#125;,
+    right &#x3D; node &#123; value &#x3D; 4, left &#x3D; leaf, right &#x3D; leaf &#125; &#125;) &#x3D; 10
+val test_sum_tree_2 &#x3D; sum_tree leaf &#x3D; 0
+val test_sum_tree_3 &#x3D; sum_tree (node &#123; value &#x3D; 1729, left &#x3D; leaf, right &#x3D; leaf &#125;) &#x3D; 1729
+val test_sum_tree_4 &#x3D; sum_tree (node &#123; value &#x3D; 32, left &#x3D; leaf,
+    right &#x3D; node &#123; value &#x3D; ~60, left &#x3D; node &#123; value &#x3D; 17, left &#x3D; leaf, right &#x3D; leaf &#125;, right &#x3D; leaf &#125; &#125;) &#x3D; ~11
+
+(* Forest For The Trees -- 3 *)
+val test_gardener_1 &#x3D; gardener (node &#123; value &#x3D; leave_me_alone,
+    left &#x3D; node &#123; value &#x3D; prune_me, left &#x3D; node &#123; value &#x3D; leave_me_alone, left &#x3D; leaf, right &#x3D; leaf &#125;, right &#x3D; leaf &#125;,
+    right &#x3D; node &#123; value &#x3D; leave_me_alone, left &#x3D; leaf, right &#x3D; leaf &#125; &#125;) &#x3D;
+    node &#123; value &#x3D; leave_me_alone, left &#x3D; leaf, right &#x3D; node &#123; value &#x3D; leave_me_alone, left &#x3D; leaf, right &#x3D; leaf &#125; &#125;
+val test_gardener_2 &#x3D; gardener leaf &#x3D; leaf
+val test_gardener_3 &#x3D; gardener (node &#123; value &#x3D; prune_me, left &#x3D; node &#123; value &#x3D; prune_me,
+    left &#x3D; node &#123; value &#x3D; leave_me_alone, left &#x3D; leaf, right &#x3D; leaf &#125;, right &#x3D; leaf &#125;,
+    right &#x3D; node &#123; value &#x3D; leave_me_alone, left &#x3D; leaf, right &#x3D; leaf &#125; &#125;) &#x3D; leaf
+val test_gardener_4 &#x3D; gardener (node &#123; value &#x3D; leave_me_alone,
+    left &#x3D; node &#123; value &#x3D; leave_me_alone, left &#x3D; node &#123; value &#x3D; leave_me_alone, left &#x3D; leaf, right &#x3D; leaf &#125;, right &#x3D; leaf &#125;,
+    right &#x3D; node &#123; value &#x3D; leave_me_alone, left &#x3D; leaf, right &#x3D; leaf &#125; &#125;) &#x3D;
+    node &#123; value &#x3D; leave_me_alone, left &#x3D; node &#123; value &#x3D; leave_me_alone,
+    left &#x3D; node &#123; value &#x3D; leave_me_alone, left &#x3D; leaf, right &#x3D; leaf &#125;, right &#x3D; leaf &#125;,
+    right &#x3D; node &#123; value &#x3D; leave_me_alone, left &#x3D; leaf, right &#x3D; leaf &#125; &#125;
+val test_gardener_5 &#x3D; gardener (node &#123; value &#x3D; leave_me_alone, left &#x3D; node &#123; value &#x3D; leave_me_alone,
+    left &#x3D; node &#123; value &#x3D; prune_me, left &#x3D; leaf, right &#x3D; leaf &#125;, right &#x3D; leaf &#125;,
+    right &#x3D; node &#123; value &#x3D; prune_me, left &#x3D; leaf, right &#x3D; leaf &#125; &#125;) &#x3D;
+    node &#123; value &#x3D; leave_me_alone, left &#x3D; node &#123; value &#x3D; leave_me_alone, left &#x3D; leaf, right &#x3D; leaf &#125;, right &#x3D; leaf &#125;
+val test_gardener_6 &#x3D; gardener (node &#123; value &#x3D; prune_me, left &#x3D; leaf, right &#x3D; leaf &#125;) &#x3D; leaf
+val test_gardener_7 &#x3D; gardener (node &#123; value &#x3D; leave_me_alone, left &#x3D; leaf, right &#x3D; leaf &#125;) &#x3D;
+    node &#123; value &#x3D; leave_me_alone, left &#x3D; leaf, right &#x3D; leaf &#125;
+val test_gardener_8 &#x3D; gardener (node &#123; value &#x3D; leave_me_alone, left &#x3D; leaf,
+    right &#x3D; node &#123; value &#x3D; prune_me, left &#x3D; node &#123; value &#x3D; prune_me, left &#x3D; leaf, right &#x3D; leaf &#125;, right &#x3D; leaf &#125; &#125;) &#x3D;
+    node &#123; value &#x3D; leave_me_alone, left &#x3D; leaf, right &#x3D; leaf &#125;
+
+(* problem 8 *)
+val test_problem8_1 &#x3D; last([3]) &#x3D; 3
+val test_problem8_2 &#x3D; last([1, 2, 5]) &#x3D; 5
+
+(* problem 9 *)
+val test_problem9_1 &#x3D; is_positive(ZERO) &#x3D; false
+val test_problem9_2 &#x3D; is_positive(SUCC ZERO) &#x3D; true
+val test_problem9_3 &#x3D; is_positive(SUCC (SUCC ZERO)) &#x3D; true
+
+(* problem 10 *)
+(* val test_problem10_1 &#x3D; pred(ZERO) &#x3D; Negative *)
+val test_problem10_2 &#x3D; pred(SUCC ZERO) &#x3D; ZERO
+val test_problem10_3 &#x3D; pred(SUCC (SUCC ZERO)) &#x3D; (SUCC ZERO)
+
+(* problem 11 *)
+val test_problem11_1 &#x3D; nat_to_int(ZERO) &#x3D; 0
+val test_problem11_2 &#x3D; nat_to_int(SUCC ZERO) &#x3D; 1
+val test_problem11_3 &#x3D; nat_to_int(SUCC (SUCC ZERO)) &#x3D; 2
+
+(* problem 12 *)
+val test_problem12_1 &#x3D; int_to_nat(0) &#x3D; ZERO
+val test_problem12_2 &#x3D; int_to_nat(1) &#x3D; SUCC ZERO
+val test_problem12_3 &#x3D; int_to_nat(2) &#x3D; SUCC (SUCC ZERO)
+
+(* problem 13 *)
+val test_problem13_1 &#x3D; add(ZERO, SUCC ZERO) &#x3D; SUCC ZERO
+val test_problem13_2 &#x3D; add(SUCC ZERO, SUCC ZERO) &#x3D; SUCC (SUCC ZERO)
+val test_problem13_3 &#x3D; add(SUCC ZERO, SUCC (SUCC ZERO)) &#x3D; SUCC (SUCC (SUCC ZERO))
+
+(* problem 14 *)
+val test_problem14_1 &#x3D; sub(SUCC ZERO, ZERO) &#x3D; SUCC ZERO
+val test_problem14_2 &#x3D; sub(SUCC (SUCC ZERO), SUCC ZERO) &#x3D; (SUCC ZERO)
+val test_problem14_3 &#x3D; sub(SUCC (SUCC (SUCC ZERO)), SUCC (SUCC (SUCC ZERO))) &#x3D; ZERO
+
+(* problem 15 *)
+val test_problem15_1 &#x3D; mult(SUCC ZERO, ZERO) &#x3D; ZERO
+val test_problem15_2 &#x3D; mult(SUCC (SUCC ZERO), SUCC ZERO) &#x3D; SUCC (SUCC ZERO)
+val test_problem15_3 &#x3D; mult(SUCC (SUCC ZERO), SUCC (SUCC ZERO)) &#x3D; SUCC (SUCC (SUCC (SUCC ZERO)))
+
+(* problem 16 *)
+val test_problem16_1 &#x3D; less_than(SUCC ZERO, ZERO) &#x3D; false
+val test_problem16_2 &#x3D; less_than(SUCC (SUCC ZERO), SUCC ZERO) &#x3D; false
+val test_problem16_3 &#x3D; less_than(SUCC (SUCC ZERO), SUCC (SUCC ZERO)) &#x3D; false
+val test_problem16_4 &#x3D; less_than(ZERO, SUCC ZERO) &#x3D; true
+val test_problem16_5 &#x3D; less_than(SUCC ZERO, SUCC (SUCC ZERO)) &#x3D; true
+
+(* https:&#x2F;&#x2F;gist.github.com&#x2F;gfizz&#x2F;11ba5ee6e1534d9a5bb8d2e6f682b0e2 *)
+(* problem 17 *)
+val test_problem17_1 &#x3D; isEmpty(Elems[]) &#x3D; true
+val test_problem17_2 &#x3D; isEmpty(Elems[0]) &#x3D; false
+val test_problem17_3 &#x3D; isEmpty(Range&#123;from&#x3D;3, to&#x3D;2&#125;) &#x3D; true
+val test_problem17_4 &#x3D; isEmpty(Range&#123;from&#x3D;0, to&#x3D;0&#125;) &#x3D; false
+val test_problem17_5 &#x3D; isEmpty(Range&#123;from&#x3D;(~5), to&#x3D;(~4)&#125;) &#x3D; false
+val test_problem17_6 &#x3D; isEmpty(Union(Elems[], Range&#123;from&#x3D;9, to&#x3D;6&#125;)) &#x3D; true
+val test_problem17_7 &#x3D; isEmpty(Union(Union(Elems[], Range&#123;from&#x3D;6, to&#x3D;9&#125;), Elems[])) &#x3D; false
+val test_problem17_8 &#x3D; isEmpty(Union(Union(Range&#123;from&#x3D;1, to&#x3D;(~1)&#125;, Elems[]), Union(Elems[], Elems[]))) &#x3D; true
+val test_problem17_9 &#x3D; isEmpty(Intersection(Elems[], Elems[])) &#x3D; true
+val test_problem17_10 &#x3D; isEmpty(Intersection(Elems[1, 2], Elems[])) &#x3D; true
+val test_problem17_11 &#x3D; isEmpty(Intersection(Range&#123;from&#x3D;9, to&#x3D;6&#125;, Elems[42])) &#x3D; true
+val test_problem17_12 &#x3D; isEmpty(Intersection(Elems[0], Range&#123;from&#x3D;1, to&#x3D;2&#125;)) &#x3D; true
+val test_problem17_13 &#x3D; isEmpty(Intersection(Union(Elems[], Elems[42]), Elems[42, 41])) &#x3D; false
+val test_problem17_14 &#x3D; isEmpty(Intersection(Elems[0], Union(Elems[], Union(Range&#123;from&#x3D;9, to&#x3D;6&#125;, Intersection(Elems[1], Elems[0]))))) &#x3D; true
+val test_problem17_15 &#x3D; isEmpty(Union(Intersection(Elems[], Elems[]), Intersection(Elems[2, 0], Elems[1]))) &#x3D; true
+val test_problem17_16 &#x3D; isEmpty(Intersection(Intersection(Elems[1, 3, 5], Elems[2, 3, 6]), Elems[1, 2, 4])) &#x3D; true
+val test_problem17_17 &#x3D; isEmpty(Intersection(Intersection(Elems[1, 3, 5], Elems[2, 3, 6]), Elems[1, 3, 4])) &#x3D; false
+val test_problem17_18 &#x3D; isEmpty(Intersection(Intersection(Elems[1, 2], Elems[2, 3]), Intersection(Elems[2, 3], Elems[3, 4]))) &#x3D; true
+val test_problem17_19 &#x3D; isEmpty(Intersection(Union(Elems[1], Elems[2]), Intersection(Elems[1], Elems[1]))) &#x3D; false
+val test_problem17_20 &#x3D; isEmpty(Intersection(Union(Elems[1], Elems[2]), Intersection(Elems[2], Elems[2]))) &#x3D; false
+val test_problem17_21 &#x3D; isEmpty(Intersection(Union(Elems[1], Elems[2]), Intersection(Elems[3], Elems[3]))) &#x3D; true
+val test_problem17_22 &#x3D; isEmpty(Intersection(Intersection(Elems[1], Elems[1]), Union(Elems[1], Elems[2]))) &#x3D; false
+val test_problem17_23 &#x3D; isEmpty(Intersection(Intersection(Elems[2], Elems[2]), Union(Elems[1], Elems[2]))) &#x3D; false
+val test_problem17_24 &#x3D; isEmpty(Intersection(Intersection(Elems[3], Elems[3]), Union(Elems[1], Elems[2]))) &#x3D; true
+
+(* problem 18 *)
+val test_problem18_1 &#x3D; contains(Elems[], 0) &#x3D; false
+val test_problem18_2 &#x3D; contains(Elems[42], 42) &#x3D; true
+val test_problem18_3 &#x3D; contains(Elems[1, 3, 5, 7, 9], 7) &#x3D; true
+val test_problem18_4 &#x3D; contains(Elems[~1, 1], 0) &#x3D; false
+val test_problem18_5 &#x3D; contains(Range&#123;from&#x3D;3, to&#x3D;2&#125;, 3) &#x3D; false
+val test_problem18_6 &#x3D; contains(Range&#123;from&#x3D;(~5), to&#x3D;(~5)&#125;, (~5)) &#x3D; true
+val test_problem18_7 &#x3D; contains(Range&#123;from&#x3D;1, to&#x3D;6&#125;, 0) &#x3D; false
+val test_problem18_8 &#x3D; contains(Union(Elems[1], Range&#123;from&#x3D;2, to&#x3D;8&#125;), 9) &#x3D; false
+val test_problem18_9 &#x3D; contains(Union(Elems[42], Elems[42, 33]), 33) &#x3D; true
+val test_problem18_10 &#x3D; contains(Union(Range&#123;from&#x3D;0, to&#x3D;5&#125;, Union(Elems[~3, ~1, 1], Elems[])), ~1) &#x3D; true
+val test_problem18_11 &#x3D; contains(Intersection(Elems[1, 2, 3], Elems[2, 3, 4]), 1) &#x3D; false
+val test_problem18_12 &#x3D; contains(Intersection(Elems[~1, ~2], Elems[0, ~2]), ~2) &#x3D; true
+val test_problem18_13 &#x3D; contains(Intersection(Elems[1, 2, 3], Intersection(Elems[0, 2, 1], Elems[3, 1, 5])), 1) &#x3D; true
+val test_problem18_14 &#x3D; contains(Intersection(Union(Elems[1], Elems[2, 3]), Elems[3, 0]), 2) &#x3D; false
+val test_problem18_15 &#x3D; contains(Union(Intersection(Elems[0, 2, 4], Range&#123;from&#x3D;0, to&#x3D;2&#125;), Intersection(Elems[0, 4], Elems[0, 2])), 4) &#x3D; false
+
+(* problem 19 *)
+fun insert(xs, x) &#x3D;
+    case xs of
+            [] &#x3D;&gt; [x]
+        | x&#39;::xs&#39; &#x3D;&gt; if x &lt;&#x3D; x&#39; then x::xs else x&#39;::insert(xs&#39;, x)
+fun sort(xs) &#x3D;
+    case xs of
+            [] &#x3D;&gt; []
+        | x::xs&#39; &#x3D;&gt; insert(sort(xs&#39;), x)
+
+val test_problem19_1 &#x3D; toList(Elems[]) &#x3D; []
+val test_problem19_2 &#x3D; toList(Elems[0, 0, 0]) &#x3D; [0]
+val test_problem19_3 &#x3D; sort(toList(Elems[3, 1, 2])) &#x3D; [1, 2, 3]
+val test_problem19_4 &#x3D; sort(toList(Elems[0, 5, ~1, 4, 3, 3, 0, ~1, 5, 2, 1, 4])) &#x3D; [~1, 0, 1, 2, 3, 4, 5]
+val test_problem19_5 &#x3D; sort(toList(Range&#123;from&#x3D;1, to&#x3D;0&#125;)) &#x3D; []
+val test_problem19_6 &#x3D; sort(toList(Range&#123;from&#x3D;0, to&#x3D;1&#125;)) &#x3D; [0, 1]
+val test_problem19_7 &#x3D; sort(toList(Range&#123;from&#x3D;42, to&#x3D;42&#125;)) &#x3D; [42]
+val test_problem19_8 &#x3D; sort(toList(Range&#123;from&#x3D;(~2), to&#x3D;2&#125;)) &#x3D; [~2, ~1, 0, 1, 2]
+val test_problem19_9 &#x3D; sort(toList(Union(Elems[], Range&#123;from&#x3D;1, to&#x3D;0&#125;))) &#x3D;[]
+val test_problem19_10 &#x3D; sort(toList(Union(Elems[3, 3, 0, 2, 0], Range&#123;from&#x3D;3, to&#x3D;5&#125;))) &#x3D; [0, 2, 3, 4, 5]
+val test_problem19_12 &#x3D; sort(toList(Union(Union(Elems[1, 2, 1], Elems[3, 2, 4]), Union(Range&#123;from&#x3D;7, to&#x3D;7&#125;, Range&#123;from&#x3D;6, to&#x3D;5&#125;)))) &#x3D; [1, 2, 3, 4, 7]
+val test_problem19_13 &#x3D; sort(toList(Intersection(Range&#123;from&#x3D;1, to&#x3D;0&#125;, Elems[]))) &#x3D; []
+val test_problem19_14 &#x3D; sort(toList(Intersection(Elems[5, 3, 1, ~1], Elems[1, 2, 3, 2, 1]))) &#x3D; [1, 3]
+val test_problem19_15 &#x3D; sort(toList(Union(Union(Elems[7], Elems[0]), Intersection(Range&#123;from&#x3D;5, to&#x3D;9&#125;, Union(Elems[6], Elems[]))))) &#x3D; [0, 6, 7]
+val test_problem19_16 &#x3D; sort(toList(Intersection(Union(Intersection(Range&#123;from&#x3D;1, to&#x3D;5&#125;, Range&#123;from&#x3D;3, to&#x3D;7&#125;), Elems[6]), Elems[4, 2, 6]))) &#x3D; [4, 6]<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">Doraemonzzz</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="http://www.doraemonzzz.com/2022/02/28/2022-2-28-Programming-Languages-Part-A-HW2/">http://www.doraemonzzz.com/2022/02/28/2022-2-28-Programming-Languages-Part-A-HW2/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://www.doraemonzzz.com" target="_blank">Doraemonzzz</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/Coursera-Programming-Languages/">Coursera Programming Languages</a></div><div class="post_share"><div class="social-share" data-image="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2022/02/28/2022-2-28-Programming-Languages-Part-A-HW2-Extra-Practice-Problems/"><img class="prev-cover" src= "/img/loading.gif" data-lazy-src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">Programming Languages Part A HW2 Extra Practice Problems</div></div></a></div><div class="next-post pull-right"><a href="/2022/01/30/2022-1-30-Programming-Languages-Part-A-Week-3%E7%AC%94%E8%AE%B0/"><img class="next-cover" src= "/img/loading.gif" data-lazy-src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">Programming Languages Part A Week 3笔记</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span> 相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2022/01/10/2022-1-10-Programming-Languages-Part-A-HW0/" title="Programming Languages Part A HW0"><img class="cover" src= "/img/loading.gif" data-lazy-src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-01-10</div><div class="title">Programming Languages Part A HW0</div></div></a></div><div><a href="/2022/01/10/2022-1-10-Programming-Languages-Part-A-HW1/" title="Programming Languages Part A HW1"><img class="cover" src= "/img/loading.gif" data-lazy-src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-01-10</div><div class="title">Programming Languages Part A HW1</div></div></a></div><div><a href="/2022/01/10/2022-1-10-Programming-Languages-Part-A-Week-1笔记/" title="Programming Languages Part A Week 1笔记"><img class="cover" src= "/img/loading.gif" data-lazy-src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-01-10</div><div class="title">Programming Languages Part A Week 1笔记</div></div></a></div><div><a href="/2022/01/10/2022-1-10-Programming-Languages-Part-A-Week-2笔记/" title="Programming Languages Part A Week 2笔记"><img class="cover" src= "/img/loading.gif" data-lazy-src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-01-10</div><div class="title">Programming Languages Part A Week 2笔记</div></div></a></div><div><a href="/2022/01/30/2022-1-30-Programming-Languages-Part-A-HW1-Extra-Practice-Problems/" title="Programming Languages Part A HW1 Extra Practice Problems"><img class="cover" src= "/img/loading.gif" data-lazy-src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-01-30</div><div class="title">Programming Languages Part A HW1 Extra Practice Problems</div></div></a></div><div><a href="/2022/01/30/2022-1-30-Programming-Languages-Part-A-Week-3笔记/" title="Programming Languages Part A Week 3笔记"><img class="cover" src= "/img/loading.gif" data-lazy-src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-01-30</div><div class="title">Programming Languages Part A Week 3笔记</div></div></a></div></div></div><hr/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div><div id="comment-switch"><span class="first-comment">Valine</span><span class="switch-btn"></span><span class="second-comment">Livere</span></div></div><div class="comment-wrap"><div><div class="vcomment" id="vcomment"></div></div><div><div id="lv-container" data-id="city" data-uid="MTAyMC8zNDcxOS8xMTI1Ng=="></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="card-info-avatar is-center"><img class="avatar-img" src= "/img/loading.gif" data-lazy-src="https://github.com/Doraemonzzz/md-photo/blob/master/%E5%A4%B4%E5%83%8F.jpg?raw=true" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/><div class="author-info__name">Doraemonzzz</div><div class="author-info__description">个人博客，主要记录有关机器学习，数学以及计算机科学的笔记</div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">700</div></a></div><div class="card-info-data-item is-center"><a href="/tags/"><div class="headline">标签</div><div class="length-num">71</div></a></div><div class="card-info-data-item is-center"><a href="/categories/"><div class="headline">分类</div><div class="length-num">28</div></a></div></div><a class="button--animated" id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/Doraemonzzz"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/Doraemonzzz" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="/doraemon_zzz@163.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a><a class="social-icon" href="https://space.bilibili.com/291079982" target="_blank" title="Bilibili"><i class="iconfont icon-bilibili"></i></a><a class="social-icon" href="/atom.xml" target="_blank" title=""><i class="fa fa-rss"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn card-announcement-animation"></i><span>公告</span></div><div class="announcement_content">暂无公告</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%A3%E7%A0%81"><span class="toc-number">1.</span> <span class="toc-text">代码</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B5%8B%E8%AF%95"><span class="toc-number">2.</span> <span class="toc-text">测试</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2022/02/28/2022-2-28-Programming-Languages-Part-A-Week-4%E7%AC%94%E8%AE%B0/" title="Programming Languages Part A Week 4笔记"><img src= "/img/loading.gif" data-lazy-src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Programming Languages Part A Week 4笔记"/></a><div class="content"><a class="title" href="/2022/02/28/2022-2-28-Programming-Languages-Part-A-Week-4%E7%AC%94%E8%AE%B0/" title="Programming Languages Part A Week 4笔记">Programming Languages Part A Week 4笔记</a><time datetime="2022-02-28T01:59:00.000Z" title="发表于 2022-02-28 09:59:00">2022-02-28</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/02/28/2022-2-28-Programming-Languages-Part-A-Section2-%E7%BF%BB%E8%AF%91/" title="Programming Languages Part A Section2 翻译"><img src= "/img/loading.gif" data-lazy-src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Programming Languages Part A Section2 翻译"/></a><div class="content"><a class="title" href="/2022/02/28/2022-2-28-Programming-Languages-Part-A-Section2-%E7%BF%BB%E8%AF%91/" title="Programming Languages Part A Section2 翻译">Programming Languages Part A Section2 翻译</a><time datetime="2022-02-28T01:16:00.000Z" title="发表于 2022-02-28 09:16:00">2022-02-28</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/02/28/2022-2-28-Programming-Languages-Part-A-HW2-Extra-Practice-Problems/" title="Programming Languages Part A HW2 Extra Practice Problems"><img src= "/img/loading.gif" data-lazy-src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Programming Languages Part A HW2 Extra Practice Problems"/></a><div class="content"><a class="title" href="/2022/02/28/2022-2-28-Programming-Languages-Part-A-HW2-Extra-Practice-Problems/" title="Programming Languages Part A HW2 Extra Practice Problems">Programming Languages Part A HW2 Extra Practice Problems</a><time datetime="2022-02-28T00:10:00.000Z" title="发表于 2022-02-28 08:10:00">2022-02-28</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/02/28/2022-2-28-Programming-Languages-Part-A-HW2/" title="Programming Languages Part A HW2"><img src= "/img/loading.gif" data-lazy-src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Programming Languages Part A HW2"/></a><div class="content"><a class="title" href="/2022/02/28/2022-2-28-Programming-Languages-Part-A-HW2/" title="Programming Languages Part A HW2">Programming Languages Part A HW2</a><time datetime="2022-02-28T00:06:00.000Z" title="发表于 2022-02-28 08:06:00">2022-02-28</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/01/30/2022-1-30-Programming-Languages-Part-A-Week-3%E7%AC%94%E8%AE%B0/" title="Programming Languages Part A Week 3笔记"><img src= "/img/loading.gif" data-lazy-src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Programming Languages Part A Week 3笔记"/></a><div class="content"><a class="title" href="/2022/01/30/2022-1-30-Programming-Languages-Part-A-Week-3%E7%AC%94%E8%AE%B0/" title="Programming Languages Part A Week 3笔记">Programming Languages Part A Week 3笔记</a><time datetime="2022-01-30T08:45:00.000Z" title="发表于 2022-01-30 16:45:00">2022-01-30</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2018 - 2022 By Doraemonzzz</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="font-plus" type="button" title="放大字体"><i class="fas fa-plus"></i></button><button id="font-minus" type="button" title="缩小字体"><i class="fas fa-minus"></i></button><button id="translateLink" type="button" title="简繁转换">简</button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div id="local-search"><div class="search-dialog"><div class="search-dialog__title" id="local-search-title">本地搜索</div><div id="local-input-panel"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div></div><hr/><div id="local-search-results"></div><span class="search-close-button"><i class="fas fa-times"></i></span></div><div id="search-mask"></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="/js/tw_cn.js"></script><script src="https://cdn.jsdelivr.net/npm/vanilla-lazyload/dist/lazyload.iife.min.js"></script><script src="/js/search/local-search.js"></script><script>var preloader = {
+  endLoading: () => {
+    document.body.style.overflow = 'auto';
+    document.getElementById('loading-box').classList.add("loaded")
+  },
+  initLoading: () => {
+    document.body.style.overflow = '';
+    document.getElementById('loading-box').classList.remove("loaded")
+
+  }
+}
+window.addEventListener('load',preloader.endLoading())</script><div class="js-pjax"><script>if (!window.MathJax) {
+  window.MathJax = {
+    tex: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]],
+      tags: 'ams'
+    },
+    chtml: {
+      scale: 1.25
+    },
+    options: {
+      renderActions: {
+        findScript: [10, doc => {
+          for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+            const display = !!node.type.match(/; *mode=display/)
+            const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+            const text = document.createTextNode('')
+            node.parentNode.replaceChild(text, node)
+            math.start = {node: text, delim: '', n: 0}
+            math.end = {node: text, delim: '', n: 0}
+            doc.math.push(math)
+          }
+        }, '']
+      }
+    }
+  }
+  
+  const script = document.createElement('script')
+  script.src = 'https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js'
+  script.id = 'MathJax-script'
+  script.async = true
+  document.head.appendChild(script)
+} else {
+  MathJax.startup.document.state(0)
+  MathJax.texReset()
+  MathJax.typeset()
+}</script><script>function loadValine () {
+  function initValine () {
+    const valine = new Valine(Object.assign({
+      el: '#vcomment',
+      appId: 'IpnmxCW9CvYWIXbol5QXsegX-MdYXbMMI',
+      appKey: 'w57DVCdbxcyB1TYYagMIMJIU',
+      placeholder: 'Please leave your footprints',
+      avatar: 'monsterid',
+      meta: 'nick,mail,link'.split(','),
+      pageSize: '10',
+      lang: 'en',
+      recordIP: false,
+      serverURLs: '',
+      emojiCDN: '',
+      emojiMaps: "",
+      enableQQ: false,
+      path: window.location.pathname,
+      requiredFields: ["nick,mail"],
+      visitor: true
+    }, null))
+  }
+
+  if (typeof Valine === 'function') initValine() 
+  else getScript('https://cdn.jsdelivr.net/npm/valine/dist/Valine.min.js').then(initValine)
+}
+
+if ('Valine' === 'Valine' || !false) {
+  if (false) btf.loadComment(document.getElementById('vcomment'),loadValine)
+  else setTimeout(loadValine, 0)
+} else {
+  function loadOtherComment () {
+    loadValine()
+  }
+}</script><script>function loadLivere () {
+  if (typeof LivereTower === 'object') {
+    window.LivereTower.init()
+  }
+  else {
+    (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+    })(document, 'script');
+  }
+}
+
+if ('Valine' === 'Livere' || !false) {
+  if (false) btf.loadComment(document.getElementById('lv-container'), loadLivere)
+  else loadLivere()
+}
+else {
+  function loadOtherComment () {
+    loadLivere()
+  }
+}</script></div><script defer="defer" id="fluttering_ribbon" mobile="false" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/canvas-fluttering-ribbon.min.js"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
