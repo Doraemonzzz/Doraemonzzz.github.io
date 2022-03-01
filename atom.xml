@@ -6,7 +6,7 @@
   <link href="http://www.doraemonzzz.com/atom.xml" rel="self"/>
   
   <link href="http://www.doraemonzzz.com/"/>
-  <updated>2022-02-28T14:24:55.282Z</updated>
+  <updated>2022-03-01T01:18:28.190Z</updated>
   <id>http://www.doraemonzzz.com/</id>
   
   <author>
@@ -17,11 +17,104 @@
   <generator uri="https://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>CMU 15-418 Assignment 1 Exploring Multi-Core and SIMD Parallelism</title>
+    <link href="http://www.doraemonzzz.com/2022/02/28/2022-2-28-CMU-15-418-Assignment-1-Exploring-Multi-Core-and-SIMD-Parallelism/"/>
+    <id>http://www.doraemonzzz.com/2022/02/28/2022-2-28-CMU-15-418-Assignment-1-Exploring-Multi-Core-and-SIMD-Parallelism/</id>
+    <published>2022-02-28T15:03:00.000Z</published>
+    <updated>2022-03-01T01:18:28.190Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;课程主页：&lt;a href=&quot;https://www.cs.cmu.edu/afs/cs/academic/class/15418-s18/www/index.html&quot;&gt;https://www.cs.cmu.edu/afs/cs/academic/class/15418-s18/www/index.html&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;课程视频：&lt;a href=&quot;https://www.bilibili.com/video/BV11A411c7pF&quot;&gt;https://www.bilibili.com/video/BV11A411c7pF&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;CMU 15-418的课程名为Parallel Computer Architecture and Programming，主要介绍并行计算相关内容。这里回顾Assignment 1，主要是熟悉多核的基本操作，利用ISPC编写一些并行程序。&lt;/p&gt;
+&lt;p&gt;参考资料：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;https://www.cs.cmu.edu/afs/cs/academic/class/15418-s18/www/assignment_writeups/asst1/asst1.pdf&quot;&gt;https://www.cs.cmu.edu/afs/cs/academic/class/15418-s18/www/assignment_writeups/asst1/asst1.pdf&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;http://15418.courses.cs.cmu.edu/spring2016/article/3&quot;&gt;http://15418.courses.cs.cmu.edu/spring2016/article/3&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://github.com/ispc/ispc&quot;&gt;https://github.com/ispc/ispc&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://ispc.github.io/example.html&quot;&gt;https://ispc.github.io/example.html&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://www.cnblogs.com/ggjucheng/archive/2013/01/14/2859613.html&quot;&gt;https://www.cnblogs.com/ggjucheng/archive/2013/01/14/2859613.html&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://blog.csdn.net/gengshenghong/article/details/7010615&quot;&gt;https://blog.csdn.net/gengshenghong/article/details/7010615&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://stackoverflow.com/questions/9079580/sse-simd-multiply-vector-by-scalar&quot;&gt;https://stackoverflow.com/questions/9079580/sse-simd-multiply-vector-by-scalar&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://github.com/oneapi-src/oneAPI-samples/blob/master/DirectProgramming/C++/CompilerInfrastructure/Intrinsics/src/intrin_dot_sample.cpp#L188:7&quot;&gt;https://github.com/oneapi-src/oneAPI-samples/blob/master/DirectProgramming/C++/CompilerInfrastructure/Intrinsics/src/intrin_dot_sample.cpp#L188:7&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://www.aarongutierrez.com/15418/index.html&quot;&gt;https://www.aarongutierrez.com/15418/index.html&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</summary>
+    
+    
+    
+    <category term="并行计算" scheme="http://www.doraemonzzz.com/categories/%E5%B9%B6%E8%A1%8C%E8%AE%A1%E7%AE%97/"/>
+    
+    
+    <category term="CMU 15-418" scheme="http://www.doraemonzzz.com/tags/CMU-15-418/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Programming Languages Part A HW3 Extra Practice Problems</title>
+    <link href="http://www.doraemonzzz.com/2022/02/28/2022-2-28-Programming-Languages-Part-A-HW3-Extra-Practice-Problems/"/>
+    <id>http://www.doraemonzzz.com/2022/02/28/2022-2-28-Programming-Languages-Part-A-HW3-Extra-Practice-Problems/</id>
+    <published>2022-02-28T14:50:00.000Z</published>
+    <updated>2022-02-28T14:50:09.727Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;这次回顾HW3 Extra Practice Problems，主要是Standard ML的头等函数和高阶函数。&lt;/p&gt;
+&lt;p&gt;课程主页：&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://www.coursera.org/learn/programming-languages/home&quot;&gt;https://www.coursera.org/learn/programming-languages/home&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;B站搬运：&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://www.bilibili.com/video/BV1dL411j7L7&quot;&gt;https://www.bilibili.com/video/BV1dL411j7L7&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;习题内容：&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://www.coursera.org/learn/programming-languages/supplement/cVK0L/extra-practice-problems&quot;&gt;https://www.coursera.org/learn/programming-languages/supplement/cVK0L/extra-practice-problems&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;参考资料：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;https://www.coursera.org/learn/programming-languages/discussions/forums/c7p3Kij0Eea7jBLLHPwd0w/threads/MMocZllWEeaDAA56pliawQ&quot;&gt;https://www.coursera.org/learn/programming-languages/discussions/forums/c7p3Kij0Eea7jBLLHPwd0w/threads/MMocZllWEeaDAA56pliawQ&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://www.coursera.org/learn/programming-languages/discussions/forums/c7p3Kij0Eea7jBLLHPwd0w/threads/DOv7aVlWEea3rQpoWFaegw&quot;&gt;https://www.coursera.org/learn/programming-languages/discussions/forums/c7p3Kij0Eea7jBLLHPwd0w/threads/DOv7aVlWEea3rQpoWFaegw&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</summary>
+    
+    
+    
+    <category term="函数式编程" scheme="http://www.doraemonzzz.com/categories/%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B/"/>
+    
+    
+    <category term="Coursera Programming Languages" scheme="http://www.doraemonzzz.com/tags/Coursera-Programming-Languages/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Programming Languages Part A HW3</title>
+    <link href="http://www.doraemonzzz.com/2022/02/28/2022-2-28-Programming-Languages-Part-A-HW3/"/>
+    <id>http://www.doraemonzzz.com/2022/02/28/2022-2-28-Programming-Languages-Part-A-HW3/</id>
+    <published>2022-02-28T14:40:00.000Z</published>
+    <updated>2022-02-28T14:55:27.241Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;这次回顾HW3，主要是Standard ML的头等函数和高阶函数。&lt;/p&gt;
+&lt;p&gt;课程主页：&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://www.coursera.org/learn/programming-languages/home&quot;&gt;https://www.coursera.org/learn/programming-languages/home&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;B站搬运：&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://www.bilibili.com/video/BV1dL411j7L7&quot;&gt;https://www.bilibili.com/video/BV1dL411j7L7&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;参考资料：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;https://smlfamily.github.io/Basis/manpages.html&quot;&gt;https://smlfamily.github.io/Basis/manpages.html&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://www.coursera.org/learn/programming-languages/discussions/weeks/4/threads/SUxukGoiEeuw8Q5h5Kj7KQ&quot;&gt;https://www.coursera.org/learn/programming-languages/discussions/weeks/4/threads/SUxukGoiEeuw8Q5h5Kj7KQ&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://www.coursera.org/learn/programming-languages/discussions/weeks/4/threads/shBA0anQEeayTApmbCmbWA&quot;&gt;https://www.coursera.org/learn/programming-languages/discussions/weeks/4/threads/shBA0anQEeayTApmbCmbWA&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://www.coursera.org/learn/programming-languages/supplement/FEymH/hints-and-gotchas-for-section-3&quot;&gt;https://www.coursera.org/learn/programming-languages/supplement/FEymH/hints-and-gotchas-for-section-3&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</summary>
+    
+    
+    
+    <category term="函数式编程" scheme="http://www.doraemonzzz.com/categories/%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B/"/>
+    
+    
+    <category term="Coursera Programming Languages" scheme="http://www.doraemonzzz.com/tags/Coursera-Programming-Languages/"/>
+    
+  </entry>
+  
+  <entry>
     <title>Programming Languages Part A Week 4笔记</title>
     <link href="http://www.doraemonzzz.com/2022/02/28/2022-2-28-Programming-Languages-Part-A-Week-4%E7%AC%94%E8%AE%B0/"/>
     <id>http://www.doraemonzzz.com/2022/02/28/2022-2-28-Programming-Languages-Part-A-Week-4%E7%AC%94%E8%AE%B0/</id>
     <published>2022-02-28T01:59:00.000Z</published>
-    <updated>2022-02-28T14:24:55.282Z</updated>
+    <updated>2022-02-28T14:33:57.937Z</updated>
     
     
     <summary type="html">&lt;p&gt;这次回顾Week4的内容，主要介绍了Standard ML的头等函数和高阶函数。&lt;/p&gt;
@@ -442,77 +535,6 @@
     
     
     <category term="Coursera Programming Languages" scheme="http://www.doraemonzzz.com/tags/Coursera-Programming-Languages/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Programming Languages Part A Week 1笔记</title>
-    <link href="http://www.doraemonzzz.com/2022/01/10/2022-1-10-Programming-Languages-Part-A-Week-1%E7%AC%94%E8%AE%B0/"/>
-    <id>http://www.doraemonzzz.com/2022/01/10/2022-1-10-Programming-Languages-Part-A-Week-1%E7%AC%94%E8%AE%B0/</id>
-    <published>2022-01-10T13:58:00.000Z</published>
-    <updated>2022-01-10T14:06:54.082Z</updated>
-    
-    
-    <summary type="html">&lt;p&gt;之前一直想学习Coursera上Programming Languages系列课程，但去年一直在看SICP，所以这部分推迟到现在开始学习，这次回顾Week1的内容，主要是一些课程介绍。&lt;/p&gt;
-&lt;p&gt;课程主页：&lt;/p&gt;
-&lt;p&gt;&lt;a href=&quot;https://www.coursera.org/learn/programming-languages/home&quot;&gt;https://www.coursera.org/learn/programming-languages/home&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;B站搬运：&lt;/p&gt;
-&lt;p&gt;&lt;a href=&quot;https://www.bilibili.com/video/BV1dL411j7L7&quot;&gt;https://www.bilibili.com/video/BV1dL411j7L7&lt;/a&gt;&lt;/p&gt;</summary>
-    
-    
-    
-    <category term="函数式编程" scheme="http://www.doraemonzzz.com/categories/%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B/"/>
-    
-    
-    <category term="Coursera Programming Languages" scheme="http://www.doraemonzzz.com/tags/Coursera-Programming-Languages/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Programming Languages Part A Section1 翻译</title>
-    <link href="http://www.doraemonzzz.com/2022/01/10/2022-1-10-Programming-Languages-Part-A-Section1-%E7%BF%BB%E8%AF%91/"/>
-    <id>http://www.doraemonzzz.com/2022/01/10/2022-1-10-Programming-Languages-Part-A-Section1-%E7%BF%BB%E8%AF%91/</id>
-    <published>2022-01-10T13:15:00.000Z</published>
-    <updated>2022-01-10T14:15:36.109Z</updated>
-    
-    
-    <summary type="html">&lt;p&gt;这里对Section 1进行翻译。&lt;/p&gt;
-&lt;p&gt;课程主页：&lt;/p&gt;
-&lt;p&gt;&lt;a href=&quot;https://www.coursera.org/learn/programming-languages/home&quot;&gt;https://www.coursera.org/learn/programming-languages/home&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;B站搬运：&lt;/p&gt;
-&lt;p&gt;&lt;a href=&quot;https://www.bilibili.com/video/BV1dL411j7L7&quot;&gt;https://www.bilibili.com/video/BV1dL411j7L7&lt;/a&gt;&lt;/p&gt;</summary>
-    
-    
-    
-    <category term="函数式编程" scheme="http://www.doraemonzzz.com/categories/%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B/"/>
-    
-    
-    <category term="Coursera Programming Languages" scheme="http://www.doraemonzzz.com/tags/Coursera-Programming-Languages/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>CS144 Lab3</title>
-    <link href="http://www.doraemonzzz.com/2022/01/08/2022-1-8-CS144-Lab3/"/>
-    <id>http://www.doraemonzzz.com/2022/01/08/2022-1-8-CS144-Lab3/</id>
-    <published>2022-01-08T08:09:00.000Z</published>
-    <updated>2022-01-10T14:41:03.715Z</updated>
-    
-    
-    <summary type="html">&lt;p&gt;这里回顾CS 144 Lab 3: the TCP sender。&lt;/p&gt;
-&lt;p&gt;实验资料：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&quot;https://www.cnblogs.com/kangyupl/p/stanford_cs144_labs.html&quot;&gt;https://www.cnblogs.com/kangyupl/p/stanford_cs144_labs.html&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;https://kangyupl.gitee.io/cs144.github.io/&quot;&gt;https://kangyupl.gitee.io/cs144.github.io/&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;https://gitee.com/kangyupl/sponge&quot;&gt;https://gitee.com/kangyupl/sponge&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;</summary>
-    
-    
-    
-    <category term="计算机网络" scheme="http://www.doraemonzzz.com/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/"/>
-    
-    
-    <category term="CS144" scheme="http://www.doraemonzzz.com/tags/CS144/"/>
     
   </entry>
   

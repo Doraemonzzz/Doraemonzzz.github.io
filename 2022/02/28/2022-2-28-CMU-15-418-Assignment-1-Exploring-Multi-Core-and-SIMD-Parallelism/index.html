@@ -1,0 +1,1647 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>CMU 15-418 Assignment 1 Exploring Multi-Core and SIMD Parallelism | Doraemonzzz</title><meta name="keywords" content="CMU 15-418"><meta name="author" content="Doraemonzzz"><meta name="copyright" content="Doraemonzzz"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="课程主页：https:&#x2F;&#x2F;www.cs.cmu.edu&#x2F;afs&#x2F;cs&#x2F;academic&#x2F;class&#x2F;15418-s18&#x2F;www&#x2F;index.html 课程视频：https:&#x2F;&#x2F;www.bilibili.com&#x2F;video&#x2F;BV11A411c7pF CMU 15-418的课程名为Parallel Computer Architecture and Programming，主要介绍并行计算相关内容。这">
+<meta property="og:type" content="article">
+<meta property="og:title" content="CMU 15-418 Assignment 1 Exploring Multi-Core and SIMD Parallelism">
+<meta property="og:url" content="http://www.doraemonzzz.com/2022/02/28/2022-2-28-CMU-15-418-Assignment-1-Exploring-Multi-Core-and-SIMD-Parallelism/index.html">
+<meta property="og:site_name" content="Doraemonzzz">
+<meta property="og:description" content="课程主页：https:&#x2F;&#x2F;www.cs.cmu.edu&#x2F;afs&#x2F;cs&#x2F;academic&#x2F;class&#x2F;15418-s18&#x2F;www&#x2F;index.html 课程视频：https:&#x2F;&#x2F;www.bilibili.com&#x2F;video&#x2F;BV11A411c7pF CMU 15-418的课程名为Parallel Computer Architecture and Programming，主要介绍并行计算相关内容。这">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg">
+<meta property="article:published_time" content="2022-02-28T15:03:00.000Z">
+<meta property="article:modified_time" content="2022-03-01T01:18:28.190Z">
+<meta property="article:author" content="Doraemonzzz">
+<meta property="article:tag" content="CMU 15-418">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg"><link rel="shortcut icon" href="https://github.com/Doraemonzzz/md-photo/blob/master/%E5%A4%B4%E5%83%8F.jpg?raw=true"><link rel="canonical" href="http://www.doraemonzzz.com/2022/02/28/2022-2-28-CMU-15-418-Assignment-1-Exploring-Multi-Core-and-SIMD-Parallelism/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//www.google-analytics.com" crossorigin=""/><link rel="preconnect" href="//hm.baidu.com"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><script>var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?6f00f37f957f0608abb8c571105456f0";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script><script async="async" src="https://www.googletagmanager.com/gtag/js?id=UA-G-RE4B1LKRZD"></script><script>window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'UA-G-RE4B1LKRZD');
+</script><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"search.xml","languages":{"hits_empty":"找不到您查询的内容：${query}"}},
+  translate: {"defaultEncoding":2,"translateDelay":0,"msgToTraditionalChinese":"繁","msgToSimplifiedChinese":"簡"},
+  noticeOutdate: {"limitDay":500,"position":"top","messagePrev":"距离上次更新已经","messageNext":"天了，文章内容可能已经过时。"},
+  highlight: {"plugin":"prismjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":200},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    jQuery: 'https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js',
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+    },
+    fancybox: {
+      js: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css'
+    }
+  },
+  isPhotoFigcaption: true,
+  islazyload: true,
+  isanchor: true
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'CMU 15-418 Assignment 1 Exploring Multi-Core and SIMD Parallelism',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2022-03-01 09:18:28'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const fontSizeVal = saveToLocal.get('global-font-size')
+    if (fontSizeVal !== undefined) {
+      document.documentElement.style.setProperty('--global-font-size', fontSizeVal + 'px')
+    }
+    })(window)</script><link rel="stylesheet" href="/css/bilibili.css" media="defer" onload="this.media='all'"><meta name="google-site-verification" content="c4v-NmuUZRgl3cvtg9GKswryK1YLaPztd_5M-df5VNI" /><meta name="generator" content="Hexo 5.4.0"><link rel="alternate" href="/atom.xml" title="Doraemonzzz" type="application/atom+xml">
+</head><body><div id="loading-box"><div class="loading-left-bg"></div><div class="loading-right-bg"></div><div class="spinner-box"><div class="configure-border-1"><div class="configure-core"></div></div><div class="configure-border-2"><div class="configure-core"></div></div><div class="loading-word">加载中...</div></div></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="author-avatar"><img class="avatar-img" src= "/img/loading.gif" data-lazy-src="https://github.com/Doraemonzzz/md-photo/blob/master/%E5%A4%B4%E5%83%8F.jpg?raw=true" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">文章</div><div class="length-num">703</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">标签</div><div class="length-num">72</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/categories/"><div class="headline">分类</div><div class="length-num">29</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-chart-pie"></i><span> 博客统计</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/charts/"><i class="fa-fw far fa-chart-bar"></i><span> 文章统计</span></a></li><li><a class="site-page child" href="/census/"><i class="fa-fw fas fa-chart-area"></i><span> 访问统计</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/top/"><i class="fa-fw fab fa-hotjar"></i><span> 阅读排行榜</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fa fa-heartbeat"></i><span> 娱乐</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于我</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">Doraemonzzz</a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-chart-pie"></i><span> 博客统计</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/charts/"><i class="fa-fw far fa-chart-bar"></i><span> 文章统计</span></a></li><li><a class="site-page child" href="/census/"><i class="fa-fw fas fa-chart-area"></i><span> 访问统计</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/top/"><i class="fa-fw fab fa-hotjar"></i><span> 阅读排行榜</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fa fa-heartbeat"></i><span> 娱乐</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于我</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">CMU 15-418 Assignment 1 Exploring Multi-Core and SIMD Parallelism</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2022-02-28T15:03:00.000Z" title="发表于 2022-02-28 23:03:00">2022-02-28</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2022-03-01T01:18:28.190Z" title="更新于 2022-03-01 09:18:28">2022-03-01</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E5%B9%B6%E8%A1%8C%E8%AE%A1%E7%AE%97/">并行计算</a></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-tag"></i><a class="article-meta__tags" href="/tags/CMU-15-418/">CMU 15-418</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">6.7k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>38分钟</span></span><span class="post-meta-separator">|</span><span class="leancloud_visitors" id="/2022/02/28/2022-2-28-CMU-15-418-Assignment-1-Exploring-Multi-Core-and-SIMD-Parallelism/" data-flag-title="CMU 15-418 Assignment 1 Exploring Multi-Core and SIMD Parallelism"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span class="leancloud-visitors-count"></span></span><span class="post-meta-separator">|</span><span class="post-meta-commentcount"><i class="far fa-comments fa-fw post-meta-icon"></i><span class="post-meta-label">评论数:</span><a href="/2022/02/28/2022-2-28-CMU-15-418-Assignment-1-Exploring-Multi-Core-and-SIMD-Parallelism/#post-comment" itemprop="discussionUrl"><span class="valine-comment-count" data-xid="/2022/02/28/2022-2-28-CMU-15-418-Assignment-1-Exploring-Multi-Core-and-SIMD-Parallelism/" itemprop="commentCount"></span></a></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p>课程主页：<a target="_blank" rel="noopener" href="https://www.cs.cmu.edu/afs/cs/academic/class/15418-s18/www/index.html">https://www.cs.cmu.edu/afs/cs/academic/class/15418-s18/www/index.html</a></p>
+<p>课程视频：<a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV11A411c7pF">https://www.bilibili.com/video/BV11A411c7pF</a></p>
+<p>CMU 15-418的课程名为Parallel Computer Architecture and Programming，主要介绍并行计算相关内容。这里回顾Assignment 1，主要是熟悉多核的基本操作，利用ISPC编写一些并行程序。</p>
+<p>参考资料：</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://www.cs.cmu.edu/afs/cs/academic/class/15418-s18/www/assignment_writeups/asst1/asst1.pdf">https://www.cs.cmu.edu/afs/cs/academic/class/15418-s18/www/assignment_writeups/asst1/asst1.pdf</a></li>
+<li><a target="_blank" rel="noopener" href="http://15418.courses.cs.cmu.edu/spring2016/article/3">http://15418.courses.cs.cmu.edu/spring2016/article/3</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/ispc/ispc">https://github.com/ispc/ispc</a></li>
+<li><a target="_blank" rel="noopener" href="https://ispc.github.io/example.html">https://ispc.github.io/example.html</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.cnblogs.com/ggjucheng/archive/2013/01/14/2859613.html">https://www.cnblogs.com/ggjucheng/archive/2013/01/14/2859613.html</a></li>
+<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/gengshenghong/article/details/7010615">https://blog.csdn.net/gengshenghong/article/details/7010615</a></li>
+<li><a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/9079580/sse-simd-multiply-vector-by-scalar">https://stackoverflow.com/questions/9079580/sse-simd-multiply-vector-by-scalar</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/oneapi-src/oneAPI-samples/blob/master/DirectProgramming/C++/CompilerInfrastructure/Intrinsics/src/intrin_dot_sample.cpp#L188:7">https://github.com/oneapi-src/oneAPI-samples/blob/master/DirectProgramming/C++/CompilerInfrastructure/Intrinsics/src/intrin_dot_sample.cpp#L188:7</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.aarongutierrez.com/15418/index.html">https://www.aarongutierrez.com/15418/index.html</a></li>
+</ul>
+<span id="more"></span>
+<h1 id="Assignment-1-Exploring-Multi-Core-and-SIMD-Parallelism"><a href="#Assignment-1-Exploring-Multi-Core-and-SIMD-Parallelism" class="headerlink" title="Assignment 1 Exploring Multi-Core and SIMD Parallelism"></a>Assignment 1 Exploring Multi-Core and SIMD Parallelism</h1><h2 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h2><p>下载代码：</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">git</span> clone https://github.com/cmu15418/asst1-s18.git<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<h2 id="Problem-1-Parallel-Fractal-Generation-Using-Pthreads-15-points"><a href="#Problem-1-Parallel-Fractal-Generation-Using-Pthreads-15-points" class="headerlink" title="Problem 1: Parallel Fractal Generation Using Pthreads (15 points)"></a>Problem 1: Parallel Fractal Generation Using Pthreads (15 points)</h2><h3 id="1-2-3"><a href="#1-2-3" class="headerlink" title="1,2,3"></a>1,2,3</h3><p>问题1,2整合到一起完成。</p>
+<p>首先编译代码并运行baseline：</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">╰─± ./mandelbrot --view <span class="token number">1</span> --thread <span class="token number">1</span>
+<span class="token punctuation">[</span>mandelbrot serial<span class="token punctuation">]</span>:            <span class="token punctuation">[</span><span class="token number">201.027</span><span class="token punctuation">]</span> ms
+Wrote image <span class="token function">file</span> mandelbrot-serial.ppm
+Hello world from thread <span class="token number">0</span>
+Thread <span class="token number">0</span>:               <span class="token punctuation">[</span><span class="token number">208.111</span><span class="token punctuation">]</span> ms
+Hello world from thread <span class="token number">0</span>
+Thread <span class="token number">0</span>:               <span class="token punctuation">[</span><span class="token number">206.634</span><span class="token punctuation">]</span> ms
+Hello world from thread <span class="token number">0</span>
+Thread <span class="token number">0</span>:               <span class="token punctuation">[</span><span class="token number">204.978</span><span class="token punctuation">]</span> ms
+<span class="token punctuation">[</span>mandelbrot thread<span class="token punctuation">]</span>:            <span class="token punctuation">[</span><span class="token number">205.970</span><span class="token punctuation">]</span> ms
+Wrote image <span class="token function">file</span> mandelbrot-thread.ppm
+++++                            <span class="token punctuation">(</span><span class="token number">0</span>.98x speedup from <span class="token number">1</span> threads<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>其次实现多线程版本，首先在WorkerArgs中添加字段：</p>
+<pre class="line-numbers language-none"><code class="language-none">&#x2F;&#x2F; Struct for passing arguments to thread routine
+typedef struct &#123;
+    float x0, x1;
+    float y0, y1;
+    unsigned int width;
+    unsigned int height;
+    &#x2F;&#x2F; add begin
+    int startRow;
+    int totalRows;
+    int startCol;
+    int totalCols;
+    &#x2F;&#x2F; add end
+    int maxIterations;
+    int* output;
+    int threadId;
+    int numThreads;
+&#125; WorkerArgs;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>其次添加多线程版本，重点是添加起始行（列）以及每行（列）对应需要完成的数量：</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">void</span> <span class="token function">mandelbrotThread</span><span class="token punctuation">(</span>
+    <span class="token keyword">int</span> numThreads<span class="token punctuation">,</span>
+    <span class="token keyword">float</span> x0<span class="token punctuation">,</span> <span class="token keyword">float</span> y0<span class="token punctuation">,</span> <span class="token keyword">float</span> x1<span class="token punctuation">,</span> <span class="token keyword">float</span> y1<span class="token punctuation">,</span>
+    <span class="token keyword">int</span> width<span class="token punctuation">,</span> <span class="token keyword">int</span> height<span class="token punctuation">,</span>
+    <span class="token keyword">int</span> maxIterations<span class="token punctuation">,</span> <span class="token keyword">int</span> output<span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+<span class="token punctuation">&#123;</span>
+    <span class="token keyword">const</span> <span class="token keyword">static</span> <span class="token keyword">int</span> MAX_THREADS <span class="token operator">=</span> <span class="token number">32</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>numThreads <span class="token operator">></span> MAX_THREADS<span class="token punctuation">)</span>
+    <span class="token punctuation">&#123;</span>
+        <span class="token function">fprintf</span><span class="token punctuation">(</span><span class="token constant">stderr</span><span class="token punctuation">,</span> <span class="token string">"Error: Max allowed threads is %d\n"</span><span class="token punctuation">,</span> MAX_THREADS<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token function">exit</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+
+    pthread_t workers<span class="token punctuation">[</span>MAX_THREADS<span class="token punctuation">]</span><span class="token punctuation">;</span>
+    WorkerArgs args<span class="token punctuation">[</span>MAX_THREADS<span class="token punctuation">]</span><span class="token punctuation">;</span>
+
+    <span class="token comment">// 把行拆成numThreads份</span>
+    <span class="token keyword">int</span> height_per_thread <span class="token operator">=</span> height <span class="token operator">/</span> numThreads<span class="token punctuation">;</span>
+    <span class="token comment">// 已经计算的height数量</span>
+    <span class="token keyword">int</span> cum_height <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+    <span class="token comment">// 把列拆成numThreads份</span>
+    <span class="token keyword">int</span> width_per_thread <span class="token operator">=</span> width <span class="token operator">/</span> numThreads<span class="token punctuation">;</span>
+    <span class="token comment">// 已经计算的width数量</span>
+    <span class="token keyword">int</span> cum_width <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> i<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span> i<span class="token operator">&lt;</span>numThreads<span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token comment">// TODO: Set thread arguments here.</span>
+        args<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">.</span>threadId <span class="token operator">=</span> i<span class="token punctuation">;</span>
+        <span class="token comment">// add;</span>
+        args<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">.</span>x0 <span class="token operator">=</span> x0<span class="token punctuation">;</span>
+        args<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">.</span>y0 <span class="token operator">=</span> y0<span class="token punctuation">;</span>
+        args<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">.</span>x1 <span class="token operator">=</span> x1<span class="token punctuation">;</span>
+        <span class="token comment">// 最后一个thread特殊处理, 处理剩余全部的height和width</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>i <span class="token operator">==</span> numThreads <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+            height_per_thread <span class="token operator">=</span> height <span class="token operator">-</span> cum_height<span class="token punctuation">;</span>
+            width_per_thread <span class="token operator">=</span> width <span class="token operator">-</span> cum_width<span class="token punctuation">;</span>
+        <span class="token punctuation">&#125;</span>
+        args<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">.</span>y1 <span class="token operator">=</span> y1<span class="token punctuation">;</span>
+        args<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">.</span>width <span class="token operator">=</span> width<span class="token punctuation">;</span>
+        args<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">.</span>height <span class="token operator">=</span> height<span class="token punctuation">;</span>
+        args<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">.</span>maxIterations <span class="token operator">=</span> maxIterations<span class="token punctuation">;</span>
+        <span class="token comment">// 起始行</span>
+        args<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">.</span>startRow <span class="token operator">=</span> cum_height<span class="token punctuation">;</span>
+        args<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">.</span>totalRows <span class="token operator">=</span> height_per_thread<span class="token punctuation">;</span>
+        args<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">.</span>startCol <span class="token operator">=</span> cum_width<span class="token punctuation">;</span>
+        args<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">.</span>totalCols <span class="token operator">=</span> width_per_thread<span class="token punctuation">;</span>
+
+        args<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">.</span>output <span class="token operator">=</span> output<span class="token punctuation">;</span>
+
+        <span class="token comment">// 更新</span>
+        cum_width <span class="token operator">+=</span> width_per_thread<span class="token punctuation">;</span>
+        cum_height <span class="token operator">+=</span> height_per_thread<span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+
+    <span class="token comment">// Fire up the worker threads.  Note that numThreads-1 pthreads</span>
+    <span class="token comment">// are created and the main app thread is used as a worker as</span>
+    <span class="token comment">// well.</span>
+
+    <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> i<span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">;</span> i<span class="token operator">&lt;</span>numThreads<span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span>
+        <span class="token function">pthread_create</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>workers<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token constant">NULL</span><span class="token punctuation">,</span> workerThreadStart<span class="token punctuation">,</span> <span class="token operator">&amp;</span>args<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token function">workerThreadStart</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>args<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token comment">// wait for worker threads to complete</span>
+    <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> i<span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">;</span> i<span class="token operator">&lt;</span>numThreads<span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span>
+        <span class="token function">pthread_join</span><span class="token punctuation">(</span>workers<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token constant">NULL</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>实验结果：</p>
+<pre class="line-numbers language-none"><code class="language-none">╰─± .&#x2F;mandelbrot --view 1 --thread 2
+[mandelbrot serial]:            [200.329] ms
+Wrote image file mandelbrot-serial.ppm
+Hello world from thread 0
+Thread 0:               [102.766] ms
+Hello world from thread 1
+Thread 1:               [108.591] ms
+Hello world from thread 0
+Thread 0:               [102.456] ms
+Hello world from thread 1
+Thread 1:               [104.368] ms
+Hello world from thread 0
+Thread 0:               [102.174] ms
+Hello world from thread 1
+Thread 1:               [104.064] ms
+[mandelbrot thread]:            [104.270] ms
+Wrote image file mandelbrot-thread.ppm
+++++                            (1.92x speedup from 2 threads)
+
+╰─± .&#x2F;mandelbrot --view 1 --thread 4 
+[mandelbrot serial]:            [200.309] ms
+Wrote image file mandelbrot-serial.ppm
+Hello world from thread 0
+Thread 0:               [20.384] ms
+Hello world from thread 3
+Thread 3:               [21.224] ms
+Hello world from thread 1
+Thread 1:               [86.168] ms
+Hello world from thread 2
+Thread 2:               [86.405] ms
+Hello world from thread 3
+Thread 3:               [20.456] ms
+Hello world from thread 0
+Thread 0:               [22.139] ms
+Hello world from thread 2
+Thread 2:               [88.118] ms
+Hello world from thread 1
+Thread 1:               [88.628] ms
+Hello world from thread 0
+Thread 0:               [20.436] ms
+Hello world from thread 3
+Thread 3:               [23.111] ms
+Hello world from thread 2
+Thread 2:               [86.491] ms
+Hello world from thread 1
+Thread 1:               [86.188] ms
+[mandelbrot thread]:            [86.637] ms
+Wrote image file mandelbrot-thread.ppm
+++++                            (2.31x speedup from 4 threads)
+
+╰─± .&#x2F;mandelbrot --view 1 --thread 8
+[mandelbrot serial]:            [201.094] ms
+Wrote image file mandelbrot-serial.ppm
+Hello world from thread 0
+Thread 0:               [3.553] ms
+Hello world from thread 7
+Thread 7:               [4.552] ms
+Hello world from thread 1
+Thread 1:               [17.341] ms
+Hello world from thread 6
+Thread 6:               [18.726] ms
+Hello world from thread 2
+Thread 2:               [35.681] ms
+Hello world from thread 5
+Thread 5:               [37.703] ms
+Hello world from thread 3
+Thread 3:               [52.302] ms
+Hello world from thread 4
+Thread 4:               [56.164] ms
+Hello world from thread 0
+Thread 0:               [3.739] ms
+Hello world from thread 7
+Thread 7:               [4.516] ms
+Hello world from thread 1
+Thread 1:               [18.916] ms
+Hello world from thread 6
+Thread 6:               [18.928] ms
+Hello world from thread 2
+Thread 2:               [34.906] ms
+Hello world from thread 5
+Thread 5:               [36.526] ms
+Hello world from thread 3
+Thread 3:               [52.649] ms
+Hello world from thread 4
+Thread 4:               [58.855] ms
+Hello world from thread 0
+Thread 0:               [3.846] ms
+Hello world from thread 7
+Thread 7:               [4.191] ms
+Hello world from thread 1
+Thread 1:               [18.252] ms
+Hello world from thread 6
+Thread 6:               [18.705] ms
+Hello world from thread 2
+Thread 2:               [37.429] ms
+Hello world from thread 5
+Thread 5:               [38.546] ms
+Hello world from thread 3
+Thread 3:               [53.211] ms
+Hello world from thread 4
+Thread 4:               [54.999] ms
+[mandelbrot thread]:            [55.322] ms
+Wrote image file mandelbrot-thread.ppm
+++++                            (3.63x speedup from 8 threads)
+
+╰─± .&#x2F;mandelbrot --view 1 --thread 16
+[mandelbrot serial]:            [200.019] ms
+Wrote image file mandelbrot-serial.ppm
+Hello world from thread 0
+Thread 0:               [0.820] ms
+Hello world from thread 15
+Thread 15:              [1.372] ms
+Hello world from thread 1
+Thread 1:               [3.454] ms
+Hello world from thread 2
+Thread 2:               [4.942] ms
+Hello world from thread 14
+Thread 14:              [4.093] ms
+Hello world from thread 13
+Thread 13:              [6.803] ms
+Hello world from thread 3
+Thread 3:               [15.707] ms
+Hello world from thread 11
+Thread 11:              [17.481] ms
+Hello world from thread 4
+Thread 4:               [18.651] ms
+Hello world from thread 12
+Thread 12:              [21.464] ms
+Hello world from thread 5
+Thread 5:               [22.844] ms
+Hello world from thread 10
+Thread 10:              [25.601] ms
+Hello world from thread 9
+Thread 9:               [28.617] ms
+Hello world from thread 6
+Thread 6:               [32.949] ms
+Hello world from thread 8
+Thread 8:               [30.751] ms
+Hello world from thread 7
+Thread 7:               [36.431] ms
+Hello world from thread 0
+Thread 0:               [0.796] ms
+Hello world from thread 1
+Thread 1:               [3.054] ms
+Hello world from thread 2
+Thread 2:               [4.158] ms
+Hello world from thread 15
+Thread 15:              [1.274] ms
+Hello world from thread 14
+Thread 14:              [3.666] ms
+Hello world from thread 13
+Thread 13:              [6.966] ms
+Hello world from thread 3
+Thread 3:               [11.873] ms
+Hello world from thread 12
+Thread 12:              [15.463] ms
+Hello world from thread 5
+Thread 5:               [20.226] ms
+Hello world from thread 11
+Thread 11:              [19.453] ms
+Hello world from thread 4
+Thread 4:               [22.439] ms
+Hello world from thread 6
+Thread 6:               [26.175] ms
+Hello world from thread 9
+Thread 9:               [27.223] ms
+Hello world from thread 10
+Thread 10:              [24.995] ms
+Hello world from thread 7
+Thread 7:               [32.344] ms
+Hello world from thread 8
+Thread 8:               [33.665] ms
+Hello world from thread 0
+Thread 0:               [0.708] ms
+Hello world from thread 1
+Thread 1:               [3.183] ms
+Hello world from thread 2
+Thread 2:               [4.689] ms
+Hello world from thread 15
+Thread 15:              [1.817] ms
+Hello world from thread 13
+Thread 13:              [8.091] ms
+Hello world from thread 14
+Thread 14:              [8.535] ms
+Hello world from thread 3
+Thread 3:               [15.579] ms
+Hello world from thread 12
+Thread 12:              [18.564] ms
+Hello world from thread 5
+Thread 5:               [22.614] ms
+Hello world from thread 4
+Thread 4:               [24.750] ms
+Hello world from thread 11
+Thread 11:              [24.949] ms
+Hello world from thread 6
+Thread 6:               [27.631] ms
+Hello world from thread 9
+Thread 9:               [30.044] ms
+Hello world from thread 10
+Thread 10:              [32.918] ms
+Hello world from thread 8
+Thread 8:               [33.039] ms
+Hello world from thread 7
+Thread 7:               [35.752] ms
+[mandelbrot thread]:            [34.221] ms
+Wrote image file mandelbrot-thread.ppm
+++++                            (5.84x speedup from 16 threads)<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>结果：</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>线程数</th>
+<th>理论加速比</th>
+<th>实际加速比</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>2</td>
+<td>2</td>
+<td>1.92</td>
+</tr>
+<tr>
+<td>4</td>
+<td>4</td>
+<td>2.31</td>
+</tr>
+<tr>
+<td>8</td>
+<td>8</td>
+<td>3.63</td>
+</tr>
+<tr>
+<td>16</td>
+<td>16</td>
+<td>5.84</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>可以看到实际加速比和理论不符，从输出中可以看到，线程负载不均匀，应该是实际加速比和理论不符的原因。</p>
+<h3 id="4"><a href="#4" class="headerlink" title="4"></a>4</h3><p>尝试了如下两种方法，但是并不奏效：</p>
+<p>按列划分：</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">void</span> <span class="token function">mandelbrotSerial_v2</span><span class="token punctuation">(</span>
+    <span class="token keyword">float</span> x0<span class="token punctuation">,</span> <span class="token keyword">float</span> y0<span class="token punctuation">,</span> <span class="token keyword">float</span> x1<span class="token punctuation">,</span> <span class="token keyword">float</span> y1<span class="token punctuation">,</span>
+    <span class="token keyword">int</span> width<span class="token punctuation">,</span> <span class="token keyword">int</span> height<span class="token punctuation">,</span>
+    <span class="token keyword">int</span> startCol<span class="token punctuation">,</span> <span class="token keyword">int</span> totalCols<span class="token punctuation">,</span>
+    <span class="token keyword">int</span> maxIterations<span class="token punctuation">,</span>
+    <span class="token keyword">int</span> output<span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+<span class="token punctuation">&#123;</span>
+    <span class="token comment">// 前闭后开</span>
+    <span class="token keyword">float</span> dx <span class="token operator">=</span> <span class="token punctuation">(</span>x1 <span class="token operator">-</span> x0<span class="token punctuation">)</span> <span class="token operator">/</span> width<span class="token punctuation">;</span>
+    <span class="token keyword">float</span> dy <span class="token operator">=</span> <span class="token punctuation">(</span>y1 <span class="token operator">-</span> y0<span class="token punctuation">)</span> <span class="token operator">/</span> height<span class="token punctuation">;</span>
+
+    <span class="token keyword">int</span> endCol <span class="token operator">=</span> startCol <span class="token operator">+</span> totalCols<span class="token punctuation">;</span>
+
+    <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> startCol<span class="token punctuation">;</span> i <span class="token operator">&lt;</span> endCol<span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> j <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> j <span class="token operator">&lt;</span> height<span class="token punctuation">;</span> j<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+            <span class="token keyword">float</span> x <span class="token operator">=</span> x0 <span class="token operator">+</span> i <span class="token operator">*</span> dx<span class="token punctuation">;</span>
+            <span class="token keyword">float</span> y <span class="token operator">=</span> y0 <span class="token operator">+</span> j <span class="token operator">*</span> dy<span class="token punctuation">;</span>
+
+            <span class="token keyword">int</span> index <span class="token operator">=</span> <span class="token punctuation">(</span>j <span class="token operator">*</span> width <span class="token operator">+</span> i<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            output<span class="token punctuation">[</span>index<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token function">mandel</span><span class="token punctuation">(</span>x<span class="token punctuation">,</span> y<span class="token punctuation">,</span> maxIterations<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">&#125;</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token keyword">void</span><span class="token operator">*</span> <span class="token function">workerThreadStart_v2</span><span class="token punctuation">(</span><span class="token keyword">void</span><span class="token operator">*</span> threadArgs<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">double</span> startTime <span class="token operator">=</span> <span class="token class-name">CycleTimer</span><span class="token operator">::</span><span class="token function">currentSeconds</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    WorkerArgs<span class="token operator">*</span> args <span class="token operator">=</span> <span class="token keyword">static_cast</span><span class="token operator">&lt;</span>WorkerArgs<span class="token operator">*</span><span class="token operator">></span><span class="token punctuation">(</span>threadArgs<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token comment">// TODO: Implement worker thread here.</span>
+    <span class="token function">mandelbrotSerial_v2</span><span class="token punctuation">(</span>args<span class="token operator">-></span>x0<span class="token punctuation">,</span> args<span class="token operator">-></span>y0<span class="token punctuation">,</span> args<span class="token operator">-></span>x1<span class="token punctuation">,</span> args<span class="token operator">-></span>y1<span class="token punctuation">,</span>
+                     args<span class="token operator">-></span>width<span class="token punctuation">,</span> args<span class="token operator">-></span>height<span class="token punctuation">,</span> args<span class="token operator">-></span>startCol<span class="token punctuation">,</span> args<span class="token operator">-></span>totalCols<span class="token punctuation">,</span>
+                     args<span class="token operator">-></span>maxIterations<span class="token punctuation">,</span> args<span class="token operator">-></span>output<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"Hello world from thread %d\n"</span><span class="token punctuation">,</span> args<span class="token operator">-></span>threadId<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">double</span> endTime <span class="token operator">=</span> <span class="token class-name">CycleTimer</span><span class="token operator">::</span><span class="token function">currentSeconds</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"Thread %d:\t\t[%.3f] ms\n"</span><span class="token punctuation">,</span> args<span class="token operator">-></span>threadId<span class="token punctuation">,</span> <span class="token punctuation">(</span>endTime <span class="token operator">-</span> startTime<span class="token punctuation">)</span> <span class="token operator">*</span> <span class="token number">1000</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">return</span> <span class="token constant">NULL</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token keyword">void</span> <span class="token function">mandelbrotThread</span><span class="token punctuation">(</span>
+    <span class="token keyword">int</span> numThreads<span class="token punctuation">,</span>
+    <span class="token keyword">float</span> x0<span class="token punctuation">,</span> <span class="token keyword">float</span> y0<span class="token punctuation">,</span> <span class="token keyword">float</span> x1<span class="token punctuation">,</span> <span class="token keyword">float</span> y1<span class="token punctuation">,</span>
+    <span class="token keyword">int</span> width<span class="token punctuation">,</span> <span class="token keyword">int</span> height<span class="token punctuation">,</span>
+    <span class="token keyword">int</span> maxIterations<span class="token punctuation">,</span> <span class="token keyword">int</span> output<span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+<span class="token punctuation">&#123;</span>
+    <span class="token keyword">const</span> <span class="token keyword">static</span> <span class="token keyword">int</span> MAX_THREADS <span class="token operator">=</span> <span class="token number">32</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>numThreads <span class="token operator">></span> MAX_THREADS<span class="token punctuation">)</span>
+    <span class="token punctuation">&#123;</span>
+        <span class="token function">fprintf</span><span class="token punctuation">(</span><span class="token constant">stderr</span><span class="token punctuation">,</span> <span class="token string">"Error: Max allowed threads is %d\n"</span><span class="token punctuation">,</span> MAX_THREADS<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token function">exit</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+
+    pthread_t workers<span class="token punctuation">[</span>MAX_THREADS<span class="token punctuation">]</span><span class="token punctuation">;</span>
+    WorkerArgs args<span class="token punctuation">[</span>MAX_THREADS<span class="token punctuation">]</span><span class="token punctuation">;</span>
+
+    <span class="token comment">// 把行拆成numThreads份</span>
+    <span class="token keyword">int</span> height_per_thread <span class="token operator">=</span> height <span class="token operator">/</span> numThreads<span class="token punctuation">;</span>
+    <span class="token comment">// 已经计算的height数量</span>
+    <span class="token keyword">int</span> cum_height <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+    <span class="token comment">// 把列拆成numThreads份</span>
+    <span class="token keyword">int</span> width_per_thread <span class="token operator">=</span> width <span class="token operator">/</span> numThreads<span class="token punctuation">;</span>
+    <span class="token comment">// 已经计算的width数量</span>
+    <span class="token keyword">int</span> cum_width <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> i<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span> i<span class="token operator">&lt;</span>numThreads<span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token comment">// TODO: Set thread arguments here.</span>
+        args<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">.</span>threadId <span class="token operator">=</span> i<span class="token punctuation">;</span>
+        <span class="token comment">// add;</span>
+        args<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">.</span>x0 <span class="token operator">=</span> x0<span class="token punctuation">;</span>
+        args<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">.</span>y0 <span class="token operator">=</span> y0<span class="token punctuation">;</span>
+        args<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">.</span>x1 <span class="token operator">=</span> x1<span class="token punctuation">;</span>
+        <span class="token comment">// 最后一个thread特殊处理, 处理剩余全部的height和width</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>i <span class="token operator">==</span> numThreads <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+            height_per_thread <span class="token operator">=</span> height <span class="token operator">-</span> cum_height<span class="token punctuation">;</span>
+            width_per_thread <span class="token operator">=</span> width <span class="token operator">-</span> cum_width<span class="token punctuation">;</span>
+        <span class="token punctuation">&#125;</span>
+        args<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">.</span>y1 <span class="token operator">=</span> y1<span class="token punctuation">;</span>
+        args<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">.</span>width <span class="token operator">=</span> width<span class="token punctuation">;</span>
+        args<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">.</span>height <span class="token operator">=</span> height<span class="token punctuation">;</span>
+        args<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">.</span>maxIterations <span class="token operator">=</span> maxIterations<span class="token punctuation">;</span>
+        <span class="token comment">// 起始行</span>
+        args<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">.</span>startRow <span class="token operator">=</span> cum_height<span class="token punctuation">;</span>
+        args<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">.</span>totalRows <span class="token operator">=</span> height_per_thread<span class="token punctuation">;</span>
+        args<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">.</span>startCol <span class="token operator">=</span> cum_width<span class="token punctuation">;</span>
+        args<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">.</span>totalCols <span class="token operator">=</span> width_per_thread<span class="token punctuation">;</span>
+
+        args<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">.</span>output <span class="token operator">=</span> output<span class="token punctuation">;</span>
+
+        <span class="token comment">// 更新</span>
+        cum_width <span class="token operator">+=</span> width_per_thread<span class="token punctuation">;</span>
+        cum_height <span class="token operator">+=</span> height_per_thread<span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+
+    <span class="token comment">// Fire up the worker threads.  Note that numThreads-1 pthreads</span>
+    <span class="token comment">// are created and the main app thread is used as a worker as</span>
+    <span class="token comment">// well.</span>
+
+    <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> i<span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">;</span> i<span class="token operator">&lt;</span>numThreads<span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span>
+        <span class="token function">pthread_create</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>workers<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token constant">NULL</span><span class="token punctuation">,</span> workerThreadStart_v2<span class="token punctuation">,</span> <span class="token operator">&amp;</span>args<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token function">workerThreadStart_v2</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>args<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token comment">// wait for worker threads to complete</span>
+    <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> i<span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">;</span> i<span class="token operator">&lt;</span>numThreads<span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span>
+        <span class="token function">pthread_join</span><span class="token punctuation">(</span>workers<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token constant">NULL</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>测试：</p>
+<pre class="line-numbers language-none"><code class="language-none">╰─± .&#x2F;mandelbrot --view 1 --thread 16
+[mandelbrot serial]:            [200.328] ms
+Wrote image file mandelbrot-serial.ppm
+Hello world from thread 1
+Thread 1:               [0.574] ms
+Hello world from thread 2
+Thread 2:               [0.882] ms
+Hello world from thread 0
+Thread 0:               [0.237] ms
+Hello world from thread 15
+Thread 15:              [0.434] ms
+Hello world from thread 3
+Thread 3:               [1.502] ms
+Hello world from thread 14
+Thread 14:              [0.573] ms
+Hello world from thread 13
+Thread 13:              [0.761] ms
+Hello world from thread 12
+Thread 12:              [5.800] ms
+Hello world from thread 4
+Thread 4:               [8.490] ms
+Hello world from thread 6
+Thread 6:               [12.065] ms
+Hello world from thread 5
+Thread 5:               [16.190] ms
+Hello world from thread 7
+Thread 7:               [28.204] ms
+Hello world from thread 11
+Thread 11:              [34.645] ms
+Hello world from thread 8
+Thread 8:               [37.265] ms
+Hello world from thread 10
+Thread 10:              [39.751] ms
+Hello world from thread 9
+Thread 9:               [47.683] ms
+Hello world from thread 1
+Thread 1:               [0.685] ms
+Hello world from thread 0
+Thread 0:               [0.294] ms
+Hello world from thread 2
+Thread 2:               [0.788] ms
+Hello world from thread 15
+Thread 15:              [0.465] ms
+Hello world from thread 14
+Thread 14:              [0.442] ms
+Hello world from thread 3
+Thread 3:               [1.634] ms
+Hello world from thread 13
+Thread 13:              [0.517] ms
+Hello world from thread 12
+Thread 12:              [6.032] ms
+Hello world from thread 4
+Thread 4:               [8.249] ms
+Hello world from thread 6
+Thread 6:               [13.591] ms
+Hello world from thread 5
+Thread 5:               [16.731] ms
+Hello world from thread 7
+Thread 7:               [30.074] ms
+Hello world from thread 11
+Thread 11:              [37.594] ms
+Hello world from thread 8
+Thread 8:               [38.285] ms
+Hello world from thread 10
+Thread 10:              [46.705] ms
+Hello world from thread 9
+Thread 9:               [47.721] ms
+Hello world from thread 1
+Thread 1:               [0.687] ms
+Hello world from thread 0
+Thread 0:               [0.231] ms
+Hello world from thread 2
+Thread 2:               [0.828] ms
+Hello world from thread 13
+Thread 13:              [0.481] ms
+Hello world from thread 15
+Thread 15:              [0.541] ms
+Hello world from thread 14
+Thread 14:              [0.458] ms
+Hello world from thread 3
+Thread 3:               [1.757] ms
+Hello world from thread 12
+Thread 12:              [6.099] ms
+Hello world from thread 4
+Thread 4:               [8.668] ms
+Hello world from thread 6
+Thread 6:               [11.606] ms
+Hello world from thread 5
+Thread 5:               [19.509] ms
+Hello world from thread 7
+Thread 7:               [31.520] ms
+Hello world from thread 11
+Thread 11:              [35.165] ms
+Hello world from thread 8
+Thread 8:               [37.545] ms
+Hello world from thread 10
+Thread 10:              [43.472] ms
+Hello world from thread 9
+Thread 9:               [48.508] ms
+[mandelbrot thread]:            [48.391] ms
+Wrote image file mandelbrot-thread.ppm
+++++                            (4.14x speedup from 16 threads)
+
+╰─± .&#x2F;mandelbrot --view 2 --thread 16
+[mandelbrot serial]:            [121.285] ms
+Wrote image file mandelbrot-serial.ppm
+Hello world from thread 15
+Thread 15:              [3.000] ms
+Hello world from thread 10
+Thread 10:              [5.815] ms
+Hello world from thread 11
+Thread 11:              [5.630] ms
+Hello world from thread 0
+Thread 0:               [7.868] ms
+Hello world from thread 9
+Thread 9:               [5.731] ms
+Hello world from thread 8
+Thread 8:               [9.158] ms
+Hello world from thread 2
+Thread 2:               [9.700] ms
+Hello world from thread 7
+Thread 7:               [10.800] ms
+Hello world from thread 1
+Thread 1:               [11.537] ms
+Hello world from thread 14
+Thread 14:              [5.657] ms
+Hello world from thread 12
+Thread 12:              [4.674] ms
+Hello world from thread 13
+Thread 13:              [4.436] ms
+Hello world from thread 3
+Thread 3:               [14.780] ms
+Hello world from thread 6
+Thread 6:               [15.527] ms
+Hello world from thread 4
+Thread 4:               [16.482] ms
+Hello world from thread 5
+Thread 5:               [18.798] ms
+Hello world from thread 11
+Thread 11:              [5.809] ms
+Hello world from thread 10
+Thread 10:              [5.872] ms
+Hello world from thread 8
+Thread 8:               [7.771] ms
+Hello world from thread 0
+Thread 0:               [7.641] ms
+Hello world from thread 2
+Thread 2:               [9.835] ms
+Hello world from thread 15
+Thread 15:              [4.964] ms
+Hello world from thread 9
+Thread 9:               [6.659] ms
+Hello world from thread 13
+Thread 13:              [3.724] ms
+Hello world from thread 14
+Thread 14:              [6.282] ms
+Hello world from thread 7
+Thread 7:               [12.417] ms
+Hello world from thread 1
+Thread 1:               [12.729] ms
+Hello world from thread 12
+Thread 12:              [4.940] ms
+Hello world from thread 6
+Thread 6:               [11.874] ms
+Hello world from thread 3
+Thread 3:               [15.604] ms
+Hello world from thread 4
+Thread 4:               [16.420] ms
+Hello world from thread 5
+Thread 5:               [18.860] ms
+Hello world from thread 11
+Thread 11:              [5.304] ms
+Hello world from thread 10
+Thread 10:              [6.258] ms
+Hello world from thread 9
+Thread 9:               [8.182] ms
+Hello world from thread 14
+Thread 14:              [3.032] ms
+Hello world from thread 15
+Thread 15:              [3.047] ms
+Hello world from thread 0
+Thread 0:               [8.809] ms
+Hello world from thread 8
+Thread 8:               [8.716] ms
+Hello world from thread 7
+Thread 7:               [11.343] ms
+Hello world from thread 2
+Thread 2:               [12.098] ms
+Hello world from thread 1
+Thread 1:               [12.429] ms
+Hello world from thread 6
+Thread 6:               [12.611] ms
+Hello world from thread 13
+Thread 13:              [3.898] ms
+Hello world from thread 12
+Thread 12:              [4.488] ms
+Hello world from thread 4
+Thread 4:               [14.674] ms
+Hello world from thread 3
+Thread 3:               [15.797] ms
+Hello world from thread 5
+Thread 5:               [20.155] ms
+[mandelbrot thread]:            [19.312] ms
+Wrote image file mandelbrot-thread.ppm
+++++                            (6.28x speedup from 16 threads)<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>加速比为4.14和6.28。</p>
+<p>另一种方式是给每个args[i].output赋予单独的数组，然后利用循环展开：</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">void</span> <span class="token function">mandelbrotSerial_v3</span><span class="token punctuation">(</span>
+    <span class="token keyword">float</span> x0<span class="token punctuation">,</span> <span class="token keyword">float</span> y0<span class="token punctuation">,</span> <span class="token keyword">float</span> x1<span class="token punctuation">,</span> <span class="token keyword">float</span> y1<span class="token punctuation">,</span>
+    <span class="token keyword">int</span> width<span class="token punctuation">,</span> <span class="token keyword">int</span> height<span class="token punctuation">,</span>
+    <span class="token keyword">int</span> startRow<span class="token punctuation">,</span> <span class="token keyword">int</span> totalRows<span class="token punctuation">,</span>
+    <span class="token keyword">int</span> maxIterations<span class="token punctuation">,</span>
+    <span class="token keyword">int</span> output<span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+<span class="token punctuation">&#123;</span>
+    <span class="token comment">// 前闭后开</span>
+    <span class="token keyword">float</span> dx <span class="token operator">=</span> <span class="token punctuation">(</span>x1 <span class="token operator">-</span> x0<span class="token punctuation">)</span> <span class="token operator">/</span> width<span class="token punctuation">;</span>
+    <span class="token keyword">float</span> dy <span class="token operator">=</span> <span class="token punctuation">(</span>y1 <span class="token operator">-</span> y0<span class="token punctuation">)</span> <span class="token operator">/</span> height<span class="token punctuation">;</span>
+    <span class="token keyword">int</span> endRow <span class="token operator">=</span> startRow <span class="token operator">+</span> totalRows<span class="token punctuation">;</span>
+
+    <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> j <span class="token operator">=</span> startRow<span class="token punctuation">;</span> j <span class="token operator">&lt;</span> endRow<span class="token punctuation">;</span> j<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+        <span class="token keyword">int</span> index <span class="token operator">=</span> <span class="token punctuation">(</span>j <span class="token operator">-</span> startRow<span class="token punctuation">)</span> <span class="token operator">*</span> width<span class="token punctuation">;</span>
+        <span class="token keyword">float</span> x<span class="token punctuation">;</span>
+        <span class="token keyword">float</span> y <span class="token operator">=</span> y0 <span class="token operator">+</span> j <span class="token operator">*</span> dy<span class="token punctuation">;</span>
+        <span class="token comment">// 循环展开</span>
+        <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token punctuation">;</span> i <span class="token operator">+</span> <span class="token number">1</span> <span class="token operator">&lt;</span> width<span class="token punctuation">;</span> i <span class="token operator">+=</span> <span class="token number">2</span><span class="token punctuation">,</span> index <span class="token operator">+=</span> <span class="token number">2</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+            x <span class="token operator">=</span> x0 <span class="token operator">+</span> i <span class="token operator">*</span> dx<span class="token punctuation">;</span>
+            output<span class="token punctuation">[</span>index<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token function">mandel</span><span class="token punctuation">(</span>x<span class="token punctuation">,</span> y<span class="token punctuation">,</span> maxIterations<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+            x <span class="token operator">=</span> x0 <span class="token operator">+</span> <span class="token punctuation">(</span>i <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">)</span> <span class="token operator">*</span> dx<span class="token punctuation">;</span>
+            output<span class="token punctuation">[</span>index <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token function">mandel</span><span class="token punctuation">(</span>x<span class="token punctuation">,</span> y<span class="token punctuation">,</span> maxIterations<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">&#125;</span>
+        <span class="token comment">// 处理剩余部分</span>
+        <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> width<span class="token punctuation">;</span> <span class="token operator">++</span>i<span class="token punctuation">,</span> <span class="token operator">++</span>index<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+            x <span class="token operator">=</span> x0 <span class="token operator">+</span> i <span class="token operator">*</span> dx<span class="token punctuation">;</span>
+            output<span class="token punctuation">[</span>index<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token function">mandel</span><span class="token punctuation">(</span>x<span class="token punctuation">,</span> y<span class="token punctuation">,</span> maxIterations<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">&#125;</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token keyword">void</span><span class="token operator">*</span> <span class="token function">workerThreadStart_v3</span><span class="token punctuation">(</span><span class="token keyword">void</span><span class="token operator">*</span> threadArgs<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">double</span> startTime <span class="token operator">=</span> <span class="token class-name">CycleTimer</span><span class="token operator">::</span><span class="token function">currentSeconds</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    WorkerArgs<span class="token operator">*</span> args <span class="token operator">=</span> <span class="token keyword">static_cast</span><span class="token operator">&lt;</span>WorkerArgs<span class="token operator">*</span><span class="token operator">></span><span class="token punctuation">(</span>threadArgs<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token comment">// TODO: Implement worker thread here.</span>
+    <span class="token function">mandelbrotSerial_v3</span><span class="token punctuation">(</span>args<span class="token operator">-></span>x0<span class="token punctuation">,</span> args<span class="token operator">-></span>y0<span class="token punctuation">,</span> args<span class="token operator">-></span>x1<span class="token punctuation">,</span> args<span class="token operator">-></span>y1<span class="token punctuation">,</span>
+                     args<span class="token operator">-></span>width<span class="token punctuation">,</span> args<span class="token operator">-></span>height<span class="token punctuation">,</span> args<span class="token operator">-></span>startRow<span class="token punctuation">,</span> args<span class="token operator">-></span>totalRows<span class="token punctuation">,</span>
+                     args<span class="token operator">-></span>maxIterations<span class="token punctuation">,</span> args<span class="token operator">-></span>output<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"Hello world from thread %d\n"</span><span class="token punctuation">,</span> args<span class="token operator">-></span>threadId<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">double</span> endTime <span class="token operator">=</span> <span class="token class-name">CycleTimer</span><span class="token operator">::</span><span class="token function">currentSeconds</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"Thread %d:\t\t[%.3f] ms\n"</span><span class="token punctuation">,</span> args<span class="token operator">-></span>threadId<span class="token punctuation">,</span> <span class="token punctuation">(</span>endTime <span class="token operator">-</span> startTime<span class="token punctuation">)</span> <span class="token operator">*</span> <span class="token number">1000</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">return</span> <span class="token constant">NULL</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token keyword">void</span> <span class="token function">mandelbrotThread</span><span class="token punctuation">(</span>
+    <span class="token keyword">int</span> numThreads<span class="token punctuation">,</span>
+    <span class="token keyword">float</span> x0<span class="token punctuation">,</span> <span class="token keyword">float</span> y0<span class="token punctuation">,</span> <span class="token keyword">float</span> x1<span class="token punctuation">,</span> <span class="token keyword">float</span> y1<span class="token punctuation">,</span>
+    <span class="token keyword">int</span> width<span class="token punctuation">,</span> <span class="token keyword">int</span> height<span class="token punctuation">,</span>
+    <span class="token keyword">int</span> maxIterations<span class="token punctuation">,</span> <span class="token keyword">int</span> output<span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+<span class="token punctuation">&#123;</span>
+    <span class="token keyword">const</span> <span class="token keyword">static</span> <span class="token keyword">int</span> MAX_THREADS <span class="token operator">=</span> <span class="token number">32</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>numThreads <span class="token operator">></span> MAX_THREADS<span class="token punctuation">)</span>
+    <span class="token punctuation">&#123;</span>
+        <span class="token function">fprintf</span><span class="token punctuation">(</span><span class="token constant">stderr</span><span class="token punctuation">,</span> <span class="token string">"Error: Max allowed threads is %d\n"</span><span class="token punctuation">,</span> MAX_THREADS<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token function">exit</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+
+    pthread_t workers<span class="token punctuation">[</span>MAX_THREADS<span class="token punctuation">]</span><span class="token punctuation">;</span>
+    WorkerArgs args<span class="token punctuation">[</span>MAX_THREADS<span class="token punctuation">]</span><span class="token punctuation">;</span>
+
+    <span class="token comment">// 把行拆成numThreads份</span>
+    <span class="token keyword">int</span> height_per_thread <span class="token operator">=</span> height <span class="token operator">/</span> numThreads<span class="token punctuation">;</span>
+    <span class="token comment">// 已经计算的height数量</span>
+    <span class="token keyword">int</span> cum_height <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+    <span class="token comment">// 把列拆成numThreads份</span>
+    <span class="token keyword">int</span> width_per_thread <span class="token operator">=</span> width <span class="token operator">/</span> numThreads<span class="token punctuation">;</span>
+    <span class="token comment">// 已经计算的width数量</span>
+    <span class="token keyword">int</span> cum_width <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+
+    <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> i<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span> i<span class="token operator">&lt;</span>numThreads<span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token comment">// TODO: Set thread arguments here.</span>
+        args<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">.</span>threadId <span class="token operator">=</span> i<span class="token punctuation">;</span>
+        <span class="token comment">// add;</span>
+        args<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">.</span>x0 <span class="token operator">=</span> x0<span class="token punctuation">;</span>
+        args<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">.</span>y0 <span class="token operator">=</span> y0<span class="token punctuation">;</span>
+        args<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">.</span>x1 <span class="token operator">=</span> x1<span class="token punctuation">;</span>
+        <span class="token comment">// 最后一个thread特殊处理, 处理剩余全部的height和width</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>i <span class="token operator">==</span> numThreads <span class="token operator">-</span> <span class="token number">1</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+            height_per_thread <span class="token operator">=</span> height <span class="token operator">-</span> cum_height<span class="token punctuation">;</span>
+            width_per_thread <span class="token operator">=</span> width <span class="token operator">-</span> cum_width<span class="token punctuation">;</span>
+        <span class="token punctuation">&#125;</span>
+        args<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">.</span>y1 <span class="token operator">=</span> y1<span class="token punctuation">;</span>
+        args<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">.</span>width <span class="token operator">=</span> width<span class="token punctuation">;</span>
+        args<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">.</span>height <span class="token operator">=</span> height<span class="token punctuation">;</span>
+        args<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">.</span>maxIterations <span class="token operator">=</span> maxIterations<span class="token punctuation">;</span>
+        <span class="token comment">// 起始行</span>
+        args<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">.</span>startRow <span class="token operator">=</span> cum_height<span class="token punctuation">;</span>
+        args<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">.</span>totalRows <span class="token operator">=</span> height_per_thread<span class="token punctuation">;</span>
+        args<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">.</span>startCol <span class="token operator">=</span> cum_width<span class="token punctuation">;</span>
+        args<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">.</span>totalCols <span class="token operator">=</span> width_per_thread<span class="token punctuation">;</span>
+
+        <span class="token comment">// 每个thread一个单独的数组</span>
+        args<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">.</span>output <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token keyword">int</span><span class="token punctuation">[</span>args<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">.</span>totalRows <span class="token operator">*</span> args<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">.</span>width<span class="token punctuation">]</span><span class="token punctuation">;</span>
+        <span class="token comment">// 更新</span>
+        cum_width <span class="token operator">+=</span> width_per_thread<span class="token punctuation">;</span>
+        cum_height <span class="token operator">+=</span> height_per_thread<span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+
+    <span class="token comment">// Fire up the worker threads.  Note that numThreads-1 pthreads</span>
+    <span class="token comment">// are created and the main app thread is used as a worker as</span>
+    <span class="token comment">// well.</span>
+
+    <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> i<span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">;</span> i<span class="token operator">&lt;</span>numThreads<span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span>
+        <span class="token function">pthread_create</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>workers<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token constant">NULL</span><span class="token punctuation">,</span> workerThreadStart_v3<span class="token punctuation">,</span> <span class="token operator">&amp;</span>args<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token function">workerThreadStart_v3</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>args<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token comment">// wait for worker threads to complete</span>
+    <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> i<span class="token operator">=</span><span class="token number">1</span><span class="token punctuation">;</span> i<span class="token operator">&lt;</span>numThreads<span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span>
+        <span class="token function">pthread_join</span><span class="token punctuation">(</span>workers<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token constant">NULL</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token comment">// 合并结果</span>
+    <span class="token keyword">int</span> start <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+    <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> numThreads<span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">int</span> m <span class="token operator">=</span> args<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">.</span>totalRows <span class="token operator">*</span> args<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">.</span>width<span class="token punctuation">;</span>
+        <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> j <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> j <span class="token operator">&lt;</span> m<span class="token punctuation">;</span> j<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+            output<span class="token punctuation">[</span>start <span class="token operator">+</span> j<span class="token punctuation">]</span> <span class="token operator">=</span> args<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">.</span>output<span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token punctuation">;</span>
+        <span class="token punctuation">&#125;</span>
+        start <span class="token operator">+=</span> m<span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>实验结果为：</p>
+<pre class="line-numbers language-none"><code class="language-none">╰─± .&#x2F;mandelbrot --view 1 --thread 16
+[mandelbrot serial]:            [200.283] ms
+Wrote image file mandelbrot-serial.ppm
+Hello world from thread 0
+Thread 0:               [0.831] ms
+Hello world from thread 1
+Thread 1:               [3.641] ms
+Hello world from thread 2
+Thread 2:               [4.788] ms
+Hello world from thread 14
+Thread 14:              [3.878] ms
+Hello world from thread 15
+Thread 15:              [1.449] ms
+Hello world from thread 13
+Thread 13:              [7.393] ms
+Hello world from thread 3
+Thread 3:               [13.183] ms
+Hello world from thread 4
+Thread 4:               [20.360] ms
+Hello world from thread 12
+Thread 12:              [15.916] ms
+Hello world from thread 5
+Thread 5:               [21.638] ms
+Hello world from thread 11
+Thread 11:              [22.251] ms
+Hello world from thread 10
+Thread 10:              [22.507] ms
+Hello world from thread 6
+Thread 6:               [27.589] ms
+Hello world from thread 9
+Thread 9:               [27.889] ms
+Hello world from thread 8
+Thread 8:               [30.121] ms
+Hello world from thread 7
+Thread 7:               [32.634] ms
+Hello world from thread 0
+Thread 0:               [0.808] ms
+Hello world from thread 1
+Thread 1:               [2.960] ms
+Hello world from thread 15
+Thread 15:              [1.483] ms
+Hello world from thread 2
+Thread 2:               [5.813] ms
+Hello world from thread 14
+Thread 14:              [3.791] ms
+Hello world from thread 13
+Thread 13:              [7.110] ms
+Hello world from thread 3
+Thread 3:               [16.928] ms
+Hello world from thread 12
+Thread 12:              [16.516] ms
+Hello world from thread 4
+Thread 4:               [17.820] ms
+Hello world from thread 5
+Thread 5:               [22.885] ms
+Hello world from thread 11
+Thread 11:              [25.085] ms
+Hello world from thread 10
+Thread 10:              [24.466] ms
+Hello world from thread 6
+Thread 6:               [27.473] ms
+Hello world from thread 7
+Thread 7:               [29.975] ms
+Hello world from thread 8
+Thread 8:               [30.919] ms
+Hello world from thread 9
+Thread 9:               [32.183] ms
+Hello world from thread 0
+Thread 0:               [1.001] ms
+Hello world from thread 1
+Thread 1:               [3.189] ms
+Hello world from thread 2
+Thread 2:               [5.523] ms
+Hello world from thread 15
+Thread 15:              [1.307] ms
+Hello world from thread 14
+Thread 14:              [3.797] ms
+Hello world from thread 13
+Thread 13:              [6.020] ms
+Hello world from thread 3
+Thread 3:               [16.198] ms
+Hello world from thread 12
+Thread 12:              [18.236] ms
+Hello world from thread 4
+Thread 4:               [19.965] ms
+Hello world from thread 10
+Thread 10:              [25.051] ms
+Hello world from thread 11
+Thread 11:              [25.945] ms
+Hello world from thread 5
+Thread 5:               [26.681] ms
+Hello world from thread 6
+Thread 6:               [28.467] ms
+Hello world from thread 7
+Thread 7:               [31.332] ms
+Hello world from thread 9
+Thread 9:               [32.669] ms
+Hello world from thread 8
+Thread 8:               [34.029] ms
+[mandelbrot thread]:            [33.867] ms
+Wrote image file mandelbrot-thread.ppm
+++++                            (5.91x speedup from 16 threads)
+
+╰─± .&#x2F;mandelbrot --view 2 --thread 16
+[mandelbrot serial]:            [125.893] ms
+Wrote image file mandelbrot-serial.ppm
+Hello world from thread 6
+Thread 6:               [6.453] ms
+Hello world from thread 11
+Thread 11:              [6.348] ms
+Hello world from thread 5
+Thread 5:               [6.949] ms
+Hello world from thread 10
+Thread 10:              [6.905] ms
+Hello world from thread 9
+Thread 9:               [6.997] ms
+Hello world from thread 4
+Thread 4:               [7.510] ms
+Hello world from thread 7
+Thread 7:               [8.023] ms
+Hello world from thread 3
+Thread 3:               [8.780] ms
+Hello world from thread 2
+Thread 2:               [12.412] ms
+Hello world from thread 1
+Thread 1:               [12.899] ms
+Hello world from thread 8
+Thread 8:               [12.710] ms
+Hello world from thread 14
+Thread 14:              [7.545] ms
+Hello world from thread 15
+Thread 15:              [8.204] ms
+Hello world from thread 12
+Thread 12:              [8.528] ms
+Hello world from thread 13
+Thread 13:              [10.376] ms
+Hello world from thread 0
+Thread 0:               [22.576] ms
+Hello world from thread 5
+Thread 5:               [6.598] ms
+Hello world from thread 6
+Thread 6:               [6.313] ms
+Hello world from thread 4
+Thread 4:               [7.217] ms
+Hello world from thread 9
+Thread 9:               [6.935] ms
+Hello world from thread 11
+Thread 11:              [7.983] ms
+Hello world from thread 7
+Thread 7:               [8.460] ms
+Hello world from thread 8
+Thread 8:               [9.118] ms
+Hello world from thread 3
+Thread 3:               [10.458] ms
+Hello world from thread 2
+Thread 2:               [11.159] ms
+Hello world from thread 10
+Thread 10:              [6.856] ms
+Hello world from thread 14
+Thread 14:              [7.672] ms
+Hello world from thread 12
+Thread 12:              [8.058] ms
+Hello world from thread 15
+Thread 15:              [8.282] ms
+Hello world from thread 1
+Thread 1:               [16.162] ms
+Hello world from thread 13
+Thread 13:              [8.554] ms
+Hello world from thread 0
+Thread 0:               [16.416] ms
+Hello world from thread 6
+Thread 6:               [6.467] ms
+Hello world from thread 5
+Thread 5:               [7.401] ms
+Hello world from thread 4
+Thread 4:               [7.772] ms
+Hello world from thread 3
+Thread 3:               [8.608] ms
+Hello world from thread 15
+Thread 15:              [6.725] ms
+Hello world from thread 10
+Thread 10:              [7.944] ms
+Hello world from thread 9
+Thread 9:               [8.051] ms
+Hello world from thread 14
+Thread 14:              [8.397] ms
+Hello world from thread 1
+Thread 1:               [14.227] ms
+Hello world from thread 2
+Thread 2:               [16.222] ms
+Hello world from thread 11
+Thread 11:              [8.859] ms
+Hello world from thread 8
+Thread 8:               [7.992] ms
+Hello world from thread 13
+Thread 13:              [7.937] ms
+Hello world from thread 12
+Thread 12:              [10.159] ms
+Hello world from thread 0
+Hello world from thread 7
+Thread 7:               [16.727] ms
+Thread 0:               [20.767] ms
+[mandelbrot thread]:            [18.906] ms
+Wrote image file mandelbrot-thread.ppm
+++++                            (6.66x speedup from 16 threads)<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>性能略有提高，加速比为5.91和6.66。</p>
+<h2 id="Problem-2-Vectorizing-Code-Using-SIMD-Intrinsics-20-points"><a href="#Problem-2-Vectorizing-Code-Using-SIMD-Intrinsics-20-points" class="headerlink" title="Problem 2: Vectorizing Code Using SIMD Intrinsics (20 points)"></a>Problem 2: Vectorizing Code Using SIMD Intrinsics (20 points)</h2><h3 id="1"><a href="#1" class="headerlink" title="1"></a>1</h3><p>模仿absVector的写法即可：</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">void</span> <span class="token function">clampedExpVector</span><span class="token punctuation">(</span><span class="token keyword">float</span><span class="token operator">*</span> values<span class="token punctuation">,</span> <span class="token keyword">int</span><span class="token operator">*</span> exponents<span class="token punctuation">,</span> <span class="token keyword">float</span><span class="token operator">*</span> output<span class="token punctuation">,</span> <span class="token keyword">int</span> N<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token comment">// Implement your vectorized version of clampedExpSerial here</span>
+    <span class="token comment">//  ...</span>
+	<span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+	<span class="token comment">// r表示第一次处理的数量</span>
+	<span class="token keyword">int</span> r <span class="token operator">=</span> N <span class="token operator">%</span> VECTOR_WIDTH<span class="token punctuation">;</span>
+	<span class="token keyword">if</span> <span class="token punctuation">(</span>r <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+		r <span class="token operator">=</span> VECTOR_WIDTH<span class="token punctuation">;</span>
+	<span class="token punctuation">&#125;</span>
+	__cmu418_vec_float x<span class="token punctuation">;</span>
+    __cmu418_vec_float result<span class="token punctuation">;</span>
+	__cmu418_vec_float constant<span class="token punctuation">;</span>
+	__cmu418_vec_int y<span class="token punctuation">;</span>
+	__cmu418_vec_float xpower<span class="token punctuation">;</span>
+	__cmu418_vec_int zero<span class="token punctuation">,</span> one<span class="token punctuation">,</span> yAndOne<span class="token punctuation">;</span>
+	__cmu418_mask mask<span class="token punctuation">,</span> greaterThanZero<span class="token punctuation">,</span> productMask<span class="token punctuation">,</span> greater<span class="token punctuation">;</span>
+
+	<span class="token keyword">for</span> <span class="token punctuation">(</span>i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> N<span class="token punctuation">;</span> <span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+		<span class="token keyword">if</span> <span class="token punctuation">(</span>i <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+			<span class="token comment">// 前r个为1</span>
+			mask <span class="token operator">=</span> <span class="token function">_cmu418_init_ones</span><span class="token punctuation">(</span>r<span class="token punctuation">)</span><span class="token punctuation">;</span>
+			<span class="token comment">// mask = _cmu418_mask_not(mask);</span>
+		<span class="token punctuation">&#125;</span> <span class="token keyword">else</span> <span class="token punctuation">&#123;</span>
+			<span class="token comment">// 全1</span>
+			mask <span class="token operator">=</span> <span class="token function">_cmu418_init_ones</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		<span class="token punctuation">&#125;</span>
+		
+		<span class="token comment">// 初始化为false</span>
+		greaterThanZero <span class="token operator">=</span> <span class="token function">_cmu418_init_ones</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		productMask <span class="token operator">=</span> <span class="token function">_cmu418_init_ones</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		greater <span class="token operator">=</span> <span class="token function">_cmu418_init_ones</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		<span class="token function">_cmu418_vset_int</span><span class="token punctuation">(</span>zero<span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> mask<span class="token punctuation">)</span><span class="token punctuation">;</span>
+		<span class="token function">_cmu418_vset_int</span><span class="token punctuation">(</span>one<span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">,</span> mask<span class="token punctuation">)</span><span class="token punctuation">;</span>
+		constant <span class="token operator">=</span> <span class="token function">_cmu418_vset_float</span><span class="token punctuation">(</span><span class="token number">4.18f</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		
+		<span class="token comment">// x = values[i];</span>
+		<span class="token function">_cmu418_vload_float</span><span class="token punctuation">(</span>x<span class="token punctuation">,</span> values <span class="token operator">+</span> i<span class="token punctuation">,</span> mask<span class="token punctuation">)</span><span class="token punctuation">;</span>
+		<span class="token comment">// result = 1.f</span>
+		result <span class="token operator">=</span> <span class="token function">_cmu418_vset_float</span><span class="token punctuation">(</span><span class="token number">1.f</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		<span class="token comment">// y = exponents[i]</span>
+		<span class="token function">_cmu418_vload_int</span><span class="token punctuation">(</span>y<span class="token punctuation">,</span> exponents <span class="token operator">+</span> i<span class="token punctuation">,</span> mask<span class="token punctuation">)</span><span class="token punctuation">;</span>
+		<span class="token comment">// xpower = x</span>
+		<span class="token function">_cmu418_vmove_float</span><span class="token punctuation">(</span>xpower<span class="token punctuation">,</span> x<span class="token punctuation">,</span> mask<span class="token punctuation">)</span><span class="token punctuation">;</span>
+		<span class="token comment">// 判断是否大于0</span>
+		<span class="token function">_cmu418_vlt_int</span><span class="token punctuation">(</span>greaterThanZero<span class="token punctuation">,</span> zero<span class="token punctuation">,</span> y<span class="token punctuation">,</span> mask<span class="token punctuation">)</span><span class="token punctuation">;</span>
+		<span class="token comment">// while (y > 0)</span>
+		<span class="token keyword">while</span> <span class="token punctuation">(</span><span class="token function">_cmu418_cntbits</span><span class="token punctuation">(</span>greaterThanZero<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+			<span class="token comment">// y &amp; 0x1</span>
+			 <span class="token function">_cmu418_vbitand_int</span><span class="token punctuation">(</span>yAndOne<span class="token punctuation">,</span> y<span class="token punctuation">,</span> one<span class="token punctuation">,</span> mask<span class="token punctuation">)</span><span class="token punctuation">;</span>
+			<span class="token comment">// 判断y &amp; 0x1是否为1</span>
+			<span class="token function">_cmu418_veq_int</span><span class="token punctuation">(</span>productMask<span class="token punctuation">,</span> yAndOne<span class="token punctuation">,</span> one<span class="token punctuation">,</span> mask<span class="token punctuation">)</span><span class="token punctuation">;</span>
+			<span class="token comment">// result *= xpower;</span>
+			<span class="token function">_cmu418_vmult_float</span><span class="token punctuation">(</span>result<span class="token punctuation">,</span> result<span class="token punctuation">,</span> xpower<span class="token punctuation">,</span> productMask<span class="token punctuation">)</span><span class="token punctuation">;</span>
+			<span class="token comment">// xpower = xpower * xpower;</span>
+			<span class="token function">_cmu418_vmult_float</span><span class="token punctuation">(</span>xpower<span class="token punctuation">,</span> xpower<span class="token punctuation">,</span> xpower<span class="token punctuation">,</span> mask<span class="token punctuation">)</span><span class="token punctuation">;</span>
+			<span class="token comment">// y >>= 1</span>
+			<span class="token function">_cmu418_vshiftright_int</span><span class="token punctuation">(</span>y<span class="token punctuation">,</span> y<span class="token punctuation">,</span> one<span class="token punctuation">,</span> mask<span class="token punctuation">)</span><span class="token punctuation">;</span>
+			<span class="token comment">// 判断是否大于0</span>
+			<span class="token function">_cmu418_vlt_int</span><span class="token punctuation">(</span>greaterThanZero<span class="token punctuation">,</span> zero<span class="token punctuation">,</span> y<span class="token punctuation">,</span> mask<span class="token punctuation">)</span><span class="token punctuation">;</span>
+		<span class="token punctuation">&#125;</span>
+		<span class="token comment">// if (result > 4.18f)</span>
+		<span class="token function">_cmu418_vlt_float</span><span class="token punctuation">(</span>greater<span class="token punctuation">,</span> constant<span class="token punctuation">,</span> result<span class="token punctuation">,</span> mask<span class="token punctuation">)</span><span class="token punctuation">;</span>
+		<span class="token comment">// result = 4.18f</span>
+		<span class="token function">_cmu418_vmove_float</span><span class="token punctuation">(</span>result<span class="token punctuation">,</span> constant<span class="token punctuation">,</span> greater<span class="token punctuation">)</span><span class="token punctuation">;</span>
+		<span class="token comment">// output[i] = result</span>
+		<span class="token function">_cmu418_vstore_float</span><span class="token punctuation">(</span>output <span class="token operator">+</span> i<span class="token punctuation">,</span> result<span class="token punctuation">,</span> mask<span class="token punctuation">)</span><span class="token punctuation">;</span>
+		<span class="token comment">// 更新</span>
+		<span class="token keyword">if</span> <span class="token punctuation">(</span>i <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+			i <span class="token operator">+=</span> r<span class="token punctuation">;</span>
+		<span class="token punctuation">&#125;</span> <span class="token keyword">else</span> <span class="token punctuation">&#123;</span>
+			i <span class="token operator">+=</span> VECTOR_WIDTH<span class="token punctuation">;</span>
+		<span class="token punctuation">&#125;</span>
+	<span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>测试：</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">╰─± ./vrun -s <span class="token number">16</span>   
+CLAMPED EXPONENT <span class="token punctuation">(</span>required<span class="token punctuation">)</span> 
+Results matched with answer<span class="token operator">!</span>
+****************** Printing Vector Unit Statistics *******************
+Vector Width:              <span class="token number">8</span>
+Total Vector Instructions: <span class="token number">124</span>
+Vector Utilization:        <span class="token number">92.237903</span>%
+Utilized Vector Lanes:     <span class="token number">915</span>
+Total Vector Lanes:        <span class="token number">992</span>
+************************ Result Verification *************************
+Passed<span class="token operator">!</span><span class="token operator">!</span><span class="token operator">!</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h3 id="2"><a href="#2" class="headerlink" title="2"></a>2</h3><p>修改<code>VECTOR_WIDTH</code>的值然后运行：</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">╰─± ./vrun -s <span class="token number">10000</span>
+CLAMPED EXPONENT <span class="token punctuation">(</span>required<span class="token punctuation">)</span> 
+Results matched with answer<span class="token operator">!</span>
+****************** Printing Vector Unit Statistics *******************
+Vector Width:              <span class="token number">2</span>
+Total Vector Instructions: <span class="token number">301610</span>
+Vector Utilization:        <span class="token number">91.087000</span>%
+Utilized Vector Lanes:     <span class="token number">549455</span>
+Total Vector Lanes:        <span class="token number">603220</span>
+************************ Result Verification *************************
+Passed<span class="token operator">!</span><span class="token operator">!</span><span class="token operator">!</span>
+
+╰─± ./vrun -s <span class="token number">10000</span>
+CLAMPED EXPONENT <span class="token punctuation">(</span>required<span class="token punctuation">)</span> 
+Results matched with answer<span class="token operator">!</span>
+****************** Printing Vector Unit Statistics *******************
+Vector Width:              <span class="token number">4</span>
+Total Vector Instructions: <span class="token number">154195</span>
+Vector Utilization:        <span class="token number">90.843250</span>%
+Utilized Vector Lanes:     <span class="token number">560303</span>
+Total Vector Lanes:        <span class="token number">616780</span>
+************************ Result Verification *************************
+Passed<span class="token operator">!</span><span class="token operator">!</span><span class="token operator">!</span>
+
+╰─± ./vrun -s <span class="token number">10000</span>
+Results matched with answer<span class="token operator">!</span>
+****************** Printing Vector Unit Statistics *******************
+Vector Width:              <span class="token number">8</span>
+Total Vector Instructions: <span class="token number">77485</span>
+Vector Utilization:        <span class="token number">90.789024</span>%
+Utilized Vector Lanes:     <span class="token number">562783</span>
+Total Vector Lanes:        <span class="token number">619880</span>
+************************ Result Verification *************************
+Passed<span class="token operator">!</span><span class="token operator">!</span><span class="token operator">!</span>
+
+╰─± ./vrun -s <span class="token number">10000</span>
+CLAMPED EXPONENT <span class="token punctuation">(</span>required<span class="token punctuation">)</span> 
+Results matched with answer<span class="token operator">!</span>
+****************** Printing Vector Unit Statistics *******************
+Vector Width:              <span class="token number">16</span>
+Total Vector Instructions: <span class="token number">38750</span>
+Vector Utilization:        <span class="token number">90.786935</span>%
+Utilized Vector Lanes:     <span class="token number">562879</span>
+Total Vector Lanes:        <span class="token number">620000</span>
+************************ Result Verification *************************
+Passed<span class="token operator">!</span><span class="token operator">!</span><span class="token operator">!</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h3 id="3"><a href="#3" class="headerlink" title="3"></a>3</h3><p>span的含义暂时没有理解，目前的做法是将数组拆成$N/W$份，每份分别求和，存储到数组中，然后对数组按顺序调用<code>_cmu418_hadd_float,_cmu418_interleave_float</code>，调用数量为$\log_2W$，不难得到，第$i$次调用时，数组的第一个元素为</p>
+<script type="math/tex; mode=display">
+\sum_{j=0}^{2^i -1} a_i</script><p>所以$\log_2 W$次调用可以得到数组的求和，代码如下：</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">float</span> <span class="token function">arraySumVectorHelper</span><span class="token punctuation">(</span><span class="token keyword">float</span><span class="token operator">*</span> values<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+	<span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>
+	__cmu418_mask mask <span class="token operator">=</span> <span class="token function">_cmu418_init_ones</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	__cmu418_vec_float result<span class="token punctuation">,</span> tmp<span class="token punctuation">;</span>
+	<span class="token function">_cmu418_vload_float</span><span class="token punctuation">(</span>tmp<span class="token punctuation">,</span> values<span class="token punctuation">,</span> mask<span class="token punctuation">)</span><span class="token punctuation">;</span> 
+	<span class="token keyword">while</span> <span class="token punctuation">(</span>i <span class="token operator">&lt;</span> VECTOR_WIDTH<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+		<span class="token function">_cmu418_hadd_float</span><span class="token punctuation">(</span>result<span class="token punctuation">,</span> tmp<span class="token punctuation">)</span><span class="token punctuation">;</span>
+		<span class="token function">_cmu418_interleave_float</span><span class="token punctuation">(</span>tmp<span class="token punctuation">,</span> result<span class="token punctuation">)</span><span class="token punctuation">;</span>
+		i <span class="token operator">*=</span> <span class="token number">2</span><span class="token punctuation">;</span>
+	<span class="token punctuation">&#125;</span>
+	<span class="token function">_cmu418_vstore_float</span><span class="token punctuation">(</span>values<span class="token punctuation">,</span> result<span class="token punctuation">,</span> mask<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+	<span class="token keyword">return</span> values<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token keyword">float</span> <span class="token function">arraySumVector</span><span class="token punctuation">(</span><span class="token keyword">float</span><span class="token operator">*</span> values<span class="token punctuation">,</span> <span class="token keyword">int</span> N<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token comment">// Implement your vectorized version here</span>
+    <span class="token comment">//  ...</span>
+	<span class="token keyword">int</span> l <span class="token operator">=</span> N <span class="token operator">/</span> VECTOR_WIDTH<span class="token punctuation">;</span>
+	<span class="token keyword">float</span> res<span class="token punctuation">[</span>VECTOR_WIDTH<span class="token punctuation">]</span><span class="token punctuation">;</span>
+	<span class="token comment">// 一次最多只能看max(N/ W, log2W)</span>
+	<span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> VECTOR_WIDTH<span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+		res<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token function">arraySumSerial</span><span class="token punctuation">(</span>values <span class="token operator">+</span> i <span class="token operator">*</span> l<span class="token punctuation">,</span> l<span class="token punctuation">)</span><span class="token punctuation">;</span>
+	<span class="token punctuation">&#125;</span>
+
+	<span class="token keyword">return</span> <span class="token function">arraySumVectorHelper</span><span class="token punctuation">(</span>res<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>测试：</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">ARRAY SUM <span class="token punctuation">(</span>bonus<span class="token punctuation">)</span> 
+Passed<span class="token operator">!</span><span class="token operator">!</span><span class="token operator">!</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<h2 id="Problem-3-Parallel-Fractal-Generation-Using-ISPC-15-points"><a href="#Problem-3-Parallel-Fractal-Generation-Using-ISPC-15-points" class="headerlink" title="Problem 3: Parallel Fractal Generation Using ISPC (15 points)"></a>Problem 3: Parallel Fractal Generation Using ISPC (15 points)</h2><h3 id="准备工作-1"><a href="#准备工作-1" class="headerlink" title="准备工作"></a>准备工作</h3><p>首先是环境配置，在官网下载操作系统对应的版本，解压后将对应文件添加到环境变量中：</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token builtin class-name">export</span> <span class="token assign-left variable"><span class="token environment constant">PATH</span></span><span class="token operator">=</span>~/ispc-v1.17.0-linux/bin:<span class="token environment constant">$PATH</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>官网地址：</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/ispc/ispc">https://github.com/ispc/ispc</a></li>
+</ul>
+<p>然后阅读ispc的例子：</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://ispc.github.io/example.html">https://ispc.github.io/example.html</a></li>
+</ul>
+<h3 id="3-1"><a href="#3-1" class="headerlink" title="3.1"></a>3.1</h3><p>测试：</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">╰─± ./mandelbrot_ispc -v <span class="token number">1</span>   
+<span class="token punctuation">[</span>mandelbrot serial<span class="token punctuation">]</span>:            <span class="token punctuation">[</span><span class="token number">215.696</span><span class="token punctuation">]</span> ms
+Wrote image <span class="token function">file</span> mandelbrot-serial.ppm
+<span class="token punctuation">[</span>mandelbrot ispc<span class="token punctuation">]</span>:              <span class="token punctuation">[</span><span class="token number">46.147</span><span class="token punctuation">]</span> ms
+Wrote image <span class="token function">file</span> mandelbrot-ispc.ppm
+                                <span class="token punctuation">(</span><span class="token number">4</span>.67x speedup from ISPC<span class="token punctuation">)</span>
+
+╰─± ./mandelbrot_ispc -v <span class="token number">2</span>
+<span class="token punctuation">[</span>mandelbrot serial<span class="token punctuation">]</span>:            <span class="token punctuation">[</span><span class="token number">131.712</span><span class="token punctuation">]</span> ms
+Wrote image <span class="token function">file</span> mandelbrot-serial.ppm
+<span class="token punctuation">[</span>mandelbrot ispc<span class="token punctuation">]</span>:              <span class="token punctuation">[</span><span class="token number">32.244</span><span class="token punctuation">]</span> ms
+Wrote image <span class="token function">file</span> mandelbrot-ispc.ppm
+                                <span class="token punctuation">(</span><span class="token number">4</span>.08x speedup from ISPC<span class="token punctuation">)</span>
+
+╰─± ./mandelbrot_ispc -v <span class="token number">3</span>
+<span class="token punctuation">[</span>mandelbrot serial<span class="token punctuation">]</span>:            <span class="token punctuation">[</span><span class="token number">308.290</span><span class="token punctuation">]</span> ms
+Wrote image <span class="token function">file</span> mandelbrot-serial.ppm
+<span class="token punctuation">[</span>mandelbrot ispc<span class="token punctuation">]</span>:              <span class="token punctuation">[</span><span class="token number">68.822</span><span class="token punctuation">]</span> ms
+Wrote image <span class="token function">file</span> mandelbrot-ispc.ppm
+                                <span class="token punctuation">(</span><span class="token number">4</span>.48x speedup from ISPC<span class="token punctuation">)</span>
+
+╰─± ./mandelbrot_ispc -v <span class="token number">4</span>
+<span class="token punctuation">[</span>mandelbrot serial<span class="token punctuation">]</span>:            <span class="token punctuation">[</span><span class="token number">304.620</span><span class="token punctuation">]</span> ms
+Wrote image <span class="token function">file</span> mandelbrot-serial.ppm
+<span class="token punctuation">[</span>mandelbrot ispc<span class="token punctuation">]</span>:              <span class="token punctuation">[</span><span class="token number">68.016</span><span class="token punctuation">]</span> ms
+Wrote image <span class="token function">file</span> mandelbrot-ispc.ppm
+                                <span class="token punctuation">(</span><span class="token number">4</span>.48x speedup from ISPC<span class="token punctuation">)</span>
+
+╰─± ./mandelbrot_ispc -v <span class="token number">5</span>
+<span class="token punctuation">[</span>mandelbrot serial<span class="token punctuation">]</span>:            <span class="token punctuation">[</span><span class="token number">60.267</span><span class="token punctuation">]</span> ms
+Wrote image <span class="token function">file</span> mandelbrot-serial.ppm
+<span class="token punctuation">[</span>mandelbrot ispc<span class="token punctuation">]</span>:              <span class="token punctuation">[</span><span class="token number">13.930</span><span class="token punctuation">]</span> ms
+Wrote image <span class="token function">file</span> mandelbrot-ispc.ppm
+                                <span class="token punctuation">(</span><span class="token number">4</span>.33x speedup from ISPC<span class="token punctuation">)</span>
+
+╰─± ./mandelbrot_ispc -v <span class="token number">6</span>
+<span class="token punctuation">[</span>mandelbrot serial<span class="token punctuation">]</span>:            <span class="token punctuation">[</span><span class="token number">534.112</span><span class="token punctuation">]</span> ms
+Wrote image <span class="token function">file</span> mandelbrot-serial.ppm
+<span class="token punctuation">[</span>mandelbrot ispc<span class="token punctuation">]</span>:              <span class="token punctuation">[</span><span class="token number">112.647</span><span class="token punctuation">]</span> ms
+Wrote image <span class="token function">file</span> mandelbrot-ispc.ppm
+                                <span class="token punctuation">(</span><span class="token number">4</span>.74x speedup from ISPC<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>因为使用了8wide AVX2 矢量指令，所以理论加速应该为8，但是和实际情况不符。注意到图片中白色部分计算量最多，黑色部分最少，所以可能和计算量不均匀有关。</p>
+<h3 id="3-2"><a href="#3-2" class="headerlink" title="3.2"></a>3.2</h3><h4 id="1-2"><a href="#1-2" class="headerlink" title="1,2"></a>1,2</h4><p>修改代码，使之可以处理任意的threadCount：</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token comment">// slightly different kernel to support tasking</span>
+task <span class="token keyword">void</span> <span class="token function">mandelbrot_ispc_task</span><span class="token punctuation">(</span>uniform <span class="token keyword">float</span> x0<span class="token punctuation">,</span> uniform <span class="token keyword">float</span> y0<span class="token punctuation">,</span> 
+                               uniform <span class="token keyword">float</span> x1<span class="token punctuation">,</span> uniform <span class="token keyword">float</span> y1<span class="token punctuation">,</span>
+                               uniform <span class="token keyword">int</span> width<span class="token punctuation">,</span> uniform <span class="token keyword">int</span> height<span class="token punctuation">,</span>
+                               uniform <span class="token keyword">int</span> rowsPerTask<span class="token punctuation">,</span>
+                               uniform <span class="token keyword">int</span> maxIterations<span class="token punctuation">,</span>
+                               uniform <span class="token keyword">int</span> output<span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+<span class="token punctuation">&#123;</span>
+
+    <span class="token comment">// taskIndex is an ISPC built-in</span>
+    
+    uniform <span class="token keyword">int</span> ystart <span class="token operator">=</span> taskIndex <span class="token operator">*</span> rowsPerTask<span class="token punctuation">;</span>
+    <span class="token comment">// 最后一个task特殊处理</span>
+    uniform <span class="token keyword">int</span> yend <span class="token operator">=</span> ystart <span class="token operator">+</span> rowsPerTask<span class="token punctuation">;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>yend <span class="token operator">+</span> rowsPerTask <span class="token operator">></span> height<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        yend <span class="token operator">=</span> height<span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+    
+    uniform <span class="token keyword">float</span> dx <span class="token operator">=</span> <span class="token punctuation">(</span>x1 <span class="token operator">-</span> x0<span class="token punctuation">)</span> <span class="token operator">/</span> width<span class="token punctuation">;</span>
+    uniform <span class="token keyword">float</span> dy <span class="token operator">=</span> <span class="token punctuation">(</span>y1 <span class="token operator">-</span> y0<span class="token punctuation">)</span> <span class="token operator">/</span> height<span class="token punctuation">;</span>
+    
+    <span class="token function">foreach</span> <span class="token punctuation">(</span>j <span class="token operator">=</span> ystart <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span> yend<span class="token punctuation">,</span> i <span class="token operator">=</span> <span class="token number">0</span> <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span> width<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+            <span class="token keyword">float</span> x <span class="token operator">=</span> x0 <span class="token operator">+</span> i <span class="token operator">*</span> dx<span class="token punctuation">;</span>
+            <span class="token keyword">float</span> y <span class="token operator">=</span> y0 <span class="token operator">+</span> j <span class="token operator">*</span> dy<span class="token punctuation">;</span>
+            
+            <span class="token keyword">int</span> index <span class="token operator">=</span> j <span class="token operator">*</span> width <span class="token operator">+</span> i<span class="token punctuation">;</span>
+            output<span class="token punctuation">[</span>index<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token function">mandel</span><span class="token punctuation">(</span>x<span class="token punctuation">,</span> y<span class="token punctuation">,</span> maxIterations<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token keyword">export</span> <span class="token keyword">void</span> <span class="token function">mandelbrot_ispc_withtasks</span><span class="token punctuation">(</span>uniform <span class="token keyword">float</span> x0<span class="token punctuation">,</span> uniform <span class="token keyword">float</span> y0<span class="token punctuation">,</span>
+                                      uniform <span class="token keyword">float</span> x1<span class="token punctuation">,</span> uniform <span class="token keyword">float</span> y1<span class="token punctuation">,</span>
+                                      uniform <span class="token keyword">int</span> width<span class="token punctuation">,</span> uniform <span class="token keyword">int</span> height<span class="token punctuation">,</span>
+                                      uniform <span class="token keyword">int</span> maxIterations<span class="token punctuation">,</span>
+                                      uniform <span class="token keyword">int</span> output<span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+<span class="token punctuation">&#123;</span>
+
+    <span class="token comment">// uniform int threadCount = 2;</span>
+    uniform <span class="token keyword">int</span> threadCount <span class="token operator">=</span> <span class="token number">1000</span><span class="token punctuation">;</span>
+    uniform <span class="token keyword">int</span> rowsPerTask <span class="token operator">=</span> height <span class="token operator">/</span> threadCount<span class="token punctuation">;</span>
+    <span class="token comment">// add</span>
+    rowsPerTask <span class="token operator">=</span> <span class="token function">max</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span> rowsPerTask<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+    <span class="token comment">// create threadCount tasks</span>
+    launch<span class="token punctuation">[</span>threadCount<span class="token punctuation">]</span> <span class="token function">mandelbrot_ispc_task</span><span class="token punctuation">(</span>x0<span class="token punctuation">,</span> y0<span class="token punctuation">,</span> x1<span class="token punctuation">,</span> y1<span class="token punctuation">,</span>
+                                     width<span class="token punctuation">,</span> height<span class="token punctuation">,</span>
+                                     rowsPerTask<span class="token punctuation">,</span>
+                                     maxIterations<span class="token punctuation">,</span>
+                                     output<span class="token punctuation">)</span><span class="token punctuation">;</span> 
+<span class="token punctuation">&#125;</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>测试：</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">╰─± ./mandelbrot_ispc -t -v <span class="token number">1</span>
+<span class="token punctuation">[</span>mandelbrot serial<span class="token punctuation">]</span>:            <span class="token punctuation">[</span><span class="token number">215.468</span><span class="token punctuation">]</span> ms
+Wrote image <span class="token function">file</span> mandelbrot-serial.ppm
+<span class="token punctuation">[</span>mandelbrot ispc<span class="token punctuation">]</span>:              <span class="token punctuation">[</span><span class="token number">46.115</span><span class="token punctuation">]</span> ms
+Wrote image <span class="token function">file</span> mandelbrot-ispc.ppm
+<span class="token punctuation">[</span>mandelbrot multicore ispc<span class="token punctuation">]</span>:    <span class="token punctuation">[</span><span class="token number">12.226</span><span class="token punctuation">]</span> ms
+Wrote image <span class="token function">file</span> mandelbrot-task-ispc.ppm
+                                <span class="token punctuation">(</span><span class="token number">4</span>.67x speedup from ISPC<span class="token punctuation">)</span>
+                                <span class="token punctuation">(</span><span class="token number">17</span>.62x speedup from task ISPC<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h4 id="3-1"><a href="#3-1" class="headerlink" title="3"></a>3</h4><p>问题描述：</p>
+<p>Pthread 抽象（用于问题 1）和 ISPC 任务抽象有什么区别？  (create/join 和 (launch/sync) 机制之间在语义上有一些明显的差异，但这些差异的含义更微妙。这里有一个思想实验来指导你的答案：当你启动 10,000 个 ISPC 任务时会发生什么？什么 当你启动 10,000 个 pthread 时会发生什么？</p>
+<p>回答：</p>
+<p>暂时没有理解题目，感觉可能的回答是pthread需要等待线程完成，而ISPC不需要。</p>
+<h2 id="Problem-4-Iterative-Square-Root-10-points"><a href="#Problem-4-Iterative-Square-Root-10-points" class="headerlink" title="Problem 4: Iterative Square Root (10 points)"></a>Problem 4: Iterative Square Root (10 points)</h2><h3 id="1-1"><a href="#1-1" class="headerlink" title="1"></a>1</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">╰─± ./sqrt     
+<span class="token punctuation">[</span>sqrt serial<span class="token punctuation">]</span>:          <span class="token punctuation">[</span><span class="token number">829.827</span><span class="token punctuation">]</span> ms
+<span class="token punctuation">[</span>sqrt ispc<span class="token punctuation">]</span>:            <span class="token punctuation">[</span><span class="token number">188.124</span><span class="token punctuation">]</span> ms
+<span class="token punctuation">[</span>sqrt task ispc<span class="token punctuation">]</span>:       <span class="token punctuation">[</span><span class="token number">20.934</span><span class="token punctuation">]</span> ms
+                                <span class="token punctuation">(</span><span class="token number">4</span>.41x speedup from ISPC<span class="token punctuation">)</span>
+                                <span class="token punctuation">(</span><span class="token number">39</span>.64x speedup from task ISPC<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h3 id="2-1"><a href="#2-1" class="headerlink" title="2"></a>2</h3><p>在3附近的加速比最大：</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token comment">// Generate data that gives high relative speedup</span>
+<span class="token keyword">void</span> <span class="token function">initGood</span><span class="token punctuation">(</span><span class="token keyword">float</span> <span class="token operator">*</span>values<span class="token punctuation">,</span> <span class="token keyword">int</span> N<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> i<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span> i<span class="token operator">&lt;</span>N<span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span>
+    <span class="token punctuation">&#123;</span>
+        <span class="token comment">// Todo: Choose values</span>
+        values<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token number">2.998f</span> <span class="token operator">-</span> i <span class="token operator">/</span> N<span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>测试：</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">╰─± ./sqrt -d g
+<span class="token punctuation">[</span>sqrt serial<span class="token punctuation">]</span>:          <span class="token punctuation">[</span><span class="token number">2101.552</span><span class="token punctuation">]</span> ms
+<span class="token punctuation">[</span>sqrt ispc<span class="token punctuation">]</span>:            <span class="token punctuation">[</span><span class="token number">321.759</span><span class="token punctuation">]</span> ms
+<span class="token punctuation">[</span>sqrt task ispc<span class="token punctuation">]</span>:       <span class="token punctuation">[</span><span class="token number">35.236</span><span class="token punctuation">]</span> ms
+                                <span class="token punctuation">(</span><span class="token number">6</span>.53x speedup from ISPC<span class="token punctuation">)</span>
+                                <span class="token punctuation">(</span><span class="token number">59</span>.64x speedup from task ISPC<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h3 id="3-2"><a href="#3-2" class="headerlink" title="3"></a>3</h3><p>在1附近的加速比最小：</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token comment">// Generate data that gives low relative speedup</span>
+<span class="token keyword">void</span> <span class="token function">initBad</span><span class="token punctuation">(</span><span class="token keyword">float</span> <span class="token operator">*</span>values<span class="token punctuation">,</span> <span class="token keyword">int</span> N<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> i<span class="token operator">=</span><span class="token number">0</span><span class="token punctuation">;</span> i<span class="token operator">&lt;</span>N<span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span>
+    <span class="token punctuation">&#123;</span>
+        <span class="token comment">// Todo: Choose values</span>
+        values<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token number">1.0f</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>测试：</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">╰─± ./sqrt -d b 
+<span class="token punctuation">[</span>sqrt serial<span class="token punctuation">]</span>:          <span class="token punctuation">[</span><span class="token number">27.776</span><span class="token punctuation">]</span> ms
+<span class="token punctuation">[</span>sqrt ispc<span class="token punctuation">]</span>:            <span class="token punctuation">[</span><span class="token number">17.068</span><span class="token punctuation">]</span> ms
+<span class="token punctuation">[</span>sqrt task ispc<span class="token punctuation">]</span>:       <span class="token punctuation">[</span><span class="token number">12.275</span><span class="token punctuation">]</span> ms
+                                <span class="token punctuation">(</span><span class="token number">1</span>.63x speedup from ISPC<span class="token punctuation">)</span>
+                                <span class="token punctuation">(</span><span class="token number">2</span>.26x speedup from task ISPC<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h2 id="Problem-5-BLAS-saxpy-10-points"><a href="#Problem-5-BLAS-saxpy-10-points" class="headerlink" title="Problem 5: BLAS saxpy (10 points)"></a>Problem 5: BLAS saxpy (10 points)</h2><h3 id="1-2"><a href="#1-2" class="headerlink" title="1"></a>1</h3><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">╰─± ./saxpy    
+<span class="token punctuation">[</span>saxpy serial<span class="token punctuation">]</span>:         <span class="token punctuation">[</span><span class="token number">12.381</span><span class="token punctuation">]</span> ms     <span class="token punctuation">[</span><span class="token number">24.072</span><span class="token punctuation">]</span> GB/s   <span class="token punctuation">[</span><span class="token number">1.615</span><span class="token punctuation">]</span> GFLOPS
+<span class="token punctuation">[</span>saxpy streaming<span class="token punctuation">]</span>:      <span class="token punctuation">[</span><span class="token number">13.943</span><span class="token punctuation">]</span> ms     <span class="token punctuation">[</span><span class="token number">21.374</span><span class="token punctuation">]</span> GB/s   <span class="token punctuation">[</span><span class="token number">1.434</span><span class="token punctuation">]</span> GFLOPS
+<span class="token punctuation">[</span>saxpy ispc<span class="token punctuation">]</span>:           <span class="token punctuation">[</span><span class="token number">15.216</span><span class="token punctuation">]</span> ms     <span class="token punctuation">[</span><span class="token number">19.586</span><span class="token punctuation">]</span> GB/s   <span class="token punctuation">[</span><span class="token number">1.314</span><span class="token punctuation">]</span> GFLOPS
+<span class="token punctuation">[</span>saxpy task ispc<span class="token punctuation">]</span>:      <span class="token punctuation">[</span><span class="token number">14.207</span><span class="token punctuation">]</span> ms     <span class="token punctuation">[</span><span class="token number">20.977</span><span class="token punctuation">]</span> GB/s   <span class="token punctuation">[</span><span class="token number">1.408</span><span class="token punctuation">]</span> GFLOPS
+                                <span class="token punctuation">(</span><span class="token number">0</span>.89x speedup from streaming<span class="token punctuation">)</span>
+                                <span class="token punctuation">(</span><span class="token number">0</span>.81x speedup from ISPC<span class="token punctuation">)</span>
+                                <span class="token punctuation">(</span><span class="token number">0</span>.87x speedup from task ISPC<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>可以看到性能没有太多提升，推测是内存读取太多的原因，应该可以改进，但试了很多种并没有成功。</p>
+<h3 id="2-2"><a href="#2-2" class="headerlink" title="2"></a>2</h3><p>每步使用用了4个内存的原因应该是要存中间结果<code>a * X[i]</code>。</p>
+<h3 id="3-3"><a href="#3-3" class="headerlink" title="3"></a>3</h3><p>这部分需要学习如下资料：</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/gengshenghong/article/details/7010615">https://blog.csdn.net/gengshenghong/article/details/7010615</a></li>
+<li><a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/9079580/sse-simd-multiply-vector-by-scalar">https://stackoverflow.com/questions/9079580/sse-simd-multiply-vector-by-scalar</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/oneapi-src/oneAPI-samples/blob/master/DirectProgramming/C++/CompilerInfrastructure/Intrinsics/src/intrin_dot_sample.cpp#L188:7">https://github.com/oneapi-src/oneAPI-samples/blob/master/DirectProgramming/C++/CompilerInfrastructure/Intrinsics/src/intrin_dot_sample.cpp#L188:7</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.aarongutierrez.com/15418/index.html">https://www.aarongutierrez.com/15418/index.html</a></li>
+</ul>
+<p>代码：</p>
+<pre class="line-numbers language-cpp" data-language="cpp"><code class="language-cpp"><span class="token keyword">void</span> <span class="token function">saxpyStreaming</span><span class="token punctuation">(</span><span class="token keyword">int</span> N<span class="token punctuation">,</span>
+                    <span class="token keyword">float</span> scale<span class="token punctuation">,</span>
+                    <span class="token keyword">float</span> X<span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+                    <span class="token keyword">float</span> Y<span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+                    <span class="token keyword">float</span> result<span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+<span class="token punctuation">&#123;</span>
+    <span class="token comment">// Replace this code with ones that make use of the streaming instructions</span>
+    <span class="token comment">// saxpySerial(N, scale, X, Y, result);</span>
+    __m128 x<span class="token punctuation">,</span> y<span class="token punctuation">;</span>
+    <span class="token comment">// scale, scale, scale, scale</span>
+    __m128 scalar <span class="token operator">=</span> <span class="token function">_mm_set1_ps</span><span class="token punctuation">(</span>scale<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> N<span class="token punctuation">;</span> i <span class="token operator">+=</span> <span class="token number">4</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token comment">// X[0], ... , X[3]</span>
+        x <span class="token operator">=</span> <span class="token function">_mm_loadu_ps</span><span class="token punctuation">(</span>X <span class="token operator">+</span> i<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        y <span class="token operator">=</span> <span class="token function">_mm_loadu_ps</span><span class="token punctuation">(</span>Y <span class="token operator">+</span> i<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token comment">// 乘以标量</span>
+        x <span class="token operator">=</span> <span class="token function">_mm_mul_ps</span><span class="token punctuation">(</span>x<span class="token punctuation">,</span> scalar<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token comment">// 加法</span>
+        x <span class="token operator">=</span> <span class="token function">_mm_add_ps</span><span class="token punctuation">(</span>x<span class="token punctuation">,</span> y<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token comment">// 存储</span>
+        <span class="token function">_mm_store_ps</span><span class="token punctuation">(</span>result <span class="token operator">+</span> i<span class="token punctuation">,</span> x<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>但是实验结果并不理想（见1）。</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">Doraemonzzz</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="http://www.doraemonzzz.com/2022/02/28/2022-2-28-CMU-15-418-Assignment-1-Exploring-Multi-Core-and-SIMD-Parallelism/">http://www.doraemonzzz.com/2022/02/28/2022-2-28-CMU-15-418-Assignment-1-Exploring-Multi-Core-and-SIMD-Parallelism/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://www.doraemonzzz.com" target="_blank">Doraemonzzz</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/CMU-15-418/">CMU 15-418</a></div><div class="post_share"><div class="social-share" data-image="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="next-post pull-full"><a href="/2022/02/28/2022-2-28-Programming-Languages-Part-A-HW3-Extra-Practice-Problems/"><img class="next-cover" src= "/img/loading.gif" data-lazy-src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">Programming Languages Part A HW3 Extra Practice Problems</div></div></a></div></nav><hr/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div><div id="comment-switch"><span class="first-comment">Valine</span><span class="switch-btn"></span><span class="second-comment">Livere</span></div></div><div class="comment-wrap"><div><div class="vcomment" id="vcomment"></div></div><div><div id="lv-container" data-id="city" data-uid="MTAyMC8zNDcxOS8xMTI1Ng=="></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="card-info-avatar is-center"><img class="avatar-img" src= "/img/loading.gif" data-lazy-src="https://github.com/Doraemonzzz/md-photo/blob/master/%E5%A4%B4%E5%83%8F.jpg?raw=true" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/><div class="author-info__name">Doraemonzzz</div><div class="author-info__description">个人博客，主要记录有关机器学习，数学以及计算机科学的笔记</div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">703</div></a></div><div class="card-info-data-item is-center"><a href="/tags/"><div class="headline">标签</div><div class="length-num">72</div></a></div><div class="card-info-data-item is-center"><a href="/categories/"><div class="headline">分类</div><div class="length-num">29</div></a></div></div><a class="button--animated" id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/Doraemonzzz"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/Doraemonzzz" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="/doraemon_zzz@163.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a><a class="social-icon" href="https://space.bilibili.com/291079982" target="_blank" title="Bilibili"><i class="iconfont icon-bilibili"></i></a><a class="social-icon" href="/atom.xml" target="_blank" title=""><i class="fa fa-rss"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn card-announcement-animation"></i><span>公告</span></div><div class="announcement_content">暂无公告</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Assignment-1-Exploring-Multi-Core-and-SIMD-Parallelism"><span class="toc-number">1.</span> <span class="toc-text">Assignment 1 Exploring Multi-Core and SIMD Parallelism</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%87%86%E5%A4%87%E5%B7%A5%E4%BD%9C"><span class="toc-number">1.1.</span> <span class="toc-text">准备工作</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Problem-1-Parallel-Fractal-Generation-Using-Pthreads-15-points"><span class="toc-number">1.2.</span> <span class="toc-text">Problem 1: Parallel Fractal Generation Using Pthreads (15 points)</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2-3"><span class="toc-number">1.2.1.</span> <span class="toc-text">1,2,3</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4"><span class="toc-number">1.2.2.</span> <span class="toc-text">4</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Problem-2-Vectorizing-Code-Using-SIMD-Intrinsics-20-points"><span class="toc-number">1.3.</span> <span class="toc-text">Problem 2: Vectorizing Code Using SIMD Intrinsics (20 points)</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1"><span class="toc-number">1.3.1.</span> <span class="toc-text">1</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2"><span class="toc-number">1.3.2.</span> <span class="toc-text">2</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3"><span class="toc-number">1.3.3.</span> <span class="toc-text">3</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Problem-3-Parallel-Fractal-Generation-Using-ISPC-15-points"><span class="toc-number">1.4.</span> <span class="toc-text">Problem 3: Parallel Fractal Generation Using ISPC (15 points)</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%87%86%E5%A4%87%E5%B7%A5%E4%BD%9C-1"><span class="toc-number">1.4.1.</span> <span class="toc-text">准备工作</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-1"><span class="toc-number">1.4.2.</span> <span class="toc-text">3.1</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-2"><span class="toc-number">1.4.3.</span> <span class="toc-text">3.2</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-2"><span class="toc-number">1.4.3.1.</span> <span class="toc-text">1,2</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-1"><span class="toc-number">1.4.3.2.</span> <span class="toc-text">3</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Problem-4-Iterative-Square-Root-10-points"><span class="toc-number">1.5.</span> <span class="toc-text">Problem 4: Iterative Square Root (10 points)</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-1"><span class="toc-number">1.5.1.</span> <span class="toc-text">1</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1"><span class="toc-number">1.5.2.</span> <span class="toc-text">2</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-2"><span class="toc-number">1.5.3.</span> <span class="toc-text">3</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Problem-5-BLAS-saxpy-10-points"><span class="toc-number">1.6.</span> <span class="toc-text">Problem 5: BLAS saxpy (10 points)</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2"><span class="toc-number">1.6.1.</span> <span class="toc-text">1</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2"><span class="toc-number">1.6.2.</span> <span class="toc-text">2</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-3"><span class="toc-number">1.6.3.</span> <span class="toc-text">3</span></a></li></ol></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2022/02/28/2022-2-28-CMU-15-418-Assignment-1-Exploring-Multi-Core-and-SIMD-Parallelism/" title="CMU 15-418 Assignment 1 Exploring Multi-Core and SIMD Parallelism"><img src= "/img/loading.gif" data-lazy-src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="CMU 15-418 Assignment 1 Exploring Multi-Core and SIMD Parallelism"/></a><div class="content"><a class="title" href="/2022/02/28/2022-2-28-CMU-15-418-Assignment-1-Exploring-Multi-Core-and-SIMD-Parallelism/" title="CMU 15-418 Assignment 1 Exploring Multi-Core and SIMD Parallelism">CMU 15-418 Assignment 1 Exploring Multi-Core and SIMD Parallelism</a><time datetime="2022-02-28T15:03:00.000Z" title="发表于 2022-02-28 23:03:00">2022-02-28</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/02/28/2022-2-28-Programming-Languages-Part-A-HW3-Extra-Practice-Problems/" title="Programming Languages Part A HW3 Extra Practice Problems"><img src= "/img/loading.gif" data-lazy-src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Programming Languages Part A HW3 Extra Practice Problems"/></a><div class="content"><a class="title" href="/2022/02/28/2022-2-28-Programming-Languages-Part-A-HW3-Extra-Practice-Problems/" title="Programming Languages Part A HW3 Extra Practice Problems">Programming Languages Part A HW3 Extra Practice Problems</a><time datetime="2022-02-28T14:50:00.000Z" title="发表于 2022-02-28 22:50:00">2022-02-28</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/02/28/2022-2-28-Programming-Languages-Part-A-HW3/" title="Programming Languages Part A HW3"><img src= "/img/loading.gif" data-lazy-src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Programming Languages Part A HW3"/></a><div class="content"><a class="title" href="/2022/02/28/2022-2-28-Programming-Languages-Part-A-HW3/" title="Programming Languages Part A HW3">Programming Languages Part A HW3</a><time datetime="2022-02-28T14:40:00.000Z" title="发表于 2022-02-28 22:40:00">2022-02-28</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/02/28/2022-2-28-Programming-Languages-Part-A-Week-4%E7%AC%94%E8%AE%B0/" title="Programming Languages Part A Week 4笔记"><img src= "/img/loading.gif" data-lazy-src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Programming Languages Part A Week 4笔记"/></a><div class="content"><a class="title" href="/2022/02/28/2022-2-28-Programming-Languages-Part-A-Week-4%E7%AC%94%E8%AE%B0/" title="Programming Languages Part A Week 4笔记">Programming Languages Part A Week 4笔记</a><time datetime="2022-02-28T01:59:00.000Z" title="发表于 2022-02-28 09:59:00">2022-02-28</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/02/28/2022-2-28-Programming-Languages-Part-A-Section2-%E7%BF%BB%E8%AF%91/" title="Programming Languages Part A Section2 翻译"><img src= "/img/loading.gif" data-lazy-src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Programming Languages Part A Section2 翻译"/></a><div class="content"><a class="title" href="/2022/02/28/2022-2-28-Programming-Languages-Part-A-Section2-%E7%BF%BB%E8%AF%91/" title="Programming Languages Part A Section2 翻译">Programming Languages Part A Section2 翻译</a><time datetime="2022-02-28T01:16:00.000Z" title="发表于 2022-02-28 09:16:00">2022-02-28</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2018 - 2022 By Doraemonzzz</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="font-plus" type="button" title="放大字体"><i class="fas fa-plus"></i></button><button id="font-minus" type="button" title="缩小字体"><i class="fas fa-minus"></i></button><button id="translateLink" type="button" title="简繁转换">简</button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div id="local-search"><div class="search-dialog"><div class="search-dialog__title" id="local-search-title">本地搜索</div><div id="local-input-panel"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div></div><hr/><div id="local-search-results"></div><span class="search-close-button"><i class="fas fa-times"></i></span></div><div id="search-mask"></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="/js/tw_cn.js"></script><script src="https://cdn.jsdelivr.net/npm/vanilla-lazyload/dist/lazyload.iife.min.js"></script><script src="/js/search/local-search.js"></script><script>var preloader = {
+  endLoading: () => {
+    document.body.style.overflow = 'auto';
+    document.getElementById('loading-box').classList.add("loaded")
+  },
+  initLoading: () => {
+    document.body.style.overflow = '';
+    document.getElementById('loading-box').classList.remove("loaded")
+
+  }
+}
+window.addEventListener('load',preloader.endLoading())</script><div class="js-pjax"><script>if (!window.MathJax) {
+  window.MathJax = {
+    tex: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]],
+      tags: 'ams'
+    },
+    chtml: {
+      scale: 1.25
+    },
+    options: {
+      renderActions: {
+        findScript: [10, doc => {
+          for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+            const display = !!node.type.match(/; *mode=display/)
+            const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+            const text = document.createTextNode('')
+            node.parentNode.replaceChild(text, node)
+            math.start = {node: text, delim: '', n: 0}
+            math.end = {node: text, delim: '', n: 0}
+            doc.math.push(math)
+          }
+        }, '']
+      }
+    }
+  }
+  
+  const script = document.createElement('script')
+  script.src = 'https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js'
+  script.id = 'MathJax-script'
+  script.async = true
+  document.head.appendChild(script)
+} else {
+  MathJax.startup.document.state(0)
+  MathJax.texReset()
+  MathJax.typeset()
+}</script><script>function loadValine () {
+  function initValine () {
+    const valine = new Valine(Object.assign({
+      el: '#vcomment',
+      appId: 'IpnmxCW9CvYWIXbol5QXsegX-MdYXbMMI',
+      appKey: 'w57DVCdbxcyB1TYYagMIMJIU',
+      placeholder: 'Please leave your footprints',
+      avatar: 'monsterid',
+      meta: 'nick,mail,link'.split(','),
+      pageSize: '10',
+      lang: 'en',
+      recordIP: false,
+      serverURLs: '',
+      emojiCDN: '',
+      emojiMaps: "",
+      enableQQ: false,
+      path: window.location.pathname,
+      requiredFields: ["nick,mail"],
+      visitor: true
+    }, null))
+  }
+
+  if (typeof Valine === 'function') initValine() 
+  else getScript('https://cdn.jsdelivr.net/npm/valine/dist/Valine.min.js').then(initValine)
+}
+
+if ('Valine' === 'Valine' || !false) {
+  if (false) btf.loadComment(document.getElementById('vcomment'),loadValine)
+  else setTimeout(loadValine, 0)
+} else {
+  function loadOtherComment () {
+    loadValine()
+  }
+}</script><script>function loadLivere () {
+  if (typeof LivereTower === 'object') {
+    window.LivereTower.init()
+  }
+  else {
+    (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+    })(document, 'script');
+  }
+}
+
+if ('Valine' === 'Livere' || !false) {
+  if (false) btf.loadComment(document.getElementById('lv-container'), loadLivere)
+  else loadLivere()
+}
+else {
+  function loadOtherComment () {
+    loadLivere()
+  }
+}</script></div><script defer="defer" id="fluttering_ribbon" mobile="false" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/canvas-fluttering-ribbon.min.js"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
