@@ -1,0 +1,788 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Programming Languages Part A Section4 翻译 | Doraemonzzz</title><meta name="keywords" content="Coursera Programming Languages"><meta name="author" content="Doraemonzzz"><meta name="copyright" content="Doraemonzzz"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="这里对Section 4进行翻译。 课程主页： https:&#x2F;&#x2F;www.coursera.org&#x2F;learn&#x2F;programming-languages&#x2F;home B站搬运： https:&#x2F;&#x2F;www.bilibili.com&#x2F;video&#x2F;BV1dL411j7L7">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Programming Languages Part A Section4 翻译">
+<meta property="og:url" content="http://www.doraemonzzz.com/2022/03/13/2022-3-13-Programming-Languages-Part-A-Section4-%E7%BF%BB%E8%AF%91/index.html">
+<meta property="og:site_name" content="Doraemonzzz">
+<meta property="og:description" content="这里对Section 4进行翻译。 课程主页： https:&#x2F;&#x2F;www.coursera.org&#x2F;learn&#x2F;programming-languages&#x2F;home B站搬运： https:&#x2F;&#x2F;www.bilibili.com&#x2F;video&#x2F;BV1dL411j7L7">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg">
+<meta property="article:published_time" content="2022-03-13T07:19:00.000Z">
+<meta property="article:modified_time" content="2022-03-13T07:20:17.207Z">
+<meta property="article:author" content="Doraemonzzz">
+<meta property="article:tag" content="Coursera Programming Languages">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg"><link rel="shortcut icon" href="https://github.com/Doraemonzzz/md-photo/blob/master/%E5%A4%B4%E5%83%8F.jpg?raw=true"><link rel="canonical" href="http://www.doraemonzzz.com/2022/03/13/2022-3-13-Programming-Languages-Part-A-Section4-%E7%BF%BB%E8%AF%91/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//www.google-analytics.com" crossorigin=""/><link rel="preconnect" href="//hm.baidu.com"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><script>var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?6f00f37f957f0608abb8c571105456f0";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script><script async="async" src="https://www.googletagmanager.com/gtag/js?id=UA-G-RE4B1LKRZD"></script><script>window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'UA-G-RE4B1LKRZD');
+</script><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"search.xml","languages":{"hits_empty":"找不到您查询的内容：${query}"}},
+  translate: {"defaultEncoding":2,"translateDelay":0,"msgToTraditionalChinese":"繁","msgToSimplifiedChinese":"簡"},
+  noticeOutdate: {"limitDay":500,"position":"top","messagePrev":"距离上次更新已经","messageNext":"天了，文章内容可能已经过时。"},
+  highlight: {"plugin":"prismjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":200},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    jQuery: 'https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js',
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+    },
+    fancybox: {
+      js: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css'
+    }
+  },
+  isPhotoFigcaption: true,
+  islazyload: true,
+  isanchor: true
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'Programming Languages Part A Section4 翻译',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2022-03-13 15:20:17'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const fontSizeVal = saveToLocal.get('global-font-size')
+    if (fontSizeVal !== undefined) {
+      document.documentElement.style.setProperty('--global-font-size', fontSizeVal + 'px')
+    }
+    })(window)</script><link rel="stylesheet" href="/css/bilibili.css" media="defer" onload="this.media='all'"><meta name="google-site-verification" content="c4v-NmuUZRgl3cvtg9GKswryK1YLaPztd_5M-df5VNI" /><meta name="generator" content="Hexo 5.4.0"><link rel="alternate" href="/atom.xml" title="Doraemonzzz" type="application/atom+xml">
+</head><body><div id="loading-box"><div class="loading-left-bg"></div><div class="loading-right-bg"></div><div class="spinner-box"><div class="configure-border-1"><div class="configure-core"></div></div><div class="configure-border-2"><div class="configure-core"></div></div><div class="loading-word">加载中...</div></div></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="author-avatar"><img class="avatar-img" src= "/img/loading.gif" data-lazy-src="https://github.com/Doraemonzzz/md-photo/blob/master/%E5%A4%B4%E5%83%8F.jpg?raw=true" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">文章</div><div class="length-num">711</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">标签</div><div class="length-num">73</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/categories/"><div class="headline">分类</div><div class="length-num">29</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-chart-pie"></i><span> 博客统计</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/charts/"><i class="fa-fw far fa-chart-bar"></i><span> 文章统计</span></a></li><li><a class="site-page child" href="/census/"><i class="fa-fw fas fa-chart-area"></i><span> 访问统计</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/top/"><i class="fa-fw fab fa-hotjar"></i><span> 阅读排行榜</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fa fa-heartbeat"></i><span> 娱乐</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于我</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">Doraemonzzz</a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-chart-pie"></i><span> 博客统计</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/charts/"><i class="fa-fw far fa-chart-bar"></i><span> 文章统计</span></a></li><li><a class="site-page child" href="/census/"><i class="fa-fw fas fa-chart-area"></i><span> 访问统计</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/top/"><i class="fa-fw fab fa-hotjar"></i><span> 阅读排行榜</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fa fa-heartbeat"></i><span> 娱乐</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于我</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">Programming Languages Part A Section4 翻译</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2022-03-13T07:19:00.000Z" title="发表于 2022-03-13 15:19:00">2022-03-13</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2022-03-13T07:20:17.207Z" title="更新于 2022-03-13 15:20:17">2022-03-13</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B/">函数式编程</a></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-tag"></i><a class="article-meta__tags" href="/tags/Coursera-Programming-Languages/">Coursera Programming Languages</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">14.4k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>48分钟</span></span><span class="post-meta-separator">|</span><span class="leancloud_visitors" id="/2022/03/13/2022-3-13-Programming-Languages-Part-A-Section4-%E7%BF%BB%E8%AF%91/" data-flag-title="Programming Languages Part A Section4 翻译"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span class="leancloud-visitors-count"></span></span><span class="post-meta-separator">|</span><span class="post-meta-commentcount"><i class="far fa-comments fa-fw post-meta-icon"></i><span class="post-meta-label">评论数:</span><a href="/2022/03/13/2022-3-13-Programming-Languages-Part-A-Section4-%E7%BF%BB%E8%AF%91/#post-comment" itemprop="discussionUrl"><span class="valine-comment-count" data-xid="/2022/03/13/2022-3-13-Programming-Languages-Part-A-Section4-%E7%BF%BB%E8%AF%91/" itemprop="commentCount"></span></a></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p>这里对Section 4进行翻译。</p>
+<p>课程主页：</p>
+<p><a target="_blank" rel="noopener" href="https://www.coursera.org/learn/programming-languages/home">https://www.coursera.org/learn/programming-languages/home</a></p>
+<p>B站搬运：</p>
+<p><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1dL411j7L7">https://www.bilibili.com/video/BV1dL411j7L7</a></p>
+<span id="more"></span>
+<h1 id="Coursera编程语言课程-第4节总结"><a href="#Coursera编程语言课程-第4节总结" class="headerlink" title="Coursera编程语言课程 第4节总结"></a>Coursera编程语言课程 第4节总结</h1><p>标准说明：本总结涵盖的材料与课堂视频以及随视频发布的材料（幻灯片、代码）大致相同。它有助于以叙述的方式阅读材料，并将整个课程部分的材料放在一份文件中，特别是在以后复习材料时。请在讨论板上报告这些笔记中的错误。</p>
+<h2 id="目录"><a href="#目录" class="headerlink" title="目录"></a>目录</h2><ul>
+<li>什么是类型推断？</li>
+<li>更全面的ML类型推断实例</li>
+<li>多态类型的例子</li>
+<li>可选：值限制</li>
+<li>可选：一些使类型推断更加困难的事情</li>
+<li>相互递归</li>
+<li>用于命名空间管理的模块</li>
+<li>签名</li>
+<li>隐藏东西</li>
+<li>介绍我们的扩展实例</li>
+<li>我们例子的签名</li>
+<li>可爱的转折：暴露整个函数</li>
+<li>签名匹配规则</li>
+<li>等价的实现</li>
+<li>不同的模块有不同的类型</li>
+<li>动机和定义等价</li>
+<li>无副作用程序设计的另一个特点</li>
+<li>标准等价</li>
+<li>重新审视我们对等价的定义</li>
+</ul>
+<h2 id="什么是类型推断？"><a href="#什么是类型推断？" class="headerlink" title="什么是类型推断？"></a>什么是类型推断？</h2><p>虽然我们已经使用ML类型推断有一段时间了，但我们还没有仔细研究过它。我们将首先仔细了解什么是类型推断，然后通过几个例子看看ML类型推断是如何工作的。</p>
+<p>Java、C和ML都是静态类型语言的例子，这意味着每个绑定都有一个”在编译时”确定的类型，也就是说，在程序的任何部分被运行之前。类型检查器是一个编译时程序，它接受或拒绝一个程序。相比之下，Racket、Ruby和Python是动态类型语言，这意味着绑定的类型不会提前确定，例如将42绑定到<code>x</code>，然后将<code>x</code>视为字符串这样的计算会导致运行时错误。在我们用Racket进行一些编程之后，我们将比较静态类型和动态类型的优缺点，作为一个重要的课程主题。</p>
+<p>与Java和C不同，ML是隐式类型的，这意味着程序员很少需要写下绑定的类型。这通常是很方便的（尽管有些人不同意它是使代码更容易还是更难读），但决不是改变ML是静态类型的事实。相反，类型检查器必须更加复杂，因为它必须推断（即弄清楚）程序员编写的类型注释“会是”什么。原则上，类型推断和类型检查可以是独立的步骤（推断器可以做它的部分，检查器可以看结果是否应该进行类型检查），但在实践中，它们经常被合并到类型检查器中。请注意，一个正确的类型推断器必须在所有类型存在的情况下找到一个解决方案，否则它必须拒绝该程序。</p>
+<p>一种特定的编程语言的类型推断是容易的、困难的还是不可能的，往往不是很明显。它与类型系统的放任程度不成正比。例如，”接受一切”和”不接受任何东西”的”极端”类型系统都是非常容易进行推断的。当我们说类型推断可能是不可能的，我们指的是技术意义上的不可判定性，就像著名的停止问题。我们的意思是存在一些类型系统，对于这些系统，没有一个计算机程序可以实现类型推断，使得</p>
+<ul>
+<li>（1）推断过程总是终止，</li>
+<li>（2）如果推断是可能的，推断过程总是成功的，以及</li>
+<li>（3）如果推断不可能，推断过程总是失败。</li>
+</ul>
+<p>幸运的是，ML的设计相当巧妙，所以类型推断可以通过一个相当直接和优雅的算法进行。虽然有些程序的推断过程慢得难以忍受，但人们在实践中编写的程序从来没有引起这种行为。我们将用几个例子来证明ML类型推断算法的关键方面。这将使你感觉到类型推断并不是”魔术”。为了进入其他课程的主题，我们不会描述完整的算法或编写代码来实现它。</p>
+<p>ML类型推断最终与参数多态性交织在一起，当推断程序确定一个函数的参数或结果可能是任何东西时，结果类型就会使用<code>&#39;a</code>、<code>&#39;b</code>等。但类型推断和多态性是完全独立的概念：一种语言可以有一个或另一个。例如，Java有泛型，但没有方法参数/结果类型的推断。</p>
+<h2 id="ML类型推断概述"><a href="#ML类型推断概述" class="headerlink" title="ML类型推断概述"></a>ML类型推断概述</h2><p>这里是ML类型推断工作的概述（更多的例子在后面）：</p>
+<ul>
+<li>它按顺序确定绑定的类型，使用早期绑定的类型来推断后期绑定的类型。这就是为什么你不能在文件中使用后面的绑定。（当你需要时，使用相互递归，类型推断决定所有相互递归的绑定的类型。相互递归将在本节后面介绍）。</li>
+<li>对于每个<code>val</code>或<code>fun</code>绑定，它分析绑定以确定关于其类型的必要事实。例如，如果我们看到表达式<code>x+1</code>，我们得出结论，<code>x</code>必须是<code>int</code>类型。我们为函数调用、模式匹配等收集类似的事实。</li>
+<li>之后，对于函数参数或结果中任何不受约束的类型，使用类型变量（例如<code>&#39;a</code>）。</li>
+<li>（强制值限制——只有变量和值可以具有多态类型，如后所述。）</li>
+</ul>
+<p>关于ML类型系统的一个惊人的事实是，这样的”按部就班”从未导致我们拒绝一个可以进行类型检查的程序，我们也从未接受一个我们不应该接受的程序。所以明确的类型注释真的是可选的，除非你使用像<code>#1</code>这样的功能。（<code>#1</code>的问题是，它没有为类型推断提供足够的信息来知道元组/记录应该有哪些其他字段，而ML类型系统需要知道字段的确切数量和所有字段的名称）。</p>
+<p>下面是一个初始的、非常简单的例子：</p>
+<pre class="line-numbers language-none"><code class="language-none">val x &#x3D; 42
+fun f(y,z,w) &#x3D; if y then z+x else 0<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<p>类型推断首先给出了<code>x</code>的<code>int</code>类型，因为42有<code>int</code>类型。接下来我们将通过其他的例子来研究更多的步骤，但在这里让我们只列出关键的事实：</p>
+<ul>
+<li><code>y</code>必须有<code>bool</code>类型，因为我们在条件中测试它。</li>
+<li><code>z</code>必须有<code>int</code>类型，因为我们把它加到我们已经确定有<code>int</code>类型的东西上。</li>
+<li><code>w</code>可以有任何类型，因为它从不被使用。</li>
+<li><code>f</code>必须返回<code>int</code>，因为它的主体是一个条件，其中两个分支都返回一个<code>int</code>。(如果它们不一致，类型检查就会失败。) </li>
+</ul>
+<p>所以<code>f</code>的类型必须是<code>bool * int * &#39;a -&gt; int</code>。</p>
+<h2 id="更详尽的ML类型推断例子"><a href="#更详尽的ML类型推断例子" class="headerlink" title="更详尽的ML类型推断例子"></a>更详尽的ML类型推断例子</h2><p>我们现在将逐步完成几个例子，生成类型推断算法需要的所有事实。请注意，人类在做类型推断时，经常会走捷径，就像人类在做算术时一样，但重点是有一个一般的算法，它有条不紊地通过代码收集约束条件，并把它们放在一起以得到答案。</p>
+<p>作为第一个例子，考虑推断这个函数的类型：</p>
+<pre class="line-numbers language-none"><code class="language-none">fun f x &#x3D;
+   let val (y,z) &#x3D; x in
+       (abs y) + z
+   end<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+<p>这里是我们如何推断类型的：</p>
+<ul>
+<li>看第一行，对于某些类型<code>T1</code>和<code>T2</code>，<code>f</code>必须有<code>T1-&gt;T2</code>的类型，在函数体中<code>f</code>有该类型，并且<code>x</code>有<code>T1</code>类型。</li>
+<li>看一下val-binding，<code>x</code>必须是pair类型（否则模式匹配就没有意义），所以对于某些<code>T3</code>和<code>T4</code>，<code>T1=T3*T4</code>，<code>y</code>有<code>T3</code>类型，<code>z</code>有<code>T4</code>类型。</li>
+<li>看一下加法表达式，我们从上下文中知道<code>abs</code>的类型是<code>int-&gt;int</code>，所以<code>y</code>的类型是<code>T3</code>意味着<code>T3=int</code>。同样地，由于<code>abs y</code>的类型是<code>int</code>，所以<code>+</code>的另一个参数必须是<code>int</code>类型，所以<code>z</code>的类型是<code>T4</code>，意味着<code>T4=int</code>。</li>
+<li>因为加法表达式的类型是<code>int</code>，所以<code>let</code>表达式的类型是<code>int</code>。因为let表达式的类型是<code>int</code>，所以<code>f</code>的返回类型是<code>int</code>，也就是说，<code>T2=int</code>。</li>
+</ul>
+<p>把所有这些约束放在一起，<code>T1=int*int</code>（因为<code>T1=T3*T4</code>），<code>T2=int</code>，所以<code>f</code>的类型是<code>int*int-&gt;int</code>。</p>
+<p>下一个例子：</p>
+<pre class="line-numbers language-none"><code class="language-none">fun sum xs &#x3D;
+   case xs of
+     [] &#x3D;&gt; 0
+   | x::xs&#39; &#x3D;&gt; x + (sum xs&#39;)<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+<ul>
+<li>从第一行来看，存在类型<code>T1</code>和<code>T2</code>，使得<code>sum</code>具有类型<code>T1-&gt;T2</code>，而<code>xs</code>具有类型<code>T1</code>。</li>
+<li>从case表达式来看，<code>xs</code>必须有一个与所有模式兼容的类型。看看这些模式，它们都能匹配任何列表，因为它们是由列表构造器构建的（在<code>x::xs&#39;</code>的情况下，子模式匹配任何类型的东西）。因此，由于<code>xs</code>的类型是<code>T1</code>，事实上<code>T1=T3 list</code>（对于某个<code>T3</code>）。</li>
+<li>看一下case分支的右侧，我们知道它们必须有相同的类型，这个类型就是<code>T2</code>。因为0的类型是<code>int</code>，所以<code>T2=int</code>。</li>
+<li>再看第二个case分支，我们在<code>x</code>和<code>xs&#39;</code>都可用的情况下对其进行类型检查。由于我们是针对一个<code>T3</code>列表匹配模式<code>x::xs&#39;</code>，所以一定是<code>x</code>有<code>T3</code>类型，<code>xs&#39;</code>有<code>T3 list</code>类型。</li>
+<li>现在看右边，我们加上了<code>x</code>，所以事实上<code>T3=int</code>。此外，递归调用会进行类型检查，因为<code>xs&#39;</code>有<code>T3 list</code>类型，<code>T3 list=T1</code>，<code>sum</code>有<code>T1-&gt;T2</code>类型。最后，由于<code>T2=int</code>，添加<code>sum xs&#39;</code>的类型检查。</li>
+</ul>
+<p>把所有东西放在一起，我们得到<code>sum</code>的类型是<code>int list-&gt;int</code>。</p>
+<p>注意，在我们得到<code>sum xs&#39;</code>之前，我们已经推断出了所有的东西，但我们仍然要检查类型的使用是否一致，否则拒绝。例如，如果我们写了<code>sum x</code>，那就不能进行类型检查，因为它与之前的事实不一致。让我们更透彻地看一下，看看会发生什么：</p>
+<pre class="line-numbers language-none"><code class="language-none">fun broken_sum xs &#x3D;
+   case xs of
+     [] &#x3D;&gt; 0
+   | x::xs&#39; &#x3D;&gt; x + (broken_sum x)<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+<ul>
+<li><code>broken_sum</code>的类型推断过程与<code>sum</code>的推断过程基本相同。前面例子中的前四条都适用，给出<code>broken_sum</code>的类型<code>T3 list -&gt;int</code>，<code>x3</code>的类型<code>T3 list</code>，<code>x</code>的类型<code>T3</code>，和<code>xs</code>的类型<code>T3 list</code>。此外，<code>T3=int</code>。</li>
+<li>我们在调用<code>broken_sum x</code>时偏离了正确的<code>sum</code>的实现。对于这个调用的类型检查，<code>x</code>的类型必须与<code>broken_sum</code>的参数相同，或者说，<code>T1=T3</code>。然而，我们知道<code>T1=T3 list</code>，所以这个新约束<code>T1=T3</code>实际上产生了一个矛盾：<code>T3=T3 list</code>。如果我们想更具体一点，我们可以利用我们的知识，即<code>T3=int</code>，将其改写为<code>int=int list</code>。看一下<code>broken_sum</code>的定义，应该很明显，这正是问题所在：我们试图将<code>x</code>作为<code>int</code>和<code>int list</code>来使用。</li>
+</ul>
+<p>当你的ML程序没有通过类型检查时，类型检查器会报告它发现矛盾的表达式以及该矛盾涉及的类型。虽然有时这些信息是有帮助的，但其他时候，实际问题是在不同的表达式上，但类型检查器直到后来才发现矛盾。</p>
+<h2 id="多态类型例子"><a href="#多态类型例子" class="headerlink" title="多态类型例子"></a>多态类型例子</h2><p>我们剩下的例子将推断出多态的类型。我们所做的就是遵循上面的程序，但是当我们完成后，我们会有一些函数类型的部分仍然是不受约束的。对于每个”可以是任何东西 “的<code>Ti</code>，我们使用一个类型变量（<code>&#39;a</code>，<code>&#39;b</code>，等等）。</p>
+<pre class="line-numbers language-none"><code class="language-none">fun length xs &#x3D;
+   case xs of
+     [] &#x3D;&gt; 0
+   | x::xs&#39; &#x3D;&gt; 1 + (length xs&#39;)<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+<p>类型推断的过程与<code>sum</code>的推断很相似。我们最终确定：</p>
+<ul>
+<li><code>length</code>的类型是<code>T1-&gt;T2</code>。</li>
+<li><code>xs</code>的类型是<code>T1</code>。</li>
+<li><code>T1=T3 list</code>（由于模式匹配）</li>
+<li><code>T2=int</code>，因为0是对<code>length</code>的可能调用结果。</li>
+<li><code>x</code>有<code>T3</code>类型，<code>xs&#39;</code>有<code>T3</code>类型的列表。</li>
+<li>递归调用<code>length xs&#39;</code>进行类型检查，因为<code>xs&#39;</code>有<code>T3 list</code>类型，也就是<code>T1</code>，即<code>length</code>的参数类型。而且我们可以添加结果，因为<code>T2=int</code>。</li>
+</ul>
+<p>所以我们有所有与<code>sum</code>相同的约束，除了我们没有<code>T3=int</code>。事实上，<code>T3</code>可以是任何东西，<code>length</code>会进行类型检查。所以类型推断认识到，当它全部完成时，它的<code>length</code>类型为<code>T3 list -&gt; int</code>，<code>T3</code>可以是任何东西。所以我们最终得到的类型是<code>&#39;a list -&gt; int</code>，正如预期的那样。同样，规则很简单：对于最终结果中不能被约束的每个<code>Ti</code>，使用一个类型变量。</p>
+<p>第二个例子：</p>
+<pre class="line-numbers language-none"><code class="language-none">fun compose (f,g) &#x3D; fn x &#x3D;&gt; f (g x) <span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<ul>
+<li>由于<code>compose</code>的参数必须是pair（从用于其参数的模式来看），<code>compose</code>的类型为<code>T1*T2-&gt;T3</code>，<code>f</code>的类型为<code>T1</code>，<code>g</code>的类型为<code>T2</code>。</li>
+<li>由于<code>compose</code>返回一个函数，<code>T3</code>是某个<code>T4-&gt;T5</code>，在该函数的主体中，<code>x</code>的类型是<code>T4</code>。</li>
+<li>所以<code>g</code>的类型一定是<code>T4-&gt;T6</code>，也就是说，<code>T2=T4-&gt;T6</code>。</li>
+<li>而<code>f</code>必须对某个<code>T7</code>具有<code>T6-&gt;T7</code>的类型，也就是说，<code>T1=T6-&gt;T7</code>。</li>
+<li>但是<code>f</code>的结果是由<code>compose</code>返回的函数的结果，所以<code>T7=T5</code>，所以<code>T1=T6-&gt;T5</code>。</li>
+</ul>
+<p>把<code>T1=T6-&gt;T5，T2=T4-&gt;T6，T3=T4-&gt;T5</code>放在一起，我们有<code>(T6-&gt;T5)*(T4-&gt;T6)-&gt;(T4-&gt;T5)</code>的<code>compose</code>的类型。没有其他东西来约束<code>T4</code>、<code>T5</code>和<code>T6</code>的类型，所以我们把它们一致地替换掉，最后得到<code>(&#39;a-&gt;&#39;b)*(&#39;c-&gt;&#39;a)-&gt;(&#39;c-&gt;&#39;b)</code>，正如预期的那样（最后一组括号是可选的，但这只是语法）。</p>
+<p>下面是一个更简单的例子，它也有多个类型变量。</p>
+<pre class="line-numbers language-none"><code class="language-none">fun f (x,y,z) &#x3D;
+    if true
+    then (x,y,z)
+    else (y,x,z)<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+<ul>
+<li>第一行要求<code>f</code>有<code>T1*T2*T3-&gt;T4</code>的类型，<code>x</code>有<code>T1</code>类型，<code>y</code>有<code>T2</code>类型，<code>z</code>有<code>T3</code>类型。</li>
+<li>条件表达式的两个分支必须具有相同的类型，这就是函数<code>T4</code>的返回类型。因此，<code>T4=T1*T2*T3，T4=T2*T1*T3</code>。这个约束条件要求<code>T1=T2</code>。</li>
+</ul>
+<p>把这些约束放在一起（没有其他约束），<code>f</code>将以类型<code>T1*T1*T3-&gt;T1*T1*T3</code>对任何类型<code>T1</code>和<code>T3</code>进行类型检查。因此，用一个类型变量替换每个类型，我们得到<code>&#39;a*&#39;a*&#39;b-&gt;&#39;a*&#39;a*&#39;b</code>，这是正确的：<code>x</code>和<code>y</code>必须有相同的类型，但<code>z</code>可以（但不需要）有不同的类型。请注意，类型检查器总是要求条件的两个分支以相同的类型进行类型检查，尽管这里我们知道哪个分支将被评估。</p>
+<h2 id="可选：值的限制"><a href="#可选：值的限制" class="headerlink" title="可选：值的限制"></a>可选：值的限制</h2><p>正如本节到目前为止所描述的，ML类型系统是不健全的，这意味着它将接受运行时可能有错误类型的值的程序，例如在我们期望的字符串的地方放一个<code>int</code>。这个问题是由多态类型和可变引用的组合造成的，而修复方法是对类型系统的一个特殊限制，称为值限制。</p>
+<p>这是一个演示该问题的示例程序：</p>
+<pre class="line-numbers language-none"><code class="language-none">val r &#x3D; ref NONE (* &#39;a option ref *)
+val _ &#x3D; r :&#x3D; SOME &quot;hi&quot; (* instantiate &#39;a with string *)
+val i &#x3D; 1 + valOf(!r) (* instantiate &#39;a with int *)<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+<p>直接使用类型检查/推断的规则会接受这个程序，即使我们不应该——我们最终试图在<code>&quot;hi&quot;</code>上加1。鉴于函数/操作符<code>ref (&#39;a -&gt; &#39;a ref), := (&#39;a ref * &#39;a -&gt; unit), ! (&#39;a ref -&gt; &#39;a)</code>，类型检查没有问题。</p>
+<p>为了恢复健全性，我们需要一个更严格的类型系统，不允许这个程序进行类型检查。ML所做的选择是防止第一行有多态的类型。因此，第二行和第三行将不会进行类型检查，因为它们不能用字符串或<code>int</code>来实例化一个<code>&#39;a</code>。一般来说，只有当val-bound中的表达式是一个值或一个变量时，ML才会给val-bound中的变量一个多态的类型。这就是所谓的值限制。在我们的例子中，<code>ref NONE</code>是一个对函数<code>ref</code>的调用。函数调用不是变量或值。所以我们得到了一个警告，<code>r</code>被赋予了一个类型<code>?X1 option ref</code>，其中<code>?X1</code>是一个“冗余类型”而不是一个类型变量。这使得<code>r</code>没有用处，后面的行也没有进行类型检查。这个限制成功地使类型系统健全，这一点并不明显，但事实上它是充分的。</p>
+<p>对于上面的<code>r</code>，我们可以使用表达式<code>ref NONE</code>，但是我们必须使用一个类型注解来给<code>r</code>一个非多态的类型，比如<code>int option ref</code>。无论我们选择什么，接下来的两行中的一行将不会进行类型检查。</p>
+<p>正如我们之前在研究部分应用时看到的那样，即使因为我们没有使用突变，值限制偶尔也会成为一种负担。我们看到这个绑定成为了值限制的受害者，并且没有被做成多态的：</p>
+<pre class="line-numbers language-none"><code class="language-none">val pairWithOne &#x3D; List.map (fn x &#x3D;&gt; (x,1)) <span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>我们看到了多种变通方法。一个是使用一个函数绑定，尽管没有值限制，但这是不必要的函数包装。这个函数的类型是<code>&#39;a list -&gt; (&#39;a * int) list</code>: </p>
+<pre class="line-numbers language-none"><code class="language-none">fun pairWithOne xs &#x3D; List.map (fn x &#x3D;&gt; (x,1)) xs <span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>有人可能会问，为什么我们不能只对引用（我们需要的地方）执行值限制，而不对列表这样的不可变类型执行值限制。答案是ML类型检查器不能总是知道哪些类型是真正的引用，而哪些不是。在下面的代码中，我们需要在最后一行强制执行值限制，因为<code>&#39;a foo</code>和<code>&#39;a ref</code>是同一类型：</p>
+<pre class="line-numbers language-none"><code class="language-none">type &#39;a foo &#x3D; &#39;a ref
+val f : &#39;a -&gt; &#39;a foo &#x3D; ref
+val r &#x3D; f NONE <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+<p>当我们在本节后面研究模块系统时，我们将看到类型检查器并不总是知道类型同义词的表示。所以为了安全起见，它对所有的类型都执行了值限制。</p>
+<h2 id="可选：使类型推断更加困难的一些事情"><a href="#可选：使类型推断更加困难的一些事情" class="headerlink" title="可选：使类型推断更加困难的一些事情"></a>可选：使类型推断更加困难的一些事情</h2><p>现在我们已经看到了ML类型推断的工作原理，我们可以看到两个有趣的观察：</p>
+<ul>
+<li>如果ML有子类型（例如，如果每个三元组也可以是一个pair），推断将更加困难，因为我们将不能得出 “<code>T3=T1*T2</code> “这样的结论，因为等价将是过度的限制。相反，我们需要约束条件，表明<code>T3</code>是一个至少有两个字段的元组。根据不同的细节，这可以做到，但是类型推断更加困难，结果也更难理解。</li>
+<li>如果ML没有参数化的多态性，推断会更加困难，因为我们必须为<code>length</code>和<code>compose</code>等函数挑选一些类型，而这可能取决于它们的使用方式。</li>
+</ul>
+<h2 id="相互递归"><a href="#相互递归" class="headerlink" title="相互递归"></a>相互递归</h2><p>我们已经看到了很多递归函数的例子，也看到了很多函数使用其他函数作为辅助函数的例子，但是如果我们需要一个函数<code>f</code>调用<code>g</code>，<code>g</code>调用<code>f</code>呢？这当然是有用的，但是ML的规则，即绑定只能使用早期的绑定，这使得它更加困难——哪个应该先来，<code>f</code>还是<code>g</code>？</p>
+<p>事实证明，ML对相互递归有特殊的支持，使用关键字<code>and</code>，并将相互递归的函数放在彼此旁边。同样地，我们也可以有相互递归的数据类型绑定。在展示了这些新的结构后，我们将展示你实际上可以通过使用高阶函数来解决缺乏对相互递归函数支持的问题，这在一般情况下是一个有用的技巧，特别是在ML中，如果你不希望你的相互递归函数彼此相邻。</p>
+<p>我们的第一个例子使用相互递归来处理一个<code>int list</code>并返回一个<code>bool</code>。如果列表在1和2之间严格交替，并以2结束，则返回true。当然，有很多方法可以实现这样的函数，但我们的方法很好地为每个”状态”（如”接下来必须有1”或”接下来必须有2”）提供了一个函数。一般来说，计算机科学中的许多问题都可以用这种有限状态机来建模，每个状态对应一个相互递归的函数是实现有限状态机的一种优雅方式。（因为所有函数调用都是尾部调用，所以代码在少量空间中运行，就像有限状态机的实现一样。）</p>
+<pre class="line-numbers language-none"><code class="language-none">fun match xs &#x3D;
+    let fun s_need_one xs &#x3D;
+            case xs of
+                [] &#x3D;&gt; true
+              | 1::xs’ &#x3D;&gt; s_need_two xs’
+              | _ &#x3D;&gt; false
+        and s_need_two xs &#x3D;
+            case xs of
+                [] &#x3D;&gt; false
+              | 2::xs’ &#x3D;&gt; s_need_one xs’
+              | _ &#x3D;&gt; false
+    in
+        s_need_one xs
+end<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>（代码在模式中使用整数常量，这是一个偶尔方便的ML特性，但对示例来说不是必需的。）</p>
+<p>在语法方面，我们通过简单地将除第一个函数外的所有函数的关键字<code>fun</code>替换为<code>and</code>来定义相互递归的函数。类型检查器将同时对所有函数（上例中的两个）进行类型检查，允许它们之间的调用，而不考虑顺序。</p>
+<p>下面是第二个（愚蠢的）示例，它还使用了两个相互递归的<code>datatype</code>绑定。类型<code>t1</code>和<code>t2</code>的定义是相互引用的，这是通过使用<code>and</code>代替第二个<code>datatype</code>允许的。这定义了两种新的数据类型，<code>t1</code>和<code>t2</code>。</p>
+<pre class="line-numbers language-none"><code class="language-none">datatype t1 &#x3D; Foo of int | Bar of t2
+and t2 &#x3D; Baz of string | Quux of t1
+
+fun no_zeros_or_empty_strings_t1 x &#x3D;
+    case x of
+        Foo i &#x3D;&gt; i &lt;&gt; 0
+      | Bar y &#x3D;&gt; no_zeros_or_empty_strings_t2 y
+and no_zeros_or_empty_strings_t2 x &#x3D;
+    case x of
+        Baz s &#x3D;&gt; size s &gt; 0
+      | Quux y &#x3D;&gt; no_zeros_or_empty_strings_t1 y<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>现在假设我们想要实现上面代码中的“无零或空字符串”功能，但出于某种原因，我们不想将函数放在彼此相邻的位置，或者我们使用的语言不支持相互递归的函数。我们可以编写几乎相同的代码，方法是将“后续”函数自身传递给“之前”函数的一个版本，该版本将函数作为参数：</p>
+<pre class="line-numbers language-none"><code class="language-none">fun no_zeros_or_empty_strings_t1(f,x) &#x3D;
+    case x of
+        Foo i &#x3D;&gt; i &lt;&gt; 0
+      | Bar y &#x3D;&gt; f y
+
+fun no_zeros_or_empty_string_t2 x &#x3D;
+    case x of
+        Baz s &#x3D;&gt; size s &gt; 0
+      | Quux y &#x3D;&gt; no_zeros_or_empty_strings_t1(no_zeros_or_empty_string_t2,y)<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>这是函数的参数可以是另一个函数带来的强大的习语。</p>
+<h2 id="名称空间管理模块"><a href="#名称空间管理模块" class="headerlink" title="名称空间管理模块"></a>名称空间管理模块</h2><p>我们首先展示如何使用ML模块将绑定分离到不同的名称空间。后面的部分将基于这篇材料，介绍更有趣、更重要的主题，即使用模块隐藏绑定和类型。</p>
+<p>为了学习ML、模式匹配和函数式编程的基础知识，我们编写了一些小程序，这些程序只是一系列绑定。对于更大的程序，我们希望用更多的结构来组织代码。在ML中，我们可以使用结构来定义包含绑定集合的模块。在最简单的情况下，你可以编写<code>structure Name = struct bindings end</code>，其中<code>Name</code>是结构的名称（你可以选择任何内容；大小写是一种约定），<code>bindings</code>是任何绑定列表，包含值、函数、异常、数据类型和类型同义词。在结构内部，你可以使用早期的绑定，就像我们“在顶层”（即任何模块之外）所做的那样。在结构外部，你通过使用<code>Name.b</code>来引用<code>Name</code>中的绑定b。我们已经使用这个符号来使用函数，比如<code>List.foldl</code>；现在你知道如何定义自己的结构了。</p>
+<p>虽然我们在示例中不会这样做，但你可以将结构嵌套在其他结构中，以创建树状层次结构。但在ML中，模块不是表达式：你不能在函数内部定义它们、将它们存储在元组中、将它们作为参数传递等等。</p>
+<p>如果在某个范围内使用来自另一个结构的许多绑定，那么编写<code>SomeLongStructureName.foo</code>多次可能会很不方便。当然，可以使用<code>val</code>绑定来避免这种情况，例如<code>val foo=SomeLongStructureName.foo</code>，但是如果我们使用结构中的许多不同绑定（每个绑定都需要一个新变量），或者在模式中使用结构中的构造函数名，那么这种技术是无效的。因此，ML允许你编写<code>open  SomeLongStructureName</code>，它提供了对模块签名中提到的模块中任何绑定的“直接”访问（你只需编写<code>foo</code>）。<code>open</code>的作用域是封闭结构的其余部分（或顶层程序的其余部分）。</p>
+<p><code>open</code>的一个常见用途是为模块本身之外的模块编写简洁的测试代码。<code>open</code>的其他用途通常不受欢迎，因为它可能会引入意外的shadow，尤其是因为不同的模块可能会重用绑定名称。例如，列表模块和树模块可能都有名为<code>map</code>的函数。</p>
+<h2 id="签名"><a href="#签名" class="headerlink" title="签名"></a>签名</h2><p>到目前为止，结构只提供名称空间管理，这是一种避免程序不同部分中的不同绑定相互隐藏的方法。名称空间管理非常有用，但不是很有趣。更有趣的是给出结构签名，这是模块的类型。它们允许我们提供模块外的代码必须遵守的严格接口。ML有几种不同的语法和语义实现方法；我们只展示了一种为模块写下显式签名的方法。下面是一个签名定义和结构定义的示例，说明结构<code>MyMathLib</code>必须具有签名MATHLIB：</p>
+<pre class="line-numbers language-none"><code class="language-none">signature MATHLIB &#x3D;
+sig
+val fact : int -&gt; int
+val half_pi : real
+val doubler : int -&gt; int
+end
+
+structure MyMathLib :&gt; MATHLIB &#x3D;
+struct
+fun fact x &#x3D;
+    if x&#x3D;0
+    then 1
+    else x * fact (x - 1)
+val half_pi &#x3D; Math.pi &#x2F; 2.0
+fun doubler y &#x3D; y + y
+end<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>由于<code>:&gt; MATHLIB</code>，结构<code>MyMathLib</code>只有在它实际提供了<code>MATHLIB</code>签名所声称的一切，并且有正确的类型时，才会进行类型检查。签名还可以包含数据类型、异常和类型绑定。因为我们在编译<code>MyMathLib</code>时会检查签名，所以我们可以在检查任何使用<code>MyMathLib</code>的代码时使用这些信息。换句话说，我们可以在假设签名正确的情况下检查客户端。</p>
+<h2 id="隐藏事物"><a href="#隐藏事物" class="headerlink" title="隐藏事物"></a>隐藏事物</h2><p>在学习如何使用ML模块向客户端隐藏实现细节之前，让我们记住，将接口与实现分离可能是构建正确、健壮、可重用程序的最重要策略。此外，我们已经可以使用函数以各种方式隐藏实现。例如，这三个函数的参数都是原来的两倍，客户（即调用者）无法判断我们是否将其中一个函数替换为另一个：</p>
+<pre class="line-numbers language-none"><code class="language-none">fun double1 x &#x3D; x + x
+fun double2 x &#x3D; x * 2
+val y &#x3D; 2
+fun double3 x &#x3D; x * y<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+<p>我们用于隐藏实现的另一个特性是在其他函数中本地定义函数。我们可以在知道旧版本不受任何其他代码依赖的情况下，在以后更改、删除或添加本地定义的函数。从工程的角度来看，这是一个关键的关注点分离。我可以改进函数的实现，并且知道我不会破坏任何客户端。相反，客户端所能做的任何事情都不能破坏上述功能的工作方式。</p>
+<p>但是，如果你想有两个顶层函数，其他模块中的代码可以使用它们，并让它们都使用相同的隐藏函数，该怎么办？有很多方法可以做到这一点（例如，创建函数记录），但是如果有一些顶级函数对模块来说是“私有”的，那就很方便了。在ML中，没有像其他语言中那样的“private”关键字。相反，你使用的签名只提及较少的内容：签名中没有明确说明的任何内容都不能从外部使用。例如，如果我们将上面的签名更改为：</p>
+<pre class="line-numbers language-none"><code class="language-none">signature MATHLIB &#x3D;
+sig
+val fact : int -&gt; int
+val half_pi : real
+end<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>然后客户端代码无法调用<code>MyMathLib.doubler</code>。绑定不在范围内，所以不使用它就会通过类型检查。一般来说，我们的想法是，我们可以随心所欲地实现模块，只有在签名中明确列出的绑定才能被客户端直接调用。</p>
+<h2 id="介绍我们的扩展示例"><a href="#介绍我们的扩展示例" class="headerlink" title="介绍我们的扩展示例"></a>介绍我们的扩展示例</h2><p>我们剩下的模块系统研究将以一个实现有理数的小模块为例。虽然真正的库会提供更多功能，但我们的库只支持创建分数、相加两个分数以及将分数转换为字符串。我们的库打算：</p>
+<ul>
+<li>（1）防止分母为零，</li>
+<li>（2）保持分数的简化形式（3/2而不是9/6，4而不是4/1）。</li>
+</ul>
+<p>虽然负分数是可以的，但从内部来看，库从来没有负分母(−3/2而不是3/−2，3/2而不是−3/−2)。下面的结构实现了所有这些想法，使用了辅助函数<code>reduce</code>，它本身使用<code>gcd</code>来化简分数。</p>
+<p>我们的模块维护不变量，如代码顶部附近的注释所示。这些是分数的性质，所有函数都假设为真，并保证为真。如果一个函数违反了不变量，其他函数可能会做错误的事情。例如，<code>gcd</code>函数对于负参数是不正确的，但是因为分母从来都不是负的，所以<code>gcd</code>永远不会用负参数调用：</p>
+<pre class="line-numbers language-none"><code class="language-none">structure Rational1 &#x3D;
+struct
+(* Invariant 1: all denominators &gt; 0
+   Invariant 2: rationals kept in reduced form, including that
+                a Frac never has a denominator of 1 *)
+  datatype rational &#x3D; Whole of int | Frac of int*int
+  exception BadFrac
+  
+(* gcd and reduce help keep fractions reduced,
+   but clients need not know about them *)
+(* they _assume_ their inputs are not negative *)
+  fun gcd (x,y) &#x3D;
+       if x&#x3D;y
+       then x
+       else if x &lt; y
+       then gcd(x,y-x)
+       else gcd(y,x)
+
+   fun reduce r &#x3D;
+       case r of
+           Whole _ &#x3D;&gt; r
+         | Frac(x,y) &#x3D;&gt;
+           if x&#x3D;0
+           then Whole 0
+           else let val d &#x3D; gcd(abs x,y) in (* using invariant 1 *)
+                    if d&#x3D;y
+                    then Whole(x div d)
+                    else Frac(x div d, y div d)
+								end
+
+(* when making a frac, we ban zero denominators *)
+   fun make_frac (x,y) &#x3D;
+       if y &#x3D; 0
+       then raise BadFrac
+       else if y &lt; 0
+       then reduce(Frac(~x,~y))
+       else reduce(Frac(x,y))
+ 
+(* using math properties, both invariants hold of the result
+   assuming they hold of the arguments *)
+   fun add (r1,r2) &#x3D;
+       case (r1,r2) of
+           (Whole(i),Whole(j))   &#x3D;&gt; Whole(i+j)
+         | (Whole(i),Frac(j,k))  &#x3D;&gt; Frac(j+k*i,k)
+         | (Frac(j,k),Whole(i))  &#x3D;&gt; Frac(j+k*i,k)
+         | (Frac(a,b),Frac(c,d)) &#x3D;&gt; reduce (Frac(a*d + b*c, b*d))
+
+(* given invariant, prints in reduced form *)
+   fun toString r &#x3D;
+       case r of
+           Whole i &#x3D;&gt; Int.toString i
+         | Frac(a,b) &#x3D;&gt; (Int.toString a) ^ &quot;&#x2F;&quot; ^ (Int.toString b)
+         
+end<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h2 id="我们的例子的签名"><a href="#我们的例子的签名" class="headerlink" title="我们的例子的签名"></a>我们的例子的签名</h2><p>现在，让我们尝试为示例模块提供一个签名，这样客户端可以使用它，但不会违反其不变量。</p>
+<p>由于<code>reduce</code>和<code>gcd</code>是我们不希望客户依赖或滥用的帮助函数，一个自然签名如下： </p>
+<pre class="line-numbers language-none"><code class="language-none">signature RATIONAL_A &#x3D;
+sig
+datatype rational &#x3D; Frac of int * int | Whole of int
+exception BadFrac
+val make_frac : int * int -&gt; rational
+val add : rational * rational -&gt; rational
+val toString : rational -&gt; string
+end<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>要使用这个签名来隐藏<code>gcd</code>和<code>reduce</code>，我们只需将上面结构定义的第一行更改为<code>structure Rational1:&gt;RATIONAL_A</code>。</p>
+<p>虽然这种方法确保客户端不直接调用<code>gcd</code>或<code>reduce</code>（因为它们在模块外“不存在”），但这还不足以确保正确使用模块中的绑定。模块的“正确”含义取决于模块的规格（而不是ML语言的定义），因此，让我们更具体地了解一下有理数库中所需的一些属性：</p>
+<ul>
+<li>属性：<code>toString</code>始终以简化形式返回字符串表示形式</li>
+<li>属性：没有代码进入无限循环</li>
+<li>属性：没有代码被零除</li>
+<li>属性：没有分母为0的分数</li>
+</ul>
+<p>属性是外部可见的；这是我们向客户承诺的。相比之下，不变量是内部的；它们是有关实现的事实，有助于确保属性。上面的代码维护不变量，并在某些地方依赖它们来确保属性，特别是：</p>
+<ul>
+<li>如果使用参数调用<code>gcd</code>，它将违反属性<code>≤ 0</code>，但由于我们知道分母大于0，<code>reduce</code>可以毫无顾虑地将分母传递给<code>gcd</code>。</li>
+<li><code>toString</code>和大多数情况下的<code>add</code>不需要调用<code>reduce</code>，因为它们可以假设自己的参数已经是简化形式。</li>
+<li><code>add</code>使用了数学的特性，即两个正数的乘积为正数，因此我们知道没有引入非正数分母。</li>
+</ul>
+<p>不幸的是，在签名<code>RATIONAL_A</code>下，客户仍然必须被信任，不能破坏属性和内部变量！因为签名公开了数据类型绑定的定义，所以ML类型系统不会阻止客户端直接使用构造函数<code>Frac</code>和<code>Whole</code>，从而绕过我们建立和保存不变量的所有工作。客户可能会做出像<code>Rational.Frac(1,0), Rational.Frac(3,~2), Rational.Frac(9, 6)</code>这样的“糟糕”分数。根据我们的规范，任何一种都可能最终导致<code>gcd</code>或<code>toString</code>行为不当。虽然我们可能只打算让客户使用<code>make_frac</code>、<code>add</code>和<code>toString</code>，但我们的签名允许更多。</p>
+<p>一种自然的反应是，通过删除行<code>datatype rational=Frac of int*int | other of int</code>来隐藏数据类型绑定。虽然这是正确的直觉，但结果签名毫无意义，将被拒绝：它反复提到一个已知不存在的<code>rational</code>类型。相反，我们想说的是，有一种类型<code>rational</code>，但是客户除了知道它的存在之外，无法知道该类型是什么。在签名中，我们可以使用抽象类型来实现这一点，如该签名所示：</p>
+<pre class="line-numbers language-none"><code class="language-none">signature RATIONAL_B &#x3D;
+sig
+type rational (* type now abstract *)
+exception BadFrac
+val make_frac : int * int -&gt; rational
+val add : rational * rational -&gt; rational
+val toString : rational -&gt; string
+end<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>（当然，我们还必须更改结构定义的第一行，以使用此签名。这总是正确的，因此我们将不再提及它。）</p>
+<p>抽象类型的这个新特性，只有在签名中才有意义，正是我们想要的。它允许我们的模块定义对某个类型的操作，而不显示该类型的实现。语法只是给出一个没有定义的类型绑定。模块的实现没有改变；我们只是在改变客户拥有的信息量。</p>
+<p>现在，客户如何产生有理数？首先，必须使用<code>make_frac</code>。之后，可以使用<code>make_frac</code>或<code>add</code>产生更多的有理数。没有其他方法，所以多亏了我们写<code>make_frac</code>和<code>add</code>的方式，所有的有理数都将以正分母的简化形式出现。</p>
+<p>与<code>RATIONAL_A</code>相比，<code>RATIONAL_B</code>的不同之处是构造器<code>Frac</code>和<code>Whole</code>。因此，客户无法直接创建有理数，也无法在有理数上进行模式匹配。他们不知道如何在内部代表他们。他们甚至不知道<code>rational</code>是作为数据类型实现的。</p>
+<p>抽象类型在编程中非常重要。</p>
+<h2 id="一个可爱的转折：暴露Whole函数"><a href="#一个可爱的转折：暴露Whole函数" class="headerlink" title="一个可爱的转折：暴露Whole函数"></a>一个可爱的转折：暴露<code>Whole</code>函数</h2><p>通过抽象<code>rational</code>类型，我们从客户那里删除了<code>Frac</code>和<code>Whole</code>构造函数。虽然这对于确保客户端不能创建一个没有被化简或分母为非正数的分数至关重要，但只有<code>Frac</code>构造函数有问题。由于允许客户端直接创建整数不会违反我们的规范，我们可以添加一个类似的函数：</p>
+<pre class="line-numbers language-none"><code class="language-none">fun make_whole x &#x3D; Whole x<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>在签名中添加<code>val make_whole : int -&gt; rational</code>。但这是不必要的包装函数；一个较短的实现是：</p>
+<pre class="line-numbers language-none"><code class="language-none">val make_whole &#x3D; Whole<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>当然，客户也无法知道我们使用的是哪种<code>make_whole</code>的实现。但为什么要创建一个和<code>Whole</code>一样的新绑定<code>make_whole</code>？与此相反，我们可以直接将构造函数导出为具有这个签名的函数，而不对我们的结构进行任何改变或添加：</p>
+<pre class="line-numbers language-none"><code class="language-none">signature RATIONAL_C &#x3D;
+sig
+type rational (* type still abstract *)
+exception BadFrac
+val Whole : int -&gt; rational (* client knows only that Whole is a function *)
+val make_frac : int * int -&gt; rational
+val add : rational * rational -&gt; rational
+val toString : rational -&gt; string
+end<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>这个签名告诉客户有一个与<code>Whole</code>绑定的函数，它接收一个<code>int</code>并产生一个<code>rational</code>。这是正确的：这种绑定是结构中的数据类型绑定所创建的东西之一。所以我们暴露了数据类型绑定所提供的部分内容：<code>rational</code>是一个类型，<code>Whole</code>被绑定到一个函数。我们仍然隐藏了数据类型绑定所提供的其余内容：<code>Frac</code>构造函数以及与<code>Frac</code>和<code>Whole</code>的模式匹配。</p>
+<h2 id="签名匹配的规则"><a href="#签名匹配的规则" class="headerlink" title="签名匹配的规则"></a>签名匹配的规则</h2><p>到目前为止，我们对一个结构是否”应该进行类型检查”的讨论是相当非正式的。现在让我们列举更精确的规则，说明结构与签名相匹配意味着什么。(这个术语与模式匹配无关。) 如果一个结构不匹配分配给它的签名，那么这个模块就不会进行类型检查。一个结构<code>Name</code>称与<code>BLAH</code>签名相匹配，如果：</p>
+<ul>
+<li>对于<code>BLAH</code>中的每个val-binding，<code>Name</code>必须有一个与该类型或更一般的类型的绑定（例如，即使签名说它不是，实现也可以是多态的——见下面的例子）。这种绑定可以通过val-绑定、fun-绑定或数据类型绑定来提供。</li>
+<li>对于<code>BLAH</code>中的每个非抽象类型绑定，<code>Name</code>必须有相同的类型绑定。</li>
+<li>对于<code>BLAH</code>中的每个抽象类型绑定，<code>Name</code>必须有一些创建该类型的绑定（要么是数据类型绑定或类型同义词）。</li>
+</ul>
+<p>请注意，<code>Name</code>可以有任何不在签名中的额外绑定。</p>
+<h2 id="等价实现"><a href="#等价实现" class="headerlink" title="等价实现"></a>等价实现</h2><p>鉴于我们的性质和不变的签名<code>RATIONAL_B</code>和<code>RATIONAL_C</code>，我们知道客户端不能依赖任何辅助函数或模块中定义的有理数的实际表示。因此，我们可以用具有相同属性的任何等效实现替换该实现：只要模块中对<code>toString</code>绑定的任何调用都产生相同的结果，客户就永远无法判断。这是另一项重要的软件开发任务：以不破坏客户的方式改进/更改库。知道客户端遵守由ML签名强制执行的抽象边界是非常宝贵的。</p>
+<p>举个简单的例子，我们可以将<code>gcd</code>定义为<code>reduce</code>内部的一个局部函数，并且知道没有客户端会失败，因为他们不能依赖<code>gcd</code>的存在。更有趣的是，让我们改变结构的一个不变量。我们不要把理性简化。相反，让我们在将有理数转换为字符串之前，先将其缩减。这简化了<code>make_frac</code>和<code>add</code>，同时使<code>toString</code>变得复杂，而<code>toString</code>现在是唯一需要<code>reduce</code>的函数。以下是整个结构，它仍然与签名<code>RATIONAL_A</code>、<code>RATIONAL_B</code>或<code>RATIONAL_C</code>匹配：</p>
+<pre class="line-numbers language-none"><code class="language-none">structure Rational2 :&gt; RATIONAL_A (* or B or C *) &#x3D;
+struct
+  datatype rational &#x3D; Whole of int | Frac of int*int
+  exception BadFrac
+  
+   fun make_frac (x,y) &#x3D;
+       if y &#x3D; 0
+       then raise BadFrac
+       else if y &lt; 0
+       then Frac(~x,~y)
+       else Frac(x,y)
+       
+   fun add (r1,r2) &#x3D;
+       case (r1,r2) of
+           (Whole(i),Whole(j))   &#x3D;&gt; Whole(i+j)
+         | (Whole(i),Frac(j,k))  &#x3D;&gt; Frac(j+k*i,k)
+         | (Frac(j,k),Whole(i))  &#x3D;&gt; Frac(j+k*i,k)
+         | (Frac(a,b),Frac(c,d)) &#x3D;&gt; Frac(a*d + b*c, b*d)
+         
+   fun toString r &#x3D;
+       let fun gcd (x,y) &#x3D;
+               if x&#x3D;y
+               then x
+               else if x &lt; y
+               then gcd(x,y-x)
+               else gcd(y,x)
+           fun reduce r &#x3D;
+               case r of
+                   Whole _ &#x3D;&gt; r
+                 | Frac(x,y) &#x3D;&gt;
+                   if x&#x3D;0
+                   then Whole 0
+                   else
+                       let val d &#x3D; gcd(abs x,y) in
+                           if d&#x3D;y
+                           then Whole(x div d)
+                           else Frac(x div d, y div d)
+                       end
+       in
+           case reduce r of
+               Whole i   &#x3D;&gt; Int.toString i
+             | Frac(a,b) &#x3D;&gt; (Int.toString a) ^ &quot;&#x2F;&quot; ^ (Int.toString b)
+       end 
+end<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>如果我们给<code>Rational1</code>和<code>Rational2</code>的签名是<code>RATIONAL_A</code>，两者都会进行类型检查，但客户端仍然可以区分它们。例如，<code>Rational1.toString(Rational1.Frac(21,3))</code>产生 “21/3”，但<code>Rational2.toString(Rational2.Frac(21,3))</code>产生 “7”。但是如果我们给<code>Rational1</code>和<code>Rational2</code>的签名是<code>RATIONAL_B</code>或<code>RATIONAL_C</code>，那么这些结构对于任何可能的客户端都是等价的。这就是为什么一开始就要使用像<code>RATIONAL_B</code>这样的限制性签名的原因：这样你就可以在以后改变结构而不需要检查所有的客户端。</p>
+<p>虽然到目前为止我们的两个结构保持着不同的不变性，但它们确实使用了相同的有理数类型定义。对于签名为<code>RATIONAL_B</code>或<code>RATIONAL_C</code>的结构来说，这并不是必须的；具有这些签名的不同结构可以以不同的方式实现该类型。例如，假设我们意识到，在内部对整数进行特殊编码比它的价值更麻烦。我们可以直接使用<code>int*int</code>并定义这个结构：</p>
+<pre class="line-numbers language-none"><code class="language-none">structure Rational3 :&gt; RATIONAL_B (* or C *)&#x3D;
+struct
+   type rational &#x3D; int*int
+   exception BadFrac
+   
+   fun make_frac (x,y) &#x3D;
+       if y &#x3D; 0
+       then raise BadFrac
+       else if y &lt; 0
+       then (~x,~y)
+       else (x,y)
+       
+   fun Whole i &#x3D; (i,1)
+   
+   fun add ((a,b),(c,d)) &#x3D; (a*d + c*b, b*d)
+   
+   fun toString (x,y) &#x3D;
+       if x&#x3D;0
+       then &quot;0&quot;
+       else
+           let fun gcd (x,y) &#x3D;
+                   if x&#x3D;y
+                   then x
+                   else if x &lt; y
+                   then gcd(x,y-x)
+                   else gcd(y,x)
+               val d &#x3D; gcd (abs x,y)
+               val num &#x3D; x div d
+               val denom &#x3D; y div d
+           in
+               Int.toString num ^ (if denom&#x3D;1
+                                   then &quot;&quot;
+                                   else &quot;&#x2F;&quot; ^ (Int.toString denom))
+           end
+end<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>(这个结构采用了<code>RATIONAL2</code>的方法，即让<code>toString</code>减少分数，但这个问题在很大程度上与<code>rational</code>的定义是正交的。)</p>
+<p>请注意，这个结构提供了<code>RATIONAL_B</code>所要求的一切。函数<code>make_frac</code>很有意思，它接收一个<code>int*int</code>，并返回一个<code>int*int</code>，但是客户不知道实际的返回类型，只知道抽象的<code>rational</code>类型。虽然在签名中给它一个<code>rational</code>的参数类型是匹配的，但这将使该模块毫无用处，因为客户端将无法创建一个有理数类型的值。尽管如此，客户不能向<code>add</code>或<code>toString</code>传递任何<code>int*int</code>；他们必须传递他们知道具有<code>rational</code>类型的东西。就像我们的其他结构一样，这意味着只有<code>make_frac</code>和<code>add</code>才能创建有理数，这也是我们所有的不变性的体现。</p>
+<p>我们的结构与<code>RATIONAL_A</code>不匹配，因为它没有把<code>rational</code>作为一种数据类型提供给构造函数<code>Frac</code>和<code>Whole</code>。</p>
+<p>我们的结构与签名<code>RATIONAL_C</code>相符，因为我们明确地添加了一个正确类型的函数<code>Whole</code>。没有客户能够将我们的”真实函数”与之前的结构将<code>Whole</code>构造函数作为一个函数的做法区分开来。</p>
+<p><code>fun Whole i = (i,1)</code>与<code>val Whole : int -&gt; rational</code>相匹配的事实很有意思。模块中<code>Whole</code>的类型实际上是多态的：<code>&#39;a -&gt; &#39;a * int</code>。ML签名匹配允许<code>&#39;a -&gt; &#39;a * int</code>匹配<code>int -&gt; rational</code>，因为<code>&#39;a -&gt; &#39;a * int</code>比<code>int -&gt; int * int</code>更一般，以及<code>int -&gt; rational</code>是<code>int -&gt; int * int</code>的一个正确抽象。不太正式地说，<code>Whole</code>在模块内有一个多态类型的事实并不意味着签名必须在模块外给它一个多态类型。 事实上，在使用抽象类型时，它不能这样做，因为<code>Whole</code>不能有<code>&#39;a -&gt; int * int</code>或<code>&#39;a -&gt; rational</code>的类型。</p>
+<h2 id="不同的模块定义了不同的类型"><a href="#不同的模块定义了不同的类型" class="headerlink" title="不同的模块定义了不同的类型"></a>不同的模块定义了不同的类型</h2><p>虽然我们定义了不同的结构（例如：<code>Rational1</code>、<code>Rational2</code>和<code>Rational3</code>），并具有相同的签名（例如：<code>RATIONAL_B</code>），但这并不意味着不同结构的绑定可以相互使用。例如，<code>Rational1.toString(Rational2.make_frac(2,3))</code>不会通过类型检查，这是一件好事，因为它将打印出一个未还原的分数。它不进行类型检查的原因是，<code>Rational2.rational</code>和<code>Rational1.rational</code>是不同的类型。它们不是由同一个数据类型绑定创建的，尽管它们碰巧看起来是一样的。此外，在模块外我们也不知道它们看起来是一样的。事实上，<code>Rational3.toString(Rational2.make_frac(2,3))</code>确实不需要进行类型检查，因为<code>Rational3.toString</code>期望一个<code>int*int</code>，但是<code>Rational2.make_frac(2,3))</code>返回一个由<code>Rational2.Frac</code>构造函数产生的值。</p>
+<h2 id="动机和定义等价"><a href="#动机和定义等价" class="headerlink" title="动机和定义等价"></a>动机和定义等价</h2><p>一段代码与另一段代码”等价”的想法是编程和计算机科学的基础。每当你简化一些代码或说”这是做同样事情的另一种方法”时，你都在非正式地思考等价性。这种推断在几种常见的情况下都会出现：</p>
+<ul>
+<li>代码维护：你能在不改变程序其他部分行为方式的情况下简化、清理或重组代码吗？</li>
+<li>向后兼容：你能在不改变任何现有功能工作方式的情况下增加新的功能吗？</li>
+<li>优化：你能用更快或更节省空间的实现来取代代码吗？</li>
+<li>抽象性：外部客户能看出我是否对我的代码做了这个改动吗？</li>
+</ul>
+<p>还要注意的是，我们在前面的讲座中使用限制性签名，主要是为了等价：通过使用更严格的接口，我们让更多不同的实现变得等价，因为客户端无法分辨出区别。</p>
+<p>我们想要一个精确的等价定义，这样我们就可以决定某些形式的代码维护或签名的不同实现是否真的可以。我们不希望这个定义过于严格，以至于我们不能进行修改以改进代码，但我们也不希望这个定义过于宽松，以至于用一个 “等价”的函数替换一个函数会导致我们的程序产生一个不同的答案。希望学习等价的概念和理论能够改善你看待用任何语言编写的软件的方式。</p>
+<p>有许多不同的可能的定义，它们以略微不同的方式解决这种严格/宽松的矛盾。我们将专注于一个有用的、被设计和实现编程语言的人普遍认为的定义。我们还将简化讨论，假设我们有一个函数的两个实现，我们想知道它们是否等价。</p>
+<p>我们的定义背后的直觉是这样的：</p>
+<ul>
+<li><p>如果一个函数<code>f</code>与一个函数<code>g</code>（或类似的其他代码片断）产生相同的答案，并具有相同的副作用，无论它们在任何程序中以任何参数被调用，都是等价的。</p>
+</li>
+<li><p>等价性不需要相同的运行时间、相同的内部数据结构的使用、相同的辅助函数等等。所有这些东西都被认为是”不可观察的”，即不影响等价性的实现细节。</p>
+</li>
+</ul>
+<p>作为一个例子，考虑两种非常不同的列表排序方式。只要它们对所有的输入都产生相同的最终答案，那么不管它们在内部是如何工作的，或者其中一个是否更快，它们仍然可以是等价的。但是，如果它们对某些列表的行为不同，也许是对有重复元素的列表，那么它们就不是等价的。</p>
+<p>然而，上面的讨论是通过隐含地假设函数总是返回并且除了产生答案之外没有其他作用而简化的。更确切地说，我们需要这两个函数在相同的环境下给出相同的参数：</p>
+<ol>
+<li>产生相同的结果（如果它们产生一个结果）</li>
+<li>具有相同的（非）终止行为；也就是说，如果一个永远运行，另一个也必须永远运行 </li>
+<li>以相同的方式突变相同的（客户可见的）内存</li>
+<li>做同样的输入/输出 </li>
+<li>引发相同的异常</li>
+</ol>
+<p>这些要求都很重要，因为我们知道，如果我们有两个等价的函数，我们可以用另一个函数替换其中一个，程序中任何地方的使用都不会有不同的表现。</p>
+<h2 id="无副作用编程的另一个好处"><a href="#无副作用编程的另一个好处" class="headerlink" title="无副作用编程的另一个好处"></a>无副作用编程的另一个好处</h2><p>要确保两个函数有相同的副作用（突变引用，进行输入/输出等），一个简单的方法是根本没有副作用。这正是ML等函数式语言所鼓励的。是的，在ML中，你可以让一个函数主体突变一些全局引用或其他东西，但这通常是不好的风格。其他函数式语言是纯函数式语言，这意味着在（大多数）函数中真的没有办法进行突变。</p>
+<p>如果你”保持功能化”，不在函数体中进行突变、打印等，作为一个政策问题，那么调用者就可以假设很多其他方式无法实现的等价关系。例如，我们可以把<code>(f x)+(f x)</code>替换成<code>(f x)*2</code>吗？一般来说，这可能是一件错误的事情，因为调用<code>f</code>可能会更新一些计数器或打印一些东西。在ML中，这也是可能的，但作为一个风格问题，可能性要小得多，所以我们倾向于让更多的东西成为等价物。在一个纯粹的函数式语言中，我们保证替换不会改变任何东西。总的来说，当你试图决定两段代码是否等价时，突变真的会妨碍你的工作——这是避免突变的一个重要原因。</p>
+<p>在维护无副作用的程序时，除了能够删除重复的计算（如上面的<code>(f x)</code>），我们还可以更自由地重新排列表达式。例如，在Java、C等语言中：</p>
+<pre class="line-numbers language-none"><code class="language-none">int a &#x3D; f(x);
+int b &#x3D; g(y);
+return b - a;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+<p>可能会产生与以下不同的结果：</p>
+<pre class="line-numbers language-none"><code class="language-none">return g(y) - f(x);<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>因为<code>f</code>和<code>g</code>可以以不同的顺序被调用。同样，这在ML中也是可能的，但如果我们避免副作用，这就不太可能了。（然而，我们可能仍然需要担心不同的异常被抛出和其他细节）。</p>
+<h2 id="标准等价"><a href="#标准等价" class="headerlink" title="标准等价"></a>标准等价</h2><p>等价是很微妙的，特别是当你试图决定两个函数是否等价而不知道它们可能被调用的所有地方时。然而，这种情况很常见，比如你在编写一个未知客户可能使用的库时。我们现在考虑几种在任何情况下都能保证等价的情况，所以这些都是很好的经验法则，也是对函数和闭包如何工作的很好提醒。</p>
+<p>首先，回忆一下我们已经学过的各种形式的语法糖。我们总是可以在函数体中使用或不使用语法糖，并得到一个等价的函数。如果我们不能，那么我们所使用的结构体实际上就不是语法糖。例如，不管<code>g</code>被绑定在什么地方，<code>f</code>的这些定义是等价的：</p>
+<pre class="line-numbers language-none"><code class="language-none">fun f x &#x3D; 
+    if x 
+    then g x
+    else false
+
+fun f x &#x3D;
+    x andalso g<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>但请注意，如果<code>g</code>可能有副作用或不终止，我们不一定能用<code>if g x then x else false</code>来代替<code>x andalso g x</code>。</p>
+<p>其次，我们可以改变一个局部变量（或函数参数）的名称，只要我们一致地改变它的所有用途。例如，这两个<code>f</code>的定义是等价的：</p>
+<pre class="line-numbers language-none"><code class="language-none">val y &#x3D; 14 
+fun f x &#x3D; x+y+x
+
+val y &#x3D; 14
+fun f z &#x3D; z+y+z<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>但有一条规则：在选择新的变量名时，不能选择函数体已经在使用的变量来指代其他东西。例如，如果我们试图用<code>y</code>代替<code>x</code>，就会得到<code>fun y = y+y+y</code>，这与我们开始使用的函数不一样。一个以前未使用过的变量从来不是一个问题。</p>
+<p>第三，我们可以使用或不使用辅助函数。例如，<code>g</code>的这两个定义是等价的：</p>
+<pre class="line-numbers language-none"><code class="language-none">val y &#x3D; 14
+fun g z &#x3D; (z+y+z)+z 
+
+val y &#x3D; 14
+fun f x &#x3D; x+y+x
+fun g z &#x3D; (f z)+z<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>同样，我们必须注意不要因为<code>f</code>和<code>g</code>有潜在的不同环境而改变变量的含义。例如，这里<code>g</code>的定义是不等价的：</p>
+<pre class="line-numbers language-none"><code class="language-none">val y &#x3D; 14
+val y &#x3D; 7
+fun g z &#x3D; (z+y+z)+z
+
+val y &#x3D; 14
+fun f x &#x3D; x+y+x
+val y &#x3D; 7
+fun g z &#x3D; (f z)+z<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>第四，正如我们之前用匿名函数解释的那样，不必要的函数包装是很差的风格，因为有一个更简单的等价方法。例如，<code>fun g y = f y</code>和<code>val g = f</code>总是相等的。然而，又一次出现了一个微妙的复杂情况。当我们有一个像<code>f</code>这样的变量与我们正在调用的函数绑定时，这个方法是有效的，但在更普遍的情况下，我们可能有一个表达式，它被评估为一个我们随后调用的函数。对于任何表达式<code>e</code>来说，<code>fun g y = e y</code>和<code>val g = e</code>总是相同的吗？不是的。</p>
+<p>作为一个愚蠢的例子，考虑<code>fun h() (print &quot;hi&quot; ; fn x =&gt; x+x)</code>和<code>e</code>是<code>h()</code>。那么<code>fun g y = (h()) y</code>是一个每次被调用都会打印的函数。但<code>val g = h()</code>是一个不打印的函数——程序在为<code>g</code>创建绑定时将打印”<code>hi</code>“一次。这不应该是神秘的：我们知道val绑定”立即”评估其右手边，但函数体在被调用前不会被评估。</p>
+<p>一个不太愚蠢的例子是，如果<code>h</code>可能引发一个异常，而不是返回一个函数。</p>
+<p>第五，<code>let val p = e1 in e2 end</code>几乎可以成为<code>(fn p =&gt; e2) e1</code>语法糖。毕竟，对于任何表达式<code>e1</code>和<code>e2</code>以及模式<code>p</code>，这两段代码：</p>
+<ul>
+<li>将<code>e1</code>评估为一个值 </li>
+<li>将该值与模式<code>p</code>匹配 </li>
+<li>如果匹配，将<code>e2</code>评估为由模式匹配扩展的环境中的一个值 </li>
+<li>返回评估<code>e2</code>的结果 </li>
+</ul>
+<p>由于这两段代码”做”的是完全相同的事情，它们必须是等价的。在Racket中，情况会是这样的（语法不同）。在ML中，唯一的区别是类型检查器：<code>p</code>中的变量在let-版本中允许有多态类型，但在匿名函数版本中不允许。</p>
+<p>例如，考虑<code>let val x = (fn y =&gt; y) in (x 0, x true) end</code>。这个愚蠢的代码进行了类型检查并返回<code>(0, true)</code>，因为x的类型是<code>&#39;a-&gt;’a</code>。但是<code>(fn x =&gt; (x 0, x true)) (fn y =&gt; y)</code>并没有进行类型检查，因为我们不能给<code>x</code>提供非多态的类型，而且函数参数不能有多态的类型。这就是ML中类型推断的工作方式。</p>
+<h2 id="重新审视我们的”等价物”定义"><a href="#重新审视我们的”等价物”定义" class="headerlink" title="重新审视我们的”等价物”定义"></a>重新审视我们的”等价物”定义</h2><p>根据设计，我们对等价的定义忽略了一个函数需要多少时间或空间来评估。因此，两个总是返回相同答案的函数可以是等价的，即使一个花了一纳秒，另一个花了一百万年。从某种意义上说，这是一件好事，因为这个定义可以让我们用纳秒版本取代百万年版本。</p>
+<p>但显然其他定义也很重要。数据结构和算法课程研究渐进复杂度，正是为了将一些算法区分为”更好的”（这显然意味着一些”差异”），即使这些更好的算法产生相同的答案。此外，渐进复杂度在设计上忽略了在某些程序中可能很重要的”恒定因素开销”，所以这种更严格的等价定义可能又太宽松了：我们实际上可能想知道两个实现所花的时间”差不多”。</p>
+<p>这些定义中没有一个是优越的。所有这些都是计算机科学家一直在使用的有价值的观点。可观察的行为（我们的定义）、渐进复杂性和实际性能都是从事软件工作的人几乎每天都会使用的智力工具。</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">Doraemonzzz</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="http://www.doraemonzzz.com/2022/03/13/2022-3-13-Programming-Languages-Part-A-Section4-%E7%BF%BB%E8%AF%91/">http://www.doraemonzzz.com/2022/03/13/2022-3-13-Programming-Languages-Part-A-Section4-%E7%BF%BB%E8%AF%91/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://www.doraemonzzz.com" target="_blank">Doraemonzzz</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/Coursera-Programming-Languages/">Coursera Programming Languages</a></div><div class="post_share"><div class="social-share" data-image="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2022/03/15/2022-3-15-OSTEP-Chapter-4-%E5%9B%9E%E9%A1%BE/"><img class="prev-cover" src= "/img/loading.gif" data-lazy-src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">OSTEP Chapter 4 回顾</div></div></a></div><div class="next-post pull-right"><a href="/2022/03/13/2022-3-13-Programming-Languages-Part-A-Section3-%E7%BF%BB%E8%AF%91/"><img class="next-cover" src= "/img/loading.gif" data-lazy-src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">Programming Languages Part A Section3 翻译</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span> 相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2022/01/10/2022-1-10-Programming-Languages-Part-A-HW0/" title="Programming Languages Part A HW0"><img class="cover" src= "/img/loading.gif" data-lazy-src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-01-10</div><div class="title">Programming Languages Part A HW0</div></div></a></div><div><a href="/2022/01/10/2022-1-10-Programming-Languages-Part-A-Week-1笔记/" title="Programming Languages Part A Week 1笔记"><img class="cover" src= "/img/loading.gif" data-lazy-src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-01-10</div><div class="title">Programming Languages Part A Week 1笔记</div></div></a></div><div><a href="/2022/01/10/2022-1-10-Programming-Languages-Part-A-HW1/" title="Programming Languages Part A HW1"><img class="cover" src= "/img/loading.gif" data-lazy-src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-01-10</div><div class="title">Programming Languages Part A HW1</div></div></a></div><div><a href="/2022/02/28/2022-2-28-Programming-Languages-Part-A-HW3-Extra-Practice-Problems/" title="Programming Languages Part A HW3 Extra Practice Problems"><img class="cover" src= "/img/loading.gif" data-lazy-src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-02-28</div><div class="title">Programming Languages Part A HW3 Extra Practice Problems</div></div></a></div><div><a href="/2022/03/13/2022-3-13-Programming-Languages-Part-A-Exam/" title="Programming Languages Part A Exam"><img class="cover" src= "/img/loading.gif" data-lazy-src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-03-13</div><div class="title">Programming Languages Part A Exam</div></div></a></div><div><a href="/2022/03/13/2022-3-13-Programming-Languages-Part-A-Practice-Exam/" title="Programming Languages Part A Practice Exam"><img class="cover" src= "/img/loading.gif" data-lazy-src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-03-13</div><div class="title">Programming Languages Part A Practice Exam</div></div></a></div></div></div><hr/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div><div id="comment-switch"><span class="first-comment">Valine</span><span class="switch-btn"></span><span class="second-comment">Livere</span></div></div><div class="comment-wrap"><div><div class="vcomment" id="vcomment"></div></div><div><div id="lv-container" data-id="city" data-uid="MTAyMC8zNDcxOS8xMTI1Ng=="></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="card-info-avatar is-center"><img class="avatar-img" src= "/img/loading.gif" data-lazy-src="https://github.com/Doraemonzzz/md-photo/blob/master/%E5%A4%B4%E5%83%8F.jpg?raw=true" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/><div class="author-info__name">Doraemonzzz</div><div class="author-info__description">个人博客，主要记录有关机器学习，数学以及计算机科学的笔记</div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">711</div></a></div><div class="card-info-data-item is-center"><a href="/tags/"><div class="headline">标签</div><div class="length-num">73</div></a></div><div class="card-info-data-item is-center"><a href="/categories/"><div class="headline">分类</div><div class="length-num">29</div></a></div></div><a class="button--animated" id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/Doraemonzzz"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/Doraemonzzz" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="/doraemon_zzz@163.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a><a class="social-icon" href="https://space.bilibili.com/291079982" target="_blank" title="Bilibili"><i class="iconfont icon-bilibili"></i></a><a class="social-icon" href="/atom.xml" target="_blank" title=""><i class="fa fa-rss"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn card-announcement-animation"></i><span>公告</span></div><div class="announcement_content">暂无公告</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Coursera%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC4%E8%8A%82%E6%80%BB%E7%BB%93"><span class="toc-number">1.</span> <span class="toc-text">Coursera编程语言课程 第4节总结</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%9B%AE%E5%BD%95"><span class="toc-number">1.1.</span> <span class="toc-text">目录</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF%E7%B1%BB%E5%9E%8B%E6%8E%A8%E6%96%AD%EF%BC%9F"><span class="toc-number">1.2.</span> <span class="toc-text">什么是类型推断？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ML%E7%B1%BB%E5%9E%8B%E6%8E%A8%E6%96%AD%E6%A6%82%E8%BF%B0"><span class="toc-number">1.3.</span> <span class="toc-text">ML类型推断概述</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9B%B4%E8%AF%A6%E5%B0%BD%E7%9A%84ML%E7%B1%BB%E5%9E%8B%E6%8E%A8%E6%96%AD%E4%BE%8B%E5%AD%90"><span class="toc-number">1.4.</span> <span class="toc-text">更详尽的ML类型推断例子</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A4%9A%E6%80%81%E7%B1%BB%E5%9E%8B%E4%BE%8B%E5%AD%90"><span class="toc-number">1.5.</span> <span class="toc-text">多态类型例子</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%AF%E9%80%89%EF%BC%9A%E5%80%BC%E7%9A%84%E9%99%90%E5%88%B6"><span class="toc-number">1.6.</span> <span class="toc-text">可选：值的限制</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%AF%E9%80%89%EF%BC%9A%E4%BD%BF%E7%B1%BB%E5%9E%8B%E6%8E%A8%E6%96%AD%E6%9B%B4%E5%8A%A0%E5%9B%B0%E9%9A%BE%E7%9A%84%E4%B8%80%E4%BA%9B%E4%BA%8B%E6%83%85"><span class="toc-number">1.7.</span> <span class="toc-text">可选：使类型推断更加困难的一些事情</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%9B%B8%E4%BA%92%E9%80%92%E5%BD%92"><span class="toc-number">1.8.</span> <span class="toc-text">相互递归</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%90%8D%E7%A7%B0%E7%A9%BA%E9%97%B4%E7%AE%A1%E7%90%86%E6%A8%A1%E5%9D%97"><span class="toc-number">1.9.</span> <span class="toc-text">名称空间管理模块</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AD%BE%E5%90%8D"><span class="toc-number">1.10.</span> <span class="toc-text">签名</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%9A%90%E8%97%8F%E4%BA%8B%E7%89%A9"><span class="toc-number">1.11.</span> <span class="toc-text">隐藏事物</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%8B%E7%BB%8D%E6%88%91%E4%BB%AC%E7%9A%84%E6%89%A9%E5%B1%95%E7%A4%BA%E4%BE%8B"><span class="toc-number">1.12.</span> <span class="toc-text">介绍我们的扩展示例</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%88%91%E4%BB%AC%E7%9A%84%E4%BE%8B%E5%AD%90%E7%9A%84%E7%AD%BE%E5%90%8D"><span class="toc-number">1.13.</span> <span class="toc-text">我们的例子的签名</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E4%B8%AA%E5%8F%AF%E7%88%B1%E7%9A%84%E8%BD%AC%E6%8A%98%EF%BC%9A%E6%9A%B4%E9%9C%B2Whole%E5%87%BD%E6%95%B0"><span class="toc-number">1.14.</span> <span class="toc-text">一个可爱的转折：暴露Whole函数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AD%BE%E5%90%8D%E5%8C%B9%E9%85%8D%E7%9A%84%E8%A7%84%E5%88%99"><span class="toc-number">1.15.</span> <span class="toc-text">签名匹配的规则</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AD%89%E4%BB%B7%E5%AE%9E%E7%8E%B0"><span class="toc-number">1.16.</span> <span class="toc-text">等价实现</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%8D%E5%90%8C%E7%9A%84%E6%A8%A1%E5%9D%97%E5%AE%9A%E4%B9%89%E4%BA%86%E4%B8%8D%E5%90%8C%E7%9A%84%E7%B1%BB%E5%9E%8B"><span class="toc-number">1.17.</span> <span class="toc-text">不同的模块定义了不同的类型</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8A%A8%E6%9C%BA%E5%92%8C%E5%AE%9A%E4%B9%89%E7%AD%89%E4%BB%B7"><span class="toc-number">1.18.</span> <span class="toc-text">动机和定义等价</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%97%A0%E5%89%AF%E4%BD%9C%E7%94%A8%E7%BC%96%E7%A8%8B%E7%9A%84%E5%8F%A6%E4%B8%80%E4%B8%AA%E5%A5%BD%E5%A4%84"><span class="toc-number">1.19.</span> <span class="toc-text">无副作用编程的另一个好处</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A0%87%E5%87%86%E7%AD%89%E4%BB%B7"><span class="toc-number">1.20.</span> <span class="toc-text">标准等价</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%87%8D%E6%96%B0%E5%AE%A1%E8%A7%86%E6%88%91%E4%BB%AC%E7%9A%84%E2%80%9D%E7%AD%89%E4%BB%B7%E7%89%A9%E2%80%9D%E5%AE%9A%E4%B9%89"><span class="toc-number">1.21.</span> <span class="toc-text">重新审视我们的”等价物”定义</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2022/03/15/2022-3-15-OSTEP-Chapter-7-%E5%9B%9E%E9%A1%BE/" title="OSTEP Chapter 7 回顾"><img src= "/img/loading.gif" data-lazy-src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="OSTEP Chapter 7 回顾"/></a><div class="content"><a class="title" href="/2022/03/15/2022-3-15-OSTEP-Chapter-7-%E5%9B%9E%E9%A1%BE/" title="OSTEP Chapter 7 回顾">OSTEP Chapter 7 回顾</a><time datetime="2022-03-15T13:40:00.000Z" title="发表于 2022-03-15 21:40:00">2022-03-15</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/03/15/2022-3-15-OSTEP-Chapter-6-%E5%9B%9E%E9%A1%BE/" title="OSTEP Chapter 6 回顾"><img src= "/img/loading.gif" data-lazy-src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="OSTEP Chapter 6 回顾"/></a><div class="content"><a class="title" href="/2022/03/15/2022-3-15-OSTEP-Chapter-6-%E5%9B%9E%E9%A1%BE/" title="OSTEP Chapter 6 回顾">OSTEP Chapter 6 回顾</a><time datetime="2022-03-15T13:38:00.000Z" title="发表于 2022-03-15 21:38:00">2022-03-15</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/03/15/2022-3-15-OSTEP-Chapter-5-%E5%9B%9E%E9%A1%BE/" title="OSTEP Chapter 5 回顾"><img src= "/img/loading.gif" data-lazy-src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="OSTEP Chapter 5 回顾"/></a><div class="content"><a class="title" href="/2022/03/15/2022-3-15-OSTEP-Chapter-5-%E5%9B%9E%E9%A1%BE/" title="OSTEP Chapter 5 回顾">OSTEP Chapter 5 回顾</a><time datetime="2022-03-15T13:37:00.000Z" title="发表于 2022-03-15 21:37:00">2022-03-15</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/03/15/2022-3-15-OSTEP-Chapter-4-%E5%9B%9E%E9%A1%BE/" title="OSTEP Chapter 4 回顾"><img src= "/img/loading.gif" data-lazy-src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="OSTEP Chapter 4 回顾"/></a><div class="content"><a class="title" href="/2022/03/15/2022-3-15-OSTEP-Chapter-4-%E5%9B%9E%E9%A1%BE/" title="OSTEP Chapter 4 回顾">OSTEP Chapter 4 回顾</a><time datetime="2022-03-15T13:31:00.000Z" title="发表于 2022-03-15 21:31:00">2022-03-15</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/03/13/2022-3-13-Programming-Languages-Part-A-Section4-%E7%BF%BB%E8%AF%91/" title="Programming Languages Part A Section4 翻译"><img src= "/img/loading.gif" data-lazy-src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Programming Languages Part A Section4 翻译"/></a><div class="content"><a class="title" href="/2022/03/13/2022-3-13-Programming-Languages-Part-A-Section4-%E7%BF%BB%E8%AF%91/" title="Programming Languages Part A Section4 翻译">Programming Languages Part A Section4 翻译</a><time datetime="2022-03-13T07:19:00.000Z" title="发表于 2022-03-13 15:19:00">2022-03-13</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2018 - 2022 By Doraemonzzz</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="font-plus" type="button" title="放大字体"><i class="fas fa-plus"></i></button><button id="font-minus" type="button" title="缩小字体"><i class="fas fa-minus"></i></button><button id="translateLink" type="button" title="简繁转换">简</button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div id="local-search"><div class="search-dialog"><div class="search-dialog__title" id="local-search-title">本地搜索</div><div id="local-input-panel"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div></div><hr/><div id="local-search-results"></div><span class="search-close-button"><i class="fas fa-times"></i></span></div><div id="search-mask"></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="/js/tw_cn.js"></script><script src="https://cdn.jsdelivr.net/npm/vanilla-lazyload/dist/lazyload.iife.min.js"></script><script src="/js/search/local-search.js"></script><script>var preloader = {
+  endLoading: () => {
+    document.body.style.overflow = 'auto';
+    document.getElementById('loading-box').classList.add("loaded")
+  },
+  initLoading: () => {
+    document.body.style.overflow = '';
+    document.getElementById('loading-box').classList.remove("loaded")
+
+  }
+}
+window.addEventListener('load',preloader.endLoading())</script><div class="js-pjax"><script>if (!window.MathJax) {
+  window.MathJax = {
+    tex: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]],
+      tags: 'ams'
+    },
+    chtml: {
+      scale: 1.25
+    },
+    options: {
+      renderActions: {
+        findScript: [10, doc => {
+          for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+            const display = !!node.type.match(/; *mode=display/)
+            const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+            const text = document.createTextNode('')
+            node.parentNode.replaceChild(text, node)
+            math.start = {node: text, delim: '', n: 0}
+            math.end = {node: text, delim: '', n: 0}
+            doc.math.push(math)
+          }
+        }, '']
+      }
+    }
+  }
+  
+  const script = document.createElement('script')
+  script.src = 'https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js'
+  script.id = 'MathJax-script'
+  script.async = true
+  document.head.appendChild(script)
+} else {
+  MathJax.startup.document.state(0)
+  MathJax.texReset()
+  MathJax.typeset()
+}</script><script>function loadValine () {
+  function initValine () {
+    const valine = new Valine(Object.assign({
+      el: '#vcomment',
+      appId: 'IpnmxCW9CvYWIXbol5QXsegX-MdYXbMMI',
+      appKey: 'w57DVCdbxcyB1TYYagMIMJIU',
+      placeholder: 'Please leave your footprints',
+      avatar: 'monsterid',
+      meta: 'nick,mail,link'.split(','),
+      pageSize: '10',
+      lang: 'en',
+      recordIP: false,
+      serverURLs: '',
+      emojiCDN: '',
+      emojiMaps: "",
+      enableQQ: false,
+      path: window.location.pathname,
+      requiredFields: ["nick,mail"],
+      visitor: true
+    }, null))
+  }
+
+  if (typeof Valine === 'function') initValine() 
+  else getScript('https://cdn.jsdelivr.net/npm/valine/dist/Valine.min.js').then(initValine)
+}
+
+if ('Valine' === 'Valine' || !false) {
+  if (false) btf.loadComment(document.getElementById('vcomment'),loadValine)
+  else setTimeout(loadValine, 0)
+} else {
+  function loadOtherComment () {
+    loadValine()
+  }
+}</script><script>function loadLivere () {
+  if (typeof LivereTower === 'object') {
+    window.LivereTower.init()
+  }
+  else {
+    (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+    })(document, 'script');
+  }
+}
+
+if ('Valine' === 'Livere' || !false) {
+  if (false) btf.loadComment(document.getElementById('lv-container'), loadLivere)
+  else loadLivere()
+}
+else {
+  function loadOtherComment () {
+    loadLivere()
+  }
+}</script></div><script defer="defer" id="fluttering_ribbon" mobile="false" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/canvas-fluttering-ribbon.min.js"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

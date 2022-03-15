@@ -1,0 +1,818 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Programming Languages Part A Section3 翻译 | Doraemonzzz</title><meta name="keywords" content="Coursera Programming Languages"><meta name="author" content="Doraemonzzz"><meta name="copyright" content="Doraemonzzz"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="这里对Section 3进行翻译。 课程主页： https:&#x2F;&#x2F;www.coursera.org&#x2F;learn&#x2F;programming-languages&#x2F;home B站搬运： https:&#x2F;&#x2F;www.bilibili.com&#x2F;video&#x2F;BV1dL411j7L7">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Programming Languages Part A Section3 翻译">
+<meta property="og:url" content="http://www.doraemonzzz.com/2022/03/13/2022-3-13-Programming-Languages-Part-A-Section3-%E7%BF%BB%E8%AF%91/index.html">
+<meta property="og:site_name" content="Doraemonzzz">
+<meta property="og:description" content="这里对Section 3进行翻译。 课程主页： https:&#x2F;&#x2F;www.coursera.org&#x2F;learn&#x2F;programming-languages&#x2F;home B站搬运： https:&#x2F;&#x2F;www.bilibili.com&#x2F;video&#x2F;BV1dL411j7L7">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg">
+<meta property="article:published_time" content="2022-03-13T04:30:00.000Z">
+<meta property="article:modified_time" content="2022-03-13T05:16:11.011Z">
+<meta property="article:author" content="Doraemonzzz">
+<meta property="article:tag" content="Coursera Programming Languages">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg"><link rel="shortcut icon" href="https://github.com/Doraemonzzz/md-photo/blob/master/%E5%A4%B4%E5%83%8F.jpg?raw=true"><link rel="canonical" href="http://www.doraemonzzz.com/2022/03/13/2022-3-13-Programming-Languages-Part-A-Section3-%E7%BF%BB%E8%AF%91/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//www.google-analytics.com" crossorigin=""/><link rel="preconnect" href="//hm.baidu.com"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><script>var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?6f00f37f957f0608abb8c571105456f0";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script><script async="async" src="https://www.googletagmanager.com/gtag/js?id=UA-G-RE4B1LKRZD"></script><script>window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'UA-G-RE4B1LKRZD');
+</script><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"search.xml","languages":{"hits_empty":"找不到您查询的内容：${query}"}},
+  translate: {"defaultEncoding":2,"translateDelay":0,"msgToTraditionalChinese":"繁","msgToSimplifiedChinese":"簡"},
+  noticeOutdate: {"limitDay":500,"position":"top","messagePrev":"距离上次更新已经","messageNext":"天了，文章内容可能已经过时。"},
+  highlight: {"plugin":"prismjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":200},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    jQuery: 'https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js',
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+    },
+    fancybox: {
+      js: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css'
+    }
+  },
+  isPhotoFigcaption: true,
+  islazyload: true,
+  isanchor: true
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'Programming Languages Part A Section3 翻译',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2022-03-13 13:16:11'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const fontSizeVal = saveToLocal.get('global-font-size')
+    if (fontSizeVal !== undefined) {
+      document.documentElement.style.setProperty('--global-font-size', fontSizeVal + 'px')
+    }
+    })(window)</script><link rel="stylesheet" href="/css/bilibili.css" media="defer" onload="this.media='all'"><meta name="google-site-verification" content="c4v-NmuUZRgl3cvtg9GKswryK1YLaPztd_5M-df5VNI" /><meta name="generator" content="Hexo 5.4.0"><link rel="alternate" href="/atom.xml" title="Doraemonzzz" type="application/atom+xml">
+</head><body><div id="loading-box"><div class="loading-left-bg"></div><div class="loading-right-bg"></div><div class="spinner-box"><div class="configure-border-1"><div class="configure-core"></div></div><div class="configure-border-2"><div class="configure-core"></div></div><div class="loading-word">加载中...</div></div></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="author-avatar"><img class="avatar-img" src= "/img/loading.gif" data-lazy-src="https://github.com/Doraemonzzz/md-photo/blob/master/%E5%A4%B4%E5%83%8F.jpg?raw=true" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">文章</div><div class="length-num">711</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">标签</div><div class="length-num">73</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/categories/"><div class="headline">分类</div><div class="length-num">29</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-chart-pie"></i><span> 博客统计</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/charts/"><i class="fa-fw far fa-chart-bar"></i><span> 文章统计</span></a></li><li><a class="site-page child" href="/census/"><i class="fa-fw fas fa-chart-area"></i><span> 访问统计</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/top/"><i class="fa-fw fab fa-hotjar"></i><span> 阅读排行榜</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fa fa-heartbeat"></i><span> 娱乐</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于我</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">Doraemonzzz</a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-chart-pie"></i><span> 博客统计</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/charts/"><i class="fa-fw far fa-chart-bar"></i><span> 文章统计</span></a></li><li><a class="site-page child" href="/census/"><i class="fa-fw fas fa-chart-area"></i><span> 访问统计</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/top/"><i class="fa-fw fab fa-hotjar"></i><span> 阅读排行榜</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fa fa-heartbeat"></i><span> 娱乐</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于我</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">Programming Languages Part A Section3 翻译</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2022-03-13T04:30:00.000Z" title="发表于 2022-03-13 12:30:00">2022-03-13</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2022-03-13T05:16:11.011Z" title="更新于 2022-03-13 13:16:11">2022-03-13</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B/">函数式编程</a></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-tag"></i><a class="article-meta__tags" href="/tags/Coursera-Programming-Languages/">Coursera Programming Languages</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">15.7k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>54分钟</span></span><span class="post-meta-separator">|</span><span class="leancloud_visitors" id="/2022/03/13/2022-3-13-Programming-Languages-Part-A-Section3-%E7%BF%BB%E8%AF%91/" data-flag-title="Programming Languages Part A Section3 翻译"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span class="leancloud-visitors-count"></span></span><span class="post-meta-separator">|</span><span class="post-meta-commentcount"><i class="far fa-comments fa-fw post-meta-icon"></i><span class="post-meta-label">评论数:</span><a href="/2022/03/13/2022-3-13-Programming-Languages-Part-A-Section3-%E7%BF%BB%E8%AF%91/#post-comment" itemprop="discussionUrl"><span class="valine-comment-count" data-xid="/2022/03/13/2022-3-13-Programming-Languages-Part-A-Section3-%E7%BF%BB%E8%AF%91/" itemprop="commentCount"></span></a></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p>这里对Section 3进行翻译。</p>
+<p>课程主页：</p>
+<p><a target="_blank" rel="noopener" href="https://www.coursera.org/learn/programming-languages/home">https://www.coursera.org/learn/programming-languages/home</a></p>
+<p>B站搬运：</p>
+<p><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1dL411j7L7">https://www.bilibili.com/video/BV1dL411j7L7</a></p>
+<span id="more"></span>
+<h1 id="Coursera编程语言课程-第3节总结"><a href="#Coursera编程语言课程-第3节总结" class="headerlink" title="Coursera编程语言课程 第3节总结"></a>Coursera编程语言课程 第3节总结</h1><p>标准说明：本总结涵盖的材料与课堂视频以及随视频发布的材料（幻灯片、代码）大致相同。它有助于以叙述的方式阅读材料，并将整个课程部分的材料放在一份文件中，特别是在以后复习材料时。请在讨论板上报告这些笔记中的错误。</p>
+<h2 id="目录"><a href="#目录" class="headerlink" title="目录"></a>目录</h2><ul>
+<li>介绍和一些术语</li>
+<li>将函数作为参数</li>
+<li>以多态类型和函数作为参数</li>
+<li>匿名函数</li>
+<li>不必要的函数封装</li>
+<li>Maps和filters</li>
+<li>返回函数 </li>
+<li>不仅仅适用于数字和列表 </li>
+<li>词法作用域</li>
+<li>环境和闭包</li>
+<li>（愚蠢的）包括高阶函数的例子</li>
+<li>为什么要使用词法作用域</li>
+<li>将闭包传递给迭代器，如filter</li>
+<li>Fold和更多的闭包实例</li>
+<li>另一个闭包习语：合并函数</li>
+<li>另一个闭包习语：currying和部分应用 </li>
+<li>值限制</li>
+<li>通过ML引用进行突变</li>
+<li>另一个闭包习语：回调</li>
+<li>可选的：另一个闭合习语：抽象数据类型</li>
+<li>可选的：其他语言中的闭包</li>
+<li>可选的：在Java中使用对象和接口的闭包</li>
+<li>可选的：C语言中使用显式环境的闭包</li>
+<li>标准库文件</li>
+</ul>
+<h2 id="为什么要使用词法作用域"><a href="#为什么要使用词法作用域" class="headerlink" title="为什么要使用词法作用域"></a>为什么要使用词法作用域</h2><p>本节重点介绍头等函数和函数闭包。“头等”的意思是，只要其他值可以被计算、传递、存储等，函数就可以被计算、传递、存储等。例如，我们可以将它们传递给函数，从函数返回它们，将它们放入pair，让它们成为数据类型构造函数携带的数据的一部分，等等。“函数闭包”指的是使用在它们之外定义的变量的函数，这使得头等函数更加强大，正如我们从不使用这种能力的更简单的高阶函数开始后所看到的那样。术语高阶函数只是指一个可以接受或返回其他函数的函数。</p>
+<p>像头等函数、函数闭包和高阶函数这样的术语经常被相互混淆或被认为是同义词。因为世界上有很多人对这些术语并不小心，所以我们也不会太担心。但头等函数的概念和函数闭包的概念确实是不同的，我们经常一起使用它们来编写优雅的、可重用的代码。出于这个原因，我们将推迟闭包的概念，这样我们就可以把它作为一个单独的概念来介绍。</p>
+<p>还有一个更通用的术语，即函数式编程。这个术语也经常被不精确地用来指代几个不同的概念。最重要和最常见的两个是： </p>
+<ul>
+<li>在大多数或所有情况下不使用可变数据。到目前为止，我们在整个课程中都避免了突变，并且大部分情况下会继续这样做。</li>
+<li>使用函数作为值，这就是本节的内容。</li>
+</ul>
+<p>还有其他一些事情也被认为与函数式编程有关：</p>
+<ul>
+<li>一种鼓励递归和递归数据结构的编程风格</li>
+<li>语法或风格更接近于传统数学中的函数表示的编程方式</li>
+<li>任何不是面向对象的编程（这一点确实不对）</li>
+<li>使用某些与laziness有关的编程习语，这是一个技术术语，我们将在以后的课程中研究某种编程结构/习语</li>
+</ul>
+<p>一个明显的相关问题是：”是什么使一种编程语言成为一种函数式语言？”你的老师已经得出结论，这不是一个有准确答案的问题，作为一个问题几乎没有意义。但可以说，函数式语言是指以函数式风格（如上所述）编写的程序比以其他风格编写的程序更方便、更自然、更常见。至少，你需要对不可变的数据、头等函数和函数闭包有良好的支持。我们越来越多地看到新的语言提供这种支持，同时也为其他风格提供良好的支持，如面向对象编程，我们将在课程结束时研究一些。</p>
+<h2 id="以函数为参数"><a href="#以函数为参数" class="headerlink" title="以函数为参数"></a>以函数为参数</h2><p>头等函数最常见的用途是把它们作为参数传递给其他函数，所以我们首先鼓励这种用途。</p>
+<p>下面是一个函数接受另一个函数的一个例子：</p>
+<pre class="line-numbers language-none"><code class="language-none">fun n_times (f,n,x) &#x3D;
+    if n&#x3D;0
+    then x
+    else f (n_times(f,n-1,x))<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+<p>我们知道参数<code>f</code>是一个函数，因为最后一行用一个参数来调用<code>f</code>。<code>n_times</code>所做的是计算<code>f(f(...(f(x))))</code>，其中对<code>f</code>的调用次数为<code>n</code>。这是一个真正有用的辅助函数。例如，这里有三个不同的用法：</p>
+<pre class="line-numbers language-none"><code class="language-none">fun double x &#x3D; x+x
+val x1 &#x3D; n_times(double,4,7) (* answer: 112 *)
+
+fun increment x &#x3D; x+1
+val x2 &#x3D; n_times(increment,4,7) (* answer: 11 *)
+
+val x3 &#x3D; n_times(tl,2,[4,8,12,16]) (* answer: [12,16] *)<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>像任何辅助函数一样，<code>n_times</code>让我们抽象出多个计算的共同部分，因此我们可以通过传递不同的参数，以不同的方式重用一些代码。主要的创新之处在于使这些参数之一成为一个函数，这是一个强大的、可执行的编程习惯。这也很有意义——我们在这里没有引入任何新的语言结构，只是以你可能没有想到的方式使用我们已经知道的语言结构。</p>
+<p>一旦我们知道了这种抽象，我们就可以为它们找到更多的用途。例如，即使我们今天的程序不需要对任何数值进行$n$次翻3倍，也许明天就会了，在这种情况下，我们就可以使用<code>n_times</code>定义<code>triple_n_times</code>：</p>
+<pre class="line-numbers language-none"><code class="language-none">fun triple x &#x3D; 3*x
+
+fun triple_n_times (n,x) &#x3D; n_times(triple,n,x)<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+<h2 id="多态类型和函数作为参数"><a href="#多态类型和函数作为参数" class="headerlink" title="多态类型和函数作为参数"></a>多态类型和函数作为参数</h2><p>现在让我们考虑<code>n_times</code>的类型，即<code>(&#39;a -&gt; &#39;a) * int * &#39;a -&gt; &#39;a</code>。首先考虑类型<code>(int -&gt; int) * int * int -&gt; int</code>可能更简单，这就是上面<code>n_times</code>用于<code>x1</code>和<code>x2</code>的方式。它需要3个参数，其中第一个参数本身就是一个函数，需要并返回一个<code>int</code>。同样地，对于<code>x3</code>，我们使用<code>n_times</code>，就好像它的类型是<code>(int list -&gt; int list) * int * int list -&gt; int list</code>。但是为<code>n_times</code>选择这两种类型中的任何一种都会使它变得不那么有用，因为只有我们的例子中的一些使用会进行类型检查。类型<code>(&#39;a -&gt; &#39;a) * int * &#39;a -&gt; &#39;a</code>表示第三个参数和结果可以是任何类型，但是必须和第一个参数的输入参数和返回类型一样。当类型可以是任何类型，并且不必与其他类型相同时，我们使用不同的字母（<code>&#39;b</code>、<code>&#39;c</code>等）。</p>
+<p>这被称为参数多态性，或者更常见的通用类型。它允许函数接受任何类型的参数。这是一个与头等函数不同的问题。 有一些函数接受函数，但没有多态类型；也有一些具有多态类型的函数不接受函数。</p>
+<p>然而，许多带有头等函数的例子都有多态类型。这是一件好事，因为它使我们的代码更容易复用。</p>
+<p>如果没有参数化的多态性，我们将不得不为列表中可能有的每一种类型的元素重新设计列表。相反，我们可以有适用于任何类型的<code>list</code>的函数，比如<code>length</code>，它的类型是<code>&#39;a list -&gt; int</code>，尽管它没有使用任何函数参数。相反，这里有一个高阶函数，它不是多态的：它的类型是<code>(int-&gt;int) * int -&gt; int</code>（最好是用一个累加器使这个函数尾部递归）:</p>
+<pre class="line-numbers language-none"><code class="language-none">fun times_until_zero (f,x) &#x3D;
+    if x &#x3D; 0 then 0 else 1 + times_until_zero(f, f x)<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<h2 id="匿名函数"><a href="#匿名函数" class="headerlink" title="匿名函数"></a>匿名函数</h2><p>像<code>triple</code>这样被传递给另一个函数（如<code>n_times</code>）的函数，没有理由需要在顶层进行命名。像往常一样，如果这些函数只在本地需要，那么在本地定义这些函数是更好的方式。所以我们可以这样写：</p>
+<pre class="line-numbers language-none"><code class="language-none">fun triple_n_times (n,x) &#x3D; 
+  let fun triple x &#x3D; 3*x in n_times(triple,n,x) end<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<p>事实上，我们可以给<code>triple</code>函数一个更小的范围：我们只需要它作为<code>n_times</code>的第一个参数，所以我们可以有一个let表达式，对triple函数进行求值：</p>
+<pre class="line-numbers language-none"><code class="language-none">fun triple_n_times (n,x) &#x3D; n_times((let fun triple y &#x3D; 3*y in triple end), n, x)<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>注意在这个例子中，我们需要let表达式（let-expression）返回”<code>triple</code>“，因为和以往一样，<code>let</code>表达式产生<code>in</code>和<code>end</code>之间表达式的结果。在这种情况下，我们只需在环境中查找<code>triple</code>，结果函数就是我们传递给<code>n_times</code>的第一个参数的值。</p>
+<p>ML有一个更简洁的方法，在你使用函数的地方指定它们，就像下面这个最好的版本： </p>
+<pre class="line-numbers language-none"><code class="language-none">fun triple_n_times (n,x) &#x3D; n_times((fn y &#x3D;&gt; 3*y), n, x)<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>这个代码指定了一个匿名函数<code>fn y =&gt; 3*y</code>。它是接受参数<code>y</code>并具有主体<code>3*y</code>的函数。<code>fn</code>是一个关键字，<code>=&gt;</code>（不是<code>=</code>）也是语法的一部分。我们从未给这个函数起过名字（它是匿名的，看到了吗？），这很方便，因为我们不需要名字。我们只是想把一个函数传给<code>n_times</code>，在<code>n_times</code>的主体中，这个函数被绑定到<code>f</code>。</p>
+<p>使用匿名函数作为其他函数的参数是很常见的。此外，你可以把匿名函数放在任何可以放表达式的地方，它仅仅是一个值，即函数本身。你唯一不能用匿名函数做的事情是递归，正是因为你没有名字可以用于递归调用。在这种情况下，你需要像以前一样使用一个函数绑定，而函数绑定必须是在let-表达式中或者在顶层。</p>
+<p>对于非递归函数，你可以使用匿名函数与<code>val</code>绑定，而不是使用<code>fun</code>绑定。例如，这两个绑定是完全一样的：</p>
+<pre class="line-numbers language-none"><code class="language-none">fun increment x &#x3D; x + 1
+val increment &#x3D; fn x &#x3D;&gt; x+1 <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<p>它们都将<code>increment</code>绑定到一个值上，这个值是一个返回其参数加1的函数。因此，函数绑定几乎是语法糖，但它们支持递归，这一点至关重要。</p>
+<h2 id="不必要的函数包装"><a href="#不必要的函数包装" class="headerlink" title="不必要的函数包装"></a>不必要的函数包装</h2><p>虽然匿名函数非常方便，但它们常常被毫无理由地使用。考虑：</p>
+<pre class="line-numbers language-none"><code class="language-none">fun nth_tail_poor (n,x) &#x3D; n_times((fn y &#x3D;&gt; tl y), n, x)<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>什么是<code>fn y =&gt; tl y</code>？它是一个返回其参数的列表尾数的函数。但是已经有一个与函数绑定的变量做了完全相同的事情：<code>tl</code>! 一般来说，当我们可以直接使用<code>f</code>时，没有理由写<code>fn x =&gt; f x</code>。这类似于初学者写<code>if x then true else false</code>而不是<code>x</code>的习惯。对于上述函数，只要这样做就行了：</p>
+<pre class="line-numbers language-none"><code class="language-none">fun nth_tail (n,x) &#x3D; n_times(tl, n, x) <span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<h2 id="Maps和filters"><a href="#Maps和filters" class="headerlink" title="Maps和filters"></a>Maps和filters</h2><p>我们现在考虑一个对列表非常有用的高阶函数： </p>
+<pre class="line-numbers language-none"><code class="language-none">fun map (f,xs) &#x3D; 
+    case xs of
+        [] &#x3D;&gt; []
+      | x::xs&#39; &#x3D;&gt; (f x)::(map(f,xs&#39;)) <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+<p><code>map</code>函数接收一个列表和函数<code>f</code>，通过对列表中的每个元素应用<code>f</code>来产生一个新的列表。下面是两个使用实例：</p>
+<pre class="line-numbers language-none"><code class="language-none">val x1 &#x3D; map (increment, [4,8,12,16]) (* answer: [5,9,13,17] *)
+val x2 &#x3D; map (hd, [[1,2],[3,4],[5,6,7]]) (* answer: [1,3,5] *)<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<p><code>map</code>的类型很有启发性：<code>(&#39;a -&gt; &#39;b) * &#39;a list -&gt; &#39;b list</code>。你可以把<code>map</code>传给你想要的任何种类的列表，但是<code>f</code>的参数类型必须是列表的元素类型（它们都是<code>&#39;a</code>）。但是<code>f</code>的返回类型可以是不同类型的<code>&#39;b</code>。结果列表是一个<code>&#39;b</code>列表。对于<code>x1</code>，<code>&#39;a</code>和<code>&#39;b</code>都是用<code>int</code>来实例化的。对于<code>x2</code>，<code>&#39;a</code>是<code>int list</code>，<code>&#39;b</code>是<code>int</code>。</p>
+<p>ML标准库提供了一个非常类似的函数<code>List.map</code>，但是它是以curried形式表示的，这个话题我们将在本节后面讨论。</p>
+<p>尽管我们的例子很简单，但<code>map</code>的定义和使用是一个非常重要的习语。 我们本来可以很容易地在整数列表上写一个递归函数来增加所有的元素，但我们却把工作分为两部分。map实现者知道如何遍历一个递归数据结构，在这个例子中是一个列表。map客户端知道如何处理这些数据，在这种情况下，每个数字都要递增。你可以想象，这些任务中的任何一项——遍历复杂的数据或为每一个数据做一些计算——都要复杂得多，最好由不同的开发者来完成，而不需要对另一项任务进行假设。这正是把<code>map</code>写成一个辅助函数，并接受一个函数让我们做的。</p>
+<p>这里有第二个非常有用的高阶函数，用于列表。它接收一个<code>&#39;a -&gt; bool</code>类型的函数和一个<code>&#39;a list</code>，并返回只包含输入列表中该函数返回<code>true</code>的元素的<code>&#39;a list</code>：</p>
+<pre class="line-numbers language-none"><code class="language-none">fun filter (f,xs) &#x3D; 
+    case xs of 
+        [] &#x3D;&gt; [] 
+      | x::xs&#39; &#x3D;&gt; if f x 
+                     then x::(filter (f,xs&#39;)) 
+                     else filter (f,xs&#39;) <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>下面是一个使用的例子，它假设列表元素是第二部分为<code>int</code>类型的pair；它返回第二部分为偶数的列表元素：</p>
+<pre class="line-numbers language-none"><code class="language-none">fun get_all_even_snd xs &#x3D; filter((fn (_,v) &#x3D;&gt; v mod 2 &#x3D; 0), xs)<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>（注意我们是如何使用一个模式作为我们匿名函数的参数的。）</p>
+<h2 id="返回函数"><a href="#返回函数" class="headerlink" title="返回函数"></a>返回函数</h2><p>函数也可以返回函数。下面是一个例子： </p>
+<pre class="line-numbers language-none"><code class="language-none">fun double_or_triple f &#x3D; 
+    if f 7
+    then fn x &#x3D;&gt; 2*x
+    else fn x &#x3D;&gt; 3*x <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+<p><code>double_or_triple</code>的类型是<code>(int -&gt; bool) -&gt; (int -&gt; int)</code>。if测试使<code>f</code>的类型变得清晰，而且像往常一样，if的两个分支必须有相同的类型，在这种情况下是<code>int-&gt;int</code>。然而，ML会将类型打印为<code>(int -&gt; bool) -&gt; int -&gt; int</code>，这是同样的事情。小括号是不必要的，因为<code>-&gt;</code>“向右结合”，即<code>t1-&gt;t2-&gt;t3-&gt;t4</code>是<code>t1-&gt;(t2-&gt;(t3-&gt;t4))</code>。</p>
+<h2 id="不仅仅是对数字和列表"><a href="#不仅仅是对数字和列表" class="headerlink" title="不仅仅是对数字和列表"></a>不仅仅是对数字和列表</h2><p>因为ML程序倾向于经常使用列表，你可能会忘记高阶函数对列表以外的东西也很有用。我们最初的一些例子只是使用了整数。但是高阶函数对我们自己的数据结构也很有用。这里我们使用<code>is_even</code>函数来查看一个算术表达式中的所有常数是否为偶数。我们可以很容易地将<code>true_of_all_constants</code>用于我们想要检查的任何其他属性：</p>
+<pre class="line-numbers language-none"><code class="language-none">datatype exp &#x3D; Constant of int 
+	     | Negate of exp 
+	     | Add of exp * exp
+	     | Multiply of exp * exp
+
+fun is_even v &#x3D;
+    (v mod 2 &#x3D; 0)
+
+fun true_of_all_constants(f,e) &#x3D;
+    case e of
+	Constant i &#x3D;&gt; f i
+      | Negate e1 &#x3D;&gt; true_of_all_constants(f,e1)
+      | Add(e1,e2) &#x3D;&gt; true_of_all_constants(f,e1)
+		      andalso true_of_all_constants(f,e2)
+      | Multiply(e1,e2) &#x3D;&gt; true_of_all_constants(f,e1)
+			   andalso true_of_all_constants(f,e2)
+
+fun all_even e &#x3D; true_of_all_constants((fn x &#x3D;&gt; x mod 2 &#x3D; 0),e)<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h2 id="词汇范围"><a href="#词汇范围" class="headerlink" title="词汇范围"></a>词汇范围</h2><p>到目前为止，我们传递给其他函数或从其他函数返回的函数都是封闭的：函数体只使用函数的参数和任何本地指定的变量。但我们知道，函数可以做得更多：它们可以使用范围内的任何绑定。这样做与高阶函数结合起来是非常强大的，所以学习使用这种技术的有效习语是至关重要的。但首先，正确掌握语义是更重要的。这可能是整个课程中最微妙和最重要的概念，所以要慢慢来，仔细阅读。</p>
+<p>一个函数的主体是在定义该函数的环境中被评估的，而不是在调用该函数的环境中。下面是一个非常简单的例子来证明这种区别：</p>
+<pre class="line-numbers language-none"><code class="language-none">val x &#x3D; 1
+fun f y &#x3D; x + y
+val x &#x3D; 2
+val y &#x3D; 3
+val z &#x3D; f (x+y)<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>在这个例子中，<code>f</code>被绑定到一个接受参数<code>y</code>的函数上，其主体也在定义<code>f</code>的环境中查找<code>x</code>。因此，这个函数总是增加它的参数，因为命名时的环境将<code>x</code>映射为1。后来我们有一个不同的环境，<code>f</code>映射到这个函数，<code>x</code>映射到2，<code>y</code>映射到3，然后我们调用<code>f x</code>。以下是评估过程：</p>
+<ul>
+<li>查阅<code>f</code>，得到之前描述的函数。</li>
+<li>在当前环境中通过查找<code>x</code>和<code>y</code>来评估参数<code>x+y</code>，产生5。</li>
+<li>用参数5调用该函数，这意味着在 “旧 “环境中评估主体<code>x+y</code>，其中<code>x</code>映射为1，<code>y</code>映射为5。所以结果是6。</li>
+</ul>
+<p>注意，参数是在当前环境中被评估的（产生5），但函数体是在“旧”环境中被评估的。我们将在下面讨论为什么这种语义是可取的，但首先我们要更精确地描述这种语义，并通过使用高阶函数的其他愚蠢的例子来理解这种语义。</p>
+<p>这种语义被称为词法作用域。另一种较差的语义，即使用当前环境（在上面的例子中会产生7），称为动态作用域。</p>
+<h2 id="环境和闭包"><a href="#环境和闭包" class="headerlink" title="环境和闭包"></a>环境和闭包</h2><p>我们已经说过，函数是值，但我们并没有精确地说明这个值到底是什么。现在我们解释一下，一个函数值有两部分，函数的代码（显然）和我们创建函数时的环境。这两部分确实形成了一个”对”，但我们把”对”放在引号里，因为它不是一个ML pair，只是有两个部分的东西。你不能单独访问”pair”的各个部分；你能做的就是调用这个函数。这个调用使用了两个部分，因为它使用环境部分评估了代码部分。</p>
+<p>这种”对”被称为函数闭包或者闭包。原因是，虽然代码本身可以有自由变量（在代码中没有绑定的变量，所以它们需要被一些外部环境所绑定），但闭包带有一个提供所有这些绑定的环境。因此，闭包总体上是”封闭的”——它拥有给定一个函数参数后产生一个函数结果所需的一切。</p>
+<p>在上面的例子中，绑定<code>fun y = x + y</code>将<code>f</code>绑定到一个闭包中。代码部分是函数<code>fn y =&gt; x + y</code>，环境部分将<code>x</code>映射为1。因此，对这个闭包的任何调用都将返回<code>y+1</code>。</p>
+<h2 id="（愚蠢的）包括高阶函数的例子"><a href="#（愚蠢的）包括高阶函数的例子" class="headerlink" title="（愚蠢的）包括高阶函数的例子"></a>（愚蠢的）包括高阶函数的例子</h2><p>当我们有高阶函数时，词法作用域和闭包会变得更加有趣，但已经描述的语义会引导我们找到正确的答案。</p>
+<p>例1：</p>
+<pre class="line-numbers language-none"><code class="language-none">val x &#x3D; 1
+fun f y &#x3D; 
+    let 
+        val x &#x3D; y+1
+    in
+        fn z &#x3D;&gt; x + y + z
+    end
+val x &#x3D; 3
+val g &#x3D; f 4 
+val y &#x3D; 5
+val z &#x3D; g 6<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>这里，<code>f</code>被绑定到一个环境部分将<code>x</code>映射为1的闭包中。因此，当我们后来评估<code>f 4</code>时，我们评估<code>let val x = y + 1 in fn z =&gt; x + y + z end</code>，在一个<code>x</code>映射为1的环境中扩展到<code>y</code>映射为4。但后来由于let绑定，我们对<code>x</code>进行了shadow，因此我们在一个<code>x</code>映射为5，<code>y</code>映射为4的环境中评估<code>fn z =&gt; x + y + z</code>。我们如何评估一个像<code>fn z =&gt; x + y + z</code>的函数？我们用当前环境创建一个闭包。所以<code>f 4</code>返回一个闭包，当被调用时，无论在任何调用地点的环境是什么，它都会在其参数上加上9。因此，在例子的最后一行，<code>z</code>将被绑定为15。</p>
+<p>例2： </p>
+<pre class="line-numbers language-none"><code class="language-none">fun f g &#x3D; 
+    let 
+        val x &#x3D; 3
+    in
+        g 2
+    end
+val x &#x3D; 4
+fun h y &#x3D; x + y 
+val z &#x3D; f h<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>在这个例子中，<code>f</code>被绑定到一个闭包上，该闭包接受另一个函数<code>g</code>作为参数，并返回<code>g 2</code>的结果。绑定到<code>h</code>的闭包总是将4加到它的参数上，因为参数是<code>y</code>，函数体是<code>x+y</code>，并且函数是在<code>x</code>映射到4的环境下被表示的。 所以在最后一行，<code>z</code>将被绑定到6。绑定<code>val x = 3</code>是完全不相关的：调用<code>g 2</code>的评估是通过查找<code>g</code>来获得传入的闭包，然后使用该闭包及其环境（其中<code>x</code>映射为4），参数为2。</p>
+<h2 id="为什么使用词法作用域"><a href="#为什么使用词法作用域" class="headerlink" title="为什么使用词法作用域"></a>为什么使用词法作用域</h2><p>虽然词法作用域和高阶函数需要一些时间来适应，但几十年的经验表明，这种语义是我们所需要的。本节剩下的大部分内容将描述各种广泛存在的依赖于词法作用域的强大习语。</p>
+<p>但首先我们也可以通过展示动态作用域（即你只有一个当前环境并使用它来评估函数体）如何导致一些基本问题来给出词法作用域的动机。</p>
+<p>首先，假设在上面的例1中，<code>f</code>的主体被改成<code>let val q = y+1 in fn z =&gt; q + y + z</code>。在词法作用域下，这是很正常的：我们总是可以改变一个局部变量的名字和它的用途而不影响任何东西。在动态作用域下，现在对<code>g 6</code>的调用将毫无意义：我们将尝试查找<code>q</code>，但在调用地点的环境中没有<code>q</code>。</p>
+<p>第二，再考虑一下例1的原始版本，但现在把<code>val x = 3</code>这一行改为<code>val x = &quot;hi&quot;</code>。在词法作用域下，这也是ok的：这个绑定从未被实际使用过。在动态作用域下，对<code>g 6</code>的调用将查找<code>x</code>，得到一个字符串，并试图把它加进去，这在一个有类型检查的程序中不应该发生。</p>
+<p>例2也有类似的问题：这个例子中f的主体很糟糕：我们有一个从未使用过的局部绑定。在词法作用域内，我们可以删除它，将主体改为<code>g 2</code>，并且知道这对程序的其他部分没有影响。而在动态作用域下，它就会产生影响。另外，在词法作用域下，我们知道任何使用与<code>h</code>绑定的闭包都会给它的参数增加4，而不管其他像<code>g</code>这样的函数是如何实现的，以及它们使用什么变量名。这是一个关键的关注点分离，只有词法作用域才能提供。</p>
+<p>对于程序中的”常规”变量，词法作用域是最合适的方式。对于某些习语来说，动态作用域有一些令人信服的用途，但是很少有语言对这些有特殊的支持（Racket有），而且很少有现代语言将动态作用域作为默认的。但是你已经看到了一个比词法作用域更像动态作用域的特性：异常处理。当一个异常被引发时，评估必须”查找”哪个处理表达式应该被评估。这种”查找”是使用动态调用堆栈完成的，而不考虑程序的词法结构。</p>
+<h2 id="将闭包传递给迭代器，如filter"><a href="#将闭包传递给迭代器，如filter" class="headerlink" title="将闭包传递给迭代器，如filter"></a>将闭包传递给迭代器，如filter</h2><p>上面的例子很傻，所以我们需要展示依赖词法作用域的有用程序。我们要展示的第一个习语是将函数传递给map和filter等迭代器。我们之前传递的函数没有使用它们的环境（只有它们的参数和可能的局部变量），但是能够传递闭包使得高阶函数的作用更加广泛。考虑：</p>
+<pre class="line-numbers language-none"><code class="language-none">fun filter (f,xs) &#x3D;
+    case xs of
+        [] &#x3D;&gt; []
+      | x::xs’ &#x3D;&gt; if f x then x::(filter(f,xs’)) else filter(f,xs’)
+
+fun allGreaterThanSeven xs &#x3D; filter (fn x &#x3D;&gt; x &gt; 7, xs)
+
+fun allGreaterThan (xs,n) &#x3D; filter (fn x &#x3D;&gt; x &gt; n, xs)<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>在这里，<code>allGreaterThanSeven</code>是”旧闻”——我们传入一个函数，从结果中删除列表中任何小于7的数字。但更有可能的是，你想要一个像<code>allGreaterThan</code>这样的函数，它把”阈值”作为一个参数<code>n</code>，并使用函数<code>fn x =&gt; x &gt; n</code>。注意这需要一个闭包和词法作用域！当<code>filter</code>的实现调用这个函数时，我们需要在定义了<code>fn x =&gt; x &gt; n</code>的环境中查找<code>n</code>。</p>
+<p>下面是另外两个例子：</p>
+<pre class="line-numbers language-none"><code class="language-none">fun allShorterThan1 (xs,s) &#x3D; filter (fn x &#x3D;&gt; String.size x &lt; String.size s, xs)
+
+fun allShorterThan2 (xs,s) &#x3D;
+    let
+        val i &#x3D; String.size s
+    in
+        filter(fn x &#x3D;&gt; String.size x &lt; i, xs)
+    end<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>这两个函数都接收一个字符串列表<code>xs</code>和一个字符串<code>s</code>，并返回一个只包含<code>xs</code>中短于<code>s</code>的字符串的列表。它们都使用闭包，在匿名函数被调用时查找<code>s</code>或<code>i</code>。第二种方法更复杂，但效率更高一些。第一种是对<code>xs</code>中的每个元素重新计算<code>String.size s</code>一次（因为<code>filter</code>多次调用它的函数参数，而函数体每次都会评估<code>String.size s</code>）。第二种是”预先计算”<code>String.size s</code>并将其绑定到函数<code>fn x =&gt; String.size x &lt; i</code>可用的变量<code>i</code>上。</p>
+<h2 id="Fold和更多的闭包例子"><a href="#Fold和更多的闭包例子" class="headerlink" title="Fold和更多的闭包例子"></a>Fold和更多的闭包例子</h2><p>除了<code>map</code>和<code>filter</code>，第三个非常有用的高阶函数是<code>fold</code>，它可以有几个稍微不同的定义，也有一些其他的名字，如<code>reduce</code>和<code>inject</code>。下面是一个常见的定义：</p>
+<pre class="line-numbers language-none"><code class="language-none">fun fold (f,acc,xs) &#x3D;
+  case xs of
+    []     &#x3D;&gt; acc
+  | x::xs’ &#x3D;&gt; fold (f, f(acc,x), xs’)<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+<p><code>fold</code>需要一个”初始答案”<code>acc</code>，并使用<code>f</code>来”组合”<code>acc</code>和列表的第一个元素，将其作为新的”初始答案”来”fold”列表的其他元素。我们可以使用<code>fold</code>来处理列表的迭代，同时提供一些表达如何组合元素的函数。例如，要对一个列表<code>foo</code>中的元素进行求和，我们可以这样做：</p>
+<pre class="line-numbers language-none"><code class="language-none">fold ((fn (x,y) &#x3D;&gt; x+y), 0, foo)<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>与<code>map</code>和<code>filter</code>一样，<code>fold</code>的大部分功能来自于客户端传递的闭包，这些闭包可以有”私有字段”（以变量绑定的形式）来保存他们想要查询的数据。这里有两个例子。第一个是计算在某个整数范围内有多少个元素。第二个是检查所有元素是否都是比其他字符串长度短的字符串。</p>
+<pre class="line-numbers language-none"><code class="language-none">fun numberInRange (xs,lo,hi) &#x3D;
+  fold ((fn (x,y) &#x3D;&gt;
+            x + (if y &gt;&#x3D; lo andalso y &lt;&#x3D; hi then 1 else 0)),
+         0, xs)
+         
+fun areAllShorter (xs,s) &#x3D;
+    let
+        val i &#x3D; String.size s
+    in
+        fold((fn (x,y) &#x3D;&gt; x andalso String.size y &lt; i), true, xs)
+    end<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>这种将递归遍历（<code>fold</code>或<code>map</code>）与元素上的数据处理（传入的闭包）分开的模式是最基本的。在我们的例子中，这两部分都很简单，我们可以用几行简单的文字就把整个事情做完。更普遍的情况是，我们可能有一组非常复杂的数据结构需要遍历，或者我们可能有非常多的数据处理需要做。把这些问题分开是很好的，这样就可以分别解决编程问题了。</p>
+<h2 id="另一个闭包习语：组合函数"><a href="#另一个闭包习语：组合函数" class="headerlink" title="另一个闭包习语：组合函数"></a>另一个闭包习语：组合函数</h2><h3 id="函数组合"><a href="#函数组合" class="headerlink" title="函数组合"></a>函数组合</h3><p>当我们用大量的函数编程时，创建新的函数是很有用的，这些函数只是其他函数的组合。你可能在数学中做过类似的事情，比如你对两个函数进行组合。例如，这里有一个函数，正是做函数组合的。</p>
+<pre class="line-numbers language-none"><code class="language-none">fun compose (f,g) &#x3D; fn x &#x3D;&gt; f (g x)<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>它接收两个函数<code>f</code>和<code>g</code>，并返回一个将其参数应用于<code>g</code>并使之成为<code>f</code>的参数的函数。关键是，代码<code>fn x =&gt; f (g x)</code>使用的是定义它的环境中的<code>f</code>和<code>g</code>。注意<code>compose</code>的类型被推断为<code>(&#39;a -&gt; &#39;b) * (&#39;c -&gt; &#39;a) -&gt; &#39;c -&gt; ‘b</code>，这等同于你可能写的：<code>(&#39;b -&gt; &#39;c) * (&#39;a -&gt; &#39;b) -&gt; (&#39;a -&gt; ‘c)</code>，因为这两种类型只是统一使用不同的类型变量名。</p>
+<p>作为一个可爱而方便的库函数，ML库将<code>infix</code>运算符<code>o</code>定义为函数组合，就像数学中一样。因此，与其写：</p>
+<pre class="line-numbers language-none"><code class="language-none">fun sqrt_of_abs i &#x3D; Math.sqrt(Real.fromInt (abs i))<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>你可以写：</p>
+<pre class="line-numbers language-none"><code class="language-none">fun sqrt_of_abs i &#x3D; (Math.sqrt o Real.fromInt o abs) i<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>但第二个版本更清楚地表明，我们可以直接使用函数组合来创建一个函数，并将其绑定到一个带有val绑定的变量上，如第三个版本：</p>
+<pre class="line-numbers language-none"><code class="language-none">val sqrt_of_abs &#x3D; Math.sqrt o Real.fromInt o abs<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>虽然这三个版本都相当可读，但第一个版本并没有立即向读者表明<code>sqrt_of_abs</code>只是其他函数的组合。</p>
+<h3 id="管道操作符"><a href="#管道操作符" class="headerlink" title="管道操作符"></a>管道操作符</h3><p>在函数式编程中，对其他函数进行组合以创建更大的函数是非常常见的，所以为其定义方便的语法是有意义的。虽然上面的第三个版本是简洁的，但它和数学中的函数组合一样，有一个对许多程序员来说很奇怪的特性，即计算是从右到左进行的。”取绝对值，转换为实数，然后计算平方根”可能比”取绝对值转换为实数后的平方根”更容易理解。</p>
+<p>我们也可以为从左到右定义方便的语法。让我们首先定义我们自己的infix操作符，让我们把函数放在我们调用它的参数的右边。</p>
+<pre class="line-numbers language-none"><code class="language-none">infix |&gt; (* tells the parser |&gt; is a function that appears between its two arguments *)
+fun x |&gt; f &#x3D; f x<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<p>现在我们可以写：</p>
+<pre class="line-numbers language-none"><code class="language-none">fun sqrt_of_abs i &#x3D; i |&gt; abs |&gt; Real.fromInt |&gt; Math.sqrt<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>这个运算符，通常被称为管道运算符，在F#编程中非常流行。（F#是一种ML的方言，在.Net上运行，与其他.Net语言编写的库互动良好)。正如我们所见，流水线运算符的语义并不复杂。</p>
+<h2 id="另一个闭包习语：Currying和部分应用"><a href="#另一个闭包习语：Currying和部分应用" class="headerlink" title="另一个闭包习语：Currying和部分应用"></a>另一个闭包习语：Currying和部分应用</h2><p>我们考虑的下一个习语在一般情况下非常方便，在定义和使用map、filter和fold等高阶函数时经常使用。我们已经看到，在ML中，每个函数都只需要一个参数，所以你必须使用一个习语来获得多个参数的效果。我们之前的方法是将一个元组作为一个参数来传递，所以元组的每一部分在概念上都是多个参数中的一个。另一种更巧妙、更方便的方法是让一个函数接受第一个概念性参数，并返回另一个接受第二个概念性参数的函数，以此类推。词汇范围对于这种技术的正常工作至关重要。</p>
+<p>这种技术被称为currying，是以一个叫Haskell Curry的逻辑学家的名字命名的，他研究了相关的想法（所以如果你不知道他，那么currying这个词就没有什么意义了）。</p>
+<h3 id="定义和使用curried函数"><a href="#定义和使用curried函数" class="headerlink" title="定义和使用curried函数"></a>定义和使用curried函数</h3><p>下面是一个使用curry的”三参数”函数的例子：</p>
+<pre class="line-numbers language-none"><code class="language-none">val sorted3 &#x3D; fn x &#x3D;&gt; fn y &#x3D;&gt; fn z &#x3D;&gt; z &gt;&#x3D; y andalso y &gt;&#x3D; x<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>如果我们调用<code>sorted3 4</code>，我们将得到一个在其环境中包含<code>x</code>的闭包。如果我们再以5来调用这个闭包，我们将得到一个环境中包含<code>x</code>和<code>y</code>的闭包。如果我们再用6来调用这个闭包，我们将得到真，因为6大于5，5大于4，这就是闭包的工作原理。</p>
+<p>所以<code>((sorted3 4) 5) 6</code>的计算结果正是我们想要的，而且感觉非常接近于用3个参数调用<code>sorted3</code>。更好的是，括号是可选的，所以我们可以写出与<code>sorted3 4 5 6</code>完全相同的东西，这实际上比我们以前的元组方法要少一些字符：</p>
+<pre class="line-numbers language-none"><code class="language-none">fun sorted3_tupled (x,y,z) &#x3D; z &gt;&#x3D; y andalso y &gt;&#x3D; x
+val someClient &#x3D; sorted3_tupled(4,5,6)<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<p>一般来说，语法<code>e1 e2 e3 e4</code>是隐含的嵌套函数调用<code>(((e1 e2) e3) e4)</code>，做出这样的选择是因为它使使用curried函数变得如此方便。</p>
+<h3 id="部分应用"><a href="#部分应用" class="headerlink" title="部分应用"></a>部分应用</h3><p>尽管我们可能期望我们的curried <code>sorted3</code>的大多数客户提供所有的3个概念参数，但他们可能提供较少的参数，并在以后使用产生的闭包。这被称为”部分应用”，因为我们提供的是概念参数的一个子集（更确切地说，是一个前缀）。作为一个愚蠢的例子，<code>sorted3 0 0</code>返回一个函数，如果它的参数是非负的，则返回<code>true</code>。</p>
+<h3 id="局部应用和高阶函数"><a href="#局部应用和高阶函数" class="headerlink" title="局部应用和高阶函数"></a>局部应用和高阶函数</h3><p>Currying对于创建带有迭代器的类似函数特别方便。例如，这里有一个curried的折叠函数，用于列表：</p>
+<pre class="line-numbers language-none"><code class="language-none">fun fold f &#x3D; fn acc &#x3D;&gt; fn xs &#x3D;&gt;
+  case xs of
+    []     &#x3D;&gt; acc
+  | x::xs’ &#x3D;&gt; fold f (f(acc,x)) xs’<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+<p>现在我们可以用这个fold按如下方式定义一个对列表元素求和的函数：</p>
+<pre class="line-numbers language-none"><code class="language-none">fun sum1 xs &#x3D; fold (fn (x,y) &#x3D;&gt; x+y) 0 xs <span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>但这比直接使用部分应用要复杂得多：</p>
+<pre class="line-numbers language-none"><code class="language-none">val sum2 &#x3D; fold (fn (x,y) &#x3D;&gt; x+y) 0<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>部分应用的便利性是ML标准库中的许多迭代器使用它们作为第一个参数的函数的原因。例如，所有这些函数的类型都使用currying：</p>
+<pre class="line-numbers language-none"><code class="language-none">val List.map &#x3D; fn : (&#39;a -&gt; &#39;b) -&gt; &#39;a list -&gt; &#39;b list 
+val List.filter &#x3D; fn : (&#39;a -&gt; bool) -&gt; &#39;a list -&gt; &#39;a list
+val List.foldl &#x3D; fn : ( &#39;a * &#39;b -&gt; &#39;b) -&gt; &#39;b -&gt; &#39;a list -&gt; &#39;b <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+<p>作为例子，<code>List.foldl((fn (x,y) =&gt; x+y), 0, [3,4,5])</code>没有通过进行类型检查，因为<code>List.foldl</code>期望的是一个<code>&#39;a * &#39;b -&gt; &#39;b</code>函数，而不是一个triple。正确的调用是<code>List.foldl (fn (x,y) =&gt; x+y) 0 [3,4,5]</code>，它用函数调用<code>List.foldl</code>，后者返回一个闭包，依此类推。</p>
+<p>有语法糖来定义curried函数；你可以只用空格来分隔概念参数，而不是使用匿名函数。因此，对于我们的fold函数来说，更好的风格应该是：</p>
+<pre class="line-numbers language-none"><code class="language-none">fun fold f acc xs &#x3D;
+  case xs of
+    []     &#x3D;&gt; acc
+  | x::xs’ &#x3D;&gt; fold f (f(acc,x)) xs’<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+<p>另一个有用的库函数是<code>List.existence</code>，我们在下面的回调例子中使用它。这些库函数很容易自己实现，所以我们应该明白它们并不花哨：</p>
+<pre class="line-numbers language-none"><code class="language-none">fun exists predicate xs &#x3D;
+    case xs of
+      [] &#x3D;&gt; false
+    | x::xs’ &#x3D;&gt; predicate x orelse exists predicate xs’<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+<h3 id="一般的currying"><a href="#一般的currying" class="headerlink" title="一般的currying"></a>一般的currying</h3><p>虽然currying和部分应用对高阶函数来说是很好的，但它们在一般情况下也是很好的。它们适用于任意多参数函数，而且部分应用也会有令人惊讶的便利。在这个例子中，<code>zip</code>和<code>range</code>都是用currying定义的，<code>countup</code>部分应用了range。<code>add_numbers</code>函数将列表<code>[v1,v2,...,vn]</code>变成 <code>[(1,v1),(2,v2),...,(n,vn)]</code>。</p>
+<pre class="line-numbers language-none"><code class="language-none">fun zip xs ys &#x3D;
+    case (xs,ys) of
+        ([],[]) &#x3D;&gt; []
+      | (x::xs’,y::ys’) &#x3D;&gt; (x,y) :: (zip xs’ ys’)
+      | _ &#x3D;&gt; raise Empty
+      
+fun range i j &#x3D; if i &gt; j then [] else i :: range (i+1) j
+
+val countup  &#x3D; range 1
+
+fun add_numbers xs &#x3D; zip (countup (length xs)) xs<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h3 id="组合函数以curry和uncurry其他函数"><a href="#组合函数以curry和uncurry其他函数" class="headerlink" title="组合函数以curry和uncurry其他函数"></a>组合函数以curry和uncurry其他函数</h3><p>有时，函数被curry了，但参数的顺序与你所希望的部分应用不一致。或者有时当你想让一个函数使用元组时，它却被curry了，反之亦然。幸运的是，我们早期的组合函数的习语可以使用一种方法的函数，并产生使用另一种方法的函数：</p>
+<pre class="line-numbers language-none"><code class="language-none">fun other_curry1 f &#x3D; fn x &#x3D;&gt; fn y &#x3D;&gt; f y x
+fun other_curry2 f x y &#x3D; f y x
+fun curry f x y &#x3D; f (x,y)
+fun uncurry f (x,y) &#x3D; f x y<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+<p>看一下这些函数的类型可以帮助你理解它们的作用。顺便说一句，这些类型也很吸引人，因为如果你把<code>-&gt;</code>读作”暗示”，把<code>*</code>读作”和”，那么所有这些函数的类型都是逻辑上的同义现象。</p>
+<h3 id="效率"><a href="#效率" class="headerlink" title="效率"></a>效率</h3><p>最后，你可能会想知道currying和tupling哪个更快。这几乎不重要；它们的工作都与概念参数的数量成正比，而这个数量通常是相当小的。对于你的软件中的性能关键函数，选择更快的方式可能很重要。在我们使用的ML编译器的版本中，tupling刚好更快。在广泛使用的OCaml、Haskell和F#的实现中，curried函数更快，所以它们是这些语言中定义多参数函数的标准方式。</p>
+<h2 id="值限制"><a href="#值限制" class="headerlink" title="值限制"></a>值限制</h2><p>一旦你学会了currying和部分应用，你可能会尝试用它来创建一个多态的函数。不幸的是，某些用法，比如说如下，在ML中是不起作用的：</p>
+<pre class="line-numbers language-none"><code class="language-none">val mapSome &#x3D; List.map SOME (*turn [v1,v2,...,vn] into [SOME v1, SOME v2, ..., SOME vn]*)
+val pairIt &#x3D; List.map (fn x &#x3D;&gt; (x,x)) (*turn [v1,v2,...,vn] into [(v1,v1),(v2,v2),...,(vn,vn)]*)<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<p>鉴于我们到目前为止所学到的知识，没有理由如下示例不起作用，尤其是所有这些函数都是有效的：</p>
+<pre class="line-numbers language-none"><code class="language-none">fun mapSome xs &#x3D; List.map SOME xs
+val mapSome &#x3D; fn xs &#x3D;&gt; List.map SOME xs
+val pairIt : int list -&gt; (int * int) list &#x3D; List.map (fn x &#x3D;&gt; (x,x))
+val incrementIt &#x3D; List.map (fn x &#x3D;&gt; x+1)<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+<p>这个原因被称为值限制，它有时是令人讨厌的。它出现在语言中是有原因的：如果没有它，类型检查器可能会允许一些代码破坏类型系统。这只可能发生在使用突变的代码中，而上面的代码不是，但类型检查器并不知道。</p>
+<p>最简单的方法是忽略这个问题，直到你得到一个关于值限制的警告/错误。当你这样做的时候，把val-binding转回fun-binding，就像上面的第一个例子中的做法。</p>
+<p>当我们在下一节研究类型推理时，我们将更详细地讨论值限制问题。</p>
+<h2 id="使用ML引用进行突变"><a href="#使用ML引用进行突变" class="headerlink" title="使用ML引用进行突变"></a>使用ML引用进行突变</h2><p>我们现在终于介绍了ML对突变的支持。突变在某些情况下是可以的。函数式编程中的一个关键方法是，只有当”更新某物的状态以便该状态的所有用户都能看到发生了变化”是对计算进行建模的自然方式时，才使用它。此外，我们希望将突变的功能分开，这样我们就能知道什么时候不使用突变了。</p>
+<p>在ML中，大多数东西确实不能被突变。相反，你必须创建一个引用，它是一个容器，其内容可以被改变。你用表达式<code>ref e</code>创建一个新的引用（初始内容是对<code>e</code>进行评估的结果）。你用<code>!r</code>得到一个引用的当前内容（不要与Java 或 C 中的否定相混淆），你用<code>r := e</code>改变<code>r</code>的内容。</p>
+<p>一个好的方法是把引用看成是一个有一个字段的记录，这个字段可以用<code>:=</code>操作符来更新。</p>
+<p>下面是一个简短的例子：</p>
+<pre class="line-numbers language-none"><code class="language-none">val x &#x3D; ref 0
+val x2 &#x3D; x (* x and x2 both refer to the same reference *)
+val x3 &#x3D; ref 0
+(* val y &#x3D; x + 1*) (* wrong: x is not an int *)
+val y &#x3D; (!x) + 1 (* y is 1 *)
+val _ &#x3D; x :&#x3D; (!x) + 7 (* the contents of the reference x refers to is now 7 *) valz1&#x3D;!x (*z1is 7*)
+val z2 &#x3D; !x2 (* z2 is also 7 -- with mutation, aliasing matters*)
+val z3 &#x3D; !x3 (* z3 is 0 *)<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h2 id="另一个闭包习语：回调"><a href="#另一个闭包习语：回调" class="headerlink" title="另一个闭包习语：回调"></a>另一个闭包习语：回调</h2><p>我们考虑的下一个常见的习语是实现一个库，当”事件”发生时检测并通知那些先前”注册”了他们并对事件感兴趣的客户。客户端可以通过提供一个”回调”来注册他们的兴趣——当事件发生时被调用的一个函数。你可能需要这种库的事件的例子包括像用户移动鼠标或按下一个键。从网络接口到达的数据是另一个例子。计算机玩家在游戏中”轮到你了”的事件，也是一个例子。</p>
+<p>这些库的目的是允许多个客户端注册回调。库的实现者不知道当事件发生时客户端需要计算什么，而且客户端可能需要”额外的数据”来进行计算。所以库的实现者不应该限制每个客户端使用什么”额外数据”。闭包是理想的选择，因为函数的类型<code>t1-&gt;t2</code>并没有指定闭包使用的任何其他变量的类型，所以我们可以把”额外数据”放在闭包的环境中。</p>
+<p>如果你在Java的Swing库中使用过”事件监听器”，那么你就在面向对象的环境中使用过这个习语。在Java中，你通过定义一个带有额外字段的子类来获得”额外数据”。对于一个简单的监听器来说，这可能需要大量的按键，这也是Java语言增加匿名内类的一个主要原因（在本课程中你不需要知道，但我们将在后面展示一个例子），它更接近闭包的便利性。</p>
+<p>在ML中，我们将使用突变来展示回调习语。这是合理的，因为我们确实希望注册一个回调来”改变世界的状态”——当一个事件发生时，现在有更多的回调可以调用了。</p>
+<p>我们的例子使用了这样的想法：当键盘上的一个键被按下时，回调应该被调用。我们将向回调传递一个表示哪个键的int。我们的接口只需要一种方法来注册回调。（在一个真正的库中，你可能还需要一个取消注册的方法。) </p>
+<pre class="line-numbers language-none"><code class="language-none">val onKeyEvent : (int -&gt; unit) -&gt; unit <span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>客户端将传递一个<code>int -&gt; unit</code>类型的函数，当后来用一个<code>int</code>调用时，将做他们想做的事情。为了实现这个函数，我们只是使用一个持有回调列表的引用。然后，当一个事件实际发生时，我们假设函数<code>onEvent</code>被调用，它调用列表中的每个回调：</p>
+<pre class="line-numbers language-none"><code class="language-none">val cbs : (int -&gt; unit) list ref &#x3D; ref []
+fun onKeyEvent f &#x3D; cbs :&#x3D; f::(!cbs) (* The only &quot;public&quot; binding *)
+fun onEvent i &#x3D;
+   let fun loop fs &#x3D;
+        case fs of
+          [] &#x3D;&gt; ()
+        | f::fs’ &#x3D;&gt; (f i; loop fs’)
+    in loop (!cbs) end<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>最重要的是，<code>onKeyEvent</code>的类型对一个回调在被调用时可以访问哪些额外的数据没有限制。这里有不同的客户端（对<code>onKeyEvent</code>的调用），在他们的环境中使用不同类型的绑定。(<code>val _ = e</code>这个习语在执行表达式时很常见，只是为了它的副作用，在这种情况下注册一个回调。)</p>
+<pre class="line-numbers language-none"><code class="language-none">val timesPressed &#x3D; ref 0
+val _ &#x3D; onKeyEvent (fn _ &#x3D;&gt; timesPressed :&#x3D; (!timesPressed) + 1)
+
+fun printIfPressed i &#x3D;
+    onKeyEvent (fn j &#x3D;&gt; if i&#x3D;j
+                        then print (&quot;you pressed &quot; ^ Int.toString i ^ &quot;\n&quot;)
+                        else ())
+                        
+val _ &#x3D; printIfPressed 4
+val _ &#x3D; printIfPressed 11
+val _ &#x3D; printIfPressed 23<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h2 id="可选：另一个闭包习语：抽象数据类型"><a href="#可选：另一个闭包习语：抽象数据类型" class="headerlink" title="可选：另一个闭包习语：抽象数据类型"></a>可选：另一个闭包习语：抽象数据类型</h2><p>我们要考虑的最后一个闭包习语是最夸张和最微妙的。它不是程序员通常会做的事情——在现代编程语言中通常有更简单的方法来做。它作为一个高级例子被包括进来，以证明具有相同环境的闭包记录很像面向对象编程中的对象：函数是方法，环境中的绑定是私有字段和方法。这里没有新的语言特征，只是词法作用域。它（正确地）表明，函数式编程和面向对象编程比它们最初看起来更相似（这个话题我们将在本课程后面重新讨论；也有重要的区别）。</p>
+<p>抽象数据类型（ADT）的关键是要求客户通过一个函数集合来使用它，而不是直接访问其私有实现。由于这种抽象性，我们以后可以改变数据类型的实现方式而不改变它对客户的行为方式。在面向对象的语言中，你可以通过定义一个具有所有私有字段（客户无法访问）和一些公共方法（与客户的接口）的类来实现一个ADT。我们可以在ML中用闭包记录做同样的事情；闭包使用的环境变量与私有字段对应。</p>
+<p>作为一个例子，考虑一个整数集合的实现，它支持创建一个新的更大的集合，并查看一个整数是否在一个集合中。我们的集合是无突变的，即在一个集合中添加一个整数会产生一个新的、不同的集合。（我们可以很容易地使用ML的引用来定义一个可变的版本。）在ML中，我们可以定义一个类型来描述我们的接口:</p>
+<pre class="line-numbers language-none"><code class="language-none">datatype set &#x3D; S of &#123; insert : int -&gt; set, member : int -&gt; bool, size : unit -&gt; int &#125;<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>粗略地说，一个集合是一个有三个字段的记录，每个字段都持有一个函数。用如下方式描述会更简单：</p>
+<pre class="line-numbers language-none"><code class="language-none">type set &#x3D; &#123; insert : int -&gt; set, member : int -&gt; bool, size : unit -&gt; int &#125;<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>但这在ML中是行不通的，因为类型绑定不能是递归的。所以我们必须处理轻微的不便，即在我们定义集合的函数记录周围有一个构造函数<code>S</code>，尽管集合是each-of类型的，而不是one-of类型的。注意，我们没有使用任何新的类型或特征；我们只是有一个描述记录的类型，其字段名为<code>insert</code>、<code>member</code>和<code>size</code>，每个字段都持有一个函数。</p>
+<p>一旦我们有了一个空集合，我们就可以使用它的<code>insert</code>字段来创建一个单元素集合，然后再使用这个集合的<code>insert</code>字段来创建一个双元素集合，以此类推。所以我们的接口唯一需要的就是这样的一个绑定：</p>
+<pre class="line-numbers language-none"><code class="language-none">val empty_set &#x3D; ... : set<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>在实现这个接口之前，让我们看看客户端如何使用它（许多括号是可选的，但可能有助于理解代码）：</p>
+<pre class="line-numbers language-none"><code class="language-none">fun use_sets () &#x3D;
+    let val S s1 &#x3D; empty_set
+        val S s2 &#x3D; (#insert s1) 34
+        val S s3 &#x3D; (#insert s2) 34
+        val S s4 &#x3D; #insert s3 19
+    in
+        if (#member s4) 42
+        then 99
+        else if (#member s4) 19
+        then 17 + (#size s3) ()
+        else 0
+end<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>我们没有使用新的功能。<code>#insert s1</code>正在读取一个记录字段，在这种情况下，它产生一个函数，然后我们可以用34来调用。如果我们是在Java中，我们可以写<code>s1.insert(34)</code>来做类似的事情。<code>val</code>绑定使用模式匹配来”剥离”<code>set</code>类型的值上的<code>S</code>构造函数。</p>
+<p>我们有很多方法可以定义<code>empty_set</code>；它们都使用了使用闭包来”记住”一个集合有哪些元素的技术。下面是一种方法：</p>
+<pre class="line-numbers language-none"><code class="language-none">val empty_set &#x3D;
+    let
+        fun make_set xs &#x3D; (* xs is a &quot;private field&quot; in result *)
+            let (* contains a &quot;private method&quot; in result *)
+                fun contains i &#x3D; List.exists (fn j &#x3D;&gt; i&#x3D;j) xs
+            in
+                S &#123; insert &#x3D; fn i &#x3D;&gt; if contains i
+                                     then make_set xs
+                                     else make_set (i::xs),
+                    member &#x3D; contains,
+                    size   &#x3D; fn () &#x3D;&gt; length xs
+                  &#125;
+             end
+    in
+          make_set []
+    end<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>所有有趣的东西都在<code>make_set</code>中，而<code>empty_set</code>只是<code>make_set []</code>返回的记录。<code>make_set</code>返回的是一个类型为<code>set</code>的值。它本质上是一个带有三个闭包的记录。这些闭包可以使用<code>xs</code>、辅助函数<code>contains</code>和<code>make_set</code>。像所有的函数体一样，它们在被调用之前不会被执行。</p>
+<h2 id="可选的：其他语言中的闭包"><a href="#可选的：其他语言中的闭包" class="headerlink" title="可选的：其他语言中的闭包"></a>可选的：其他语言中的闭包</h2><p>为了结束我们对函数闭包的研究，我们从ML中抽离出来，展示Java（使用泛型和接口）和C（使用带有明确环境参数的函数指针）中的类似编程模式。我们不会在这个材料上测试你，欢迎你跳过它。然而，通过在其他环境中看到类似的想法，它可能会帮助你理解闭包，而且它应该帮助你看到一种语言中的中心思想如何影响你如何处理其他语言中的问题。也就是说，它可以使你成为一个更好的Java或C语言的程序员。</p>
+<p>对于Java和C语言，我们将”移植”这段ML代码，它定义了我们自己的多态链列类型构造器和该类型的三个多态函数（两个高阶）。我们将研究在Java或C中编写类似代码的几种方法，这将有助于我们更好地理解闭包和对象之间的相似性（对于Java）以及如何使环境显性化（对于C）。在ML中，没有理由定义我们自己的类型构造器，因为<code>’a list</code>已经写好了，但这样做将有助于我们与Java和C的版本进行比较：</p>
+<pre class="line-numbers language-none"><code class="language-none">datatype ’a mylist &#x3D; Cons of ’a * (’a mylist) | Empty
+
+fun map f xs &#x3D;
+    case xs of
+        Empty &#x3D;&gt; Empty
+      | Cons(x,xs) &#x3D;&gt; Cons(f x, map f xs)
+      
+fun filter f xs &#x3D;
+    case xs of
+        Empty &#x3D;&gt; Empty
+      | Cons(x,xs) &#x3D;&gt; if f x then Cons(x,filter f xs) else filter f xs
+      
+fun length xs &#x3D;
+    case xs of
+        Empty &#x3D;&gt; 0
+      | Cons(_,xs) &#x3D;&gt; 1 + length xs<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>使用这个库，这里有两个客户端函数。（后者不是特别有效，但显示了对<code>length</code>和<code>filter</code>的简单使用）：</p>
+<pre class="line-numbers language-none"><code class="language-none">val doubleAll &#x3D; map (fn x &#x3D;&gt; x * 2)
+fun countNs (xs, n : int) &#x3D; length (filter (fn x &#x3D;&gt; x&#x3D;n) xs)<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<h2 id="可选的：Java中使用对象和接口的闭包"><a href="#可选的：Java中使用对象和接口的闭包" class="headerlink" title="可选的：Java中使用对象和接口的闭包"></a>可选的：Java中使用对象和接口的闭包</h2><p>Java 8包括对闭包的支持，就像现在大多数其他主流的面向对象语言一样（C#、Scala、Ruby……），但值得考虑的是，如果没有这种支持，我们如何在Java中编写类似的代码，因为近二十年来一直需要这样做。虽然我们没有头等的函数、currying或类型推理，但我们有泛型（Java过去没有），我们可以用一个方法定义接口，我们可以像函数类型一样使用这些接口。闲话少说，下面是这段代码的Java类似物，接下来是对你可能没有见过的功能和我们可以用其他方式编写代码的简要讨论：</p>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">interface</span> <span class="token class-name">Func</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">B</span><span class="token punctuation">,</span><span class="token class-name">A</span><span class="token punctuation">></span></span> <span class="token punctuation">&#123;</span>
+    <span class="token class-name">B</span> <span class="token function">m</span><span class="token punctuation">(</span><span class="token class-name">A</span> x<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+<span class="token keyword">interface</span> <span class="token class-name">Pred</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">A</span><span class="token punctuation">></span></span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">boolean</span> <span class="token function">m</span><span class="token punctuation">(</span><span class="token class-name">A</span> x<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+<span class="token keyword">class</span> <span class="token class-name">List</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">T</span><span class="token punctuation">></span></span> <span class="token punctuation">&#123;</span>
+    <span class="token class-name">T</span>       head<span class="token punctuation">;</span>
+    <span class="token class-name">List</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">T</span><span class="token punctuation">></span></span> tail<span class="token punctuation">;</span>
+    <span class="token class-name">List</span><span class="token punctuation">(</span><span class="token class-name">T</span> x<span class="token punctuation">,</span> <span class="token class-name">List</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">T</span><span class="token punctuation">></span></span> xs<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        head <span class="token operator">=</span> x<span class="token punctuation">;</span>
+        tail <span class="token operator">=</span> xs<span class="token punctuation">;</span> 
+    <span class="token punctuation">&#125;</span>
+    <span class="token keyword">static</span> <span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">A</span><span class="token punctuation">,</span><span class="token class-name">B</span><span class="token punctuation">></span></span> <span class="token class-name">List</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">B</span><span class="token punctuation">></span></span> <span class="token function">map</span><span class="token punctuation">(</span><span class="token class-name">Func</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">B</span><span class="token punctuation">,</span><span class="token class-name">A</span><span class="token punctuation">></span></span> f<span class="token punctuation">,</span> <span class="token class-name">List</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">A</span><span class="token punctuation">></span></span> xs<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">if</span><span class="token punctuation">(</span>xs<span class="token operator">==</span><span class="token keyword">null</span><span class="token punctuation">)</span>
+            <span class="token keyword">return</span> <span class="token keyword">null</span><span class="token punctuation">;</span>
+        <span class="token keyword">return</span> <span class="token keyword">new</span> <span class="token class-name">List</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">B</span><span class="token punctuation">></span></span><span class="token punctuation">(</span>f<span class="token punctuation">.</span><span class="token function">m</span><span class="token punctuation">(</span>xs<span class="token punctuation">.</span>head<span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token function">map</span><span class="token punctuation">(</span>f<span class="token punctuation">,</span>xs<span class="token punctuation">.</span>tail<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+    <span class="token keyword">static</span> <span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">A</span><span class="token punctuation">></span></span> <span class="token class-name">List</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">A</span><span class="token punctuation">></span></span> <span class="token function">filter</span><span class="token punctuation">(</span><span class="token class-name">Pred</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">A</span><span class="token punctuation">></span></span> f<span class="token punctuation">,</span> <span class="token class-name">List</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">A</span><span class="token punctuation">></span></span> xs<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">if</span><span class="token punctuation">(</span>xs<span class="token operator">==</span><span class="token keyword">null</span><span class="token punctuation">)</span>
+            <span class="token keyword">return</span> <span class="token keyword">null</span><span class="token punctuation">;</span>
+        <span class="token keyword">if</span><span class="token punctuation">(</span>f<span class="token punctuation">.</span><span class="token function">m</span><span class="token punctuation">(</span>xs<span class="token punctuation">.</span>head<span class="token punctuation">)</span><span class="token punctuation">)</span>
+            <span class="token keyword">return</span> <span class="token keyword">new</span> <span class="token class-name">List</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">A</span><span class="token punctuation">></span></span><span class="token punctuation">(</span>xs<span class="token punctuation">.</span>head<span class="token punctuation">,</span> <span class="token function">filter</span><span class="token punctuation">(</span>f<span class="token punctuation">,</span>xs<span class="token punctuation">.</span>tail<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">return</span> <span class="token function">filter</span><span class="token punctuation">(</span>f<span class="token punctuation">,</span>xs<span class="token punctuation">.</span>tail<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+    <span class="token keyword">static</span> <span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">A</span><span class="token punctuation">></span></span> <span class="token keyword">int</span> <span class="token function">length</span><span class="token punctuation">(</span><span class="token class-name">List</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">A</span><span class="token punctuation">></span></span> xs<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">int</span> ans <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+        <span class="token keyword">while</span><span class="token punctuation">(</span>xs <span class="token operator">!=</span> <span class="token keyword">null</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+            <span class="token operator">++</span>ans<span class="token punctuation">;</span>
+            xs <span class="token operator">=</span> xs<span class="token punctuation">.</span>tail<span class="token punctuation">;</span>
+        <span class="token punctuation">&#125;</span>
+        <span class="token keyword">return</span> ans<span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span>
+
+<span class="token keyword">class</span> <span class="token class-name">ExampleClients</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">static</span> <span class="token class-name">List</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">Integer</span><span class="token punctuation">></span></span> <span class="token function">doubleAll</span><span class="token punctuation">(</span><span class="token class-name">List</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">Integer</span><span class="token punctuation">></span></span> xs<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">return</span> <span class="token class-name">List</span><span class="token punctuation">.</span><span class="token function">map</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">Func</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">Integer</span><span class="token punctuation">,</span><span class="token class-name">Integer</span><span class="token punctuation">></span></span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+                             <span class="token keyword">public</span> <span class="token class-name">Integer</span> <span class="token function">m</span><span class="token punctuation">(</span><span class="token class-name">Integer</span> x<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span> <span class="token keyword">return</span> x <span class="token operator">*</span> <span class="token number">2</span><span class="token punctuation">;</span> <span class="token punctuation">&#125;</span>
+                         <span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span class="token punctuation">,</span> 
+                         xs<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+    <span class="token keyword">static</span> <span class="token keyword">int</span> <span class="token function">countNs</span><span class="token punctuation">(</span><span class="token class-name">List</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">Integer</span><span class="token punctuation">></span></span> xs<span class="token punctuation">,</span> <span class="token keyword">final</span> <span class="token keyword">int</span> n<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">return</span> <span class="token class-name">List</span><span class="token punctuation">.</span><span class="token function">length</span><span class="token punctuation">(</span><span class="token class-name">List</span><span class="token punctuation">.</span><span class="token function">filter</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">Pred</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">Integer</span><span class="token punctuation">></span></span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+                                           <span class="token keyword">public</span> <span class="token keyword">boolean</span> <span class="token function">m</span><span class="token punctuation">(</span><span class="token class-name">Integer</span> x<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span> <span class="token keyword">return</span> x<span class="token operator">==</span>n<span class="token punctuation">;</span> <span class="token punctuation">&#125;</span>
+                                      <span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span class="token punctuation">,</span> 
+                                      xs<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>这段代码使用了几个有趣的技术和特征：</p>
+<ul>
+<li>为了取代<code>map</code>的<code>&#39;a -&gt; ‘b</code>和<code>filter</code>的<code>&#39;a -&gt; bool</code>的（<code>filter</code>）函数类型，我们有一个方法的通用接口。实现这些接口之一的类可以拥有它所需要的任何类型的字段，这将起到闭包环境的作用。</li>
+<li>通用类<code>List</code>起到了数据类型绑定的作用。构造函数按照预期初始化了<code>head</code>和<code>tail</code>的字段，使用标准的Java惯例<code>null</code>表示空的列表。</li>
+<li>Java中的静态方法可以是泛型的，只要在返回类型的左边明确提到类型变量。除了这一点和语法，<code>map</code>和<code>filter</code>的实现与它们的ML对应物类似，使用<code>Func</code>或<code>Pred</code>接口中的一个方法作为参数传递的函数。对于长度，我们可以使用递归，但选择遵循Java对循环的偏爱。</li>
+<li>如果你从未见过匿名内部类，那么<code>doubleAll</code>和<code>countNs</code>这两个方法看起来会很奇怪。有点像匿名函数，这个语言特性让我们创建一个实现了一个接口的对象，而不用给这个对象的类命名。相反，我们使用<code>new</code>来实现接口（适当地实例化类型变量），然后为方法提供定义。作为一个内部类，这个定义可以使用包围对象的字段或最终的局部变量和包围方法的参数，以更繁琐的语法获得封闭环境的大部分便利。(匿名内部类被添加到Java中，以支持回调和类似的习语）。</li>
+</ul>
+<p>我们可以用很多不同的方法来编写Java代码。特别值得注意的是：</p>
+<ul>
+<li><p>在Java的实现中，尾递归的效率不如循环高，所以更倾向于基于循环的<code>map</code>和<code>filter</code>的实现是合理的。在不反转中间列表的情况下做到这一点比你想象的要复杂（你需要保留一个指向前一个元素的指针，并为第一个元素编写特殊的代码），这就是为什么这种程序在编程面试时经常被问到。递归版本很容易理解，但对于很长的列表来说是不明智的。</p>
+</li>
+<li><p>一个更加面向对象的方法是使<code>map</code>、<code>filter</code>和<code>length</code>成为实例方法而不是静态方法。方法的签名将改变为：</p>
+<pre class="line-numbers language-none"><code class="language-none">&lt;B&gt; List&lt;B&gt; map(Func&lt;B,T&gt; f) &#123;...&#125;
+List&lt;T&gt; filter(Pred&lt;T&gt; f) &#123;...&#125;
+int length() &#123;...&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+<p>这种方法的缺点是，如果客户端可能有一个空的列表，我们必须在这些方法的任何使用中添加特殊情况。原因是空列表被表示为<code>null</code>，使用<code>null</code>作为调用的接收方会引发<code>NullPointerException</code>。所以方法<code>doubleAll</code>和<code>countNs</code>必须检查它们的参数是否为空，以避免这种异常。</p>
+</li>
+<li><p>另一种更加面向对象的方法是不对空列表使用<code>null</code>。相反，我们会有一个抽象的<code>list</code>类，其中有两个子类，一个用于空列表，一个用于非空列表。这种方法对具有多个构造函数的数据类型来说是一种更忠实的面向对象的方法，使用它可以使前面的实例方法建议在没有特殊情况下得以实现。对于习惯于使用<code>null</code>的程序员来说，这种方法确实更复杂、更长。</p>
+</li>
+<li><p>匿名内类只是一种方便。我们可以定义一些”正常”的类来实现<code>Func&lt;Integer,Integer&gt;</code>和<code>Pred&lt;Integer&gt;</code>，并创建实例来传递给<code>map</code>和<code>filter</code>。对于<code>countNs</code>的例子，我们的类将有一个<code>int</code>字段用于保存$n$，我们将把这个字段的值传递给类的构造函数，后者将初始化这个字段。</p>
+</li>
+</ul>
+<h2 id="可选的：C语言中使用显式环境的闭包"><a href="#可选的：C语言中使用显式环境的闭包" class="headerlink" title="可选的：C语言中使用显式环境的闭包"></a>可选的：C语言中使用显式环境的闭包</h2><p>C语言确实有函数，但它们不是闭包。如果你向一个函数传递一个指针，它只是一个代码指针。正如我们所研究的，如果一个函数参数只能使用它的参数，那么高阶函数的作用就大打折扣。那么，在C语言中，我们能做什么呢？我们可以对高阶函数做如下的改变：</p>
+<ul>
+<li>明确地把环境作为另一个参数。</li>
+<li>让函数的参数也取一个环境。</li>
+<li>当调用函数参数时，把环境传给它。</li>
+</ul>
+<p>因此，高阶函数不再是这样的了：</p>
+<pre class="line-numbers language-none"><code class="language-none">int f(int (*g)(int), list_t xs) &#123; ... g(xs-&gt;head) ... &#125;<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>我们会让它看起来像这样：</p>
+<pre class="line-numbers language-none"><code class="language-none">int f(int (*g)(void*,int), void* env, list_t xs) &#123; ... g(env,xs-&gt;head) ... &#125;<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>我们使用<code>void*</code>是因为我们希望<code>f</code>能与使用不同类型环境的函数一起工作，所以没有好的选择。客户端将不得不从其他兼容的类型中转换到<code>void*</code>。我们在此不讨论这些细节。</p>
+<p>虽然C语言的代码有很多其他的细节，但在<code>map</code>和<code>filter</code>的定义和使用中使用明确的环境是与其他语言的版本的关键区别：</p>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;stdlib.h></span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;stdint.h></span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;stdbool.h></span></span>
+
+<span class="token keyword">typedef</span> <span class="token keyword">struct</span> <span class="token class-name">List</span> <span class="token class-name">list_t</span><span class="token punctuation">;</span>
+<span class="token keyword">struct</span> <span class="token class-name">List</span> <span class="token punctuation">&#123;</span>
+<span class="token keyword">void</span> <span class="token operator">*</span> head<span class="token punctuation">;</span>
+  <span class="token class-name">list_t</span> <span class="token operator">*</span> tail<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
+<span class="token class-name">list_t</span> <span class="token operator">*</span> <span class="token function">makelist</span> <span class="token punctuation">(</span><span class="token keyword">void</span> <span class="token operator">*</span> x<span class="token punctuation">,</span> <span class="token class-name">list_t</span> <span class="token operator">*</span> xs<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+  <span class="token class-name">list_t</span> <span class="token operator">*</span> ans <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token class-name">list_t</span> <span class="token operator">*</span><span class="token punctuation">)</span><span class="token function">malloc</span><span class="token punctuation">(</span><span class="token keyword">sizeof</span><span class="token punctuation">(</span><span class="token class-name">list_t</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  ans<span class="token operator">-></span>head <span class="token operator">=</span> x<span class="token punctuation">;</span>
+  ans<span class="token operator">-></span>tail <span class="token operator">=</span> xs<span class="token punctuation">;</span>
+  <span class="token keyword">return</span> ans<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+<span class="token class-name">list_t</span> <span class="token operator">*</span> <span class="token function">map</span><span class="token punctuation">(</span><span class="token keyword">void</span><span class="token operator">*</span> <span class="token punctuation">(</span><span class="token operator">*</span>f<span class="token punctuation">)</span><span class="token punctuation">(</span><span class="token keyword">void</span><span class="token operator">*</span><span class="token punctuation">,</span><span class="token keyword">void</span><span class="token operator">*</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token keyword">void</span><span class="token operator">*</span> env<span class="token punctuation">,</span> <span class="token class-name">list_t</span> <span class="token operator">*</span> xs<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+  <span class="token keyword">if</span><span class="token punctuation">(</span>xs<span class="token operator">==</span><span class="token constant">NULL</span><span class="token punctuation">)</span>
+    <span class="token keyword">return</span> <span class="token constant">NULL</span><span class="token punctuation">;</span>
+  <span class="token keyword">return</span> <span class="token function">makelist</span><span class="token punctuation">(</span><span class="token function">f</span><span class="token punctuation">(</span>env<span class="token punctuation">,</span>xs<span class="token operator">-></span>head<span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token function">map</span><span class="token punctuation">(</span>f<span class="token punctuation">,</span>env<span class="token punctuation">,</span>xs<span class="token operator">-></span>tail<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+<span class="token class-name">list_t</span> <span class="token operator">*</span> <span class="token function">filter</span><span class="token punctuation">(</span><span class="token function">bool</span> <span class="token punctuation">(</span><span class="token operator">*</span>f<span class="token punctuation">)</span><span class="token punctuation">(</span><span class="token keyword">void</span><span class="token operator">*</span><span class="token punctuation">,</span><span class="token keyword">void</span><span class="token operator">*</span><span class="token punctuation">)</span><span class="token punctuation">,</span> <span class="token keyword">void</span><span class="token operator">*</span> env<span class="token punctuation">,</span> <span class="token class-name">list_t</span> <span class="token operator">*</span> xs<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+  <span class="token keyword">if</span><span class="token punctuation">(</span>xs<span class="token operator">==</span><span class="token constant">NULL</span><span class="token punctuation">)</span>
+    <span class="token keyword">return</span> <span class="token constant">NULL</span><span class="token punctuation">;</span>
+  <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token function">f</span><span class="token punctuation">(</span>env<span class="token punctuation">,</span>xs<span class="token operator">-></span>head<span class="token punctuation">)</span><span class="token punctuation">)</span>
+    <span class="token keyword">return</span> <span class="token function">makelist</span><span class="token punctuation">(</span>xs<span class="token operator">-></span>head<span class="token punctuation">,</span> <span class="token function">filter</span><span class="token punctuation">(</span>f<span class="token punctuation">,</span>env<span class="token punctuation">,</span>xs<span class="token operator">-></span>tail<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token keyword">return</span> <span class="token function">filter</span><span class="token punctuation">(</span>f<span class="token punctuation">,</span>env<span class="token punctuation">,</span>xs<span class="token operator">-></span>tail<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+<span class="token keyword">int</span> <span class="token function">length</span><span class="token punctuation">(</span><span class="token class-name">list_t</span><span class="token operator">*</span> xs<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+  <span class="token keyword">int</span> ans <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+  <span class="token keyword">while</span><span class="token punctuation">(</span>xs <span class="token operator">!=</span> <span class="token constant">NULL</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token operator">++</span>ans<span class="token punctuation">;</span>
+    xs <span class="token operator">=</span> xs<span class="token operator">-></span>tail<span class="token punctuation">;</span>
+  <span class="token punctuation">&#125;</span>
+<span class="token keyword">return</span> ans<span class="token punctuation">;</span> <span class="token punctuation">&#125;</span>
+<span class="token keyword">void</span><span class="token operator">*</span> <span class="token function">doubleInt</span><span class="token punctuation">(</span><span class="token keyword">void</span><span class="token operator">*</span> ignore<span class="token punctuation">,</span> <span class="token keyword">void</span><span class="token operator">*</span> i<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span> <span class="token comment">// type casts to match what map expects</span>
+  <span class="token keyword">return</span> <span class="token punctuation">(</span><span class="token keyword">void</span><span class="token operator">*</span><span class="token punctuation">)</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token class-name">intptr_t</span><span class="token punctuation">)</span>i<span class="token punctuation">)</span><span class="token operator">*</span><span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+<span class="token class-name">list_t</span> <span class="token operator">*</span> <span class="token function">doubleAll</span><span class="token punctuation">(</span><span class="token class-name">list_t</span> <span class="token operator">*</span> xs<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span> <span class="token comment">// assumes list holds intptr_t fields</span>
+  <span class="token keyword">return</span> <span class="token function">map</span><span class="token punctuation">(</span>doubleInt<span class="token punctuation">,</span> <span class="token constant">NULL</span><span class="token punctuation">,</span> xs<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+bool <span class="token function">isN</span><span class="token punctuation">(</span><span class="token keyword">void</span><span class="token operator">*</span> n<span class="token punctuation">,</span> <span class="token keyword">void</span><span class="token operator">*</span> i<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span> <span class="token comment">// type casts to match what filter expects</span>
+  <span class="token keyword">return</span> <span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token class-name">intptr_t</span><span class="token punctuation">)</span>n<span class="token punctuation">)</span><span class="token operator">==</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token class-name">intptr_t</span><span class="token punctuation">)</span>i<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+<span class="token keyword">int</span> <span class="token function">countNs</span><span class="token punctuation">(</span><span class="token class-name">list_t</span> <span class="token operator">*</span> xs<span class="token punctuation">,</span> <span class="token class-name">intptr_t</span> n<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span> <span class="token comment">// assumes list hold intptr_t fields</span>
+  <span class="token keyword">return</span> <span class="token function">length</span><span class="token punctuation">(</span><span class="token function">filter</span><span class="token punctuation">(</span>isN<span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token keyword">void</span><span class="token operator">*</span><span class="token punctuation">)</span>n<span class="token punctuation">,</span> xs<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>就像在Java中一样，使用递归而不是循环要简单得多，但效率可能较低。另一个选择是定义结构，将代码和环境放在一个值中，但我们的方法是对每个高阶函数使用是一个额外的<code>void*</code>参数，这在C代码中更常见。</p>
+<p>对于那些对C规范的细节感兴趣的人来说。还要注意上面的客户端代码，特别是函数<code>doubleInt</code>、<code>isN</code>和<code>countNs</code>中的代码，是不可移植的，因为假设一个<code>intptr_t</code>可以被转换到<code>void *</code>，然后转换回来在技术上是不合法的，除非这个值是以一个指针（而不是一个适合<code>intptr_t</code>的数字）开始。虽然上面写的代码是一个相当常见的方法，但可移植的版本需要使用一个数字的指针，或者用<code>intptr_t</code>替换库中<code>void*</code>的使用。后一种方法仍然是一个可重用的库，因为任何指针都可以转换为<code>intptr_t</code>并返回。</p>
+<h2 id="标准库文档"><a href="#标准库文档" class="headerlink" title="标准库文档"></a>标准库文档</h2><p>这个话题与本节的其他部分没有密切关系，但我们在作业3中有点需要它，它对任何编程语言都是有用的，而且它显示了ML中预定义的一些有用的函数（高阶或非高阶）。</p>
+<p>ML，像许多语言一样，有一个标准库。这是语言中的程序可以假设总是可用的代码。在标准库中的代码有两个常见而不同的原因：</p>
+<ul>
+<li>我们需要一个标准库来与”外部世界”对接，以提供否则不可能实现的功能。例如，打开一个文件或设置一个定时器。</li>
+<li>标准库可以提供一些常用的、有用的功能，以至于只需要定义一次就可以了，这样所有的程序都可以使用相同的函数名称、参数顺序等。例如，拼接两个字符串的函数、映射一个列表的函数等等。</li>
+</ul>
+<p>标准库通常是如此之大，以至于期望教它们是没有意义的。你需要自己地寻找文档，并对”可能提供的东西”和”可能存在的地方”形成一个粗略的直觉。因此，在作业3中，我们让你去寻找更多关于ML的标准库中的几个简单函数。</p>
+<p>与大多数现代语言相比，在线文档是非常原始的，但它完全可以满足我们的需要。只要去：</p>
+<pre class="line-numbers language-none"><code class="language-none">http:&#x2F;&#x2F;www.standardml.org&#x2F;Basis&#x2F;manpages.html<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>这些函数是用ML的模块系统组织起来的，我们将在下一节研究它的基本原理。例如，对字符有用的函数在结构<code>Char</code>中。要使用<code>Bar</code>结构中的函数<code>foo</code>，你就写<code>Bar.foo</code>，这正是我们使用<code>List.map</code>等函数的方法。有一个问题是，字符串结构的函数是在签名<code>STRING</code>下记录的。签名基本上是结构的类型，我们将在后面研究。某些库函数被认为是非常有用的，它们不在一个结构中，比如<code>hd</code>。这些绑定的描述在<a target="_blank" rel="noopener" href="http://www.standardml.org/Basis/top-level-chapter.html">http://www.standardml.org/Basis/top-level-chapter.html</a>。</p>
+<p>没有什么可以替代精确和完整的代码库文档，但有时当你在编程过程中只需要快速提醒时，查找完整的文档会很不方便。例如，很容易忘记参数的顺序，或者一个函数是Curried还是Tupled。通常情况下，你可以使用REPL来快速获得你需要的信息。毕竟，如果你输入一个像<code>List.map</code>这样的函数，它会评估这个表达式并返回其类型。如果你不记得一个函数叫什么，你甚至可以猜测它的名字。如果你错了，你只会得到一个未定义变量的信息。最后，利用我们将要学习的功能，你可以让REPL打印出一个结构所提供的所有绑定关系。举例来说，只需这样做：</p>
+<pre class="line-numbers language-none"><code class="language-none">structure X &#x3D; List; (* List is the structure we want to know about *)
+structure X : LIST  (* This is what the REPL gives back *)
+signature X &#x3D; LIST; (* Write LIST because that is what follows the : on the previous line *)<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+<p>由于在REPL中查找东西非常方便，其他语言的一些REPL更进一步，提供了打印与函数或库相关的文档的特殊命令。</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">Doraemonzzz</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="http://www.doraemonzzz.com/2022/03/13/2022-3-13-Programming-Languages-Part-A-Section3-%E7%BF%BB%E8%AF%91/">http://www.doraemonzzz.com/2022/03/13/2022-3-13-Programming-Languages-Part-A-Section3-%E7%BF%BB%E8%AF%91/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://www.doraemonzzz.com" target="_blank">Doraemonzzz</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/Coursera-Programming-Languages/">Coursera Programming Languages</a></div><div class="post_share"><div class="social-share" data-image="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2022/03/13/2022-3-13-Programming-Languages-Part-A-Section4-%E7%BF%BB%E8%AF%91/"><img class="prev-cover" src= "/img/loading.gif" data-lazy-src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">Programming Languages Part A Section4 翻译</div></div></a></div><div class="next-post pull-right"><a href="/2022/03/13/2022-3-13-Programming-Languages-Part-A-Exam/"><img class="next-cover" src= "/img/loading.gif" data-lazy-src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">Programming Languages Part A Exam</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span> 相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2022/01/10/2022-1-10-Programming-Languages-Part-A-HW0/" title="Programming Languages Part A HW0"><img class="cover" src= "/img/loading.gif" data-lazy-src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-01-10</div><div class="title">Programming Languages Part A HW0</div></div></a></div><div><a href="/2022/01/10/2022-1-10-Programming-Languages-Part-A-Week-1笔记/" title="Programming Languages Part A Week 1笔记"><img class="cover" src= "/img/loading.gif" data-lazy-src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-01-10</div><div class="title">Programming Languages Part A Week 1笔记</div></div></a></div><div><a href="/2022/01/10/2022-1-10-Programming-Languages-Part-A-HW1/" title="Programming Languages Part A HW1"><img class="cover" src= "/img/loading.gif" data-lazy-src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-01-10</div><div class="title">Programming Languages Part A HW1</div></div></a></div><div><a href="/2022/02/28/2022-2-28-Programming-Languages-Part-A-HW3-Extra-Practice-Problems/" title="Programming Languages Part A HW3 Extra Practice Problems"><img class="cover" src= "/img/loading.gif" data-lazy-src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-02-28</div><div class="title">Programming Languages Part A HW3 Extra Practice Problems</div></div></a></div><div><a href="/2022/03/13/2022-3-13-Programming-Languages-Part-A-Exam/" title="Programming Languages Part A Exam"><img class="cover" src= "/img/loading.gif" data-lazy-src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-03-13</div><div class="title">Programming Languages Part A Exam</div></div></a></div><div><a href="/2022/03/13/2022-3-13-Programming-Languages-Part-A-Practice-Exam/" title="Programming Languages Part A Practice Exam"><img class="cover" src= "/img/loading.gif" data-lazy-src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-03-13</div><div class="title">Programming Languages Part A Practice Exam</div></div></a></div></div></div><hr/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div><div id="comment-switch"><span class="first-comment">Valine</span><span class="switch-btn"></span><span class="second-comment">Livere</span></div></div><div class="comment-wrap"><div><div class="vcomment" id="vcomment"></div></div><div><div id="lv-container" data-id="city" data-uid="MTAyMC8zNDcxOS8xMTI1Ng=="></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="card-info-avatar is-center"><img class="avatar-img" src= "/img/loading.gif" data-lazy-src="https://github.com/Doraemonzzz/md-photo/blob/master/%E5%A4%B4%E5%83%8F.jpg?raw=true" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/><div class="author-info__name">Doraemonzzz</div><div class="author-info__description">个人博客，主要记录有关机器学习，数学以及计算机科学的笔记</div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">711</div></a></div><div class="card-info-data-item is-center"><a href="/tags/"><div class="headline">标签</div><div class="length-num">73</div></a></div><div class="card-info-data-item is-center"><a href="/categories/"><div class="headline">分类</div><div class="length-num">29</div></a></div></div><a class="button--animated" id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/Doraemonzzz"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/Doraemonzzz" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="/doraemon_zzz@163.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a><a class="social-icon" href="https://space.bilibili.com/291079982" target="_blank" title="Bilibili"><i class="iconfont icon-bilibili"></i></a><a class="social-icon" href="/atom.xml" target="_blank" title=""><i class="fa fa-rss"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn card-announcement-animation"></i><span>公告</span></div><div class="announcement_content">暂无公告</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Coursera%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC3%E8%8A%82%E6%80%BB%E7%BB%93"><span class="toc-number">1.</span> <span class="toc-text">Coursera编程语言课程 第3节总结</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%9B%AE%E5%BD%95"><span class="toc-number">1.1.</span> <span class="toc-text">目录</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E4%BD%BF%E7%94%A8%E8%AF%8D%E6%B3%95%E4%BD%9C%E7%94%A8%E5%9F%9F"><span class="toc-number">1.2.</span> <span class="toc-text">为什么要使用词法作用域</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%A5%E5%87%BD%E6%95%B0%E4%B8%BA%E5%8F%82%E6%95%B0"><span class="toc-number">1.3.</span> <span class="toc-text">以函数为参数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A4%9A%E6%80%81%E7%B1%BB%E5%9E%8B%E5%92%8C%E5%87%BD%E6%95%B0%E4%BD%9C%E4%B8%BA%E5%8F%82%E6%95%B0"><span class="toc-number">1.4.</span> <span class="toc-text">多态类型和函数作为参数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8C%BF%E5%90%8D%E5%87%BD%E6%95%B0"><span class="toc-number">1.5.</span> <span class="toc-text">匿名函数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%8D%E5%BF%85%E8%A6%81%E7%9A%84%E5%87%BD%E6%95%B0%E5%8C%85%E8%A3%85"><span class="toc-number">1.6.</span> <span class="toc-text">不必要的函数包装</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Maps%E5%92%8Cfilters"><span class="toc-number">1.7.</span> <span class="toc-text">Maps和filters</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BF%94%E5%9B%9E%E5%87%BD%E6%95%B0"><span class="toc-number">1.8.</span> <span class="toc-text">返回函数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%8D%E4%BB%85%E4%BB%85%E6%98%AF%E5%AF%B9%E6%95%B0%E5%AD%97%E5%92%8C%E5%88%97%E8%A1%A8"><span class="toc-number">1.9.</span> <span class="toc-text">不仅仅是对数字和列表</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AF%8D%E6%B1%87%E8%8C%83%E5%9B%B4"><span class="toc-number">1.10.</span> <span class="toc-text">词汇范围</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%8E%AF%E5%A2%83%E5%92%8C%E9%97%AD%E5%8C%85"><span class="toc-number">1.11.</span> <span class="toc-text">环境和闭包</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%EF%BC%88%E6%84%9A%E8%A0%A2%E7%9A%84%EF%BC%89%E5%8C%85%E6%8B%AC%E9%AB%98%E9%98%B6%E5%87%BD%E6%95%B0%E7%9A%84%E4%BE%8B%E5%AD%90"><span class="toc-number">1.12.</span> <span class="toc-text">（愚蠢的）包括高阶函数的例子</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E4%BD%BF%E7%94%A8%E8%AF%8D%E6%B3%95%E4%BD%9C%E7%94%A8%E5%9F%9F"><span class="toc-number">1.13.</span> <span class="toc-text">为什么使用词法作用域</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B0%86%E9%97%AD%E5%8C%85%E4%BC%A0%E9%80%92%E7%BB%99%E8%BF%AD%E4%BB%A3%E5%99%A8%EF%BC%8C%E5%A6%82filter"><span class="toc-number">1.14.</span> <span class="toc-text">将闭包传递给迭代器，如filter</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Fold%E5%92%8C%E6%9B%B4%E5%A4%9A%E7%9A%84%E9%97%AD%E5%8C%85%E4%BE%8B%E5%AD%90"><span class="toc-number">1.15.</span> <span class="toc-text">Fold和更多的闭包例子</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%A6%E4%B8%80%E4%B8%AA%E9%97%AD%E5%8C%85%E4%B9%A0%E8%AF%AD%EF%BC%9A%E7%BB%84%E5%90%88%E5%87%BD%E6%95%B0"><span class="toc-number">1.16.</span> <span class="toc-text">另一个闭包习语：组合函数</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%87%BD%E6%95%B0%E7%BB%84%E5%90%88"><span class="toc-number">1.16.1.</span> <span class="toc-text">函数组合</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AE%A1%E9%81%93%E6%93%8D%E4%BD%9C%E7%AC%A6"><span class="toc-number">1.16.2.</span> <span class="toc-text">管道操作符</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%A6%E4%B8%80%E4%B8%AA%E9%97%AD%E5%8C%85%E4%B9%A0%E8%AF%AD%EF%BC%9ACurrying%E5%92%8C%E9%83%A8%E5%88%86%E5%BA%94%E7%94%A8"><span class="toc-number">1.17.</span> <span class="toc-text">另一个闭包习语：Currying和部分应用</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%9A%E4%B9%89%E5%92%8C%E4%BD%BF%E7%94%A8curried%E5%87%BD%E6%95%B0"><span class="toc-number">1.17.1.</span> <span class="toc-text">定义和使用curried函数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%83%A8%E5%88%86%E5%BA%94%E7%94%A8"><span class="toc-number">1.17.2.</span> <span class="toc-text">部分应用</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B1%80%E9%83%A8%E5%BA%94%E7%94%A8%E5%92%8C%E9%AB%98%E9%98%B6%E5%87%BD%E6%95%B0"><span class="toc-number">1.17.3.</span> <span class="toc-text">局部应用和高阶函数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%80%E8%88%AC%E7%9A%84currying"><span class="toc-number">1.17.4.</span> <span class="toc-text">一般的currying</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BB%84%E5%90%88%E5%87%BD%E6%95%B0%E4%BB%A5curry%E5%92%8Cuncurry%E5%85%B6%E4%BB%96%E5%87%BD%E6%95%B0"><span class="toc-number">1.17.5.</span> <span class="toc-text">组合函数以curry和uncurry其他函数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%95%88%E7%8E%87"><span class="toc-number">1.17.6.</span> <span class="toc-text">效率</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%80%BC%E9%99%90%E5%88%B6"><span class="toc-number">1.18.</span> <span class="toc-text">值限制</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8ML%E5%BC%95%E7%94%A8%E8%BF%9B%E8%A1%8C%E7%AA%81%E5%8F%98"><span class="toc-number">1.19.</span> <span class="toc-text">使用ML引用进行突变</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%A6%E4%B8%80%E4%B8%AA%E9%97%AD%E5%8C%85%E4%B9%A0%E8%AF%AD%EF%BC%9A%E5%9B%9E%E8%B0%83"><span class="toc-number">1.20.</span> <span class="toc-text">另一个闭包习语：回调</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%AF%E9%80%89%EF%BC%9A%E5%8F%A6%E4%B8%80%E4%B8%AA%E9%97%AD%E5%8C%85%E4%B9%A0%E8%AF%AD%EF%BC%9A%E6%8A%BD%E8%B1%A1%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B"><span class="toc-number">1.21.</span> <span class="toc-text">可选：另一个闭包习语：抽象数据类型</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%AF%E9%80%89%E7%9A%84%EF%BC%9A%E5%85%B6%E4%BB%96%E8%AF%AD%E8%A8%80%E4%B8%AD%E7%9A%84%E9%97%AD%E5%8C%85"><span class="toc-number">1.22.</span> <span class="toc-text">可选的：其他语言中的闭包</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%AF%E9%80%89%E7%9A%84%EF%BC%9AJava%E4%B8%AD%E4%BD%BF%E7%94%A8%E5%AF%B9%E8%B1%A1%E5%92%8C%E6%8E%A5%E5%8F%A3%E7%9A%84%E9%97%AD%E5%8C%85"><span class="toc-number">1.23.</span> <span class="toc-text">可选的：Java中使用对象和接口的闭包</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%AF%E9%80%89%E7%9A%84%EF%BC%9AC%E8%AF%AD%E8%A8%80%E4%B8%AD%E4%BD%BF%E7%94%A8%E6%98%BE%E5%BC%8F%E7%8E%AF%E5%A2%83%E7%9A%84%E9%97%AD%E5%8C%85"><span class="toc-number">1.24.</span> <span class="toc-text">可选的：C语言中使用显式环境的闭包</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A0%87%E5%87%86%E5%BA%93%E6%96%87%E6%A1%A3"><span class="toc-number">1.25.</span> <span class="toc-text">标准库文档</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2022/03/15/2022-3-15-OSTEP-Chapter-7-%E5%9B%9E%E9%A1%BE/" title="OSTEP Chapter 7 回顾"><img src= "/img/loading.gif" data-lazy-src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="OSTEP Chapter 7 回顾"/></a><div class="content"><a class="title" href="/2022/03/15/2022-3-15-OSTEP-Chapter-7-%E5%9B%9E%E9%A1%BE/" title="OSTEP Chapter 7 回顾">OSTEP Chapter 7 回顾</a><time datetime="2022-03-15T13:40:00.000Z" title="发表于 2022-03-15 21:40:00">2022-03-15</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/03/15/2022-3-15-OSTEP-Chapter-6-%E5%9B%9E%E9%A1%BE/" title="OSTEP Chapter 6 回顾"><img src= "/img/loading.gif" data-lazy-src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="OSTEP Chapter 6 回顾"/></a><div class="content"><a class="title" href="/2022/03/15/2022-3-15-OSTEP-Chapter-6-%E5%9B%9E%E9%A1%BE/" title="OSTEP Chapter 6 回顾">OSTEP Chapter 6 回顾</a><time datetime="2022-03-15T13:38:00.000Z" title="发表于 2022-03-15 21:38:00">2022-03-15</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/03/15/2022-3-15-OSTEP-Chapter-5-%E5%9B%9E%E9%A1%BE/" title="OSTEP Chapter 5 回顾"><img src= "/img/loading.gif" data-lazy-src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="OSTEP Chapter 5 回顾"/></a><div class="content"><a class="title" href="/2022/03/15/2022-3-15-OSTEP-Chapter-5-%E5%9B%9E%E9%A1%BE/" title="OSTEP Chapter 5 回顾">OSTEP Chapter 5 回顾</a><time datetime="2022-03-15T13:37:00.000Z" title="发表于 2022-03-15 21:37:00">2022-03-15</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/03/15/2022-3-15-OSTEP-Chapter-4-%E5%9B%9E%E9%A1%BE/" title="OSTEP Chapter 4 回顾"><img src= "/img/loading.gif" data-lazy-src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="OSTEP Chapter 4 回顾"/></a><div class="content"><a class="title" href="/2022/03/15/2022-3-15-OSTEP-Chapter-4-%E5%9B%9E%E9%A1%BE/" title="OSTEP Chapter 4 回顾">OSTEP Chapter 4 回顾</a><time datetime="2022-03-15T13:31:00.000Z" title="发表于 2022-03-15 21:31:00">2022-03-15</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/03/13/2022-3-13-Programming-Languages-Part-A-Section4-%E7%BF%BB%E8%AF%91/" title="Programming Languages Part A Section4 翻译"><img src= "/img/loading.gif" data-lazy-src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Programming Languages Part A Section4 翻译"/></a><div class="content"><a class="title" href="/2022/03/13/2022-3-13-Programming-Languages-Part-A-Section4-%E7%BF%BB%E8%AF%91/" title="Programming Languages Part A Section4 翻译">Programming Languages Part A Section4 翻译</a><time datetime="2022-03-13T07:19:00.000Z" title="发表于 2022-03-13 15:19:00">2022-03-13</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2018 - 2022 By Doraemonzzz</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="font-plus" type="button" title="放大字体"><i class="fas fa-plus"></i></button><button id="font-minus" type="button" title="缩小字体"><i class="fas fa-minus"></i></button><button id="translateLink" type="button" title="简繁转换">简</button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div id="local-search"><div class="search-dialog"><div class="search-dialog__title" id="local-search-title">本地搜索</div><div id="local-input-panel"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div></div><hr/><div id="local-search-results"></div><span class="search-close-button"><i class="fas fa-times"></i></span></div><div id="search-mask"></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="/js/tw_cn.js"></script><script src="https://cdn.jsdelivr.net/npm/vanilla-lazyload/dist/lazyload.iife.min.js"></script><script src="/js/search/local-search.js"></script><script>var preloader = {
+  endLoading: () => {
+    document.body.style.overflow = 'auto';
+    document.getElementById('loading-box').classList.add("loaded")
+  },
+  initLoading: () => {
+    document.body.style.overflow = '';
+    document.getElementById('loading-box').classList.remove("loaded")
+
+  }
+}
+window.addEventListener('load',preloader.endLoading())</script><div class="js-pjax"><script>if (!window.MathJax) {
+  window.MathJax = {
+    tex: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]],
+      tags: 'ams'
+    },
+    chtml: {
+      scale: 1.25
+    },
+    options: {
+      renderActions: {
+        findScript: [10, doc => {
+          for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+            const display = !!node.type.match(/; *mode=display/)
+            const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+            const text = document.createTextNode('')
+            node.parentNode.replaceChild(text, node)
+            math.start = {node: text, delim: '', n: 0}
+            math.end = {node: text, delim: '', n: 0}
+            doc.math.push(math)
+          }
+        }, '']
+      }
+    }
+  }
+  
+  const script = document.createElement('script')
+  script.src = 'https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js'
+  script.id = 'MathJax-script'
+  script.async = true
+  document.head.appendChild(script)
+} else {
+  MathJax.startup.document.state(0)
+  MathJax.texReset()
+  MathJax.typeset()
+}</script><script>function loadValine () {
+  function initValine () {
+    const valine = new Valine(Object.assign({
+      el: '#vcomment',
+      appId: 'IpnmxCW9CvYWIXbol5QXsegX-MdYXbMMI',
+      appKey: 'w57DVCdbxcyB1TYYagMIMJIU',
+      placeholder: 'Please leave your footprints',
+      avatar: 'monsterid',
+      meta: 'nick,mail,link'.split(','),
+      pageSize: '10',
+      lang: 'en',
+      recordIP: false,
+      serverURLs: '',
+      emojiCDN: '',
+      emojiMaps: "",
+      enableQQ: false,
+      path: window.location.pathname,
+      requiredFields: ["nick,mail"],
+      visitor: true
+    }, null))
+  }
+
+  if (typeof Valine === 'function') initValine() 
+  else getScript('https://cdn.jsdelivr.net/npm/valine/dist/Valine.min.js').then(initValine)
+}
+
+if ('Valine' === 'Valine' || !false) {
+  if (false) btf.loadComment(document.getElementById('vcomment'),loadValine)
+  else setTimeout(loadValine, 0)
+} else {
+  function loadOtherComment () {
+    loadValine()
+  }
+}</script><script>function loadLivere () {
+  if (typeof LivereTower === 'object') {
+    window.LivereTower.init()
+  }
+  else {
+    (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+    })(document, 'script');
+  }
+}
+
+if ('Valine' === 'Livere' || !false) {
+  if (false) btf.loadComment(document.getElementById('lv-container'), loadLivere)
+  else loadLivere()
+}
+else {
+  function loadOtherComment () {
+    loadLivere()
+  }
+}</script></div><script defer="defer" id="fluttering_ribbon" mobile="false" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/canvas-fluttering-ribbon.min.js"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
