@@ -6,7 +6,7 @@
   <link href="http://www.doraemonzzz.com/atom.xml" rel="self"/>
   
   <link href="http://www.doraemonzzz.com/"/>
-  <updated>2022-03-15T13:41:03.626Z</updated>
+  <updated>2022-04-03T03:08:59.245Z</updated>
   <id>http://www.doraemonzzz.com/</id>
   
   <author>
@@ -15,6 +15,52 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Programming Languages Part B Week 2笔记</title>
+    <link href="http://www.doraemonzzz.com/2022/04/03/2022-4-3-Programming-Languages-Part-B-Week-2%E7%AC%94%E8%AE%B0/"/>
+    <id>http://www.doraemonzzz.com/2022/04/03/2022-4-3-Programming-Languages-Part-B-Week-2%E7%AC%94%E8%AE%B0/</id>
+    <published>2022-04-03T03:07:00.000Z</published>
+    <updated>2022-04-03T03:08:59.245Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;这次回顾Part B Week 2的内容，主要介绍了Racket基本语法。&lt;/p&gt;
+&lt;p&gt;课程主页：&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://www.coursera.org/learn/programming-languages-part-b/home&quot;&gt;https://www.coursera.org/learn/programming-languages-part-b/home&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;B站搬运：&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://www.bilibili.com/video/BV1tZ4y1D7&quot;&gt;https://www.bilibili.com/video/BV1tZ4y1D7&lt;/a&gt;&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="函数式编程" scheme="http://www.doraemonzzz.com/categories/%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B/"/>
+    
+    
+    <category term="Coursera Programming Languages" scheme="http://www.doraemonzzz.com/tags/Coursera-Programming-Languages/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Programming Languages Part B Week 1笔记</title>
+    <link href="http://www.doraemonzzz.com/2022/04/03/2022-4-3-Programming-Languages-Part-B-Week-1%E7%AC%94%E8%AE%B0/"/>
+    <id>http://www.doraemonzzz.com/2022/04/03/2022-4-3-Programming-Languages-Part-B-Week-1%E7%AC%94%E8%AE%B0/</id>
+    <published>2022-04-03T03:04:00.000Z</published>
+    <updated>2022-04-03T03:07:18.639Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;这次回顾Part B Week 1的内容，主要介绍了课程结构。&lt;/p&gt;
+&lt;p&gt;课程主页：&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://www.coursera.org/learn/programming-languages-part-b/home&quot;&gt;https://www.coursera.org/learn/programming-languages-part-b/home&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;B站搬运：&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://www.bilibili.com/video/BV1tZ4y1D7&quot;&gt;https://www.bilibili.com/video/BV1tZ4y1D7&lt;/a&gt;&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="函数式编程" scheme="http://www.doraemonzzz.com/categories/%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B/"/>
+    
+    
+    <category term="Coursera Programming Languages" scheme="http://www.doraemonzzz.com/tags/Coursera-Programming-Languages/"/>
+    
+  </entry>
   
   <entry>
     <title>OSTEP Chapter 7 回顾</title>
@@ -143,7 +189,7 @@
     <link href="http://www.doraemonzzz.com/2022/03/15/2022-3-15-OSTEP-Chapter-4-%E5%9B%9E%E9%A1%BE/"/>
     <id>http://www.doraemonzzz.com/2022/03/15/2022-3-15-OSTEP-Chapter-4-%E5%9B%9E%E9%A1%BE/</id>
     <published>2022-03-15T13:31:00.000Z</published>
-    <updated>2022-03-15T13:37:28.542Z</updated>
+    <updated>2022-03-19T02:43:47.692Z</updated>
     
     
     <summary type="html">&lt;p&gt;OSTEP的全称是Operating Systems: Three Easy Pieces，是一本很好的操作系统入门书，之所以再看这本书，是因为学习xv6碰到了不少困难，希望结合多个教材一起学习，后续会给出大部分章节的回顾，这里从第4章开始，本章介绍了抽象：进程。&lt;/p&gt;
@@ -517,56 +563,6 @@
     
     
     <summary type="html">&lt;p&gt;这里给出CS 144 Lab 1: stitching substrings into a byte stream的翻译。&lt;/p&gt;
-&lt;p&gt;实验资料：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&quot;https://www.cnblogs.com/kangyupl/p/stanford_cs144_labs.html&quot;&gt;https://www.cnblogs.com/kangyupl/p/stanford_cs144_labs.html&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;https://kangyupl.gitee.io/cs144.github.io/&quot;&gt;https://kangyupl.gitee.io/cs144.github.io/&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;https://gitee.com/kangyupl/sponge&quot;&gt;https://gitee.com/kangyupl/sponge&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;</summary>
-    
-    
-    
-    <category term="计算机网络" scheme="http://www.doraemonzzz.com/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/"/>
-    
-    
-    <category term="CS144" scheme="http://www.doraemonzzz.com/tags/CS144/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>CS144 Lab0翻译</title>
-    <link href="http://www.doraemonzzz.com/2022/01/30/2022-1-30-CS144-Lab0%E7%BF%BB%E8%AF%91/"/>
-    <id>http://www.doraemonzzz.com/2022/01/30/2022-1-30-CS144-Lab0%E7%BF%BB%E8%AF%91/</id>
-    <published>2022-01-30T07:36:00.000Z</published>
-    <updated>2022-01-30T07:37:29.955Z</updated>
-    
-    
-    <summary type="html">&lt;p&gt;这里给出CS 144 Lab 0: networking warmup的翻译。&lt;/p&gt;
-&lt;p&gt;实验资料：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&quot;https://www.cnblogs.com/kangyupl/p/stanford_cs144_labs.html&quot;&gt;https://www.cnblogs.com/kangyupl/p/stanford_cs144_labs.html&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;https://kangyupl.gitee.io/cs144.github.io/&quot;&gt;https://kangyupl.gitee.io/cs144.github.io/&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;https://gitee.com/kangyupl/sponge&quot;&gt;https://gitee.com/kangyupl/sponge&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;</summary>
-    
-    
-    
-    <category term="计算机网络" scheme="http://www.doraemonzzz.com/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/"/>
-    
-    
-    <category term="CS144" scheme="http://www.doraemonzzz.com/tags/CS144/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>CS144 Lab6</title>
-    <link href="http://www.doraemonzzz.com/2022/01/22/2022-1-22-CS144-Lab6/"/>
-    <id>http://www.doraemonzzz.com/2022/01/22/2022-1-22-CS144-Lab6/</id>
-    <published>2022-01-22T15:26:00.000Z</published>
-    <updated>2022-01-22T15:26:34.746Z</updated>
-    
-    
-    <summary type="html">&lt;p&gt;这里回顾Lab 6: building an IP router。&lt;/p&gt;
 &lt;p&gt;实验资料：&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;a href=&quot;https://www.cnblogs.com/kangyupl/p/stanford_cs144_labs.html&quot;&gt;https://www.cnblogs.com/kangyupl/p/stanford_cs144_labs.html&lt;/a&gt;&lt;/li&gt;
