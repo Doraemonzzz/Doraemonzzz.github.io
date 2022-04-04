@@ -1,0 +1,451 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Programming Languages Part B Section7 翻译 | Doraemonzzz</title><meta name="keywords" content="Coursera Programming Languages"><meta name="author" content="Doraemonzzz"><meta name="copyright" content="Doraemonzzz"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="这里对Section 7进行翻译。 课程主页： https:&#x2F;&#x2F;www.coursera.org&#x2F;learn&#x2F;programming-languages-part-b&#x2F;home B站搬运： https:&#x2F;&#x2F;www.bilibili.com&#x2F;video&#x2F;BV1tZ4y1D7">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Programming Languages Part B Section7 翻译">
+<meta property="og:url" content="http://www.doraemonzzz.com/2022/04/04/2022-4-4-Programming-Languages-Part-B-Section7-%E7%BF%BB%E8%AF%91/index.html">
+<meta property="og:site_name" content="Doraemonzzz">
+<meta property="og:description" content="这里对Section 7进行翻译。 课程主页： https:&#x2F;&#x2F;www.coursera.org&#x2F;learn&#x2F;programming-languages-part-b&#x2F;home B站搬运： https:&#x2F;&#x2F;www.bilibili.com&#x2F;video&#x2F;BV1tZ4y1D7">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg">
+<meta property="article:published_time" content="2022-04-04T07:39:00.000Z">
+<meta property="article:modified_time" content="2022-04-04T08:32:43.940Z">
+<meta property="article:author" content="Doraemonzzz">
+<meta property="article:tag" content="Coursera Programming Languages">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg"><link rel="shortcut icon" href="https://github.com/Doraemonzzz/md-photo/blob/master/%E5%A4%B4%E5%83%8F.jpg?raw=true"><link rel="canonical" href="http://www.doraemonzzz.com/2022/04/04/2022-4-4-Programming-Languages-Part-B-Section7-%E7%BF%BB%E8%AF%91/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//www.google-analytics.com" crossorigin=""/><link rel="preconnect" href="//hm.baidu.com"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><script>var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?6f00f37f957f0608abb8c571105456f0";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script><script async="async" src="https://www.googletagmanager.com/gtag/js?id=UA-G-RE4B1LKRZD"></script><script>window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'UA-G-RE4B1LKRZD');
+</script><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"search.xml","languages":{"hits_empty":"找不到您查询的内容：${query}"}},
+  translate: {"defaultEncoding":2,"translateDelay":0,"msgToTraditionalChinese":"繁","msgToSimplifiedChinese":"簡"},
+  noticeOutdate: {"limitDay":500,"position":"top","messagePrev":"距离上次更新已经","messageNext":"天了，文章内容可能已经过时。"},
+  highlight: {"plugin":"prismjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":200},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    jQuery: 'https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js',
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+    },
+    fancybox: {
+      js: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css'
+    }
+  },
+  isPhotoFigcaption: true,
+  islazyload: true,
+  isanchor: true
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'Programming Languages Part B Section7 翻译',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2022-04-04 16:32:43'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const fontSizeVal = saveToLocal.get('global-font-size')
+    if (fontSizeVal !== undefined) {
+      document.documentElement.style.setProperty('--global-font-size', fontSizeVal + 'px')
+    }
+    })(window)</script><link rel="stylesheet" href="/css/bilibili.css" media="defer" onload="this.media='all'"><meta name="google-site-verification" content="c4v-NmuUZRgl3cvtg9GKswryK1YLaPztd_5M-df5VNI" /><meta name="generator" content="Hexo 5.4.0"><link rel="alternate" href="/atom.xml" title="Doraemonzzz" type="application/atom+xml">
+</head><body><div id="loading-box"><div class="loading-left-bg"></div><div class="loading-right-bg"></div><div class="spinner-box"><div class="configure-border-1"><div class="configure-core"></div></div><div class="configure-border-2"><div class="configure-core"></div></div><div class="loading-word">加载中...</div></div></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="author-avatar"><img class="avatar-img" src= "/img/loading.gif" data-lazy-src="https://github.com/Doraemonzzz/md-photo/blob/master/%E5%A4%B4%E5%83%8F.jpg?raw=true" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">文章</div><div class="length-num">723</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">标签</div><div class="length-num">73</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/categories/"><div class="headline">分类</div><div class="length-num">29</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-chart-pie"></i><span> 博客统计</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/charts/"><i class="fa-fw far fa-chart-bar"></i><span> 文章统计</span></a></li><li><a class="site-page child" href="/census/"><i class="fa-fw fas fa-chart-area"></i><span> 访问统计</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/top/"><i class="fa-fw fab fa-hotjar"></i><span> 阅读排行榜</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fa fa-heartbeat"></i><span> 娱乐</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于我</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">Doraemonzzz</a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-chart-pie"></i><span> 博客统计</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/charts/"><i class="fa-fw far fa-chart-bar"></i><span> 文章统计</span></a></li><li><a class="site-page child" href="/census/"><i class="fa-fw fas fa-chart-area"></i><span> 访问统计</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/top/"><i class="fa-fw fab fa-hotjar"></i><span> 阅读排行榜</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fa fa-heartbeat"></i><span> 娱乐</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于我</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">Programming Languages Part B Section7 翻译</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2022-04-04T07:39:00.000Z" title="发表于 2022-04-04 15:39:00">2022-04-04</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2022-04-04T08:32:43.940Z" title="更新于 2022-04-04 16:32:43">2022-04-04</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B/">函数式编程</a></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-tag"></i><a class="article-meta__tags" href="/tags/Coursera-Programming-Languages/">Coursera Programming Languages</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">9.5k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>29分钟</span></span><span class="post-meta-separator">|</span><span class="leancloud_visitors" id="/2022/04/04/2022-4-4-Programming-Languages-Part-B-Section7-%E7%BF%BB%E8%AF%91/" data-flag-title="Programming Languages Part B Section7 翻译"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span class="leancloud-visitors-count"></span></span><span class="post-meta-separator">|</span><span class="post-meta-commentcount"><i class="far fa-comments fa-fw post-meta-icon"></i><span class="post-meta-label">评论数:</span><a href="/2022/04/04/2022-4-4-Programming-Languages-Part-B-Section7-%E7%BF%BB%E8%AF%91/#post-comment" itemprop="discussionUrl"><span class="valine-comment-count" data-xid="/2022/04/04/2022-4-4-Programming-Languages-Part-B-Section7-%E7%BF%BB%E8%AF%91/" itemprop="commentCount"></span></a></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p>这里对Section 7进行翻译。</p>
+<p>课程主页：</p>
+<p><a target="_blank" rel="noopener" href="https://www.coursera.org/learn/programming-languages-part-b/home">https://www.coursera.org/learn/programming-languages-part-b/home</a></p>
+<p>B站搬运：</p>
+<p><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1tZ4y1D7">https://www.bilibili.com/video/BV1tZ4y1D7</a></p>
+<span id="more"></span>
+<h1 id="Coursera编程语言课程-第7节总结"><a href="#Coursera编程语言课程-第7节总结" class="headerlink" title="Coursera编程语言课程 第7节总结"></a>Coursera编程语言课程 第7节总结</h1><p>标准说明：本总结涵盖的材料与课堂视频以及随视频发布的材料（幻灯片、代码）大致相同。它有助于以叙述的方式阅读材料，并将整个课程部分的材料放在一份文件中，特别是在以后复习材料时。请在讨论板上报告这些笔记中的错误。</p>
+<h2 id="目录"><a href="#目录" class="headerlink" title="目录"></a>目录</h2><ul>
+<li>ML vs Racket</li>
+<li>什么是静态检查？</li>
+<li>正确性：健全性、完整性、不确定性</li>
+<li>弱类型</li>
+<li>更灵活的原语是一个相关但不同的问题</li>
+<li>静态检查的优缺点</li>
+<li>静态类型还是动态类型更方便？</li>
+<li>静态类型会阻止有用的程序吗？ </li>
+<li>静态类型的早期错误检测重要吗？</li>
+<li>静态或动态类型会带来更好的性能吗？ </li>
+<li>静态或动态类型使代码重用更容易吗？</li>
+<li>静态或动态类型更适合原型设计？</li>
+<li>静态类型还是动态类型更适合代码改进？ </li>
+<li>可选：<code>eval</code>和<code>quote</code></li>
+</ul>
+<h2 id="ML-vs-Racket"><a href="#ML-vs-Racket" class="headerlink" title="ML vs Racket"></a>ML vs Racket</h2><p>在研究静态类型的一般主题及其优点/缺点之前，在我们迄今为止所研究的两种语言ML和Racket之间做一个更具体的比较是很有意思的。这两种语言在很多方面都很相似，它们的结构都鼓励函数式风格（避免突变，使用头等闭包），同时允许适当的突变。也有许多不同之处，包括非常不同的语法方法，ML对模式匹配的支持与Racket对结构的访问函数比较，Racket对let表达式的多种变体，等等。</p>
+<p>但是这两种语言之间最普遍的区别是ML有一个静态类型系统，而Racket没有。（在DrRacket系统中还有一种相关的语言，叫做Typed Racket，它可以与Racket和许多其他语言很好地互动，允许你混合使用不同语言编写的程序。在本课程中，我们不会研究这个，所以我们在这里只提到Racket语言。）</p>
+<p>我们在下面精确地研究什么是静态类型系统，ML的类型系统保证什么，以及静态类型的优点和缺点是什么。任何用ML和Racket编程的人可能已经对这些话题有了一些想法。ML通过做类型检查和报告错误，在运行前拒绝了很多程序。为了做到这一点，ML强制执行某些限制（例如，一个列表中的所有元素必须具有相同的类型）。因此，ML确保在编译时不存在某些错误（例如，我们永远不会尝试将一个字符串传递给加法运算符）。</p>
+<p>更有趣的是，我们能不能用更像Racket的想法来描述ML和它的类型系统，反之，我们能不能用ML来描述Racket风格的编程？事实证明，我们可以，而且这样做既能拓展思维，又是后续话题的良好先导。</p>
+<p>首先考虑一个Racket程序员如何看待ML。忽略语法差异和其他问题，我们可以把ML描述为Racket的一个子集。运行的程序产生类似的答案，但是ML拒绝了更多的程序，因为它们是非法的，也就是说，不是语言的一部分。这有什么好处呢？ML的设计是为了拒绝那些很可能是bug的程序。Racket允许像<code>(define (f y) (+ y (car y))</code>这样的程序，但任何对<code>f</code>的调用都会导致错误，所以这几乎不是一个有用的程序。因此，ML拒绝这个程序而不是等到程序员测试<code>f</code>，是很有帮助的。同样地，类型系统可以捕捉到由于程序的不同部分的假设不一致而产生的错误。函数<code>(define (g x) (+ x x))</code>和<code>(define (h z) (g (cons z 2)))</code>本身都是合理的，但是如果<code>h</code>中的<code>g</code>与<code>g</code>的这个定义绑定，那么对<code>h</code>的任何调用都会失败，就像对<code>f</code>的调用一样。例如，在这段代码中，<code>if</code>表达式和与<code>xs</code>绑定的表达式都不会进行类型检查，而是根据情况代表合理的Racket习语：</p>
+<pre class="line-numbers language-scheme" data-language="scheme"><code class="language-scheme"><span class="token punctuation">(</span><span class="token keyword">define</span> <span class="token punctuation">(</span><span class="token function">f</span> x<span class="token punctuation">)</span> <span class="token punctuation">(</span><span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">></span> x <span class="token number">0</span><span class="token punctuation">)</span> <span class="token boolean">#t</span> <span class="token punctuation">(</span><span class="token builtin">list</span> <span class="token number">1</span> <span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+<span class="token punctuation">(</span><span class="token keyword">define</span> xs <span class="token punctuation">(</span><span class="token builtin">list</span> <span class="token number">1</span> <span class="token boolean">#t</span> <span class="token string">"hi"</span><span class="token punctuation">)</span><span class="token punctuation">)</span> 
+<span class="token punctuation">(</span><span class="token keyword">define</span> y <span class="token punctuation">(</span><span class="token function">f</span> <span class="token punctuation">(</span><span class="token builtin">car</span> xs<span class="token punctuation">)</span><span class="token punctuation">)</span> <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+<p>那么，现在一个ML程序员可能如何看待Racket？一种观点是与上面的讨论相反，Racket接受一个超集程序，其中有些是错误的，有些不是。一个更有趣的观点是，Racket就是ML，其中每个表达式都是一个大数据类型的一部分。在这种观点中，每个计算的结果都被构造函数隐含包装到一个大的数据类型中，而像<code>+</code>这样的基元的实现会检查其参数的标签（例如，看它们是否是数字）并在适当的时候引发错误。更详细地说，这就像Racket有这样一个数据类型的绑定：</p>
+<pre class="line-numbers language-none"><code class="language-none">datatype theType &#x3D; Int of int | String of string
+                 | Pair of theType * theType
+                 | Fun of theType -&gt; theType
+                 | ... (* one constructor per built-in type *)<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+<p>那么就像当程序员写下42这样的东西时，它就隐含了真正的<code>Int 42</code>，这样每个表达式的结果都有<code>theType</code>类型。那么像<code>+</code>这样的函数，如果两个参数都没有正确的构造函数，就会引发错误，如果有必要，它们的结果也会被正确的构造函数包装起来。例如，我们可以把<code>car</code>看成是：</p>
+<pre class="line-numbers language-none"><code class="language-none">fun car v &#x3D; case v of Pair(a,b) &#x3D;&gt; a | _ &#x3D;&gt; raise ... (* give some error *)<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>由于这种”秘密的模式匹配”没有暴露给程序员，Racket还提供了which-构造函数来供程序员使用。例如，原始的<code>pair?</code>可以被看作是：</p>
+<pre class="line-numbers language-none"><code class="language-none">fun pair? v &#x3D; case v of Pair _ &#x3D;&gt; true | _ &#x3D;&gt; false <span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>最后，Racket的结构描述做了一件你无法用ML数据类型绑定来做的事情。它们可以动态地给数据类型添加新的构造函数。（你可以在ML中用<code>exn</code>类型做这个，但不能用数据类型绑定。如果你能做到，就不可能静态检查缺失的模式匹配子句。）</p>
+<p>我们可以从<code>theType</code>的角度来考虑Racket，意味着你在Racket中做的任何事情都可以在ML中完成：ML程序员可以明确地使用类似上述<code>theType</code>符号的东西来编程。</p>
+<h2 id="什么是静态检查？"><a href="#什么是静态检查？" class="headerlink" title="什么是静态检查？"></a>什么是静态检查？</h2><p>通常所说的”静态检查”是指在程序（成功）解析后、运行前为拒绝程序而做的任何事情。如果一个程序没有被解析，我们仍然会得到一个错误，但我们把这样的错误称为“语法错误”或“解析错误”。相比之下，来自静态检查的错误，通常是”类型错误”，将包括诸如未定义的变量或使用数字而不是pair。我们做静态检查时不需要对程序进行任何输入识别，这就是”编译时检查”，尽管在静态检查成功后，语言实现是否会使用编译器或解释器并不重要。</p>
+<p>静态检查的执行方式是编程语言的定义的一部分。不同的语言可以做不同的事情；有些语言根本就不做静态检查。考虑到一种具有特定定义的语言，你也可以使用其他工具进行更多的静态检查，以尝试发现错误或确保没有错误，尽管这些工具不是语言定义的一部分。</p>
+<p>最常见的方法是通过类型系统来实现语言的静态检查。当我们学习ML的时候，我们为每个语言结构给出了类型规则。每个变量都有一个类型，一个条件的两个分支必须有相同的类型，等等。ML的静态检查是检查这些规则是否被遵循（在ML的情况下，推断出类型来做到这一点）。但这是语言的静态检查方法（如何做），与静态检查的目的（完成什么）是不同的。其目的是为了拒绝那些没有意义的程序或可能试图滥用语言特性的程序。有一些错误是类型系统通常不能防止的（比如数组边界错误），还有一些是类型系统不能防止的，除非给它更多关于程序应该做什么的信息。例如，如果一个程序把条件的分支放在错误的顺序中，或者调用<code>+</code>而不是<code>*</code>，这仍然是一个程序，只是不是预期的程序。</p>
+<p>例如，ML的类型系统的一个目的是防止将字符串传递给除法运算符等算术原语。相比之下，Racket使用了动态检查（即运行时检查），对每个值进行标记，让除法运算符检查其参数是否为数字。ML的实现不需要为此目的对数值进行标记，因为它可以依靠静态检查。但正如我们将在下面讨论的那样，交换条件是，静态检查器必须拒绝一些实际上不会做错的程序。</p>
+<p>正如ML和Racket所证明的那样，防止“坏事”的典型点是“编译时”和“运行时”。然而，值得注意的是，关于我们何时宣布某件事情为错误，其实是有一个连续的eagerness。为了举例，考虑一下大多数类型系统没有静态地防止的东西：除以零。如果我们有一些包含表达式<code>(/ 3 0)</code>的函数，什么时候会引起一个错误：</p>
+<ul>
+<li>输入时：调整编辑器，使人们甚至不能写下分母为0的除法。这是近似的，因为也许我们正要写0.33，但我们不允许写0。</li>
+<li>编译时：我们一看到这个表达式就知道了。这是近似的，因为也许上下文是<code>(if #f (/ 3 0) 42)</code>。</li>
+<li>链接时：一旦我们看到包含<code>(/ 3 0)</code>的函数可能是由某个“main”函数调用的。这没有编译时那么近似，因为有些代码可能永远不会被使用，但我们仍然要近似估计哪些代码可能被调用。</li>
+<li>运行时：只要我们执行除法就可以了。</li>
+<li>甚至更晚：与其引发错误，不如返回某种表示除以零的值，并且不引发错误，直到该值被用于我们需要实际数字的地方，比如索引到一个数组。</li>
+</ul>
+<p>虽然”甚至更晚”的选项一开始看起来过于宽松，但这恰恰是浮点运算的特点。<code>(/ 3.0 0.0)</code>产生<code>+inf.0</code>，它仍然可以被计算，但不能被转换成一个精确的数字。在科学计算中，这是非常有用的，可以避免很多额外的情况：也许我们会做一些事情，比如取$\pi/2$的正切值，但只在最终答案中不使用的情况下。</p>
+<h2 id="正确性：健全性、完整性、不确定性"><a href="#正确性：健全性、完整性、不确定性" class="headerlink" title="正确性：健全性、完整性、不确定性"></a>正确性：健全性、完整性、不确定性</h2><p>直观地说，如果一个静态检查器能防止它声称要防止的东西，那么它就是正确的；否则，无论是语言的定义还是静态检查的实现，都需要进行修改。但是，我们可以通过对健全性和完整性这两个术语的限定，对正确性进行更精确的描述。对于这两个术语，其定义是关于我们希望防止的一些事情X。例如，X可以是”一个程序查找一个不在环境中的变量”。</p>
+<p>如果一个类型系统从不接受一个在某些输入下会做X的程序，那么它就是健全的。</p>
+<p>如果一个类型系统从来没有拒绝过一个在任意输入下都不会做X的程序，那么这个类型系统就是完整的。</p>
+<p>理解这些说法的一个好方法是，健全性可以防止假阴性(false negative)，完整性可以防止假阳性(false positive)。术语假阴性和假阳性来自统计学和医学。假设有一个针对某种疾病的医学测试，但它不是一个完美的测试。如果测试没有检测出疾病，但病人实际上患有该疾病，那么这就是假阴性（测试是阴性的，但这是假的）。如果测试检测到了疾病，但病人实际上没有得病，那么这就是假阳性（测试是阳性的，但这是假的）。在静态检查中，疾病是”在某些输入下运行时执行X”，测试是”程序是否进行了类型检查？”健全性和完整性这两个术语来自于逻辑学，在编程语言的研究中经常使用。一个健全的逻辑只证明真实的东西。一个完整的逻辑可以证明所有真实的东西。在这里，我们的类型系统就是逻辑，我们试图证明的事情是”X不会发生”。</p>
+<p>在现代语言中，类型系统是健全的（它们能防止它们所声称的），但不是完整的（它们拒绝它们不需要拒绝的程序）。健全性很重要，因为它让语言用户和语言实现者相信X永远不会发生。完整是好的，但希望在实践中很少有程序被不必要地拒绝，而且在这些情况下，希望程序员很容易修改程序，使其进行类型检查。</p>
+<p>类型系统是不完整的，因为对于几乎任何你想静态检查的东西，都不可能实现一个满足如下条件的静态检查器，在你的语言中给定任何程序</p>
+<ul>
+<li>（a）总是终止</li>
+<li>（b）健全</li>
+<li>（c）完整</li>
+</ul>
+<p>既然我们必须放弃一个，（c）似乎是最好的选择（程序员不喜欢可能不终止的编译器）。</p>
+<p>不可能性的结果正是计算理论研究核心的不可判定性思想。了解程序的重要属性不可判定意味着什么是成为受过教育的计算机科学家的基础。不可判定性直接暗示静态检查的内在近似（即不完整性），这一事实可能是不可判定性最重要的分支。</p>
+<p>我们根本不可能写一个程序，把另一个ML/Racket/Java/等的程序作为输入，而这个程序总是正确地回答诸如”这个程序会不会除以0？”这样的问题。”这个程序会不会把一个字符串当成一个函数？” “这个程序会终止吗？”等等。</p>
+<h2 id="弱类型"><a href="#弱类型" class="headerlink" title="弱类型"></a>弱类型</h2><p>那么为了安全起见，至少在某些情况下，语言的实现还是应该进行动态检查以防止X的发生，而且语言的定义应该允许这些检查在运行时失败。</p>
+<p>但另一种说法是，如果X发生了，那就是程序员的错，而语言的定义不需要进行检查。事实上，如果X发生了，那么运行中的程序可以做任何事情：崩溃、破坏数据、产生错误的答案、删除文件、启动病毒或者让计算机着火。如果一种语言的程序允许合法的实现计算机着火（即使它可能不会），我们称这种语言为弱类型。那些对有缺陷的程序的行为有更多限制的语言被称为强类型语言。这些术语不太准确，因为类型系统的正确性只是问题的一部分。毕竟，Racket是动态类型的，但仍然是强类型的。此外，在弱类型语言中，实际不稳定和不可预测的行为的一大来源是数组边界错误（他们不需要检查边界，他们可以错误地访问一些其他数据），但很少有类型系统检查数组边界。</p>
+<p>C和C++是著名的弱类型语言。为什么它们会被这样定义呢？简而言之，因为设计者不希望语言的定义迫使实现者做所有必要的动态检查。虽然执行检查有一定的时间成本，但更大的问题是，实现必须保留额外的数据（如值上的标记）来进行检查，而C/C++被设计成低级别的语言，程序员可以期望不添加额外的”隐藏字段”。</p>
+<p>支持弱类型的一个较早的、现在已经很少见的观点体现在”strong types for weak minds”这一说法上。这种观点认为，任何强类型语言要么是静态地拒绝程序，要么是动态地进行不必要的测试（见上文的不确定性），所以人们应该能够在他/她知道不必要的地方”推翻”检查。在现实中，人类是非常容易出错的，我们应该欢迎自动检查，即使它不得不为我们在谨慎的一面犯错。此外，随着时间的推移，类型系统已经变得更有表现力了（例如，多态性），语言实现在优化不必要的检查方面也变得更好了（他们只是永远不会得到所有的检查）。与此同时，软件已经变得非常大，非常复杂，并被社会各界所依赖。在一个用C语言编写的3000万行的操作系统中，有一个错误可以使整个计算机陷入安全危机，这是一个很严重的问题。虽然这仍然是一个真正的问题，而且C语言提供的支持很少，但使用其他工具对C代码进行静态和/或动态检查，以试图防止这种错误，已经越来越普遍。</p>
+<h2 id="更灵活的原语是一个相关但不同的问题"><a href="#更灵活的原语是一个相关但不同的问题" class="headerlink" title="更灵活的原语是一个相关但不同的问题"></a>更灵活的原语是一个相关但不同的问题</h2><p>假设我们改变了ML，使类型系统接受任何表达式<code>e1+e2</code>，只要<code>e1</code>和<code>e2</code>有某种类型，并且我们改变了加法的评估规则，如果其中一个参数没有产生数字，则返回0。这是否会使ML成为一种动态类型的语言？它是”更加动态”的，因为语言更加宽松，一些”可能的”错误不会被急切地检测出来，但是仍然有一个类型系统在拒绝程序。我们同样可以改变Racket，使其在”+”被赋予不良参数时不产生错误。Racket的设计者选择不这样做，因为这很可能会掩盖错误，而不会有很大的作用。</p>
+<p>其他语言做出了不同的选择，通过扩展原始运算的表示，在这样的情况下不出错，从而报告更少的错误。除了对任何种类的数据进行加密运算外，还有一些例子：</p>
+<ul>
+<li>允许超边界的数组访问。例如，如果<code>arr</code>少于10个元素，我们仍然可以允许<code>arr[10]</code>，只需返回一个默认值或<code>arr[10]=e</code>，使数组更大。</li>
+<li>允许用错误的参数数调用函数。额外的参数可以被默默地忽略。太少的参数可以用语言选择的默认值来代替。</li>
+</ul>
+<p>这些选择是语言设计的问题。赋予可能出现的错误以意义往往是不明智的，因为它掩盖了错误，并使它们更难调试，因为程序在一些无意义的应用计算发生后很久才运行。另一方面，这种”更动态”的功能在提供给程序员时被使用，所以显然有人认为它们是有用的。</p>
+<p>就我们的目的而言，我们只是把这个问题与静态与动态类型分开考虑。我们不是在程序运行前或运行时阻止一些X（例如，调用一个参数过多的函数），而是改变语言语义，这样我们就根本不会阻止X——我们允许它，并扩展我们的评估规则，给它一个语义。</p>
+<h2 id="静态检查的优势和劣势"><a href="#静态检查的优势和劣势" class="headerlink" title="静态检查的优势和劣势"></a>静态检查的优势和劣势</h2><p>现在我们知道了什么是静态类型和动态类型，让我们来讨论一下几十年来关于哪个更好的争论。我们知道静态类型为你早期捕获许多错误，健全性确保某些类型的错误不会留下，而不完整性意味着一些完美的程序被拒绝。我们不会否认静态类型化是否可取（如果没有其他问题的话，这取决于你在检查什么），但我们将考虑七个具体的观点，并考虑每个观点的有效论据，包括支持和反对静态类型。</p>
+<h2 id="1-静态类型还是动态类型更方便？"><a href="#1-静态类型还是动态类型更方便？" class="headerlink" title="1. 静态类型还是动态类型更方便？"></a>1. 静态类型还是动态类型更方便？</h2><p>动态类型更方便的论点源于能够混合和匹配不同种类的数据，如数字、字符串和数据对，而不需要声明新的类型名称或用模式匹配使代码混乱。例如，如果我们想要一个返回数字或字符串的函数，我们可以直接返回数字或字符串，而调用者可以根据需要使用动态类型谓词。在Racket中，我们可以这样写：</p>
+<pre class="line-numbers language-scheme" data-language="scheme"><code class="language-scheme"><span class="token punctuation">(</span><span class="token keyword">define</span> <span class="token punctuation">(</span><span class="token function">f</span> y<span class="token punctuation">)</span> <span class="token punctuation">(</span><span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">></span> y <span class="token number">0</span><span class="token punctuation">)</span> <span class="token punctuation">(</span><span class="token operator">+</span> y y<span class="token punctuation">)</span> <span class="token string">"hi"</span><span class="token punctuation">)</span><span class="token punctuation">)</span> 
+<span class="token punctuation">(</span><span class="token keyword">let</span> <span class="token punctuation">(</span><span class="token function">[ans</span> <span class="token punctuation">(</span><span class="token function">f</span> x<span class="token punctuation">)</span>]<span class="token punctuation">)</span> <span class="token punctuation">(</span><span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token builtin">number?</span> ans<span class="token punctuation">)</span> <span class="token punctuation">(</span><span class="token builtin">number->string</span> ans<span class="token punctuation">)</span> ans<span class="token punctuation">)</span> <span class="token punctuation">)</span> <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<p>相比之下，类似的ML代码需要使用一个数据类型，在<code>f</code>中使用构造函数，并通过模式匹配来使用结果：</p>
+<pre class="line-numbers language-none"><code class="language-none">datatype t &#x3D; Int of int | String of string
+fun f y &#x3D; if y &gt; 0 then Int(y+y) else String &quot;hi&quot;
+val _ &#x3D; case f x of Int i &#x3D;&gt; Int.toString i | String s &#x3D;&gt; s<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+<p>另一方面，静态类型使得假设数据具有某种类型更加方便，知道这种假设不能被违反，这将导致以后的错误。对于一个Racket函数来说，要确保某些数据是，例如，一个数字，它必须在代码中插入一个显式的动态检查，这是更多的工作，更难读。而相应的ML代码则没有这种尴尬。</p>
+<pre class="line-numbers language-scheme" data-language="scheme"><code class="language-scheme"><span class="token punctuation">(</span><span class="token keyword">define</span> <span class="token punctuation">(</span><span class="token function">cube</span> x<span class="token punctuation">)</span> 
+  <span class="token punctuation">(</span><span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token builtin">not</span> <span class="token punctuation">(</span><span class="token builtin">number?</span> x<span class="token punctuation">)</span><span class="token punctuation">)</span> 
+      <span class="token punctuation">(</span><span class="token builtin">error</span> <span class="token string">"bad arguments"</span><span class="token punctuation">)</span> 
+      <span class="token punctuation">(</span><span class="token operator">*</span> x x x<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span> 
+<span class="token punctuation">(</span><span class="token function">cube</span> <span class="token number">7</span><span class="token punctuation">)</span>
+
+fun cube x = x * x * x
+val _ = cube <span class="token number">7</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>请注意，如果没有Racket代码中的检查，实际的错误会出现在乘法的主体中，这可能会使不知道cube是用乘法实现的调用者感到困惑。</p>
+<h2 id="2-静态类型会阻止有用的程序吗？"><a href="#2-静态类型会阻止有用的程序吗？" class="headerlink" title="2. 静态类型会阻止有用的程序吗？"></a>2. 静态类型会阻止有用的程序吗？</h2><p>动态类型化并不排斥那些完全有意义的程序。例如，下面的Racket代码将<code>&#39;((7 . 7) . (#t . #t))</code>绑定到<code>pair_of_pairs</code>上是没有问题的，但是相应的ML代码并没有通过类型检查，因为ML类型系统无法给<code>f</code>提供类型（这是ML的一个限制。有一些语言具有更具表现力的多态性形式，可以对这种代码进行类型检查。但是由于不可知性，总是有局限性。）：</p>
+<pre class="line-numbers language-scheme" data-language="scheme"><code class="language-scheme"><span class="token punctuation">(</span><span class="token keyword">define</span> <span class="token punctuation">(</span><span class="token function">f</span> g<span class="token punctuation">)</span> <span class="token punctuation">(</span><span class="token builtin">cons</span> <span class="token punctuation">(</span><span class="token function">g</span> <span class="token number">7</span><span class="token punctuation">)</span> <span class="token punctuation">(</span><span class="token function">g</span> <span class="token boolean">#t</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+<span class="token punctuation">(</span><span class="token keyword">define</span> pair_of_pairs <span class="token punctuation">(</span><span class="token function">f</span> <span class="token punctuation">(</span><span class="token keyword">lambda</span> <span class="token punctuation">(</span><span class="token lambda-parameter">x</span><span class="token punctuation">)</span> <span class="token punctuation">(</span><span class="token builtin">cons</span> x x<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+
+fun f g = <span class="token punctuation">(</span><span class="token function">g</span> 7, g true<span class="token punctuation">)</span> <span class="token punctuation">(</span><span class="token operator">*</span> does not type-check *<span class="token punctuation">)</span>
+val pair_of_pairs = f <span class="token punctuation">(</span><span class="token function">fn</span> x => <span class="token punctuation">(</span><span class="token function">x,x</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>当然，我们可以写一个ML程序来产生<code>((7,7),(true,true))</code>，但我们可能不得不”绕过类型系统”而不是按照我们想要的方式来做。</p>
+<p>另一方面，动态类型的灵活性来自于在每个值上加一个标签。在ML和其他静态类型语言中，我们可以通过使用数据类型和显式标签在我们想做的时候做同样的事情。在极端情况下，如果你想在ML中像Racket那样编程，你可以使用一个数据类型来代表”The One Racket Type”，并在所有地方插入显式标签和模式匹配。虽然这种编程风格在任何地方使用都是很痛苦的，但它证明了一个观点：我们在Racket中可以做的事情，在ML中是做不到的。(我们在上面已经讨论过这个问题)</p>
+<pre class="line-numbers language-none"><code class="language-none">datatype tort &#x3D; Int of int
+              | String of string
+              | Pair of tort * tort
+              | Fun of tort -&gt; tort
+              | Bool of bool
+              | ...
+fun f g &#x3D; (case g of Fun g&#39; &#x3D;&gt; Pair(g&#39; (Int 7), g&#39; (Bool true)))
+val pair_of_pairs &#x3D; f (Fun (fn x &#x3D;&gt; Pair(x,x)))<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>也许支持静态类型的一个更简单的论据是，现代类型系统有足够的表现力，它们很少妨碍你的工作。你有多少次试图写一个像<code>f</code>这样无法在ML中通过类型检查的函数？</p>
+<h2 id="3-静态类型的早期错误检测是否重要？"><a href="#3-静态类型的早期错误检测是否重要？" class="headerlink" title="3. 静态类型的早期错误检测是否重要？"></a>3. 静态类型的早期错误检测是否重要？</h2><p>支持静态类型的一个明显的论点是，它能更早地捕捉到错误，只要你静态地检查（非正式地，”编译”）代码。软件开发的一个众所周知的常识是，如果在开发者还在思考代码的时候，就能更早地发现错误。考虑一下这个Racket程序：</p>
+<pre class="line-numbers language-scheme" data-language="scheme"><code class="language-scheme"><span class="token punctuation">(</span><span class="token keyword">define</span> <span class="token punctuation">(</span><span class="token function">pow</span> x<span class="token punctuation">)</span>
+   <span class="token punctuation">(</span><span class="token keyword">lambda</span> <span class="token punctuation">(</span><span class="token lambda-parameter">y</span><span class="token punctuation">)</span>
+      <span class="token punctuation">(</span><span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">=</span> y <span class="token number">0</span><span class="token punctuation">)</span>
+          <span class="token number">1</span>
+          <span class="token punctuation">(</span><span class="token operator">*</span> x <span class="token punctuation">(</span><span class="token function">pow</span> x <span class="token punctuation">(</span><span class="token operator">-</span> y <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>虽然算法看起来是正确的，但这个程序有一个bug：<code>pow</code>期望的是curried参数，但递归调用传递pow两个参数，而不是通过currying。这个bug直到用不等于0的y测试<code>pow</code>时才被发现。等效的ML程序根本没有通过类型检查：</p>
+<pre class="line-numbers language-none"><code class="language-none">fun pow x y &#x3D; (* does not type-check *)
+  if y &#x3D; 0
+  then 1
+  else x * pow (x,y-1)<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+<p>由于静态检查器可以捕捉到已知的错误类型，专家级的程序员可以利用这些知识将注意力集中在其他地方。一个程序员在写下大部分代码时，可能会对tupling与currying相当马虎，因为他知道类型检查器随后会给出一个可以快速纠正的错误列表。这可以腾出精力来关注其他任务，如数组边界推理或更高层次的算法问题。</p>
+<p>一个动态类型的支持者会说，静态检查通常只抓到你无论如何都会通过测试抓到的错误。因为你仍然需要测试你的程序，在你运行测试之前抓到一些bug的额外价值就减少了。毕竟，下面的程序不能作为指数函数使用（它们使用了错误的算术），ML的类型系统不会检测到这一点，而测试可以捕捉到这个bug，也会捕捉到上面的currying bug：</p>
+<pre class="line-numbers language-scheme" data-language="scheme"><code class="language-scheme"><span class="token punctuation">(</span><span class="token keyword">define</span> <span class="token punctuation">(</span><span class="token function">pow</span> x<span class="token punctuation">)</span> <span class="token comment">; wrong algorithm</span>
+  <span class="token punctuation">(</span><span class="token keyword">lambda</span> <span class="token punctuation">(</span><span class="token lambda-parameter">y</span><span class="token punctuation">)</span>
+     <span class="token punctuation">(</span><span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">=</span> y <span class="token number">0</span><span class="token punctuation">)</span>
+     <span class="token number">1</span>
+     <span class="token punctuation">(</span><span class="token operator">+</span> x <span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token function">pow</span> x<span class="token punctuation">)</span> <span class="token punctuation">(</span><span class="token operator">-</span> y <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+     
+fun pow x y = <span class="token punctuation">(</span><span class="token operator">*</span> wrong algorithm *<span class="token punctuation">)</span>
+   if y = <span class="token number">0</span>
+   then <span class="token number">1</span>
+   else x + pow x <span class="token punctuation">(</span><span class="token function">y</span> - <span class="token number">1</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h2 id="4-静态类型或动态类型会带来更好的性能吗？"><a href="#4-静态类型或动态类型会带来更好的性能吗？" class="headerlink" title="4. 静态类型或动态类型会带来更好的性能吗？"></a>4. 静态类型或动态类型会带来更好的性能吗？</h2><p>静态类型可以使代码更快，因为它不需要在运行时进行类型测试。事实上，大部分的性能优势可能来自于不在第一时间存储类型标记，这需要更多的空间并减慢构造函数的速度。在ML中，只有在程序员使用数据类型构造器的地方才有运行时标签，而不是到处都有。</p>
+<p>动态类型有三个合理的反驳理由。首先，这种低层次的性能在大多数软件中并不重要。其次，动态类型语言的实现可以而且确实试图优化它所认为的不必要的类型测试。例如，在<code>(let ([x (+ y y)]) (* x 4))</code>中，乘法不需要检查<code>x</code>和4是否是数字，而加法可以只检查一次<code>y</code>。虽然没有一个优化器可以从每个程序中删除所有不必要的测试（不确定性再次出现），但对于程序中性能重要的部分来说，这在实践中可能足够容易。第三，如果静态类型语言的程序员不得不在类型系统的限制下工作，那么这些变通方法就会削弱所谓的性能优势。毕竟，使用数据类型的ML程序也有标签。</p>
+<h2 id="5-静态类型或动态类型使代码更容易被重用？"><a href="#5-静态类型或动态类型使代码更容易被重用？" class="headerlink" title="5. 静态类型或动态类型使代码更容易被重用？"></a>5. 静态类型或动态类型使代码更容易被重用？</h2><p>动态类型可以说使重用库函数更加容易。毕竟，如果你从cons单元中建立了很多不同种类的数据，你可以继续使用<code>car, cdr, cadr</code>等来获取这些数据，而不是为每个数据结构设计很多不同的getter函数。另一方面，这也会掩盖一些错误。 例如，假设你不小心把一个列表传给了一个接收树的函数。如果<code>cdr</code>对它们都有效，你可能只是得到了错误的答案，或者稍后导致一个神秘的错误，而对列表和树使用不同的类型可以更快发现错误。</p>
+<p>这确实是一个有趣的设计问题，比静态类型和动态类型更普遍。通常情况下，重用一个你已经拥有的库或数据结构是很好的，尤其是你可以重用所有可用的函数。其他时候，这使得分离概念上不同的东西太困难了，所以最好是建立一个新的类型。这样，当你把错误的东西放在错误的地方时，静态类型检查器或动态类型测试可以发现。</p>
+<h2 id="6-静态类型或动态类型对原型开发更好？"><a href="#6-静态类型或动态类型对原型开发更好？" class="headerlink" title="6. 静态类型或动态类型对原型开发更好？"></a>6. 静态类型或动态类型对原型开发更好？</h2><p>在软件项目的早期，你正在开发一个原型，往往同时你也在改变你对软件将做什么以及实现方式的看法。</p>
+<p>动态类型通常被认为更适合于原型开发，因为当这些决定处于变化之中时，你不需要花费精力来确定变量、函数和数据结构的类型。此外，你可能知道你的程序的一部分还没有意义（在静态类型语言中不会进行类型检查），但你还是想运行你的程序的其余部分（例如，测试你刚写的部分）。</p>
+<p>静态类型的支持者可能会反驳说，在你的软件设计中记录类型永远不会太早，即使（也许特别是）它们不清楚而且在变化。此外，注释代码或添加存根，如形式为<code>_ =&gt; raise Unimplemented</code>的模式匹配分支，通常是很容易的，并且记录了程序中哪些部分是已知不工作的。</p>
+<h2 id="7-静态类型还是动态类型更有利于代码改进？"><a href="#7-静态类型还是动态类型更有利于代码改进？" class="headerlink" title="7. 静态类型还是动态类型更有利于代码改进？"></a>7. 静态类型还是动态类型更有利于代码改进？</h2><p>在软件工程中，大量的精力都花在了维护工作程序上，通过消除错误，增加新的功能，以及在一般情况下进化代码来进行一些改变。</p>
+<p>动态类型有时对代码的改进更方便，因为我们可以改变代码，使其更具有允许性（接受更多类型的参数），而不必改变代码中任何预先存在的客户端。例如，考虑改变这个简单的函数：</p>
+<pre class="line-numbers language-scheme" data-language="scheme"><code class="language-scheme"><span class="token punctuation">(</span><span class="token keyword">define</span> <span class="token punctuation">(</span><span class="token function">f</span> x<span class="token punctuation">)</span> <span class="token punctuation">(</span><span class="token operator">*</span> <span class="token number">2</span> x<span class="token punctuation">)</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>到如下版本，可以处理数字或字符串：</p>
+<pre class="line-numbers language-scheme" data-language="scheme"><code class="language-scheme"><span class="token punctuation">(</span><span class="token keyword">define</span> <span class="token punctuation">(</span><span class="token function">f</span> x<span class="token punctuation">)</span>
+  <span class="token punctuation">(</span><span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token builtin">number?</span> x<span class="token punctuation">)</span>
+      <span class="token punctuation">(</span><span class="token operator">*</span> <span class="token number">2</span> x<span class="token punctuation">)</span>
+      <span class="token punctuation">(</span><span class="token builtin">string-append</span> x x<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+<p>现有的调用者，大概是用数字来调用<code>f</code>的，都看不出这个变化，但新的调用者可以传入字符串，甚至是不知道值是数字还是字符串的值。如果我们在ML中做了类似的改变，没有任何现有的调用者会通过类型检查，因为他们都必须用<code>Int</code>构造函数来包裹他们的参数，并对函数结果使用模式匹配。</p>
+<pre class="line-numbers language-none"><code class="language-none">fun f x &#x3D; 2 * x
+
+datatype t &#x3D; Int of int | String of string
+fun f x &#x3D;
+  case f x of
+    Int i &#x3D;&gt; Int (2 * i)
+  | String s &#x3D;&gt; String (s ^ s)<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>另一方面，静态类型检查在进化代码时非常有用，可以捕捉进化过程中引入的错误。当我们改变一个函数的类型时，所有的调用者都不再通过类型检查，这意味着类型检查器给我们提供了一个宝贵的”待办事项清单”，即所有需要改变的调用点。根据这个论点，改进代码的最安全的方法是改变任何函数的类型，这些函数的规范正在发生变化，这是一个关于在类型中尽可能多地捕捉规范的论点。</p>
+<p>ML中一个特别好的例子是当你需要为一个数据类型添加一个新的构造函数时。如果你没有使用通配符模式，那么你将为所有使用该数据类型的案例表达式得到一个警告。</p>
+<p>尽管”来自类型检查器的待办事项清单”很有价值，但在清单上的所有项目被解决之前，程序将不会运行，这可能是令人沮丧的，或者，正如在前面的要求下所讨论的，你使用注释或存根来删除尚未发展的部分。</p>
+<h2 id="可选：eval和quote"><a href="#可选：eval和quote" class="headerlink" title="可选：eval和quote"></a>可选：<code>eval</code>和<code>quote</code></h2><p>（这个简短的部分几乎没有触及用<code>eval</code>编程的表面。它实际上只是介绍了这个概念。我们鼓励有兴趣的学生自己去学习更多的知识）。</p>
+<p>在某种意义上，说Racket是一种解释型语言是相当公平的：它有一个原始的<code>eval</code>，可以在运行时获取程序的表示并对其进行评估。例如，这个程序的风格很差，因为有很多更简单的方法来实现它的目的，它可能会也可能不会根据<code>x</code>来打印一些东西：</p>
+<pre class="line-numbers language-scheme" data-language="scheme"><code class="language-scheme"><span class="token punctuation">(</span><span class="token keyword">define</span> <span class="token punctuation">(</span><span class="token function">make-some-code</span> y<span class="token punctuation">)</span>
+   <span class="token punctuation">(</span><span class="token keyword">if</span> y
+       <span class="token punctuation">(</span><span class="token builtin">list</span> <span class="token symbol">'begin</span> <span class="token punctuation">(</span><span class="token builtin">list</span> <span class="token symbol">'print</span> <span class="token string">"hi"</span><span class="token punctuation">)</span> <span class="token punctuation">(</span><span class="token builtin">list</span> <span class="token symbol">'+</span> <span class="token number">4</span> <span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+       <span class="token punctuation">(</span><span class="token builtin">list</span> <span class="token symbol">'+</span> <span class="token number">5</span> <span class="token number">3</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+
+<span class="token punctuation">(</span><span class="token keyword">define</span> <span class="token punctuation">(</span><span class="token function">f</span> x<span class="token punctuation">)</span>
+  <span class="token punctuation">(</span><span class="token builtin">eval</span> <span class="token punctuation">(</span><span class="token function">make-some-code</span> x<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>Racket函数<code>make-some-code</code>很奇怪。它不曾打印或执行加法。它所做的只是返回一些包含符号、字符串和数字的列表。例如，如果用<code>#t</code>调用，它会返回：</p>
+<pre class="line-numbers language-none"><code class="language-none">&#39;(begin (print &quot;hi&quot;) (+ 4 2)) <span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>这不过是一个三元素列表，其中第一个元素是符号<code>begin</code>。 它只是Racket的数据。但如果我们看这个数据，它看起来就像一个我们可以运行的Racket程序。这些嵌套的列表是一个Racket表达式的完美表示，如果被评估，会打印<code>&quot;hi&quot;</code>，结果是6。</p>
+<p><code>eval</code>原语接受这样的表示，并在运行时对其进行评估。我们可以执行任何我们想要的计算来生成我们传递给<code>eval</code>的数据。作为一个简单的例子，我们可以把两个列表附加在一起，比如<code>(list &#39;+ 2)</code>和<code>(list 3 4)</code>。如果我们用<code>&#39;(+ 2 3 4)</code>的结果调用<code>eval</code>，即一个4元素的列表，那么eval返回9。</p>
+<p>许多语言都有<code>eval</code>，许多语言没有，使用它的适当的习语是一个有很大争议的问题。大多数人都同意它往往被过度使用，但也是一个非常强大的结构，有时是你想要的。</p>
+<p>一个基于编译器的语言实现（注意我们没有说”编译语言”）可以处理<code>eval</code>吗？嗯，它需要在运行时有编译器或解释器，因为它不能事先知道什么可能被传递给<code>eval</code>。基于解释器的语言实现也需要在运行时有一个解释器或编译器，但是，当然，它已经需要评估”常规程序”。</p>
+<p>在Javascript和Ruby这样的语言中，我们没有Racket语法的便利性，在Racket语法中，程序和列表看起来如此相似，以至于<code>eval</code>可以接受一个与Racket语法完全相同的列表表示法。相反，在这些语言中，<code>eval</code>需要一个字符串，并通过首先解析它，然后运行它，将其解释为具体的语法。不管是哪种语言，如果给出一个不符合格式的程序或一个引发错误的程序，<code>eval</code>将引发一个错误。</p>
+<p>在Racket中，像我们这样写<code>make-some-code</code>是很痛苦和不必要的。相反，有一种特殊形式的<code>quote</code>，它把它下面的所有东西都当作符号、数字、列表等，而不是当作要调用的函数。所以我们可以这样写</p>
+<pre class="line-numbers language-scheme" data-language="scheme"><code class="language-scheme"><span class="token punctuation">(</span><span class="token keyword">define</span> <span class="token punctuation">(</span><span class="token function">make-some-code</span> y<span class="token punctuation">)</span>
+  <span class="token punctuation">(</span><span class="token keyword">if</span> y
+      <span class="token punctuation">(</span><span class="token keyword">quote</span> <span class="token punctuation">(</span><span class="token keyword">begin</span> <span class="token punctuation">(</span><span class="token function">print</span> <span class="token string">"hi"</span><span class="token punctuation">)</span> <span class="token punctuation">(</span><span class="token operator">+</span> <span class="token number">4</span> <span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+      <span class="token punctuation">(</span><span class="token keyword">quote</span> <span class="token punctuation">(</span><span class="token operator">+</span> <span class="token number">5</span> <span class="token number">3</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+<p>有趣的是，<code>eval</code>和<code>quote</code>是反义词。对于任何表达式<code>e</code>，我们应该有<code>(eval (quote e))</code>作为写<code>e</code>的一种糟糕的方式，但也是等价的。</p>
+<p>通常情况下，<code>quote</code>是”太强了”——我们想引用大多数东西，但在我们正在构建的主要是语法中评估一些代码是很方便的。Racket有quasiquote和unquote可以做到这一点（如果感兴趣的话，请看手册），Racket的语言学前辈们几十年来都有这种功能。在现代脚本语言中，我们经常可以看到类似的功能：将表达式的评估嵌入到字符串中（我们可能会也可能不会调用<code>eval</code>，就像我们可能会也可能不会使用Racket的quote表达式来构建<code>eval</code>的东西）。这种功能有时在脚本语言中被称为插值，但它只是quasiquote。</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">Doraemonzzz</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="http://www.doraemonzzz.com/2022/04/04/2022-4-4-Programming-Languages-Part-B-Section7-%E7%BF%BB%E8%AF%91/">http://www.doraemonzzz.com/2022/04/04/2022-4-4-Programming-Languages-Part-B-Section7-%E7%BF%BB%E8%AF%91/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://www.doraemonzzz.com" target="_blank">Doraemonzzz</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/Coursera-Programming-Languages/">Coursera Programming Languages</a></div><div class="post_share"><div class="social-share" data-image="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="next-post pull-full"><a href="/2022/04/04/2022-4-4-Programming-Languages-Part-B-Quiz/"><img class="next-cover" src= "/img/loading.gif" data-lazy-src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">Programming Languages Part B Quiz</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span> 相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2022/01/10/2022-1-10-Programming-Languages-Part-A-HW0/" title="Programming Languages Part A HW0"><img class="cover" src= "/img/loading.gif" data-lazy-src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-01-10</div><div class="title">Programming Languages Part A HW0</div></div></a></div><div><a href="/2022/01/10/2022-1-10-Programming-Languages-Part-A-Week-1笔记/" title="Programming Languages Part A Week 1笔记"><img class="cover" src= "/img/loading.gif" data-lazy-src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-01-10</div><div class="title">Programming Languages Part A Week 1笔记</div></div></a></div><div><a href="/2022/01/10/2022-1-10-Programming-Languages-Part-A-HW1/" title="Programming Languages Part A HW1"><img class="cover" src= "/img/loading.gif" data-lazy-src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-01-10</div><div class="title">Programming Languages Part A HW1</div></div></a></div><div><a href="/2022/02/28/2022-2-28-Programming-Languages-Part-A-HW3-Extra-Practice-Problems/" title="Programming Languages Part A HW3 Extra Practice Problems"><img class="cover" src= "/img/loading.gif" data-lazy-src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-02-28</div><div class="title">Programming Languages Part A HW3 Extra Practice Problems</div></div></a></div><div><a href="/2022/03/13/2022-3-13-Programming-Languages-Part-A-Exam/" title="Programming Languages Part A Exam"><img class="cover" src= "/img/loading.gif" data-lazy-src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-03-13</div><div class="title">Programming Languages Part A Exam</div></div></a></div><div><a href="/2022/04/03/2022-4-3-Programming-Languages-Part-B-Week-1笔记/" title="Programming Languages Part B Week 1笔记"><img class="cover" src= "/img/loading.gif" data-lazy-src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-04-03</div><div class="title">Programming Languages Part B Week 1笔记</div></div></a></div></div></div><hr/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div><div id="comment-switch"><span class="first-comment">Valine</span><span class="switch-btn"></span><span class="second-comment">Livere</span></div></div><div class="comment-wrap"><div><div class="vcomment" id="vcomment"></div></div><div><div id="lv-container" data-id="city" data-uid="MTAyMC8zNDcxOS8xMTI1Ng=="></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="card-info-avatar is-center"><img class="avatar-img" src= "/img/loading.gif" data-lazy-src="https://github.com/Doraemonzzz/md-photo/blob/master/%E5%A4%B4%E5%83%8F.jpg?raw=true" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/><div class="author-info__name">Doraemonzzz</div><div class="author-info__description">个人博客，主要记录有关机器学习，数学以及计算机科学的笔记</div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">723</div></a></div><div class="card-info-data-item is-center"><a href="/tags/"><div class="headline">标签</div><div class="length-num">73</div></a></div><div class="card-info-data-item is-center"><a href="/categories/"><div class="headline">分类</div><div class="length-num">29</div></a></div></div><a class="button--animated" id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/Doraemonzzz"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/Doraemonzzz" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="/doraemon_zzz@163.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a><a class="social-icon" href="https://space.bilibili.com/291079982" target="_blank" title="Bilibili"><i class="iconfont icon-bilibili"></i></a><a class="social-icon" href="/atom.xml" target="_blank" title=""><i class="fa fa-rss"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn card-announcement-animation"></i><span>公告</span></div><div class="announcement_content">暂无公告</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Coursera%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC7%E8%8A%82%E6%80%BB%E7%BB%93"><span class="toc-number">1.</span> <span class="toc-text">Coursera编程语言课程 第7节总结</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%9B%AE%E5%BD%95"><span class="toc-number">1.1.</span> <span class="toc-text">目录</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ML-vs-Racket"><span class="toc-number">1.2.</span> <span class="toc-text">ML vs Racket</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF%E9%9D%99%E6%80%81%E6%A3%80%E6%9F%A5%EF%BC%9F"><span class="toc-number">1.3.</span> <span class="toc-text">什么是静态检查？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%AD%A3%E7%A1%AE%E6%80%A7%EF%BC%9A%E5%81%A5%E5%85%A8%E6%80%A7%E3%80%81%E5%AE%8C%E6%95%B4%E6%80%A7%E3%80%81%E4%B8%8D%E7%A1%AE%E5%AE%9A%E6%80%A7"><span class="toc-number">1.4.</span> <span class="toc-text">正确性：健全性、完整性、不确定性</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BC%B1%E7%B1%BB%E5%9E%8B"><span class="toc-number">1.5.</span> <span class="toc-text">弱类型</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9B%B4%E7%81%B5%E6%B4%BB%E7%9A%84%E5%8E%9F%E8%AF%AD%E6%98%AF%E4%B8%80%E4%B8%AA%E7%9B%B8%E5%85%B3%E4%BD%86%E4%B8%8D%E5%90%8C%E7%9A%84%E9%97%AE%E9%A2%98"><span class="toc-number">1.6.</span> <span class="toc-text">更灵活的原语是一个相关但不同的问题</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%9D%99%E6%80%81%E6%A3%80%E6%9F%A5%E7%9A%84%E4%BC%98%E5%8A%BF%E5%92%8C%E5%8A%A3%E5%8A%BF"><span class="toc-number">1.7.</span> <span class="toc-text">静态检查的优势和劣势</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-%E9%9D%99%E6%80%81%E7%B1%BB%E5%9E%8B%E8%BF%98%E6%98%AF%E5%8A%A8%E6%80%81%E7%B1%BB%E5%9E%8B%E6%9B%B4%E6%96%B9%E4%BE%BF%EF%BC%9F"><span class="toc-number">1.8.</span> <span class="toc-text">1. 静态类型还是动态类型更方便？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-%E9%9D%99%E6%80%81%E7%B1%BB%E5%9E%8B%E4%BC%9A%E9%98%BB%E6%AD%A2%E6%9C%89%E7%94%A8%E7%9A%84%E7%A8%8B%E5%BA%8F%E5%90%97%EF%BC%9F"><span class="toc-number">1.9.</span> <span class="toc-text">2. 静态类型会阻止有用的程序吗？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-%E9%9D%99%E6%80%81%E7%B1%BB%E5%9E%8B%E7%9A%84%E6%97%A9%E6%9C%9F%E9%94%99%E8%AF%AF%E6%A3%80%E6%B5%8B%E6%98%AF%E5%90%A6%E9%87%8D%E8%A6%81%EF%BC%9F"><span class="toc-number">1.10.</span> <span class="toc-text">3. 静态类型的早期错误检测是否重要？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-%E9%9D%99%E6%80%81%E7%B1%BB%E5%9E%8B%E6%88%96%E5%8A%A8%E6%80%81%E7%B1%BB%E5%9E%8B%E4%BC%9A%E5%B8%A6%E6%9D%A5%E6%9B%B4%E5%A5%BD%E7%9A%84%E6%80%A7%E8%83%BD%E5%90%97%EF%BC%9F"><span class="toc-number">1.11.</span> <span class="toc-text">4. 静态类型或动态类型会带来更好的性能吗？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-%E9%9D%99%E6%80%81%E7%B1%BB%E5%9E%8B%E6%88%96%E5%8A%A8%E6%80%81%E7%B1%BB%E5%9E%8B%E4%BD%BF%E4%BB%A3%E7%A0%81%E6%9B%B4%E5%AE%B9%E6%98%93%E8%A2%AB%E9%87%8D%E7%94%A8%EF%BC%9F"><span class="toc-number">1.12.</span> <span class="toc-text">5. 静态类型或动态类型使代码更容易被重用？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6-%E9%9D%99%E6%80%81%E7%B1%BB%E5%9E%8B%E6%88%96%E5%8A%A8%E6%80%81%E7%B1%BB%E5%9E%8B%E5%AF%B9%E5%8E%9F%E5%9E%8B%E5%BC%80%E5%8F%91%E6%9B%B4%E5%A5%BD%EF%BC%9F"><span class="toc-number">1.13.</span> <span class="toc-text">6. 静态类型或动态类型对原型开发更好？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#7-%E9%9D%99%E6%80%81%E7%B1%BB%E5%9E%8B%E8%BF%98%E6%98%AF%E5%8A%A8%E6%80%81%E7%B1%BB%E5%9E%8B%E6%9B%B4%E6%9C%89%E5%88%A9%E4%BA%8E%E4%BB%A3%E7%A0%81%E6%94%B9%E8%BF%9B%EF%BC%9F"><span class="toc-number">1.14.</span> <span class="toc-text">7. 静态类型还是动态类型更有利于代码改进？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%AF%E9%80%89%EF%BC%9Aeval%E5%92%8Cquote"><span class="toc-number">1.15.</span> <span class="toc-text">可选：eval和quote</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2022/04/04/2022-4-4-Programming-Languages-Part-B-Section7-%E7%BF%BB%E8%AF%91/" title="Programming Languages Part B Section7 翻译"><img src= "/img/loading.gif" data-lazy-src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Programming Languages Part B Section7 翻译"/></a><div class="content"><a class="title" href="/2022/04/04/2022-4-4-Programming-Languages-Part-B-Section7-%E7%BF%BB%E8%AF%91/" title="Programming Languages Part B Section7 翻译">Programming Languages Part B Section7 翻译</a><time datetime="2022-04-04T07:39:00.000Z" title="发表于 2022-04-04 15:39:00">2022-04-04</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/04/04/2022-4-4-Programming-Languages-Part-B-Quiz/" title="Programming Languages Part B Quiz"><img src= "/img/loading.gif" data-lazy-src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Programming Languages Part B Quiz"/></a><div class="content"><a class="title" href="/2022/04/04/2022-4-4-Programming-Languages-Part-B-Quiz/" title="Programming Languages Part B Quiz">Programming Languages Part B Quiz</a><time datetime="2022-04-04T06:21:00.000Z" title="发表于 2022-04-04 14:21:00">2022-04-04</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/04/03/2022-4-3-Programming-Languages-Part-B-Section6-%E7%BF%BB%E8%AF%91/" title="Programming Languages Part B Section6 翻译"><img src= "/img/loading.gif" data-lazy-src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Programming Languages Part B Section6 翻译"/></a><div class="content"><a class="title" href="/2022/04/03/2022-4-3-Programming-Languages-Part-B-Section6-%E7%BF%BB%E8%AF%91/" title="Programming Languages Part B Section6 翻译">Programming Languages Part B Section6 翻译</a><time datetime="2022-04-03T13:09:00.000Z" title="发表于 2022-04-03 21:09:00">2022-04-03</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/04/03/2022-4-3-Programming-Languages-Part-B-Section5-%E7%BF%BB%E8%AF%91/" title="Programming Languages Part B Section5 翻译"><img src= "/img/loading.gif" data-lazy-src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Programming Languages Part B Section5 翻译"/></a><div class="content"><a class="title" href="/2022/04/03/2022-4-3-Programming-Languages-Part-B-Section5-%E7%BF%BB%E8%AF%91/" title="Programming Languages Part B Section5 翻译">Programming Languages Part B Section5 翻译</a><time datetime="2022-04-03T10:04:00.000Z" title="发表于 2022-04-03 18:04:00">2022-04-03</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/04/03/2022-4-3-Programming-Languages-Part-B-HW2-Extra-Practice-Problems/" title="Programming Languages Part B HW2 Extra Practice Problems"><img src= "/img/loading.gif" data-lazy-src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Programming Languages Part B HW2 Extra Practice Problems"/></a><div class="content"><a class="title" href="/2022/04/03/2022-4-3-Programming-Languages-Part-B-HW2-Extra-Practice-Problems/" title="Programming Languages Part B HW2 Extra Practice Problems">Programming Languages Part B HW2 Extra Practice Problems</a><time datetime="2022-04-03T07:44:00.000Z" title="发表于 2022-04-03 15:44:00">2022-04-03</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2018 - 2022 By Doraemonzzz</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="font-plus" type="button" title="放大字体"><i class="fas fa-plus"></i></button><button id="font-minus" type="button" title="缩小字体"><i class="fas fa-minus"></i></button><button id="translateLink" type="button" title="简繁转换">简</button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div id="local-search"><div class="search-dialog"><div class="search-dialog__title" id="local-search-title">本地搜索</div><div id="local-input-panel"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div></div><hr/><div id="local-search-results"></div><span class="search-close-button"><i class="fas fa-times"></i></span></div><div id="search-mask"></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="/js/tw_cn.js"></script><script src="https://cdn.jsdelivr.net/npm/vanilla-lazyload/dist/lazyload.iife.min.js"></script><script src="/js/search/local-search.js"></script><script>var preloader = {
+  endLoading: () => {
+    document.body.style.overflow = 'auto';
+    document.getElementById('loading-box').classList.add("loaded")
+  },
+  initLoading: () => {
+    document.body.style.overflow = '';
+    document.getElementById('loading-box').classList.remove("loaded")
+
+  }
+}
+window.addEventListener('load',preloader.endLoading())</script><div class="js-pjax"><script>if (!window.MathJax) {
+  window.MathJax = {
+    tex: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]],
+      tags: 'ams'
+    },
+    chtml: {
+      scale: 1.25
+    },
+    options: {
+      renderActions: {
+        findScript: [10, doc => {
+          for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+            const display = !!node.type.match(/; *mode=display/)
+            const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+            const text = document.createTextNode('')
+            node.parentNode.replaceChild(text, node)
+            math.start = {node: text, delim: '', n: 0}
+            math.end = {node: text, delim: '', n: 0}
+            doc.math.push(math)
+          }
+        }, '']
+      }
+    }
+  }
+  
+  const script = document.createElement('script')
+  script.src = 'https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js'
+  script.id = 'MathJax-script'
+  script.async = true
+  document.head.appendChild(script)
+} else {
+  MathJax.startup.document.state(0)
+  MathJax.texReset()
+  MathJax.typeset()
+}</script><script>function loadValine () {
+  function initValine () {
+    const valine = new Valine(Object.assign({
+      el: '#vcomment',
+      appId: 'IpnmxCW9CvYWIXbol5QXsegX-MdYXbMMI',
+      appKey: 'w57DVCdbxcyB1TYYagMIMJIU',
+      placeholder: 'Please leave your footprints',
+      avatar: 'monsterid',
+      meta: 'nick,mail,link'.split(','),
+      pageSize: '10',
+      lang: 'en',
+      recordIP: false,
+      serverURLs: '',
+      emojiCDN: '',
+      emojiMaps: "",
+      enableQQ: false,
+      path: window.location.pathname,
+      requiredFields: ["nick,mail"],
+      visitor: true
+    }, null))
+  }
+
+  if (typeof Valine === 'function') initValine() 
+  else getScript('https://cdn.jsdelivr.net/npm/valine/dist/Valine.min.js').then(initValine)
+}
+
+if ('Valine' === 'Valine' || !false) {
+  if (false) btf.loadComment(document.getElementById('vcomment'),loadValine)
+  else setTimeout(loadValine, 0)
+} else {
+  function loadOtherComment () {
+    loadValine()
+  }
+}</script><script>function loadLivere () {
+  if (typeof LivereTower === 'object') {
+    window.LivereTower.init()
+  }
+  else {
+    (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+    })(document, 'script');
+  }
+}
+
+if ('Valine' === 'Livere' || !false) {
+  if (false) btf.loadComment(document.getElementById('lv-container'), loadLivere)
+  else loadLivere()
+}
+else {
+  function loadOtherComment () {
+    loadLivere()
+  }
+}</script></div><script defer="defer" id="fluttering_ribbon" mobile="false" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/canvas-fluttering-ribbon.min.js"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

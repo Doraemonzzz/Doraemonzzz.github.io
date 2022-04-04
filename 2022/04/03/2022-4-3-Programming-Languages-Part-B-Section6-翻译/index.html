@@ -1,0 +1,487 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Programming Languages Part B Section6 翻译 | Doraemonzzz</title><meta name="keywords" content="Coursera Programming Languages"><meta name="author" content="Doraemonzzz"><meta name="copyright" content="Doraemonzzz"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="这里对Section 6进行翻译。 课程主页： https:&#x2F;&#x2F;www.coursera.org&#x2F;learn&#x2F;programming-languages-part-b&#x2F;home B站搬运： https:&#x2F;&#x2F;www.bilibili.com&#x2F;video&#x2F;BV1tZ4y1D7">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Programming Languages Part B Section6 翻译">
+<meta property="og:url" content="http://www.doraemonzzz.com/2022/04/03/2022-4-3-Programming-Languages-Part-B-Section6-%E7%BF%BB%E8%AF%91/index.html">
+<meta property="og:site_name" content="Doraemonzzz">
+<meta property="og:description" content="这里对Section 6进行翻译。 课程主页： https:&#x2F;&#x2F;www.coursera.org&#x2F;learn&#x2F;programming-languages-part-b&#x2F;home B站搬运： https:&#x2F;&#x2F;www.bilibili.com&#x2F;video&#x2F;BV1tZ4y1D7">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg">
+<meta property="article:published_time" content="2022-04-03T13:09:00.000Z">
+<meta property="article:modified_time" content="2022-04-04T07:39:14.324Z">
+<meta property="article:author" content="Doraemonzzz">
+<meta property="article:tag" content="Coursera Programming Languages">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg"><link rel="shortcut icon" href="https://github.com/Doraemonzzz/md-photo/blob/master/%E5%A4%B4%E5%83%8F.jpg?raw=true"><link rel="canonical" href="http://www.doraemonzzz.com/2022/04/03/2022-4-3-Programming-Languages-Part-B-Section6-%E7%BF%BB%E8%AF%91/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//www.google-analytics.com" crossorigin=""/><link rel="preconnect" href="//hm.baidu.com"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><script>var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?6f00f37f957f0608abb8c571105456f0";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script><script async="async" src="https://www.googletagmanager.com/gtag/js?id=UA-G-RE4B1LKRZD"></script><script>window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'UA-G-RE4B1LKRZD');
+</script><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"search.xml","languages":{"hits_empty":"找不到您查询的内容：${query}"}},
+  translate: {"defaultEncoding":2,"translateDelay":0,"msgToTraditionalChinese":"繁","msgToSimplifiedChinese":"簡"},
+  noticeOutdate: {"limitDay":500,"position":"top","messagePrev":"距离上次更新已经","messageNext":"天了，文章内容可能已经过时。"},
+  highlight: {"plugin":"prismjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":200},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    jQuery: 'https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js',
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+    },
+    fancybox: {
+      js: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css'
+    }
+  },
+  isPhotoFigcaption: true,
+  islazyload: true,
+  isanchor: true
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'Programming Languages Part B Section6 翻译',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2022-04-04 15:39:14'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const fontSizeVal = saveToLocal.get('global-font-size')
+    if (fontSizeVal !== undefined) {
+      document.documentElement.style.setProperty('--global-font-size', fontSizeVal + 'px')
+    }
+    })(window)</script><link rel="stylesheet" href="/css/bilibili.css" media="defer" onload="this.media='all'"><meta name="google-site-verification" content="c4v-NmuUZRgl3cvtg9GKswryK1YLaPztd_5M-df5VNI" /><meta name="generator" content="Hexo 5.4.0"><link rel="alternate" href="/atom.xml" title="Doraemonzzz" type="application/atom+xml">
+</head><body><div id="loading-box"><div class="loading-left-bg"></div><div class="loading-right-bg"></div><div class="spinner-box"><div class="configure-border-1"><div class="configure-core"></div></div><div class="configure-border-2"><div class="configure-core"></div></div><div class="loading-word">加载中...</div></div></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="author-avatar"><img class="avatar-img" src= "/img/loading.gif" data-lazy-src="https://github.com/Doraemonzzz/md-photo/blob/master/%E5%A4%B4%E5%83%8F.jpg?raw=true" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">文章</div><div class="length-num">723</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">标签</div><div class="length-num">73</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/categories/"><div class="headline">分类</div><div class="length-num">29</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-chart-pie"></i><span> 博客统计</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/charts/"><i class="fa-fw far fa-chart-bar"></i><span> 文章统计</span></a></li><li><a class="site-page child" href="/census/"><i class="fa-fw fas fa-chart-area"></i><span> 访问统计</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/top/"><i class="fa-fw fab fa-hotjar"></i><span> 阅读排行榜</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fa fa-heartbeat"></i><span> 娱乐</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于我</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">Doraemonzzz</a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-chart-pie"></i><span> 博客统计</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/charts/"><i class="fa-fw far fa-chart-bar"></i><span> 文章统计</span></a></li><li><a class="site-page child" href="/census/"><i class="fa-fw fas fa-chart-area"></i><span> 访问统计</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/top/"><i class="fa-fw fab fa-hotjar"></i><span> 阅读排行榜</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fa fa-heartbeat"></i><span> 娱乐</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于我</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">Programming Languages Part B Section6 翻译</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2022-04-03T13:09:00.000Z" title="发表于 2022-04-03 21:09:00">2022-04-03</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2022-04-04T07:39:14.324Z" title="更新于 2022-04-04 15:39:14">2022-04-04</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B/">函数式编程</a></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-tag"></i><a class="article-meta__tags" href="/tags/Coursera-Programming-Languages/">Coursera Programming Languages</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">8.5k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>28分钟</span></span><span class="post-meta-separator">|</span><span class="leancloud_visitors" id="/2022/04/03/2022-4-3-Programming-Languages-Part-B-Section6-%E7%BF%BB%E8%AF%91/" data-flag-title="Programming Languages Part B Section6 翻译"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span class="leancloud-visitors-count"></span></span><span class="post-meta-separator">|</span><span class="post-meta-commentcount"><i class="far fa-comments fa-fw post-meta-icon"></i><span class="post-meta-label">评论数:</span><a href="/2022/04/03/2022-4-3-Programming-Languages-Part-B-Section6-%E7%BF%BB%E8%AF%91/#post-comment" itemprop="discussionUrl"><span class="valine-comment-count" data-xid="/2022/04/03/2022-4-3-Programming-Languages-Part-B-Section6-%E7%BF%BB%E8%AF%91/" itemprop="commentCount"></span></a></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p>这里对Section 6进行翻译。</p>
+<p>课程主页：</p>
+<p><a target="_blank" rel="noopener" href="https://www.coursera.org/learn/programming-languages-part-b/home">https://www.coursera.org/learn/programming-languages-part-b/home</a></p>
+<p>B站搬运：</p>
+<p><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1tZ4y1D7">https://www.bilibili.com/video/BV1tZ4y1D7</a></p>
+<span id="more"></span>
+<h1 id="Coursera编程语言课程-第6节总结"><a href="#Coursera编程语言课程-第6节总结" class="headerlink" title="Coursera编程语言课程 第6节总结"></a>Coursera编程语言课程 第6节总结</h1><p>标准说明：本总结涵盖的材料与课堂视频以及随视频发布的材料（幻灯片、代码）大致相同。它有助于以叙述的方式阅读材料，并将整个课程部分的材料放在一份文件中，特别是在以后复习材料时。请在讨论板上报告这些笔记中的错误。</p>
+<h2 id="目录"><a href="#目录" class="headerlink" title="目录"></a>目录</h2><ul>
+<li>不使用数据类型的数据类型编程 </li>
+<li>改变我们对算术表达式数据类型的评估方式</li>
+<li>通过Racket列表的递归数据类型 </li>
+<li>通过Racket的<code>struct</code>实现递归数据类型 </li>
+<li>为什么<code>struct</code>方法更好 </li>
+<li>实现一般的编程语言 </li>
+<li>在另一种语言中实现一种编程语言 </li>
+<li>关于合法AST的假设和非假设</li>
+<li>有变量的语言的解释器需要环境</li>
+<li>实现闭包</li>
+<li>可选：更有效地实现闭包</li>
+<li>通过元语言中的函数定义”宏”</li>
+</ul>
+<h2 id="不使用数据类型的数据类型编程"><a href="#不使用数据类型的数据类型编程" class="headerlink" title="不使用数据类型的数据类型编程"></a>不使用数据类型的数据类型编程</h2><p>在ML中，我们使用数据类型绑定来创建我们自己的one-of类型，包括用于树状数据的递归数据类型，例如用于算术表达式的小语言。数据类型绑定在静态环境中引入了一个新的类型，以及用于创建该类型数据的构造器和用于使用该类型数据的模式匹配。Racket作为一种动态类型的语言，没有直接对应于数据类型绑定的东西，但它确实支持同样的数据表示和编程。</p>
+<p>首先，我们在ML中需要数据类型的一些情况在Racket中更简单，因为我们可以直接使用动态类型将任何类型的数据放在我们想要的地方。例如，我们知道ML中的列表是多态的，但是任何特定的列表都必须有相同类型的元素。所以我们不能直接建立一个持有“string和ints”的列表。但是，我们可以用一个数据类型来解决这个限制，就像这个例子一样：</p>
+<pre class="line-numbers language-none"><code class="language-none">datatype int_or_string &#x3D; I of int | S of string
+
+fun funny_sum xs &#x3D;
+    case xs of
+        [] &#x3D;&gt; 0
+      | (I i)::xs&#39; &#x3D;&gt; i + funny_sum xs&#39;
+      | (S s)::xs&#39; &#x3D;&gt; String.size s + funny_sum xs&#39;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>在Racket中，不需要这样的变通方法，因为我们可以直接写出对元素为数字或字符串的列表有效的函数：</p>
+<pre class="line-numbers language-scheme" data-language="scheme"><code class="language-scheme"><span class="token punctuation">(</span><span class="token keyword">define</span> <span class="token punctuation">(</span><span class="token function">funny-sum</span> xs<span class="token punctuation">)</span>
+  <span class="token punctuation">(</span><span class="token keyword">cond</span> [<span class="token punctuation">(</span><span class="token builtin">null?</span> xs<span class="token punctuation">)</span> 0]
+        [<span class="token punctuation">(</span><span class="token builtin">number?</span> <span class="token punctuation">(</span><span class="token builtin">car</span> xs<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">(</span><span class="token operator">+</span> <span class="token punctuation">(</span><span class="token builtin">car</span> xs<span class="token punctuation">)</span> <span class="token punctuation">(</span><span class="token function">funny-sum</span> <span class="token punctuation">(</span><span class="token builtin">cdr</span> xs<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span>]
+        [<span class="token punctuation">(</span><span class="token builtin">string?</span> <span class="token punctuation">(</span><span class="token builtin">car</span> xs<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">(</span><span class="token operator">+</span> <span class="token punctuation">(</span><span class="token builtin">string-length</span> <span class="token punctuation">(</span><span class="token builtin">car</span> xs<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">(</span><span class="token function">funny-sum</span> <span class="token punctuation">(</span><span class="token builtin">cdr</span> xs<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span>]<span class="token punctuation">)</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+<p>对这种方法至关重要的是，Racket有内置的基元，如<code>null?</code>, <code>number?</code>和<code>string?</code>，用于在运行时测试数据的类型。</p>
+<p>但对于像这种用于算术表达式的ML表示法的递归数据类型：</p>
+<pre class="line-numbers language-none"><code class="language-none">datatype exp &#x3D; Const of int | Negate of exp | Add of exp * exp | Multiply of exp * exp<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>将我们的编程习惯适应于Racket将被证明是更有趣的。</p>
+<p>我们将首先考虑一个评估<code>exp</code>类型的ML函数，但这个函数的返回类型与我们在课程早期编写的类似函数不同。然后我们将考虑在Racket中为算术表达式定义和使用这种类型的两种不同方法。我们将论证第二种方法更好，但第一种方法对于理解Racket的总体情况和第二种方法特别重要。</p>
+<h2 id="改变我们对算术表达式数据类型的评估方式"><a href="#改变我们对算术表达式数据类型的评估方式" class="headerlink" title="改变我们对算术表达式数据类型的评估方式"></a>改变我们对算术表达式数据类型的评估方式</h2><p>最明显的函数是对算术表达式进行求值并返回结果的函数，该函数需要接收上述ML数据类型的值。以前，我们这样写一个函数：</p>
+<pre class="line-numbers language-none"><code class="language-none">fun eval_exp_old e &#x3D; 
+    case e of
+        Const i &#x3D;&gt; i
+      | Negate e2  &#x3D;&gt; ~ (eval_exp_old e2)
+      | Add(e1,e2) &#x3D;&gt; (eval_exp_old e1) + (eval_exp_old e2)
+      | Multiply(e1,e2) &#x3D;&gt; (eval_exp_old e1) * (eval_exp_old e2)<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p><code>eval_exp_old</code>的类型是<code>exp-&gt;int</code>。特别是，返回类型是<code>int</code>，一个ML整数，然后我们可以使用ML的算术运算符进行加法、乘法等。</p>
+<p>在本模块的其余部分，我们将改写这类函数以返回<code>exp</code>，因此ML类型将变成<code>exp-&gt;exp</code>。调用的结果（包括递归调用）将具有<code>Const i</code>的形式（对于某个<code>int i</code>），例如<code>Const 17</code>。调用者必须检查返回的<code>exp</code>的种类确实是<code>Const</code>，提取基础数据（在ML中，使用模式匹配），然后自己根据需要使用<code>Const</code>构造函数来返回<code>exp</code>。对于我们的小算术语言，这种方法导致了一个相当复杂的程序：</p>
+<pre class="line-numbers language-none"><code class="language-none">exception Error of string
+
+fun eval_exp_new e &#x3D;
+    let
+	fun get_int e &#x3D;
+	    case e of
+		Const i &#x3D;&gt; i
+	      | _ &#x3D;&gt; raise (Error &quot;expected Const result&quot;)
+    in
+	case e of
+         Const _ &#x3D;&gt; e
+	  | Negate e2  &#x3D;&gt; 
+	    Const (~ (get_int (eval_exp_new e2)))
+	  | Add(e1,e2) &#x3D;&gt; 
+	    Const ((get_int (eval_exp_new e1)) + (get_int (eval_exp_new e2)))
+	  | Multiply(e1,e2) &#x3D;&gt; 
+	    Const ((get_int (eval_exp_new e1)) * (get_int (eval_exp_new e2)))
+    end<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>这种额外的复杂化对我们简单的类型<code>exp</code>没有什么好处，但我们这样做有一个非常好的理由。不久之后，我们就会开始设计有多种结果的小语言。假设一个计算的结果不一定是一个数字，因为它也可以是一个布尔值、一个字符串、一个pair、一个函数闭包等等。那么我们的<code>eval_exp</code>函数需要返回某种<code>one-of</code>类型，而使用<code>exp</code>类型所表示的可能性的一个子集将很好地满足我们的需要。然后，像加法这样的<code>eval_exp</code>案例将需要检查递归的结果是否是正确的数值类型。如果这个检查不成功，那么上面那行引发异常的<code>get_int</code>就会被评估（而对于我们到目前为止的简单例子，异常永远不会被引发）。</p>
+<h2 id="通过Racket列表的递归数据类型"><a href="#通过Racket列表的递归数据类型" class="headerlink" title="通过Racket列表的递归数据类型"></a>通过Racket列表的递归数据类型</h2><p>在我们写一个类似于上述ML <code>eval_exp_new</code>函数的Racket函数之前，我们需要确定算术表达式本身。我们需要一种方法来构造常量、相反数、加法和乘法，需要一种方法来测试我们有什么样的表达式（例如：这是否是加法），以及一种方法来访问这些表达式（例如：获取加法的第一个子表达式）。在ML中，数据类型绑定给了我们这一切。</p>
+<p>在Racket中，动态类型让我们可以使用列表来表示任何类型的数据，包括算术表达式。 一个古老的习惯是用第一个列表元素来表示”这是什么东西”，然后用后续的列表元素来保存基础数据。用这种方法，我们可以用自己的Racket函数来构造、测试和访问：</p>
+<pre class="line-numbers language-scheme" data-language="scheme"><code class="language-scheme"><span class="token comment">; just helper functions that make lists where first element is a symbol</span>
+<span class="token comment">; Note: More robust could check at run-time the type of thing being put in</span>
+<span class="token punctuation">(</span><span class="token keyword">define</span> <span class="token punctuation">(</span><span class="token function">Const</span> i<span class="token punctuation">)</span> <span class="token punctuation">(</span><span class="token builtin">list</span> <span class="token symbol">'Const</span> i<span class="token punctuation">)</span><span class="token punctuation">)</span>
+<span class="token punctuation">(</span><span class="token keyword">define</span> <span class="token punctuation">(</span><span class="token function">Negate</span> e<span class="token punctuation">)</span> <span class="token punctuation">(</span><span class="token builtin">list</span> <span class="token symbol">'Negate</span> e<span class="token punctuation">)</span><span class="token punctuation">)</span>
+<span class="token punctuation">(</span><span class="token keyword">define</span> <span class="token punctuation">(</span><span class="token function">Add</span> e1 e2<span class="token punctuation">)</span> <span class="token punctuation">(</span><span class="token builtin">list</span> <span class="token symbol">'Add</span> e1 e2<span class="token punctuation">)</span><span class="token punctuation">)</span>
+<span class="token punctuation">(</span><span class="token keyword">define</span> <span class="token punctuation">(</span><span class="token function">Multiply</span> e1 e2<span class="token punctuation">)</span> <span class="token punctuation">(</span><span class="token builtin">list</span> <span class="token symbol">'Multiply</span> e1 e2<span class="token punctuation">)</span><span class="token punctuation">)</span>
+
+<span class="token comment">; just helper functions that test what "kind of exp"</span>
+<span class="token comment">; Note: More robust could raise better errors for non-exp values</span>
+<span class="token punctuation">(</span><span class="token keyword">define</span> <span class="token punctuation">(</span><span class="token function">Const?</span> x<span class="token punctuation">)</span> <span class="token punctuation">(</span><span class="token builtin">eq?</span> <span class="token punctuation">(</span><span class="token builtin">car</span> x<span class="token punctuation">)</span> <span class="token symbol">'Const</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+<span class="token punctuation">(</span><span class="token keyword">define</span> <span class="token punctuation">(</span><span class="token function">Negate?</span> x<span class="token punctuation">)</span> <span class="token punctuation">(</span><span class="token builtin">eq?</span> <span class="token punctuation">(</span><span class="token builtin">car</span> x<span class="token punctuation">)</span> <span class="token symbol">'Negate</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+<span class="token punctuation">(</span><span class="token keyword">define</span> <span class="token punctuation">(</span><span class="token function">Add?</span> x<span class="token punctuation">)</span> <span class="token punctuation">(</span><span class="token builtin">eq?</span> <span class="token punctuation">(</span><span class="token builtin">car</span> x<span class="token punctuation">)</span> <span class="token symbol">'Add</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+<span class="token punctuation">(</span><span class="token keyword">define</span> <span class="token punctuation">(</span><span class="token function">Multiply?</span> x<span class="token punctuation">)</span> <span class="token punctuation">(</span><span class="token builtin">eq?</span> <span class="token punctuation">(</span><span class="token builtin">car</span> x<span class="token punctuation">)</span> <span class="token symbol">'Multiply</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+
+<span class="token comment">; just helper functions that get the pieces for "one kind of exp"</span>
+<span class="token comment">; Note: More robust could check "what kind of exp"</span>
+<span class="token punctuation">(</span><span class="token keyword">define</span> <span class="token punctuation">(</span><span class="token function">Const-int</span> e<span class="token punctuation">)</span> <span class="token punctuation">(</span><span class="token builtin">car</span> <span class="token punctuation">(</span><span class="token builtin">cdr</span> e<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+<span class="token punctuation">(</span><span class="token keyword">define</span> <span class="token punctuation">(</span><span class="token function">Negate-e</span> e<span class="token punctuation">)</span> <span class="token punctuation">(</span><span class="token builtin">car</span> <span class="token punctuation">(</span><span class="token builtin">cdr</span> e<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+<span class="token punctuation">(</span><span class="token keyword">define</span> <span class="token punctuation">(</span><span class="token function">Add-e1</span> e<span class="token punctuation">)</span> <span class="token punctuation">(</span><span class="token builtin">car</span> <span class="token punctuation">(</span><span class="token builtin">cdr</span> e<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+<span class="token punctuation">(</span><span class="token keyword">define</span> <span class="token punctuation">(</span><span class="token function">Add-e2</span> e<span class="token punctuation">)</span> <span class="token punctuation">(</span><span class="token builtin">car</span> <span class="token punctuation">(</span><span class="token builtin">cdr</span> <span class="token punctuation">(</span><span class="token builtin">cdr</span> e<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+<span class="token punctuation">(</span><span class="token keyword">define</span> <span class="token punctuation">(</span><span class="token function">Multiply-e1</span> e<span class="token punctuation">)</span> <span class="token punctuation">(</span><span class="token builtin">car</span> <span class="token punctuation">(</span><span class="token builtin">cdr</span> e<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+<span class="token punctuation">(</span><span class="token keyword">define</span> <span class="token punctuation">(</span><span class="token function">Multiply-e2</span> e<span class="token punctuation">)</span> <span class="token punctuation">(</span><span class="token builtin">car</span> <span class="token punctuation">(</span><span class="token builtin">cdr</span> <span class="token punctuation">(</span><span class="token builtin">cdr</span> e<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>(作为说明，我们以前没有见过<code>&#39;foo</code>这个语法。这是一个Racket符号。就我们的目的而言，符号<code>&#39;foo</code>很像字符串<code>&quot;foo&quot;</code>，你可以使用任何字符序列，但符号和字符串是不同的东西。比较两个符号是否相等是一个快速的操作，比字符串相等要快。你可以用<code>eq?</code>来比较符号，而你不应该将<code>eq?</code>用于字符串。我们可以用字符串来做这个例子，用<code>equal?</code>而不是<code>eq?</code>)。</p>
+<p>现在我们可以写一个Racket函数来”评估”一个算术表达式。它类似于<code>eval_exp_new</code>中的ML版本，只是用我们的辅助函数代替了数据类型构造器和模式匹配：</p>
+<pre class="line-numbers language-scheme" data-language="scheme"><code class="language-scheme"><span class="token punctuation">(</span><span class="token keyword">define</span> <span class="token punctuation">(</span><span class="token function">eval-exp</span> e<span class="token punctuation">)</span>
+  <span class="token punctuation">(</span><span class="token keyword">cond</span> [<span class="token punctuation">(</span><span class="token function">Const?</span> e<span class="token punctuation">)</span> e] <span class="token comment">; note returning an exp, not a number</span>
+        [<span class="token punctuation">(</span><span class="token function">Negate?</span> e<span class="token punctuation">)</span> <span class="token punctuation">(</span><span class="token function">Const</span> <span class="token punctuation">(</span><span class="token operator">-</span> <span class="token punctuation">(</span><span class="token function">Const-int</span> <span class="token punctuation">(</span><span class="token function">eval-exp</span> <span class="token punctuation">(</span><span class="token function">Negate-e</span> e<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span>]
+        [<span class="token punctuation">(</span><span class="token function">Add?</span> e<span class="token punctuation">)</span> <span class="token punctuation">(</span><span class="token keyword">let</span> <span class="token punctuation">(</span><span class="token function">[v1</span> <span class="token punctuation">(</span><span class="token function">Const-int</span> <span class="token punctuation">(</span><span class="token function">eval-exp</span> <span class="token punctuation">(</span><span class="token function">Add-e1</span> e<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span>]
+                        [v2 <span class="token punctuation">(</span><span class="token function">Const-int</span> <span class="token punctuation">(</span><span class="token function">eval-exp</span> <span class="token punctuation">(</span><span class="token function">Add-e2</span> e<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span>]<span class="token punctuation">)</span>
+                    <span class="token punctuation">(</span><span class="token function">Const</span> <span class="token punctuation">(</span><span class="token operator">+</span> v1 v2<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span>]
+        [<span class="token punctuation">(</span><span class="token function">Multiply?</span> e<span class="token punctuation">)</span> <span class="token punctuation">(</span><span class="token keyword">let</span> <span class="token punctuation">(</span><span class="token function">[v1</span> <span class="token punctuation">(</span><span class="token function">Const-int</span> <span class="token punctuation">(</span><span class="token function">eval-exp</span> <span class="token punctuation">(</span><span class="token function">Multiply-e1</span> e<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span>]
+                             [v2 <span class="token punctuation">(</span><span class="token function">Const-int</span> <span class="token punctuation">(</span><span class="token function">eval-exp</span> <span class="token punctuation">(</span><span class="token function">Multiply-e2</span> e<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span>]<span class="token punctuation">)</span>
+                         <span class="token punctuation">(</span><span class="token function">Const</span> <span class="token punctuation">(</span><span class="token operator">*</span> v1 v2<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span>]
+        [#t <span class="token punctuation">(</span><span class="token builtin">error</span> <span class="token string">"eval-exp expected an exp"</span><span class="token punctuation">)</span>]<span class="token punctuation">)</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>同样地，我们可以使用我们的辅助函数来定义算术表达式：</p>
+<pre class="line-numbers language-scheme" data-language="scheme"><code class="language-scheme"><span class="token punctuation">(</span><span class="token keyword">define</span> test-exp <span class="token punctuation">(</span><span class="token function">Multiply</span> <span class="token punctuation">(</span><span class="token function">Negate</span> <span class="token punctuation">(</span><span class="token function">Add</span> <span class="token punctuation">(</span><span class="token function">Const</span> <span class="token number">2</span><span class="token punctuation">)</span> <span class="token punctuation">(</span><span class="token function">Const</span> <span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">(</span><span class="token function">Const</span> <span class="token number">7</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span> 
+<span class="token punctuation">(</span><span class="token keyword">define</span> test-ans <span class="token punctuation">(</span><span class="token function">eval-exp</span> test-exp<span class="token punctuation">)</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<p>注意，<code>test-ans</code>是<code>&#39;(Const -28)</code>，而不是<code>-28</code>。</p>
+<p>还注意到，在动态类型下，程序中没有任何东西表示什么是算术表达式。只有我们的文档和注释会指出算术表达式是如何在常量、相反数、加法和乘法方面构建的。</p>
+<h2 id="通过Racket的struct定义递归数据类型"><a href="#通过Racket的struct定义递归数据类型" class="headerlink" title="通过Racket的struct定义递归数据类型"></a>通过Racket的<code>struct</code>定义递归数据类型</h2><p>上面定义算术表达式的方法不如我们现在介绍的使用Racket中特殊结构体的第二种方法。一个<code>struct</code>表示法看起来像：</p>
+<pre class="line-numbers language-none"><code class="language-none">(struct foo (bar baz quux) #: transparent) <span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>这就定义了一个名为<code>foo</code>的新结构，就像一个ML构造器。它为环境添加了构建<code>foo</code>的函数，测试某物是否为<code>foo</code>，以及从<code>foo</code>中提取字段<code>bar, baz, quux</code>。这些绑定的名称是由构造函数名称<code>foo</code>系统地形成的，如下所示：</p>
+<ul>
+<li><code>foo</code>是一个接收三个参数并返回一个值的函数，该值是一个具有容纳第一个参数的<code>bar</code>字段、容纳第二个参数的<code>baz</code>字段和容纳第三个参数的<code>quux</code>字段的<code>foo</code>。</li>
+<li><code>foo?</code>是一个接受一个参数的函数，对于通过调用<code>foo</code>创建的值返回<code>#t</code>，对于其他的值返回<code>#f</code>。</li>
+<li><code>foo-bar</code>是一个函数，它接收<code>foo</code>，并返回<code>bar</code>字段的内容，如果传递的不是<code>foo</code>，则引发错误。</li>
+<li><code>foo-baz</code>是一个函数，它接收<code>foo</code>并返回<code>baz</code>字段的内容，如果传递的不是<code>foo</code>，则引发错误。</li>
+<li><code>foo-quux</code>是一个函数，它接收<code>foo</code>并返回<code>quux</code>字段的内容，如果传递的不是<code>foo</code>，则引发错误。</li>
+</ul>
+<p>我们可以在结构定义中加入一些有用的属性来修改它们的行为，我们在这里讨论其中的两个。</p>
+<p>首先，<code>#:transparent</code>属性使字段和访问函数在定义结构的模块之外也能看到。从模块化的角度来看，这种风格值得商榷，但在使用DrRacket时，它有一个很大的优势。它允许REPL打印结构值及其内容，而不仅仅是抽象值。例如，根据我们对结构<code>foo</code>的定义，<code>(foo &quot;hi&quot; (+ 3 7) #f)</code>的结果会打印为<code>(foo &quot;hi&quot; 10 #f)</code>。如果没有<code>#:transparent</code>属性，它将打印为<code>#&lt;foo&gt;</code>，而调用<code>foo</code>函数产生的每个值都将以同样的方式打印。这个特性对于检查从结构的递归使用中建立的值来说变得更加有用。</p>
+<p>其次，<code>#:mutable</code>属性使所有的字段都是可变的，它还提供了<code>set-foo-bar!, set-foo-baz!, set-foo-quux!</code>等变体函数。简而言之，程序员在设计结构时决定拥有可改变的字段是否利大于弊。我们也可以让某些字段可变，而某些字段不可变。</p>
+<p>我们可以使用结构来定义一种新的方式来表示算术表达式，以及一个评估这种算术表达式的函数：</p>
+<pre class="line-numbers language-scheme" data-language="scheme"><code class="language-scheme"><span class="token punctuation">(</span><span class="token function">struct</span> const <span class="token punctuation">(</span><span class="token function">int</span><span class="token punctuation">)</span> #:transparent<span class="token punctuation">)</span>
+<span class="token punctuation">(</span><span class="token function">struct</span> negate <span class="token punctuation">(</span><span class="token function">e</span><span class="token punctuation">)</span> #:transparent<span class="token punctuation">)</span>
+<span class="token punctuation">(</span><span class="token function">struct</span> add <span class="token punctuation">(</span><span class="token function">e1</span> e2<span class="token punctuation">)</span> #:transparent<span class="token punctuation">)</span>
+<span class="token punctuation">(</span><span class="token function">struct</span> multiply <span class="token punctuation">(</span><span class="token function">e1</span> e2<span class="token punctuation">)</span> #:transparent<span class="token punctuation">)</span>
+
+<span class="token punctuation">(</span><span class="token keyword">define</span> <span class="token punctuation">(</span><span class="token function">eval-exp</span> e<span class="token punctuation">)</span>
+  <span class="token punctuation">(</span><span class="token keyword">cond</span> [<span class="token punctuation">(</span><span class="token function">const?</span> e<span class="token punctuation">)</span> e] <span class="token comment">; note returning an exp, not a number</span>
+        [<span class="token punctuation">(</span><span class="token function">negate?</span> e<span class="token punctuation">)</span> <span class="token punctuation">(</span><span class="token function">const</span> <span class="token punctuation">(</span><span class="token operator">-</span> <span class="token punctuation">(</span><span class="token function">const-int</span> <span class="token punctuation">(</span><span class="token function">eval-exp</span> <span class="token punctuation">(</span><span class="token function">negate-e</span> e<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span>]
+        [<span class="token punctuation">(</span><span class="token function">add?</span> e<span class="token punctuation">)</span> <span class="token punctuation">(</span><span class="token keyword">let</span> <span class="token punctuation">(</span><span class="token function">[v1</span> <span class="token punctuation">(</span><span class="token function">const-int</span> <span class="token punctuation">(</span><span class="token function">eval-exp</span> <span class="token punctuation">(</span><span class="token function">add-e1</span> e<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span>]
+                        [v2 <span class="token punctuation">(</span><span class="token function">const-int</span> <span class="token punctuation">(</span><span class="token function">eval-exp</span> <span class="token punctuation">(</span><span class="token function">add-e2</span> e<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span>]<span class="token punctuation">)</span>
+                    <span class="token punctuation">(</span><span class="token function">const</span> <span class="token punctuation">(</span><span class="token operator">+</span> v1 v2<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span>]
+        [<span class="token punctuation">(</span><span class="token function">multiply?</span> e<span class="token punctuation">)</span> <span class="token punctuation">(</span><span class="token keyword">let</span> <span class="token punctuation">(</span><span class="token function">[v1</span> <span class="token punctuation">(</span><span class="token function">const-int</span> <span class="token punctuation">(</span><span class="token function">eval-exp</span> <span class="token punctuation">(</span><span class="token function">multiply-e1</span> e<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span>]
+                             [v2 <span class="token punctuation">(</span><span class="token function">const-int</span> <span class="token punctuation">(</span><span class="token function">eval-exp</span> <span class="token punctuation">(</span><span class="token function">multiply-e2</span> e<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span>]<span class="token punctuation">)</span>
+                         <span class="token punctuation">(</span><span class="token function">const</span> <span class="token punctuation">(</span><span class="token operator">*</span> v1 v2<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span>]
+        [#t <span class="token punctuation">(</span><span class="token builtin">error</span> <span class="token string">"eval-exp expected an exp"</span><span class="token punctuation">)</span>]<span class="token punctuation">)</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>就像我们之前的方法一样，语言中没有任何东西表明算术表达式是如何用常数、取反、加法和乘法来表示的。这个版本的<code>eval-exp</code>的结构与之前的版本几乎相同，只是使用了结构定义提供的函数而不是我们自己的列表处理函数。使用构造函数来定义表达式也是类似的：</p>
+<pre class="line-numbers language-scheme" data-language="scheme"><code class="language-scheme"><span class="token punctuation">(</span><span class="token keyword">define</span> test-exp <span class="token punctuation">(</span><span class="token function">multiply</span> <span class="token punctuation">(</span><span class="token function">negate</span> <span class="token punctuation">(</span><span class="token function">add</span> <span class="token punctuation">(</span><span class="token function">const</span> <span class="token number">2</span><span class="token punctuation">)</span> <span class="token punctuation">(</span><span class="token function">const</span> <span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">(</span><span class="token function">const</span> <span class="token number">7</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+<span class="token punctuation">(</span><span class="token keyword">define</span> test-ans <span class="token punctuation">(</span><span class="token function">eval-exp</span> test-exp<span class="token punctuation">)</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<h2 id="为什么struct方法更好"><a href="#为什么struct方法更好" class="headerlink" title="为什么struct方法更好"></a>为什么<code>struct</code>方法更好</h2><p>命名结构并不是我们一开始使用的列表方法的语法糖。关键的区别在于，结构定义创造了一种新的值类型。给定 </p>
+<pre class="line-numbers language-scheme" data-language="scheme"><code class="language-scheme"><span class="token punctuation">(</span><span class="token function">struct</span> add <span class="token punctuation">(</span><span class="token function">e1</span> e2<span class="token punctuation">)</span> #: transparent<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>函数<code>add</code>返回的内容会导致<code>add?</code>返回<code>#t</code>，而其他所有类型测试函数如<code>number?, pair?, null?, negate?, multiply?</code>返回<code>#f</code>。同样，访问一个<code>add</code>值的<code>e1</code>和<code>e2</code>字段的方法是使用<code>add-e1</code>和<code>add-e2</code>——使用<code>car, cdr, multiply-e1</code>等是一个运行时错误。(反之，<code>add-e1</code>和<code>add-e2</code>对任何不是add的内容都会产生错误）。</p>
+<p>请注意，我们之前使用的列表的方法并不具备这些特性。从我们所说的<code>Add</code>函数构建的内容是一个列表，所以<code>pair?</code>对它返回<code>#t</code>，并且我们可以（尽管它的风格很差），直接用<code>car</code>和<code>cdr</code>访问这些片段。</p>
+<p>除了更简洁之外，我们基于结构的方法也更有优势，因为它能更快地发现错误。在我们的算术语言中对一个加法表达式使用<code>cdr</code>或<code>Multiply-e2</code>几乎肯定是个错误，但我们基于列表的方法认为这只不过是使用Racket原语访问一个列表。同样，没有什么能阻止我们的代码的一个不明智的客户写<code>(list &#39;Add &quot;hello&quot;)</code>，然而我们的基于列表的<code>Add?</code>函数会在给出结果列表<code>’(Add &quot;hello&quot;)</code>时返回<code>#t</code>。</p>
+<p>也就是说，我们在这里使用的结构名称并没有真正执行不变性。特别是，我们希望确保任何add表达式的<code>e1</code>和<code>e2</code>字段只包含其他算术表达式。Racket有很好的方法来做到这一点，但我们在这里不研究它们。首先，Racket有一个模块系统，我们可以用它来向客户端公开结构定义的部分内容，所以我们可以隐藏构造函数，并公开一个不同的函数来保证不变性（就像我们对ML的模块系统所做的那样）。（许多人错误地认为动态类型语言不能像这样强制执行模块化。Racket的结构以及其他语言中的类似功能对此进行了说明。 你不需要抽象类型和静态类型来强制执行 ADT。 有一种方法可以创建新类型，然后不直接公开这些类型的构造函数。）其次，Racket有一个contract系统，允许程序员定义任意的函数，用来检查结构字段的属性，比如只允许字段中出现某些类型的值。</p>
+<p>最后，我们注意到Racket的<code>struct</code>是一个强大的原语，不能用其他东西来描述或表示，比如函数表示或宏表示。它确实创造了一种新的数据类型。使<code>add</code>的结果导致<code>add?</code>返回<code>#t</code>，而其他类型的测试则返回<code>#f</code>，这种特性是任何列表、函数、宏等方法都无法做到的。除非语言给了你一个制造这样的新类型的原语，否则任何其他的算术表达式的代码都必须制造一些导致其他类型测试的值，例如使得如<code>pair?</code>或<code>procedure?</code>返回<code>#t</code>。</p>
+<h2 id="实现一般的编程语言"><a href="#实现一般的编程语言" class="headerlink" title="实现一般的编程语言"></a>实现一般的编程语言</h2><p>虽然这门课程主要是关于编程语言特征的含义，而不是如何实现它们，但实现一种小型编程语言仍然是一种宝贵的经验。首先，理解一些特性的语义的一个好方法是必须实现这些特性，这迫使你思考所有可能的情况。第二，它打消了像高阶函数或对象这样的东西是”魔法”的想法，因为我们可以用更简单的特性来实现它们。第三，许多编程任务类似于实现一种编程语言的解释器。例如，处理像pdf文件这样的结构化文件，并将其转化为用于显示的矩形像素，类似于将一个输入程序转化为一个答案。</p>
+<p>我们可以把一个语言实现的典型工作流描述如下。首先，我们取一个字符串，包含该语言中程序的具体语法。一般来说，这个字符串是一个或多个文件的内容。如果这个字符串在语法上不符合要求，解析器就会出错，这意味着这个字符串不可能包含某个语言的程序，因为它存在着诸如误用关键词、错位的括号等问题。如果没有这样的错误，解析器就会产生一棵树，代表这个程序。这就是所谓的抽象语法树，简称AST。对于语言实现的下一步，它是一个更方便的表示。如果我们的语言包括类型检查规则或其他原因，AST可能仍然不是一个合法的程序，类型检查器将使用这个AST来产生错误信息或不产生错误信息。然后，AST被传递给实现的其他部分。</p>
+<p>对于实现某个编程语言B的其余实现，基本上有两种方法。第一种，我们可以用另一种语言A写一个解释器，接收B的程序并产生答案。把这样的程序称为B的评估器（evaluator）或B的执行器（executor）可能更有意义，但B的解释器（interpreter）几十年来一直是标准术语。第二种，我们可以在另一种语言A中编写一个编译器，该编译器接收B中的程序，并在其他语言C（不一定是C语言）中产生等效的程序，然后使用一些预先存在的C的实现。一个比 “编译器”更好的术语是”翻译器”，但”编译器”这个术语又是无处不在的。无论是解释器方法还是编译器方法，我们都把A，即我们编写B的实现的语言，称为元语言。</p>
+<p>虽然有很多纯正的解释器和编译器，但现代系统往往结合了每种解释器和编译器的各个方面，并使用多层次的解释和翻译。例如，一个典型的Java系统将Java源代码编译成一种可移植的中间格式。然后，Java虚拟机可以开始解释这种格式的代码，但通过进一步将代码编译成可以直接在硬件上执行的代码，可以获得更好的性能。我们可以把硬件本身看作是用晶体管编写的解释器，然而许多现代处理器实际上在硬件中都有翻译器，在执行前就把二进制指令转换成更小的简单指令。即使是这个运行程序的多层故事也有许多变化和增强，但从根本上说，每一步都是解释或翻译的某种组合。</p>
+<p>一句说教的话：解释器与编译器是特定编程语言实现的一个特征，而不是编程语言的一个特征。在计算机科学中，有一个更恼人、更普遍的误解，那就是有诸如C等编译语言和诸如Racket等解释语言。这是无稽之谈：我可以为C写一个解释器，也可以为Racket写一个编译器。(事实上，DrRacket采取的是一种混合方法，与Java并无不同。）C语言用编译器实现，而函数式语言用解释器实现的历史很长，但函数式语言的编译器已经存在了几十年。例如，SML/NJ就将每个模块/绑定编译为二进制代码。</p>
+<h2 id="在另一种语言中实现一种编程语言"><a href="#在另一种语言中实现一种编程语言" class="headerlink" title="在另一种语言中实现一种编程语言"></a>在另一种语言中实现一种编程语言</h2><p>我们上面用于算术表达式的<code>eval-exp</code>函数是一个小型编程语言的解释器的完美例子。这里的语言正是由常量、取反、加法和乘法表达式的构造函数正确构建的表达式。适当的指称取决于语言；在这里，我们的意思是常数用数字表示，相反数/加法/乘法持有其他适当的子表达式。我们还需要为我们的小语言提供一个值（即结果）的表示，这也是语言表示的一部分。这里我们指的是常数，即由常数构造器构建的表达式子集。那么<code>eval-exp</code>就是一个解释器，因为它是一个函数，可以接收我们语言中的表达式，并根据我们语言的语义规则产生我们语言中的值。Racket只是一种元语言，是我们编写解释器的”另一种”语言。</p>
+<p>解析和类型检查怎么了？简而言之，我们跳过了它们。通过使用Racket的构造器，我们基本上是直接用抽象语法树来写程序，依靠方便的语法来写树，而不是编造一个语法和写一个解析器。也就是说，我们用这样的表达式编写程序：</p>
+<pre class="line-numbers language-scheme" data-language="scheme"><code class="language-scheme"><span class="token punctuation">(</span><span class="token function">negate</span> <span class="token punctuation">(</span><span class="token function">add</span> <span class="token punctuation">(</span><span class="token function">const</span> <span class="token number">2</span><span class="token punctuation">)</span> <span class="token punctuation">(</span><span class="token function">const</span> <span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>而不是像”<code>-(2+2)</code>“这样的字符串。</p>
+<p>虽然将算术表达式这样的语言嵌入到Racket这样的另一种语言中，与拥有特殊的语法相比，似乎很不方便，但它的优势甚至超过了不需要写解析器。例如，下面我们将看到我们如何使用元语言（本例中是Racket）来编写类似于我们语言的宏的东西。</p>
+<h2 id="关于合法AST的假设和非假设"><a href="#关于合法AST的假设和非假设" class="headerlink" title="关于合法AST的假设和非假设"></a>关于合法AST的假设和非假设</h2><p>在像我们的算术表达式语言这样的语言中，两种”错误的”AST之间存在着微妙的区别。为了使这种区别更加清晰，让我们用另外三种表达式来扩展我们的语言：</p>
+<pre class="line-numbers language-scheme" data-language="scheme"><code class="language-scheme"><span class="token punctuation">(</span><span class="token function">struct</span> const <span class="token punctuation">(</span><span class="token function">int</span><span class="token punctuation">)</span> #:transparent<span class="token punctuation">)</span> <span class="token comment">; int should hold a number</span>
+<span class="token punctuation">(</span><span class="token function">struct</span> negate <span class="token punctuation">(</span><span class="token function">e1</span><span class="token punctuation">)</span> #:transparent<span class="token punctuation">)</span> <span class="token comment">; e1 should hold an expression</span>
+<span class="token punctuation">(</span><span class="token function">struct</span> add <span class="token punctuation">(</span><span class="token function">e1</span> e2<span class="token punctuation">)</span> #:transparent<span class="token punctuation">)</span> <span class="token comment">; e1, e2 should hold expressions</span>
+<span class="token punctuation">(</span><span class="token function">struct</span> multiply <span class="token punctuation">(</span><span class="token function">e1</span> e2<span class="token punctuation">)</span> #:transparent<span class="token punctuation">)</span> <span class="token comment">; e1, e2 should hold expressions</span>
+<span class="token punctuation">(</span><span class="token function">struct</span> bool <span class="token punctuation">(</span><span class="token function">b</span><span class="token punctuation">)</span> #:transparent<span class="token punctuation">)</span> <span class="token comment">; b should hold #t or #f</span>
+<span class="token punctuation">(</span><span class="token function">struct</span> if-then-else <span class="token punctuation">(</span><span class="token function">e1</span> e2 e3<span class="token punctuation">)</span> #:transparent<span class="token punctuation">)</span> <span class="token comment">; e1, e2, e3 should hold expressions</span>
+<span class="token punctuation">(</span><span class="token function">struct</span> eq-num <span class="token punctuation">(</span><span class="token function">e1</span> e2<span class="token punctuation">)</span> #:transparent<span class="token punctuation">)</span> <span class="token comment">; e1, e2 should hold expressions</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>新的功能包括布尔值（真或假）、条件表达式，以及用于比较两个数字并返回布尔值的结构（当且仅当数字相同时为真）。最重要的是，现在用这种语言评估一个表达式的结果可以是：</p>
+<ul>
+<li>一个整数，如<code>(const 17)</code></li>
+<li>一个布尔值，如<code>(bool true)</code></li>
+<li>不存在，因为当我们试图评估程序时，我们会得到一个”运行时类型错误”，试图把布尔值当作数字，反之亦然 </li>
+</ul>
+<p>换句话说，在我们的语言中现在有两种类型的值（数字和布尔值），如果一个子表达式被评估为错误的值，有些操作应该失败。</p>
+<p>最后一种可能性是解释器应该检查的，并给出适当的错误信息。如果评估某种表达式（例如加法）需要评估子表达式的结果具有某种类型（例如像<code>(const 4)</code>这样的数字，而不是像<code>(bool #t)</code>这样的布尔值），那么解释器应该检查这种结果（例如使用<code>const?</code>）而不是假设递归结果具有正确的类型。这样一来，错误信息就合适了（例如：”加法的参数不是一个数字”），而不是解释器实现方面的东西。</p>
+<p>与这些笔记相对应的课程材料中发布的代码有两个完整的解释器，用于这种语言。第一个解释器不包括任何这种检查，而第二个更好的解释器则包括。称第一个解释器为<code>eval-exp-wrong</code>，第二个解释器为<code>eval-exp</code>，这里只是两者的加法情况：</p>
+<pre class="line-numbers language-scheme" data-language="scheme"><code class="language-scheme"><span class="token comment">; eval-exp-wrong</span>
+[<span class="token punctuation">(</span><span class="token function">add?</span> e<span class="token punctuation">)</span>
+ <span class="token punctuation">(</span><span class="token keyword">let</span> <span class="token punctuation">(</span><span class="token function">[i1</span> <span class="token punctuation">(</span><span class="token function">const-int</span> <span class="token punctuation">(</span><span class="token function">eval-exp-wrong</span> <span class="token punctuation">(</span><span class="token function">add-e1</span> e<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span>]
+       [i2 <span class="token punctuation">(</span><span class="token function">const-int</span> <span class="token punctuation">(</span><span class="token function">eval-exp-wrong</span> <span class="token punctuation">(</span><span class="token function">add-e2</span> e<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span>]<span class="token punctuation">)</span>
+ <span class="token punctuation">(</span><span class="token function">const</span> <span class="token punctuation">(</span><span class="token operator">+</span> i1 i2<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span>]
+<span class="token comment">; eval-exp</span>
+[<span class="token punctuation">(</span><span class="token function">add?</span> e<span class="token punctuation">)</span>
+<span class="token punctuation">(</span><span class="token keyword">let</span> <span class="token punctuation">(</span><span class="token function">[v1</span> <span class="token punctuation">(</span><span class="token function">eval-exp</span> <span class="token punctuation">(</span><span class="token function">add-e1</span> e<span class="token punctuation">)</span><span class="token punctuation">)</span>]
+      [v2 <span class="token punctuation">(</span><span class="token function">eval-exp</span> <span class="token punctuation">(</span><span class="token function">add-e2</span> e<span class="token punctuation">)</span><span class="token punctuation">)</span>]<span class="token punctuation">)</span>
+  <span class="token punctuation">(</span><span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token builtin">and</span> <span class="token punctuation">(</span><span class="token function">const?</span> v1<span class="token punctuation">)</span> <span class="token punctuation">(</span><span class="token function">const?</span> v2<span class="token punctuation">)</span><span class="token punctuation">)</span>
+      <span class="token punctuation">(</span><span class="token function">const</span> <span class="token punctuation">(</span><span class="token operator">+</span> <span class="token punctuation">(</span><span class="token function">const-int</span> v1<span class="token punctuation">)</span> <span class="token punctuation">(</span><span class="token function">const-int</span> v2<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+      <span class="token punctuation">(</span><span class="token builtin">error</span> <span class="token string">"add applied to non-number"</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span>]<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>然而，<code>eval-exp</code>是假设它正在评估的表达式是该语言的合法AST。它可以处理<code>(add (const 2) (const 2))</code>，它的评估结果是<code>(const 4)</code>，但是没有优雅地处理<code>(add #t #f)</code>或者<code>(add 3 4)</code>。根据我们在注释中的规则，这些都是不合法的AST，即：</p>
+<ul>
+<li><code>const</code>的<code>int</code>字段应该保存一个Racket数字。</li>
+<li><code>bool</code>的<code>b</code>字段应该保存一个Racket布尔值。</li>
+<li>所有其他表达式的字段应该持有其他合法的AST。(是的，这个定义是递归的）。</li>
+</ul>
+<p>解释器假设它被赋予了一个合法的AST是合理的，所以如果被赋予了一个非法的AST，它可以用一个奇怪的、与实现相关的错误信息来实现”崩溃”。</p>
+<h2 id="有变量的语言的解释器需要环境"><a href="#有变量的语言的解释器需要环境" class="headerlink" title="有变量的语言的解释器需要环境"></a>有变量的语言的解释器需要环境</h2><p>我们的算术表达式语言中缺少的最大东西就是变量。这就是为什么我们可以只有一个递归函数，它接受一个表达式并返回一个值。正如我们从课程一开始就知道的那样，由于表达式可以包含变量，评估它们需要一个将变量映射为值的环境。因此，有变量的语言的解释器需要一个递归的辅助函数，它接收一个表达式和一个环境，并产生一个值。（事实上，对于具有突变或异常等特征的语言，辅助函数甚至需要更多的参数。）</p>
+<p>环境的表示是解释器在元语言中实现的一部分，而不是语言的抽象语法的一部分。许多表示方法都是合适的，为常用变量提供快速访问的花式数据结构也是合适的。但是对于我们的目的来说，忽略效率是可以的。因此，使用 Racket作为我们的元语言，一个包含字符串（变量名）和值（变量绑定到的对象）pair的简单关联列表就可以满足要求。</p>
+<p>给定一个环境，解释器在不同的情况下以不同的方式使用它：</p>
+<ul>
+<li>为了评估一个变量表达式，它在环境中查找该变量的名称（即字符串）。</li>
+<li>为了评估大多数子表达式，例如加法运算的子表达式，解释器向递归调用传递评估外部表达式所传递的相同环境。</li>
+<li>为了评估像let-expression的主体这样的东西，解释器会向递归调用传递一个稍微不同的环境，比如传递给它的环境中多了一个绑定（即字符串和值的pair）。</li>
+</ul>
+<p>为了评估整个程序，我们只需调用我们的递归辅助函数，该函数接收一个带有程序的环境和一个合适的初始环境，例如空环境，其中没有任何绑定。</p>
+<h2 id="实现闭包"><a href="#实现闭包" class="headerlink" title="实现闭包"></a>实现闭包</h2><p>为了实现带有函数闭包和词法范围的语言，我们的解释器需要记住函数被定义时的环境，以便在函数被调用时使用这个环境而不是调用者的环境。这样做的诀窍很直接：我们可以创建一个叫做闭包的小数据结构，其中包括环境和函数本身。正是这一对（闭包）是解释一个函数的结果。换句话说，一个函数不是一个值，一个闭包才是，所以对一个函数的评估会产生一个闭包，这个闭包记住了我们评估该函数时的环境。</p>
+<p>我们还需要实现函数调用。一个调用有两个表达式<code>e1</code>和<code>e2</code>，在ML中是<code>e1 e2</code>，在Racket中是<code>(e1 e2)</code>。(我们在这里考虑的是单参数函数，尽管实现上自然会支持模拟多参数函数的currying)。我们对一个调用的评估如下： </p>
+<ul>
+<li>我们使用当前的环境来评估<code>e1</code>。结果应该是一个闭包（否则就是一个运行时错误）。</li>
+<li>我们使用当前的环境来评估<code>e2</code>。其结果将是闭包的参数。</li>
+<li>我们使用闭包的环境部分来评估闭包的代码部分的主体，并将代码部分的参数扩展到调用地的参数。</li>
+</ul>
+<p>在与这些教材相关的作业中，有一个额外的变量环境扩展，它允许闭包以递归方式调用自己。但关键的想法是一样的：我们扩展了与闭包一起存储的环境来评估闭包的函数体。</p>
+<p>这确实是解释器实现闭包的方式。这就是我们第一次学习闭包时学到的语义，只是在解释器中被实现了。</p>
+<h2 id="可选：更高效地实现闭包"><a href="#可选：更高效地实现闭包" class="headerlink" title="可选：更高效地实现闭包"></a>可选：更高效地实现闭包</h2><p>我们在每个闭包中存储整个当前环境，这似乎很昂贵，但事实并不是。首先，当环境是关联列表时，它并不昂贵，因为不同的环境只是彼此的扩展，而且当我们用<code>cons</code>生成更长的列表时，我们并没有复制列表。（记得这种共享是不改变列表的一大好处，我们也不改变环境）。其次，在实际中，我们可以通过只存储函数主体可能使用的环境部分来节省空间。我们可以看一下函数体，看看它有哪些自由变量（在函数体中使用的变量，其名称在函数体之外），我们存储在闭包中的环境只需要这些变量。毕竟，如果函数体没有使用某个变量，闭包的执行就不可能需要从环境中查找该变量。语言实现在开始评估之前，会预先计算每个函数的自由变量。它们可以将结果与每个函数一起存储，这样在构建闭包时就可以迅速获得这组变量。</p>
+<p>最后，你可能会问，如果目标语言本身没有闭包，编译器如何实现闭包。作为翻译的一部分，函数定义仍然评估为闭包，它有两个部分，代码和环境。然而，我们并没有一个解释器，每当我们到达一个需要查询的变量时，它都有一个”当前环境”。因此，我们改变了程序中的所有函数，使其接受一个额外的参数（环境），并改变所有的函数调用，使其明确地传入这个额外的参数。现在，当我们有一个闭包时，代码部分将有一个额外的参数，调用者将为这个参数传入环境部分。然后，编译器只需要将所有自由变量的使用翻译成代码，使用额外的参数来寻找正确的值。在实际中，为环境使用良好的数据结构（如数组）可以使这些变量的查找变得非常快（和从数组中读出一个值一样快）。</p>
+<h2 id="通过元语言中的函数来实现”宏”"><a href="#通过元语言中的函数来实现”宏”" class="headerlink" title="通过元语言中的函数来实现”宏”"></a>通过元语言中的函数来实现”宏”</h2><p>在实现一个解释器或编译器时，必须把被实现的语言和用于实现的语言（元语言）中的内容分开。例如，<code>eval-exp</code>是一个Racket函数，它接收一个算术表达式语言的表达式（或我们正在实现的任何语言），并产生一个算术表达式语言的值。因此，举例来说，一个算术表达式语言表达式永远不会包括<code>eval-exp</code>的使用或Racket加法表达式。</p>
+<p>但由于我们是在Racket中编写待评估程序，我们可以使用Racket辅助函数来帮助我们创建这些程序。这样做基本上就是用Racket函数作为宏语言，为我们的语言设计宏。下面是一个例子。</p>
+<pre class="line-numbers language-scheme" data-language="scheme"><code class="language-scheme"><span class="token punctuation">(</span><span class="token keyword">define</span> <span class="token punctuation">(</span><span class="token function">double</span> e<span class="token punctuation">)</span> <span class="token comment">; takes language-implemented syntax and produces language-implemented syntax</span>
+   <span class="token punctuation">(</span><span class="token function">multiply</span> e <span class="token punctuation">(</span><span class="token function">const</span> <span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<p>这里<code>double</code>是一个Racket函数，它接收一个算术表达式的语法并产生一个算术表达式的语法。调用<code>double</code>在我们的语言中产生抽象的语法，很像宏扩展。例如，<code>(negate (double (negate (const 4)))) produces (negate (multiply (negate (const 4)) (const 2))</code>。请注意，这个”宏”<code>double</code>并没有以任何方式评估程序：我们产生了抽象的语法，然后可以被评估，放在一个更大的程序里面，等等。</p>
+<p>能够这样做是我们的小语言嵌入Racket元语言的一个优势。 无论选择哪种元语言，同样的技术都能发挥作用。然而，这种方法并不能像真正的宏系统那样处理与变量shadow有关的问题，因为它有hygienic宏。</p>
+<p>这里有一个不同的”宏”，在两个方面很有意思。首先，参数是一个Racket列表，其中有语言实现的表达式（语法）。其次，这个”宏”是递归的，对参数列表中的每个元素都调用一次自己：</p>
+<pre class="line-numbers language-scheme" data-language="scheme"><code class="language-scheme"><span class="token punctuation">(</span><span class="token keyword">define</span> <span class="token punctuation">(</span><span class="token function">list-product</span> es<span class="token punctuation">)</span>
+  <span class="token punctuation">(</span><span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token builtin">null?</span> es<span class="token punctuation">)</span>
+      <span class="token punctuation">(</span><span class="token function">const</span> <span class="token number">1</span><span class="token punctuation">)</span>
+      <span class="token punctuation">(</span><span class="token function">multiply</span> <span class="token punctuation">(</span><span class="token builtin">car</span> es<span class="token punctuation">)</span> <span class="token punctuation">(</span><span class="token function">list-product</span> <span class="token punctuation">(</span><span class="token builtin">cdr</span> es<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre></article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">Doraemonzzz</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="http://www.doraemonzzz.com/2022/04/03/2022-4-3-Programming-Languages-Part-B-Section6-%E7%BF%BB%E8%AF%91/">http://www.doraemonzzz.com/2022/04/03/2022-4-3-Programming-Languages-Part-B-Section6-%E7%BF%BB%E8%AF%91/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://www.doraemonzzz.com" target="_blank">Doraemonzzz</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/Coursera-Programming-Languages/">Coursera Programming Languages</a></div><div class="post_share"><div class="social-share" data-image="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2022/04/04/2022-4-4-Programming-Languages-Part-B-Quiz/"><img class="prev-cover" src= "/img/loading.gif" data-lazy-src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">Programming Languages Part B Quiz</div></div></a></div><div class="next-post pull-right"><a href="/2022/04/03/2022-4-3-Programming-Languages-Part-B-Section5-%E7%BF%BB%E8%AF%91/"><img class="next-cover" src= "/img/loading.gif" data-lazy-src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">Programming Languages Part B Section5 翻译</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span> 相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2022/01/10/2022-1-10-Programming-Languages-Part-A-HW0/" title="Programming Languages Part A HW0"><img class="cover" src= "/img/loading.gif" data-lazy-src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-01-10</div><div class="title">Programming Languages Part A HW0</div></div></a></div><div><a href="/2022/01/10/2022-1-10-Programming-Languages-Part-A-Week-1笔记/" title="Programming Languages Part A Week 1笔记"><img class="cover" src= "/img/loading.gif" data-lazy-src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-01-10</div><div class="title">Programming Languages Part A Week 1笔记</div></div></a></div><div><a href="/2022/01/10/2022-1-10-Programming-Languages-Part-A-HW1/" title="Programming Languages Part A HW1"><img class="cover" src= "/img/loading.gif" data-lazy-src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-01-10</div><div class="title">Programming Languages Part A HW1</div></div></a></div><div><a href="/2022/02/28/2022-2-28-Programming-Languages-Part-A-HW3-Extra-Practice-Problems/" title="Programming Languages Part A HW3 Extra Practice Problems"><img class="cover" src= "/img/loading.gif" data-lazy-src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-02-28</div><div class="title">Programming Languages Part A HW3 Extra Practice Problems</div></div></a></div><div><a href="/2022/03/13/2022-3-13-Programming-Languages-Part-A-Exam/" title="Programming Languages Part A Exam"><img class="cover" src= "/img/loading.gif" data-lazy-src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-03-13</div><div class="title">Programming Languages Part A Exam</div></div></a></div><div><a href="/2022/04/03/2022-4-3-Programming-Languages-Part-B-Week-1笔记/" title="Programming Languages Part B Week 1笔记"><img class="cover" src= "/img/loading.gif" data-lazy-src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-04-03</div><div class="title">Programming Languages Part B Week 1笔记</div></div></a></div></div></div><hr/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div><div id="comment-switch"><span class="first-comment">Valine</span><span class="switch-btn"></span><span class="second-comment">Livere</span></div></div><div class="comment-wrap"><div><div class="vcomment" id="vcomment"></div></div><div><div id="lv-container" data-id="city" data-uid="MTAyMC8zNDcxOS8xMTI1Ng=="></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="card-info-avatar is-center"><img class="avatar-img" src= "/img/loading.gif" data-lazy-src="https://github.com/Doraemonzzz/md-photo/blob/master/%E5%A4%B4%E5%83%8F.jpg?raw=true" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/><div class="author-info__name">Doraemonzzz</div><div class="author-info__description">个人博客，主要记录有关机器学习，数学以及计算机科学的笔记</div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">723</div></a></div><div class="card-info-data-item is-center"><a href="/tags/"><div class="headline">标签</div><div class="length-num">73</div></a></div><div class="card-info-data-item is-center"><a href="/categories/"><div class="headline">分类</div><div class="length-num">29</div></a></div></div><a class="button--animated" id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/Doraemonzzz"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/Doraemonzzz" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="/doraemon_zzz@163.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a><a class="social-icon" href="https://space.bilibili.com/291079982" target="_blank" title="Bilibili"><i class="iconfont icon-bilibili"></i></a><a class="social-icon" href="/atom.xml" target="_blank" title=""><i class="fa fa-rss"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn card-announcement-animation"></i><span>公告</span></div><div class="announcement_content">暂无公告</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Coursera%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC6%E8%8A%82%E6%80%BB%E7%BB%93"><span class="toc-number">1.</span> <span class="toc-text">Coursera编程语言课程 第6节总结</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%9B%AE%E5%BD%95"><span class="toc-number">1.1.</span> <span class="toc-text">目录</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%8D%E4%BD%BF%E7%94%A8%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%E7%9A%84%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%E7%BC%96%E7%A8%8B"><span class="toc-number">1.2.</span> <span class="toc-text">不使用数据类型的数据类型编程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%94%B9%E5%8F%98%E6%88%91%E4%BB%AC%E5%AF%B9%E7%AE%97%E6%9C%AF%E8%A1%A8%E8%BE%BE%E5%BC%8F%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%E7%9A%84%E8%AF%84%E4%BC%B0%E6%96%B9%E5%BC%8F"><span class="toc-number">1.3.</span> <span class="toc-text">改变我们对算术表达式数据类型的评估方式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%80%9A%E8%BF%87Racket%E5%88%97%E8%A1%A8%E7%9A%84%E9%80%92%E5%BD%92%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B"><span class="toc-number">1.4.</span> <span class="toc-text">通过Racket列表的递归数据类型</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%80%9A%E8%BF%87Racket%E7%9A%84struct%E5%AE%9A%E4%B9%89%E9%80%92%E5%BD%92%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B"><span class="toc-number">1.5.</span> <span class="toc-text">通过Racket的struct定义递归数据类型</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88struct%E6%96%B9%E6%B3%95%E6%9B%B4%E5%A5%BD"><span class="toc-number">1.6.</span> <span class="toc-text">为什么struct方法更好</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%9E%E7%8E%B0%E4%B8%80%E8%88%AC%E7%9A%84%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80"><span class="toc-number">1.7.</span> <span class="toc-text">实现一般的编程语言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9C%A8%E5%8F%A6%E4%B8%80%E7%A7%8D%E8%AF%AD%E8%A8%80%E4%B8%AD%E5%AE%9E%E7%8E%B0%E4%B8%80%E7%A7%8D%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80"><span class="toc-number">1.8.</span> <span class="toc-text">在另一种语言中实现一种编程语言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%B3%E4%BA%8E%E5%90%88%E6%B3%95AST%E7%9A%84%E5%81%87%E8%AE%BE%E5%92%8C%E9%9D%9E%E5%81%87%E8%AE%BE"><span class="toc-number">1.9.</span> <span class="toc-text">关于合法AST的假设和非假设</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9C%89%E5%8F%98%E9%87%8F%E7%9A%84%E8%AF%AD%E8%A8%80%E7%9A%84%E8%A7%A3%E9%87%8A%E5%99%A8%E9%9C%80%E8%A6%81%E7%8E%AF%E5%A2%83"><span class="toc-number">1.10.</span> <span class="toc-text">有变量的语言的解释器需要环境</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%9E%E7%8E%B0%E9%97%AD%E5%8C%85"><span class="toc-number">1.11.</span> <span class="toc-text">实现闭包</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%AF%E9%80%89%EF%BC%9A%E6%9B%B4%E9%AB%98%E6%95%88%E5%9C%B0%E5%AE%9E%E7%8E%B0%E9%97%AD%E5%8C%85"><span class="toc-number">1.12.</span> <span class="toc-text">可选：更高效地实现闭包</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%80%9A%E8%BF%87%E5%85%83%E8%AF%AD%E8%A8%80%E4%B8%AD%E7%9A%84%E5%87%BD%E6%95%B0%E6%9D%A5%E5%AE%9E%E7%8E%B0%E2%80%9D%E5%AE%8F%E2%80%9D"><span class="toc-number">1.13.</span> <span class="toc-text">通过元语言中的函数来实现”宏”</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2022/04/04/2022-4-4-Programming-Languages-Part-B-Section7-%E7%BF%BB%E8%AF%91/" title="Programming Languages Part B Section7 翻译"><img src= "/img/loading.gif" data-lazy-src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Programming Languages Part B Section7 翻译"/></a><div class="content"><a class="title" href="/2022/04/04/2022-4-4-Programming-Languages-Part-B-Section7-%E7%BF%BB%E8%AF%91/" title="Programming Languages Part B Section7 翻译">Programming Languages Part B Section7 翻译</a><time datetime="2022-04-04T07:39:00.000Z" title="发表于 2022-04-04 15:39:00">2022-04-04</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/04/04/2022-4-4-Programming-Languages-Part-B-Quiz/" title="Programming Languages Part B Quiz"><img src= "/img/loading.gif" data-lazy-src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Programming Languages Part B Quiz"/></a><div class="content"><a class="title" href="/2022/04/04/2022-4-4-Programming-Languages-Part-B-Quiz/" title="Programming Languages Part B Quiz">Programming Languages Part B Quiz</a><time datetime="2022-04-04T06:21:00.000Z" title="发表于 2022-04-04 14:21:00">2022-04-04</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/04/03/2022-4-3-Programming-Languages-Part-B-Section6-%E7%BF%BB%E8%AF%91/" title="Programming Languages Part B Section6 翻译"><img src= "/img/loading.gif" data-lazy-src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Programming Languages Part B Section6 翻译"/></a><div class="content"><a class="title" href="/2022/04/03/2022-4-3-Programming-Languages-Part-B-Section6-%E7%BF%BB%E8%AF%91/" title="Programming Languages Part B Section6 翻译">Programming Languages Part B Section6 翻译</a><time datetime="2022-04-03T13:09:00.000Z" title="发表于 2022-04-03 21:09:00">2022-04-03</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/04/03/2022-4-3-Programming-Languages-Part-B-Section5-%E7%BF%BB%E8%AF%91/" title="Programming Languages Part B Section5 翻译"><img src= "/img/loading.gif" data-lazy-src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Programming Languages Part B Section5 翻译"/></a><div class="content"><a class="title" href="/2022/04/03/2022-4-3-Programming-Languages-Part-B-Section5-%E7%BF%BB%E8%AF%91/" title="Programming Languages Part B Section5 翻译">Programming Languages Part B Section5 翻译</a><time datetime="2022-04-03T10:04:00.000Z" title="发表于 2022-04-03 18:04:00">2022-04-03</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/04/03/2022-4-3-Programming-Languages-Part-B-HW2-Extra-Practice-Problems/" title="Programming Languages Part B HW2 Extra Practice Problems"><img src= "/img/loading.gif" data-lazy-src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Programming Languages Part B HW2 Extra Practice Problems"/></a><div class="content"><a class="title" href="/2022/04/03/2022-4-3-Programming-Languages-Part-B-HW2-Extra-Practice-Problems/" title="Programming Languages Part B HW2 Extra Practice Problems">Programming Languages Part B HW2 Extra Practice Problems</a><time datetime="2022-04-03T07:44:00.000Z" title="发表于 2022-04-03 15:44:00">2022-04-03</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2018 - 2022 By Doraemonzzz</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="font-plus" type="button" title="放大字体"><i class="fas fa-plus"></i></button><button id="font-minus" type="button" title="缩小字体"><i class="fas fa-minus"></i></button><button id="translateLink" type="button" title="简繁转换">简</button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div id="local-search"><div class="search-dialog"><div class="search-dialog__title" id="local-search-title">本地搜索</div><div id="local-input-panel"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div></div><hr/><div id="local-search-results"></div><span class="search-close-button"><i class="fas fa-times"></i></span></div><div id="search-mask"></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="/js/tw_cn.js"></script><script src="https://cdn.jsdelivr.net/npm/vanilla-lazyload/dist/lazyload.iife.min.js"></script><script src="/js/search/local-search.js"></script><script>var preloader = {
+  endLoading: () => {
+    document.body.style.overflow = 'auto';
+    document.getElementById('loading-box').classList.add("loaded")
+  },
+  initLoading: () => {
+    document.body.style.overflow = '';
+    document.getElementById('loading-box').classList.remove("loaded")
+
+  }
+}
+window.addEventListener('load',preloader.endLoading())</script><div class="js-pjax"><script>if (!window.MathJax) {
+  window.MathJax = {
+    tex: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]],
+      tags: 'ams'
+    },
+    chtml: {
+      scale: 1.25
+    },
+    options: {
+      renderActions: {
+        findScript: [10, doc => {
+          for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+            const display = !!node.type.match(/; *mode=display/)
+            const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+            const text = document.createTextNode('')
+            node.parentNode.replaceChild(text, node)
+            math.start = {node: text, delim: '', n: 0}
+            math.end = {node: text, delim: '', n: 0}
+            doc.math.push(math)
+          }
+        }, '']
+      }
+    }
+  }
+  
+  const script = document.createElement('script')
+  script.src = 'https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js'
+  script.id = 'MathJax-script'
+  script.async = true
+  document.head.appendChild(script)
+} else {
+  MathJax.startup.document.state(0)
+  MathJax.texReset()
+  MathJax.typeset()
+}</script><script>function loadValine () {
+  function initValine () {
+    const valine = new Valine(Object.assign({
+      el: '#vcomment',
+      appId: 'IpnmxCW9CvYWIXbol5QXsegX-MdYXbMMI',
+      appKey: 'w57DVCdbxcyB1TYYagMIMJIU',
+      placeholder: 'Please leave your footprints',
+      avatar: 'monsterid',
+      meta: 'nick,mail,link'.split(','),
+      pageSize: '10',
+      lang: 'en',
+      recordIP: false,
+      serverURLs: '',
+      emojiCDN: '',
+      emojiMaps: "",
+      enableQQ: false,
+      path: window.location.pathname,
+      requiredFields: ["nick,mail"],
+      visitor: true
+    }, null))
+  }
+
+  if (typeof Valine === 'function') initValine() 
+  else getScript('https://cdn.jsdelivr.net/npm/valine/dist/Valine.min.js').then(initValine)
+}
+
+if ('Valine' === 'Valine' || !false) {
+  if (false) btf.loadComment(document.getElementById('vcomment'),loadValine)
+  else setTimeout(loadValine, 0)
+} else {
+  function loadOtherComment () {
+    loadValine()
+  }
+}</script><script>function loadLivere () {
+  if (typeof LivereTower === 'object') {
+    window.LivereTower.init()
+  }
+  else {
+    (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+    })(document, 'script');
+  }
+}
+
+if ('Valine' === 'Livere' || !false) {
+  if (false) btf.loadComment(document.getElementById('lv-container'), loadLivere)
+  else loadLivere()
+}
+else {
+  function loadOtherComment () {
+    loadLivere()
+  }
+}</script></div><script defer="defer" id="fluttering_ribbon" mobile="false" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/canvas-fluttering-ribbon.min.js"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

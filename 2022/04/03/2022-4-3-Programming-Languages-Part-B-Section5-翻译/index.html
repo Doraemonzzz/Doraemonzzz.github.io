@@ -1,0 +1,857 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Programming Languages Part B Section5 翻译 | Doraemonzzz</title><meta name="keywords" content="Coursera Programming Languages"><meta name="author" content="Doraemonzzz"><meta name="copyright" content="Doraemonzzz"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="这里对Section 5进行翻译。 课程主页： https:&#x2F;&#x2F;www.coursera.org&#x2F;learn&#x2F;programming-languages-part-b&#x2F;home B站搬运： https:&#x2F;&#x2F;www.bilibili.com&#x2F;video&#x2F;BV1tZ4y1D7">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Programming Languages Part B Section5 翻译">
+<meta property="og:url" content="http://www.doraemonzzz.com/2022/04/03/2022-4-3-Programming-Languages-Part-B-Section5-%E7%BF%BB%E8%AF%91/index.html">
+<meta property="og:site_name" content="Doraemonzzz">
+<meta property="og:description" content="这里对Section 5进行翻译。 课程主页： https:&#x2F;&#x2F;www.coursera.org&#x2F;learn&#x2F;programming-languages-part-b&#x2F;home B站搬运： https:&#x2F;&#x2F;www.bilibili.com&#x2F;video&#x2F;BV1tZ4y1D7">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg">
+<meta property="article:published_time" content="2022-04-03T10:04:00.000Z">
+<meta property="article:modified_time" content="2022-04-03T12:51:50.196Z">
+<meta property="article:author" content="Doraemonzzz">
+<meta property="article:tag" content="Coursera Programming Languages">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg"><link rel="shortcut icon" href="https://github.com/Doraemonzzz/md-photo/blob/master/%E5%A4%B4%E5%83%8F.jpg?raw=true"><link rel="canonical" href="http://www.doraemonzzz.com/2022/04/03/2022-4-3-Programming-Languages-Part-B-Section5-%E7%BF%BB%E8%AF%91/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//www.google-analytics.com" crossorigin=""/><link rel="preconnect" href="//hm.baidu.com"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><script>var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?6f00f37f957f0608abb8c571105456f0";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script><script async="async" src="https://www.googletagmanager.com/gtag/js?id=UA-G-RE4B1LKRZD"></script><script>window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'UA-G-RE4B1LKRZD');
+</script><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"search.xml","languages":{"hits_empty":"找不到您查询的内容：${query}"}},
+  translate: {"defaultEncoding":2,"translateDelay":0,"msgToTraditionalChinese":"繁","msgToSimplifiedChinese":"簡"},
+  noticeOutdate: {"limitDay":500,"position":"top","messagePrev":"距离上次更新已经","messageNext":"天了，文章内容可能已经过时。"},
+  highlight: {"plugin":"prismjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":200},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    jQuery: 'https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js',
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+    },
+    fancybox: {
+      js: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css'
+    }
+  },
+  isPhotoFigcaption: true,
+  islazyload: true,
+  isanchor: true
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'Programming Languages Part B Section5 翻译',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2022-04-03 20:51:50'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const fontSizeVal = saveToLocal.get('global-font-size')
+    if (fontSizeVal !== undefined) {
+      document.documentElement.style.setProperty('--global-font-size', fontSizeVal + 'px')
+    }
+    })(window)</script><link rel="stylesheet" href="/css/bilibili.css" media="defer" onload="this.media='all'"><meta name="google-site-verification" content="c4v-NmuUZRgl3cvtg9GKswryK1YLaPztd_5M-df5VNI" /><meta name="generator" content="Hexo 5.4.0"><link rel="alternate" href="/atom.xml" title="Doraemonzzz" type="application/atom+xml">
+</head><body><div id="loading-box"><div class="loading-left-bg"></div><div class="loading-right-bg"></div><div class="spinner-box"><div class="configure-border-1"><div class="configure-core"></div></div><div class="configure-border-2"><div class="configure-core"></div></div><div class="loading-word">加载中...</div></div></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="author-avatar"><img class="avatar-img" src= "/img/loading.gif" data-lazy-src="https://github.com/Doraemonzzz/md-photo/blob/master/%E5%A4%B4%E5%83%8F.jpg?raw=true" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">文章</div><div class="length-num">723</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">标签</div><div class="length-num">73</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/categories/"><div class="headline">分类</div><div class="length-num">29</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-chart-pie"></i><span> 博客统计</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/charts/"><i class="fa-fw far fa-chart-bar"></i><span> 文章统计</span></a></li><li><a class="site-page child" href="/census/"><i class="fa-fw fas fa-chart-area"></i><span> 访问统计</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/top/"><i class="fa-fw fab fa-hotjar"></i><span> 阅读排行榜</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fa fa-heartbeat"></i><span> 娱乐</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于我</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">Doraemonzzz</a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-chart-pie"></i><span> 博客统计</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/charts/"><i class="fa-fw far fa-chart-bar"></i><span> 文章统计</span></a></li><li><a class="site-page child" href="/census/"><i class="fa-fw fas fa-chart-area"></i><span> 访问统计</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/top/"><i class="fa-fw fab fa-hotjar"></i><span> 阅读排行榜</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fa fa-heartbeat"></i><span> 娱乐</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于我</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">Programming Languages Part B Section5 翻译</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2022-04-03T10:04:00.000Z" title="发表于 2022-04-03 18:04:00">2022-04-03</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2022-04-03T12:51:50.196Z" title="更新于 2022-04-03 20:51:50">2022-04-03</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B/">函数式编程</a></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-tag"></i><a class="article-meta__tags" href="/tags/Coursera-Programming-Languages/">Coursera Programming Languages</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">14.6k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>49分钟</span></span><span class="post-meta-separator">|</span><span class="leancloud_visitors" id="/2022/04/03/2022-4-3-Programming-Languages-Part-B-Section5-%E7%BF%BB%E8%AF%91/" data-flag-title="Programming Languages Part B Section5 翻译"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span class="leancloud-visitors-count"></span></span><span class="post-meta-separator">|</span><span class="post-meta-commentcount"><i class="far fa-comments fa-fw post-meta-icon"></i><span class="post-meta-label">评论数:</span><a href="/2022/04/03/2022-4-3-Programming-Languages-Part-B-Section5-%E7%BF%BB%E8%AF%91/#post-comment" itemprop="discussionUrl"><span class="valine-comment-count" data-xid="/2022/04/03/2022-4-3-Programming-Languages-Part-B-Section5-%E7%BF%BB%E8%AF%91/" itemprop="commentCount"></span></a></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p>这里对Section 5进行翻译。</p>
+<p>课程主页：</p>
+<p><a target="_blank" rel="noopener" href="https://www.coursera.org/learn/programming-languages-part-b/home">https://www.coursera.org/learn/programming-languages-part-b/home</a></p>
+<p>B站搬运：</p>
+<p><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1tZ4y1D7">https://www.bilibili.com/video/BV1tZ4y1D7</a></p>
+<span id="more"></span>
+<h1 id="Coursera编程语言课程-第5节总结"><a href="#Coursera编程语言课程-第5节总结" class="headerlink" title="Coursera编程语言课程 第5节总结"></a>Coursera编程语言课程 第5节总结</h1><p>标准说明：本总结涵盖的材料与课堂视频以及随视频发布的材料（幻灯片、代码）大致相同。它有助于以叙述的方式阅读材料，并将整个课程部分的材料放在一份文件中，特别是在以后复习材料时。请在讨论板上报告这些笔记中的错误。</p>
+<h2 id="目录"><a href="#目录" class="headerlink" title="目录"></a>目录</h2><ul>
+<li>从ML切换到Racket</li>
+<li>Racket vs. Scheme </li>
+<li>入门：定义，函数，列表（和<code>if</code>）</li>
+<li>语法和括号 </li>
+<li>动态类型（和条件）</li>
+<li>本地绑定：<code>let, let*, letrec</code>, 本地<code>define</code></li>
+<li>顶层定义</li>
+<li>绑定一般是可变的：<code>set!</code>存在</li>
+<li>关于<code>cons</code>的真相</li>
+<li><code>cons</code>是不可改变的，但有<code>mcons</code></li>
+<li>延迟评估和形式转换简介 </li>
+<li>带有延迟和强制的惰性评估</li>
+<li>流</li>
+<li>记忆</li>
+<li>宏程序：关键点</li>
+<li>可选：tokenization化、括号化和范围                     </li>
+<li>可选：用<code>define-syntar</code>定义宏</li>
+<li>可选：变量、宏和hygiene</li>
+<li>可选：更多的宏例子</li>
+</ul>
+<h2 id="从ML切换到Racket"><a href="#从ML切换到Racket" class="headerlink" title="从ML切换到Racket"></a>从ML切换到Racket</h2><p>在编程语言的B部分，我们将使用Racket编程语言（而不是ML）和DrRacket编程环境（而不是SML/NJ和Emacs）。关于安装和基本使用说明的说明在课程网站上。</p>
+<p>我们的重点仍将主要放在关键的编程语言结构上。我们将转换到Racket，因为其中的一些概念在Racket中更能体现出来。也就是说，Racket和ML有很多相似之处。它们都是主要的函数式语言（即存在突变，但不鼓励突变），有闭包、匿名函数、对列表的方便支持、无返回语句等。在第二种语言中看到这些特征应该有助于重新加强基本的想法。一个明显的区别是，我们不会在Racket中使用模式匹配。</p>
+<p>对我们来说，Racket和ML之间最重要的区别是：</p>
+<ul>
+<li>Racket不使用静态类型系统。因此，它可以接受更多的程序，程序员也不需要一直定义新的类型，但大多数错误在运行时才会发生。</li>
+<li>Racket有一个非常简约和统一的语法。</li>
+</ul>
+<p>Racket有很多先进的语言特性，包括宏、与ML截然不同的模块系统、引用/评估、头等函数、contract等等。我们将有时间只介绍其中的几个主题。</p>
+<p>前面的几个主题涵盖了基本的Racket编程，因为在我们开始使用Racket来研究更高级的概念之前，我们需要介绍Racket。我们将迅速完成这一工作，因为</p>
+<ul>
+<li>(a)我们已经看到了类似的语言，</li>
+<li>(b)Racket指南，<a target="_blank" rel="noopener" href="http://docs.racket-lang.org/guide/index.html">http://docs.racket-lang.org/guide/index.html</a>，以及在<a target="_blank" rel="noopener" href="http://racket-lang.org/">http://racket-lang.org/</a>的其他文档，这些资料都很好，而且是免费的。</li>
+</ul>
+<h2 id="Racket-vs-Scheme"><a href="#Racket-vs-Scheme" class="headerlink" title="Racket vs. Scheme"></a>Racket vs. Scheme</h2><p>Racket源于Scheme，这是一种著名的编程语言，从1975年就开始发展了。(Racket的设计者在2010年决定对Scheme进行足够的修改和补充，因此给这个结果起一个新的名字比把它当作Scheme的方言更有意义。两种语言仍然非常相似，只有一小部分关键差异（空列表是如何写的，由cons构建的对是否是可变的，模块是如何工作的），一个较长的小差异列表，以及一个较长的Racket提供的附加功能列表。</p>
+<p>总的来说，Racket是一种正在积极开发的现代语言，它已经被用来构建几个”真实”（不管是什么意思）的系统。与Scheme相比，它的改进使它成为本课程和现实世界编程的好选择。然而，它更像是一个”移动的目标”——设计者在努力使语言和配套的DrRacket系统变得更好时，没有受到历史先例的约束。因此，课程材料中的细节更有可能变得过时。</p>
+<h2 id="入门：定义，函数，列表（和if）"><a href="#入门：定义，函数，列表（和if）" class="headerlink" title="入门：定义，函数，列表（和if）"></a>入门：定义，函数，列表（和<code>if</code>）</h2><p>一个Racket文件（也是一个Racket模块）的第一行应该是 </p>
+<pre class="line-numbers language-scheme" data-language="scheme"><code class="language-scheme">#lang racket<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>这在课程的安装/使用说明中有所讨论。这些讲义将转而关注这一行之后的文件内容。一个Racket文件包含了一系列的表示法。</p>
+<p>一个像 </p>
+<pre class="line-numbers language-scheme" data-language="scheme"><code class="language-scheme"><span class="token punctuation">(</span><span class="token keyword">define</span> a <span class="token number">3</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>这样的定义扩展了顶层环境，使<code>a</code>被绑定到<code>3</code>。Racket对变量名称中可能出现的字符有非常宽松的规定，一个常见的惯例是用连字符来分隔像<code>my-favorite-identifier</code>这样的词。</p>
+<p>然后如下定义</p>
+<pre class="line-numbers language-scheme" data-language="scheme"><code class="language-scheme"><span class="token punctuation">(</span><span class="token keyword">define</span> b <span class="token punctuation">(</span><span class="token operator">+</span> a <span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>将<code>b</code>绑定到5。一般来说，如果我们有<code>(define x e)</code>，其中<code>x</code>是一个变量，<code>e</code>是一个表达式，我们将<code>e</code>评估为一个值，并改变环境，使<code>x</code>被绑定到该值。除了语法之外，这应该是非常熟悉的，尽管在讲座的最后我们会讨论到，与ML不同的是，绑定可以引用文件中后来的绑定。此外，在Racket中，一切都用前缀表达式表示，比如上面使用的加法函数。</p>
+<p>一个需要一个参数的匿名函数被写成<code>(lambda (x) e)</code>，其中参数是变量<code>x</code>，主体是表达式<code>e</code>。因此，如下方式将<code>cube1</code>与立方函数绑定：</p>
+<pre class="line-numbers language-scheme" data-language="scheme"><code class="language-scheme"><span class="token punctuation">(</span><span class="token keyword">define</span> cube1 <span class="token punctuation">(</span><span class="token keyword">lambda</span> <span class="token punctuation">(</span><span class="token lambda-parameter">x</span><span class="token punctuation">)</span> <span class="token punctuation">(</span><span class="token operator">*</span> x <span class="token punctuation">(</span><span class="token operator">*</span> x<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>在Racket中，不同的函数确实需要不同数量的参数，调用参数数量错误的函数是运行时错误。一个三个参数的函数看起来像<code>(lambda (x y z) e)</code>。然而，许多函数可以接受任何数量的参数。乘法函数，<code>*</code>，就是其中之一，所以我们可以写成：</p>
+<pre class="line-numbers language-scheme" data-language="scheme"><code class="language-scheme"><span class="token punctuation">(</span><span class="token keyword">define</span> cube2 <span class="token punctuation">(</span><span class="token keyword">lambda</span> <span class="token punctuation">(</span><span class="token lambda-parameter">x</span><span class="token punctuation">)</span> <span class="token punctuation">(</span><span class="token operator">*</span> x x<span class="token punctuation">)</span><span class="token punctuation">)</span> <span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>你可以查阅Racket文档来学习如何定义你自己的可变参数函数。</p>
+<p>与ML不同，你可以在匿名函数中使用递归，因为命名本身就在函数主体的范围内：</p>
+<pre class="line-numbers language-scheme" data-language="scheme"><code class="language-scheme"><span class="token punctuation">(</span><span class="token keyword">define</span> pow
+  <span class="token punctuation">(</span><span class="token keyword">lambda</span> <span class="token punctuation">(</span><span class="token lambda-parameter">x y</span><span class="token punctuation">)</span>
+    <span class="token punctuation">(</span><span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">=</span> y <span class="token number">0</span><span class="token punctuation">)</span>
+        <span class="token number">1</span>
+        <span class="token punctuation">(</span><span class="token operator">*</span> x <span class="token punctuation">(</span><span class="token function">pow</span> x <span class="token punctuation">(</span><span class="token operator">-</span> y <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>上面的例子还使用了一个if表达式，它的一般语法形式是<code>(if e1 e2 e3)</code>。它对<code>e1</code>进行评估。如果结果是<code>#f</code>（Racket的常数，表示false），它就评估<code>e3</code>的结果。如果结果是其他任何东西，包括<code>#t</code>（Racket的常数，代表true），它就会评估<code>e2</code>的结果。请注意，这比ML中要灵活得多。</p>
+<p>有一种非常常见的语法糖，你应该在定义函数中使用，它没有明确使用lambda这个词：</p>
+<pre class="line-numbers language-scheme" data-language="scheme"><code class="language-scheme"><span class="token punctuation">(</span><span class="token keyword">define</span> <span class="token punctuation">(</span><span class="token function">cube3</span> x<span class="token punctuation">)</span>
+  <span class="token punctuation">(</span><span class="token operator">*</span> x x x<span class="token punctuation">)</span><span class="token punctuation">)</span>
+
+<span class="token punctuation">(</span><span class="token keyword">define</span> <span class="token punctuation">(</span><span class="token function">pow</span> x y<span class="token punctuation">)</span>
+    <span class="token punctuation">(</span><span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">=</span> y <span class="token number">0</span><span class="token punctuation">)</span>
+        <span class="token number">1</span>
+    <span class="token punctuation">(</span><span class="token operator">*</span> x <span class="token punctuation">(</span><span class="token function">pow</span> x <span class="token punctuation">(</span><span class="token operator">-</span> y <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>这更像是ML的<code>fun</code>绑定，但在ML中<code>fun</code>不仅仅是语法糖，因为它是递归所必需的。</p>
+<p>我们可以在Racket中使用currying。毕竟，Racket的头等函数和ML中一样都是闭包的，currying只是一种编程习惯：</p>
+<pre class="line-numbers language-scheme" data-language="scheme"><code class="language-scheme"><span class="token punctuation">(</span><span class="token keyword">define</span> pow
+  <span class="token punctuation">(</span><span class="token keyword">lambda</span> <span class="token punctuation">(</span><span class="token lambda-parameter">x</span><span class="token punctuation">)</span>
+    <span class="token punctuation">(</span><span class="token keyword">lambda</span> <span class="token punctuation">(</span><span class="token lambda-parameter">y</span><span class="token punctuation">)</span>
+      <span class="token punctuation">(</span><span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">=</span> y <span class="token number">0</span><span class="token punctuation">)</span>
+          <span class="token number">1</span>
+          <span class="token punctuation">(</span><span class="token operator">*</span> x <span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token function">pow</span> x<span class="token punctuation">)</span> <span class="token punctuation">(</span><span class="token operator">-</span> y <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+
+<span class="token punctuation">(</span><span class="token keyword">define</span> three-to-the <span class="token punctuation">(</span><span class="token function">pow</span> <span class="token number">3</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+<span class="token punctuation">(</span><span class="token keyword">define</span> eightyone <span class="token punctuation">(</span><span class="token function">three-to-the</span> <span class="token number">4</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+<span class="token punctuation">(</span><span class="token keyword">define</span> sixteen <span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token function">pow</span> <span class="token number">2</span><span class="token punctuation">)</span> <span class="token number">4</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>因为Racket的多参数函数确实是多参数函数（不是语法糖），所以currying并不常见。 调用curried函数没有语法糖：我们必须写<code>((pow 2) 4)</code>，因为<code>(pow 2 4)</code>用两个参数调用与<code>pow</code>绑定的单参数函数，这是一个运行时错误。Racket添加了语法来定义curried函数。 我们可以这样写：</p>
+<pre class="line-numbers language-scheme" data-language="scheme"><code class="language-scheme"><span class="token punctuation">(</span><span class="token keyword">define</span> <span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token function">pow</span> x<span class="token punctuation">)</span> y<span class="token punctuation">)</span>
+   <span class="token punctuation">(</span><span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">=</span> y <span class="token number">0</span><span class="token punctuation">)</span>
+       <span class="token number">1</span>
+   <span class="token punctuation">(</span><span class="token operator">*</span> x <span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token function">pow</span> x<span class="token punctuation">)</span> <span class="token punctuation">(</span><span class="token operator">-</span> y <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+<p>这是一个相当新的功能，可能还没有被广泛了解。</p>
+<p>Racket有内置的列表，和ML很像，而且Racket程序在实践中可能比ML程序更经常地使用列表。我们将使用内置函数来构建列表，提取部分内容，并查看列表是否为空。函数名称<code>car</code>和<code>cdr</code>是一个历史性的意外。</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>原语</th>
+<th>描述</th>
+<th>例子</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>null</code></td>
+<td>空列表</td>
+<td><code>null</code></td>
+</tr>
+<tr>
+<td><code>cons</code></td>
+<td>构建一个列表</td>
+<td><code>(cons 2 (cons 3 null))</code></td>
+</tr>
+<tr>
+<td><code>car</code></td>
+<td>获取列表的第一个元素</td>
+<td><code>(car some-list)</code></td>
+</tr>
+<tr>
+<td><code>cdr</code></td>
+<td>获取列表的尾部</td>
+<td><code>(cdr some-list)</code></td>
+</tr>
+<tr>
+<td><code>null?</code></td>
+<td>如果是空列表则返回<code>#t</code>，否则返回<code>#f</code></td>
+<td><code>(null? some-value)</code></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>与Scheme不同，你不能用<code>()</code>表示空列表。你可以用<code>&#39;()</code>，但我们更喜欢<code>null</code>。</p>
+<p>还有一个内置的函数<code>list</code>用于从任何数量的元素建立一个列表，所以你可以写<code>(list 2 3 4)</code>而不是<code>(cons 2 (cons 3 (cons 4 null))</code>。列表不需要持有相同类型的元素，所以你可以创建<code>(list #t &quot;hi&quot; 14)</code>而不出错。</p>
+<p>这里有三个列表处理函数的例子。<code>map</code>和<code>append</code>实际上是默认提供的，所以我们不会自己实现：</p>
+<pre class="line-numbers language-scheme" data-language="scheme"><code class="language-scheme"><span class="token punctuation">(</span><span class="token keyword">define</span> <span class="token punctuation">(</span><span class="token function">sum</span> xs<span class="token punctuation">)</span>
+  <span class="token punctuation">(</span><span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token builtin">null?</span> xs<span class="token punctuation">)</span>
+      <span class="token number">0</span>
+      <span class="token punctuation">(</span><span class="token operator">+</span> <span class="token punctuation">(</span><span class="token builtin">car</span> xs<span class="token punctuation">)</span> <span class="token punctuation">(</span><span class="token function">sum</span> <span class="token punctuation">(</span><span class="token builtin">cdr</span> xs<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+      
+<span class="token punctuation">(</span><span class="token keyword">define</span> <span class="token punctuation">(</span><span class="token builtin">append</span> xs ys<span class="token punctuation">)</span>
+  <span class="token punctuation">(</span><span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token builtin">null?</span> xs<span class="token punctuation">)</span>
+      ys
+      <span class="token punctuation">(</span><span class="token builtin">cons</span> <span class="token punctuation">(</span><span class="token builtin">car</span> xs<span class="token punctuation">)</span> <span class="token punctuation">(</span><span class="token builtin">append</span> <span class="token punctuation">(</span><span class="token builtin">cdr</span> xs<span class="token punctuation">)</span> ys<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+      
+<span class="token punctuation">(</span><span class="token keyword">define</span> <span class="token punctuation">(</span><span class="token builtin">map</span> f xs<span class="token punctuation">)</span>
+  <span class="token punctuation">(</span><span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token builtin">null?</span> xs<span class="token punctuation">)</span>
+      null
+      <span class="token punctuation">(</span><span class="token builtin">cons</span> <span class="token punctuation">(</span><span class="token function">f</span> <span class="token punctuation">(</span><span class="token builtin">car</span> xs<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">(</span><span class="token builtin">map</span> f <span class="token punctuation">(</span><span class="token builtin">cdr</span> xs<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h2 id="语法和括号"><a href="#语法和括号" class="headerlink" title="语法和括号"></a>语法和括号</h2><p>忽略一些小细节，Racket的语法简单得惊人。语言中的一切都是：</p>
+<ul>
+<li>某种形式的原语，如<code>#t, #f, 34, &quot;hi&quot;, null</code>等等。一个特别重要的原语是变量（比如<code>x</code>或者<code>something-like-this</code>！），也可以是一个特殊的形式，比如<code>define, lambda, if</code>，还有更多。</li>
+<li>括号中的序列<code>(t1 t2 ... tn)</code>。</li>
+</ul>
+<p>序列中的第一件事会影响到序列中其他部分的含义。例如，<code>(define ...)</code>意味着我们有一个定义，接下来的东西可以是要被定义的变量，或者是一个用于函数定义的序列。</p>
+<p>如果一个序列中的第一项不是一个特殊的形式，并且这个序列是表达式的一部分，那么我们就有一个函数调用。Racket中的许多东西都是函数，比如<code>+</code>和<code>&gt;</code>。</p>
+<p>顺便提一下，Racket也允许在任何地方用<code>[</code>和<code>]</code>来代替<code>(</code>和<code>)</code>。作为一个风格问题，我们将展示几个地方，其中<code>[...]</code>是常见的首选选项。Racket不允许不匹配的括号形式，<code>(</code>必须和<code>)</code>匹配， <code>[</code>必须和<code>]</code>匹配。DrRacket让这个问题变得简单，因为如果你输入<code>)</code>来匹配<code>[</code>，它就会输入<code>]</code>来代替。</p>
+<p>通过”括号化一切”，Racket有一个毫不含糊的语法。对于<code>1+2*3</code>是<code>1+(2*3)</code>还是<code>(1+2)*3</code>，<code>f x y</code>是<code>(f x) y</code>还是<code>f (x y)</code>，从来没有任何规则需要学习。这使得解析，即把程序文本转换为代表程序结构的树，变得微不足道。请注意，基于XML的语言如HTML也采取了同样的方法。在HTML中，一个”左括号”看起来像<code>&lt;foo&gt;</code>，而与之匹配的右括号看起来像<code>&lt;/foo&gt;</code>。</p>
+<p>出于某种原因，HTML很少被批评为充斥着小括号，但这是对LISP、Scheme和Racket的常见抱怨。如果你在街上拦住一个程序员，问他/她关于这些语言的情况，他们很可能会说一些关于”所有这些括号”的话。这是一种奇怪的迷恋：使用这些语言的人很快就习惯了，而且统一的语法让人感到愉快。例如，它使编辑器很容易正确缩进你的代码。</p>
+<p>从学习编程语言和基本编程结构的角度来看，你应该认识到对小括号的强烈意见（无论是赞成还是反对）是一种语法偏见。虽然每个人都有权对句法有自己的看法，但不应该让它妨碍你学习Racket做得很好的先进理念，比如hygienic宏或动态类型语言中的抽象数据类型或头等延续。一个类比是，如果一个欧洲历史的学生不想了解法国大革命，只因为他或她不喜欢有法国口音的人。</p>
+<p>综上所述，在Racket中进行实际编程的确需要你正确地使用括号，而且Racket在一个重要方面与ML、Java、C等不同：小括号会改变你程序的含义。你不能因为你喜欢而添加或删除它们。它们绝不是可有可无或毫无意义的。</p>
+<p>在表达式中，<code>(e)</code>意味着对<code>e</code>进行评估，然后用0个参数调用结果函数。所以<code>(42)</code>将是个运行时错误：你把数字42当作一个函数。同样，<code>((+20 22))</code>也是一个错误，原因也是如此。</p>
+<p>刚接触 Racket 的程序员有时很难记住括号很重要并确定程序失败的原因，通常是在运行时，当它们被错误括号时。作为一个例子，考虑一下这七个定义。第一个是阶乘的正确实现，其他都是错误的：</p>
+<pre class="line-numbers language-scheme" data-language="scheme"><code class="language-scheme"><span class="token punctuation">(</span><span class="token keyword">define</span> <span class="token punctuation">(</span><span class="token function">fact</span> n<span class="token punctuation">)</span> <span class="token punctuation">(</span><span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">=</span> n <span class="token number">0</span><span class="token punctuation">)</span> <span class="token number">1</span> <span class="token punctuation">(</span><span class="token operator">*</span> n <span class="token punctuation">(</span><span class="token function">fact</span> <span class="token punctuation">(</span><span class="token operator">-</span> n <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token comment">; 1</span>
+<span class="token punctuation">(</span><span class="token keyword">define</span> <span class="token punctuation">(</span><span class="token function">fact</span> n<span class="token punctuation">)</span> <span class="token punctuation">(</span><span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">=</span> n <span class="token number">0</span><span class="token punctuation">)</span> <span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span> <span class="token punctuation">(</span><span class="token operator">*</span> n <span class="token punctuation">(</span><span class="token function">fact</span> <span class="token punctuation">(</span><span class="token operator">-</span> n <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token comment">; 2</span>
+<span class="token punctuation">(</span><span class="token keyword">define</span> <span class="token punctuation">(</span><span class="token function">fact</span> n<span class="token punctuation">)</span> <span class="token punctuation">(</span><span class="token keyword">if</span> = n <span class="token number">0</span> <span class="token number">1</span> <span class="token punctuation">(</span><span class="token operator">*</span> n <span class="token punctuation">(</span><span class="token function">fact</span> <span class="token punctuation">(</span><span class="token operator">-</span> n <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token comment">; 3</span>
+<span class="token punctuation">(</span><span class="token keyword">define</span> fact <span class="token punctuation">(</span><span class="token function">n</span><span class="token punctuation">)</span> <span class="token punctuation">(</span><span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">=</span> n <span class="token number">0</span><span class="token punctuation">)</span> <span class="token number">1</span> <span class="token punctuation">(</span><span class="token operator">*</span> n <span class="token punctuation">(</span><span class="token function">fact</span> <span class="token punctuation">(</span><span class="token operator">-</span> n <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token comment">; 4</span>
+<span class="token punctuation">(</span><span class="token keyword">define</span> <span class="token punctuation">(</span><span class="token function">fact</span> n<span class="token punctuation">)</span> <span class="token punctuation">(</span><span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">=</span> n <span class="token number">0</span><span class="token punctuation">)</span> <span class="token number">1</span> <span class="token punctuation">(</span><span class="token operator">*</span> n fact <span class="token punctuation">(</span><span class="token operator">-</span> n <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token comment">; 5</span>
+<span class="token punctuation">(</span><span class="token keyword">define</span> <span class="token punctuation">(</span><span class="token function">fact</span> n<span class="token punctuation">)</span> <span class="token punctuation">(</span><span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">=</span> n <span class="token number">0</span><span class="token punctuation">)</span> <span class="token number">1</span> <span class="token punctuation">(</span><span class="token operator">*</span> n <span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token function">fact</span><span class="token punctuation">)</span> <span class="token punctuation">(</span><span class="token operator">-</span> n <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token comment">; 6</span>
+<span class="token punctuation">(</span><span class="token keyword">define</span> <span class="token punctuation">(</span><span class="token function">fact</span> n<span class="token punctuation">)</span> <span class="token punctuation">(</span><span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">=</span> n <span class="token number">0</span><span class="token punctuation">)</span> <span class="token number">1</span> <span class="token punctuation">(</span><span class="token function">n</span> * <span class="token punctuation">(</span><span class="token function">fact</span> <span class="token punctuation">(</span><span class="token operator">-</span> n <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token comment">; 7</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>说明：</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>行</th>
+<th>错误</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>2</td>
+<td>将1作为一个没有参数的函数来调用</td>
+</tr>
+<tr>
+<td>3</td>
+<td>使用带有5个子表达式的<code>if</code>，而不是3个</td>
+</tr>
+<tr>
+<td>4</td>
+<td>错误的表示语法：<code>(n)</code>看起来像一个表达式，后面有更多的东西</td>
+</tr>
+<tr>
+<td>5</td>
+<td>将函数作为<code>*</code>的某个参数</td>
+</tr>
+<tr>
+<td>6</td>
+<td>对<code>fact</code>调用0个参数</td>
+</tr>
+<tr>
+<td>7</td>
+<td>将<code>n</code>作为函数，用其调用<code>*</code></td>
+</tr>
+</tbody>
+</table>
+</div>
+<h2 id="动态类型（和cond）"><a href="#动态类型（和cond）" class="headerlink" title="动态类型（和cond）"></a>动态类型（和<code>cond</code>）</h2><p>Racket不使用静态类型系统来拒绝程序的运行。作为一个极端的例子，函数<code>(lambda () (1 2))</code>是一个完美的零参数函数，如果你调用它，会导致错误。我们将在以后的讲座中花大量的时间来比较动态和静态类型以及它们的相对好处，但现在我们要习惯于动态类型。</p>
+<p>举个例子，假设我们想有数字列表，但其中的一些元素实际上可以是其他列表，而这些列表本身又包含数字或其他列表，等等，可以有很多层次。Racket允许直接这样做，例如，<code>(list 2 (list 4 5) (list (list 1 2) (list 6)) 19 (list 14 0))</code>。在ML中，这样的表达式不会进行类型检查；我们需要创建我们自己的数据类型绑定，并在正确的地方使用正确的构造函数。</p>
+<p>现在在Racket中，假设我们想在这样的列表上计算什么。这也是没有问题的。例如，我们在这里设计了一个函数来对这种数据结构中的所有数字进行求和：</p>
+<pre class="line-numbers language-scheme" data-language="scheme"><code class="language-scheme"><span class="token punctuation">(</span><span class="token keyword">define</span> <span class="token punctuation">(</span><span class="token function">sum</span> xs<span class="token punctuation">)</span>
+  <span class="token punctuation">(</span><span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token builtin">null?</span> xs<span class="token punctuation">)</span>
+      <span class="token number">0</span>
+      <span class="token punctuation">(</span><span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token builtin">number?</span> <span class="token punctuation">(</span><span class="token builtin">car</span> xs<span class="token punctuation">)</span><span class="token punctuation">)</span>
+          <span class="token punctuation">(</span><span class="token operator">+</span> <span class="token punctuation">(</span><span class="token builtin">car</span> xs<span class="token punctuation">)</span> <span class="token punctuation">(</span><span class="token function">sum</span> <span class="token punctuation">(</span><span class="token builtin">cdr</span> xs<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+          <span class="token punctuation">(</span><span class="token operator">+</span> <span class="token punctuation">(</span><span class="token function">sum</span> <span class="token punctuation">(</span><span class="token builtin">car</span> xs<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">(</span><span class="token function">sum</span> <span class="token punctuation">(</span><span class="token builtin">cdr</span> xs<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>这段代码简单地使用了空列表<code>(null?)</code>和数字<code>(number?)</code>的内置谓词。最后一行假设<code>(car xs)</code>是一个列表；如果不是，那么这个函数就被误用了，我们会得到一个运行时错误。</p>
+<p>我们现在岔开话题，介绍一下<code>cond</code>的特殊形式，这种形式对于嵌套条件来说，比使用多个<code>if</code>表达式的风格更好。我们可以将前面的函数改写为：</p>
+<pre class="line-numbers language-scheme" data-language="scheme"><code class="language-scheme"><span class="token punctuation">(</span><span class="token keyword">define</span> <span class="token punctuation">(</span><span class="token function">sum</span> xs<span class="token punctuation">)</span>
+  <span class="token punctuation">(</span><span class="token keyword">cond</span> [<span class="token punctuation">(</span><span class="token builtin">null?</span> xs<span class="token punctuation">)</span> 0]
+        [<span class="token punctuation">(</span><span class="token builtin">number?</span> <span class="token punctuation">(</span><span class="token builtin">car</span> xs<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">(</span><span class="token operator">+</span> <span class="token punctuation">(</span><span class="token builtin">car</span> xs<span class="token punctuation">)</span> <span class="token punctuation">(</span><span class="token function">sum</span> <span class="token punctuation">(</span><span class="token builtin">cdr</span> xs<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span>]
+        [#t <span class="token punctuation">(</span><span class="token operator">+</span> <span class="token punctuation">(</span><span class="token function">sum</span> <span class="token punctuation">(</span><span class="token builtin">car</span> xs<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">(</span><span class="token function">sum</span> <span class="token punctuation">(</span><span class="token builtin">cdr</span> xs<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span>]<span class="token punctuation">)</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+<p>一个<code>cond</code>只是有任意数量的括号内的表达式对，<code>[e1 e2]</code>。第一个表达式是一个测试；如果它的值是<code>#f</code>，我们就跳到下一个分支。否则我们评估<code>e2</code>，而这就是答案。作为一个风格问题，你的最后一个分支应该有测试<code>#t</code>，这样你就不会”跌入谷底”，在这种情况下，结果是某种你不想处理的<code>void</code>对象。</p>
+<p>与<code>if</code>一样，测试的结果不一定是<code>#t</code>或<code>#f</code>。除了<code>#f</code>以外的任何东西都会被解释为<code>#t</code>。利用这个特性有时是不好的风格，但它可能是有用的。</p>
+<p>现在让我们把动态类型再向前推进一步，改变我们的<code>sum</code>函数的规范。假设我们甚至想在我们的列表中允许非数字和非列表，在这种情况下，我们只想通过在sum中添加0来忽略这些元素。如果这是你想要的（也可能不是你想要的），那么我们可以在Racket中这样做。如下这段代码将永远不会引发错误：</p>
+<pre class="line-numbers language-scheme" data-language="scheme"><code class="language-scheme"><span class="token punctuation">(</span><span class="token keyword">define</span> <span class="token punctuation">(</span><span class="token function">sum</span> xs<span class="token punctuation">)</span>
+  <span class="token punctuation">(</span><span class="token keyword">cond</span> [<span class="token punctuation">(</span><span class="token builtin">null?</span> xs<span class="token punctuation">)</span> 0]
+        [<span class="token punctuation">(</span><span class="token builtin">number?</span> xs<span class="token punctuation">)</span> xs]
+        [<span class="token punctuation">(</span><span class="token builtin">list?</span> xs<span class="token punctuation">)</span> <span class="token punctuation">(</span><span class="token operator">+</span> <span class="token punctuation">(</span><span class="token function">sum</span> <span class="token punctuation">(</span><span class="token builtin">car</span> xs<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">(</span><span class="token function">sum</span> <span class="token punctuation">(</span><span class="token builtin">cdr</span> xs<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span>]
+        [#t 0]<span class="token punctuation">)</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h2 id="本地绑定：let-let-letrec-局部define"><a href="#本地绑定：let-let-letrec-局部define" class="headerlink" title="本地绑定：let, let*, letrec, 局部define"></a>本地绑定：<code>let, let*, letrec</code>, 局部<code>define</code></h2><p>出于所有常见的原因，我们需要能够在函数中定义局部变量。像ML一样，我们可以在任何地方使用表达式来做这件事。与ML不同的是，本地绑定的结构形式不是一种，而是四种。这种多样性是好的。不同的表达式在不同的情况下都很方便，使用最自然的表达式可以向阅读你的代码的人传达一些有用的信息，即局部绑定是如何相互关联的。这种多样性也会帮助我们学习范围和环境，而不是仅仅接受只能有一种语义的let表达式。变量如何在环境中被查找是编程语言的一个基本特征。</p>
+<p>首先，有这样一种表达方式</p>
+<pre class="line-numbers language-scheme" data-language="scheme"><code class="language-scheme"><span class="token punctuation">(</span><span class="token keyword">let</span> <span class="token punctuation">(</span><span class="token function">[x1</span> e1]
+      [x2 e2] 
+      ...
+      [xn en]<span class="token punctuation">)</span>
+  e<span class="token punctuation">)</span> <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>正如你所期望的，这创建了局部变量<code>x1, x2, ... xn</code>，与评估<code>e1, e2, ..., en</code>的结果绑定，然后主体<code>e</code>可以使用这些变量（即它们在环境中），<code>e</code>的结果就是整体结果。从语法上看，注意到在绑定的集合周围的/额外的”小括号”，以及我们使用方括号的地方的常见风格。</p>
+<p>但是上面的描述遗漏了一件事。我们用什么环境来评估<code>e1, e2, ..., en</code>？事实证明，我们使用来自<code>let</code>表达式之前的环境。也就是说，后来的变量在其环境中没有先前的变量。如果<code>e3</code>使用<code>x1</code>或<code>x2</code>，这要么是一个错误，要么是指一些同名的外部变量。这不是ML let表达式的工作方式。作为一个愚蠢的例子，这个函数将其参数翻倍：</p>
+<pre class="line-numbers language-scheme" data-language="scheme"><code class="language-scheme"><span class="token punctuation">(</span><span class="token keyword">define</span> <span class="token punctuation">(</span><span class="token function">silly-double</span> x<span class="token punctuation">)</span>
+  <span class="token punctuation">(</span><span class="token keyword">let</span> <span class="token punctuation">(</span><span class="token function">[x</span> <span class="token punctuation">(</span><span class="token operator">+</span> x <span class="token number">3</span><span class="token punctuation">)</span>]
+        [y <span class="token punctuation">(</span><span class="token operator">+</span> x <span class="token number">2</span><span class="token punctuation">)</span>]<span class="token punctuation">)</span>
+     <span class="token punctuation">(</span><span class="token operator">+</span> x y <span class="token number">-5</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+<p>这种行为有时是有用的。例如，为了在一些局部范围内交换<code>x</code>和<code>y</code>的含义，你可以写<code>(let ([x y][y x]) ...)</code>。更多的时候，我们使用<code>let</code>，这种语义与”每个绑定在其环境中都有之前的绑定”相比并不重要：它传达了表达式是相互独立的。</p>
+<p>如果我们用<code>let*</code>来代替<code>let</code>，那么语义上就会在由先前的表达式产生的环境中评估每个绑定的表达式。这就是ML的<code>let</code>表达式的工作方式。这通常是很方便的。如果我们只有常规<code>let</code>，我们将不得不把<code>let</code>表达式嵌套在彼此之间，这样以后的每个绑定都在外层<code>let</code>表达式的主体中。(我们将使用嵌套的<code>let</code>表达式，每个表达式有一个绑定，而不是一个有<code>n</code>个绑定的<code>let</code><em>)。下面是一个使用`let</em>`的例子：</p>
+<pre class="line-numbers language-scheme" data-language="scheme"><code class="language-scheme"><span class="token punctuation">(</span><span class="token keyword">define</span> <span class="token punctuation">(</span><span class="token function">silly-double</span> x<span class="token punctuation">)</span>
+  <span class="token punctuation">(</span><span class="token keyword">let*</span> <span class="token punctuation">(</span><span class="token function">[x</span> <span class="token punctuation">(</span><span class="token operator">+</span> x <span class="token number">3</span><span class="token punctuation">)</span>]
+         [y <span class="token punctuation">(</span><span class="token operator">+</span> x <span class="token number">2</span><span class="token punctuation">)</span>]<span class="token punctuation">)</span>
+        <span class="token punctuation">(</span><span class="token operator">+</span> x y <span class="token number">-8</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+<p>如上所述，当语义上的差异无关紧要时，使用<code>let</code>而不是<code>let*</code>是常见的风格。</p>
+<p>无论是<code>let</code>还是<code>let*</code>都不允许递归，因为<code>e1, e2, ..., en</code>不能指代被否定的绑定或任何后来的绑定。为了做到这一点，我们有第三个变体<code>letrec</code>，它可以让我们这样写：</p>
+<pre class="line-numbers language-scheme" data-language="scheme"><code class="language-scheme"><span class="token punctuation">(</span><span class="token keyword">define</span> <span class="token punctuation">(</span><span class="token function">triple</span> x<span class="token punctuation">)</span>
+  <span class="token punctuation">(</span><span class="token keyword">letrec</span> <span class="token punctuation">(</span><span class="token function">[y</span> <span class="token punctuation">(</span><span class="token operator">+</span> x <span class="token number">2</span><span class="token punctuation">)</span>]
+           [f <span class="token punctuation">(</span><span class="token keyword">lambda</span> <span class="token punctuation">(</span><span class="token lambda-parameter">z</span><span class="token punctuation">)</span> <span class="token punctuation">(</span><span class="token operator">+</span> z y w x<span class="token punctuation">)</span><span class="token punctuation">)</span>]
+           [w <span class="token punctuation">(</span><span class="token operator">+</span> x <span class="token number">7</span><span class="token punctuation">)</span>]<span class="token punctuation">)</span>
+    <span class="token punctuation">(</span><span class="token function">f</span> <span class="token number">-9</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>我们通常使用<code>letrec</code>来定义一个或多个（相互）递归的函数，比如这个非常慢，对非负数<code>mod 2</code>的方法：</p>
+<pre class="line-numbers language-scheme" data-language="scheme"><code class="language-scheme"><span class="token punctuation">(</span><span class="token keyword">define</span> <span class="token punctuation">(</span><span class="token function">mod2</span> x<span class="token punctuation">)</span>
+  <span class="token punctuation">(</span><span class="token keyword">letrec</span>
+      <span class="token punctuation">(</span><span class="token function">[even?</span> <span class="token punctuation">(</span><span class="token keyword">lambda</span> <span class="token punctuation">(</span><span class="token lambda-parameter">x</span><span class="token punctuation">)</span> <span class="token punctuation">(</span><span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token builtin">zero?</span> x<span class="token punctuation">)</span> <span class="token boolean">#t</span> <span class="token punctuation">(</span><span class="token builtin">odd?</span> <span class="token punctuation">(</span><span class="token operator">-</span> x <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span>]
+       [odd? <span class="token punctuation">(</span><span class="token keyword">lambda</span> <span class="token punctuation">(</span><span class="token lambda-parameter">x</span><span class="token punctuation">)</span> <span class="token punctuation">(</span><span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token builtin">zero?</span> x<span class="token punctuation">)</span> <span class="token boolean">#f</span> <span class="token punctuation">(</span><span class="token builtin">even?</span> <span class="token punctuation">(</span><span class="token operator">-</span> x <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span>]<span class="token punctuation">)</span>
+    <span class="token punctuation">(</span><span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token builtin">even?</span> x<span class="token punctuation">)</span> <span class="token number">0</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>另外，你可以通过使用局部定义来获得与<code>letrec</code>相同的行为，这在真正的Racket代码中非常常见，事实上是比let-表达式更受欢迎的风格。在本课程中，如果你愿意，你可以使用它，但不是必须的。对局部定义出现的位置有一些限制；在函数体的开头是一个允许出现的常见位置。</p>
+<pre class="line-numbers language-scheme" data-language="scheme"><code class="language-scheme"><span class="token punctuation">(</span><span class="token keyword">define</span> <span class="token punctuation">(</span><span class="token function">mod2_b</span> x<span class="token punctuation">)</span>
+  <span class="token punctuation">(</span><span class="token keyword">define</span> even? <span class="token punctuation">(</span><span class="token keyword">lambda</span><span class="token punctuation">(</span><span class="token function">x</span><span class="token punctuation">)</span> <span class="token punctuation">(</span><span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token builtin">zero?</span> x<span class="token punctuation">)</span> <span class="token boolean">#t</span> <span class="token punctuation">(</span><span class="token builtin">odd?</span> <span class="token punctuation">(</span><span class="token operator">-</span> x <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+  <span class="token punctuation">(</span><span class="token keyword">define</span> odd? <span class="token punctuation">(</span><span class="token keyword">lambda</span><span class="token punctuation">(</span><span class="token function">x</span><span class="token punctuation">)</span> <span class="token punctuation">(</span><span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token builtin">zero?</span> x<span class="token punctuation">)</span> <span class="token boolean">#f</span> <span class="token punctuation">(</span><span class="token builtin">even?</span> <span class="token punctuation">(</span><span class="token operator">-</span> x <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+  <span class="token punctuation">(</span><span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token builtin">even?</span> x<span class="token punctuation">)</span> <span class="token number">0</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+<p>我们需要谨慎对待<code>letrec</code>和局部定义。它们允许代码引用以后被初始化的变量，但每个绑定的表达式仍然按顺序被评估。</p>
+<p>对于相互递归的函数，这从来不是一个问题：在上面的例子中，在上面的例子中，<code>even?</code>的定义引用了odd?的定义，尽管与odd?绑定的表达式还没有被评估。这没有问题，因为在<code>even?</code>中的使用是在一个函数体中，所以它要在<code>odd?</code>被初始化之后才会被使用。与此相反，<code>letrec</code>的这种使用方式是不好的：</p>
+<pre class="line-numbers language-scheme" data-language="scheme"><code class="language-scheme"><span class="token punctuation">(</span><span class="token keyword">define</span> <span class="token punctuation">(</span><span class="token function">bad-letrec</span> x<span class="token punctuation">)</span>
+  <span class="token punctuation">(</span><span class="token keyword">letrec</span> <span class="token punctuation">(</span><span class="token function">[y</span> z]
+           [z 13]<span class="token punctuation">)</span>
+     <span class="token punctuation">(</span><span class="token keyword">if</span> x y z<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+<p><code>letrec</code>的语义要求使用<code>z</code>来初始化<code>y</code>，但是<code>z</code>的表达式（13）还没有被评估。在这种情况下，当调用<code>bad-letrec</code>时，Racket将引发一个错误。(在Racket 6.1版之前，它会将<code>y</code>绑定到一个特殊的”未定义”对象上，这几乎总是有隐藏错误的效果)。</p>
+<p>对于这门课，你可以决定是否使用局部定义。讲座材料一般不会使用，而是选择<code>let, let*</code>或<code>letrec</code>中最方便、沟通效果最好的一种。但是欢迎你使用局部定义，它们“彼此相邻”的行为类似于<code>letrec</code>绑定。</p>
+<h2 id="顶层定义"><a href="#顶层定义" class="headerlink" title="顶层定义"></a>顶层定义</h2><p>Racket文件是一个有一系列定义的模块。就像<code>let</code>表达式一样，什么环境用于什么定义对语义学来说非常重要。在ML中，文件就像一个隐含的<code>let*</code>。在Racket中，它基本上就像一个隐含的<code>letrec</code>。这很方便，因为它可以让你在一个模块中随意排列你的函数。例如，你不需要把相互递归的函数放在一起或者使用特殊的语法。另一方面，有一些新的”问题”需要注意：</p>
+<ul>
+<li>你不能让两个绑定使用同一个变量。这毫无意义：对变量的使用会使用哪一个？在类似<code>letrec</code>的语义下，如果一个变量在同一个相互递归的绑定集合中被定义，我们就不会让它shadow另一个。</li>
+<li>如果一个较早的绑定使用了一个较晚的绑定，它需要在一个函数体中这样做，以便较晚的绑定在使用时被初始化。在Racket中，使用未初始化的值的情况会在使用模块时引起错误（例如，当你在DrRacket中点击le的”Run”时）。</li>
+<li>所以在一个模块/文件中，没有顶层的影子（你仍然可以在定义或let表达式中shadow），但一个模块可以shadow另一个文件中的绑定，比如Racket的标准库中隐含的文件。例如，虽然这样做的风格不好，但我们可以用我们自己的函数来shadow内置的<code>list</code>函数。我们自己的函数甚至可以是递归的，像其他递归函数一样调用自己。然而，在REPL中的行为是不同的，所以不要在REPL中用自己的递归函数定义shadow一个函数。在定义窗口中删除递归函数，并在REPL中使用它，仍可按预期工作。</li>
+</ul>
+<h2 id="绑定通常是可变的：set-存在"><a href="#绑定通常是可变的：set-存在" class="headerlink" title="绑定通常是可变的：set!存在"></a>绑定通常是可变的：<code>set!</code>存在</h2><p>虽然Racket鼓励函数式编程风格，鼓励自由使用闭包和避免副作用，但事实是有赋值语句。如果<code>x</code>在你的环境中，那么<code>(set! x 13)</code>将改变绑定，使<code>x</code>现在映射到<code>13</code>的值。这样做会影响到所有在其环境中有这个<code>x</code>的代码。<code>set!</code>读作”set-bang”，感叹号是一种惯例，用来提醒读者你的代码正在发生副作用，可能会影响其他代码。下面是一个例子：</p>
+<pre class="line-numbers language-scheme" data-language="scheme"><code class="language-scheme"><span class="token punctuation">(</span><span class="token keyword">define</span> b <span class="token number">3</span><span class="token punctuation">)</span>
+<span class="token punctuation">(</span><span class="token keyword">define</span> f <span class="token punctuation">(</span><span class="token keyword">lambda</span> <span class="token punctuation">(</span><span class="token lambda-parameter">x</span><span class="token punctuation">)</span> <span class="token punctuation">(</span><span class="token operator">*</span> <span class="token number">1</span> <span class="token punctuation">(</span><span class="token operator">+</span> x b<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+<span class="token punctuation">(</span><span class="token keyword">define</span> c <span class="token punctuation">(</span><span class="token operator">+</span> b <span class="token number">4</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+<span class="token punctuation">(</span><span class="token keyword">set!</span> b <span class="token number">5</span><span class="token punctuation">)</span>
+<span class="token punctuation">(</span><span class="token keyword">define</span> z <span class="token punctuation">(</span><span class="token function">f</span> <span class="token number">4</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+<span class="token punctuation">(</span><span class="token keyword">define</span> w c<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>在评估这个程序后，<code>z</code>被绑定到9，因为绑定在<code>f</code>上的函数的主体在评估时，会查找<code>b</code>并发现5。然而，<code>w</code>被绑定到7上，因为当我们评估<code>(define c (+ b 4))</code>时，我们发现<code>b</code>是3，像往常一样，结果是将<code>c</code>绑定在7上，而不管我们是如何得到7的。所以当我们评估<code>(define w c)</code>时，我们得到7；<code>b</code>的变化并不重要。</p>
+<p>你也可以对局部变量使用<code>set!</code>，同样的推理也适用：你必须考虑到你什么时候查询一个变量来决定你得到什么值。但习惯了带有赋值语句的语言的程序员都习惯了。</p>
+<p>改变顶层绑定尤其令人担忧，因为我们可能不知道所有使用该符号的代码。例如，我们上面的函数<code>f</code>使用了<code>b</code>，如果<code>b</code>被突变为一个意想不到的值，它可能会表现得很奇怪，甚至是神秘地失败。如果<code>f</code>需要抵御这种可能性，它就需要在<code>b</code>可能发生变化后避免使用<code>b</code>。在软件开发中，有一种通用的技术你应该知道：如果某样东西可能被突变，而你又需要旧的值，那么在变异发生之前做一个拷贝。在Racket中，我们可以很容易地编写如下代码：</p>
+<pre class="line-numbers language-scheme" data-language="scheme"><code class="language-scheme"><span class="token punctuation">(</span><span class="token keyword">define</span> f
+   <span class="token punctuation">(</span><span class="token keyword">let</span> <span class="token punctuation">(</span><span class="token function">[b</span> b]<span class="token punctuation">)</span>
+      <span class="token punctuation">(</span><span class="token keyword">lambda</span> <span class="token punctuation">(</span><span class="token lambda-parameter">x</span><span class="token punctuation">)</span> <span class="token punctuation">(</span><span class="token operator">*</span> <span class="token number">1</span> <span class="token punctuation">(</span><span class="token operator">+</span> x b<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+<p>这段代码使函数体中的<code>b</code>指的是一个本地<code>b</code>，它被初始化为全局<code>b</code>。</p>
+<p>但这是我们需要的防御性吗？因为<code>*</code>和<code>+</code>只是绑定在函数上的变量，我们可能也想防御它们在以后被改变：</p>
+<pre class="line-numbers language-scheme" data-language="scheme"><code class="language-scheme"><span class="token punctuation">(</span><span class="token keyword">define</span> f
+   <span class="token punctuation">(</span><span class="token keyword">let</span> <span class="token punctuation">(</span><span class="token function">[b</span> b]
+         [+ +]
+         [* *]<span class="token punctuation">)</span>
+      <span class="token punctuation">(</span><span class="token keyword">lambda</span> <span class="token punctuation">(</span><span class="token lambda-parameter">x</span><span class="token punctuation">)</span> <span class="token punctuation">(</span><span class="token operator">*</span> <span class="token number">1</span> <span class="token punctuation">(</span><span class="token operator">+</span> x b<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>如果<code>f</code>使用了其他辅助函数，事情会变得更糟。对绑定在函数上的变量进行本地拷贝是不够的，除非这些函数也对其所有的辅助函数进行拷贝。</p>
+<p>幸运的是，在Racket中，由于一个合理的妥协，这些都是不必要的：一个顶层的绑定是不可变的，除非定义它的模块包含了一个<code>set!</code>。因此，如果包含<code>(define b 4)</code>的文件没有一个改变它的<code>set!</code>，那么我们可以放心，其他的文件将不被允许在这个绑定上使用<code>set!</code>（它将导致一个错误）。而所有像<code>+</code>和<code>*</code>这样的预定义函数都在一个不对它们使用<code>set!</code>的模块中，所以它们也不能被改变。(在Scheme中，所有顶层绑定都是可变的，但程序员通常只是假设它们不会被改变，因为假设可能会改变太痛苦了）。</p>
+<p>所以前面的讨论并不会影响到你的大部分Racket编程，但是对于理解<code>set!</code>的含义以及如何通过复制来防御突变是很有用的。关键是，Racket经常避免突变的可能性，这使得编写正确的代码变得非常困难。</p>
+<h2 id="关于cons的真相"><a href="#关于cons的真相" class="headerlink" title="关于cons的真相"></a>关于<code>cons</code>的真相</h2><p>到目前为止，我们已经用<code>cons, null, car, cdr</code>和<code>null?</code>来创建和访问列表。例如，<code>(cons 14 (cons #t null))</code>产生了一个列表<code>&#39;(14 #t)</code>，其中的引号字符表明这是打印一个列表值，而不是表示对14的（错误的）函数调用。</p>
+<p>但事实上，<code>cons</code>只是生成一个pair，你用<code>car</code>得到第一部分，用<code>cdr</code>得到第二部分。这样的pair在Racket等语言中通常被称为cons单元。所以我们可以写<code>(cons (+ 7 7) #t)</code>来产生pair <code>&#39;(14 . #t)</code>，其中的句号表明这不是一个列表。根据惯例和预定义的<code>list?</code>函数，一个列表要么是<code>null</code>，要么是一个pair，其中cdr（即第二个组件）是一个列表。一个不是列表的cons单元通常被称为不适当的列表，特别是如果它在第二位置有嵌套的cons单元，例如，<code>(cons 1 (cons 2 (cons 3 4)))</code>，其结果打印为<code>&#39;(1 2 3 . 4)</code>。</p>
+<p>大多数列表函数，如<code>length</code>，如果传递给一个不恰当的列表，会产生一个运行时错误。另一方面，内置的<code>pair?</code> 对任何用<code>cons</code>构建的列表都返回<code>true</code>，即除了空列表以外的任何不正确或正确的列表。</p>
+<p>不适当的列表有什么用？真正的问题是，pair是构建每个类型的一种普遍有用的方式，即具有多个部分的东西。在一个动态类型的语言中，你所需要的列表就是pair和一些识别列表结束的方法，按照惯例，Racket使用<code>null</code>常量（打印为<code>&#39;()</code>）来识别。作为一个风格问题，你应该使用适当的列表，而不是不适当的列表，因为集合可能有任何数量的元素。</p>
+<h2 id="Cons单元是不可变的，但是有mcons"><a href="#Cons单元是不可变的，但是有mcons" class="headerlink" title="Cons单元是不可变的，但是有mcons"></a>Cons单元是不可变的，但是有<code>mcons</code></h2><p>Cons单元是不可变的。当你创建一个cons单元时，它的两个字段被初始化，永远不会改变。(这是Racket和Scheme的主要区别。)因此我们可以继续享受cons单元不能被我们程序中的其他代码所改变的好处。它还有一个有点微妙的优势。Racket的实现可以很聪明地使列表成为一个恒定时间的操作，因为它可以在每个cons单元被创建时存储它是否是一个合适的列表。如果cons单元是可变的，这就不可行了，因为在列表中的一个突变可能会把它变成一个不恰当的列表。</p>
+<p>要意识到cons单元真的是不可变的，尽管我们已经使用了<code>set!</code>，是一个有点微妙的问题。考虑一下这段代码：</p>
+<pre class="line-numbers language-scheme" data-language="scheme"><code class="language-scheme"><span class="token punctuation">(</span><span class="token keyword">define</span> x <span class="token punctuation">(</span><span class="token builtin">cons</span> <span class="token number">14</span> null<span class="token punctuation">)</span><span class="token punctuation">)</span>
+<span class="token punctuation">(</span><span class="token keyword">define</span> y x<span class="token punctuation">)</span>
+<span class="token punctuation">(</span><span class="token keyword">set!</span> x <span class="token punctuation">(</span><span class="token builtin">cons</span> <span class="token number">42</span> null<span class="token punctuation">)</span><span class="token punctuation">)</span>
+<span class="token punctuation">(</span><span class="token keyword">define</span> fourteen <span class="token punctuation">(</span><span class="token builtin">car</span> y<span class="token punctuation">)</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+<p><code>set!</code>改变了<code>x</code>的绑定内容，成为一个不同的pair；它没有改变<code>x</code>所指的旧对的内容。你可以尝试做一些类似<code>(set! (car x) 27)</code>，但这是一个语法错误：<code>set!</code>需要一个变量来赋值，而不是其他类型的位置。</p>
+<p>如果我们想要可变pair，Racket很乐意用一组不同的原语来满足我们的要求：</p>
+<ul>
+<li><code>mcons</code>产生一个可变pair</li>
+<li><code>mcar</code>返回一个可变pair的第一个分量</li>
+<li><code>mcdr</code>返回一个可变pair的第二个分量</li>
+<li><code>mpair?</code>如果给定一个可变对，则返回<code>#t</code></li>
+<li><code>set-mcar!</code>接收一个可变对和一个表达式，并将第一个分量改变为表达式的结果</li>
+<li><code>set-mcdr!</code>接收一个可变对和一个表达式，并将第二个分量改变为表达式的结果</li>
+</ul>
+<p>由于我们接下来要研究的一些强大的习语使用突变来存储先前的计算结果，我们会发现可变pair很有用。</p>
+<h2 id="延迟评估和thunks简介"><a href="#延迟评估和thunks简介" class="headerlink" title="延迟评估和thunks简介"></a>延迟评估和thunks简介</h2><p>语言结构的一个关键语义问题是它的子表达式何时被评估。例如，在Racket中（在ML和大多数但不是所有的编程语言中也是如此），给定<code>(e1, e2 ... en)</code>，我们在执行函数主体之前对函数参数<code>e2, ..., en</code>进行一次评估，给定函数<code>(lambda (...) ...)</code>，我们在函数被调用之前不会评估主体。我们可以将这一规则（提前评估参数）与<code>(if e1 e2 e3)</code>的工作方式进行对比：我们不会同时评估<code>e2</code>和<code>e3</code>。这就是为什么：</p>
+<pre class="line-numbers language-scheme" data-language="scheme"><code class="language-scheme"><span class="token punctuation">(</span><span class="token keyword">define</span> <span class="token punctuation">(</span><span class="token function">my-if-bad</span> x y z<span class="token punctuation">)</span> <span class="token punctuation">(</span><span class="token keyword">if</span> x y z<span class="token punctuation">)</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>是一个不能在任何使用<code>if</code>表达式的地方使用的函数；评估子表达式的规则从根本上是不同的。例如，这个函数永远不会终止，因为每次调用都是递归调用</p>
+<pre class="line-numbers language-scheme" data-language="scheme"><code class="language-scheme"><span class="token punctuation">(</span><span class="token keyword">define</span> <span class="token punctuation">(</span><span class="token function">factorial-wrong</span> x<span class="token punctuation">)</span> <span class="token punctuation">(</span><span class="token function">my-if-bad</span> <span class="token punctuation">(</span><span class="token operator">=</span> x <span class="token number">0</span><span class="token punctuation">)</span> <span class="token number">1</span> <span class="token punctuation">(</span><span class="token operator">*</span> x <span class="token punctuation">(</span><span class="token function">factorial-wrong</span> <span class="token punctuation">(</span><span class="token operator">-</span> x <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>然而，我们可以利用函数体在被调用之前不被评估这一事实，制作一个更有用的”if函数”版本：</p>
+<pre class="line-numbers language-scheme" data-language="scheme"><code class="language-scheme"><span class="token punctuation">(</span><span class="token keyword">define</span> <span class="token punctuation">(</span><span class="token function">my-if</span> x y z<span class="token punctuation">)</span> <span class="token punctuation">(</span><span class="token keyword">if</span> x <span class="token punctuation">(</span><span class="token function">y</span><span class="token punctuation">)</span> <span class="token punctuation">(</span><span class="token function">z</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>现在我们可以在写<code>(if e1 e2 e3)</code>的地方改写<code>(my-if e1 (lambda () e2) (lambda () e3))</code>，<code>my-if</code>的主体要么调用与<code>y</code>绑定的零参数函数，要么调用与<code>z</code>绑定的零参数函数。</p>
+<pre class="line-numbers language-scheme" data-language="scheme"><code class="language-scheme"><span class="token punctuation">(</span><span class="token keyword">define</span> <span class="token punctuation">(</span><span class="token function">factorial</span> x<span class="token punctuation">)</span> <span class="token punctuation">(</span><span class="token function">my-if</span> <span class="token punctuation">(</span><span class="token operator">=</span> x <span class="token number">0</span><span class="token punctuation">)</span> <span class="token punctuation">(</span><span class="token keyword">lambda</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token number">1</span><span class="token punctuation">)</span> <span class="token punctuation">(</span><span class="token keyword">lambda</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">(</span><span class="token operator">*</span> x <span class="token punctuation">(</span><span class="token function">factorial</span> <span class="token punctuation">(</span><span class="token operator">-</span> x <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>虽然肯定没有理由以这种方式包装Racket的”if”，但使用零参数函数来延迟求值（现在不评估表达式，在零参数函数被调用时再评估）的一般习语是非常强大的。作为方便的术语/行话，当我们使用一个零参数函数来延迟求值时，我们把这个函数称为thunk。你甚至可以说，”thunk参数”意味着”使用<code>(lambda () e)</code>代替<code>e</code>“。</p>
+<p>使用thunks是一个强大的编程习语。它不是特定于Racket，我们在ML中也可以学习这种编程。</p>
+<h2 id="带有延迟和强制的惰性评估"><a href="#带有延迟和强制的惰性评估" class="headerlink" title="带有延迟和强制的惰性评估"></a>带有延迟和强制的惰性评估</h2><p>假设我们有一个大型的计算，我们知道如何执行，但我们不知道是否需要执行它。程序的其他部分知道哪里需要计算结果，可能有0、1或更多不同的地方。如果我们做了thunk，那么我们可能会多次重复这个大的计算。但是，如果我们不做thunk，那么即使我们不需要，我们也会进行大型计算。为了获得两全其美的效果，我们可以使用一个编程习语，它有几个不同的名字（也许技术上略有不同）：惰性评估、按需调用、承诺（promise）。这个想法是利用突变来记住我们第一次使用thunk时的结果，这样我们就不需要再使用thunk了。</p>
+<p>在Racket中的一个简单实现是：</p>
+<pre class="line-numbers language-scheme" data-language="scheme"><code class="language-scheme"><span class="token punctuation">(</span><span class="token keyword">define</span> <span class="token punctuation">(</span><span class="token function">my-delay</span> f<span class="token punctuation">)</span>
+  <span class="token punctuation">(</span><span class="token function">mcons</span> <span class="token boolean">#f</span> f<span class="token punctuation">)</span><span class="token punctuation">)</span>
+  
+<span class="token punctuation">(</span><span class="token keyword">define</span> <span class="token punctuation">(</span><span class="token function">my-force</span> th<span class="token punctuation">)</span>
+  <span class="token punctuation">(</span><span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">mcar</span> th<span class="token punctuation">)</span>
+      <span class="token punctuation">(</span><span class="token function">mcdr</span> th<span class="token punctuation">)</span>
+      <span class="token punctuation">(</span><span class="token keyword">begin</span> <span class="token punctuation">(</span><span class="token function">set-mcar!</span> th <span class="token boolean">#t</span><span class="token punctuation">)</span>
+             <span class="token punctuation">(</span><span class="token function">set-mcdr!</span> th <span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token function">mcdr</span> th<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+             <span class="token punctuation">(</span><span class="token function">mcdr</span> th<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>我们可以创建一个thunk <code>f</code>并将其传递给<code>my-delay</code>。这将返回一个pair，其中第一个字段表示我们还没有使用这个thunk。然后是<code>my-force</code>，如果它看到thunk还没有被使用，就会使用它，使用突变来改变这个pair，以保持使用thunk的结果。这样一来，以后用同一pair调用<code>my-force</code>就不会重复计算了。具有讽刺意味的是，虽然我们在实现中使用了突变，但如果传递给<code>my-delay</code>的thunk有副作用或者依赖于可变数据，那么这样就很容易出错，因为这些副作用最多出现一次，而且可能很难确定第一次调用<code>my-force</code>的时间。</p>
+<p>考虑一下这个愚蠢的例子，我们想用一个递归算法将两个表达式<code>e1</code>和<code>e2</code>的结果相乘（当然，你实际上只需要使用<code>*</code>，如果<code>e1</code>产生一个负数，这个算法就不起作用）：</p>
+<pre class="line-numbers language-scheme" data-language="scheme"><code class="language-scheme"><span class="token punctuation">(</span><span class="token keyword">define</span> <span class="token punctuation">(</span><span class="token function">my-mult</span> x y<span class="token punctuation">)</span>
+  <span class="token punctuation">(</span><span class="token keyword">cond</span> [<span class="token punctuation">(</span><span class="token operator">=</span> x <span class="token number">0</span><span class="token punctuation">)</span> 0]
+        [<span class="token punctuation">(</span><span class="token operator">=</span> x <span class="token number">1</span><span class="token punctuation">)</span> y]
+        [#t <span class="token punctuation">(</span><span class="token operator">+</span> y <span class="token punctuation">(</span><span class="token function">my-mult</span> <span class="token punctuation">(</span><span class="token operator">-</span> x <span class="token number">1</span><span class="token punctuation">)</span> y<span class="token punctuation">)</span><span class="token punctuation">)</span>]<span class="token punctuation">)</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+<p>现在调用<code>(my-mult e1 e2)</code>对<code>e1</code>和<code>e2</code>各评估一次，然后做0次或更多次的加法。但是如果<code>e1</code>的值是<code>0</code>，而<code>e2</code>的计算时间很长呢？那么评估<code>e2</code>就是浪费了。所以我们可以考虑使用如下方法：</p>
+<pre class="line-numbers language-scheme" data-language="scheme"><code class="language-scheme"><span class="token punctuation">(</span><span class="token keyword">define</span> <span class="token punctuation">(</span><span class="token function">my-mult</span> x y-thunk<span class="token punctuation">)</span>
+  <span class="token punctuation">(</span><span class="token keyword">cond</span> [<span class="token punctuation">(</span><span class="token operator">=</span> x <span class="token number">0</span><span class="token punctuation">)</span> 0]
+        [<span class="token punctuation">(</span><span class="token operator">=</span> x <span class="token number">1</span><span class="token punctuation">)</span> <span class="token punctuation">(</span><span class="token function">y-thunk</span><span class="token punctuation">)</span>]
+        [#t <span class="token punctuation">(</span><span class="token operator">+</span> <span class="token punctuation">(</span><span class="token function">y-thunk</span><span class="token punctuation">)</span> <span class="token punctuation">(</span><span class="token function">my-mult</span> <span class="token punctuation">(</span><span class="token operator">-</span> x <span class="token number">1</span><span class="token punctuation">)</span> y-thunk<span class="token punctuation">)</span><span class="token punctuation">)</span>]<span class="token punctuation">)</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+<p>现在我们将调用<code>(my-mult e1 (lambda () e2))</code>。如果<code>e1</code>的值为0，这很好；如果<code>e1</code>的值为1，这很好用；如果<code>e1</code>的值为一个很大数，这很可怕。毕竟，现在我们在每次递归调用时都要评估<code>e2</code>。所以让我们使用<code>my-delay</code>和<code>my-force</code>来获得更好的效果：</p>
+<pre class="line-numbers language-scheme" data-language="scheme"><code class="language-scheme"><span class="token punctuation">(</span><span class="token function">my-mult</span> e1 <span class="token punctuation">(</span><span class="token keyword">let</span> <span class="token punctuation">(</span><span class="token function">[x</span> <span class="token punctuation">(</span><span class="token function">my-delay</span> <span class="token punctuation">(</span><span class="token keyword">lambda</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> e2<span class="token punctuation">)</span><span class="token punctuation">)</span> ]<span class="token punctuation">)</span> <span class="token punctuation">(</span><span class="token keyword">lambda</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">(</span><span class="token function">my-force</span> x<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>注意，我们在调用<code>my-mult</code>之前创建了一次延迟计算，然后在第一次调用传递给<code>my-mult</code>的thunk时，<code>my-force</code>将评估<code>e2</code>并记住结果，以便以后调用<code>my-force x</code>。另一种可能看起来更简单的方法是重写<code>my-mult</code>，期望从<code>my-delay</code>获得结果，而不是一个任意的thunk：</p>
+<pre class="line-numbers language-scheme" data-language="scheme"><code class="language-scheme"><span class="token punctuation">(</span><span class="token keyword">define</span> <span class="token punctuation">(</span><span class="token function">my-mult</span> x y-promise<span class="token punctuation">)</span>
+ <span class="token punctuation">(</span><span class="token keyword">cond</span> [<span class="token punctuation">(</span><span class="token operator">=</span> x <span class="token number">0</span><span class="token punctuation">)</span> 0]
+       [<span class="token punctuation">(</span><span class="token operator">=</span> x <span class="token number">1</span><span class="token punctuation">)</span> <span class="token punctuation">(</span><span class="token function">my-force</span> y-promise<span class="token punctuation">)</span>]
+       [#t <span class="token punctuation">(</span><span class="token operator">+</span> <span class="token punctuation">(</span><span class="token function">my-force</span> y-promise<span class="token punctuation">)</span> <span class="token punctuation">(</span><span class="token function">my-mult</span> <span class="token punctuation">(</span><span class="token operator">-</span> x <span class="token number">1</span><span class="token punctuation">)</span> y-promise<span class="token punctuation">)</span><span class="token punctuation">)</span>]<span class="token punctuation">)</span><span class="token punctuation">)</span>
+       
+<span class="token punctuation">(</span><span class="token function">my-mult</span> e1 <span class="token punctuation">(</span><span class="token function">my-delay</span> <span class="token punctuation">(</span><span class="token keyword">lambda</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> e2<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>有些语言，最明显的是Haskell，对所有的函数调用都使用这种方法，也就是说，在这些语言中，函数调用的语义是不同的。如果一个参数从未被使用过，它就不会被评估，否则就只评估一次。这被称为按需调用，而我们将使用的所有语言都是按值调用（参数在调用前被完全评估）。</p>
+<h2 id="流"><a href="#流" class="headerlink" title="流"></a>流</h2><p> 一个流是一个值的无限序列。我们显然不能明确地创建这样一个序列（这要花很长时间），但我们可以创建知道如何产生无限序列的代码，以及知道如何请求所需序列的代码。</p>
+<p>流在计算机科学中是非常常见的。你可以把一个同步电路产生的比特序列看作是一个流，每个时钟周期有一个值。电路不知道它应该运行多长时间，但它可以永远产生新的值。UNIX管道<code>(cmd1 | cmd2)</code>也是流；它使<code>cmd1</code>产生与<code>cmd2</code>需要的输入一样多的输出。对用户在网页上点击的东西做出反应的网络程序可以把用户的活动当作一个流，即不知道下一个东西何时到来，也不知道有多少个，但可以随时做出适当的反应。更广泛地说，流可以是一种方便的分工：软件的一个部分知道如何在先天的序列中产生连续的值，但不知道需要多少个和/或如何处理它们。另一部分可以确定需要多少个，但不知道如何生成它们。</p>
+<p>有很多方法可以对流进行编码；我们将采取简单的方法，将流表示为一个thunk，当被调用时产生pair，内容为</p>
+<ul>
+<li>(1)序列中的第一个元素和</li>
+<li>(2)一个表示第二至第无穷个元素的流的thunk</li>
+</ul>
+<p>编写这样的thunks通常使用递归法。这里有三个例子：</p>
+<pre class="line-numbers language-scheme" data-language="scheme"><code class="language-scheme"><span class="token punctuation">(</span><span class="token keyword">define</span> ones <span class="token punctuation">(</span><span class="token keyword">lambda</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">(</span><span class="token builtin">cons</span> <span class="token number">1</span> ones<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+
+<span class="token punctuation">(</span><span class="token keyword">define</span> nats
+  <span class="token punctuation">(</span><span class="token keyword">letrec</span> <span class="token punctuation">(</span><span class="token function">[f</span> <span class="token punctuation">(</span><span class="token keyword">lambda</span> <span class="token punctuation">(</span><span class="token lambda-parameter">x</span><span class="token punctuation">)</span> <span class="token punctuation">(</span><span class="token builtin">cons</span> x <span class="token punctuation">(</span><span class="token keyword">lambda</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">(</span><span class="token function">f</span> <span class="token punctuation">(</span><span class="token operator">+</span> x <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span>]<span class="token punctuation">)</span>
+    <span class="token punctuation">(</span><span class="token keyword">lambda</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">(</span><span class="token function">f</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+
+<span class="token punctuation">(</span><span class="token keyword">define</span> powers-of-two
+  <span class="token punctuation">(</span><span class="token keyword">letrec</span> <span class="token punctuation">(</span><span class="token function">[f</span> <span class="token punctuation">(</span><span class="token keyword">lambda</span> <span class="token punctuation">(</span><span class="token lambda-parameter">x</span><span class="token punctuation">)</span> <span class="token punctuation">(</span><span class="token builtin">cons</span> x <span class="token punctuation">(</span><span class="token keyword">lambda</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">(</span><span class="token function">f</span> <span class="token punctuation">(</span><span class="token operator">*</span> x <span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span>]<span class="token punctuation">)</span>
+    <span class="token punctuation">(</span><span class="token keyword">lambda</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">(</span><span class="token function">f</span> <span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>给定这种流的编码和流<code>s</code>，我们将通过<code>(car (s))</code>得到第一个元素，通过<code>(car ((cdr (s))))))</code>得到第二个元素，通过<code>(car ((cdr (cdr (s))))))))</code>得到第三个元素，等等。请记住括号的作用：<code>(e)</code>调用thunk <code>e</code>。</p>
+<p>我们可以写一个高阶函数，接收一个流和一个预测函数，并返回在预测函数返回真之前产生的流元素的数量：</p>
+<pre class="line-numbers language-scheme" data-language="scheme"><code class="language-scheme"><span class="token punctuation">(</span><span class="token keyword">define</span> <span class="token punctuation">(</span><span class="token function">number-until</span> stream tester<span class="token punctuation">)</span>
+  <span class="token punctuation">(</span><span class="token keyword">letrec</span> <span class="token punctuation">(</span><span class="token function">[f</span> <span class="token punctuation">(</span><span class="token keyword">lambda</span> <span class="token punctuation">(</span><span class="token lambda-parameter">stream ans</span><span class="token punctuation">)</span>
+                <span class="token punctuation">(</span><span class="token keyword">let</span> <span class="token punctuation">(</span><span class="token function">[pr</span> <span class="token punctuation">(</span><span class="token function">stream</span><span class="token punctuation">)</span>]<span class="token punctuation">)</span>
+                  <span class="token punctuation">(</span><span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">tester</span> <span class="token punctuation">(</span><span class="token builtin">car</span> pr<span class="token punctuation">)</span><span class="token punctuation">)</span>
+                      ans
+                      <span class="token punctuation">(</span><span class="token function">f</span> <span class="token punctuation">(</span><span class="token builtin">cdr</span> pr<span class="token punctuation">)</span> <span class="token punctuation">(</span><span class="token operator">+</span> ans <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span>]<span class="token punctuation">)</span>
+    <span class="token punctuation">(</span><span class="token function">f</span> stream <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>作为一个例子，<code>(number-until powers-of-two (lambda (x) (= x 16)))</code>的评估结果是4。</p>
+<p>顺便说一句，给定前一个元素，上面所有的流都最多只能产生它们的下一个元素。因此，我们可以使用高阶函数来抽象出这些函数的共同点，这让我们把流的创建逻辑放在一个地方，而把特定流的细节放在另一个地方。这只是使用高阶函数来重用通用功能的另一个例子：</p>
+<pre class="line-numbers language-scheme" data-language="scheme"><code class="language-scheme"><span class="token punctuation">(</span><span class="token keyword">define</span> <span class="token punctuation">(</span><span class="token function">stream-maker</span> fn arg<span class="token punctuation">)</span>
+  <span class="token punctuation">(</span><span class="token keyword">letrec</span> <span class="token punctuation">(</span><span class="token function">[f</span> <span class="token punctuation">(</span><span class="token keyword">lambda</span> <span class="token punctuation">(</span><span class="token lambda-parameter">x</span><span class="token punctuation">)</span> 
+                <span class="token punctuation">(</span><span class="token builtin">cons</span> x <span class="token punctuation">(</span><span class="token keyword">lambda</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">(</span><span class="token function">f</span> <span class="token punctuation">(</span><span class="token function">fn</span> x arg<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span>]<span class="token punctuation">)</span>
+    <span class="token punctuation">(</span><span class="token keyword">lambda</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">(</span><span class="token function">f</span> arg<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+<span class="token punctuation">(</span><span class="token keyword">define</span> ones <span class="token punctuation">(</span><span class="token function">stream-maker</span> <span class="token punctuation">(</span><span class="token keyword">lambda</span> <span class="token punctuation">(</span><span class="token lambda-parameter">x y</span><span class="token punctuation">)</span> <span class="token number">1</span><span class="token punctuation">)</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+<span class="token punctuation">(</span><span class="token keyword">define</span> nats <span class="token punctuation">(</span><span class="token function">stream-maker</span> + <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+<span class="token punctuation">(</span><span class="token keyword">define</span> powers-of-two <span class="token punctuation">(</span><span class="token function">stream-maker</span> * <span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h2 id="记忆化"><a href="#记忆化" class="headerlink" title="记忆化"></a>记忆化</h2><p>一个与懒惰评估相关的、实际上并不使用thunks的系语是记忆化。如果一个函数没有副作用，那么如果我们用相同的参数多次调用它，我们实际上不需要多次调用。相反，我们可以查找第一次调用该函数时的答案是什么。</p>
+<p>这是否是一个好主意，取决于权衡利弊。将旧的答案保存在一个表中需要空间，而且查表也需要一些时间，但与重新进行昂贵的计算相比，这可能是一个很大的胜利。同样，要使这种技术正确，需要给定相同的参数，函数将总是返回相同的结果，并且没有副作用。因此，能够使用这个备忘表（即做记忆化）是避免突变的另一个优势。</p>
+<p>为了实现记忆化，我们确实使用了突变。每当函数被调用时有一个我们以前没见过的参数，我们就计算答案，然后把结果加到表中（通过突变）。</p>
+<p>作为一个例子，让我们考虑一个函数的3个版本，它接收<code>x</code>并返回<code>fibonacci(x)</code>。(斐波那契数是一个著名的定义，在人口建模等方面很有用）。一个简单的递归定义是：</p>
+<pre class="line-numbers language-scheme" data-language="scheme"><code class="language-scheme"><span class="token punctuation">(</span><span class="token keyword">define</span> <span class="token punctuation">(</span><span class="token function">fibonacci</span> x<span class="token punctuation">)</span>
+  <span class="token punctuation">(</span><span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token builtin">or</span> <span class="token punctuation">(</span><span class="token operator">=</span> x <span class="token number">1</span><span class="token punctuation">)</span> <span class="token punctuation">(</span><span class="token operator">=</span> x <span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+      <span class="token number">1</span>
+      <span class="token punctuation">(</span><span class="token operator">+</span> <span class="token punctuation">(</span><span class="token function">fibonacci</span> <span class="token punctuation">(</span><span class="token operator">-</span> x <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+         <span class="token punctuation">(</span><span class="token function">fibonacci</span> <span class="token punctuation">(</span><span class="token operator">-</span> x <span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>不幸的是，这个函数需要指数级的时间来运行。我们可能开始注意到<code>(fibonaccci 30)</code>的停顿，而(<code>fibonacci 40)</code>需要比这长一千倍的时间，而<code>(fibonacci 10000)</code>需要的时间比宇宙中的粒子还多。现在，我们可以通过采取记住以前答案的方法来解决这个问题：</p>
+<pre class="line-numbers language-scheme" data-language="scheme"><code class="language-scheme"><span class="token punctuation">(</span><span class="token keyword">define</span> <span class="token punctuation">(</span><span class="token function">fibonacci</span> x<span class="token punctuation">)</span>
+  <span class="token punctuation">(</span><span class="token keyword">letrec</span> <span class="token punctuation">(</span><span class="token function">[f</span> <span class="token punctuation">(</span><span class="token keyword">lambda</span> <span class="token punctuation">(</span><span class="token lambda-parameter">acc1 acc2 y</span><span class="token punctuation">)</span>
+                <span class="token punctuation">(</span><span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">=</span> y x<span class="token punctuation">)</span>
+                    <span class="token punctuation">(</span><span class="token operator">+</span> acc1 acc2<span class="token punctuation">)</span>
+                    <span class="token punctuation">(</span><span class="token function">f</span> <span class="token punctuation">(</span><span class="token operator">+</span> acc1 acc2<span class="token punctuation">)</span> acc1 <span class="token punctuation">(</span><span class="token operator">+</span> y <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span>]<span class="token punctuation">)</span>
+    <span class="token punctuation">(</span><span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token builtin">or</span> <span class="token punctuation">(</span><span class="token operator">=</span> x <span class="token number">1</span><span class="token punctuation">)</span> <span class="token punctuation">(</span><span class="token operator">=</span> x <span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+        <span class="token number">1</span>
+        <span class="token punctuation">(</span><span class="token function">f</span> <span class="token number">1</span> <span class="token number">1</span> <span class="token number">3</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>这需要线性时间，所以<code>(fibonacci 10000)</code>几乎立即返回（而且是一个非常大的数字），但它需要一个相当不同的方法来解决问题。通过记忆化，我们可以用一种适用于很多算法的技术将斐波那契变成一种古老的算法。它与”动态规划”密切相关，你经常在高级算法课程中了解到这一点。下面是进行这种记忆化的版本（下面介绍assoc库函数）：</p>
+<pre class="line-numbers language-scheme" data-language="scheme"><code class="language-scheme"><span class="token punctuation">(</span><span class="token keyword">define</span> fibonacci
+  <span class="token punctuation">(</span><span class="token keyword">letrec</span><span class="token punctuation">(</span><span class="token function">[memo</span> null] <span class="token comment">; list of pairs (arg . result) </span>
+          [f <span class="token punctuation">(</span><span class="token keyword">lambda</span> <span class="token punctuation">(</span><span class="token lambda-parameter">x</span><span class="token punctuation">)</span>
+               <span class="token punctuation">(</span><span class="token keyword">let</span> <span class="token punctuation">(</span><span class="token function">[ans</span> <span class="token punctuation">(</span><span class="token builtin">assoc</span> x memo<span class="token punctuation">)</span>]<span class="token punctuation">)</span>
+                 <span class="token punctuation">(</span><span class="token keyword">if</span> ans 
+                     <span class="token punctuation">(</span><span class="token builtin">cdr</span> ans<span class="token punctuation">)</span>
+                     <span class="token punctuation">(</span><span class="token keyword">let</span> <span class="token punctuation">(</span><span class="token function">[new-ans</span> <span class="token punctuation">(</span><span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token builtin">or</span> <span class="token punctuation">(</span><span class="token operator">=</span> x <span class="token number">1</span><span class="token punctuation">)</span> <span class="token punctuation">(</span><span class="token operator">=</span> x <span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+                                        <span class="token number">1</span>
+                                        <span class="token punctuation">(</span><span class="token operator">+</span> <span class="token punctuation">(</span><span class="token function">f</span> <span class="token punctuation">(</span><span class="token operator">-</span> x <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+                                           <span class="token punctuation">(</span><span class="token function">f</span> <span class="token punctuation">(</span><span class="token operator">-</span> x <span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span>]<span class="token punctuation">)</span>
+                       <span class="token punctuation">(</span><span class="token keyword">begin</span> 
+                         <span class="token punctuation">(</span><span class="token keyword">set!</span> memo <span class="token punctuation">(</span><span class="token builtin">cons</span> <span class="token punctuation">(</span><span class="token builtin">cons</span> x new-ans<span class="token punctuation">)</span> memo<span class="token punctuation">)</span><span class="token punctuation">)</span>
+                         new-ans<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span>]<span class="token punctuation">)</span>
+    f<span class="token punctuation">)</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>对<code>f</code>的不同调用必须使用同一个可变的备忘表：如果我们在对<code>f</code>的调用中创建这个表，那么每次调用都会使用一个新的空表，这是毫无意义的。但我们并没有把表放在顶层，因为这将是不好的风格，因为它的存在应该只被<code>fibonacci</code>的实现所知道。</p>
+<p>为什么这种技术能使<code>(fibonacci 10000)</code>迅速完成？因为当我们在任何递归调用中评估<code>(f (- x 2))</code>时，结果已经在表中了，所以不再有指数级的递归调用。这比第二次调用<code>(fibonacci 10000)</code>会更快地完成要重要得多（因为答案会在备忘表中）。</p>
+<p>对于一个大表来说，使用列表和Racket的<code>assoc</code>函数可能是一个糟糕的选择，但它对于演示备忘录的概念是正确的。<code>assoc</code>只是Racket的一个库函数，它接收值和列表的pair，并返回列表中第一个pair的car等于值的对。(<code>assoc</code>之所以返回pair而不是pair的cdr，是为了区分没有pair的情况和pair的cdr里有<code>#f</code>的情况。这就是我们在ML中使用选项的那种情况）。</p>
+<h2 id="宏：关键点"><a href="#宏：关键点" class="headerlink" title="宏：关键点"></a>宏：关键点</h2><p>本模块的最后一个主题是宏，它通过让程序员使用自己的语法糖来增加语言的语法。为了给其他主题留出时间，大部分的宏材料都是可有可无的，但我们还是鼓励你去学习。本节包含了一些非选择性的关键观点。虽然本模块的家庭作业不需要用到宏，但我们在下一模块的学习中需要用到这个概念。</p>
+<p>宏的定义在语言中引入了一些新的语法。它描述了如何将新的语法转化为语言本身的不同语法。宏系统是一种用于创建宏的语言（或更大语言的一部分）。宏的使用是指使用先前指定的一个宏。宏使用的语义是用宏定义所表示的适当的语法来替换宏使用。这个过程通常被称为宏扩展，因为语法转换产生更大的代码量是常见的，但不是必须的。</p>
+<p>关键的一点是，宏扩展发生在我们所学的其他任何东西之前：在类型检查之前，在编译之前，在评估之前。把”扩展所有的宏 “看作是在其他事情发生之前对整个程序的预处理。因此，宏在任何地方都会被展开，例如在函数体中，条件的两个分支中，等等。</p>
+<p>下面是Racket中可能出现的3个宏的例子：</p>
+<ul>
+<li>程序员可以写<code>(my-if e1 then e2 else e3)</code>，其中<code>my-if, then, else</code>是关键字，这个宏可以扩展为<code>(if e1 e2 e3)</code>。</li>
+<li>程序员可以写<code>(comment-out e1 e2)</code>，并让它转换为<code>e2</code>，也就是说，这是一个方便的方法，可以把表达式<code>e1</code>从程序中取出（用<code>e2</code>代替），而不需要实际删除任何东西。</li>
+<li>程序员可以写<code>(my-delay e)</code>并让它转换为<code>(mcons #f (lambda () e))</code>。 这与我们前面提到的<code>my-delay</code>函数不同，因为该函数需要调用者传入一个thunk。在这里，宏的扩展完成了thunk的创建，宏的用户不应该包括一个明确的thunk。</li>
+</ul>
+<p>Racket有一个优秀而复杂的宏系统。由于精确的技术原因，它的宏系统优于许多著名的宏系统，特别是C或C++的预处理器。所以我们可以用Racket来学习一般的宏的一些陷阱。本模块的其余部分（可选）将讨论：</p>
+<ul>
+<li>宏系统必须如何处理tokenization、括号化和范围化的问题，以及Racket如何比C/C++更好地处理括号化和范围化。 </li>
+<li>如何在Racket中定义宏，比如上面描述的那些宏</li>
+<li>宏的命名应该如何注意表达式的评估顺序以及评估的次数  </li>
+<li>宏中的变量绑定的关键问题和hygiene的概念</li>
+</ul>
+<h2 id="可选：符号化-tokenization-、括号化和范围化"><a href="#可选：符号化-tokenization-、括号化和范围化" class="headerlink" title="可选：符号化(tokenization)、括号化和范围化"></a>可选：符号化(tokenization)、括号化和范围化</h2><p>宏和宏扩展的表示法比在文本编辑器中或在你手动编写的脚本中执行一些字符串替换时的”find-and-replace”更有条理，更微妙。宏的扩展大致有三个方面的不同。</p>
+<p>首先，考虑一个宏，用<code>car</code>取代每个<code>head</code>的用法。在宏系统中，这并不意味着变量<code>headt</code>会被改写成<code>cart</code>。因此，宏的实现至少要理解编程语言的文本是如何被分解成tokens（即词）的。Token的概念在不同的语言中是不一样的。例如，<code>a-b</code>在大多数语言中是三个token（一个变量、一个减号和另一个变量），但在Racket中是一个标记。</p>
+<p>其次，我们可以询问宏是否理解括号。例如，在C/C++中，如果你有一个宏 </p>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">define</span> <span class="token macro-name function">ADD</span><span class="token expression"><span class="token punctuation">(</span>x<span class="token punctuation">,</span>y<span class="token punctuation">)</span> x<span class="token operator">+</span>y </span></span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>那么<code>ADD(1,2/3)*4</code>就会被改写成<code>1+2/3*4</code>，这与<code>(1+2/3)*4</code>不是一回事。所以在这样的语言中，宏的编写者一般会在宏的名称中加入很多明确的括号，例如，</p>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">define</span> <span class="token macro-name function">ADD</span><span class="token expression"><span class="token punctuation">(</span>x<span class="token punctuation">,</span>y<span class="token punctuation">)</span> <span class="token punctuation">(</span><span class="token punctuation">(</span>x<span class="token punctuation">)</span><span class="token operator">+</span><span class="token punctuation">(</span>y<span class="token punctuation">)</span><span class="token punctuation">)</span> </span></span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>在Racket中，宏扩展保留了代码结构，所以这个问题不存在。Racket的宏使用看起来总是像<code>(x ...)</code>，其中<code>x</code>是宏的名字，扩展的结果“保持在同一个括号里”（例如，<code>(my-if x then y else z)</code>可能扩展成<code>(if x y z)</code>）。这是Racket最小和一致的语法的一个优点。</p>
+<p>第三，我们可以问，即使在创建变量绑定的时候，宏扩展是否也会发生。如果不是，那么局部变量就可以shadow宏，这可能是你想要的。例如，假设我们有</p>
+<pre class="line-numbers language-scheme" data-language="scheme"><code class="language-scheme"><span class="token punctuation">(</span><span class="token keyword">let</span> <span class="token punctuation">(</span><span class="token function">[hd</span> 0] [car 1]<span class="token punctuation">)</span> hd<span class="token punctuation">)</span> <span class="token comment">; evaluates to 0</span>
+<span class="token punctuation">(</span><span class="token keyword">let*</span> <span class="token punctuation">(</span><span class="token function">[hd</span> 0] [car 1]<span class="token punctuation">)</span> hd<span class="token punctuation">)</span> <span class="token comment">; evaluates to 0</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<p>如果我们用<code>hd</code>代替<code>car</code>，那么第一个表达式是一个错误（试图绑定<code>hd</code>两次），第二个表达式现在求值为1。 在Racket中，宏扩展不适用于变量名称，也就是说，上面的<code>car</code>是不同的，并且会shadow任何刚好在范围内的<code>car</code>的宏。</p>
+<h2 id="可选：用define-syntax定义宏"><a href="#可选：用define-syntax定义宏" class="headerlink" title="可选：用define-syntax定义宏"></a>可选：用<code>define-syntax</code>定义宏</h2><p>现在让我们来看看我们将在Racket中使用的定义宏的语法。(多年来，Racket的前身Scheme有很多变化；这是我们将使用的一种现代方法）。下面是一个宏，它允许用户为任何表达式<code>e1, e2, e3</code>使用<code>(my-if e1 then e2 else e3)</code>，并让它准确地表示<code>(if e1 e2 e3)</code>：</p>
+<pre class="line-numbers language-scheme" data-language="scheme"><code class="language-scheme"><span class="token punctuation">(</span><span class="token keyword">define-syntax</span> my-if
+  <span class="token punctuation">(</span><span class="token keyword">syntax-rules</span> <span class="token punctuation">(</span><span class="token function">then</span> else<span class="token punctuation">)</span>
+    [<span class="token punctuation">(</span><span class="token function">my-if</span> e1 then e2 else e3<span class="token punctuation">)</span>
+     <span class="token punctuation">(</span><span class="token keyword">if</span> e1 e2 e3<span class="token punctuation">)</span>]<span class="token punctuation">)</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+<ul>
+<li><code>define-syntax</code>是指定一个宏的特殊形式。</li>
+<li><code>my-if</code>是我们的宏的名称。它将<code>my-if</code>添加到环境中，这样，形式为<code>(my-if ...)</code>的表达式将根据宏定义的其余部分的语法规则进行宏扩展。</li>
+<li><code>syntax-rules</code>是一个关键字。</li>
+<li>下一个括号内的列表（在这里是<code>(then else)</code>）是这个宏的关键字列表，也就是说，在<code>my-if</code>的主体中使用的任何<code>then</code>或<code>else</code>都只是语法，而不在这个列表中的任何东西（不包括<code>my-if</code>本身）都代表一个任意表达式。</li>
+<li>其余的是一个pair列表：<code>my-if</code>可能被如何使用，以及如果它被这样使用，应该如何改写。</li>
+<li>在这个例子中，我们的列表只有一个选项：<code>my-if</code>必须被用于一个形式为<code>(my-if e1 then e2 else e3)</code>的表达式中，这就变成了<code>(if e1 e2 e3)</code>。否则就会出现错误。注意重写发生在对表达式<code>e1, e2, e3</code>的任何求值之前，这与函数不同。这就是我们对像<code>my-if</code>这样的条件表达式的要求。</li>
+</ul>
+<p>下面是第二个简单的例子，我们使用宏来”注释”一个表达式。我们使用<code>(comment-out e1 e2)</code>将其改写为<code>e2</code>，这意味着<code>e1</code>将永远不会被评估。这在调试代码时可能比实际使用注释更方便：</p>
+<pre class="line-numbers language-scheme" data-language="scheme"><code class="language-scheme"><span class="token punctuation">(</span><span class="token keyword">define-syntax</span> comment-out
+  <span class="token punctuation">(</span><span class="token keyword">syntax-rules</span> <span class="token punctuation">(</span><span class="token punctuation">)</span>
+    [<span class="token punctuation">(</span><span class="token function">comment-out</span> ignore instead<span class="token punctuation">)</span> instead]<span class="token punctuation">)</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+<p>我们的第三个例子是宏<code>my-delay</code>，这样，与前面提到的<code>my-delay</code>函数不同，用户会写<code>(my-delay e)</code>来创建一个promise，这样<code>my-force</code>会评估<code>e</code>并记住结果，而不是用户写<code>(my-delay (lambda () e))</code>。这只是宏，而不是函数，可以像这样”通过添加thunk来延迟评估”，因为函数调用总是评估其参数：</p>
+<pre class="line-numbers language-scheme" data-language="scheme"><code class="language-scheme"><span class="token punctuation">(</span><span class="token keyword">define-syntax</span> my-delay
+  <span class="token punctuation">(</span><span class="token keyword">syntax-rules</span> <span class="token punctuation">(</span><span class="token punctuation">)</span>
+    [<span class="token punctuation">(</span><span class="token function">my-delay</span> e<span class="token punctuation">)</span>
+     <span class="token punctuation">(</span><span class="token function">mcons</span> <span class="token boolean">#f</span> <span class="token punctuation">(</span><span class="token keyword">lambda</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> e<span class="token punctuation">)</span><span class="token punctuation">)</span>]<span class="token punctuation">)</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+<p>我们不应该创建一个<code>my-force</code>的宏版本，因为我们前面的函数版本正是我们想要的。使用<code>(my-force e)</code>，我们确实想把<code>e</code>评估为值，这应该是由<code>my-delay</code>创建的<code>cons-cell</code>，然后在<code>my-force</code>函数中执行计算。定义宏不会带来任何好处，而且容易出错。考虑一下这个糟糕的尝试：</p>
+<pre class="line-numbers language-scheme" data-language="scheme"><code class="language-scheme"><span class="token punctuation">(</span><span class="token keyword">define-syntax</span> my-force
+  <span class="token punctuation">(</span><span class="token keyword">syntax-rules</span> <span class="token punctuation">(</span><span class="token punctuation">)</span>
+     [<span class="token punctuation">(</span><span class="token function">my-force</span> e<span class="token punctuation">)</span>
+      <span class="token punctuation">(</span><span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">mcar</span> e<span class="token punctuation">)</span>
+          <span class="token punctuation">(</span><span class="token function">mcdr</span> e<span class="token punctuation">)</span>
+          <span class="token punctuation">(</span><span class="token keyword">begin</span> <span class="token punctuation">(</span><span class="token function">set-mcar!</span> e <span class="token boolean">#t</span><span class="token punctuation">)</span>
+                 <span class="token punctuation">(</span><span class="token function">set-mcdr!</span> e <span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token function">mcdr</span> e<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+                 <span class="token punctuation">(</span><span class="token function">mcdr</span> e<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span>]<span class="token punctuation">)</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>由于宏扩展，这个宏的使用最终会对其参数进行多次评估，如果<code>e</code>有副作用，就会产生奇怪的行为。宏的使用者不会想到这一点。在这样的代码中：</p>
+<pre class="line-numbers language-scheme" data-language="scheme"><code class="language-scheme"><span class="token punctuation">(</span><span class="token keyword">let</span> <span class="token punctuation">(</span><span class="token function">[t</span> <span class="token punctuation">(</span><span class="token function">my-delay</span> some-complicated-expression<span class="token punctuation">)</span>]<span class="token punctuation">)</span>
+  <span class="token punctuation">(</span><span class="token function">my-force</span> t<span class="token punctuation">)</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<p>这无关紧要，因为<code>t</code>已经绑定到一个值，但是在如下代码中：</p>
+<pre class="line-numbers language-scheme" data-language="scheme"><code class="language-scheme"><span class="token punctuation">(</span><span class="token function">my-force</span> <span class="token punctuation">(</span><span class="token keyword">begin</span> <span class="token punctuation">(</span><span class="token function">print</span> <span class="token string">"hi"</span><span class="token punctuation">)</span> <span class="token punctuation">(</span><span class="token function">my-delay</span> some-complicated-expression<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>我们最终要打印多次。请记住，宏的扩展是将整个参数<code>e</code>复制到宏定义中出现的任何地方，但我们经常希望它只被评估一次。这个版本的宏在这方面做得很好：</p>
+<pre class="line-numbers language-scheme" data-language="scheme"><code class="language-scheme"><span class="token punctuation">(</span><span class="token keyword">define-syntax</span> my-force-macro
+  <span class="token punctuation">(</span><span class="token keyword">syntax-rules</span> <span class="token punctuation">(</span><span class="token punctuation">)</span>
+    [<span class="token punctuation">(</span><span class="token function">my-force</span> e<span class="token punctuation">)</span>
+     <span class="token punctuation">(</span><span class="token keyword">let</span> <span class="token punctuation">(</span><span class="token function">[x</span> e]<span class="token punctuation">)</span>
+       <span class="token punctuation">(</span><span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">mcar</span> x<span class="token punctuation">)</span>
+           <span class="token punctuation">(</span><span class="token function">mcdr</span> x<span class="token punctuation">)</span>
+           <span class="token punctuation">(</span><span class="token keyword">begin</span> <span class="token punctuation">(</span><span class="token function">set-mcar!</span> x <span class="token boolean">#t</span><span class="token punctuation">)</span>
+                  <span class="token punctuation">(</span><span class="token function">set-mcdr!</span> x <span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token function">mcdr</span> x<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+                  <span class="token punctuation">(</span><span class="token function">mcdr</span> x<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span>]<span class="token punctuation">)</span><span class="token punctuation">)</span>
+<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>但是，还是那句话，没有理由使用这样的宏，因为一个函数正好可以做我们需要的事情。只要坚持使用：</p>
+<pre class="line-numbers language-scheme" data-language="scheme"><code class="language-scheme"><span class="token punctuation">(</span><span class="token keyword">define</span> <span class="token punctuation">(</span><span class="token function">my-force</span> th<span class="token punctuation">)</span>
+  <span class="token punctuation">(</span><span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token function">mcar</span> th<span class="token punctuation">)</span>
+      <span class="token punctuation">(</span><span class="token function">mcdr</span> th<span class="token punctuation">)</span>
+      <span class="token punctuation">(</span><span class="token keyword">begin</span> <span class="token punctuation">(</span><span class="token function">set-mcar!</span> th <span class="token boolean">#t</span><span class="token punctuation">)</span>
+             <span class="token punctuation">(</span><span class="token function">set-mcdr!</span> th <span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token function">mcdr</span> th<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+             <span class="token punctuation">(</span><span class="token function">mcdr</span> th<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h2 id="可选：变量、宏和hygiene"><a href="#可选：变量、宏和hygiene" class="headerlink" title="可选：变量、宏和hygiene"></a>可选：变量、宏和hygiene</h2><p>让我们考虑一个将其参数加倍的宏。请注意，这是一个很差的风格，因为如果你想把一个参数加倍，你应该直接写一个函数：<code>(define (double x) (* 2 x))</code>或<code>(define (double x) (+ x x))</code>，这两者是等价的。但这个简短的例子将让我们研究宏参数何时被评估以及在什么环境下被评估，所以我们将把它作为一个差劲的例子。</p>
+<p>这两个宏是不等价的：</p>
+<pre class="line-numbers language-scheme" data-language="scheme"><code class="language-scheme"><span class="token punctuation">(</span><span class="token keyword">define-syntax</span> double1
+  <span class="token punctuation">(</span><span class="token keyword">syntax-rules</span> <span class="token punctuation">(</span><span class="token punctuation">)</span>
+         [<span class="token punctuation">(</span><span class="token function">double1</span> e<span class="token punctuation">)</span>
+          <span class="token punctuation">(</span><span class="token operator">*</span> <span class="token number">2</span> e<span class="token punctuation">)</span>]<span class="token punctuation">)</span><span class="token punctuation">)</span>
+          
+<span class="token punctuation">(</span><span class="token keyword">define-syntax</span> double2
+  <span class="token punctuation">(</span><span class="token keyword">syntax-rules</span> <span class="token punctuation">(</span><span class="token punctuation">)</span>
+    [<span class="token punctuation">(</span><span class="token function">double2</span> e<span class="token punctuation">)</span>
+     <span class="token punctuation">(</span><span class="token operator">+</span> e e<span class="token punctuation">)</span>]<span class="token punctuation">)</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>原因是<code>double2</code>将评估其参数两次。所以<code>(double1 (begin (print &quot;hi&quot;) 17))</code>会打印”<code>hi</code>“一次，但<code>(double2 (begin (print &quot;hi&quot;) 17))</code>会打印”<code>hi</code>“两次。函数版本打印”<code>hi</code>“一次，只是因为像往常一样，函数参数在调用函数之前被评估为数值。</p>
+<p>为了在不改变算法的情况下修复<code>double2</code>，使其成为乘法而不是加法，我们应该使用一个局部变量。</p>
+<pre class="line-numbers language-scheme" data-language="scheme"><code class="language-scheme"><span class="token punctuation">(</span><span class="token keyword">define-syntax</span> double3
+  <span class="token punctuation">(</span><span class="token keyword">syntax-rules</span> <span class="token punctuation">(</span><span class="token punctuation">)</span>
+    [<span class="token punctuation">(</span><span class="token function">double3</span> e<span class="token punctuation">)</span>
+     <span class="token punctuation">(</span><span class="token keyword">let</span> <span class="token punctuation">(</span><span class="token function">[x</span> e]<span class="token punctuation">)</span>
+       <span class="token punctuation">(</span><span class="token operator">+</span> x x<span class="token punctuation">)</span><span class="token punctuation">)</span>]<span class="token punctuation">)</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>在宏定义中使用局部变量来控制表达式是否/何时被评估，这正是你应该做的，但在功能较少的宏语言中（同样，C/C++是一个容易被嘲笑的目标），宏中的局部变量通常被避免。其原因与范围和所谓的hygiene有关。为了举例说明，考虑一下<code>double3</code>的这个愚蠢的变体：</p>
+<pre class="line-numbers language-scheme" data-language="scheme"><code class="language-scheme"><span class="token punctuation">(</span><span class="token keyword">define-syntax</span> double4
+  <span class="token punctuation">(</span><span class="token keyword">syntax-rules</span> <span class="token punctuation">(</span><span class="token punctuation">)</span>
+    [<span class="token punctuation">(</span><span class="token function">double4</span> e<span class="token punctuation">)</span>
+     <span class="token punctuation">(</span><span class="token keyword">let*</span> <span class="token punctuation">(</span><span class="token function">[zero</span> 0]
+            [x e]<span class="token punctuation">)</span>
+       <span class="token punctuation">(</span><span class="token operator">+</span> x x zero<span class="token punctuation">)</span><span class="token punctuation">)</span>]<span class="token punctuation">)</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>在Racket中，这个宏总是按预期工作，但这可能/应该让你感到惊讶。毕竟，假设我有这样的用法：</p>
+<pre class="line-numbers language-scheme" data-language="scheme"><code class="language-scheme"><span class="token punctuation">(</span><span class="token keyword">let</span> <span class="token punctuation">(</span><span class="token function">[zero</span> 17]<span class="token punctuation">)</span>
+   <span class="token punctuation">(</span><span class="token function">double4</span> zero<span class="token punctuation">)</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<p>如果你按照预期进行句法重写，你最终会得到：</p>
+<pre class="line-numbers language-scheme" data-language="scheme"><code class="language-scheme"><span class="token punctuation">(</span><span class="token keyword">let</span> <span class="token punctuation">(</span><span class="token function">[zero</span> 17]<span class="token punctuation">)</span>
+  <span class="token punctuation">(</span><span class="token keyword">let*</span> <span class="token punctuation">(</span><span class="token function">[zero</span> 0]
+         [x zero]<span class="token punctuation">)</span>
+       <span class="token punctuation">(</span><span class="token operator">+</span> x x zero<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+<p>但是这个表达式的值是0，而不是34。问题是在宏使用处的一个自由变量（<code>(double4 zero)</code>中的<code>zero</code>）最终进入了宏定义中的一个局部变量的范围。这就是为什么在C/C++中，宏定义中的局部变量往往有一些有趣的名字，比如<code>__x_hopefully_no_conflict</code>，希望这种事情不会发生。在Racket中，宏扩展的规则更加复杂，以避免这种问题。基本上，每次使用宏时，它的所有局部变量都会被改写成新的变量名，并且不与程序中的其他内容相冲突。这就是Racket宏hygienic的一半原因。</p>
+<p>另一半与宏定义中的自由变量有关，并确保它们不会错误地出现在使用宏的某个局部变量的范围内。例如，考虑这个使用<code>double3</code>的奇怪代码：</p>
+<pre class="line-numbers language-scheme" data-language="scheme"><code class="language-scheme"><span class="token punctuation">(</span><span class="token keyword">let</span> <span class="token punctuation">(</span><span class="token function">[+</span> *]<span class="token punctuation">)</span>
+   <span class="token punctuation">(</span><span class="token function">double3</span> <span class="token number">17</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<p>朴素的重写会产生：</p>
+<pre class="line-numbers language-scheme" data-language="scheme"><code class="language-scheme"><span class="token punctuation">(</span><span class="token keyword">let</span> <span class="token punctuation">(</span><span class="token function">[+</span> *]<span class="token punctuation">)</span>
+  <span class="token punctuation">(</span><span class="token keyword">let</span> <span class="token punctuation">(</span><span class="token function">[x</span> 17]<span class="token punctuation">)</span>
+     <span class="token punctuation">(</span><span class="token operator">+</span> <span class="token number">17</span> <span class="token number">17</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
+<p>然而这产生了$17^2$，而不是34。同样，朴素的重写并不是Racket所做的。宏定义中的自由变量总是指宏被定义的环境中的东西，而不是宏被使用的地方。这使得编写总是按预期工作的宏容易得多。同样，C/C++中的宏的工作方式与朴素的重写一样。</p>
+<p>在有些情况下，你不需要hygiene。例如，假设你想要一个用于for-loop的宏，宏用户指定一个变量来保存循环索引，而宏生成器则确保该变量在每个循环迭代中保持正确的值。Racket的宏系统有一种方法可以做到这一点，这涉及到明确地违反hygiene规定，但我们不会在这里演示。</p>
+<h2 id="可选：更多的宏例子"><a href="#可选：更多的宏例子" class="headerlink" title="可选：更多的宏例子"></a>可选：更多的宏例子</h2><p>最后，让我们考虑一些更有用的宏表示法，包括那些使用多种情况来进行重写的宏。首先，这里有一个宏，可以让你使用<code>let*</code>语义写出最多两个<code>let</code>绑定，但括号较少：</p>
+<pre class="line-numbers language-scheme" data-language="scheme"><code class="language-scheme"><span class="token punctuation">(</span><span class="token keyword">define-syntax</span> let2
+  <span class="token punctuation">(</span><span class="token keyword">syntax-rules</span> <span class="token punctuation">(</span><span class="token punctuation">)</span>
+    [<span class="token punctuation">(</span><span class="token function">let2</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> body<span class="token punctuation">)</span>
+     body]
+    [<span class="token punctuation">(</span><span class="token function">let2</span> <span class="token punctuation">(</span><span class="token function">var</span> val<span class="token punctuation">)</span> body<span class="token punctuation">)</span>
+     <span class="token punctuation">(</span><span class="token keyword">let</span> <span class="token punctuation">(</span><span class="token function">[var</span> val]<span class="token punctuation">)</span> body<span class="token punctuation">)</span>]
+    [<span class="token punctuation">(</span><span class="token function">let2</span> <span class="token punctuation">(</span><span class="token function">var1</span> val1 var2 val2<span class="token punctuation">)</span> body<span class="token punctuation">)</span>
+     <span class="token punctuation">(</span><span class="token keyword">let</span> <span class="token punctuation">(</span><span class="token function">[var1</span> val1]<span class="token punctuation">)</span>
+       <span class="token punctuation">(</span><span class="token keyword">let</span> <span class="token punctuation">(</span><span class="token function">[var2</span> val2]<span class="token punctuation">)</span>
+         body<span class="token punctuation">)</span><span class="token punctuation">)</span>]<span class="token punctuation">)</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>举例来说，<code>(let2 () 4)</code>求值为4，<code>(let2 (x 5) (+ x 4)</code>求值为9，<code>(let2 (x 5 y 6) (+ x y))</code>求值为11。</p>
+<p>事实上，鉴于对递归宏的支持，我们可以完全用<code>let</code>来重新定义Racket的<code>let*</code>。我们需要一些方法来谈论”语法列表的其余部分”，Racket的<code>...</code>给了我们这个方法。</p>
+<pre class="line-numbers language-scheme" data-language="scheme"><code class="language-scheme"><span class="token punctuation">(</span><span class="token keyword">define-syntax</span> my-let*
+  <span class="token punctuation">(</span><span class="token keyword">syntax-rules</span> <span class="token punctuation">(</span><span class="token punctuation">)</span>
+    [<span class="token punctuation">(</span><span class="token function">my-let*</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> body<span class="token punctuation">)</span>
+     body]
+    [<span class="token punctuation">(</span><span class="token function">my-let*</span> <span class="token punctuation">(</span><span class="token function">[var0</span> val0]
+               [var-rest val-rest] ...<span class="token punctuation">)</span>
+              body<span class="token punctuation">)</span>
+     <span class="token punctuation">(</span><span class="token keyword">let</span> <span class="token punctuation">(</span><span class="token function">[var0</span> val0]<span class="token punctuation">)</span>
+       <span class="token punctuation">(</span><span class="token function">my-let*</span> <span class="token punctuation">(</span><span class="token function">[var-rest</span> val-rest] ...<span class="token punctuation">)</span>
+                body<span class="token punctuation">)</span><span class="token punctuation">)</span>]<span class="token punctuation">)</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>由于宏是递归的，没有什么可以阻止你在宏扩展过程中，即在代码运行之前，产生一个固有的循环或固有的语法量。上面的例子没有这样做，因为它在一个较短的绑定列表上递归。</p>
+<p>最后，这里是一个有限形式的for-loop的宏，它执行其主体$hi - lo$次。(它是有限的，因为主体没有给出当前的迭代次数。)注意使用<code>let</code>表达式来确保我们精确地评估<code>lo</code>和<code>hi</code>一次，但我们评估<code>body</code>的次数是正确的。</p>
+<pre class="line-numbers language-scheme" data-language="scheme"><code class="language-scheme"><span class="token punctuation">(</span><span class="token keyword">define-syntax</span> for
+  <span class="token punctuation">(</span><span class="token keyword">syntax-rules</span> <span class="token punctuation">(</span><span class="token function">to</span> do<span class="token punctuation">)</span>
+    [<span class="token punctuation">(</span><span class="token function">for</span> lo to hi do body<span class="token punctuation">)</span>
+     <span class="token punctuation">(</span><span class="token keyword">let</span> <span class="token punctuation">(</span><span class="token function">[l</span> lo]
+           [h hi]<span class="token punctuation">)</span>
+       <span class="token punctuation">(</span><span class="token keyword">letrec</span> <span class="token punctuation">(</span><span class="token function">[loop</span> <span class="token punctuation">(</span><span class="token keyword">lambda</span> <span class="token punctuation">(</span><span class="token lambda-parameter">it</span><span class="token punctuation">)</span>
+                        <span class="token punctuation">(</span><span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">></span> it h<span class="token punctuation">)</span>
+                            <span class="token boolean">#t</span>
+                            <span class="token punctuation">(</span><span class="token keyword">begin</span> body <span class="token punctuation">(</span><span class="token function">loop</span> <span class="token punctuation">(</span><span class="token operator">+</span> it <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span>]<span class="token punctuation">)</span>
+         <span class="token punctuation">(</span><span class="token function">loop</span> l<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span>]<span class="token punctuation">)</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">Doraemonzzz</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="http://www.doraemonzzz.com/2022/04/03/2022-4-3-Programming-Languages-Part-B-Section5-%E7%BF%BB%E8%AF%91/">http://www.doraemonzzz.com/2022/04/03/2022-4-3-Programming-Languages-Part-B-Section5-%E7%BF%BB%E8%AF%91/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://www.doraemonzzz.com" target="_blank">Doraemonzzz</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/Coursera-Programming-Languages/">Coursera Programming Languages</a></div><div class="post_share"><div class="social-share" data-image="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2022/04/03/2022-4-3-Programming-Languages-Part-B-Section6-%E7%BF%BB%E8%AF%91/"><img class="prev-cover" src= "/img/loading.gif" data-lazy-src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">Programming Languages Part B Section6 翻译</div></div></a></div><div class="next-post pull-right"><a href="/2022/04/03/2022-4-3-Programming-Languages-Part-B-HW2-Extra-Practice-Problems/"><img class="next-cover" src= "/img/loading.gif" data-lazy-src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">Programming Languages Part B HW2 Extra Practice Problems</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span> 相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2022/01/10/2022-1-10-Programming-Languages-Part-A-HW0/" title="Programming Languages Part A HW0"><img class="cover" src= "/img/loading.gif" data-lazy-src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-01-10</div><div class="title">Programming Languages Part A HW0</div></div></a></div><div><a href="/2022/01/10/2022-1-10-Programming-Languages-Part-A-Week-1笔记/" title="Programming Languages Part A Week 1笔记"><img class="cover" src= "/img/loading.gif" data-lazy-src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-01-10</div><div class="title">Programming Languages Part A Week 1笔记</div></div></a></div><div><a href="/2022/01/10/2022-1-10-Programming-Languages-Part-A-HW1/" title="Programming Languages Part A HW1"><img class="cover" src= "/img/loading.gif" data-lazy-src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-01-10</div><div class="title">Programming Languages Part A HW1</div></div></a></div><div><a href="/2022/02/28/2022-2-28-Programming-Languages-Part-A-HW3-Extra-Practice-Problems/" title="Programming Languages Part A HW3 Extra Practice Problems"><img class="cover" src= "/img/loading.gif" data-lazy-src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-02-28</div><div class="title">Programming Languages Part A HW3 Extra Practice Problems</div></div></a></div><div><a href="/2022/03/13/2022-3-13-Programming-Languages-Part-A-Exam/" title="Programming Languages Part A Exam"><img class="cover" src= "/img/loading.gif" data-lazy-src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-03-13</div><div class="title">Programming Languages Part A Exam</div></div></a></div><div><a href="/2022/04/03/2022-4-3-Programming-Languages-Part-B-Week-1笔记/" title="Programming Languages Part B Week 1笔记"><img class="cover" src= "/img/loading.gif" data-lazy-src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-04-03</div><div class="title">Programming Languages Part B Week 1笔记</div></div></a></div></div></div><hr/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div><div id="comment-switch"><span class="first-comment">Valine</span><span class="switch-btn"></span><span class="second-comment">Livere</span></div></div><div class="comment-wrap"><div><div class="vcomment" id="vcomment"></div></div><div><div id="lv-container" data-id="city" data-uid="MTAyMC8zNDcxOS8xMTI1Ng=="></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="card-info-avatar is-center"><img class="avatar-img" src= "/img/loading.gif" data-lazy-src="https://github.com/Doraemonzzz/md-photo/blob/master/%E5%A4%B4%E5%83%8F.jpg?raw=true" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/><div class="author-info__name">Doraemonzzz</div><div class="author-info__description">个人博客，主要记录有关机器学习，数学以及计算机科学的笔记</div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">723</div></a></div><div class="card-info-data-item is-center"><a href="/tags/"><div class="headline">标签</div><div class="length-num">73</div></a></div><div class="card-info-data-item is-center"><a href="/categories/"><div class="headline">分类</div><div class="length-num">29</div></a></div></div><a class="button--animated" id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/Doraemonzzz"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/Doraemonzzz" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="/doraemon_zzz@163.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a><a class="social-icon" href="https://space.bilibili.com/291079982" target="_blank" title="Bilibili"><i class="iconfont icon-bilibili"></i></a><a class="social-icon" href="/atom.xml" target="_blank" title=""><i class="fa fa-rss"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn card-announcement-animation"></i><span>公告</span></div><div class="announcement_content">暂无公告</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Coursera%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80%E8%AF%BE%E7%A8%8B-%E7%AC%AC5%E8%8A%82%E6%80%BB%E7%BB%93"><span class="toc-number">1.</span> <span class="toc-text">Coursera编程语言课程 第5节总结</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%9B%AE%E5%BD%95"><span class="toc-number">1.1.</span> <span class="toc-text">目录</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%8EML%E5%88%87%E6%8D%A2%E5%88%B0Racket"><span class="toc-number">1.2.</span> <span class="toc-text">从ML切换到Racket</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Racket-vs-Scheme"><span class="toc-number">1.3.</span> <span class="toc-text">Racket vs. Scheme</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%A5%E9%97%A8%EF%BC%9A%E5%AE%9A%E4%B9%89%EF%BC%8C%E5%87%BD%E6%95%B0%EF%BC%8C%E5%88%97%E8%A1%A8%EF%BC%88%E5%92%8Cif%EF%BC%89"><span class="toc-number">1.4.</span> <span class="toc-text">入门：定义，函数，列表（和if）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AF%AD%E6%B3%95%E5%92%8C%E6%8B%AC%E5%8F%B7"><span class="toc-number">1.5.</span> <span class="toc-text">语法和括号</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8A%A8%E6%80%81%E7%B1%BB%E5%9E%8B%EF%BC%88%E5%92%8Ccond%EF%BC%89"><span class="toc-number">1.6.</span> <span class="toc-text">动态类型（和cond）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9C%AC%E5%9C%B0%E7%BB%91%E5%AE%9A%EF%BC%9Alet-let-letrec-%E5%B1%80%E9%83%A8define"><span class="toc-number">1.7.</span> <span class="toc-text">本地绑定：let, let*, letrec, 局部define</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%A1%B6%E5%B1%82%E5%AE%9A%E4%B9%89"><span class="toc-number">1.8.</span> <span class="toc-text">顶层定义</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BB%91%E5%AE%9A%E9%80%9A%E5%B8%B8%E6%98%AF%E5%8F%AF%E5%8F%98%E7%9A%84%EF%BC%9Aset-%E5%AD%98%E5%9C%A8"><span class="toc-number">1.9.</span> <span class="toc-text">绑定通常是可变的：set!存在</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%B3%E4%BA%8Econs%E7%9A%84%E7%9C%9F%E7%9B%B8"><span class="toc-number">1.10.</span> <span class="toc-text">关于cons的真相</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Cons%E5%8D%95%E5%85%83%E6%98%AF%E4%B8%8D%E5%8F%AF%E5%8F%98%E7%9A%84%EF%BC%8C%E4%BD%86%E6%98%AF%E6%9C%89mcons"><span class="toc-number">1.11.</span> <span class="toc-text">Cons单元是不可变的，但是有mcons</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BB%B6%E8%BF%9F%E8%AF%84%E4%BC%B0%E5%92%8Cthunks%E7%AE%80%E4%BB%8B"><span class="toc-number">1.12.</span> <span class="toc-text">延迟评估和thunks简介</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B8%A6%E6%9C%89%E5%BB%B6%E8%BF%9F%E5%92%8C%E5%BC%BA%E5%88%B6%E7%9A%84%E6%83%B0%E6%80%A7%E8%AF%84%E4%BC%B0"><span class="toc-number">1.13.</span> <span class="toc-text">带有延迟和强制的惰性评估</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B5%81"><span class="toc-number">1.14.</span> <span class="toc-text">流</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AE%B0%E5%BF%86%E5%8C%96"><span class="toc-number">1.15.</span> <span class="toc-text">记忆化</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%8F%EF%BC%9A%E5%85%B3%E9%94%AE%E7%82%B9"><span class="toc-number">1.16.</span> <span class="toc-text">宏：关键点</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%AF%E9%80%89%EF%BC%9A%E7%AC%A6%E5%8F%B7%E5%8C%96-tokenization-%E3%80%81%E6%8B%AC%E5%8F%B7%E5%8C%96%E5%92%8C%E8%8C%83%E5%9B%B4%E5%8C%96"><span class="toc-number">1.17.</span> <span class="toc-text">可选：符号化(tokenization)、括号化和范围化</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%AF%E9%80%89%EF%BC%9A%E7%94%A8define-syntax%E5%AE%9A%E4%B9%89%E5%AE%8F"><span class="toc-number">1.18.</span> <span class="toc-text">可选：用define-syntax定义宏</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%AF%E9%80%89%EF%BC%9A%E5%8F%98%E9%87%8F%E3%80%81%E5%AE%8F%E5%92%8Chygiene"><span class="toc-number">1.19.</span> <span class="toc-text">可选：变量、宏和hygiene</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%AF%E9%80%89%EF%BC%9A%E6%9B%B4%E5%A4%9A%E7%9A%84%E5%AE%8F%E4%BE%8B%E5%AD%90"><span class="toc-number">1.20.</span> <span class="toc-text">可选：更多的宏例子</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2022/04/04/2022-4-4-Programming-Languages-Part-B-Section7-%E7%BF%BB%E8%AF%91/" title="Programming Languages Part B Section7 翻译"><img src= "/img/loading.gif" data-lazy-src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Programming Languages Part B Section7 翻译"/></a><div class="content"><a class="title" href="/2022/04/04/2022-4-4-Programming-Languages-Part-B-Section7-%E7%BF%BB%E8%AF%91/" title="Programming Languages Part B Section7 翻译">Programming Languages Part B Section7 翻译</a><time datetime="2022-04-04T07:39:00.000Z" title="发表于 2022-04-04 15:39:00">2022-04-04</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/04/04/2022-4-4-Programming-Languages-Part-B-Quiz/" title="Programming Languages Part B Quiz"><img src= "/img/loading.gif" data-lazy-src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Programming Languages Part B Quiz"/></a><div class="content"><a class="title" href="/2022/04/04/2022-4-4-Programming-Languages-Part-B-Quiz/" title="Programming Languages Part B Quiz">Programming Languages Part B Quiz</a><time datetime="2022-04-04T06:21:00.000Z" title="发表于 2022-04-04 14:21:00">2022-04-04</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/04/03/2022-4-3-Programming-Languages-Part-B-Section6-%E7%BF%BB%E8%AF%91/" title="Programming Languages Part B Section6 翻译"><img src= "/img/loading.gif" data-lazy-src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Programming Languages Part B Section6 翻译"/></a><div class="content"><a class="title" href="/2022/04/03/2022-4-3-Programming-Languages-Part-B-Section6-%E7%BF%BB%E8%AF%91/" title="Programming Languages Part B Section6 翻译">Programming Languages Part B Section6 翻译</a><time datetime="2022-04-03T13:09:00.000Z" title="发表于 2022-04-03 21:09:00">2022-04-03</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/04/03/2022-4-3-Programming-Languages-Part-B-Section5-%E7%BF%BB%E8%AF%91/" title="Programming Languages Part B Section5 翻译"><img src= "/img/loading.gif" data-lazy-src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Programming Languages Part B Section5 翻译"/></a><div class="content"><a class="title" href="/2022/04/03/2022-4-3-Programming-Languages-Part-B-Section5-%E7%BF%BB%E8%AF%91/" title="Programming Languages Part B Section5 翻译">Programming Languages Part B Section5 翻译</a><time datetime="2022-04-03T10:04:00.000Z" title="发表于 2022-04-03 18:04:00">2022-04-03</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/04/03/2022-4-3-Programming-Languages-Part-B-HW2-Extra-Practice-Problems/" title="Programming Languages Part B HW2 Extra Practice Problems"><img src= "/img/loading.gif" data-lazy-src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Programming Languages Part B HW2 Extra Practice Problems"/></a><div class="content"><a class="title" href="/2022/04/03/2022-4-3-Programming-Languages-Part-B-HW2-Extra-Practice-Problems/" title="Programming Languages Part B HW2 Extra Practice Problems">Programming Languages Part B HW2 Extra Practice Problems</a><time datetime="2022-04-03T07:44:00.000Z" title="发表于 2022-04-03 15:44:00">2022-04-03</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2018 - 2022 By Doraemonzzz</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="font-plus" type="button" title="放大字体"><i class="fas fa-plus"></i></button><button id="font-minus" type="button" title="缩小字体"><i class="fas fa-minus"></i></button><button id="translateLink" type="button" title="简繁转换">简</button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div id="local-search"><div class="search-dialog"><div class="search-dialog__title" id="local-search-title">本地搜索</div><div id="local-input-panel"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div></div><hr/><div id="local-search-results"></div><span class="search-close-button"><i class="fas fa-times"></i></span></div><div id="search-mask"></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="/js/tw_cn.js"></script><script src="https://cdn.jsdelivr.net/npm/vanilla-lazyload/dist/lazyload.iife.min.js"></script><script src="/js/search/local-search.js"></script><script>var preloader = {
+  endLoading: () => {
+    document.body.style.overflow = 'auto';
+    document.getElementById('loading-box').classList.add("loaded")
+  },
+  initLoading: () => {
+    document.body.style.overflow = '';
+    document.getElementById('loading-box').classList.remove("loaded")
+
+  }
+}
+window.addEventListener('load',preloader.endLoading())</script><div class="js-pjax"><script>if (!window.MathJax) {
+  window.MathJax = {
+    tex: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]],
+      tags: 'ams'
+    },
+    chtml: {
+      scale: 1.25
+    },
+    options: {
+      renderActions: {
+        findScript: [10, doc => {
+          for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+            const display = !!node.type.match(/; *mode=display/)
+            const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+            const text = document.createTextNode('')
+            node.parentNode.replaceChild(text, node)
+            math.start = {node: text, delim: '', n: 0}
+            math.end = {node: text, delim: '', n: 0}
+            doc.math.push(math)
+          }
+        }, '']
+      }
+    }
+  }
+  
+  const script = document.createElement('script')
+  script.src = 'https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js'
+  script.id = 'MathJax-script'
+  script.async = true
+  document.head.appendChild(script)
+} else {
+  MathJax.startup.document.state(0)
+  MathJax.texReset()
+  MathJax.typeset()
+}</script><script>function loadValine () {
+  function initValine () {
+    const valine = new Valine(Object.assign({
+      el: '#vcomment',
+      appId: 'IpnmxCW9CvYWIXbol5QXsegX-MdYXbMMI',
+      appKey: 'w57DVCdbxcyB1TYYagMIMJIU',
+      placeholder: 'Please leave your footprints',
+      avatar: 'monsterid',
+      meta: 'nick,mail,link'.split(','),
+      pageSize: '10',
+      lang: 'en',
+      recordIP: false,
+      serverURLs: '',
+      emojiCDN: '',
+      emojiMaps: "",
+      enableQQ: false,
+      path: window.location.pathname,
+      requiredFields: ["nick,mail"],
+      visitor: true
+    }, null))
+  }
+
+  if (typeof Valine === 'function') initValine() 
+  else getScript('https://cdn.jsdelivr.net/npm/valine/dist/Valine.min.js').then(initValine)
+}
+
+if ('Valine' === 'Valine' || !false) {
+  if (false) btf.loadComment(document.getElementById('vcomment'),loadValine)
+  else setTimeout(loadValine, 0)
+} else {
+  function loadOtherComment () {
+    loadValine()
+  }
+}</script><script>function loadLivere () {
+  if (typeof LivereTower === 'object') {
+    window.LivereTower.init()
+  }
+  else {
+    (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+    })(document, 'script');
+  }
+}
+
+if ('Valine' === 'Livere' || !false) {
+  if (false) btf.loadComment(document.getElementById('lv-container'), loadLivere)
+  else loadLivere()
+}
+else {
+  function loadOtherComment () {
+    loadLivere()
+  }
+}</script></div><script defer="defer" id="fluttering_ribbon" mobile="false" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/canvas-fluttering-ribbon.min.js"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
