@@ -6,7 +6,7 @@
   <link href="http://www.doraemonzzz.com/atom.xml" rel="self"/>
   
   <link href="http://www.doraemonzzz.com/"/>
-  <updated>2022-05-31T14:10:03.379Z</updated>
+  <updated>2022-07-25T15:15:46.131Z</updated>
   <id>http://www.doraemonzzz.com/</id>
   
   <author>
@@ -15,6 +15,43 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Performer和RFA的理论以及实现</title>
+    <link href="http://www.doraemonzzz.com/2022/07/25/2022-7-25-Performer%E5%92%8CRFA%E7%9A%84%E7%90%86%E8%AE%BA%E4%BB%A5%E5%8F%8A%E5%AE%9E%E7%8E%B0/"/>
+    <id>http://www.doraemonzzz.com/2022/07/25/2022-7-25-Performer%E5%92%8CRFA%E7%9A%84%E7%90%86%E8%AE%BA%E4%BB%A5%E5%8F%8A%E5%AE%9E%E7%8E%B0/</id>
+    <published>2022-07-25T13:38:00.000Z</published>
+    <updated>2022-07-25T15:15:46.131Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;参考代码：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;https://github.com/lucidrains/performer-pytorch&quot;&gt;https://github.com/lucidrains/performer-pytorch&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://github.com/Noahs-ARK/RFA&quot;&gt;https://github.com/Noahs-ARK/RFA&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;参考论文：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;https://arxiv.org/abs/2009.14794&quot;&gt;Rethinking Attention with Performers&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://arxiv.org/abs/2103.02143&quot;&gt;Random Feature Attention&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://arxiv.org/abs/1610.09072&quot;&gt;Orthogonal Random Features&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;概述：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;待补充&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;符号参考：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;https://doraemonzzz.gitbook.io/transformer_evolution_paper/notations&quot;&gt;https://doraemonzzz.gitbook.io/transformer_evolution_paper/notations&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</summary>
+    
+    
+    
+    <category term="深度学习" scheme="http://www.doraemonzzz.com/categories/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/"/>
+    
+    
+    <category term="transformer优化" scheme="http://www.doraemonzzz.com/tags/transformer%E4%BC%98%E5%8C%96/"/>
+    
+  </entry>
   
   <entry>
     <title>解封前的纪念</title>
@@ -516,29 +553,6 @@
     
     
     <summary type="html">&lt;p&gt;这次回顾Part B Week 4的内容，主要介绍了静态类型和动态类型的区别。&lt;/p&gt;
-&lt;p&gt;课程主页：&lt;/p&gt;
-&lt;p&gt;&lt;a href=&quot;https://www.coursera.org/learn/programming-languages-part-b/home&quot;&gt;https://www.coursera.org/learn/programming-languages-part-b/home&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;B站搬运：&lt;/p&gt;
-&lt;p&gt;&lt;a href=&quot;https://www.bilibili.com/video/BV1tZ4y1D7&quot;&gt;https://www.bilibili.com/video/BV1tZ4y1D7&lt;/a&gt;&lt;/p&gt;</summary>
-    
-    
-    
-    <category term="函数式编程" scheme="http://www.doraemonzzz.com/categories/%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B/"/>
-    
-    
-    <category term="Coursera Programming Languages" scheme="http://www.doraemonzzz.com/tags/Coursera-Programming-Languages/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Programming Languages Part B Week 3笔记</title>
-    <link href="http://www.doraemonzzz.com/2022/04/03/2022-4-3-Programming-Languages-Part-B-Week-3%E7%AC%94%E8%AE%B0/"/>
-    <id>http://www.doraemonzzz.com/2022/04/03/2022-4-3-Programming-Languages-Part-B-Week-3%E7%AC%94%E8%AE%B0/</id>
-    <published>2022-04-03T06:04:00.000Z</published>
-    <updated>2022-04-03T06:43:50.101Z</updated>
-    
-    
-    <summary type="html">&lt;p&gt;这次回顾Part B Week 3的内容，主要介绍了Struct以及如何在Racket中实现一个简单的编程语言的解释器。&lt;/p&gt;
 &lt;p&gt;课程主页：&lt;/p&gt;
 &lt;p&gt;&lt;a href=&quot;https://www.coursera.org/learn/programming-languages-part-b/home&quot;&gt;https://www.coursera.org/learn/programming-languages-part-b/home&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;B站搬运：&lt;/p&gt;
