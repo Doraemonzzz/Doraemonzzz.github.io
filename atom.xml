@@ -6,7 +6,7 @@
   <link href="http://www.doraemonzzz.com/atom.xml" rel="self"/>
   
   <link href="http://www.doraemonzzz.com/"/>
-  <updated>2022-09-17T05:39:02.717Z</updated>
+  <updated>2022-10-11T15:33:34.813Z</updated>
   <id>http://www.doraemonzzz.com/</id>
   
   <author>
@@ -17,11 +17,68 @@
   <generator uri="https://hexo.io/">Hexo</generator>
   
   <entry>
-    <title>GAMES101 Lecture 5 Rasterization 2  (Antialiasing and Z-Buffering)</title>
-    <link href="http://www.doraemonzzz.com/2022/09/17/2022-9-17-GAMES101-Lecture-5-Rasterization-2/"/>
-    <id>http://www.doraemonzzz.com/2022/09/17/2022-9-17-GAMES101-Lecture-5-Rasterization-2/</id>
+    <title>GAMES101 Lecture 7 Shading 1 (Illumination Shading and  Graphics Pipeline)</title>
+    <link href="http://www.doraemonzzz.com/2022/10/11/2022-10-11-GAMES101-Lecture-7-Shading-1-(Illumination-Shading-and/"/>
+    <id>http://www.doraemonzzz.com/2022/10/11/2022-10-11-GAMES101-Lecture-7-Shading-1-(Illumination-Shading-and/</id>
+    <published>2022-10-11T14:13:00.000Z</published>
+    <updated>2022-10-11T15:33:34.813Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;这里回顾GAMES101 Lecture 7，着色（光照与基本着色模型）。&lt;/p&gt;
+&lt;p&gt;课程主页：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;https://sites.cs.ucsb.edu/~lingqi/teaching/games101.html&quot;&gt;https://sites.cs.ucsb.edu/~lingqi/teaching/games101.html&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;课程作业：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;http://games-cn.org/forums/topic/allhw/&quot;&gt;http://games-cn.org/forums/topic/allhw/&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;课程视频：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;https://www.bilibili.com/video/BV1X7411F744?spm_id_from=333.337.search-card.all.click&quot;&gt;https://www.bilibili.com/video/BV1X7411F744?spm_id_from=333.337.search-card.all.click&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</summary>
+    
+    
+    
+    <category term="计算机图形学" scheme="http://www.doraemonzzz.com/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6/"/>
+    
+    
+    <category term="GAMES101" scheme="http://www.doraemonzzz.com/tags/GAMES101/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>torch/numpy中max和argmax的关系</title>
+    <link href="http://www.doraemonzzz.com/2022/09/18/2022-9-18-torchnumpy%E4%B8%ADmax%E5%92%8Cargmax%E7%9A%84%E5%85%B3%E7%B3%BB/"/>
+    <id>http://www.doraemonzzz.com/2022/09/18/2022-9-18-torchnumpy%E4%B8%ADmax%E5%92%8Cargmax%E7%9A%84%E5%85%B3%E7%B3%BB/</id>
+    <published>2022-09-18T13:23:00.000Z</published>
+    <updated>2022-09-18T15:23:42.325Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;今天在使用torch/numpy中的argmax碰到一点问题，花了一些时间总算理解了其和max关系，这里简单总结一下。&lt;/p&gt;
+&lt;p&gt;参考资料：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;https://stackoverflow.com/questions/40357335/numpy-how-to-get-a-max-from-an-argmax-result&quot;&gt;https://stackoverflow.com/questions/40357335/numpy-how-to-get-a-max-from-an-argmax-result&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://numpy.org/doc/stable/reference/generated/numpy.ix_.html&quot;&gt;https://numpy.org/doc/stable/reference/generated/numpy.ix_.html&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://pytorch.org/docs/stable/generated/torch.meshgrid.html&quot;&gt;https://pytorch.org/docs/stable/generated/torch.meshgrid.html&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://docs.scipy.org/doc/numpy-1.10.1/reference/arrays.indexing.html#advanced-indexing&quot;&gt;https://docs.scipy.org/doc/numpy-1.10.1/reference/arrays.indexing.html#advanced-indexing&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</summary>
+    
+    
+    
+    <category term="深度学习" scheme="http://www.doraemonzzz.com/categories/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/"/>
+    
+    
+    <category term="pytorch" scheme="http://www.doraemonzzz.com/tags/pytorch/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>GAMES101 Lecture 6 Rasterization 2  (Antialiasing and Z-Buffering)</title>
+    <link href="http://www.doraemonzzz.com/2022/09/17/2022-9-17-GAMES101-Lecture-6-Rasterization-2/"/>
+    <id>http://www.doraemonzzz.com/2022/09/17/2022-9-17-GAMES101-Lecture-6-Rasterization-2/</id>
     <published>2022-09-17T03:36:00.000Z</published>
-    <updated>2022-09-17T05:39:02.717Z</updated>
+    <updated>2022-10-11T14:21:58.635Z</updated>
     
     
     <summary type="html">&lt;p&gt;这里回顾GAMES101 Lecture 6，光栅化（深度测试与抗锯齿）。&lt;/p&gt;
@@ -575,69 +632,6 @@
 &lt;p&gt;参考资料：&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;a href=&quot;https://github.com/joshuap233/Operating-Systems-Three-Easy-Pieces-NOTES/blob/main/15.%E7%AC%AC%E5%8D%81%E4%BA%94%E7%AB%A0-%E6%9C%BA%E5%88%B6:%E5%9C%B0%E5%9D%80%E8%BD%AC%E6%8D%A2/%E9%97%AE%E9%A2%98%E7%AD%94%E6%A1%88.md&quot;&gt;https://github.com/joshuap233/Operating-Systems-Three-Easy-Pieces-NOTES/blob/main/15.%E7%AC%AC%E5%8D%81%E4%BA%94%E7%AB%A0-%E6%9C%BA%E5%88%B6:%E5%9C%B0%E5%9D%80%E8%BD%AC%E6%8D%A2/%E9%97%AE%E9%A2%98%E7%AD%94%E6%A1%88.md&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;</summary>
-    
-    
-    
-    <category term="操作系统" scheme="http://www.doraemonzzz.com/categories/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/"/>
-    
-    
-    <category term="OSTEP" scheme="http://www.doraemonzzz.com/tags/OSTEP/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>OSTEP Chapter 14 回顾</title>
-    <link href="http://www.doraemonzzz.com/2022/04/04/2022-4-4-OSTEP-Chapter-14-%E5%9B%9E%E9%A1%BE/"/>
-    <id>http://www.doraemonzzz.com/2022/04/04/2022-4-4-OSTEP-Chapter-14-%E5%9B%9E%E9%A1%BE/</id>
-    <published>2022-04-04T14:34:00.000Z</published>
-    <updated>2022-04-04T14:47:52.183Z</updated>
-    
-    
-    <summary type="html">&lt;p&gt;这里回顾第14章，本章介绍了插叙：内存操作API。&lt;/p&gt;
-&lt;p&gt;书籍介绍：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&quot;https://book.douban.com/subject/34994608/&quot;&gt;https://book.douban.com/subject/34994608/&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;学习资料：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&quot;https://pages.cs.wisc.edu/~remzi/OSTEP/&quot;&gt;https://pages.cs.wisc.edu/~remzi/OSTEP/&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;https://github.com/remzi-arpacidusseau/ostep-translations/tree/master/chinese&quot;&gt;https://github.com/remzi-arpacidusseau/ostep-translations/tree/master/chinese&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;https://github.com/joshuap233/Operating-Systems-Three-Easy-Pieces-NOTES&quot;&gt;https://github.com/joshuap233/Operating-Systems-Three-Easy-Pieces-NOTES&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;参考资料：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&quot;https://stackoverflow.com/questions/29459957/program-received-signal-sigabrt-aborted&quot;&gt;https://stackoverflow.com/questions/29459957/program-received-signal-sigabrt-aborted&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;https://github.com/joshuap233/Operating-Systems-Three-Easy-Pieces-NOTES/blob/main/14.%E7%AC%AC%E5%8D%81%E5%9B%9B%E7%AB%A0-%E6%8F%92%E5%8F%99:%E5%86%85%E5%AD%98%E6%93%8D%E4%BD%9Capi/code/7.c&quot;&gt;https://github.com/joshuap233/Operating-Systems-Three-Easy-Pieces-NOTES/blob/main/14.%E7%AC%AC%E5%8D%81%E5%9B%9B%E7%AB%A0-%E6%8F%92%E5%8F%99:%E5%86%85%E5%AD%98%E6%93%8D%E4%BD%9Capi/code/7.c&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;</summary>
-    
-    
-    
-    <category term="操作系统" scheme="http://www.doraemonzzz.com/categories/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/"/>
-    
-    
-    <category term="OSTEP" scheme="http://www.doraemonzzz.com/tags/OSTEP/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>OSTEP Chapter 13 回顾</title>
-    <link href="http://www.doraemonzzz.com/2022/04/04/2022-4-4-OSTEP-Chapter-13-%E5%9B%9E%E9%A1%BE/"/>
-    <id>http://www.doraemonzzz.com/2022/04/04/2022-4-4-OSTEP-Chapter-13-%E5%9B%9E%E9%A1%BE/</id>
-    <published>2022-04-04T14:10:00.000Z</published>
-    <updated>2022-04-04T14:17:40.847Z</updated>
-    
-    
-    <summary type="html">&lt;p&gt;这里回顾第13章，本章介绍了抽象：地址空间。&lt;/p&gt;
-&lt;p&gt;书籍介绍：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&quot;https://book.douban.com/subject/34994608/&quot;&gt;https://book.douban.com/subject/34994608/&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;学习资料：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&quot;https://pages.cs.wisc.edu/~remzi/OSTEP/&quot;&gt;https://pages.cs.wisc.edu/~remzi/OSTEP/&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;https://github.com/remzi-arpacidusseau/ostep-translations/tree/master/chinese&quot;&gt;https://github.com/remzi-arpacidusseau/ostep-translations/tree/master/chinese&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;https://github.com/joshuap233/Operating-Systems-Three-Easy-Pieces-NOTES&quot;&gt;https://github.com/joshuap233/Operating-Systems-Three-Easy-Pieces-NOTES&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;</summary>
     
     
