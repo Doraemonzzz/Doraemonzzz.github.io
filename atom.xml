@@ -6,7 +6,7 @@
   <link href="http://www.doraemonzzz.com/atom.xml" rel="self"/>
   
   <link href="http://www.doraemonzzz.com/"/>
-  <updated>2022-10-11T15:33:34.813Z</updated>
+  <updated>2022-10-18T15:03:09.878Z</updated>
   <id>http://www.doraemonzzz.com/</id>
   
   <author>
@@ -17,11 +17,236 @@
   <generator uri="https://hexo.io/">Hexo</generator>
   
   <entry>
-    <title>GAMES101 Lecture 7 Shading 1 (Illumination Shading and  Graphics Pipeline)</title>
-    <link href="http://www.doraemonzzz.com/2022/10/11/2022-10-11-GAMES101-Lecture-7-Shading-1-(Illumination-Shading-and/"/>
-    <id>http://www.doraemonzzz.com/2022/10/11/2022-10-11-GAMES101-Lecture-7-Shading-1-(Illumination-Shading-and/</id>
+    <title>Deep Learning Systems HW1</title>
+    <link href="http://www.doraemonzzz.com/2022/10/17/2022-10-17-Deep-Learning-Systems-HW1/"/>
+    <id>http://www.doraemonzzz.com/2022/10/17/2022-10-17-Deep-Learning-Systems-HW1/</id>
+    <published>2022-10-17T15:15:00.000Z</published>
+    <updated>2022-10-18T15:03:09.878Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;这里回顾HW1，主要是实现一个基本的自动微分框架。&lt;/p&gt;
+&lt;p&gt;课程主页：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;https://dlsyscourse.org/&quot;&gt;https://dlsyscourse.org/&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://forum.dlsyscourse.org/&quot;&gt;https://forum.dlsyscourse.org/&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://mugrade-online.dlsyscourse.org/&quot;&gt;https://mugrade-online.dlsyscourse.org/&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;参考资料：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;https://forum.dlsyscourse.org/t/q3-topologic-sort-inputs-is-not-a-node-list-solved/1995&quot;&gt;https://forum.dlsyscourse.org/t/q3-topologic-sort-inputs-is-not-a-node-list-solved/1995&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://blog.csdn.net/qq_34384524/article/details/86892864&quot;&gt;https://blog.csdn.net/qq_34384524/article/details/86892864&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://en.wikipedia.org/wiki/Topological_sorting#Depth-first_search&quot;&gt;https://en.wikipedia.org/wiki/Topological_sorting#Depth-first_search&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://forum.dlsyscourse.org/t/q4-how-to-multiply-the-partial-derivative/2131&quot;&gt;https://forum.dlsyscourse.org/t/q4-how-to-multiply-the-partial-derivative/2131&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://forum.dlsyscourse.org/t/q4-reverse-mode-ad-test-throws-grad-attributeerror-for-tensor-object/2035&quot;&gt;https://forum.dlsyscourse.org/t/q4-reverse-mode-ad-test-throws-grad-attributeerror-for-tensor-object/2035&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://forum.dlsyscourse.org/t/not-understand-several-sentences-meaning-in-hw1/2090/2&quot;&gt;https://forum.dlsyscourse.org/t/not-understand-several-sentences-meaning-in-hw1/2090/2&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://blog.csdn.net/qq1483661204/article/details/70543952&quot;&gt;https://blog.csdn.net/qq1483661204/article/details/70543952&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</summary>
+    
+    
+    
+    <category term="深度学习" scheme="http://www.doraemonzzz.com/categories/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/"/>
+    
+    
+    <category term="深度学习系统" scheme="http://www.doraemonzzz.com/tags/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E7%B3%BB%E7%BB%9F/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Deep Learning Systems HW0</title>
+    <link href="http://www.doraemonzzz.com/2022/10/17/2022-10-17-Deep-Learning-Systems-HW0/"/>
+    <id>http://www.doraemonzzz.com/2022/10/17/2022-10-17-Deep-Learning-Systems-HW0/</id>
+    <published>2022-10-17T14:19:00.000Z</published>
+    <updated>2022-10-17T15:15:10.960Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;这里回顾HW0，主要是熟悉代码和复现一些基本的反传。&lt;/p&gt;
+&lt;p&gt;课程主页：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;https://dlsyscourse.org/&quot;&gt;https://dlsyscourse.org/&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://forum.dlsyscourse.org/&quot;&gt;https://forum.dlsyscourse.org/&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://mugrade-online.dlsyscourse.org/&quot;&gt;https://mugrade-online.dlsyscourse.org/&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;参考资料：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;https://github.com/hsjeong5/MNIST-for-Numpy/blob/master/mnist.py&quot;&gt;https://github.com/hsjeong5/MNIST-for-Numpy/blob/master/mnist.py&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://mattpetersen.github.io/load-mnist-with-numpy&quot;&gt;https://mattpetersen.github.io/load-mnist-with-numpy&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</summary>
+    
+    
+    
+    <category term="深度学习" scheme="http://www.doraemonzzz.com/categories/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/"/>
+    
+    
+    <category term="深度学习系统" scheme="http://www.doraemonzzz.com/tags/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E7%B3%BB%E7%BB%9F/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Deep Learning Systems 开发环境配置</title>
+    <link href="http://www.doraemonzzz.com/2022/10/16/2022-10-16-Deep-Learning-Systems-%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/"/>
+    <id>http://www.doraemonzzz.com/2022/10/16/2022-10-16-Deep-Learning-Systems-%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/</id>
+    <published>2022-10-16T15:13:00.000Z</published>
+    <updated>2022-10-17T15:14:01.977Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;最近开始学习Deep Learning Systems，这里介绍下开发环境配置的问题。&lt;/p&gt;
+&lt;p&gt;课程主页：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;https://dlsyscourse.org/&quot;&gt;https://dlsyscourse.org/&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://forum.dlsyscourse.org/&quot;&gt;https://forum.dlsyscourse.org/&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://mugrade-online.dlsyscourse.org/&quot;&gt;https://mugrade-online.dlsyscourse.org/&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;参考资料：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;https://github.com/WassimBenzarti/colab-ssh&quot;&gt;https://github.com/WassimBenzarti/colab-ssh&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://www.youtube.com/watch?v=RMCRwjnv2MI&quot;&gt;https://www.youtube.com/watch?v=RMCRwjnv2MI&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</summary>
+    
+    
+    
+    <category term="深度学习" scheme="http://www.doraemonzzz.com/categories/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/"/>
+    
+    
+    <category term="深度学习系统" scheme="http://www.doraemonzzz.com/tags/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E7%B3%BB%E7%BB%9F/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>GAMES101 HW3</title>
+    <link href="http://www.doraemonzzz.com/2022/10/16/2022-10-16-GAMES101-HW3/"/>
+    <id>http://www.doraemonzzz.com/2022/10/16/2022-10-16-GAMES101-HW3/</id>
+    <published>2022-10-16T10:55:00.000Z</published>
+    <updated>2022-10-16T12:48:42.575Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;这里回顾GAMES101 HW3，这次作业的内容是Pipeline and Shading。&lt;/p&gt;
+&lt;p&gt;课程主页：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;https://sites.cs.ucsb.edu/~lingqi/teaching/games101.html&quot;&gt;https://sites.cs.ucsb.edu/~lingqi/teaching/games101.html&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;课程作业：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;http://games-cn.org/forums/topic/allhw/&quot;&gt;http://games-cn.org/forums/topic/allhw/&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;课程视频：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;https://www.bilibili.com/video/BV1X7411F744?spm_id_from=333.337.search-card.all.click&quot;&gt;https://www.bilibili.com/video/BV1X7411F744?spm_id_from=333.337.search-card.all.click&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;参考资料：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;https://logic-three-body.github.io/post/games101-greaterassignment3-shader-and-graphic-pipeline/&quot;&gt;https://logic-three-body.github.io/post/games101-greaterassignment3-shader-and-graphic-pipeline/&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://games-cn.org/forums/topic/zuoye3faxiantietugenweiyitietulidekhhekndoushisha/&quot;&gt;https://games-cn.org/forums/topic/zuoye3faxiantietugenweiyitietulidekhhekndoushisha/&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;http://games-cn.org/forums/topic/%e4%bd%9c%e4%b8%9a3%e6%9b%b4%e6%ad%a3%e5%85%ac%e5%91%8a/&quot;&gt;http://games-cn.org/forums/topic/%e4%bd%9c%e4%b8%9a3%e6%9b%b4%e6%ad%a3%e5%85%ac%e5%91%8a/&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</summary>
+    
+    
+    
+    <category term="计算机图形学" scheme="http://www.doraemonzzz.com/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6/"/>
+    
+    
+    <category term="GAMES101" scheme="http://www.doraemonzzz.com/tags/GAMES101/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>GAMES102 Lecture 10 Geometry 1 (Introduction)</title>
+    <link href="http://www.doraemonzzz.com/2022/10/16/2022-10-16-GAMES102-Lecture-10-Geometry-1-(Introduction)/"/>
+    <id>http://www.doraemonzzz.com/2022/10/16/2022-10-16-GAMES102-Lecture-10-Geometry-1-(Introduction)/</id>
+    <published>2022-10-16T01:54:00.000Z</published>
+    <updated>2022-10-16T03:57:45.744Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;这里回顾GAMES101 Lecture 10，这一讲完成了着色，并介绍了几何（基本表示方法）。&lt;/p&gt;
+&lt;p&gt;课程主页：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;https://sites.cs.ucsb.edu/~lingqi/teaching/games101.html&quot;&gt;https://sites.cs.ucsb.edu/~lingqi/teaching/games101.html&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;课程作业：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;http://games-cn.org/forums/topic/allhw/&quot;&gt;http://games-cn.org/forums/topic/allhw/&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;课程视频：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;https://www.bilibili.com/video/BV1X7411F744?spm_id_from=333.337.search-card.all.click&quot;&gt;https://www.bilibili.com/video/BV1X7411F744?spm_id_from=333.337.search-card.all.click&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</summary>
+    
+    
+    
+    <category term="计算机图形学" scheme="http://www.doraemonzzz.com/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6/"/>
+    
+    
+    <category term="GAMES101" scheme="http://www.doraemonzzz.com/tags/GAMES101/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>GAMES102 Lecture 9 Shading 3 (Texture Mapping cont)</title>
+    <link href="http://www.doraemonzzz.com/2022/10/13/2022-10-13-GAMES102-Lecture-9-Shading-3-(Texture-Mapping-cont)/"/>
+    <id>http://www.doraemonzzz.com/2022/10/13/2022-10-13-GAMES102-Lecture-9-Shading-3-(Texture-Mapping-cont)/</id>
+    <published>2022-10-13T14:17:00.000Z</published>
+    <updated>2022-10-16T01:53:37.369Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;这里回顾GAMES101 Lecture 9，着色（插值、高级纹理映射）。&lt;/p&gt;
+&lt;p&gt;课程主页：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;https://sites.cs.ucsb.edu/~lingqi/teaching/games101.html&quot;&gt;https://sites.cs.ucsb.edu/~lingqi/teaching/games101.html&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;课程作业：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;http://games-cn.org/forums/topic/allhw/&quot;&gt;http://games-cn.org/forums/topic/allhw/&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;课程视频：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;https://www.bilibili.com/video/BV1X7411F744?spm_id_from=333.337.search-card.all.click&quot;&gt;https://www.bilibili.com/video/BV1X7411F744?spm_id_from=333.337.search-card.all.click&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</summary>
+    
+    
+    
+    <category term="计算机图形学" scheme="http://www.doraemonzzz.com/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6/"/>
+    
+    
+    <category term="GAMES101" scheme="http://www.doraemonzzz.com/tags/GAMES101/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>GAMES102 Lecture 8 Shading 2 (Illumination Shading and Graphics Pipeline)</title>
+    <link href="http://www.doraemonzzz.com/2022/10/12/2022-10-12-GAMES101-Lecture-8-Shading-2-(Illumination-Shading-and-Graphics-Pipeline)/"/>
+    <id>http://www.doraemonzzz.com/2022/10/12/2022-10-12-GAMES101-Lecture-8-Shading-2-(Illumination-Shading-and-Graphics-Pipeline)/</id>
+    <published>2022-10-12T13:48:00.000Z</published>
+    <updated>2022-10-12T15:42:05.796Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;这里回顾GAMES101 Lecture 8，着色（光照与基本着色模型）。&lt;/p&gt;
+&lt;p&gt;课程主页：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;https://sites.cs.ucsb.edu/~lingqi/teaching/games101.html&quot;&gt;https://sites.cs.ucsb.edu/~lingqi/teaching/games101.html&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;课程作业：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;http://games-cn.org/forums/topic/allhw/&quot;&gt;http://games-cn.org/forums/topic/allhw/&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;课程视频：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;https://www.bilibili.com/video/BV1X7411F744?spm_id_from=333.337.search-card.all.click&quot;&gt;https://www.bilibili.com/video/BV1X7411F744?spm_id_from=333.337.search-card.all.click&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</summary>
+    
+    
+    
+    <category term="计算机图形学" scheme="http://www.doraemonzzz.com/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6/"/>
+    
+    
+    <category term="GAMES101" scheme="http://www.doraemonzzz.com/tags/GAMES101/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>GAMES101 Lecture 7 Shading 1 (Illumination Shading and Graphics Pipeline)</title>
+    <link href="http://www.doraemonzzz.com/2022/10/11/2022-10-11-GAMES101-Lecture-7-Shading-1-(Illumination-Shading-and-Graphics-Pipeline)/"/>
+    <id>http://www.doraemonzzz.com/2022/10/11/2022-10-11-GAMES101-Lecture-7-Shading-1-(Illumination-Shading-and-Graphics-Pipeline)/</id>
     <published>2022-10-11T14:13:00.000Z</published>
-    <updated>2022-10-11T15:33:34.813Z</updated>
+    <updated>2022-10-12T13:52:40.287Z</updated>
     
     
     <summary type="html">&lt;p&gt;这里回顾GAMES101 Lecture 7，着色（光照与基本着色模型）。&lt;/p&gt;
@@ -435,211 +660,6 @@
     
     
     <category term="变分法" scheme="http://www.doraemonzzz.com/tags/%E5%8F%98%E5%88%86%E6%B3%95/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>变分法 Lecture 1 变分学的几个经典例子</title>
-    <link href="http://www.doraemonzzz.com/2022/08/14/2022-8-14-%E5%8F%98%E5%88%86%E6%B3%95-Lecture-1-%E5%8F%98%E5%88%86%E5%AD%A6%E7%9A%84%E5%87%A0%E4%B8%AA%E7%BB%8F%E5%85%B8%E4%BE%8B%E5%AD%90/"/>
-    <id>http://www.doraemonzzz.com/2022/08/14/2022-8-14-%E5%8F%98%E5%88%86%E6%B3%95-Lecture-1-%E5%8F%98%E5%88%86%E5%AD%A6%E7%9A%84%E5%87%A0%E4%B8%AA%E7%BB%8F%E5%85%B8%E4%BE%8B%E5%AD%90/</id>
-    <published>2022-08-14T08:45:00.000Z</published>
-    <updated>2022-08-14T14:42:34.285Z</updated>
-    
-    
-    <summary type="html">&lt;p&gt;这段时间主要精力都在炼丹，魔改网络结构上，公开课不知不觉落下许多，最近准备继续投入精力进行学习，主要集中于一些数学基础课程上，最先开始的是変分学，这里列出一些学习资料：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&quot;https://www.bilibili.com/video/BV1Fr4y1V7BS?p=22&amp;amp;spm_id_from=333.1007.top_right_bar_window_history.content.click&quot;&gt;公开课视频&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;http://ocw.nctu.edu.tw/course_detail-c.php?bgid=1&amp;amp;gid=1&amp;amp;nid=171&amp;amp;pid=170&quot;&gt;公开课主页&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;https://ochicken.top/Library/Mathematics/Functional_Analysis/%E9%92%B1%E4%BC%9F%E9%95%BF%20-%20%E5%8F%98%E5%88%86%E6%B3%95%E5%8F%8A%E6%9C%89%E9%99%90%E5%85%83(%E4%B8%8A%E5%86%8C&quot;&gt;变分法及有限元&lt;/a&gt;.pdf)&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;https://github.com/orcax/todo/blob/master/%E3%80%8A%E5%8F%98%E5%88%86%E6%B3%95%E5%9F%BA%E7%A1%80(%E7%AC%AC2%E7%89%88&quot;&gt;变分法基础&lt;/a&gt;%E3%80%8B%E8%80%81%E5%A4%A7%E4%B8%AD.pdf)&lt;/li&gt;
-&lt;/ul&gt;</summary>
-    
-    
-    
-    <category term="数学" scheme="http://www.doraemonzzz.com/categories/%E6%95%B0%E5%AD%A6/"/>
-    
-    
-    <category term="变分法" scheme="http://www.doraemonzzz.com/tags/%E5%8F%98%E5%88%86%E6%B3%95/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Performer和RFA的理论以及实现</title>
-    <link href="http://www.doraemonzzz.com/2022/07/25/2022-7-25-Performer%E5%92%8CRFA%E7%9A%84%E7%90%86%E8%AE%BA%E4%BB%A5%E5%8F%8A%E5%AE%9E%E7%8E%B0/"/>
-    <id>http://www.doraemonzzz.com/2022/07/25/2022-7-25-Performer%E5%92%8CRFA%E7%9A%84%E7%90%86%E8%AE%BA%E4%BB%A5%E5%8F%8A%E5%AE%9E%E7%8E%B0/</id>
-    <published>2022-07-25T13:38:00.000Z</published>
-    <updated>2022-07-25T15:15:46.131Z</updated>
-    
-    
-    <summary type="html">&lt;p&gt;参考代码：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&quot;https://github.com/lucidrains/performer-pytorch&quot;&gt;https://github.com/lucidrains/performer-pytorch&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;https://github.com/Noahs-ARK/RFA&quot;&gt;https://github.com/Noahs-ARK/RFA&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;参考论文：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&quot;https://arxiv.org/abs/2009.14794&quot;&gt;Rethinking Attention with Performers&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;https://arxiv.org/abs/2103.02143&quot;&gt;Random Feature Attention&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;https://arxiv.org/abs/1610.09072&quot;&gt;Orthogonal Random Features&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;概述：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;待补充&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;符号参考：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&quot;https://doraemonzzz.gitbook.io/transformer_evolution_paper/notations&quot;&gt;https://doraemonzzz.gitbook.io/transformer_evolution_paper/notations&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;</summary>
-    
-    
-    
-    <category term="深度学习" scheme="http://www.doraemonzzz.com/categories/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/"/>
-    
-    
-    <category term="transformer优化" scheme="http://www.doraemonzzz.com/tags/transformer%E4%BC%98%E5%8C%96/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>解封前的纪念</title>
-    <link href="http://www.doraemonzzz.com/2022/05/31/2022-5-31-%E8%A7%A3%E5%B0%81%E5%89%8D%E7%9A%84%E7%BA%AA%E5%BF%B5/"/>
-    <id>http://www.doraemonzzz.com/2022/05/31/2022-5-31-%E8%A7%A3%E5%B0%81%E5%89%8D%E7%9A%84%E7%BA%AA%E5%BF%B5/</id>
-    <published>2022-05-31T13:54:28.000Z</published>
-    <updated>2022-05-31T14:10:03.379Z</updated>
-    
-    
-    <summary type="html">&lt;p&gt;明天开始上海逐步恢复正常了，正好5月没写过博客，这里写篇博客做个纪念。&lt;/p&gt;</summary>
-    
-    
-    
-    <category term="随笔" scheme="http://www.doraemonzzz.com/categories/%E9%9A%8F%E7%AC%94/"/>
-    
-    
-    <category term="杂谈" scheme="http://www.doraemonzzz.com/tags/%E6%9D%82%E8%B0%88/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>OSTEP Chapter 18 回顾</title>
-    <link href="http://www.doraemonzzz.com/2022/04/04/2022-4-4-OSTEP-Chapter-18-%E5%9B%9E%E9%A1%BE/"/>
-    <id>http://www.doraemonzzz.com/2022/04/04/2022-4-4-OSTEP-Chapter-18-%E5%9B%9E%E9%A1%BE/</id>
-    <published>2022-04-04T15:08:00.000Z</published>
-    <updated>2022-04-04T15:09:05.843Z</updated>
-    
-    
-    <summary type="html">&lt;p&gt;这里回顾第18章，本章介绍了分页。&lt;/p&gt;
-&lt;p&gt;书籍介绍：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&quot;https://book.douban.com/subject/34994608/&quot;&gt;https://book.douban.com/subject/34994608/&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;学习资料：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&quot;https://pages.cs.wisc.edu/~remzi/OSTEP/&quot;&gt;https://pages.cs.wisc.edu/~remzi/OSTEP/&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;https://github.com/remzi-arpacidusseau/ostep-translations/tree/master/chinese&quot;&gt;https://github.com/remzi-arpacidusseau/ostep-translations/tree/master/chinese&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;https://github.com/joshuap233/Operating-Systems-Three-Easy-Pieces-NOTES&quot;&gt;https://github.com/joshuap233/Operating-Systems-Three-Easy-Pieces-NOTES&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;</summary>
-    
-    
-    
-    <category term="操作系统" scheme="http://www.doraemonzzz.com/categories/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/"/>
-    
-    
-    <category term="OSTEP" scheme="http://www.doraemonzzz.com/tags/OSTEP/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>OSTEP Chapter 17 回顾</title>
-    <link href="http://www.doraemonzzz.com/2022/04/04/2022-4-4-OSTEP-Chapter-17-%E5%9B%9E%E9%A1%BE/"/>
-    <id>http://www.doraemonzzz.com/2022/04/04/2022-4-4-OSTEP-Chapter-17-%E5%9B%9E%E9%A1%BE/</id>
-    <published>2022-04-04T14:58:00.000Z</published>
-    <updated>2022-04-04T14:59:16.190Z</updated>
-    
-    
-    <summary type="html">&lt;p&gt;这里回顾第17章，本章介绍了空闲空间管理。&lt;/p&gt;
-&lt;p&gt;书籍介绍：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&quot;https://book.douban.com/subject/34994608/&quot;&gt;https://book.douban.com/subject/34994608/&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;学习资料：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&quot;https://pages.cs.wisc.edu/~remzi/OSTEP/&quot;&gt;https://pages.cs.wisc.edu/~remzi/OSTEP/&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;https://github.com/remzi-arpacidusseau/ostep-translations/tree/master/chinese&quot;&gt;https://github.com/remzi-arpacidusseau/ostep-translations/tree/master/chinese&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;https://github.com/joshuap233/Operating-Systems-Three-Easy-Pieces-NOTES&quot;&gt;https://github.com/joshuap233/Operating-Systems-Three-Easy-Pieces-NOTES&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;</summary>
-    
-    
-    
-    <category term="操作系统" scheme="http://www.doraemonzzz.com/categories/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/"/>
-    
-    
-    <category term="OSTEP" scheme="http://www.doraemonzzz.com/tags/OSTEP/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>OSTEP Chapter 16 回顾</title>
-    <link href="http://www.doraemonzzz.com/2022/04/04/2022-4-4-OSTEP-Chapter-16-%E5%9B%9E%E9%A1%BE/"/>
-    <id>http://www.doraemonzzz.com/2022/04/04/2022-4-4-OSTEP-Chapter-16-%E5%9B%9E%E9%A1%BE/</id>
-    <published>2022-04-04T14:54:00.000Z</published>
-    <updated>2022-04-04T14:54:59.868Z</updated>
-    
-    
-    <summary type="html">&lt;p&gt;这里回顾第16章，本章介绍了分段。&lt;/p&gt;
-&lt;p&gt;书籍介绍：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&quot;https://book.douban.com/subject/34994608/&quot;&gt;https://book.douban.com/subject/34994608/&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;学习资料：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&quot;https://pages.cs.wisc.edu/~remzi/OSTEP/&quot;&gt;https://pages.cs.wisc.edu/~remzi/OSTEP/&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;https://github.com/remzi-arpacidusseau/ostep-translations/tree/master/chinese&quot;&gt;https://github.com/remzi-arpacidusseau/ostep-translations/tree/master/chinese&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;https://github.com/joshuap233/Operating-Systems-Three-Easy-Pieces-NOTES&quot;&gt;https://github.com/joshuap233/Operating-Systems-Three-Easy-Pieces-NOTES&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;参考资料：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&quot;https://github.com/joshuap233/Operating-Systems-Three-Easy-Pieces-NOTES/blob/main/15.%E7%AC%AC%E5%8D%81%E4%BA%94%E7%AB%A0-%E6%9C%BA%E5%88%B6:%E5%9C%B0%E5%9D%80%E8%BD%AC%E6%8D%A2/%E9%97%AE%E9%A2%98%E7%AD%94%E6%A1%88.md&quot;&gt;https://pages.cs.wisc.edu/~remzi/OSTEP/vm-segmentation.pdf&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;</summary>
-    
-    
-    
-    <category term="操作系统" scheme="http://www.doraemonzzz.com/categories/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/"/>
-    
-    
-    <category term="OSTEP" scheme="http://www.doraemonzzz.com/tags/OSTEP/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>OSTEP Chapter 15 回顾</title>
-    <link href="http://www.doraemonzzz.com/2022/04/04/2022-4-4-OSTEP-Chapter-15-%E5%9B%9E%E9%A1%BE/"/>
-    <id>http://www.doraemonzzz.com/2022/04/04/2022-4-4-OSTEP-Chapter-15-%E5%9B%9E%E9%A1%BE/</id>
-    <published>2022-04-04T14:48:00.000Z</published>
-    <updated>2022-04-04T14:48:51.862Z</updated>
-    
-    
-    <summary type="html">&lt;p&gt;这里回顾第15章，本章介绍了机制：地址转换。&lt;/p&gt;
-&lt;p&gt;书籍介绍：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&quot;https://book.douban.com/subject/34994608/&quot;&gt;https://book.douban.com/subject/34994608/&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;学习资料：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&quot;https://pages.cs.wisc.edu/~remzi/OSTEP/&quot;&gt;https://pages.cs.wisc.edu/~remzi/OSTEP/&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;https://github.com/remzi-arpacidusseau/ostep-translations/tree/master/chinese&quot;&gt;https://github.com/remzi-arpacidusseau/ostep-translations/tree/master/chinese&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;https://github.com/joshuap233/Operating-Systems-Three-Easy-Pieces-NOTES&quot;&gt;https://github.com/joshuap233/Operating-Systems-Three-Easy-Pieces-NOTES&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;参考资料：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&quot;https://github.com/joshuap233/Operating-Systems-Three-Easy-Pieces-NOTES/blob/main/15.%E7%AC%AC%E5%8D%81%E4%BA%94%E7%AB%A0-%E6%9C%BA%E5%88%B6:%E5%9C%B0%E5%9D%80%E8%BD%AC%E6%8D%A2/%E9%97%AE%E9%A2%98%E7%AD%94%E6%A1%88.md&quot;&gt;https://github.com/joshuap233/Operating-Systems-Three-Easy-Pieces-NOTES/blob/main/15.%E7%AC%AC%E5%8D%81%E4%BA%94%E7%AB%A0-%E6%9C%BA%E5%88%B6:%E5%9C%B0%E5%9D%80%E8%BD%AC%E6%8D%A2/%E9%97%AE%E9%A2%98%E7%AD%94%E6%A1%88.md&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;</summary>
-    
-    
-    
-    <category term="操作系统" scheme="http://www.doraemonzzz.com/categories/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/"/>
-    
-    
-    <category term="OSTEP" scheme="http://www.doraemonzzz.com/tags/OSTEP/"/>
     
   </entry>
   
