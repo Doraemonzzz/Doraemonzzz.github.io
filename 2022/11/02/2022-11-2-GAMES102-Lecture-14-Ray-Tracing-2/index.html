@@ -1,0 +1,537 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>GAMES102 Lecture 14 Ray Tracing 2 | Doraemonzzz</title><meta name="keywords" content="GAMES101"><meta name="author" content="Doraemonzzz"><meta name="copyright" content="Doraemonzzz"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="这里回顾GAMES101 Lecture 14，这一讲完成了加速结构，介绍了辐射度量学。 课程主页：  https:&#x2F;&#x2F;sites.cs.ucsb.edu&#x2F;~lingqi&#x2F;teaching&#x2F;games101.html  课程作业：  http:&#x2F;&#x2F;games-cn.org&#x2F;forums&#x2F;topic&#x2F;allhw&#x2F;  课程视频：  https:&#x2F;&#x2F;www.bilibili.com&#x2F;video&#x2F;BV1X">
+<meta property="og:type" content="article">
+<meta property="og:title" content="GAMES102 Lecture 14 Ray Tracing 2">
+<meta property="og:url" content="http://www.doraemonzzz.com/2022/11/02/2022-11-2-GAMES102-Lecture-14-Ray-Tracing-2/index.html">
+<meta property="og:site_name" content="Doraemonzzz">
+<meta property="og:description" content="这里回顾GAMES101 Lecture 14，这一讲完成了加速结构，介绍了辐射度量学。 课程主页：  https:&#x2F;&#x2F;sites.cs.ucsb.edu&#x2F;~lingqi&#x2F;teaching&#x2F;games101.html  课程作业：  http:&#x2F;&#x2F;games-cn.org&#x2F;forums&#x2F;topic&#x2F;allhw&#x2F;  课程视频：  https:&#x2F;&#x2F;www.bilibili.com&#x2F;video&#x2F;BV1X">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg">
+<meta property="article:published_time" content="2022-11-02T13:59:00.000Z">
+<meta property="article:modified_time" content="2022-11-03T14:17:59.244Z">
+<meta property="article:author" content="Doraemonzzz">
+<meta property="article:tag" content="GAMES101">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg"><link rel="shortcut icon" href="https://github.com/Doraemonzzz/md-photo/blob/master/%E5%A4%B4%E5%83%8F.jpg?raw=true"><link rel="canonical" href="http://www.doraemonzzz.com/2022/11/02/2022-11-2-GAMES102-Lecture-14-Ray-Tracing-2/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//www.google-analytics.com" crossorigin=""/><link rel="preconnect" href="//hm.baidu.com"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><script>var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?6f00f37f957f0608abb8c571105456f0";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script><script async="async" src="https://www.googletagmanager.com/gtag/js?id=UA-G-RE4B1LKRZD"></script><script>window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'UA-G-RE4B1LKRZD');
+</script><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"search.xml","languages":{"hits_empty":"找不到您查询的内容：${query}"}},
+  translate: {"defaultEncoding":2,"translateDelay":0,"msgToTraditionalChinese":"繁","msgToSimplifiedChinese":"簡"},
+  noticeOutdate: {"limitDay":500,"position":"top","messagePrev":"距离上次更新已经","messageNext":"天了，文章内容可能已经过时。"},
+  highlight: {"plugin":"prismjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":200},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    jQuery: 'https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js',
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+    },
+    fancybox: {
+      js: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css'
+    }
+  },
+  isPhotoFigcaption: true,
+  islazyload: true,
+  isanchor: true
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'GAMES102 Lecture 14 Ray Tracing 2',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2022-11-03 22:17:59'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const fontSizeVal = saveToLocal.get('global-font-size')
+    if (fontSizeVal !== undefined) {
+      document.documentElement.style.setProperty('--global-font-size', fontSizeVal + 'px')
+    }
+    })(window)</script><link rel="stylesheet" href="/css/bilibili.css" media="defer" onload="this.media='all'"><meta name="google-site-verification" content="c4v-NmuUZRgl3cvtg9GKswryK1YLaPztd_5M-df5VNI" /><meta name="generator" content="Hexo 5.4.0"><link rel="alternate" href="/atom.xml" title="Doraemonzzz" type="application/atom+xml">
+</head><body><div id="loading-box"><div class="loading-left-bg"></div><div class="loading-right-bg"></div><div class="spinner-box"><div class="configure-border-1"><div class="configure-core"></div></div><div class="configure-border-2"><div class="configure-core"></div></div><div class="loading-word">加载中...</div></div></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="author-avatar"><img class="avatar-img" src= "/img/loading.gif" data-lazy-src="https://github.com/Doraemonzzz/md-photo/blob/master/%E5%A4%B4%E5%83%8F.jpg?raw=true" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">文章</div><div class="length-num">773</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">标签</div><div class="length-num">76</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/categories/"><div class="headline">分类</div><div class="length-num">30</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-chart-pie"></i><span> 博客统计</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/charts/"><i class="fa-fw far fa-chart-bar"></i><span> 文章统计</span></a></li><li><a class="site-page child" href="/census/"><i class="fa-fw fas fa-chart-area"></i><span> 访问统计</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/top/"><i class="fa-fw fab fa-hotjar"></i><span> 阅读排行榜</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fa fa-heartbeat"></i><span> 娱乐</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于我</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">Doraemonzzz</a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-chart-pie"></i><span> 博客统计</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/charts/"><i class="fa-fw far fa-chart-bar"></i><span> 文章统计</span></a></li><li><a class="site-page child" href="/census/"><i class="fa-fw fas fa-chart-area"></i><span> 访问统计</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/top/"><i class="fa-fw fab fa-hotjar"></i><span> 阅读排行榜</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fa fa-heartbeat"></i><span> 娱乐</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于我</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">GAMES102 Lecture 14 Ray Tracing 2</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2022-11-02T13:59:00.000Z" title="发表于 2022-11-02 21:59:00">2022-11-02</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2022-11-03T14:17:59.244Z" title="更新于 2022-11-03 22:17:59">2022-11-03</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9B%BE%E5%BD%A2%E5%AD%A6/">计算机图形学</a></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-tag"></i><a class="article-meta__tags" href="/tags/GAMES101/">GAMES101</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">1.9k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>6分钟</span></span><span class="post-meta-separator">|</span><span class="leancloud_visitors" id="/2022/11/02/2022-11-2-GAMES102-Lecture-14-Ray-Tracing-2/" data-flag-title="GAMES102 Lecture 14 Ray Tracing 2"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span class="leancloud-visitors-count"></span></span><span class="post-meta-separator">|</span><span class="post-meta-commentcount"><i class="far fa-comments fa-fw post-meta-icon"></i><span class="post-meta-label">评论数:</span><a href="/2022/11/02/2022-11-2-GAMES102-Lecture-14-Ray-Tracing-2/#post-comment" itemprop="discussionUrl"><span class="valine-comment-count" data-xid="/2022/11/02/2022-11-2-GAMES102-Lecture-14-Ray-Tracing-2/" itemprop="commentCount"></span></a></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p>这里回顾GAMES101 Lecture 14，这一讲完成了加速结构，介绍了辐射度量学。</p>
+<p>课程主页：</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://sites.cs.ucsb.edu/~lingqi/teaching/games101.html">https://sites.cs.ucsb.edu/~lingqi/teaching/games101.html</a></li>
+</ul>
+<p>课程作业：</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="http://games-cn.org/forums/topic/allhw/">http://games-cn.org/forums/topic/allhw/</a></li>
+</ul>
+<p>课程视频：</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1X7411F744?spm_id_from=333.337.search-card.all.click">https://www.bilibili.com/video/BV1X7411F744?spm_id_from=333.337.search-card.all.click</a></li>
+</ul>
+<span id="more"></span>
+<h2 id="本讲内容"><a href="#本讲内容" class="headerlink" title="本讲内容"></a>本讲内容</h2><ul>
+<li>如何使用AABB加速光线追踪的计算过程，即如何加速和物体求交；<ul>
+<li>均匀格子；</li>
+<li>空间划分；</li>
+</ul>
+</li>
+<li>辐射度量学；</li>
+</ul>
+<h2 id="基本思路"><a href="#基本思路" class="headerlink" title="基本思路"></a>基本思路</h2><ul>
+<li>对于光线和物体求交的过程；</li>
+<li>我们先考虑光线和物体包围盒求交；<ul>
+<li>如果和包围盒有交点，即和物体求交；</li>
+</ul>
+</li>
+</ul>
+<h2 id="均匀空间划分（格子）"><a href="#均匀空间划分（格子）" class="headerlink" title="均匀空间划分（格子）"></a>均匀空间划分（格子）</h2><h3 id="预处理"><a href="#预处理" class="headerlink" title="预处理"></a>预处理</h3><p>对于空间中的物体，首先找到包围盒：</p>
+<p><img src= "/img/loading.gif" data-lazy-src="https://github.com/Doraemonzzz/md-photo/blob/master/GAMES101/lecture14/2022110201.jpg?raw=true" alt=""></p>
+<p>其次将盒子划分为格子：</p>
+<p><img src= "/img/loading.gif" data-lazy-src="https://github.com/Doraemonzzz/md-photo/blob/master/GAMES101/lecture14/2022110202.jpg?raw=true" alt=""></p>
+<p>最后判定哪些格子中有物体表面（下图中标记为灰色）：</p>
+<p><img src= "/img/loading.gif" data-lazy-src="https://github.com/Doraemonzzz/md-photo/blob/master/GAMES101/lecture14/2022110203.jpg?raw=true" alt=""></p>
+<h3 id="光线场景相交"><a href="#光线场景相交" class="headerlink" title="光线场景相交"></a>光线场景相交</h3><p>有了之前的准备工作，可以介绍光线和场景的相交：</p>
+<ul>
+<li>光线穿按顺序穿过网；</li>
+<li>对于每个格子：<ul>
+<li>测试与在该格子内所有物体的是否相交；</li>
+</ul>
+</li>
+</ul>
+<p>图示：</p>
+<p><img src= "/img/loading.gif" data-lazy-src="https://github.com/Doraemonzzz/md-photo/blob/master/GAMES101/lecture14/2022110204.jpg?raw=true" alt=""></p>
+<p>这里有个问题，就是如何判断光线和哪个格子相交，老师给出的方法如下：</p>
+<ul>
+<li>假设已经和格子a相交，根据光线的方向检查和a周围的格子是否相交，然后找到距离最近的格子；<ul>
+<li>这也是光栅化一条线的方法；</li>
+</ul>
+</li>
+</ul>
+<p>这里的整体思路是尽量多做光线和盒子的求交，减少和物体的求交，那么加速效果如何呢？这和格子的分辨率有关。</p>
+<h3 id="格子分辨率"><a href="#格子分辨率" class="headerlink" title="格子分辨率"></a>格子分辨率</h3><p>如果只有一个格子，那么：</p>
+<p><img src= "/img/loading.gif" data-lazy-src="https://github.com/Doraemonzzz/md-photo/blob/master/GAMES101/lecture14/2022110205.jpg?raw=true" alt=""></p>
+<p>如果格子太多，那么需要计算很多次光线和格子相交：</p>
+<p><img src= "/img/loading.gif" data-lazy-src="https://github.com/Doraemonzzz/md-photo/blob/master/GAMES101/lecture14/2022110206.jpg?raw=true" alt=""></p>
+<p>实际中，人们发现了一个启发式的方法，划分的格子数量为：</p>
+<ul>
+<li>$cells =C \times objs$；</li>
+<li>在3维中，$C=27$；</li>
+</ul>
+<p><img src= "/img/loading.gif" data-lazy-src="https://github.com/Doraemonzzz/md-photo/blob/master/GAMES101/lecture14/2022110207.jpg?raw=true" alt=""></p>
+<h3 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h3><ul>
+<li>格子法可以一定程度上加速；</li>
+<li>但问题是，如果物体分布不均匀，则会浪费很多计算量；</li>
+<li>一个缓解方式是非均匀划分；</li>
+</ul>
+<h2 id="非均匀空间划分"><a href="#非均匀空间划分" class="headerlink" title="非均匀空间划分"></a>非均匀空间划分</h2><p>非均匀空间划分是指格子大小不同的划分：</p>
+<p><img src= "/img/loading.gif" data-lazy-src="https://github.com/Doraemonzzz/md-photo/blob/master/GAMES101/lecture14/2022110208.jpg?raw=true" alt=""></p>
+<p>说明：</p>
+<ul>
+<li>Oct-Tree<ul>
+<li>八叉树，将空间划分为8份；</li>
+<li>平面内为4份；</li>
+<li>对于$n$维空间，需要划分为$2^n$份，这样当维度增加，划分的工作了太大；</li>
+</ul>
+</li>
+<li>KD-Tree<ul>
+<li>对Oct-Tree的改进，每次只对某个维度进行划分；</li>
+<li>选择划分的维度有一定技巧；</li>
+</ul>
+</li>
+<li>BSP-Tree<ul>
+<li>Oct-Tree的改进，每次对某个方向进行划分；</li>
+<li>但是计算不方便；</li>
+</ul>
+</li>
+</ul>
+<h3 id="KD-Tree划分"><a href="#KD-Tree划分" class="headerlink" title="KD-Tree划分"></a>KD-Tree划分</h3><p>这里介绍KD-Tree的例子。</p>
+<p>第一次沿竖直方向划分：</p>
+<p><img src= "/img/loading.gif" data-lazy-src="https://github.com/Doraemonzzz/md-photo/blob/master/GAMES101/lecture14/2022110210.jpg?raw=true" alt=""></p>
+<p>第二次沿水平方向划分：</p>
+<p><img src= "/img/loading.gif" data-lazy-src="https://github.com/Doraemonzzz/md-photo/blob/master/GAMES101/lecture14/2022110211.jpg?raw=true" alt=""></p>
+<p>后续以此类推：</p>
+<p><img src= "/img/loading.gif" data-lazy-src="https://github.com/Doraemonzzz/md-photo/blob/master/GAMES101/lecture14/2022110209.jpg?raw=true" alt=""></p>
+<p>这样划分构成了一棵树：</p>
+<ul>
+<li>内部节点存储<ul>
+<li>分割轴：x轴、y轴或z轴</li>
+<li>分割位置：分割平面沿轴的坐</li>
+<li>子节点：指向子节点的指针</li>
+<li>内部节点不存储物体</li>
+</ul>
+</li>
+<li>叶节点存储<ul>
+<li>物体列表</li>
+</ul>
+</li>
+</ul>
+<h3 id="遍历KD-Tree"><a href="#遍历KD-Tree" class="headerlink" title="遍历KD-Tree"></a>遍历KD-Tree</h3><p>现在考虑如何遍历KD-Tree。</p>
+<p>第一步发现和节点A有交点：</p>
+<p><img src= "/img/loading.gif" data-lazy-src="https://github.com/Doraemonzzz/md-photo/blob/master/GAMES101/lecture14/2022110212.jpg?raw=true" alt=""></p>
+<p>所以要判断和其子节点是否有交点：</p>
+<p><img src= "/img/loading.gif" data-lazy-src="https://github.com/Doraemonzzz/md-photo/blob/master/GAMES101/lecture14/2022110213.jpg?raw=true" alt=""></p>
+<p>因为子节点是叶节点，所以无需继续判断。所以接下来判断和另一个子节点是否有交点即可：</p>
+<p><img src= "/img/loading.gif" data-lazy-src="https://github.com/Doraemonzzz/md-photo/blob/master/GAMES101/lecture14/2022110214.jpg?raw=true" alt=""></p>
+<p><img src= "/img/loading.gif" data-lazy-src="https://github.com/Doraemonzzz/md-photo/blob/master/GAMES101/lecture14/2022110215.jpg?raw=true" alt=""></p>
+<p>以此类推，继续进行上述步骤即可：</p>
+<p><img src= "/img/loading.gif" data-lazy-src="https://github.com/Doraemonzzz/md-photo/blob/master/GAMES101/lecture14/2022110216.jpg" alt=""></p>
+<p><img src= "/img/loading.gif" data-lazy-src="https://github.com/Doraemonzzz/md-photo/blob/master/GAMES101/lecture14/2022110217.jpg?raw=true" alt=""></p>
+<p><img src= "/img/loading.gif" data-lazy-src="https://github.com/Doraemonzzz/md-photo/blob/master/GAMES101/lecture14/2022110218.jpg?raw=true" alt=""></p>
+<p><img src= "/img/loading.gif" data-lazy-src="https://github.com/Doraemonzzz/md-photo/blob/master/GAMES101/lecture14/2022110219.jpg?raw=true" alt=""></p>
+<h3 id="小结-1"><a href="#小结-1" class="headerlink" title="小结"></a>小结</h3><p>对于KD-Tree：</p>
+<ul>
+<li>如果节点为叶节点：<ul>
+<li>则判断和叶节点中的物体是否幼教；</li>
+</ul>
+</li>
+<li>如果节点不是叶节点：<ul>
+<li>如果和节点的包围盒有交点，则判断和其子节点是否有交点；</li>
+</ul>
+</li>
+</ul>
+<h3 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h3><ul>
+<li>对于KD-Tree，很难判断包围盒和空间中的三角形是否有交集，这也是KD-Tree的弱点；</li>
+<li>另一个问题是，一个物体可能存在于多个叶节点中；</li>
+</ul>
+<p>如何解决这些问题，需要介绍BVH。</p>
+<h2 id="Bounding-Volume-Hierarchy-BVH"><a href="#Bounding-Volume-Hierarchy-BVH" class="headerlink" title="Bounding Volume Hierarchy (BVH)"></a>Bounding Volume Hierarchy (BVH)</h2><p>BVH的思路很简单：</p>
+<ul>
+<li>不从空间划分；</li>
+<li>从物体划分；</li>
+</ul>
+<h3 id="例子"><a href="#例子" class="headerlink" title="例子"></a>例子</h3><p>第一步还是引入一个包围盒：</p>
+<p><img src= "/img/loading.gif" data-lazy-src="https://github.com/Doraemonzzz/md-photo/blob/master/GAMES101/lecture14/2022110220.jpg?raw=true" alt=""></p>
+<p>第二步将物体划分为两部分，然后分别求出包围盒：</p>
+<p><img src= "/img/loading.gif" data-lazy-src="https://github.com/Doraemonzzz/md-photo/blob/master/GAMES101/lecture14/2022110221.jpg?raw=true" alt=""></p>
+<p>以此类推：</p>
+<p><img src= "/img/loading.gif" data-lazy-src="https://github.com/Doraemonzzz/md-photo/blob/master/GAMES101/lecture14/2022110223.jpg?raw=true" alt=""></p>
+<p><img src= "/img/loading.gif" data-lazy-src="https://github.com/Doraemonzzz/md-photo/blob/master/GAMES101/lecture14/2022110222.jpg?raw=true" alt=""></p>
+<h3 id="小结-2"><a href="#小结-2" class="headerlink" title="小结"></a>小结</h3><p>算法流程：</p>
+<ul>
+<li>查找边界框；</li>
+<li>递归地将物体集拆分为两个子集；</li>
+<li>重新计算子集的边界框；</li>
+<li>必要时停止；</li>
+<li>在每个叶节点中存储对象；</li>
+</ul>
+<h3 id="构造BVH"><a href="#构造BVH" class="headerlink" title="构造BVH"></a>构造BVH</h3><p>如何划分节点？</p>
+<ul>
+<li>选择要拆分的维度；</li>
+<li>启发式#1：始终选择节点中的最长轴；<ul>
+<li>划分后的长度相同；</li>
+</ul>
+</li>
+<li>启发式#2：在中间对象位置拆分节点；<ul>
+<li>划分后的数量相同；</li>
+</ul>
+</li>
+</ul>
+<p>终止标准？</p>
+<ul>
+<li>启发式：当节点包含少量元素时停止<br>（例如 5 个）；</li>
+</ul>
+<h3 id="BVH使用的数据结构"><a href="#BVH使用的数据结构" class="headerlink" title="BVH使用的数据结构"></a>BVH使用的数据结构</h3><p>内部节点存储</p>
+<ul>
+<li>边界框；</li>
+<li>Children：指向子节点的指针；</li>
+</ul>
+<p>叶节点存储</p>
+<ul>
+<li>边界框；</li>
+<li>对象列表；</li>
+</ul>
+<p>节点表示场景中的物体集合</p>
+<ul>
+<li>子树中的所有对象；</li>
+</ul>
+<h3 id="伪代码"><a href="#伪代码" class="headerlink" title="伪代码"></a>伪代码</h3><pre class="line-numbers language-none"><code class="language-none">Intersect(Ray ray, BVH node) &#123;
+    if (ray misses node.bbox) return;
+    if (node is a leaf node)
+        test intersection with all objs;
+        return closest intersection;
+        
+    hit1 &#x3D; Intersect(ray, node.child1);
+    hit2 &#x3D; Intersect(ray, node.child2);
+    
+    return the closer of hit1, hit2;
+&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h2 id="空间划分VS物体划分"><a href="#空间划分VS物体划分" class="headerlink" title="空间划分VS物体划分"></a>空间划分VS物体划分</h2><ul>
+<li>空间划分（例如KD-tree）<ul>
+<li>将空间划分为不重叠的区域；</li>
+<li>一个对象可以包含在多个区域中；</li>
+</ul>
+</li>
+<li>对象划分（例如BVH）<ul>
+<li>将物体集划分为不相交的子集；</li>
+<li>每个集合的边界框可能在空间上重叠；</li>
+</ul>
+</li>
+</ul>
+<p><img src= "/img/loading.gif" data-lazy-src="https://github.com/Doraemonzzz/md-photo/blob/master/GAMES101/lecture14/2022110224.jpg?raw=true" alt=""></p>
+<h1 id="辐射度量学"><a href="#辐射度量学" class="headerlink" title="辐射度量学"></a>辐射度量学</h1><h2 id="动机"><a href="#动机" class="headerlink" title="动机"></a>动机</h2><p>观察：</p>
+<ul>
+<li>在作业3中，我们实现了Blinn-Phong模型；</li>
+<li>光强度$I$为$10$；</li>
+<li>但是$10$什么？</li>
+</ul>
+<p>另一方面：</p>
+<ul>
+<li>Blinn-Phong模型很多假设不正确；</li>
+</ul>
+<p>要回答，解决这些问题，就需要学习辐射度量学。</p>
+<h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>辐射度量学测量系统和物体的照明，准确度量光的空间特性：</p>
+<ul>
+<li>新术语：Radiant flux, intensity, irradiance, radiance；</li>
+</ul>
+<p>辐射度量在物理上准确地定义光照。</p>
+<h2 id="Radiant-Energy-and-Flux-Power"><a href="#Radiant-Energy-and-Flux-Power" class="headerlink" title="Radiant Energy and Flux (Power)"></a>Radiant Energy and Flux (Power)</h2><p>定义：Radiant Energy是电磁辐射的能量，以焦耳为单位，用如下符号表示：</p>
+<script type="math/tex; mode=display">
+Q[\mathrm{J}=\mathrm {Joule}]</script><p>定义：Radiant flux（power）是单位时间内发射、反射、传输或接收的能量：</p>
+<script type="math/tex; mode=display">
+\Phi \equiv \frac{\mathrm{d} Q}{\mathrm{~d} t}[\mathrm{W}=\mathrm{Watt}][\operatorname{lm}=\text { lumen}]</script><p>即在单位时间内流过传感器的光子数量。</p>
+<h2 id="Radiant-Intensity"><a href="#Radiant-Intensity" class="headerlink" title="Radiant Intensity"></a>Radiant Intensity</h2><p>定义：Radiant Intensity是点光源发出的每单位立体角的功率：</p>
+<script type="math/tex; mode=display">
+I(\omega) \equiv \frac{\mathrm{d} \Phi}{\mathrm{d} \omega}\left[\frac{\mathrm{W}}{\mathrm{sr}}\right]\left[\frac{\mathrm{lm}}{\mathrm{sr}}=\mathrm{cd}=\text {candela}\right]</script><p>图示：</p>
+<p><img src= "/img/loading.gif" data-lazy-src="https://github.com/Doraemonzzz/md-photo/blob/master/GAMES101/lecture14/2022110225.jpg?raw=true" alt=""></p>
+<h3 id="角和立体角"><a href="#角和立体角" class="headerlink" title="角和立体角"></a>角和立体角</h3><p>角度：圆上的对圆弧长度与半径之比。</p>
+<p>计算公式：</p>
+<script type="math/tex; mode=display">
+\theta =\frac{l}{r}</script><p>圆的角度为$2\pi$。</p>
+<p>图示：</p>
+<p><img src= "/img/loading.gif" data-lazy-src="https://github.com/Doraemonzzz/md-photo/blob/master/GAMES101/lecture14/2022110226.jpg?raw=true" alt=""></p>
+<p>立体角：球体对向面积与半径平方的比值：</p>
+<p>计算公式：</p>
+<script type="math/tex; mode=display">
+\Omega=\frac{A}{r^2}</script><p>球的立体角为$4\pi$。</p>
+<p>计算公式：</p>
+<script type="math/tex; mode=display">
+\Omega=\frac{A}{r^2}</script><p>图示：</p>
+<p><img src= "/img/loading.gif" data-lazy-src="https://github.com/Doraemonzzz/md-photo/blob/master/GAMES101/lecture14/2022110227.jpg?raw=true" alt=""></p>
+<h3 id="可微立体角"><a href="#可微立体角" class="headerlink" title="可微立体角"></a>可微立体角</h3><p><img src= "/img/loading.gif" data-lazy-src="https://github.com/Doraemonzzz/md-photo/blob/master/GAMES101/lecture14/2022110228.jpg?raw=true" alt=""></p>
+<p>在球面上，可以计算出立体角：</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+\mathrm{d} A &=(r \mathrm{~d} \theta)(r \sin \theta \mathrm{d} \phi) \\
+&=r^2 \sin \theta \mathrm{d} \theta \mathrm{d} \phi \\
+\mathrm{d} \omega &=\frac{\mathrm{d} A}{r^2}=\sin \theta \mathrm{d} \theta \mathrm{d} \phi
+\end{aligned}</script><p>积分可得：</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+\Omega &=\int_{S^2} \mathrm{~d} \omega \\
+&=\int_0^{2 \pi} \int_0^\pi \sin \theta \mathrm{d} \theta \mathrm{d} \phi \\
+&=4 \pi
+\end{aligned}</script><p>即球面的立体角为$4\pi$。在实际中，我们利用立体角表示方向。</p>
+<h2 id="Radiant-flux（power）和Radiant-Intensity的关系"><a href="#Radiant-flux（power）和Radiant-Intensity的关系" class="headerlink" title="Radiant flux（power）和Radiant Intensity的关系"></a>Radiant flux（power）和Radiant Intensity的关系</h2><p>将Radiant Intensity关于立体角积分，即可得到Radiant flux，图示：</p>
+<p><img src= "/img/loading.gif" data-lazy-src="https://github.com/Doraemonzzz/md-photo/blob/master/GAMES101/lecture14/2022110229.jpg?raw=true" alt=""></p>
+<p>公式：</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+\Phi &=\int_{S^2} I \mathrm{~d} \omega \\
+&=4 \pi I \\
+I &=\frac{\Phi}{4 \pi}
+\end{aligned}</script></article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">Doraemonzzz</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="http://www.doraemonzzz.com/2022/11/02/2022-11-2-GAMES102-Lecture-14-Ray-Tracing-2/">http://www.doraemonzzz.com/2022/11/02/2022-11-2-GAMES102-Lecture-14-Ray-Tracing-2/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://www.doraemonzzz.com" target="_blank">Doraemonzzz</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/GAMES101/">GAMES101</a></div><div class="post_share"><div class="social-share" data-image="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2022/11/03/2022-11-3-GAMES102-Lecture-15-Ray-Tracing-3/"><img class="prev-cover" src= "/img/loading.gif" data-lazy-src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">GAMES102 Lecture 15 Ray Tracing 3</div></div></a></div><div class="next-post pull-right"><a href="/2022/11/01/2022-11-1-Deep-Learning-Systems-HW2/"><img class="next-cover" src= "/img/loading.gif" data-lazy-src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">Deep Learning Systems HW2</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span> 相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2022/10/11/2022-10-11-GAMES101-Lecture-7-Shading-1-(Illumination-Shading-and-Graphics-Pipeline)/" title="GAMES101 Lecture 7 Shading 1 (Illumination Shading and Graphics Pipeline)"><img class="cover" src= "/img/loading.gif" data-lazy-src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-10-11</div><div class="title">GAMES101 Lecture 7 Shading 1 (Illumination Shading and Graphics Pipeline)</div></div></a></div><div><a href="/2022/10/12/2022-10-12-GAMES101-Lecture-8-Shading-2-(Illumination-Shading-and-Graphics-Pipeline)/" title="GAMES102 Lecture 8 Shading 2 (Illumination Shading and Graphics Pipeline)"><img class="cover" src= "/img/loading.gif" data-lazy-src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-10-12</div><div class="title">GAMES102 Lecture 8 Shading 2 (Illumination Shading and Graphics Pipeline)</div></div></a></div><div><a href="/2022/10/13/2022-10-13-GAMES102-Lecture-9-Shading-3-(Texture-Mapping-cont)/" title="GAMES102 Lecture 9 Shading 3 (Texture Mapping cont)"><img class="cover" src= "/img/loading.gif" data-lazy-src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-10-13</div><div class="title">GAMES102 Lecture 9 Shading 3 (Texture Mapping cont)</div></div></a></div><div><a href="/2022/10/16/2022-10-16-GAMES102-Lecture-10-Geometry-1-(Introduction)/" title="GAMES102 Lecture 10 Geometry 1 (Introduction)"><img class="cover" src= "/img/loading.gif" data-lazy-src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-10-16</div><div class="title">GAMES102 Lecture 10 Geometry 1 (Introduction)</div></div></a></div><div><a href="/2022/10/18/2022-10-18-GAMES102-Lecture-11-Geometry-2-(Curves-and-Surfaces)/" title="GAMES102 Lecture 11 Geometry 2 (Curves and Surfaces)"><img class="cover" src= "/img/loading.gif" data-lazy-src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-10-18</div><div class="title">GAMES102 Lecture 11 Geometry 2 (Curves and Surfaces)</div></div></a></div><div><a href="/2022/10/19/2022-10-19-GAMES102-Lecture-12-Geometry-3/" title="GAMES102 Lecture 12 Geometry 3"><img class="cover" src= "/img/loading.gif" data-lazy-src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-10-19</div><div class="title">GAMES102 Lecture 12 Geometry 3</div></div></a></div></div></div><hr/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div><div id="comment-switch"><span class="first-comment">Valine</span><span class="switch-btn"></span><span class="second-comment">Livere</span></div></div><div class="comment-wrap"><div><div class="vcomment" id="vcomment"></div></div><div><div id="lv-container" data-id="city" data-uid="MTAyMC8zNDcxOS8xMTI1Ng=="></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="card-info-avatar is-center"><img class="avatar-img" src= "/img/loading.gif" data-lazy-src="https://github.com/Doraemonzzz/md-photo/blob/master/%E5%A4%B4%E5%83%8F.jpg?raw=true" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/><div class="author-info__name">Doraemonzzz</div><div class="author-info__description">个人博客，主要记录有关机器学习，数学以及计算机科学的笔记</div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">773</div></a></div><div class="card-info-data-item is-center"><a href="/tags/"><div class="headline">标签</div><div class="length-num">76</div></a></div><div class="card-info-data-item is-center"><a href="/categories/"><div class="headline">分类</div><div class="length-num">30</div></a></div></div><a class="button--animated" id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/Doraemonzzz"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/Doraemonzzz" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="/doraemon_zzz@163.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a><a class="social-icon" href="https://space.bilibili.com/291079982" target="_blank" title="Bilibili"><i class="iconfont icon-bilibili"></i></a><a class="social-icon" href="/atom.xml" target="_blank" title=""><i class="fa fa-rss"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn card-announcement-animation"></i><span>公告</span></div><div class="announcement_content">暂无公告</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9C%AC%E8%AE%B2%E5%86%85%E5%AE%B9"><span class="toc-number">1.</span> <span class="toc-text">本讲内容</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9F%BA%E6%9C%AC%E6%80%9D%E8%B7%AF"><span class="toc-number">2.</span> <span class="toc-text">基本思路</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9D%87%E5%8C%80%E7%A9%BA%E9%97%B4%E5%88%92%E5%88%86%EF%BC%88%E6%A0%BC%E5%AD%90%EF%BC%89"><span class="toc-number">3.</span> <span class="toc-text">均匀空间划分（格子）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%A2%84%E5%A4%84%E7%90%86"><span class="toc-number">3.1.</span> <span class="toc-text">预处理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%89%E7%BA%BF%E5%9C%BA%E6%99%AF%E7%9B%B8%E4%BA%A4"><span class="toc-number">3.2.</span> <span class="toc-text">光线场景相交</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A0%BC%E5%AD%90%E5%88%86%E8%BE%A8%E7%8E%87"><span class="toc-number">3.3.</span> <span class="toc-text">格子分辨率</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B0%8F%E7%BB%93"><span class="toc-number">3.4.</span> <span class="toc-text">小结</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%9D%9E%E5%9D%87%E5%8C%80%E7%A9%BA%E9%97%B4%E5%88%92%E5%88%86"><span class="toc-number">4.</span> <span class="toc-text">非均匀空间划分</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#KD-Tree%E5%88%92%E5%88%86"><span class="toc-number">4.1.</span> <span class="toc-text">KD-Tree划分</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%81%8D%E5%8E%86KD-Tree"><span class="toc-number">4.2.</span> <span class="toc-text">遍历KD-Tree</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B0%8F%E7%BB%93-1"><span class="toc-number">4.3.</span> <span class="toc-text">小结</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%97%AE%E9%A2%98"><span class="toc-number">4.4.</span> <span class="toc-text">问题</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Bounding-Volume-Hierarchy-BVH"><span class="toc-number">5.</span> <span class="toc-text">Bounding Volume Hierarchy (BVH)</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BE%8B%E5%AD%90"><span class="toc-number">5.1.</span> <span class="toc-text">例子</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B0%8F%E7%BB%93-2"><span class="toc-number">5.2.</span> <span class="toc-text">小结</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9E%84%E9%80%A0BVH"><span class="toc-number">5.3.</span> <span class="toc-text">构造BVH</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#BVH%E4%BD%BF%E7%94%A8%E7%9A%84%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84"><span class="toc-number">5.4.</span> <span class="toc-text">BVH使用的数据结构</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BC%AA%E4%BB%A3%E7%A0%81"><span class="toc-number">5.5.</span> <span class="toc-text">伪代码</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%A9%BA%E9%97%B4%E5%88%92%E5%88%86VS%E7%89%A9%E4%BD%93%E5%88%92%E5%88%86"><span class="toc-number">6.</span> <span class="toc-text">空间划分VS物体划分</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E8%BE%90%E5%B0%84%E5%BA%A6%E9%87%8F%E5%AD%A6"><span class="toc-number"></span> <span class="toc-text">辐射度量学</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8A%A8%E6%9C%BA"><span class="toc-number">1.</span> <span class="toc-text">动机</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AE%80%E4%BB%8B"><span class="toc-number">2.</span> <span class="toc-text">简介</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Radiant-Energy-and-Flux-Power"><span class="toc-number">3.</span> <span class="toc-text">Radiant Energy and Flux (Power)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Radiant-Intensity"><span class="toc-number">4.</span> <span class="toc-text">Radiant Intensity</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A7%92%E5%92%8C%E7%AB%8B%E4%BD%93%E8%A7%92"><span class="toc-number">4.1.</span> <span class="toc-text">角和立体角</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%AF%E5%BE%AE%E7%AB%8B%E4%BD%93%E8%A7%92"><span class="toc-number">4.2.</span> <span class="toc-text">可微立体角</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Radiant-flux%EF%BC%88power%EF%BC%89%E5%92%8CRadiant-Intensity%E7%9A%84%E5%85%B3%E7%B3%BB"><span class="toc-number">5.</span> <span class="toc-text">Radiant flux（power）和Radiant Intensity的关系</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2022/12/08/2022-12-8-GAMES101-HW8/" title="GAMES101 HW8"><img src= "/img/loading.gif" data-lazy-src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="GAMES101 HW8"/></a><div class="content"><a class="title" href="/2022/12/08/2022-12-8-GAMES101-HW8/" title="GAMES101 HW8">GAMES101 HW8</a><time datetime="2022-12-08T14:28:00.000Z" title="发表于 2022-12-08 22:28:00">2022-12-08</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/12/08/2022-12-8-GAMES101-HW7/" title="GAMES101 HW7"><img src= "/img/loading.gif" data-lazy-src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="GAMES101 HW7"/></a><div class="content"><a class="title" href="/2022/12/08/2022-12-8-GAMES101-HW7/" title="GAMES101 HW7">GAMES101 HW7</a><time datetime="2022-12-08T13:57:00.000Z" title="发表于 2022-12-08 21:57:00">2022-12-08</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/12/01/2022-12-1-GAMES102-Lecture-22-Animation-(cont.)/" title="GAMES102 Lecture 22 Animation (cont.)"><img src= "/img/loading.gif" data-lazy-src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="GAMES102 Lecture 22 Animation (cont.)"/></a><div class="content"><a class="title" href="/2022/12/01/2022-12-1-GAMES102-Lecture-22-Animation-(cont.)/" title="GAMES102 Lecture 22 Animation (cont.)">GAMES102 Lecture 22 Animation (cont.)</a><time datetime="2022-12-01T13:47:00.000Z" title="发表于 2022-12-01 21:47:00">2022-12-01</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/11/30/2022-11-30-GAMES102-Lecture-21-Animation/" title="GAMES102 Lecture 21 Animation"><img src= "/img/loading.gif" data-lazy-src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="GAMES102 Lecture 21 Animation"/></a><div class="content"><a class="title" href="/2022/11/30/2022-11-30-GAMES102-Lecture-21-Animation/" title="GAMES102 Lecture 21 Animation">GAMES102 Lecture 21 Animation</a><time datetime="2022-11-30T14:06:00.000Z" title="发表于 2022-11-30 22:06:00">2022-11-30</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/11/24/2022-11-24-GAMES102-Lecture-20-Color-and-Perception/" title="GAMES102 Lecture 20 Color and Perception"><img src= "/img/loading.gif" data-lazy-src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="GAMES102 Lecture 20 Color and Perception"/></a><div class="content"><a class="title" href="/2022/11/24/2022-11-24-GAMES102-Lecture-20-Color-and-Perception/" title="GAMES102 Lecture 20 Color and Perception">GAMES102 Lecture 20 Color and Perception</a><time datetime="2022-11-24T13:25:00.000Z" title="发表于 2022-11-24 21:25:00">2022-11-24</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2018 - 2022 By Doraemonzzz</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="font-plus" type="button" title="放大字体"><i class="fas fa-plus"></i></button><button id="font-minus" type="button" title="缩小字体"><i class="fas fa-minus"></i></button><button id="translateLink" type="button" title="简繁转换">简</button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div id="local-search"><div class="search-dialog"><div class="search-dialog__title" id="local-search-title">本地搜索</div><div id="local-input-panel"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div></div><hr/><div id="local-search-results"></div><span class="search-close-button"><i class="fas fa-times"></i></span></div><div id="search-mask"></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="/js/tw_cn.js"></script><script src="https://cdn.jsdelivr.net/npm/vanilla-lazyload/dist/lazyload.iife.min.js"></script><script src="/js/search/local-search.js"></script><script>var preloader = {
+  endLoading: () => {
+    document.body.style.overflow = 'auto';
+    document.getElementById('loading-box').classList.add("loaded")
+  },
+  initLoading: () => {
+    document.body.style.overflow = '';
+    document.getElementById('loading-box').classList.remove("loaded")
+
+  }
+}
+window.addEventListener('load',preloader.endLoading())</script><div class="js-pjax"><script>if (!window.MathJax) {
+  window.MathJax = {
+    tex: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]],
+      tags: 'ams'
+    },
+    chtml: {
+      scale: 1.25
+    },
+    options: {
+      renderActions: {
+        findScript: [10, doc => {
+          for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+            const display = !!node.type.match(/; *mode=display/)
+            const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+            const text = document.createTextNode('')
+            node.parentNode.replaceChild(text, node)
+            math.start = {node: text, delim: '', n: 0}
+            math.end = {node: text, delim: '', n: 0}
+            doc.math.push(math)
+          }
+        }, '']
+      }
+    }
+  }
+  
+  const script = document.createElement('script')
+  script.src = 'https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js'
+  script.id = 'MathJax-script'
+  script.async = true
+  document.head.appendChild(script)
+} else {
+  MathJax.startup.document.state(0)
+  MathJax.texReset()
+  MathJax.typeset()
+}</script><script>function loadValine () {
+  function initValine () {
+    const valine = new Valine(Object.assign({
+      el: '#vcomment',
+      appId: 'IpnmxCW9CvYWIXbol5QXsegX-MdYXbMMI',
+      appKey: 'w57DVCdbxcyB1TYYagMIMJIU',
+      placeholder: 'Please leave your footprints',
+      avatar: 'monsterid',
+      meta: 'nick,mail,link'.split(','),
+      pageSize: '10',
+      lang: 'en',
+      recordIP: false,
+      serverURLs: '',
+      emojiCDN: '',
+      emojiMaps: "",
+      enableQQ: false,
+      path: window.location.pathname,
+      requiredFields: ["nick,mail"],
+      visitor: true
+    }, null))
+  }
+
+  if (typeof Valine === 'function') initValine() 
+  else getScript('https://cdn.jsdelivr.net/npm/valine/dist/Valine.min.js').then(initValine)
+}
+
+if ('Valine' === 'Valine' || !false) {
+  if (false) btf.loadComment(document.getElementById('vcomment'),loadValine)
+  else setTimeout(loadValine, 0)
+} else {
+  function loadOtherComment () {
+    loadValine()
+  }
+}</script><script>function loadLivere () {
+  if (typeof LivereTower === 'object') {
+    window.LivereTower.init()
+  }
+  else {
+    (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+    })(document, 'script');
+  }
+}
+
+if ('Valine' === 'Livere' || !false) {
+  if (false) btf.loadComment(document.getElementById('lv-container'), loadLivere)
+  else loadLivere()
+}
+else {
+  function loadOtherComment () {
+    loadLivere()
+  }
+}</script></div><script defer="defer" id="fluttering_ribbon" mobile="false" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/canvas-fluttering-ribbon.min.js"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
