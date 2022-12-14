@@ -6,7 +6,7 @@
   <link href="http://www.doraemonzzz.com/atom.xml" rel="self"/>
   
   <link href="http://www.doraemonzzz.com/"/>
-  <updated>2022-12-11T07:20:57.601Z</updated>
+  <updated>2022-12-14T01:32:52.217Z</updated>
   <id>http://www.doraemonzzz.com/</id>
   
   <author>
@@ -17,11 +17,44 @@
   <generator uri="https://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>Deep Learning Systems HW4</title>
+    <link href="http://www.doraemonzzz.com/2022/12/12/2022-12-12-Deep-Learning-Systems-HW4/"/>
+    <id>http://www.doraemonzzz.com/2022/12/12/2022-12-12-Deep-Learning-Systems-HW4/</id>
+    <published>2022-12-12T14:05:00.000Z</published>
+    <updated>2022-12-14T01:32:52.217Z</updated>
+    
+    
+    <summary type="html">&lt;p&gt;这里回顾HW4，这次的主要内容是利用needle实现cnn和rnn。&lt;/p&gt;
+&lt;p&gt;课程主页：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;https://dlsyscourse.org/&quot;&gt;https://dlsyscourse.org/&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://forum.dlsyscourse.org/&quot;&gt;https://forum.dlsyscourse.org/&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://mugrade-online.dlsyscourse.org/&quot;&gt;https://mugrade-online.dlsyscourse.org/&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;参考资料：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;https://www.cs.toronto.edu/~kriz/cifar.html&quot;&gt;https://www.cs.toronto.edu/~kriz/cifar.html&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://forum.dlsyscourse.org/t/test-ndarray-backend-with-test-optim-py-hw2/2821&quot;&gt;https://forum.dlsyscourse.org/t/test-ndarray-backend-with-test-optim-py-hw2/2821&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://hideyukiinada.github.io/cnn_backprop_strides2.html&quot;&gt;https://hideyukiinada.github.io/cnn_backprop_strides2.html&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://deeplearning.cs.cmu.edu/F21/document/recitation/Recitation5/CNN_Backprop_Recitation_5_F21.pdf&quot;&gt;https://deeplearning.cs.cmu.edu/F21/document/recitation/Recitation5/CNN_Backprop_Recitation_5_F21.pdf&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://pytorch.org/docs/stable/generated/torch.nn.Conv2d.html&quot;&gt;https://pytorch.org/docs/stable/generated/torch.nn.Conv2d.html&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</summary>
+    
+    
+    
+    <category term="深度学习" scheme="http://www.doraemonzzz.com/categories/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/"/>
+    
+    
+    <category term="深度学习系统" scheme="http://www.doraemonzzz.com/tags/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E7%B3%BB%E7%BB%9F/"/>
+    
+  </entry>
+  
+  <entry>
     <title>Deep Learning Systems HW3</title>
     <link href="http://www.doraemonzzz.com/2022/12/11/2022-12-11-Deep-Learning-Systems-HW3/"/>
     <id>http://www.doraemonzzz.com/2022/12/11/2022-12-11-Deep-Learning-Systems-HW3/</id>
     <published>2022-12-11T04:41:00.000Z</published>
-    <updated>2022-12-11T07:20:57.601Z</updated>
+    <updated>2022-12-14T01:31:01.631Z</updated>
     
     
     <summary type="html">&lt;p&gt;这里回顾HW3，这次的主要内容是实现一个简单的线性代数库。&lt;/p&gt;
@@ -641,41 +674,6 @@
     
     
     <category term="GAMES101" scheme="http://www.doraemonzzz.com/tags/GAMES101/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Deep Learning Systems HW1</title>
-    <link href="http://www.doraemonzzz.com/2022/10/17/2022-10-17-Deep-Learning-Systems-HW1/"/>
-    <id>http://www.doraemonzzz.com/2022/10/17/2022-10-17-Deep-Learning-Systems-HW1/</id>
-    <published>2022-10-17T15:15:00.000Z</published>
-    <updated>2022-10-18T15:03:09.878Z</updated>
-    
-    
-    <summary type="html">&lt;p&gt;这里回顾HW1，主要是实现一个基本的自动微分框架。&lt;/p&gt;
-&lt;p&gt;课程主页：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&quot;https://dlsyscourse.org/&quot;&gt;https://dlsyscourse.org/&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;https://forum.dlsyscourse.org/&quot;&gt;https://forum.dlsyscourse.org/&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;https://mugrade-online.dlsyscourse.org/&quot;&gt;https://mugrade-online.dlsyscourse.org/&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;参考资料：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&quot;https://forum.dlsyscourse.org/t/q3-topologic-sort-inputs-is-not-a-node-list-solved/1995&quot;&gt;https://forum.dlsyscourse.org/t/q3-topologic-sort-inputs-is-not-a-node-list-solved/1995&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;https://blog.csdn.net/qq_34384524/article/details/86892864&quot;&gt;https://blog.csdn.net/qq_34384524/article/details/86892864&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;https://en.wikipedia.org/wiki/Topological_sorting#Depth-first_search&quot;&gt;https://en.wikipedia.org/wiki/Topological_sorting#Depth-first_search&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;https://forum.dlsyscourse.org/t/q4-how-to-multiply-the-partial-derivative/2131&quot;&gt;https://forum.dlsyscourse.org/t/q4-how-to-multiply-the-partial-derivative/2131&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;https://forum.dlsyscourse.org/t/q4-reverse-mode-ad-test-throws-grad-attributeerror-for-tensor-object/2035&quot;&gt;https://forum.dlsyscourse.org/t/q4-reverse-mode-ad-test-throws-grad-attributeerror-for-tensor-object/2035&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;https://forum.dlsyscourse.org/t/not-understand-several-sentences-meaning-in-hw1/2090/2&quot;&gt;https://forum.dlsyscourse.org/t/not-understand-several-sentences-meaning-in-hw1/2090/2&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;https://blog.csdn.net/qq1483661204/article/details/70543952&quot;&gt;https://blog.csdn.net/qq1483661204/article/details/70543952&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;</summary>
-    
-    
-    
-    <category term="深度学习" scheme="http://www.doraemonzzz.com/categories/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/"/>
-    
-    
-    <category term="深度学习系统" scheme="http://www.doraemonzzz.com/tags/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E7%B3%BB%E7%BB%9F/"/>
     
   </entry>
   
