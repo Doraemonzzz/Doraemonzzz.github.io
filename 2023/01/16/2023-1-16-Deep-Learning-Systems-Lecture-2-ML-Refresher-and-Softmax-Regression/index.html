@@ -1,0 +1,400 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Deep Learning Systems Lecture 2 ML Refresher and Softmax Regression | Doraemonzzz</title><meta name="keywords" content="深度学习系统"><meta name="author" content="Doraemonzzz"><meta name="copyright" content="Doraemonzzz"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="这里回顾dlsys第二讲，本讲内容是机器学习回顾以及Softmax回归。 课程主页：  https:&#x2F;&#x2F;dlsyscourse.org&#x2F; https:&#x2F;&#x2F;forum.dlsyscourse.org&#x2F; https:&#x2F;&#x2F;mugrade-online.dlsyscourse.org&#x2F;">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Deep Learning Systems Lecture 2 ML Refresher and Softmax Regression">
+<meta property="og:url" content="http://www.doraemonzzz.com/2023/01/16/2023-1-16-Deep-Learning-Systems-Lecture-2-ML-Refresher-and-Softmax-Regression/index.html">
+<meta property="og:site_name" content="Doraemonzzz">
+<meta property="og:description" content="这里回顾dlsys第二讲，本讲内容是机器学习回顾以及Softmax回归。 课程主页：  https:&#x2F;&#x2F;dlsyscourse.org&#x2F; https:&#x2F;&#x2F;forum.dlsyscourse.org&#x2F; https:&#x2F;&#x2F;mugrade-online.dlsyscourse.org&#x2F;">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg">
+<meta property="article:published_time" content="2023-01-16T04:12:00.000Z">
+<meta property="article:modified_time" content="2023-01-16T07:42:13.323Z">
+<meta property="article:author" content="Doraemonzzz">
+<meta property="article:tag" content="深度学习系统">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg"><link rel="shortcut icon" href="https://github.com/Doraemonzzz/md-photo/blob/master/%E5%A4%B4%E5%83%8F.jpg?raw=true"><link rel="canonical" href="http://www.doraemonzzz.com/2023/01/16/2023-1-16-Deep-Learning-Systems-Lecture-2-ML-Refresher-and-Softmax-Regression/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//www.google-analytics.com" crossorigin=""/><link rel="preconnect" href="//hm.baidu.com"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><script>var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?6f00f37f957f0608abb8c571105456f0";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script><script async="async" src="https://www.googletagmanager.com/gtag/js?id=UA-G-RE4B1LKRZD"></script><script>window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'UA-G-RE4B1LKRZD');
+</script><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"search.xml","languages":{"hits_empty":"找不到您查询的内容：${query}"}},
+  translate: {"defaultEncoding":2,"translateDelay":0,"msgToTraditionalChinese":"繁","msgToSimplifiedChinese":"簡"},
+  noticeOutdate: {"limitDay":500,"position":"top","messagePrev":"距离上次更新已经","messageNext":"天了，文章内容可能已经过时。"},
+  highlight: {"plugin":"prismjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":200},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    jQuery: 'https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js',
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+    },
+    fancybox: {
+      js: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css'
+    }
+  },
+  isPhotoFigcaption: true,
+  islazyload: true,
+  isanchor: true
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'Deep Learning Systems Lecture 2 ML Refresher and Softmax Regression',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2023-01-16 15:42:13'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const fontSizeVal = saveToLocal.get('global-font-size')
+    if (fontSizeVal !== undefined) {
+      document.documentElement.style.setProperty('--global-font-size', fontSizeVal + 'px')
+    }
+    })(window)</script><link rel="stylesheet" href="/css/bilibili.css" media="defer" onload="this.media='all'"><meta name="google-site-verification" content="c4v-NmuUZRgl3cvtg9GKswryK1YLaPztd_5M-df5VNI" /><meta name="generator" content="Hexo 5.4.0"><link rel="alternate" href="/atom.xml" title="Doraemonzzz" type="application/atom+xml">
+</head><body><div id="loading-box"><div class="loading-left-bg"></div><div class="loading-right-bg"></div><div class="spinner-box"><div class="configure-border-1"><div class="configure-core"></div></div><div class="configure-border-2"><div class="configure-core"></div></div><div class="loading-word">加载中...</div></div></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="author-avatar"><img class="avatar-img" src= "/img/loading.gif" data-lazy-src="https://github.com/Doraemonzzz/md-photo/blob/master/%E5%A4%B4%E5%83%8F.jpg?raw=true" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">文章</div><div class="length-num">794</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">标签</div><div class="length-num">79</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/categories/"><div class="headline">分类</div><div class="length-num">32</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-chart-pie"></i><span> 博客统计</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/charts/"><i class="fa-fw far fa-chart-bar"></i><span> 文章统计</span></a></li><li><a class="site-page child" href="/census/"><i class="fa-fw fas fa-chart-area"></i><span> 访问统计</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/top/"><i class="fa-fw fab fa-hotjar"></i><span> 阅读排行榜</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fa fa-heartbeat"></i><span> 娱乐</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于我</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">Doraemonzzz</a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-chart-pie"></i><span> 博客统计</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/charts/"><i class="fa-fw far fa-chart-bar"></i><span> 文章统计</span></a></li><li><a class="site-page child" href="/census/"><i class="fa-fw fas fa-chart-area"></i><span> 访问统计</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/top/"><i class="fa-fw fab fa-hotjar"></i><span> 阅读排行榜</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fa fa-heartbeat"></i><span> 娱乐</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于我</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">Deep Learning Systems Lecture 2 ML Refresher and Softmax Regression</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2023-01-16T04:12:00.000Z" title="发表于 2023-01-16 12:12:00">2023-01-16</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2023-01-16T07:42:13.323Z" title="更新于 2023-01-16 15:42:13">2023-01-16</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/">深度学习</a></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-tag"></i><a class="article-meta__tags" href="/tags/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E7%B3%BB%E7%BB%9F/">深度学习系统</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">1.7k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>7分钟</span></span><span class="post-meta-separator">|</span><span class="leancloud_visitors" id="/2023/01/16/2023-1-16-Deep-Learning-Systems-Lecture-2-ML-Refresher-and-Softmax-Regression/" data-flag-title="Deep Learning Systems Lecture 2 ML Refresher and Softmax Regression"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span class="leancloud-visitors-count"></span></span><span class="post-meta-separator">|</span><span class="post-meta-commentcount"><i class="far fa-comments fa-fw post-meta-icon"></i><span class="post-meta-label">评论数:</span><a href="/2023/01/16/2023-1-16-Deep-Learning-Systems-Lecture-2-ML-Refresher-and-Softmax-Regression/#post-comment" itemprop="discussionUrl"><span class="valine-comment-count" data-xid="/2023/01/16/2023-1-16-Deep-Learning-Systems-Lecture-2-ML-Refresher-and-Softmax-Regression/" itemprop="commentCount"></span></a></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p>这里回顾dlsys第二讲，本讲内容是机器学习回顾以及Softmax回归。</p>
+<p>课程主页：</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://dlsyscourse.org/">https://dlsyscourse.org/</a></li>
+<li><a target="_blank" rel="noopener" href="https://forum.dlsyscourse.org/">https://forum.dlsyscourse.org/</a></li>
+<li><a target="_blank" rel="noopener" href="https://mugrade-online.dlsyscourse.org/">https://mugrade-online.dlsyscourse.org/</a></li>
+</ul>
+<span id="more"></span>
+<h1 id="大纲"><a href="#大纲" class="headerlink" title="大纲"></a>大纲</h1><ul>
+<li>机器学习基础；</li>
+<li>Softmax回归；</li>
+</ul>
+<h1 id="机器学习基础"><a href="#机器学习基础" class="headerlink" title="机器学习基础"></a>机器学习基础</h1><h2 id="机器学习是数据驱动的编程"><a href="#机器学习是数据驱动的编程" class="headerlink" title="机器学习是数据驱动的编程"></a>机器学习是数据驱动的编程</h2><ul>
+<li>假设您要编写一个程序，将手写的数字图分类为适当的类别：0,1,…,9；</li>
+<li>您可以认真思考数字的性质，尝试确定表示数字类型的逻辑，并编写一个程序来编码此逻辑（尽管我是一个合格的程序员，但我认为我不能很好地做到这一点 )；</li>
+</ul>
+<p><img src= "/img/loading.gif" data-lazy-src="https://github.com/Doraemonzzz/md-photo/blob/master/dlsys/l02/01.jpg?raw=true" alt=""></p>
+<p>一个简单的方式是使用机器学习，特别的，有监督学习：收集一组具有已知标签的图像训练集，并将其输入机器学习算法，该算法（如果做得好）将自动生成解决此任务的“程序”：</p>
+<p><img src= "/img/loading.gif" data-lazy-src="https://github.com/Doraemonzzz/md-photo/blob/master/dlsys/l02/02.jpg?raw=true" alt=""></p>
+<h2 id="机器学习算法的三要素"><a href="#机器学习算法的三要素" class="headerlink" title="机器学习算法的三要素"></a>机器学习算法的三要素</h2><p>每个机器学习算法都包含三个不同的元素：</p>
+<ol>
+<li><strong>假设类</strong>：“程序结构”，通过一组参数参数化，描述了我们如何将输入（例如，数字图像）映射到输出（例如，类标签或不同类标签的概率）；</li>
+<li><p><strong>损失函数</strong>：指定给定假设（即参数的选择）在感兴趣的任务上执行得有多“好”的函数；</p>
+</li>
+<li><p><strong>优化方法</strong>：确定一组参数的过程，这些参数（近似地）最小化训练集的损失总和；</p>
+</li>
+</ol>
+<h1 id="Softmax回归"><a href="#Softmax回归" class="headerlink" title="Softmax回归"></a>Softmax回归</h1><h2 id="多分类问题设置"><a href="#多分类问题设置" class="headerlink" title="多分类问题设置"></a>多分类问题设置</h2><p>让我们考虑一个$k$分类设置，我们有：</p>
+<ul>
+<li>训练数据：$x^{(i)}\in \mathbb R^n,y\in \{1,\ldots, k\}, i=1,\ldots, m$；</li>
+<li>$𝑛$ = 输入数据的维度；</li>
+<li>$k$ = 不同类别/标签的数量；</li>
+<li>$m$ = 训练集中的点数；</li>
+</ul>
+<p>示例：28x28 MNIST手写数字分类：</p>
+<ul>
+<li>$n=28.28=784$；</li>
+<li>$k = 10$；</li>
+<li>$m = 60,000$；</li>
+</ul>
+<h2 id="线性假设函数"><a href="#线性假设函数" class="headerlink" title="线性假设函数"></a>线性假设函数</h2><p>我们的假设函数将输入$x\in \mathbb R^n$映射到$k$维向量：</p>
+<script type="math/tex; mode=display">
+h: \mathbb{R}^n \rightarrow \mathbb{R}^k.</script><p>其中$h_i(x)$表示将$x$分类为第$i$类的置信度。</p>
+<p><strong>线性假设函数</strong>是使用线性变换描述该映射：</p>
+<script type="math/tex; mode=display">
+h_\theta(x)=\theta^T x,\theta \in \mathbb R^{n\times k.}</script><h3 id="批量矩阵符号"><a href="#批量矩阵符号" class="headerlink" title="批量矩阵符号"></a>批量矩阵符号</h3><p>因为实际计算时涉及到多个样本，所以引入批量矩阵符号：</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+X  \in \mathbb{R}^{m \times n}&=\left[\begin{array}{c}
+-x^{(1)^T} \\
+\vdots \\
+-x^{(m)^T}
+\end{array}\right]\\
+y \in\{1, \ldots, k\}^m&=\left[\begin{array}{c}
+y^{(1)} \\
+\vdots \\
+y^{(m)}
+\end{array}\right]
+\end{aligned}</script><p>那么线性假设类可以写成：</p>
+<script type="math/tex; mode=display">
+h_\theta(X)=\left[\begin{array}{c}
+-h_\theta\left(x^{(1)}\right)^T- \\
+\vdots \\
+-h_\theta\left(x^m\right)^T-
+\end{array}\right]=\left[\begin{array}{c}
+-x^{(1)^T} \theta- \\
+\vdots \\
+-x^{(m)^T} \theta-
+\end{array}\right]=X \theta</script><h2 id="损失函数"><a href="#损失函数" class="headerlink" title="损失函数"></a>损失函数</h2><h3 id="1-分类误差"><a href="#1-分类误差" class="headerlink" title="#1: 分类误差"></a>#1: 分类误差</h3><p>分类中使用的最简单的损失函数就是分类错误，即分类器是否犯错：</p>
+<script type="math/tex; mode=display">
+\ell_{\text {err }}(h(x), y)= \begin{cases}0 & \text { if } \operatorname{argmax}_i h_i(x)=y \\ 1 & \text { otherwise }\end{cases}</script><p>我们通常使用这个损失函数来评估分类器的质量；不幸的是，分类误差是用于优化的糟糕损失函数，因为它不可微。</p>
+<h3 id="2-softmax-cross-entropy-loss"><a href="#2-softmax-cross-entropy-loss" class="headerlink" title="#2: softmax / cross-entropy loss"></a>#2: softmax / cross-entropy loss</h3><p>让我们通过取幂和归一化它的项（使它们全部为正且总和为一），将假设函数转换为“概率”：</p>
+<script type="math/tex; mode=display">
+z_i=p(\text { label }=i)=\frac{\exp \left(h_i(x)\right)}{\sum_{j=1}^k \exp \left(h_j(x)\right)} \Leftrightarrow z \equiv \operatorname{normalize}(\exp (h(x)))</script><p>然后让我们将损失定义为真实类别的（负）对数概率：这称为softmax或交叉熵损失：</p>
+<script type="math/tex; mode=display">
+\ell_{c e}(h(x), y)=-\log p(\text { label }=y)=-h_y(x)+\log \sum_{j=1}^k \exp \left(h_j(x)\right)</script><h2 id="softmax回归优化问题"><a href="#softmax回归优化问题" class="headerlink" title="softmax回归优化问题"></a>softmax回归优化问题</h2><p>机器学习算法的第三个组成部分是解决相关优化问题的方法，即最小化训练集平均损失的问题：</p>
+<script type="math/tex; mode=display">
+\underset{\theta}{\operatorname{minimize}} \frac{1}{m} \sum_{i=1}^m \ell\left(h_\theta\left(x^{(i)}\right), y^{(i)}\right)</script><p>对于softmax回归（即线性假设类和softmax损失函数）：</p>
+<script type="math/tex; mode=display">
+\underset{\theta}{\operatorname{minimize}} \frac{1}{m} \sum_{i=1}^m \ell_{c e}\left(\theta^T x^{(i)}, y^{(i)}\right)</script><p>那么我们如何找到解决这个优化问题的$\theta$呢？</p>
+<h3 id="优化：梯度下降"><a href="#优化：梯度下降" class="headerlink" title="优化：梯度下降"></a>优化：梯度下降</h3><p>对于函数$f: \mathbb{R}^{n \times k} \rightarrow \mathbb{R}$，梯度定义为：</p>
+<script type="math/tex; mode=display">
+\nabla_\theta f(\theta) \in \mathbb{R}^{n \times k}=\left[\begin{array}{ccc}
+\frac{\partial f(\theta)}{\partial \theta_{11}} & \cdots & \frac{\partial f(\theta)}{\partial \theta_{1 k}} \\
+\vdots & \ddots & \vdots \\
+\frac{\partial f(\theta)}{\partial \theta_{n 1}} & \cdots & \frac{\partial f(\theta)}{\partial \theta_{n k}}
+\end{array}\right]</script><p>梯度指向$f$减小最多的方向（局部）：</p>
+<p><img src= "/img/loading.gif" data-lazy-src="https://github.com/Doraemonzzz/md-photo/blob/master/dlsys/l02/03.jpg?raw=true" alt=""></p>
+<p>为了最小化函数，梯度下降算法通过在负梯度方向上迭代地执行步骤来进行：</p>
+<script type="math/tex; mode=display">
+\theta:=\theta-\alpha \nabla_\theta f(\theta)</script><p>其中$\alpha&gt;0$是步长大小或学习率：</p>
+<p><img src= "/img/loading.gif" data-lazy-src="https://github.com/Doraemonzzz/md-photo/blob/master/dlsys/l02/04.jpg?raw=true" alt=""></p>
+<p>注意学习率不能太大或者太小，太大会不收敛，太小会收敛的太慢。</p>
+<h3 id="随机梯度下降"><a href="#随机梯度下降" class="headerlink" title="随机梯度下降"></a>随机梯度下降</h3><ul>
+<li>如果我们的目标函数（如机器学习中的情况）是个体损失的总和，我们不想使用所有示例计算梯度来对参数进行一次更新；</li>
+<li>相反，采取许多梯度更新步骤，每个步骤都基于一个小批量（数据的小部分），使用一次“传递”数据进行多次参数更新；</li>
+<li>重复：<ul>
+<li>采样$X \in \mathbb{R}^{B \times n}, y \in\{1, \ldots, k\}^B$；</li>
+<li>更新参数$\theta:=\theta-\frac{\alpha}{B} \sum_{i=1}^B \nabla_\theta \ell\left(h_\theta\left(x^{(i)}\right), y^{(i)}\right)$；</li>
+</ul>
+</li>
+</ul>
+<h3 id="softmax目标函数的梯度"><a href="#softmax目标函数的梯度" class="headerlink" title="softmax目标函数的梯度"></a>softmax目标函数的梯度</h3><p>接下来的任务是计算softmax目标函数的梯度：</p>
+<script type="math/tex; mode=display">
+\nabla_\theta \ell_{c e}\left(\theta^T x, y\right)=?</script><p>对于$h\in \mathbb R^k$，我们有：</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+\frac{\partial \ell_{c e}(h, y)}{\partial h_i} & =\frac{\partial}{\partial h_i}\left(-h_y+\log \sum_{j=1}^k \exp h_j\right) \\
+& =-1\{i=y\}+\frac{\exp h_i}{\sum_{j=1}^k \exp h_j}
+\end{aligned}</script><p>向量形式为：</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+\nabla_h \ell_{c e}(h, y)&=z-e_y\\
+z&=\text { normalize }(\exp (h))
+
+\end{aligned}</script><p>所以接下来我们该如何计算$\nabla_\theta \ell_{c e}\left(\theta^T x, y\right)$呢？</p>
+<ul>
+<li>方法1：使用链式法则逐步计算；</li>
+<li>方法2：假设每一项都是标量，先计算标量的结果，然后通过维度决定运算顺序；</li>
+</ul>
+<p>方法2是方便的方式，这里举个例子，首先假设结果都是标量，那么$\frac{\partial \theta^T x}{\partial \theta}= x$：</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+\frac{\partial}{\partial \theta} \ell_{c e}\left(\theta^T x, y\right) & =\frac{\partial \ell_{c e}\left(\theta^T x, y\right)}{\partial \theta^T x} \frac{\partial \theta^T x}{\partial \theta} \\
+& =\left(z-e_y\right)(x)
+\end{aligned}</script><p>注意此时维度对不上，注意到$x\in \mathbb R^n, z-e_y \in \mathbb R^{k},\frac{\partial}{\partial \theta} \ell_{c e}\left(\theta^T x, y\right)\in \mathbb R^{n\times k}$，所以：</p>
+<script type="math/tex; mode=display">
+\nabla_\theta \ell_{c e}\left(\theta^T x, y\right) \in \mathbb{R}^{n \times k}=x\left(z-e_y\right)^T</script><p>Batch形式为：</p>
+<script type="math/tex; mode=display">
+\nabla_\theta \ell_{c e}(X \theta, y) \in \mathbb{R}^{n \times k}=X^T\left(Z-I_y\right), \quad Z=\operatorname{normalize}(\exp (X \theta))</script><h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><p>最终算法是：</p>
+<ul>
+<li>重复直到收敛：<ul>
+<li>采样$X \in \mathbb{R}^{B \times n}, y \in\{1, \ldots, k\}^B$；</li>
+<li>更新参数$\theta:=\theta-\frac{\alpha}{B} X^T\left(Z-I_y\right)$；</li>
+</ul>
+</li>
+</ul>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">Doraemonzzz</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="http://www.doraemonzzz.com/2023/01/16/2023-1-16-Deep-Learning-Systems-Lecture-2-ML-Refresher-and-Softmax-Regression/">http://www.doraemonzzz.com/2023/01/16/2023-1-16-Deep-Learning-Systems-Lecture-2-ML-Refresher-and-Softmax-Regression/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://www.doraemonzzz.com" target="_blank">Doraemonzzz</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E7%B3%BB%E7%BB%9F/">深度学习系统</a></div><div class="post_share"><div class="social-share" data-image="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2023/01/18/2023-1-18-Deep-Learning-Systems-Lecture-3-Manual-Neural-Networks-and-Backprop/"><img class="prev-cover" src= "/img/loading.gif" data-lazy-src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">Deep Learning Systems Lecture 3 Manual Neural Networks and Backprop</div></div></a></div><div class="next-post pull-right"><a href="/2023/01/15/2023-1-15-Deep-Learning-Systems-Lecture-1-Introduction-and-Logistics/"><img class="next-cover" src= "/img/loading.gif" data-lazy-src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">Deep Learning Systems Lecture 1 Introduction and Logistics</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span> 相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2022/10/16/2022-10-16-Deep-Learning-Systems-开发环境配置/" title="Deep Learning Systems 开发环境配置"><img class="cover" src= "/img/loading.gif" data-lazy-src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-10-16</div><div class="title">Deep Learning Systems 开发环境配置</div></div></a></div><div><a href="/2022/10/17/2022-10-17-Deep-Learning-Systems-HW0/" title="Deep Learning Systems HW0"><img class="cover" src= "/img/loading.gif" data-lazy-src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-10-17</div><div class="title">Deep Learning Systems HW0</div></div></a></div><div><a href="/2022/10/17/2022-10-17-Deep-Learning-Systems-HW1/" title="Deep Learning Systems HW1"><img class="cover" src= "/img/loading.gif" data-lazy-src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-10-17</div><div class="title">Deep Learning Systems HW1</div></div></a></div><div><a href="/2022/11/01/2022-11-1-Deep-Learning-Systems-HW2/" title="Deep Learning Systems HW2"><img class="cover" src= "/img/loading.gif" data-lazy-src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-11-01</div><div class="title">Deep Learning Systems HW2</div></div></a></div><div><a href="/2023/01/15/2023-1-15-Deep-Learning-Systems-Lecture-1-Introduction-and-Logistics/" title="Deep Learning Systems Lecture 1 Introduction and Logistics"><img class="cover" src= "/img/loading.gif" data-lazy-src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-01-15</div><div class="title">Deep Learning Systems Lecture 1 Introduction and Logistics</div></div></a></div><div><a href="/2023/01/18/2023-1-18-Deep-Learning-Systems-Lecture-3-Manual-Neural-Networks-and-Backprop/" title="Deep Learning Systems Lecture 3 Manual Neural Networks and Backprop"><img class="cover" src= "/img/loading.gif" data-lazy-src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-01-18</div><div class="title">Deep Learning Systems Lecture 3 Manual Neural Networks and Backprop</div></div></a></div></div></div><hr/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div><div id="comment-switch"><span class="first-comment">Valine</span><span class="switch-btn"></span><span class="second-comment">Livere</span></div></div><div class="comment-wrap"><div><div class="vcomment" id="vcomment"></div></div><div><div id="lv-container" data-id="city" data-uid="MTAyMC8zNDcxOS8xMTI1Ng=="></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="card-info-avatar is-center"><img class="avatar-img" src= "/img/loading.gif" data-lazy-src="https://github.com/Doraemonzzz/md-photo/blob/master/%E5%A4%B4%E5%83%8F.jpg?raw=true" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/><div class="author-info__name">Doraemonzzz</div><div class="author-info__description">个人博客，主要记录有关机器学习，数学以及计算机科学的笔记</div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">794</div></a></div><div class="card-info-data-item is-center"><a href="/tags/"><div class="headline">标签</div><div class="length-num">79</div></a></div><div class="card-info-data-item is-center"><a href="/categories/"><div class="headline">分类</div><div class="length-num">32</div></a></div></div><a class="button--animated" id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/Doraemonzzz"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/Doraemonzzz" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="/doraemon_zzz@163.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a><a class="social-icon" href="https://space.bilibili.com/291079982" target="_blank" title="Bilibili"><i class="iconfont icon-bilibili"></i></a><a class="social-icon" href="/atom.xml" target="_blank" title=""><i class="fa fa-rss"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn card-announcement-animation"></i><span>公告</span></div><div class="announcement_content">暂无公告</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%A4%A7%E7%BA%B2"><span class="toc-number">1.</span> <span class="toc-text">大纲</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E5%9F%BA%E7%A1%80"><span class="toc-number">2.</span> <span class="toc-text">机器学习基础</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E6%98%AF%E6%95%B0%E6%8D%AE%E9%A9%B1%E5%8A%A8%E7%9A%84%E7%BC%96%E7%A8%8B"><span class="toc-number">2.1.</span> <span class="toc-text">机器学习是数据驱动的编程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%AE%97%E6%B3%95%E7%9A%84%E4%B8%89%E8%A6%81%E7%B4%A0"><span class="toc-number">2.2.</span> <span class="toc-text">机器学习算法的三要素</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Softmax%E5%9B%9E%E5%BD%92"><span class="toc-number">3.</span> <span class="toc-text">Softmax回归</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A4%9A%E5%88%86%E7%B1%BB%E9%97%AE%E9%A2%98%E8%AE%BE%E7%BD%AE"><span class="toc-number">3.1.</span> <span class="toc-text">多分类问题设置</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BA%BF%E6%80%A7%E5%81%87%E8%AE%BE%E5%87%BD%E6%95%B0"><span class="toc-number">3.2.</span> <span class="toc-text">线性假设函数</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%89%B9%E9%87%8F%E7%9F%A9%E9%98%B5%E7%AC%A6%E5%8F%B7"><span class="toc-number">3.2.1.</span> <span class="toc-text">批量矩阵符号</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%8D%9F%E5%A4%B1%E5%87%BD%E6%95%B0"><span class="toc-number">3.3.</span> <span class="toc-text">损失函数</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E5%88%86%E7%B1%BB%E8%AF%AF%E5%B7%AE"><span class="toc-number">3.3.1.</span> <span class="toc-text">#1: 分类误差</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-softmax-cross-entropy-loss"><span class="toc-number">3.3.2.</span> <span class="toc-text">#2: softmax &#x2F; cross-entropy loss</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#softmax%E5%9B%9E%E5%BD%92%E4%BC%98%E5%8C%96%E9%97%AE%E9%A2%98"><span class="toc-number">3.4.</span> <span class="toc-text">softmax回归优化问题</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BC%98%E5%8C%96%EF%BC%9A%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D"><span class="toc-number">3.4.1.</span> <span class="toc-text">优化：梯度下降</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%9A%8F%E6%9C%BA%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D"><span class="toc-number">3.4.2.</span> <span class="toc-text">随机梯度下降</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#softmax%E7%9B%AE%E6%A0%87%E5%87%BD%E6%95%B0%E7%9A%84%E6%A2%AF%E5%BA%A6"><span class="toc-number">3.4.3.</span> <span class="toc-text">softmax目标函数的梯度</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B0%8F%E7%BB%93"><span class="toc-number">3.5.</span> <span class="toc-text">小结</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2023/01/20/2023-1-20-Deep-Learning-Systems-Lecture-4-Automatic-Differentiation/" title="Deep Learning Systems Lecture 4 Automatic Differentiation"><img src= "/img/loading.gif" data-lazy-src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Deep Learning Systems Lecture 4 Automatic Differentiation"/></a><div class="content"><a class="title" href="/2023/01/20/2023-1-20-Deep-Learning-Systems-Lecture-4-Automatic-Differentiation/" title="Deep Learning Systems Lecture 4 Automatic Differentiation">Deep Learning Systems Lecture 4 Automatic Differentiation</a><time datetime="2023-01-20T08:35:00.000Z" title="发表于 2023-01-20 16:35:00">2023-01-20</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2023/01/19/2023-1-19-ECE408-Lecture-10-Introduction-to-Machine-Learning/" title="ECE408 Lecture 10 Introduction to Machine Learning"><img src= "/img/loading.gif" data-lazy-src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="ECE408 Lecture 10 Introduction to Machine Learning"/></a><div class="content"><a class="title" href="/2023/01/19/2023-1-19-ECE408-Lecture-10-Introduction-to-Machine-Learning/" title="ECE408 Lecture 10 Introduction to Machine Learning">ECE408 Lecture 10 Introduction to Machine Learning</a><time datetime="2023-01-19T05:32:00.000Z" title="发表于 2023-01-19 13:32:00">2023-01-19</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2023/01/19/2023-1-19-ECE408-Lecture-9-Tiled-Convolution-Analysis/" title="ECE408 Lecture 9 Tiled Convolution Analysis"><img src= "/img/loading.gif" data-lazy-src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="ECE408 Lecture 9 Tiled Convolution Analysis"/></a><div class="content"><a class="title" href="/2023/01/19/2023-1-19-ECE408-Lecture-9-Tiled-Convolution-Analysis/" title="ECE408 Lecture 9 Tiled Convolution Analysis">ECE408 Lecture 9 Tiled Convolution Analysis</a><time datetime="2023-01-19T04:32:00.000Z" title="发表于 2023-01-19 12:32:00">2023-01-19</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2023/01/18/2023-1-18-Deep-Learning-Systems-Lecture-3-Manual-Neural-Networks-and-Backprop/" title="Deep Learning Systems Lecture 3 Manual Neural Networks and Backprop"><img src= "/img/loading.gif" data-lazy-src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Deep Learning Systems Lecture 3 Manual Neural Networks and Backprop"/></a><div class="content"><a class="title" href="/2023/01/18/2023-1-18-Deep-Learning-Systems-Lecture-3-Manual-Neural-Networks-and-Backprop/" title="Deep Learning Systems Lecture 3 Manual Neural Networks and Backprop">Deep Learning Systems Lecture 3 Manual Neural Networks and Backprop</a><time datetime="2023-01-18T11:23:00.000Z" title="发表于 2023-01-18 19:23:00">2023-01-18</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2023/01/16/2023-1-16-Deep-Learning-Systems-Lecture-2-ML-Refresher-and-Softmax-Regression/" title="Deep Learning Systems Lecture 2 ML Refresher and Softmax Regression"><img src= "/img/loading.gif" data-lazy-src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Deep Learning Systems Lecture 2 ML Refresher and Softmax Regression"/></a><div class="content"><a class="title" href="/2023/01/16/2023-1-16-Deep-Learning-Systems-Lecture-2-ML-Refresher-and-Softmax-Regression/" title="Deep Learning Systems Lecture 2 ML Refresher and Softmax Regression">Deep Learning Systems Lecture 2 ML Refresher and Softmax Regression</a><time datetime="2023-01-16T04:12:00.000Z" title="发表于 2023-01-16 12:12:00">2023-01-16</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2018 - 2023 By Doraemonzzz</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="font-plus" type="button" title="放大字体"><i class="fas fa-plus"></i></button><button id="font-minus" type="button" title="缩小字体"><i class="fas fa-minus"></i></button><button id="translateLink" type="button" title="简繁转换">简</button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div id="local-search"><div class="search-dialog"><div class="search-dialog__title" id="local-search-title">本地搜索</div><div id="local-input-panel"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div></div><hr/><div id="local-search-results"></div><span class="search-close-button"><i class="fas fa-times"></i></span></div><div id="search-mask"></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="/js/tw_cn.js"></script><script src="https://cdn.jsdelivr.net/npm/vanilla-lazyload/dist/lazyload.iife.min.js"></script><script src="/js/search/local-search.js"></script><script>var preloader = {
+  endLoading: () => {
+    document.body.style.overflow = 'auto';
+    document.getElementById('loading-box').classList.add("loaded")
+  },
+  initLoading: () => {
+    document.body.style.overflow = '';
+    document.getElementById('loading-box').classList.remove("loaded")
+
+  }
+}
+window.addEventListener('load',preloader.endLoading())</script><div class="js-pjax"><script>if (!window.MathJax) {
+  window.MathJax = {
+    tex: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]],
+      tags: 'ams'
+    },
+    chtml: {
+      scale: 1.25
+    },
+    options: {
+      renderActions: {
+        findScript: [10, doc => {
+          for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+            const display = !!node.type.match(/; *mode=display/)
+            const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+            const text = document.createTextNode('')
+            node.parentNode.replaceChild(text, node)
+            math.start = {node: text, delim: '', n: 0}
+            math.end = {node: text, delim: '', n: 0}
+            doc.math.push(math)
+          }
+        }, '']
+      }
+    }
+  }
+  
+  const script = document.createElement('script')
+  script.src = 'https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js'
+  script.id = 'MathJax-script'
+  script.async = true
+  document.head.appendChild(script)
+} else {
+  MathJax.startup.document.state(0)
+  MathJax.texReset()
+  MathJax.typeset()
+}</script><script>function loadValine () {
+  function initValine () {
+    const valine = new Valine(Object.assign({
+      el: '#vcomment',
+      appId: 'IpnmxCW9CvYWIXbol5QXsegX-MdYXbMMI',
+      appKey: 'w57DVCdbxcyB1TYYagMIMJIU',
+      placeholder: 'Please leave your footprints',
+      avatar: 'monsterid',
+      meta: 'nick,mail,link'.split(','),
+      pageSize: '10',
+      lang: 'en',
+      recordIP: false,
+      serverURLs: '',
+      emojiCDN: '',
+      emojiMaps: "",
+      enableQQ: false,
+      path: window.location.pathname,
+      requiredFields: ["nick,mail"],
+      visitor: true
+    }, null))
+  }
+
+  if (typeof Valine === 'function') initValine() 
+  else getScript('https://cdn.jsdelivr.net/npm/valine/dist/Valine.min.js').then(initValine)
+}
+
+if ('Valine' === 'Valine' || !false) {
+  if (false) btf.loadComment(document.getElementById('vcomment'),loadValine)
+  else setTimeout(loadValine, 0)
+} else {
+  function loadOtherComment () {
+    loadValine()
+  }
+}</script><script>function loadLivere () {
+  if (typeof LivereTower === 'object') {
+    window.LivereTower.init()
+  }
+  else {
+    (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+    })(document, 'script');
+  }
+}
+
+if ('Valine' === 'Livere' || !false) {
+  if (false) btf.loadComment(document.getElementById('lv-container'), loadLivere)
+  else loadLivere()
+}
+else {
+  function loadOtherComment () {
+    loadLivere()
+  }
+}</script></div><script defer="defer" id="fluttering_ribbon" mobile="false" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/canvas-fluttering-ribbon.min.js"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
