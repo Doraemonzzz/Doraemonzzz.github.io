@@ -1,0 +1,460 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Deep Learning Systems Lecture 11 Hardware Acceleration | Doraemonzzz</title><meta name="keywords" content="深度学习系统"><meta name="author" content="Doraemonzzz"><meta name="copyright" content="Doraemonzzz"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="这里回顾dlsys第十一讲，本讲内容是硬件加速。 课程主页：  https:&#x2F;&#x2F;dlsyscourse.org&#x2F; https:&#x2F;&#x2F;forum.dlsyscourse.org&#x2F; https:&#x2F;&#x2F;mugrade-online.dlsyscourse.org&#x2F;">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Deep Learning Systems Lecture 11 Hardware Acceleration">
+<meta property="og:url" content="http://www.doraemonzzz.com/2023/02/18/2023-2-18-Deep-Learning-Systems-Lecture-11-Hardware-Acceleration/index.html">
+<meta property="og:site_name" content="Doraemonzzz">
+<meta property="og:description" content="这里回顾dlsys第十一讲，本讲内容是硬件加速。 课程主页：  https:&#x2F;&#x2F;dlsyscourse.org&#x2F; https:&#x2F;&#x2F;forum.dlsyscourse.org&#x2F; https:&#x2F;&#x2F;mugrade-online.dlsyscourse.org&#x2F;">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg">
+<meta property="article:published_time" content="2023-02-18T12:16:00.000Z">
+<meta property="article:modified_time" content="2023-02-18T15:59:30.469Z">
+<meta property="article:author" content="Doraemonzzz">
+<meta property="article:tag" content="深度学习系统">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg"><link rel="shortcut icon" href="https://github.com/Doraemonzzz/md-photo/blob/master/%E5%A4%B4%E5%83%8F.jpg?raw=true"><link rel="canonical" href="http://www.doraemonzzz.com/2023/02/18/2023-2-18-Deep-Learning-Systems-Lecture-11-Hardware-Acceleration/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//www.google-analytics.com" crossorigin=""/><link rel="preconnect" href="//hm.baidu.com"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><script>var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?6f00f37f957f0608abb8c571105456f0";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script><script async="async" src="https://www.googletagmanager.com/gtag/js?id=UA-G-RE4B1LKRZD"></script><script>window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'UA-G-RE4B1LKRZD');
+</script><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"search.xml","languages":{"hits_empty":"找不到您查询的内容：${query}"}},
+  translate: {"defaultEncoding":2,"translateDelay":0,"msgToTraditionalChinese":"繁","msgToSimplifiedChinese":"簡"},
+  noticeOutdate: {"limitDay":500,"position":"top","messagePrev":"距离上次更新已经","messageNext":"天了，文章内容可能已经过时。"},
+  highlight: {"plugin":"prismjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":200},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    jQuery: 'https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js',
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+    },
+    fancybox: {
+      js: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css'
+    }
+  },
+  isPhotoFigcaption: true,
+  islazyload: true,
+  isanchor: true
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'Deep Learning Systems Lecture 11 Hardware Acceleration',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2023-02-18 23:59:30'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const fontSizeVal = saveToLocal.get('global-font-size')
+    if (fontSizeVal !== undefined) {
+      document.documentElement.style.setProperty('--global-font-size', fontSizeVal + 'px')
+    }
+    })(window)</script><link rel="stylesheet" href="/css/bilibili.css" media="defer" onload="this.media='all'"><meta name="google-site-verification" content="c4v-NmuUZRgl3cvtg9GKswryK1YLaPztd_5M-df5VNI" /><meta name="generator" content="Hexo 5.4.0"><link rel="alternate" href="/atom.xml" title="Doraemonzzz" type="application/atom+xml">
+</head><body><div id="loading-box"><div class="loading-left-bg"></div><div class="loading-right-bg"></div><div class="spinner-box"><div class="configure-border-1"><div class="configure-core"></div></div><div class="configure-border-2"><div class="configure-core"></div></div><div class="loading-word">加载中...</div></div></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="author-avatar"><img class="avatar-img" src= "/img/loading.gif" data-lazy-src="https://github.com/Doraemonzzz/md-photo/blob/master/%E5%A4%B4%E5%83%8F.jpg?raw=true" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">文章</div><div class="length-num">818</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">标签</div><div class="length-num">79</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/categories/"><div class="headline">分类</div><div class="length-num">32</div></a></div></div></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-chart-pie"></i><span> 博客统计</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/charts/"><i class="fa-fw far fa-chart-bar"></i><span> 文章统计</span></a></li><li><a class="site-page child" href="/census/"><i class="fa-fw fas fa-chart-area"></i><span> 访问统计</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/top/"><i class="fa-fw fab fa-hotjar"></i><span> 阅读排行榜</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fa fa-heartbeat"></i><span> 娱乐</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于我</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">Doraemonzzz</a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-chart-pie"></i><span> 博客统计</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/charts/"><i class="fa-fw far fa-chart-bar"></i><span> 文章统计</span></a></li><li><a class="site-page child" href="/census/"><i class="fa-fw fas fa-chart-area"></i><span> 访问统计</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/top/"><i class="fa-fw fab fa-hotjar"></i><span> 阅读排行榜</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fa fa-heartbeat"></i><span> 娱乐</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于我</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">Deep Learning Systems Lecture 11 Hardware Acceleration</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2023-02-18T12:16:00.000Z" title="发表于 2023-02-18 20:16:00">2023-02-18</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2023-02-18T15:59:30.469Z" title="更新于 2023-02-18 23:59:30">2023-02-18</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/">深度学习</a></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-tag"></i><a class="article-meta__tags" href="/tags/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E7%B3%BB%E7%BB%9F/">深度学习系统</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">1.3k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>7分钟</span></span><span class="post-meta-separator">|</span><span class="leancloud_visitors" id="/2023/02/18/2023-2-18-Deep-Learning-Systems-Lecture-11-Hardware-Acceleration/" data-flag-title="Deep Learning Systems Lecture 11 Hardware Acceleration"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span class="leancloud-visitors-count"></span></span><span class="post-meta-separator">|</span><span class="post-meta-commentcount"><i class="far fa-comments fa-fw post-meta-icon"></i><span class="post-meta-label">评论数:</span><a href="/2023/02/18/2023-2-18-Deep-Learning-Systems-Lecture-11-Hardware-Acceleration/#post-comment" itemprop="discussionUrl"><span class="valine-comment-count" data-xid="/2023/02/18/2023-2-18-Deep-Learning-Systems-Lecture-11-Hardware-Acceleration/" itemprop="commentCount"></span></a></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p>这里回顾dlsys第十一讲，本讲内容是硬件加速。</p>
+<p>课程主页：</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://dlsyscourse.org/">https://dlsyscourse.org/</a></li>
+<li><a target="_blank" rel="noopener" href="https://forum.dlsyscourse.org/">https://forum.dlsyscourse.org/</a></li>
+<li><a target="_blank" rel="noopener" href="https://mugrade-online.dlsyscourse.org/">https://mugrade-online.dlsyscourse.org/</a></li>
+</ul>
+<span id="more"></span>
+<h2 id="大纲"><a href="#大纲" class="headerlink" title="大纲"></a>大纲</h2><ul>
+<li>一般加速技术；</li>
+<li>案例研究：矩阵乘法；</li>
+</ul>
+<h2 id="一般加速技术"><a href="#一般加速技术" class="headerlink" title="一般加速技术"></a>一般加速技术</h2><h3 id="机器学习框架中的层"><a href="#机器学习框架中的层" class="headerlink" title="机器学习框架中的层"></a>机器学习框架中的层</h3><p><img src= "/img/loading.gif" data-lazy-src="https://github.com/Doraemonzzz/md-photo/blob/master/dlsys/l11/01.jpg?raw=true" alt=""></p>
+<h3 id="向量化"><a href="#向量化" class="headerlink" title="向量化"></a>向量化</h3><p>相加两个长度为256的数组：</p>
+<pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">void vecadd(float* A, float *B, float* C) &#123;
+    for (int i &#x3D; 0; i &lt; 64; ++i) &#123;
+        float4 a &#x3D; load_float4(A + i*4);
+        float4 b &#x3D; load_float4(B + i*4);
+        float4 c &#x3D; add_float4(a, b);
+        store_float4(C + i* 4, c);
+    &#125;
+&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>附加要求：内存（A、B、C）需要对齐到128位。</p>
+<h3 id="数据布局和步幅"><a href="#数据布局和步幅" class="headerlink" title="数据布局和步幅"></a>数据布局和步幅</h3><ul>
+<li>问题：如何在内存中存储一个矩阵;</li>
+<li>Row major：<code>A[i, j] =&gt; Adata[i * A.shape[1] + j]</code>；</li>
+<li>Column major：<code>A[i, j] =&gt; Adata[j * A.shape[0] + i]</code>；</li>
+<li>Strides format：<code>A[i, j] =&gt; Adata[i * A.strides[0] + j * A.strides[1]]</code>；</li>
+</ul>
+<h3 id="关于strides的讨论"><a href="#关于strides的讨论" class="headerlink" title="关于strides的讨论"></a>关于strides的讨论</h3><p>优点：可以零拷贝方式进行转换/切片：</p>
+<ul>
+<li>切片：更改begin offset和形状；</li>
+<li>Transpose：交换strides；</li>
+<li>广播：插入一个等于0的stride；</li>
+</ul>
+<p>缺点：内存访问变得不连续：</p>
+<ul>
+<li>使向量化更难；</li>
+<li>许多线性代数运算可能需要先压缩数组；</li>
+</ul>
+<h3 id="并行"><a href="#并行" class="headerlink" title="并行"></a>并行</h3><pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">void vecadd(float* A, float *B, float* C) &#123;
+    #pragma omp parallel for
+    for (int i &#x3D; 0; i &lt; 64; ++i) &#123;
+        float4 a &#x3D; load_float4(A + i*4);
+        float4 b &#x3D; load_float4(B + i*4);
+        float4 c &#x3D; add_float4(a, b);
+        store_float4(C * 4, c);
+    &#125;
+&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h2 id="案例研究：矩阵乘法"><a href="#案例研究：矩阵乘法" class="headerlink" title="案例研究：矩阵乘法"></a>案例研究：矩阵乘法</h2><h3 id="Vanilla矩阵乘法"><a href="#Vanilla矩阵乘法" class="headerlink" title="Vanilla矩阵乘法"></a>Vanilla矩阵乘法</h3><p>计算$C=A B^T$，朴素的实现时间复杂度为$O(n^3)$，代码：</p>
+<pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">float A[n][n], B[n][n], C[n][n];
+
+for (int i &#x3D; 0; i &lt; n; ++i) &#123;
+    for (int j &#x3D; 0; j &lt; n; ++j) &#123;
+        C[i][j] &#x3D; 0;
+        for (int k &#x3D; 0; k &lt; n; ++k) &#123;
+            C[i][j] +&#x3D; A[i][k] * B[j][k];
+        &#125;
+    &#125;
+&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<h3 id="现代CPU上的内存层次结构"><a href="#现代CPU上的内存层次结构" class="headerlink" title="现代CPU上的内存层次结构"></a>现代CPU上的内存层次结构</h3><p><img src= "/img/loading.gif" data-lazy-src="https://github.com/Doraemonzzz/md-photo/blob/master/dlsys/l11/02.jpg?raw=true" alt=""></p>
+<h3 id="考虑结构的复杂度分析"><a href="#考虑结构的复杂度分析" class="headerlink" title="考虑结构的复杂度分析"></a>考虑结构的复杂度分析</h3><pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">dram float A[n][n], B[n][n], C[n][n];
+for (int i &#x3D; 0; i &lt; n; ++i) &#123;
+    for (int j &#x3D; 0; j &lt; n; ++j) &#123;
+        register float c &#x3D; 0;
+        for (int k &#x3D; 0; k &lt; n; ++k) &#123;
+            register float a &#x3D; A[i][k];
+            register float b &#x3D; B[j][k];
+            c +&#x3D; a * b;
+        &#125;
+        C[i][j] &#x3D; c;
+    &#125;
+&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>分析：</p>
+<ul>
+<li>A dram-&gt;rigister time cost: $n^3$；</li>
+<li>B dram-&gt;rigister time cost: $n^3$；</li>
+<li>A register memory cost: 1；</li>
+<li>B register memory cost: 1；</li>
+<li>C register memory cost: 1；</li>
+</ul>
+<p>小结：</p>
+<ul>
+<li>Load cost: $2\times \mathrm{dramspeed} \times n^3$；</li>
+<li>Register cost：$3$；</li>
+</ul>
+<h3 id="Tiled矩阵乘法"><a href="#Tiled矩阵乘法" class="headerlink" title="Tiled矩阵乘法"></a>Tiled矩阵乘法</h3><p><img src= "/img/loading.gif" data-lazy-src="https://github.com/Doraemonzzz/md-photo/blob/master/dlsys/l11/03.jpg?raw=true" alt=""></p>
+<pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">dram float A[n&#x2F;v1][n&#x2F;v3][v1][v3];
+dram float B[n&#x2F;v2][n&#x2F;v3][v2][v3];
+dram float C[n&#x2F;v1][n&#x2F;v2][v1][v2];
+
+for (int i &#x3D; 0; i &lt; n&#x2F;v1; ++i) &#123;
+    for (int j &#x3D; 0; j &lt; n&#x2F;v2; ++j) &#123;
+        register float c[v1][v2] &#x3D; 0;
+        for (int k &#x3D; 0; k &lt; n&#x2F;v3; ++k) &#123;
+            register float a[v1][v3] &#x3D; A[i][k];
+            register float b[v2][v3] &#x3D; B[j][k];
+            c +&#x3D; dot(a, b.T);
+        &#125;
+        C[i][j] &#x3D; c;
+    &#125;
+&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>分析：</p>
+<ul>
+<li>A dram-&gt;rigister time cost: $n/v_1 \times n/v_2 \times n/ v_3 \times v_1\times v_3=n^3/ v_2$；</li>
+<li>B dram-&gt;rigister time cost: $n/v_1 \times n/v_2 \times n/ v_3 \times v_2\times v_3=n^3/v_1$；</li>
+<li>A register memory cost: $v_1\times v_3$；</li>
+<li>B register memory cost: $v_2\times v_3$；</li>
+<li>C register memory cost: $v_1\times v_2$；</li>
+</ul>
+<p>小结：</p>
+<ul>
+<li>Load cost: $\mathrm{dramspeed} \times (n^3/ v_2 + n^3/ v_1)$；</li>
+<li>Register cost：$v_1\times v_3+ v_2\times v_3 + v_1\times v_2$；</li>
+</ul>
+<h3 id="感知cache-line的tiling"><a href="#感知cache-line的tiling" class="headerlink" title="感知cache line的tiling"></a>感知cache line的tiling</h3><pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">dram float A[n&#x2F;b1][b1][n];
+dram float B[n&#x2F;b2][b2][n];
+dram float C[n&#x2F;b1][n&#x2F;b2][b1][b2];
+
+for (int i &#x3D; 0; i &lt; n&#x2F;b1; ++i) &#123;
+    l1cache float a[b1][n] &#x3D; A[i];
+    for (int j &#x3D; 0; j &lt; n&#x2F;b2; ++j) &#123;
+        l1cache b[b2][n] &#x3D; B[j];
+        C[i][j] &#x3D; dot(a, b.T);
+    &#125;
+&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p><img src= "/img/loading.gif" data-lazy-src="https://github.com/Doraemonzzz/md-photo/blob/master/dlsys/l11/04.jpg?raw=true" alt=""></p>
+<p>分析：</p>
+<ul>
+<li>A dram-&gt;l1 time cost: $n/b_1\times b_1 \times n = n^2$；</li>
+<li>B dram-&gt;l1 time cost: $n/b_1\times n/ b_2 \times b_2\times n =n^3/ b_1$；</li>
+</ul>
+<p>约束：</p>
+<ul>
+<li><code>b1 * n + b2 * n &lt; l1 cache size</code>；</li>
+<li>要在点乘上使用分块，需要：<ul>
+<li><code>b1 % v1 == 0</code>；</li>
+<li><code>b2 % v2 == 0</code>；</li>
+</ul>
+</li>
+</ul>
+<h3 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h3><pre class="line-numbers language-none"><code class="language-none">dram float A[n&#x2F;b1][b1&#x2F;v1][n][v1];
+dram float B[n&#x2F;b2][b2&#x2F;v2][n][v2];
+
+for (int i &#x3D; 0; i &lt; n&#x2F;b1; ++i) &#123;
+    l1cache float a[b1&#x2F;v1][n][v1] &#x3D; A[i];
+    for (int j &#x3D; 0; j &lt; n&#x2F;b2; ++j) &#123;
+        l1cache b[b2&#x2F;v2][n][v2] &#x3D; B[j];
+        for (int x &#x3D; 0; x &lt; b1&#x2F;v1; ++x) &#123;
+            for (int y &#x3D; 0; y &lt; b2&#x2F;v2; ++y) &#123;
+                register float c[v1][v2] &#x3D; 0;
+                for (int k &#x3D; 0; k &lt; n; ++k) &#123;
+                    register float ar[v1] &#x3D; a[x][k][:];
+                    register float br[v2] &#x3D; b[y][k][:];
+                    C +&#x3D; dot(ar, br.T);
+                &#125;
+            &#125;
+        &#125;
+    &#125;
+&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>分析：</p>
+<ul>
+<li>load cost: $\mathrm{l1speed}\times (n^3/ v_2 + n^3 / v_1) + \mathrm{dramspeed} \times (n^2 + n^3 / b_1)$；</li>
+</ul>
+<h3 id="关键思想：内存加载重用"><a href="#关键思想：内存加载重用" class="headerlink" title="关键思想：内存加载重用"></a>关键思想：内存加载重用</h3><pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">dram float A[n&#x2F;v1][n&#x2F;v3][v1][v3];
+dram float B[n&#x2F;v2][n&#x2F;v3][v2][v3];
+dram float C[n&#x2F;v1][n&#x2F;v2][v1][v2];
+
+for (int i &#x3D; 0; i &lt; n&#x2F;v1; ++i) &#123;
+    for (int j &#x3D; 0; j &lt; n&#x2F;v2; ++j) &#123;
+        register float c[v1][v2] &#x3D; 0;
+        for (int k &#x3D; 0; k &lt; n&#x2F;v3; ++k) &#123;
+            register float a[v1][v3] &#x3D; A[i][k];
+            register float b[v2][v3] &#x3D; B[j][k];
+            c +&#x3D; dot(a, b.T);
+        &#125;
+        C[i][j] &#x3D; c;
+    &#125;
+&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>分析：</p>
+<ul>
+<li>a重用$v_2$次；</li>
+<li>b重用$v_1$次；</li>
+<li>A dram-&gt;rigister time cost: $n/v_1 \times n/v_2 \times n/ v_3 \times v_1\times v_3=n^3/ v_2$；</li>
+<li>B dram-&gt;rigister time cost: $n/v_1 \times n/v_2 \times n/ v_3 \times v_2\times v_3=n^3/v_1$；</li>
+</ul>
+<h3 id="常见的重用模式"><a href="#常见的重用模式" class="headerlink" title="常见的重用模式"></a>常见的重用模式</h3><pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">float A[n][n];
+float B[n][n];
+float C[n][n];
+
+C[i][j] &#x3D; sum(A[i][k] * B[j][k], axis&#x3D;k)<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>$A$的访问独立于$j$，对$j$维度tile $v$次，可以使$A$重用$v$次。</p>
+<h3 id="讨论：卷积中可能的重用模式"><a href="#讨论：卷积中可能的重用模式" class="headerlink" title="讨论：卷积中可能的重用模式"></a>讨论：卷积中可能的重用模式</h3><pre class="line-numbers language-c++" data-language="c++"><code class="language-c++">float Input[n][ci][h][w];
+float Weight[co][ci][K][K];
+float Output[n][co][h][w];
+
+Output[b][co][y][x] &#x3D; sum(Input[b][k][y+ry][x+rx] * Weight[co][k][ry][rx], axis&#x3D;[k, ry, rx])<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="mailto:undefined">Doraemonzzz</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="http://www.doraemonzzz.com/2023/02/18/2023-2-18-Deep-Learning-Systems-Lecture-11-Hardware-Acceleration/">http://www.doraemonzzz.com/2023/02/18/2023-2-18-Deep-Learning-Systems-Lecture-11-Hardware-Acceleration/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://www.doraemonzzz.com" target="_blank">Doraemonzzz</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E7%B3%BB%E7%BB%9F/">深度学习系统</a></div><div class="post_share"><div class="social-share" data-image="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2023/02/18/2023-2-18-Deep-Learning-Systems-Lecture-12-GPU-Acceleration/"><img class="prev-cover" src= "/img/loading.gif" data-lazy-src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">Deep Learning Systems Lecture 12 GPU Acceleration</div></div></a></div><div class="next-post pull-right"><a href="/2023/02/18/2023-2-18-Deep-Learning-Systems-Lecture-10-Convolutional-operators-in-deep-networks/"><img class="next-cover" src= "/img/loading.gif" data-lazy-src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">Deep Learning Systems Lecture 10 Convolutional operators in deep networks</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span> 相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2022/10/16/2022-10-16-Deep-Learning-Systems-开发环境配置/" title="Deep Learning Systems 开发环境配置"><img class="cover" src= "/img/loading.gif" data-lazy-src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-10-16</div><div class="title">Deep Learning Systems 开发环境配置</div></div></a></div><div><a href="/2022/10/17/2022-10-17-Deep-Learning-Systems-HW0/" title="Deep Learning Systems HW0"><img class="cover" src= "/img/loading.gif" data-lazy-src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-10-17</div><div class="title">Deep Learning Systems HW0</div></div></a></div><div><a href="/2022/10/17/2022-10-17-Deep-Learning-Systems-HW1/" title="Deep Learning Systems HW1"><img class="cover" src= "/img/loading.gif" data-lazy-src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-10-17</div><div class="title">Deep Learning Systems HW1</div></div></a></div><div><a href="/2022/11/01/2022-11-1-Deep-Learning-Systems-HW2/" title="Deep Learning Systems HW2"><img class="cover" src= "/img/loading.gif" data-lazy-src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-11-01</div><div class="title">Deep Learning Systems HW2</div></div></a></div><div><a href="/2023/01/16/2023-1-16-Deep-Learning-Systems-Lecture-2-ML-Refresher-and-Softmax-Regression/" title="Deep Learning Systems Lecture 2 ML Refresher and Softmax Regression"><img class="cover" src= "/img/loading.gif" data-lazy-src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-01-16</div><div class="title">Deep Learning Systems Lecture 2 ML Refresher and Softmax Regression</div></div></a></div><div><a href="/2023/01/15/2023-1-15-Deep-Learning-Systems-Lecture-1-Introduction-and-Logistics/" title="Deep Learning Systems Lecture 1 Introduction and Logistics"><img class="cover" src= "/img/loading.gif" data-lazy-src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-01-15</div><div class="title">Deep Learning Systems Lecture 1 Introduction and Logistics</div></div></a></div></div></div><hr/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div><div id="comment-switch"><span class="first-comment">Valine</span><span class="switch-btn"></span><span class="second-comment">Livere</span></div></div><div class="comment-wrap"><div><div class="vcomment" id="vcomment"></div></div><div><div id="lv-container" data-id="city" data-uid="MTAyMC8zNDcxOS8xMTI1Ng=="></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="card-info-avatar is-center"><img class="avatar-img" src= "/img/loading.gif" data-lazy-src="https://github.com/Doraemonzzz/md-photo/blob/master/%E5%A4%B4%E5%83%8F.jpg?raw=true" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/><div class="author-info__name">Doraemonzzz</div><div class="author-info__description">个人博客，主要记录有关机器学习，数学以及计算机科学的笔记</div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">818</div></a></div><div class="card-info-data-item is-center"><a href="/tags/"><div class="headline">标签</div><div class="length-num">79</div></a></div><div class="card-info-data-item is-center"><a href="/categories/"><div class="headline">分类</div><div class="length-num">32</div></a></div></div><a class="button--animated" id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/Doraemonzzz"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/Doraemonzzz" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="/doraemon_zzz@163.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a><a class="social-icon" href="https://space.bilibili.com/291079982" target="_blank" title="Bilibili"><i class="iconfont icon-bilibili"></i></a><a class="social-icon" href="/atom.xml" target="_blank" title=""><i class="fa fa-rss"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn card-announcement-animation"></i><span>公告</span></div><div class="announcement_content">暂无公告</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A4%A7%E7%BA%B2"><span class="toc-number">1.</span> <span class="toc-text">大纲</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E8%88%AC%E5%8A%A0%E9%80%9F%E6%8A%80%E6%9C%AF"><span class="toc-number">2.</span> <span class="toc-text">一般加速技术</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E6%A1%86%E6%9E%B6%E4%B8%AD%E7%9A%84%E5%B1%82"><span class="toc-number">2.1.</span> <span class="toc-text">机器学习框架中的层</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%90%91%E9%87%8F%E5%8C%96"><span class="toc-number">2.2.</span> <span class="toc-text">向量化</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E5%B8%83%E5%B1%80%E5%92%8C%E6%AD%A5%E5%B9%85"><span class="toc-number">2.3.</span> <span class="toc-text">数据布局和步幅</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%B3%E4%BA%8Estrides%E7%9A%84%E8%AE%A8%E8%AE%BA"><span class="toc-number">2.4.</span> <span class="toc-text">关于strides的讨论</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B9%B6%E8%A1%8C"><span class="toc-number">2.5.</span> <span class="toc-text">并行</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A1%88%E4%BE%8B%E7%A0%94%E7%A9%B6%EF%BC%9A%E7%9F%A9%E9%98%B5%E4%B9%98%E6%B3%95"><span class="toc-number">3.</span> <span class="toc-text">案例研究：矩阵乘法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Vanilla%E7%9F%A9%E9%98%B5%E4%B9%98%E6%B3%95"><span class="toc-number">3.1.</span> <span class="toc-text">Vanilla矩阵乘法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%8E%B0%E4%BB%A3CPU%E4%B8%8A%E7%9A%84%E5%86%85%E5%AD%98%E5%B1%82%E6%AC%A1%E7%BB%93%E6%9E%84"><span class="toc-number">3.2.</span> <span class="toc-text">现代CPU上的内存层次结构</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%80%83%E8%99%91%E7%BB%93%E6%9E%84%E7%9A%84%E5%A4%8D%E6%9D%82%E5%BA%A6%E5%88%86%E6%9E%90"><span class="toc-number">3.3.</span> <span class="toc-text">考虑结构的复杂度分析</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Tiled%E7%9F%A9%E9%98%B5%E4%B9%98%E6%B3%95"><span class="toc-number">3.4.</span> <span class="toc-text">Tiled矩阵乘法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%84%9F%E7%9F%A5cache-line%E7%9A%84tiling"><span class="toc-number">3.5.</span> <span class="toc-text">感知cache line的tiling</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B0%8F%E7%BB%93"><span class="toc-number">3.6.</span> <span class="toc-text">小结</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%B3%E9%94%AE%E6%80%9D%E6%83%B3%EF%BC%9A%E5%86%85%E5%AD%98%E5%8A%A0%E8%BD%BD%E9%87%8D%E7%94%A8"><span class="toc-number">3.7.</span> <span class="toc-text">关键思想：内存加载重用</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B8%B8%E8%A7%81%E7%9A%84%E9%87%8D%E7%94%A8%E6%A8%A1%E5%BC%8F"><span class="toc-number">3.8.</span> <span class="toc-text">常见的重用模式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AE%A8%E8%AE%BA%EF%BC%9A%E5%8D%B7%E7%A7%AF%E4%B8%AD%E5%8F%AF%E8%83%BD%E7%9A%84%E9%87%8D%E7%94%A8%E6%A8%A1%E5%BC%8F"><span class="toc-number">3.9.</span> <span class="toc-text">讨论：卷积中可能的重用模式</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2023/02/20/2023-2-20-Deep-Learning-Systems-Lecture-24-Model-Deployment/" title="Deep Learning Systems Lecture 24 Model Deployment"><img src= "/img/loading.gif" data-lazy-src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Deep Learning Systems Lecture 24 Model Deployment"/></a><div class="content"><a class="title" href="/2023/02/20/2023-2-20-Deep-Learning-Systems-Lecture-24-Model-Deployment/" title="Deep Learning Systems Lecture 24 Model Deployment">Deep Learning Systems Lecture 24 Model Deployment</a><time datetime="2023-02-20T07:30:00.000Z" title="发表于 2023-02-20 15:30:00">2023-02-20</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2023/02/20/2023-2-20-Deep-Learning-Systems-Lecture-22-Implicit-Layers/" title="Deep Learning Systems Lecture 22 Implicit Layers"><img src= "/img/loading.gif" data-lazy-src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Deep Learning Systems Lecture 22 Implicit Layers"/></a><div class="content"><a class="title" href="/2023/02/20/2023-2-20-Deep-Learning-Systems-Lecture-22-Implicit-Layers/" title="Deep Learning Systems Lecture 22 Implicit Layers">Deep Learning Systems Lecture 22 Implicit Layers</a><time datetime="2023-02-20T06:48:00.000Z" title="发表于 2023-02-20 14:48:00">2023-02-20</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2023/02/20/2023-2-20-Deep-Learning-Systems-Lecture-20-Transformers-and-Attention/" title="Deep Learning Systems Lecture 20 Transformers and Attention"><img src= "/img/loading.gif" data-lazy-src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Deep Learning Systems Lecture 20 Transformers and Attention"/></a><div class="content"><a class="title" href="/2023/02/20/2023-2-20-Deep-Learning-Systems-Lecture-20-Transformers-and-Attention/" title="Deep Learning Systems Lecture 20 Transformers and Attention">Deep Learning Systems Lecture 20 Transformers and Attention</a><time datetime="2023-02-20T04:48:00.000Z" title="发表于 2023-02-20 12:48:00">2023-02-20</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2023/02/20/2023-2-20-Deep-Learning-Systems-Lecture-18-Sequence-Modeling-and-Recurrent-Networks/" title="Deep Learning Systems Lecture 18 Sequence Modeling and Recurrent Networks"><img src= "/img/loading.gif" data-lazy-src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Deep Learning Systems Lecture 18 Sequence Modeling and Recurrent Networks"/></a><div class="content"><a class="title" href="/2023/02/20/2023-2-20-Deep-Learning-Systems-Lecture-18-Sequence-Modeling-and-Recurrent-Networks/" title="Deep Learning Systems Lecture 18 Sequence Modeling and Recurrent Networks">Deep Learning Systems Lecture 18 Sequence Modeling and Recurrent Networks</a><time datetime="2023-02-20T02:37:00.000Z" title="发表于 2023-02-20 10:37:00">2023-02-20</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2023/02/19/2023-2-19-Deep-Learning-Systems-Lecture-16-Generative-Adversarial-Networks/" title="Deep Learning Systems Lecture 16 Generative Adversarial Networks"><img src= "/img/loading.gif" data-lazy-src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/img/default.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Deep Learning Systems Lecture 16 Generative Adversarial Networks"/></a><div class="content"><a class="title" href="/2023/02/19/2023-2-19-Deep-Learning-Systems-Lecture-16-Generative-Adversarial-Networks/" title="Deep Learning Systems Lecture 16 Generative Adversarial Networks">Deep Learning Systems Lecture 16 Generative Adversarial Networks</a><time datetime="2023-02-19T04:43:00.000Z" title="发表于 2023-02-19 12:43:00">2023-02-19</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2018 - 2023 By Doraemonzzz</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="font-plus" type="button" title="放大字体"><i class="fas fa-plus"></i></button><button id="font-minus" type="button" title="缩小字体"><i class="fas fa-minus"></i></button><button id="translateLink" type="button" title="简繁转换">简</button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div id="local-search"><div class="search-dialog"><div class="search-dialog__title" id="local-search-title">本地搜索</div><div id="local-input-panel"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div></div><hr/><div id="local-search-results"></div><span class="search-close-button"><i class="fas fa-times"></i></span></div><div id="search-mask"></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="/js/tw_cn.js"></script><script src="https://cdn.jsdelivr.net/npm/vanilla-lazyload/dist/lazyload.iife.min.js"></script><script src="/js/search/local-search.js"></script><script>var preloader = {
+  endLoading: () => {
+    document.body.style.overflow = 'auto';
+    document.getElementById('loading-box').classList.add("loaded")
+  },
+  initLoading: () => {
+    document.body.style.overflow = '';
+    document.getElementById('loading-box').classList.remove("loaded")
+
+  }
+}
+window.addEventListener('load',preloader.endLoading())</script><div class="js-pjax"><script>if (!window.MathJax) {
+  window.MathJax = {
+    tex: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]],
+      tags: 'ams'
+    },
+    chtml: {
+      scale: 1.25
+    },
+    options: {
+      renderActions: {
+        findScript: [10, doc => {
+          for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+            const display = !!node.type.match(/; *mode=display/)
+            const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+            const text = document.createTextNode('')
+            node.parentNode.replaceChild(text, node)
+            math.start = {node: text, delim: '', n: 0}
+            math.end = {node: text, delim: '', n: 0}
+            doc.math.push(math)
+          }
+        }, '']
+      }
+    }
+  }
+  
+  const script = document.createElement('script')
+  script.src = 'https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js'
+  script.id = 'MathJax-script'
+  script.async = true
+  document.head.appendChild(script)
+} else {
+  MathJax.startup.document.state(0)
+  MathJax.texReset()
+  MathJax.typeset()
+}</script><script>function loadValine () {
+  function initValine () {
+    const valine = new Valine(Object.assign({
+      el: '#vcomment',
+      appId: 'IpnmxCW9CvYWIXbol5QXsegX-MdYXbMMI',
+      appKey: 'w57DVCdbxcyB1TYYagMIMJIU',
+      placeholder: 'Please leave your footprints',
+      avatar: 'monsterid',
+      meta: 'nick,mail,link'.split(','),
+      pageSize: '10',
+      lang: 'en',
+      recordIP: false,
+      serverURLs: '',
+      emojiCDN: '',
+      emojiMaps: "",
+      enableQQ: false,
+      path: window.location.pathname,
+      requiredFields: ["nick,mail"],
+      visitor: true
+    }, null))
+  }
+
+  if (typeof Valine === 'function') initValine() 
+  else getScript('https://cdn.jsdelivr.net/npm/valine/dist/Valine.min.js').then(initValine)
+}
+
+if ('Valine' === 'Valine' || !false) {
+  if (false) btf.loadComment(document.getElementById('vcomment'),loadValine)
+  else setTimeout(loadValine, 0)
+} else {
+  function loadOtherComment () {
+    loadValine()
+  }
+}</script><script>function loadLivere () {
+  if (typeof LivereTower === 'object') {
+    window.LivereTower.init()
+  }
+  else {
+    (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+    })(document, 'script');
+  }
+}
+
+if ('Valine' === 'Livere' || !false) {
+  if (false) btf.loadComment(document.getElementById('lv-container'), loadLivere)
+  else loadLivere()
+}
+else {
+  function loadOtherComment () {
+    loadLivere()
+  }
+}</script></div><script defer="defer" id="fluttering_ribbon" mobile="false" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/canvas-fluttering-ribbon.min.js"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
